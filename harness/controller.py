@@ -24,10 +24,11 @@ class StaleVersionError(RuntimeError):
 
 ALLOWED_TRANSITIONS = {
     "pending_evaluation": {"evaluating", "terminated"},
-    "evaluating": {"active", "pending_repair", "undetermined", "irreparable"},
+    "evaluating": {"active", "pending_repair", "resolving_ambiguity", "undetermined", "irreparable"},
     "pending_repair": {"patch_submitted", "irreparable", "terminated"},
     "patch_submitted": {"pending_recheck", "pending_repair", "terminated"},
-    "pending_recheck": {"active", "pending_repair", "undetermined", "irreparable"},
+    "pending_recheck": {"active", "pending_repair", "resolving_ambiguity", "undetermined", "irreparable"},
+    "resolving_ambiguity": {"active", "pending_repair", "undetermined", "terminated"},
     "active": {"stale"},
     "stale": {"pending_evaluation", "terminated"},
     "undetermined": {"pending_evaluation", "terminated"},
@@ -57,6 +58,7 @@ class DualAgentController:
         self._versions: dict[NodeKey, dict[str, Any]] = {}
         self._current: dict[tuple[str, int], NodeKey] = {}
         self._patches: dict[str, dict[str, Any]] = {}
+        self._ambiguity_analyses: dict[str, dict[str, Any]] = {}
         self._events: list[dict[str, Any]] = []
 
     @property
@@ -154,12 +156,45 @@ class DualAgentController:
             destination = "active"
         elif verdict in {"unsupported", "counterexample_found", "blocked_by_invalid_dependency"}:
             destination = "pending_repair"
-        elif verdict in {"ambiguous", "undetermined"}:
+        elif verdict == "ambiguous":
+            destination = "resolving_ambiguity"
+        elif verdict == "undetermined":
             destination = "undetermined"
         else:
             raise InvalidTransitionError(f"no lifecycle mapping for verdict: {verdict}")
         self.transition(key.ref(), destination, reason=f"evaluation {evaluation['evaluation_id']}")
         self._events.append({"event": "evaluation_recorded", "target": key.ref(), "evaluation_id": evaluation["evaluation_id"]})
+
+    def record_ambiguity_analysis(self, analysis: dict[str, Any]) -> None:
+        """Apply an Evaluator-authored branch analysis without choosing an interpretation."""
+        validate_contract("ambiguity_analysis", analysis)
+        key = self._require_current(analysis["target"])
+        record = self._versions[key]
+        if record["lifecycle_state"] != "resolving_ambiguity":
+            raise InvalidTransitionError("ambiguity analysis requires resolving_ambiguity state")
+        expected_versions = {
+            str(ref["node_id"]): ref["version"] for ref in record["node"]["depends_on"]
+        }
+        if analysis["dependency_versions"] != expected_versions:
+            raise StaleVersionError("ambiguity analysis dependency versions do not match the target node")
+        if analysis["analysis_id"] in self._ambiguity_analyses:
+            raise ContractError(f"duplicate ambiguity analysis id: {analysis['analysis_id']}")
+        self._ambiguity_analyses[analysis["analysis_id"]] = deepcopy(analysis)
+        outcome = analysis["outcome"]
+        if outcome == "robustly_accepted":
+            verdict, destination = "accepted", "active"
+        elif outcome == "requires_clarification":
+            verdict, destination = "ambiguous", "pending_repair"
+        elif outcome == "unsupported_under_all_checked":
+            verdict, destination = "unsupported", "pending_repair"
+        else:
+            verdict, destination = "undetermined", "undetermined"
+        record["current_verdict"] = verdict
+        self.transition(key.ref(), destination, reason=f"ambiguity analysis {analysis['analysis_id']}")
+        self._events.append({
+            "event": "ambiguity_analysis_recorded", "target": key.ref(),
+            "analysis_id": analysis["analysis_id"], "outcome": outcome,
+        })
 
     def submit_patch(self, patch: dict[str, Any]) -> None:
         validate_contract("patch_proposal", patch)
@@ -234,4 +269,3 @@ class DualAgentController:
                         self._versions[key]["stale_reason"] = f"dependency {old_key.node_id}@v{old_key.version} was superseded"
                     stale_keys.add(key)
                     changed = True
-

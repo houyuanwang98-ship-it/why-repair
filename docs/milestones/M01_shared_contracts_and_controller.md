@@ -20,6 +20,7 @@ M1 只实现双 Agent 之间的共享数据对象、严格运行时校验、节�
 - `ProofNode`
 - `DependencyEdge`
 - `EvaluationRecord`
+- `AmbiguityAnalysis`
 - `ErrorCertificate`
 - `CounterexampleCertificate`
 - `PatchProposal`
@@ -35,7 +36,8 @@ Controller 生命周期：
 
 ```text
 pending_evaluation -> evaluating
-evaluating -> active | pending_repair | undetermined | irreparable
+evaluating -> active | resolving_ambiguity | pending_repair | undetermined | irreparable
+resolving_ambiguity -> active | pending_repair | undetermined | terminated
 pending_repair -> patch_submitted | irreparable | terminated
 patch_submitted -> pending_recheck
 pending_recheck -> active | pending_repair | undetermined | irreparable
@@ -44,6 +46,17 @@ stale -> pending_evaluation | terminated
 ```
 
 数学裁决单独保存在 `current_verdict`。`stale` 等生命周期状态不会被当作数学错误。
+
+### 多解释分支检查
+
+当 Evaluator 首次给出 `ambiguous` 时，Controller 不直接终止，而是进入 `resolving_ambiguity`。Evaluator 必须列出至少两个合理解释，并在相同的依赖版本下逐一检查。系统通过确定性规则汇总分支，禁止模型只选择最容易成立的解释：
+
+- 所有合理解释均成立、含义等价，而且在声明范围内穷尽，结果为 `robustly_accepted`，节点进入 `active`。
+- 一部分合理解释成立而另一部分不成立，或多个成立解释含义不同，结果为 `requires_clarification`。Evaluator 随后生成 `interpretation_ambiguity` 类型的 `ErrorCertificate`，节点进入 `pending_repair`，由 Generator 做消歧义改写。
+- 声明范围内穷尽的合理解释均不成立，结果为 `unsupported_under_all_checked`，节点进入 `pending_repair`。
+- 解释未穷尽、分支自身无法判断或含义关系无法判断时，结果为 `undetermined`。
+
+`coverage_status` 必须明确写为 `exhaustive_within_declared_scope`、`best_effort` 或 `non_exhaustive`。这里的“穷尽”只针对明确声明的有限候选范围，不声称穷尽自然语言的一切可能解释。
 
 ## 5. M1 支持的补丁范围
 
@@ -64,6 +77,7 @@ Schema 能表达 `insert_before`、`replace`、`delete` 和 `add_assumption`。�
 
 - `data/fixtures/m1/accepted_repair.json`：节点 2 v1 被替换为 v2，节点 3 因依赖旧版本而过期。
 - `data/fixtures/m1/rejected_stale_patch.json`：v2 生效后，再提交指向 v1 的补丁必须失败。
+- `data/fixtures/m1/ambiguity_branching.json`：一个解释成立而另一个失败时，不能挑选成功分支，必须请求消歧义改写。
 
 ## 8. M1 退出条件
 

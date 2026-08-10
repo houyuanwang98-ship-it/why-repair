@@ -58,7 +58,39 @@
         "dependency_versions": {"type": "object", "propertyNames": {"pattern": "^[1-9][0-9]*$"}, "additionalProperties": {"type": "integer", "minimum": 1}},
         "evaluator_id": {"type": "string", "minLength": 1},
         "error_certificate_id": {"type": ["string", "null"]},
-        "counterexample_certificate_id": {"type": ["string", "null"]}
+        "counterexample_certificate_id": {"type": ["string", "null"]},
+        "ambiguity_analysis_id": {"type": ["string", "null"]}
+      }
+    },
+    "AmbiguityAnalysis": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "analysis_id", "target", "ambiguous_span", "ambiguity_type", "declared_scope", "coverage_status", "meaning_relation", "interpretations", "dependency_versions", "outcome", "evaluator_id"],
+      "properties": {
+        "schema_version": {"const": "0.1"},
+        "analysis_id": {"type": "string", "minLength": 1},
+        "target": {"$ref": "#/$defs/NodeRef"},
+        "ambiguous_span": {"type": "string", "minLength": 1},
+        "ambiguity_type": {"enum": ["unclear_reference", "scope_ambiguity", "notation_ambiguity", "syntactic_ambiguity", "other"]},
+        "declared_scope": {"type": "string", "minLength": 1},
+        "coverage_status": {"enum": ["exhaustive_within_declared_scope", "best_effort", "non_exhaustive"]},
+        "meaning_relation": {"enum": ["equivalent", "distinct", "undetermined"]},
+        "interpretations": {
+          "type": "array", "minItems": 2,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["interpretation_id", "normalized_claim", "plausibility", "verdict", "reason"],
+            "properties": {
+              "interpretation_id": {"type": "string", "minLength": 1},
+              "normalized_claim": {"type": "string", "minLength": 1},
+              "plausibility": {"enum": ["reasonable", "remote"]},
+              "verdict": {"enum": ["accepted", "accepted_with_gap", "unsupported", "ambiguous", "undetermined", "blocked_by_invalid_dependency"]},
+              "reason": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "dependency_versions": {"type": "object", "propertyNames": {"pattern": "^[1-9][0-9]*$"}, "additionalProperties": {"type": "integer", "minimum": 1}},
+        "outcome": {"enum": ["robustly_accepted", "requires_clarification", "unsupported_under_all_checked", "undetermined"]},
+        "evaluator_id": {"type": "string", "minLength": 1}
       }
     },
     "ErrorCertificate": {
@@ -130,7 +162,7 @@
       "required": ["schema_version", "node", "lifecycle_state", "current_verdict", "created_by", "supersedes"],
       "properties": {
         "schema_version": {"const": "0.1"}, "node": {"$ref": "#/$defs/ProofNode"},
-        "lifecycle_state": {"enum": ["pending_evaluation", "evaluating", "pending_repair", "patch_submitted", "pending_recheck", "active", "stale", "irreparable", "undetermined", "terminated"]},
+        "lifecycle_state": {"enum": ["pending_evaluation", "evaluating", "resolving_ambiguity", "pending_repair", "patch_submitted", "pending_recheck", "active", "stale", "irreparable", "undetermined", "terminated"]},
         "current_verdict": {"type": ["string", "null"]}, "created_by": {"enum": ["original", "repair_generator", "human"]},
         "supersedes": {"oneOf": [{"$ref": "#/$defs/NodeRef"}, {"type": "null"}]}, "stale_reason": {"type": "string"}
       }
@@ -163,7 +195,8 @@
   },
   "oneOf": [
     {"$ref": "#/$defs/ProofNode"}, {"$ref": "#/$defs/DependencyEdge"},
-    {"$ref": "#/$defs/EvaluationRecord"}, {"$ref": "#/$defs/ErrorCertificate"},
+    {"$ref": "#/$defs/EvaluationRecord"}, {"$ref": "#/$defs/AmbiguityAnalysis"},
+    {"$ref": "#/$defs/ErrorCertificate"},
     {"$ref": "#/$defs/CounterexampleCertificate"}, {"$ref": "#/$defs/PatchProposal"},
     {"$ref": "#/$defs/PatchReview"}, {"$ref": "#/$defs/NodeVersion"},
     {"$ref": "#/$defs/RunManifest"}

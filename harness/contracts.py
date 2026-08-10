@@ -31,7 +31,16 @@ ERROR_TYPES = {
 LIFECYCLE_STATES = {
     "pending_evaluation", "evaluating", "pending_repair", "patch_submitted",
     "pending_recheck", "active", "stale", "irreparable", "undetermined",
-    "terminated",
+    "resolving_ambiguity", "terminated",
+}
+
+INTERPRETATION_COVERAGE = {
+    "exhaustive_within_declared_scope", "best_effort", "non_exhaustive",
+}
+
+AMBIGUITY_OUTCOMES = {
+    "robustly_accepted", "requires_clarification",
+    "unsupported_under_all_checked", "undetermined",
 }
 
 PATCH_OPERATIONS = {"insert_before", "replace", "delete", "add_assumption"}
@@ -168,7 +177,11 @@ def validate_evaluation_record(value: Any, path: str = "evaluation_record") -> d
         "schema_version", "evaluation_id", "target", "verdict", "error_type",
         "reason", "dependency_versions", "evaluator_id",
     }
-    _exact_keys(obj, required, {"error_certificate_id", "counterexample_certificate_id"}, path)
+    _exact_keys(
+        obj, required,
+        {"error_certificate_id", "counterexample_certificate_id", "ambiguity_analysis_id"},
+        path,
+    )
     _schema_header(obj, path)
     _string(obj["evaluation_id"], f"{path}.evaluation_id")
     target = validate_node_ref(obj["target"], f"{path}.target")
@@ -188,9 +201,90 @@ def validate_evaluation_record(value: Any, path: str = "evaluation_record") -> d
         _integer(version, f"{path}.dependency_versions.{node_id}")
     if str(target["node_id"]) in versions:
         _fail(f"{path}.dependency_versions", "must not include the target itself")
-    for optional in ("error_certificate_id", "counterexample_certificate_id"):
+    for optional in ("error_certificate_id", "counterexample_certificate_id", "ambiguity_analysis_id"):
         if obj.get(optional) is not None:
             _string(obj[optional], f"{path}.{optional}")
+    return obj
+
+
+def ambiguity_outcome(value: dict[str, Any]) -> str:
+    """Compute the only permitted aggregate outcome for an ambiguity analysis."""
+    interpretations = [
+        item for item in value["interpretations"] if item["plausibility"] == "reasonable"
+    ]
+    verdicts = [item["verdict"] for item in interpretations]
+    accepted = [verdict in {"accepted", "accepted_with_gap"} for verdict in verdicts]
+    if any(verdict in {"ambiguous", "undetermined", "blocked_by_invalid_dependency"} for verdict in verdicts):
+        return "undetermined"
+    if any(accepted) and not all(accepted):
+        return "requires_clarification"
+    if all(accepted):
+        if value["meaning_relation"] == "equivalent" and value["coverage_status"] == "exhaustive_within_declared_scope":
+            return "robustly_accepted"
+        if value["meaning_relation"] == "distinct":
+            return "requires_clarification"
+        return "undetermined"
+    if value["coverage_status"] == "exhaustive_within_declared_scope":
+        return "unsupported_under_all_checked"
+    return "undetermined"
+
+
+def validate_ambiguity_analysis(value: Any, path: str = "ambiguity_analysis") -> dict[str, Any]:
+    obj = _object(value, path)
+    required = {
+        "schema_version", "analysis_id", "target", "ambiguous_span",
+        "ambiguity_type", "declared_scope", "coverage_status",
+        "meaning_relation", "interpretations", "dependency_versions",
+        "outcome", "evaluator_id",
+    }
+    _exact_keys(obj, required, set(), path)
+    _schema_header(obj, path)
+    _string(obj["analysis_id"], f"{path}.analysis_id")
+    target = validate_node_ref(obj["target"], f"{path}.target")
+    _string(obj["ambiguous_span"], f"{path}.ambiguous_span")
+    _enum(
+        obj["ambiguity_type"],
+        {"unclear_reference", "scope_ambiguity", "notation_ambiguity", "syntactic_ambiguity", "other"},
+        f"{path}.ambiguity_type",
+    )
+    _string(obj["declared_scope"], f"{path}.declared_scope")
+    _enum(obj["coverage_status"], INTERPRETATION_COVERAGE, f"{path}.coverage_status")
+    _enum(obj["meaning_relation"], {"equivalent", "distinct", "undetermined"}, f"{path}.meaning_relation")
+    interpretations = obj["interpretations"]
+    if not isinstance(interpretations, list) or len(interpretations) < 2:
+        _fail(f"{path}.interpretations", "must contain at least two candidates")
+    seen_ids: set[str] = set()
+    reasonable_count = 0
+    for index, item_value in enumerate(interpretations):
+        item_path = f"{path}.interpretations[{index}]"
+        item = _object(item_value, item_path)
+        _exact_keys(
+            item,
+            {"interpretation_id", "normalized_claim", "plausibility", "verdict", "reason"},
+            set(), item_path,
+        )
+        interpretation_id = _string(item["interpretation_id"], f"{item_path}.interpretation_id")
+        if interpretation_id in seen_ids:
+            _fail(f"{path}.interpretations", "contains duplicate interpretation ids")
+        seen_ids.add(interpretation_id)
+        _string(item["normalized_claim"], f"{item_path}.normalized_claim")
+        plausibility = _enum(item["plausibility"], {"reasonable", "remote"}, f"{item_path}.plausibility")
+        if plausibility == "reasonable":
+            reasonable_count += 1
+        _enum(item["verdict"], MATHEMATICAL_VERDICTS - {"counterexample_found"}, f"{item_path}.verdict")
+        _string(item["reason"], f"{item_path}.reason")
+    if reasonable_count < 2:
+        _fail(f"{path}.interpretations", "must contain at least two reasonable candidates")
+    versions = _object(obj["dependency_versions"], f"{path}.dependency_versions")
+    for node_id, version in versions.items():
+        if not str(node_id).isdigit() or str(node_id) == str(target["node_id"]):
+            _fail(f"{path}.dependency_versions", "keys must be numeric dependency node ids")
+        _integer(version, f"{path}.dependency_versions.{node_id}")
+    _enum(obj["outcome"], AMBIGUITY_OUTCOMES, f"{path}.outcome")
+    expected = ambiguity_outcome(obj)
+    if obj["outcome"] != expected:
+        _fail(f"{path}.outcome", f"must equal deterministic outcome {expected!r}")
+    _string(obj["evaluator_id"], f"{path}.evaluator_id")
     return obj
 
 
@@ -378,6 +472,7 @@ VALIDATORS: dict[str, Callable[[Any, str], dict[str, Any]]] = {
     "dependency_edge": validate_dependency_edge,
     "proof_node": validate_proof_node,
     "evaluation_record": validate_evaluation_record,
+    "ambiguity_analysis": validate_ambiguity_analysis,
     "error_certificate": validate_error_certificate,
     "counterexample_certificate": validate_counterexample_certificate,
     "patch_proposal": validate_patch_proposal,
@@ -394,4 +489,3 @@ def validate_contract(kind: str, value: Any) -> dict[str, Any]:
     except KeyError as exc:
         raise ContractError(f"unknown contract kind: {kind!r}") from exc
     return validator(value, kind)
-

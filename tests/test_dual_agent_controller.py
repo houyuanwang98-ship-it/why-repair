@@ -51,6 +51,21 @@ def review(accepted=True):
     }
 
 
+def ambiguity_analysis(outcome="requires_clarification", meaning_relation="distinct"):
+    return {
+        "schema_version": "0.1", "analysis_id": "amb-1", "target": ref(2),
+        "ambiguous_span": "it is zero", "ambiguity_type": "unclear_reference",
+        "declared_scope": "reasonable antecedents in the local obligation",
+        "coverage_status": "exhaustive_within_declared_scope",
+        "meaning_relation": meaning_relation, "dependency_versions": {"1": 1},
+        "interpretations": [
+            {"interpretation_id": "i1", "normalized_claim": "a=0", "plausibility": "reasonable", "verdict": "accepted", "reason": "the inference works"},
+            {"interpretation_id": "i2", "normalized_claim": "x-y=0", "plausibility": "reasonable", "verdict": "unsupported", "reason": "the inference does not follow"},
+        ],
+        "outcome": outcome, "evaluator_id": "fixture-evaluator",
+    }
+
+
 class DualAgentControllerTest(unittest.TestCase):
     def controller_with_three_nodes(self):
         controller = DualAgentController()
@@ -112,6 +127,27 @@ class DualAgentControllerTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "missing dependency version"):
             controller.validate_graph("p1")
 
+    def test_ambiguous_verdict_runs_interpretation_branches_then_requests_rewrite(self):
+        controller = self.controller_with_three_nodes()
+        controller.transition(ref(2), "evaluating", reason="start")
+        controller.record_evaluation(evaluation(2, "ambiguous", [1]))
+        self.assertEqual("resolving_ambiguity", controller.lifecycle(ref(2)))
+        controller.record_ambiguity_analysis(ambiguity_analysis())
+        self.assertEqual("pending_repair", controller.lifecycle(ref(2)))
+        self.assertEqual("ambiguous", controller.node_version(ref(2))["current_verdict"])
+
+    def test_equivalent_exhaustive_interpretations_can_be_robustly_accepted(self):
+        controller = self.controller_with_three_nodes()
+        controller.transition(ref(2), "evaluating", reason="start")
+        controller.record_evaluation(evaluation(2, "ambiguous", [1]))
+        analysis = ambiguity_analysis("robustly_accepted", "equivalent")
+        for branch in analysis["interpretations"]:
+            branch["verdict"] = "accepted"
+            branch["normalized_claim"] = "a=0"
+        controller.record_ambiguity_analysis(analysis)
+        self.assertEqual("active", controller.lifecycle(ref(2)))
+        self.assertEqual("accepted", controller.node_version(ref(2))["current_verdict"])
+
 
 class M1FixtureReplayTest(unittest.TestCase):
     fixture_dir = Path(__file__).parents[1] / "data" / "fixtures" / "m1"
@@ -160,6 +196,18 @@ class M1FixtureReplayTest(unittest.TestCase):
         self.assertEqual("StaleVersionError", fixture["expected_error"])
         with self.assertRaises(StaleVersionError):
             controller.submit_patch(late_patch)
+
+    def test_ambiguity_branching_fixture_replays_completely(self):
+        fixture = self.load_fixture("ambiguity_branching.json")
+        controller = DualAgentController()
+        controller.register_node(node_record(1, "a=0", state="active", verdict="accepted"))
+        controller.register_node(node_record(2, "It is zero, so the sides are equal.", [ref(1)]))
+        controller.transition(fixture["target"], "evaluating", reason="fixture replay")
+        controller.record_evaluation(evaluation(2, fixture["initial_verdict"], [1]))
+        controller.record_ambiguity_analysis(fixture["analysis"])
+        record = controller.node_version(fixture["target"])
+        self.assertEqual(fixture["expected"]["lifecycle_state"], record["lifecycle_state"])
+        self.assertEqual(fixture["expected"]["current_verdict"], record["current_verdict"])
 
 
 if __name__ == "__main__":

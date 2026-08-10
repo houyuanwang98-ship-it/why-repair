@@ -75,6 +75,36 @@ class DualAgentContractTest(unittest.TestCase):
         with self.assertRaises(ContractError):
             validate_contract("proof_node", node)
 
+    def test_ambiguity_outcome_cannot_cherry_pick_one_successful_interpretation(self):
+        analysis = {
+            "schema_version": "0.1", "analysis_id": "amb-1", "target": REF2,
+            "ambiguous_span": "it is zero", "ambiguity_type": "unclear_reference",
+            "declared_scope": "pronoun antecedents in nodes 1-2",
+            "coverage_status": "exhaustive_within_declared_scope",
+            "meaning_relation": "distinct", "dependency_versions": {"1": 1},
+            "interpretations": [
+                {"interpretation_id": "i1", "normalized_claim": "a=0", "plausibility": "reasonable", "verdict": "accepted", "reason": "works"},
+                {"interpretation_id": "i2", "normalized_claim": "x-y=0", "plausibility": "reasonable", "verdict": "unsupported", "reason": "does not follow"},
+            ],
+            "outcome": "robustly_accepted", "evaluator_id": "eval",
+        }
+        with self.assertRaisesRegex(ContractError, "requires_clarification"):
+            validate_contract("ambiguity_analysis", analysis)
+
+    def test_non_exhaustive_equivalent_successes_remain_undetermined(self):
+        analysis = {
+            "schema_version": "0.1", "analysis_id": "amb-2", "target": REF2,
+            "ambiguous_span": "it", "ambiguity_type": "unclear_reference",
+            "declared_scope": "best effort antecedents", "coverage_status": "non_exhaustive",
+            "meaning_relation": "equivalent", "dependency_versions": {"1": 1},
+            "interpretations": [
+                {"interpretation_id": "i1", "normalized_claim": "P", "plausibility": "reasonable", "verdict": "accepted", "reason": "works"},
+                {"interpretation_id": "i2", "normalized_claim": "P", "plausibility": "reasonable", "verdict": "accepted", "reason": "works"},
+            ],
+            "outcome": "undetermined", "evaluator_id": "eval",
+        }
+        self.assertIs(analysis, validate_contract("ambiguity_analysis", analysis))
+
 
 if __name__ == "__main__":
     unittest.main()
