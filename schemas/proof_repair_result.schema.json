@@ -1,0 +1,132 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "goal": {
+      "type": "string"
+    },
+    "proof_steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "step_id": {
+            "type": "integer"
+          },
+          "text": {
+            "type": "string"
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "is_valid": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "step_id",
+          "text",
+          "depends_on",
+          "is_valid",
+          "reason"
+        ]
+      }
+    },
+    "first_invalid_step": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "step_id": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "error_type": {
+          "type": "string",
+          "enum": [
+            "quantifier_error",
+            "missing_assumption",
+            "theorem_misuse",
+            "algebraic_invalidity",
+            "proof_gap",
+            "target_shift",
+            "false_generalization",
+            "no_error"
+          ]
+        }
+      },
+      "required": [
+        "step_id",
+        "reason",
+        "error_type"
+      ]
+    },
+    "minimal_repair": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "repair_type": {
+          "type": "string"
+        },
+        "patch": {
+          "type": "string"
+        },
+        "repaired_proof_steps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "repair_type",
+        "patch",
+        "repaired_proof_steps"
+      ]
+    },
+    "self_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "is_valid_after_repair": {
+          "type": "boolean"
+        },
+        "remaining_issues": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "is_valid_after_repair",
+        "remaining_issues"
+      ]
+    }
+  },
+  "required": [
+    "assumptions",
+    "goal",
+    "proof_steps",
+    "first_invalid_step",
+    "minimal_repair",
+    "self_check"
+  ]
+}

@@ -1,0 +1,771 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "parent_id": {
+      "type": ["string", "null"]
+    },
+    "subquestion_label": {
+      "type": ["string", "null"]
+    },
+    "prior_subquestion_rule_ids": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "domain": {
+      "type": "string"
+    },
+    "topic": {
+      "type": "string"
+    },
+    "theorem": {
+      "type": "string"
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "proof_graph": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "node_id": {
+            "type": "integer"
+          },
+          "claim": {
+            "type": "string"
+          },
+          "self_contained_claim": {
+            "type": "string"
+          },
+          "source_reliability": {
+            "type": "string",
+            "enum": ["unknown", "reliable", "ocr_uncertain"]
+          },
+          "node_type": {
+            "type": "string",
+            "enum": [
+              "definition",
+              "introduction",
+              "assumption",
+              "claim",
+              "calculation_step",
+              "conclusion"
+            ]
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "dependency_source": {
+            "type": "string",
+            "enum": [
+              "host_agent_graph_builder",
+              "model_graph_builder",
+              "deterministic_linear_graph",
+              "heuristic_fallback"
+            ]
+          },
+          "local_context": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ambient_facts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "obligation": {
+            "type": "string"
+          },
+          "retrieval_required": {
+            "type": "boolean"
+          },
+          "retrieval_reason": {
+            "type": "string"
+          },
+          "retrieval_query": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "domain": {
+                "type": "string"
+              },
+              "topic": {
+                "type": "string"
+              },
+              "goal": {
+                "type": "string"
+              },
+              "assumptions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "predecessor_node_ids": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "predecessor_claims": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "formal_obligation": {
+                "type": "string"
+              },
+              "normalized_query": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "topic_tokens": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "goal_tokens": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "assumption_tokens": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "predecessor_tokens": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "topic_tokens",
+                  "goal_tokens",
+                  "assumption_tokens",
+                  "predecessor_tokens"
+                ]
+              }
+            },
+            "required": [
+              "domain",
+              "topic",
+              "goal",
+              "assumptions",
+              "predecessor_node_ids",
+              "predecessor_claims",
+              "formal_obligation",
+              "normalized_query"
+            ]
+          },
+          "retrieval_scope": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "topic",
+              "domain",
+              "global",
+              null
+            ]
+          },
+          "candidate_pool_size": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "retrieval_role": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "diagnostic_only",
+              null
+            ]
+          },
+          "verification_source": {
+            "type": "string",
+            "enum": [
+              "deterministic_checker",
+              "model_adjudicator",
+              "calculation_model_adjudicator",
+              "host_agent_adjudication"
+            ]
+          },
+          "retrieved_rules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "score": {
+                  "type": "number"
+                },
+                "score_breakdown": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "goal": {
+                      "type": "number"
+                    },
+                    "predecessors": {
+                      "type": "number"
+                    },
+                    "assumptions": {
+                      "type": "number"
+                    },
+                    "topic": {
+                      "type": "number"
+                    },
+                    "domain": {
+                      "type": "number"
+                    },
+                    "topic_conflict": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "goal",
+                    "predecessors",
+                    "assumptions",
+                    "topic",
+                    "domain",
+                    "topic_conflict"
+                  ]
+                },
+                "matched_query_fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "matched_rule_fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "matched_fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "score",
+                "score_breakdown",
+                "matched_query_fields",
+                "matched_rule_fields",
+                "matched_fields"
+              ]
+            }
+          },
+          "rule_applicability": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "rule_id": {"type": "string"},
+                "rule_name": {"type": "string"},
+                "satisfied_conditions": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                },
+                "missing_conditions": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                },
+                "matched_conclusion": {"type": "boolean"},
+                "applicable": {"type": "boolean"},
+                "common_misuses": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                }
+              },
+              "required": [
+                "rule_id",
+                "rule_name",
+                "satisfied_conditions",
+                "missing_conditions",
+                "matched_conclusion",
+                "applicable",
+                "common_misuses"
+              ]
+            }
+          },
+          "satisfied_conditions": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "missing_conditions": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "matched_conclusion": {
+            "type": ["boolean", "null"]
+          },
+          "applicable_rule_id": {
+            "type": ["string", "null"]
+          },
+          "operation_check": {
+            "type": ["string", "null"]
+          },
+          "counterexample": {
+            "type": ["object", "null"],
+            "additionalProperties": false,
+            "properties": {
+              "description": {"type": "string"},
+              "verification": {"type": "string"}
+            },
+            "required": ["description", "verification"]
+          },
+          "model_adjudication": {
+            "type": ["object", "null"],
+            "additionalProperties": false,
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": ["derivable", "counterexample", "undetermined"]
+              },
+              "reasoning_summary": {"type": "string"},
+              "proof_outline": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "completion_assessment": {
+                "type": "string",
+                "enum": [
+                  "directly_justified",
+                  "omitted_intermediate_steps",
+                  "not_applicable"
+                ]
+              },
+              "original_step_requires_completion": {"type": "boolean"},
+              "bridge_steps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "claim": {"type": "string"},
+                    "justification": {"type": "string"},
+                    "depends_on_context": {
+                      "type": "array",
+                      "items": {"type": "string"}
+                    }
+                  },
+                  "required": ["claim", "justification", "depends_on_context"]
+                }
+              },
+              "bridge_length": {"type": "integer", "minimum": 0},
+              "counterexample_description": {"type": ["string", "null"]},
+              "counterexample_verification": {"type": ["string", "null"]},
+              "confidence": {
+                "type": "string",
+                "enum": ["low", "medium", "high"]
+              }
+            },
+            "required": [
+              "decision",
+              "reasoning_summary",
+              "proof_outline",
+              "completion_assessment",
+              "original_step_requires_completion",
+              "bridge_steps",
+              "bridge_length",
+              "counterexample_description",
+              "counterexample_verification",
+              "confidence"
+            ]
+          },
+          "calculation_context": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "structure": {
+                "type": "string",
+                "enum": ["field", "real_numbers", "commutative_ring", "ring", "abelian_group", "group", "vector_space", "unknown"]
+              },
+              "carrier": {"type": ["string", "null"]},
+              "operations": {"type": "array", "items": {"type": "string"}},
+              "axioms": {"type": "array", "items": {"type": "string"}},
+              "properties": {"type": "array", "items": {"type": "string"}},
+              "local_conditions": {"type": "array", "items": {"type": "string"}},
+              "source_node_ids": {"type": "array", "items": {"type": "integer"}},
+              "inherited_from_node_id": {"type": ["integer", "null"]},
+              "context_changed": {"type": "boolean"},
+              "change_reason": {"type": ["string", "null"]}
+            },
+            "required": ["structure", "carrier", "operations", "axioms", "properties", "local_conditions", "source_node_ids", "inherited_from_node_id", "context_changed", "change_reason"]
+          },
+          "calculation_source_expression": {"type": ["string", "null"]},
+          "calculation_adjudication": {
+            "type": ["object", "null"],
+            "additionalProperties": false,
+            "properties": {
+              "decision": {
+                "type": "string",
+                "enum": ["valid_transformation", "repairable_gap", "missing_precondition", "invalid_transformation", "context_mismatch", "undetermined"]
+              },
+              "source_expression": {"type": "string"},
+              "target_expression": {"type": "string"},
+              "atomic_steps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "expression": {"type": "string"},
+                    "rule": {"type": "string"},
+                    "required_conditions": {"type": "array", "items": {"type": "string"}}
+                  },
+                  "required": ["expression", "rule", "required_conditions"]
+                }
+              },
+              "used_axioms": {"type": "array", "items": {"type": "string"}},
+              "introduced_assumptions": {"type": "array", "items": {"type": "string"}},
+              "missing_conditions": {"type": "array", "items": {"type": "string"}},
+              "reasoning_summary": {"type": "string"},
+              "confidence": {"type": "string", "enum": ["low", "medium", "high"]}
+            },
+            "required": ["decision", "source_expression", "target_expression", "atomic_steps", "used_axioms", "introduced_assumptions", "missing_conditions", "reasoning_summary", "confidence"]
+          },
+          "diagnosis_adjudication": {
+            "type": ["object", "null"],
+            "additionalProperties": false,
+            "properties": {
+              "diagnosis_review": {
+                "type": "string",
+                "enum": ["confirmed", "false_positive", "uncertain"]
+              },
+              "error_category": {
+                "type": "string",
+                "enum": [
+                  "directly_justified",
+                  "missing_bridge_lemma",
+                  "missing_assumption",
+                  "theorem_misuse",
+                  "algebraic_invalidity",
+                  "false_local_claim",
+                  "false_theorem",
+                  "target_mismatch",
+                  "ocr_uncertain",
+                  "undetermined"
+                ]
+              },
+              "failed_inference": {"type": "string"},
+              "violated_obligation": {"type": "string"},
+              "error_scope": {
+                "type": "string",
+                "enum": ["none", "local_node", "original_theorem", "source_text"]
+              },
+              "evidence": {"type": "array", "items": {"type": "string"}},
+              "counterexample_or_witness": {"type": ["string", "null"]},
+              "claim_globally_derivable": {"type": ["boolean", "null"]},
+              "repairability": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "insert_bridge",
+                  "establish_premise",
+                  "replace_step",
+                  "change_target",
+                  "change_assumption",
+                  "cannot_repair",
+                  "manual_review"
+                ]
+              },
+              "minimal_repair": {"type": ["string", "null"]},
+              "theorem_dependency": {
+                "type": ["object", "null"],
+                "additionalProperties": false,
+                "properties": {
+                  "name": {"type": "string"},
+                  "statement": {"type": "string"},
+                  "conditions": {"type": "array", "items": {"type": "string"}},
+                  "conclusion": {"type": "string"},
+                  "why_required": {"type": "string"},
+                  "search_query": {"type": "string"},
+                  "student_explicitly_invokes_theorem": {"type": "boolean"}
+                },
+                "required": [
+                  "name",
+                  "statement",
+                  "conditions",
+                  "conclusion",
+                  "why_required",
+                  "search_query",
+                  "student_explicitly_invokes_theorem"
+                ]
+              },
+              "confidence": {"type": "string", "enum": ["low", "medium", "high"]}
+            },
+            "required": [
+              "diagnosis_review",
+              "error_category",
+              "failed_inference",
+              "violated_obligation",
+              "error_scope",
+              "evidence",
+              "counterexample_or_witness",
+              "claim_globally_derivable",
+              "repairability",
+              "minimal_repair",
+              "theorem_dependency",
+              "confidence"
+            ]
+          },
+          "theorem_candidates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {"type": "string"},
+                "name": {"type": "string"},
+                "statement": {"type": "string"},
+                "conditions": {"type": "array", "items": {"type": "string"}},
+                "conclusion": {"type": "string"},
+                "source": {"type": "string"},
+                "score": {"type": "number"}
+              },
+              "required": ["id", "name", "statement", "conditions", "conclusion", "source", "score"]
+            }
+          },
+          "theorem_verification": {
+            "type": ["object", "null"],
+            "additionalProperties": false,
+            "properties": {
+              "verification_status": {"type": "string", "enum": ["local_verified", "web_verified", "not_found"]},
+              "theorem_name": {"type": "string"},
+              "statement": {"type": "string"},
+              "conditions": {"type": "array", "items": {"type": "string"}},
+              "conclusion": {"type": "string"},
+              "source_id": {"type": ["string", "null"]},
+              "source_url": {"type": ["string", "null"]},
+              "source_title": {"type": ["string", "null"]},
+              "search_query": {"type": "string"},
+              "search_attempted": {"type": "string", "enum": ["local_only", "local_and_web"]},
+              "supports_claim": {"type": "boolean"},
+              "premises_satisfied": {"type": "array", "items": {"type": "string"}},
+              "missing_premises": {"type": "array", "items": {"type": "string"}},
+              "is_foundational": {"type": ["boolean", "null"]},
+              "direct_use_assessment": {"type": "string", "enum": ["direct_use_acceptable", "omission_is_gap", "not_applicable"]},
+              "evidence": {"type": "array", "items": {"type": "string"}},
+              "confidence": {"type": "string", "enum": ["low", "medium", "high"]}
+            },
+            "required": [
+              "verification_status", "theorem_name", "statement", "conditions", "conclusion",
+              "source_id", "source_url", "source_title", "search_query", "search_attempted",
+              "supports_claim", "premises_satisfied", "missing_premises", "is_foundational",
+              "direct_use_assessment", "evidence", "confidence"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "closed",
+              "valid_with_gap",
+              "missing_bridge_lemma",
+              "missing_assumption",
+              "theorem_misuse",
+              "algebraic_invalidity",
+              "false_local_claim",
+              "false_theorem",
+              "target_mismatch",
+              "downstream_invalid",
+              "undetermined"
+            ]
+          },
+          "logic_class": {
+            "type": "string",
+            "enum": [
+              "no_error",
+              "repairable_gap",
+              "unsupported_inference",
+              "false_claim",
+              "downstream_dependency",
+              "indeterminate"
+            ]
+          },
+          "repair_scope": {
+            "type": "string",
+            "enum": [
+              "none",
+              "insert_local_justification",
+              "establish_or_add_premise",
+              "replace_local_step",
+              "change_theorem_or_give_counterexample",
+              "repair_predecessor",
+              "manual_review"
+            ]
+          },
+          "gap_type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "error_type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "diagnosis": {
+            "type": "string"
+          },
+          "repair_action": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "expand_step",
+              "insert_bridge_lemma",
+              "add_assumption",
+              "replace_theorem",
+              "replace_step",
+              "counterexample",
+              "manual_review",
+              null
+            ]
+          },
+          "minimal_repair": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "node_id",
+          "claim",
+          "self_contained_claim",
+          "source_reliability",
+          "node_type",
+          "depends_on",
+          "dependency_source",
+          "local_context",
+          "ambient_facts",
+          "obligation",
+          "retrieval_required",
+          "retrieval_reason",
+          "retrieval_query",
+          "retrieval_scope",
+          "candidate_pool_size",
+          "retrieval_role",
+          "verification_source",
+          "retrieved_rules",
+          "rule_applicability",
+          "satisfied_conditions",
+          "missing_conditions",
+          "matched_conclusion",
+          "applicable_rule_id",
+          "operation_check",
+          "counterexample",
+          "model_adjudication",
+          "calculation_context",
+          "calculation_source_expression",
+          "calculation_adjudication",
+          "diagnosis_adjudication",
+          "theorem_candidates",
+          "theorem_verification",
+          "status",
+          "logic_class",
+          "repair_scope",
+          "gap_type",
+          "error_type",
+          "diagnosis",
+          "repair_action",
+          "minimal_repair"
+        ]
+      }
+    },
+    "validity_status": {
+      "type": "string",
+      "enum": [
+        "valid",
+        "valid_with_gap",
+        "invalid",
+        "false_theorem",
+        "undetermined"
+      ]
+    },
+    "first_gap_step": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "first_invalid_step": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "first_undetermined_step": {
+      "type": ["integer", "null"]
+    },
+    "summary_diagnosis": {
+      "type": "string"
+    },
+    "summary_repair": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "parent_id",
+    "subquestion_label",
+    "prior_subquestion_rule_ids",
+    "domain",
+    "topic",
+    "theorem",
+    "assumptions",
+    "proof_graph",
+    "validity_status",
+    "first_gap_step",
+    "first_invalid_step",
+    "first_undetermined_step",
+    "summary_diagnosis",
+    "summary_repair"
+  ]
+}
