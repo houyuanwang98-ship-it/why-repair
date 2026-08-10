@@ -85,6 +85,16 @@ def _integer(value: Any, path: str, *, minimum: int = 1) -> int:
     return value
 
 
+def _node_id(value: Any, path: str) -> int | str:
+    if isinstance(value, bool):
+        _fail(path, "must be a positive integer or nonempty string")
+    if isinstance(value, int):
+        return _integer(value, path)
+    if isinstance(value, str):
+        return _string(value, path)
+    _fail(path, "must be a positive integer or nonempty string")
+
+
 def _boolean(value: Any, path: str) -> bool:
     if not isinstance(value, bool):
         _fail(path, "must be a boolean")
@@ -115,7 +125,7 @@ def validate_node_ref(value: Any, path: str = "node_ref") -> dict[str, Any]:
     obj = _object(value, path)
     _exact_keys(obj, {"proof_id", "node_id", "version"}, set(), path)
     _string(obj["proof_id"], f"{path}.proof_id")
-    _integer(obj["node_id"], f"{path}.node_id")
+    _node_id(obj["node_id"], f"{path}.node_id")
     _integer(obj["version"], f"{path}.version")
     return obj
 
@@ -130,8 +140,6 @@ def validate_dependency_edge(value: Any, path: str = "dependency_edge") -> dict[
     target = validate_node_ref(obj["target"], f"{path}.target")
     if source["proof_id"] != target["proof_id"]:
         _fail(path, "source and target must belong to the same proof")
-    if source["node_id"] >= target["node_id"]:
-        _fail(path, "dependency must point from an earlier node to a later node")
     _enum(obj["relation"], {"used_as_premise", "applies_definition", "case_scope"}, f"{path}.relation")
     _string(obj["reason"], f"{path}.reason")
     return obj
@@ -140,14 +148,15 @@ def validate_dependency_edge(value: Any, path: str = "dependency_edge") -> dict[
 def validate_proof_node(value: Any, path: str = "proof_node") -> dict[str, Any]:
     obj = _object(value, path)
     required = {
-        "schema_version", "proof_id", "node_id", "version", "claim",
+        "schema_version", "proof_id", "node_id", "version", "order_key", "claim",
         "self_contained_claim", "node_type", "source_span", "depends_on",
     }
     _exact_keys(obj, required, set(), path)
     _schema_header(obj, path)
     _string(obj["proof_id"], f"{path}.proof_id")
-    _integer(obj["node_id"], f"{path}.node_id")
+    _node_id(obj["node_id"], f"{path}.node_id")
     _integer(obj["version"], f"{path}.version")
+    _integer(obj["order_key"], f"{path}.order_key")
     _string(obj["claim"], f"{path}.claim")
     _string(obj["self_contained_claim"], f"{path}.self_contained_claim")
     _enum(obj["node_type"], NODE_TYPES, f"{path}.node_type")
@@ -166,8 +175,8 @@ def validate_proof_node(value: Any, path: str = "proof_node") -> dict[str, Any]:
         if key in seen:
             _fail(f"{path}.depends_on", "contains duplicate node references")
         seen.add(key)
-        if ref["proof_id"] != obj["proof_id"] or ref["node_id"] >= obj["node_id"]:
-            _fail(f"{path}.depends_on[{index}]", "must reference an earlier node in the same proof")
+        if ref["proof_id"] != obj["proof_id"] or ref["node_id"] == obj["node_id"]:
+            _fail(f"{path}.depends_on[{index}]", "must reference another node in the same proof")
     return obj
 
 
@@ -196,8 +205,8 @@ def validate_evaluation_record(value: Any, path: str = "evaluation_record") -> d
     _string(obj["evaluator_id"], f"{path}.evaluator_id")
     versions = _object(obj["dependency_versions"], f"{path}.dependency_versions")
     for node_id, version in versions.items():
-        if not str(node_id).isdigit():
-            _fail(f"{path}.dependency_versions", "keys must be numeric node ids")
+        if not str(node_id).strip():
+            _fail(f"{path}.dependency_versions", "keys must be nonempty node ids")
         _integer(version, f"{path}.dependency_versions.{node_id}")
     if str(target["node_id"]) in versions:
         _fail(f"{path}.dependency_versions", "must not include the target itself")
@@ -277,8 +286,8 @@ def validate_ambiguity_analysis(value: Any, path: str = "ambiguity_analysis") ->
         _fail(f"{path}.interpretations", "must contain at least two reasonable candidates")
     versions = _object(obj["dependency_versions"], f"{path}.dependency_versions")
     for node_id, version in versions.items():
-        if not str(node_id).isdigit() or str(node_id) == str(target["node_id"]):
-            _fail(f"{path}.dependency_versions", "keys must be numeric dependency node ids")
+        if not str(node_id).strip() or str(node_id) == str(target["node_id"]):
+            _fail(f"{path}.dependency_versions", "keys must be nonempty dependency node ids")
         _integer(version, f"{path}.dependency_versions.{node_id}")
     _enum(obj["outcome"], AMBIGUITY_OUTCOMES, f"{path}.outcome")
     expected = ambiguity_outcome(obj)
@@ -302,8 +311,8 @@ def validate_error_certificate(value: Any, path: str = "error_certificate") -> d
         _fail(f"{path}.premises", "must be an array")
     for index, premise in enumerate(obj["premises"]):
         ref = validate_node_ref(premise, f"{path}.premises[{index}]")
-        if ref["proof_id"] != target["proof_id"] or ref["node_id"] >= target["node_id"]:
-            _fail(f"{path}.premises[{index}]", "must be an earlier node in the same proof")
+        if ref["proof_id"] != target["proof_id"] or ref["node_id"] == target["node_id"]:
+            _fail(f"{path}.premises[{index}]", "must reference another node in the same proof")
     _enum(obj["error_type"], ERROR_TYPES, f"{path}.error_type")
     _string(obj["failed_inference"], f"{path}.failed_inference")
     _string_list(obj["evidence"], f"{path}.evidence", nonempty=True)
@@ -367,8 +376,8 @@ def validate_patch_proposal(value: Any, path: str = "patch_proposal") -> dict[st
     obj = _object(value, path)
     required = {
         "schema_version", "patch_id", "error_certificate_id", "target",
-        "operation", "replacement_nodes", "used_dependencies", "rationale",
-        "changes_problem",
+        "operation", "replacement_nodes", "target_dependencies_after",
+        "used_dependencies", "rationale", "changes_problem",
     }
     _exact_keys(obj, required, set(), path)
     _schema_header(obj, path)
@@ -380,14 +389,41 @@ def validate_patch_proposal(value: Any, path: str = "patch_proposal") -> dict[st
         _fail(f"{path}.replacement_nodes", "must be an array")
     if operation in {"replace", "insert_before"} and not obj["replacement_nodes"]:
         _fail(f"{path}.replacement_nodes", f"must be nonempty for {operation}")
-    for index, node in enumerate(obj["replacement_nodes"]):
-        _string(node, f"{path}.replacement_nodes[{index}]")
+    seen_node_ids: set[int | str] = set()
+    seen_order_keys: set[int] = set()
+    for index, node_value in enumerate(obj["replacement_nodes"]):
+        node_path = f"{path}.replacement_nodes[{index}]"
+        node = _object(node_value, node_path)
+        _exact_keys(
+            node,
+            {"node_id", "order_key", "claim", "self_contained_claim", "node_type", "depends_on"},
+            set(), node_path,
+        )
+        node_id = _node_id(node["node_id"], f"{node_path}.node_id")
+        order_key = _integer(node["order_key"], f"{node_path}.order_key")
+        if node_id in seen_node_ids or order_key in seen_order_keys:
+            _fail(f"{path}.replacement_nodes", "contains duplicate node ids or order keys")
+        seen_node_ids.add(node_id)
+        seen_order_keys.add(order_key)
+        _string(node["claim"], f"{node_path}.claim")
+        _string(node["self_contained_claim"], f"{node_path}.self_contained_claim")
+        _enum(node["node_type"], NODE_TYPES, f"{node_path}.node_type")
+        if not isinstance(node["depends_on"], list):
+            _fail(f"{node_path}.depends_on", "must be an array")
+        for dep_index, dep in enumerate(node["depends_on"]):
+            validate_node_ref(dep, f"{node_path}.depends_on[{dep_index}]")
+    if operation == "insert_before" and len(obj["replacement_nodes"]) > 3:
+        _fail(f"{path}.replacement_nodes", "M1 permits at most three inserted nodes")
+    if not isinstance(obj["target_dependencies_after"], list):
+        _fail(f"{path}.target_dependencies_after", "must be an array")
+    for index, dep in enumerate(obj["target_dependencies_after"]):
+        validate_node_ref(dep, f"{path}.target_dependencies_after[{index}]")
     if not isinstance(obj["used_dependencies"], list):
         _fail(f"{path}.used_dependencies", "must be an array")
     for index, dep in enumerate(obj["used_dependencies"]):
         ref = validate_node_ref(dep, f"{path}.used_dependencies[{index}]")
-        if ref["proof_id"] != target["proof_id"] or ref["node_id"] >= target["node_id"]:
-            _fail(f"{path}.used_dependencies[{index}]", "must be an earlier node in the same proof")
+        if ref["proof_id"] != target["proof_id"] or ref["node_id"] == target["node_id"]:
+            _fail(f"{path}.used_dependencies[{index}]", "must reference another node in the same proof")
     _string(obj["rationale"], f"{path}.rationale")
     changes_problem = _boolean(obj["changes_problem"], f"{path}.changes_problem")
     if operation == "add_assumption" and not changes_problem:

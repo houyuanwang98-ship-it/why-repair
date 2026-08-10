@@ -14,7 +14,8 @@ def node_record(node_id, claim, depends_on=(), state="pending_evaluation", verdi
         "schema_version": "0.1",
         "node": {
             "schema_version": "0.1", "proof_id": "p1", "node_id": node_id,
-            "version": 1, "claim": claim, "self_contained_claim": claim,
+            "version": 1, "order_key": node_id * 1000,
+            "claim": claim, "self_contained_claim": claim,
             "node_type": "conclusion", "source_span": {"start": node_id * 10, "end": node_id * 10 + 5},
             "depends_on": list(depends_on),
         },
@@ -23,9 +24,9 @@ def node_record(node_id, claim, depends_on=(), state="pending_evaluation", verdi
     }
 
 
-def evaluation(node_id, verdict, dependencies, evaluation_id="eval-1", error_type=None):
+def evaluation(node_id, verdict, dependencies, evaluation_id="eval-1", error_type=None, target_version=1):
     value = {
-        "schema_version": "0.1", "evaluation_id": evaluation_id, "target": ref(node_id),
+        "schema_version": "0.1", "evaluation_id": evaluation_id, "target": ref(node_id, target_version),
         "verdict": verdict, "error_type": error_type, "reason": "fixture result",
         "dependency_versions": {str(i): 1 for i in dependencies}, "evaluator_id": "fixture-evaluator",
     }
@@ -36,7 +37,12 @@ def patch(target_version=1):
     return {
         "schema_version": "0.1", "patch_id": "patch-1", "error_certificate_id": "err-1",
         "target": ref(2, target_version), "operation": "replace",
-        "replacement_nodes": ["n^2 = 4k^2."], "used_dependencies": [ref(1)],
+        "replacement_nodes": [{
+            "node_id": 2, "order_key": 2000, "claim": "n^2 = 4k^2.",
+            "self_contained_claim": "n^2 = 4k^2.", "node_type": "calculation",
+            "depends_on": [ref(1)],
+        }],
+        "target_dependencies_after": [ref(1)], "used_dependencies": [ref(1)],
         "rationale": "Correct the expansion.", "changes_problem": False,
     }
 
@@ -48,6 +54,23 @@ def review(accepted=True):
         "verdict": "accepted" if accepted else "unsupported",
         "reason": "fixture review", "reviewer_id": "fixture-evaluator",
         **({} if accepted else {"rejection_code": "mathematical_error"}),
+    }
+
+
+def insertion_patch():
+    inserted_ref = {"proof_id": "p1", "node_id": "bridge-1", "version": 1}
+    return {
+        "schema_version": "0.1", "patch_id": "patch-1", "error_certificate_id": "err-1",
+        "target": ref(2), "operation": "insert_before",
+        "replacement_nodes": [{
+            "node_id": "bridge-1", "order_key": 1500,
+            "claim": "From n=2k, n^2=4k^2.",
+            "self_contained_claim": "From n=2k, n^2=4k^2.",
+            "node_type": "calculation", "depends_on": [ref(1)],
+        }],
+        "target_dependencies_after": [inserted_ref],
+        "used_dependencies": [ref(1)], "rationale": "Insert the missing bridge.",
+        "changes_problem": False,
     }
 
 
@@ -127,6 +150,36 @@ class DualAgentControllerTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "missing dependency version"):
             controller.validate_graph("p1")
 
+    def test_graph_rejects_dependency_with_later_order_key(self):
+        controller = DualAgentController()
+        controller.register_node(node_record(1, "P", [ref(2)]))
+        controller.register_node(node_record(2, "Q", state="active", verdict="accepted"))
+        with self.assertRaisesRegex(ValueError, "earlier order_key"):
+            controller.validate_graph("p1")
+
+    def test_insert_before_creates_pending_node_and_requeues_target(self):
+        controller = self.controller_with_three_nodes()
+        controller.transition(ref(2), "evaluating", reason="start")
+        controller.record_evaluation(evaluation(2, "unsupported", [1], error_type="algebraic_invalidity"))
+        proposal = insertion_patch()
+        controller.submit_patch(proposal)
+        controller.begin_patch_review(proposal["patch_id"])
+        result = controller.review_patch(review(True))
+        inserted_ref = result["inserted_refs"][0]
+        target_ref = result["target_ref"]
+        self.assertEqual("pending_evaluation", controller.lifecycle(inserted_ref))
+        self.assertEqual("pending_evaluation", controller.lifecycle(target_ref))
+        self.assertEqual("stale", controller.lifecycle(ref(3)))
+        with self.assertRaisesRegex(InvalidTransitionError, "dependency is active"):
+            controller.transition(target_ref, "evaluating", reason="too early")
+        controller.transition(inserted_ref, "evaluating", reason="evaluate inserted bridge")
+        controller.record_evaluation(evaluation("bridge-1", "accepted", [1], evaluation_id="eval-bridge"))
+        self.assertEqual("active", controller.lifecycle(inserted_ref))
+        self.assertEqual("pending_evaluation", controller.lifecycle(target_ref))
+        controller.transition(target_ref, "evaluating", reason="re-evaluate original target")
+        controller.record_evaluation(evaluation(2, "accepted", ["bridge-1"], evaluation_id="eval-target", target_version=2))
+        self.assertEqual("active", controller.lifecycle(target_ref))
+
     def test_ambiguous_verdict_runs_interpretation_branches_then_requests_rewrite(self):
         controller = self.controller_with_three_nodes()
         controller.transition(ref(2), "evaluating", reason="start")
@@ -173,7 +226,8 @@ class M1FixtureReplayTest(unittest.TestCase):
         ))
         patch_spec = fixture["patch"]
         proposal = patch(patch_spec["target_version"])
-        proposal["replacement_nodes"] = [patch_spec["replacement"]]
+        proposal["replacement_nodes"][0]["claim"] = patch_spec["replacement"]
+        proposal["replacement_nodes"][0]["self_contained_claim"] = patch_spec["replacement"]
         controller.submit_patch(proposal)
         controller.begin_patch_review(proposal["patch_id"])
         new_ref = controller.review_patch(review(fixture["review"]["accepted"]))
@@ -192,7 +246,8 @@ class M1FixtureReplayTest(unittest.TestCase):
         late_spec = fixture["late_patch"]
         late_patch = patch(late_spec["target_version"])
         late_patch["patch_id"] = late_spec["patch_id"]
-        late_patch["replacement_nodes"] = [late_spec["replacement"]]
+        late_patch["replacement_nodes"][0]["claim"] = late_spec["replacement"]
+        late_patch["replacement_nodes"][0]["self_contained_claim"] = late_spec["replacement"]
         self.assertEqual("StaleVersionError", fixture["expected_error"])
         with self.assertRaises(StaleVersionError):
             controller.submit_patch(late_patch)
@@ -208,6 +263,29 @@ class M1FixtureReplayTest(unittest.TestCase):
         record = controller.node_version(fixture["target"])
         self.assertEqual(fixture["expected"]["lifecycle_state"], record["lifecycle_state"])
         self.assertEqual(fixture["expected"]["current_verdict"], record["current_verdict"])
+
+    def test_insert_bridge_fixture_replays_completely(self):
+        fixture = self.load_fixture("insert_bridge_and_reevaluate.json")
+        controller = DualAgentControllerTest().controller_with_three_nodes()
+        controller.transition(fixture["target"], "evaluating", reason="fixture start")
+        controller.record_evaluation(evaluation(2, "unsupported", [1], error_type="algebraic_invalidity"))
+        proposal = insertion_patch()
+        controller.submit_patch(proposal)
+        controller.begin_patch_review(proposal["patch_id"])
+        result = controller.review_patch(review(True))
+        inserted_ref, target_ref = result["inserted_refs"][0], result["target_ref"]
+        expected = fixture["expected_after_patch"]
+        self.assertEqual(expected["inserted_lifecycle"], controller.lifecycle(inserted_ref))
+        self.assertEqual(expected["target_version"], target_ref["version"])
+        self.assertEqual(expected["target_lifecycle"], controller.lifecycle(target_ref))
+        self.assertEqual(expected["descendant_lifecycle"], controller.lifecycle(ref(3)))
+        controller.transition(inserted_ref, "evaluating", reason="fixture bridge check")
+        controller.record_evaluation(evaluation("bridge-1", "accepted", [1], evaluation_id="fixture-bridge"))
+        controller.transition(target_ref, "evaluating", reason="fixture target recheck")
+        controller.record_evaluation(evaluation(2, "accepted", ["bridge-1"], evaluation_id="fixture-target", target_version=2))
+        expected = fixture["expected_after_recheck"]
+        self.assertEqual(expected["inserted_lifecycle"], controller.lifecycle(inserted_ref))
+        self.assertEqual(expected["target_lifecycle"], controller.lifecycle(target_ref))
 
 
 if __name__ == "__main__":

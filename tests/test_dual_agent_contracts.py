@@ -52,16 +52,19 @@ class DualAgentContractTest(unittest.TestCase):
         patch = {
             "schema_version": "0.1", "patch_id": "patch-1", "error_certificate_id": "err-1",
             "target": REF2, "operation": "add_assumption", "replacement_nodes": [],
+            "target_dependencies_after": [REF1],
             "used_dependencies": [REF1], "rationale": "Add a != 0", "changes_problem": False,
         }
         with self.assertRaises(ContractError):
             validate_contract("patch_proposal", patch)
 
-    def test_forward_dependency_is_rejected(self):
+    def test_self_dependency_is_rejected(self):
         node = {
             "schema_version": "0.1", "proof_id": "p1", "node_id": 1, "version": 1,
+            "order_key": 1000,
             "claim": "P", "self_contained_claim": "P", "node_type": "claim",
-            "source_span": {"start": 0, "end": 1}, "depends_on": [REF2],
+            "source_span": {"start": 0, "end": 1},
+            "depends_on": [{"proof_id": "p1", "node_id": 1, "version": 2}],
         }
         with self.assertRaises(ContractError):
             validate_contract("proof_node", node)
@@ -69,6 +72,7 @@ class DualAgentContractTest(unittest.TestCase):
     def test_duplicate_dependency_is_rejected(self):
         node = {
             "schema_version": "0.1", "proof_id": "p1", "node_id": 2, "version": 1,
+            "order_key": 2000,
             "claim": "Q", "self_contained_claim": "Q", "node_type": "claim",
             "source_span": {"start": 2, "end": 3}, "depends_on": [REF1, REF1],
         }

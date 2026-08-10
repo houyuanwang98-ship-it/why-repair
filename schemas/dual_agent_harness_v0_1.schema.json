@@ -10,19 +10,20 @@
       "required": ["proof_id", "node_id", "version"],
       "properties": {
         "proof_id": {"type": "string", "minLength": 1},
-        "node_id": {"type": "integer", "minimum": 1},
+        "node_id": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "string", "minLength": 1}]},
         "version": {"type": "integer", "minimum": 1}
       }
     },
     "ProofNode": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_version", "proof_id", "node_id", "version", "claim", "self_contained_claim", "node_type", "source_span", "depends_on"],
+      "required": ["schema_version", "proof_id", "node_id", "version", "order_key", "claim", "self_contained_claim", "node_type", "source_span", "depends_on"],
       "properties": {
         "schema_version": {"const": "0.1"},
         "proof_id": {"type": "string", "minLength": 1},
-        "node_id": {"type": "integer", "minimum": 1},
+        "node_id": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "string", "minLength": 1}]},
         "version": {"type": "integer", "minimum": 1},
+        "order_key": {"type": "integer", "minimum": 1},
         "claim": {"type": "string", "minLength": 1},
         "self_contained_claim": {"type": "string", "minLength": 1},
         "node_type": {"enum": ["definition", "assumption", "introduction", "claim", "calculation", "conclusion", "citation"]},
@@ -55,7 +56,7 @@
         "verdict": {"enum": ["accepted", "accepted_with_gap", "unsupported", "counterexample_found", "ambiguous", "undetermined", "blocked_by_invalid_dependency"]},
         "error_type": {"type": ["string", "null"], "enum": ["missing_assumption", "theorem_misuse", "algebraic_invalidity", "target_mismatch", "dependency_error", "false_local_claim", "false_theorem", "segmentation_error", "interpretation_ambiguity", null]},
         "reason": {"type": "string", "minLength": 1},
-        "dependency_versions": {"type": "object", "propertyNames": {"pattern": "^[1-9][0-9]*$"}, "additionalProperties": {"type": "integer", "minimum": 1}},
+        "dependency_versions": {"type": "object", "propertyNames": {"minLength": 1}, "additionalProperties": {"type": "integer", "minimum": 1}},
         "evaluator_id": {"type": "string", "minLength": 1},
         "error_certificate_id": {"type": ["string", "null"]},
         "counterexample_certificate_id": {"type": ["string", "null"]},
@@ -88,7 +89,7 @@
             }
           }
         },
-        "dependency_versions": {"type": "object", "propertyNames": {"pattern": "^[1-9][0-9]*$"}, "additionalProperties": {"type": "integer", "minimum": 1}},
+        "dependency_versions": {"type": "object", "propertyNames": {"minLength": 1}, "additionalProperties": {"type": "integer", "minimum": 1}},
         "outcome": {"enum": ["robustly_accepted", "requires_clarification", "unsupported_under_all_checked", "undetermined"]},
         "evaluator_id": {"type": "string", "minLength": 1}
       }
@@ -137,13 +138,26 @@
     },
     "PatchProposal": {
       "type": "object", "additionalProperties": false,
-      "required": ["schema_version", "patch_id", "error_certificate_id", "target", "operation", "replacement_nodes", "used_dependencies", "rationale", "changes_problem"],
+      "required": ["schema_version", "patch_id", "error_certificate_id", "target", "operation", "replacement_nodes", "target_dependencies_after", "used_dependencies", "rationale", "changes_problem"],
       "properties": {
         "schema_version": {"const": "0.1"}, "patch_id": {"type": "string"}, "error_certificate_id": {"type": "string"},
         "target": {"$ref": "#/$defs/NodeRef"}, "operation": {"enum": ["insert_before", "replace", "delete", "add_assumption"]},
-        "replacement_nodes": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "replacement_nodes": {"type": "array", "maxItems": 3, "items": {"$ref": "#/$defs/PatchNodeDraft"}},
+        "target_dependencies_after": {"type": "array", "items": {"$ref": "#/$defs/NodeRef"}},
         "used_dependencies": {"type": "array", "items": {"$ref": "#/$defs/NodeRef"}},
         "rationale": {"type": "string"}, "changes_problem": {"type": "boolean"}
+      }
+    },
+    "PatchNodeDraft": {
+      "type": "object", "additionalProperties": false,
+      "required": ["node_id", "order_key", "claim", "self_contained_claim", "node_type", "depends_on"],
+      "properties": {
+        "node_id": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "string", "minLength": 1}]},
+        "order_key": {"type": "integer", "minimum": 1},
+        "claim": {"type": "string", "minLength": 1},
+        "self_contained_claim": {"type": "string", "minLength": 1},
+        "node_type": {"enum": ["definition", "assumption", "introduction", "claim", "calculation", "conclusion", "citation"]},
+        "depends_on": {"type": "array", "items": {"$ref": "#/$defs/NodeRef"}}
       }
     },
     "PatchReview": {
