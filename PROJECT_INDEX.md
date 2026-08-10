@@ -20,7 +20,8 @@
 | [两人工作计划](docs/two_person_work_plan.md) | 分工、进度、验收门和协作协议 | 生效中 |
 | [研究路线图](ROADMAP.md) | 里程碑与验收条件 | 生效中 |
 | [同学 AI 接手提示词](prompts/collaborator_onboarding_prompt.md) | 另一台电脑的自包含上下文 | 可使用 |
-| [M0 范围与术语](docs/milestones/M00_scope_and_terminology.md) | 研究问题、定义与验收案例 | 待双人审阅 |
+| [M0 范围与术语](docs/milestones/M00_scope_and_terminology.md) | 研究问题、定义与验收案例 | `v0.1` 已冻结 |
+| [M0 裁决记录](docs/milestones/M00_adjudication.md) | 双人评审分歧与最终裁决 | 已完成 |
 | [开发指南](docs/development-guide.md) | 现有 checker 架构 | 已有 |
 | [Canonical Skill](skills/math-proof-repair-agent/SKILL.md) | 现有 Evaluator/checker 行为 | 已有 |
 | [结果 Schema](schemas/algebra_obligation_result.schema.json) | 现有 checker 输出契约 | 已有，待映射 |
