@@ -2,6 +2,22 @@
 
 Notable project changes are grouped by release date and change type. Dates use Hong Kong time (`+08:00`).
 
+## 2026-08-10 +08:00 — Freeze M1 shared harness contracts v0.1
+
+### Added
+
+- Added shared dual-agent contracts, a deterministic Controller, stable node ordering and exact version references.
+- Added replacement, bridge-node insertion, dependency-gated re-evaluation, ambiguity branching and four no-model replay fixtures.
+- Added `docs/milestones/M01_freeze_record.md` with the frozen scope and compatibility rules.
+
+### Integration
+
+- Integrated member B's completed M0 review from remote `main` before freezing M1.
+
+### Validation
+
+- Passed the complete 85-test suite and JSON Schema parsing before the freeze.
+
 ## 2026-08-10 +08:00 — Complete the M0 person B review
 
 ### Documentation

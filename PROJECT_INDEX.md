@@ -22,7 +22,8 @@
 | [同学 AI 接手提示词](prompts/collaborator_onboarding_prompt.md) | 另一台电脑的自包含上下文 | 可使用 |
 | [M0 范围与术语](docs/milestones/M00_scope_and_terminology.md) | 研究问题、定义与验收案例 | `v0.1` 已冻结 |
 | [M0 裁决记录](docs/milestones/M00_adjudication.md) | 双人评审分歧与最终裁决 | 已完成 |
-| [M1 共享契约与 Controller](docs/milestones/M01_shared_contracts_and_controller.md) | Schema、版本化状态机与无模型回放 | 实现完成，待双人审查 |
+| [M1 共享契约与 Controller](docs/milestones/M01_shared_contracts_and_controller.md) | Schema、版本化状态机与无模型回放 | `v0.1` 已冻结 |
+| [M1 冻结记录](docs/milestones/M01_freeze_record.md) | 冻结范围、验证依据与变更规则 | 已完成 |
 | [开发指南](docs/development-guide.md) | 现有 checker 架构 | 已有 |
 | [Canonical Skill](skills/math-proof-repair-agent/SKILL.md) | 现有 Evaluator/checker 行为 | 已有 |
 | [结果 Schema](schemas/algebra_obligation_result.schema.json) | 现有 checker 输出契约 | 已有，待映射 |
