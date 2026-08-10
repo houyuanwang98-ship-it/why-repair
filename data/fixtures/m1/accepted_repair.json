@@ -1,0 +1,16 @@
+{
+  "description": "Replacing node 2 creates v2 and invalidates descendant node 3.",
+  "initial_nodes": [
+    {"node_id": 1, "claim": "n=2k", "depends_on": [], "state": "active", "verdict": "accepted"},
+    {"node_id": 2, "claim": "n^2=2k^2", "depends_on": [1], "state": "pending_evaluation", "verdict": null},
+    {"node_id": 3, "claim": "n^2 is even", "depends_on": [2], "state": "active", "verdict": "accepted"}
+  ],
+  "evaluation": {"target_node_id": 2, "verdict": "unsupported", "dependencies": [1], "error_type": "algebraic_invalidity"},
+  "patch": {"target_node_id": 2, "target_version": 1, "replacement": "n^2 = 4k^2."},
+  "review": {"accepted": true},
+  "expected": {
+    "current_node_2": {"proof_id": "p1", "node_id": 2, "version": 2},
+    "node_2_lifecycle": "active",
+    "node_3_lifecycle": "stale"
+  }
+}
