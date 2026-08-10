@@ -2,6 +2,26 @@
 
 Notable project changes are grouped by release date and change type. Dates use Hong Kong time (`+08:00`).
 
+## 2026-08-10 +08:00 — Complete the M0 person B review
+
+### Documentation
+
+- Replaced the placeholder copy in
+  `docs/milestones/M00_review_person_b.md` with person B's complete review of
+  cases A–J, including node types, direct dependencies, verdicts, error types,
+  counterexample scopes, and Controller lifecycle handling.
+- Answered all seven M0 review questions and documented execution requirements
+  for version binding, descendant invalidation, independent patch review, and
+  strict Schema enum spelling.
+- Recorded the procedural limitation that the existing member A review and
+  adjudication were already present when this review was completed, so the new
+  record is not represented as retrospectively proven blind review evidence.
+
+### Validation
+
+- Passed all 63 standard-library unit tests and verified the review document's
+  UTF-8 integrity and required section coverage.
+
 ## 2026-07-23 21:35:18 +08:00 — Modularize the proof checker and test suite
 
 ### Changed
