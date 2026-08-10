@@ -27,6 +27,7 @@ The system does not claim formal soundness and must preserve an explicit
 | [Two-person work plan](docs/two_person_work_plan.md) | Roles, schedule, gates, and collaboration protocol | Active |
 | [Research roadmap](ROADMAP.md) | Milestones and acceptance gates | Active |
 | [Collaborator AI prompt](prompts/collaborator_onboarding_prompt.md) | Self-contained prompt for the second computer | Ready |
+| [M0 scope and terminology](docs/milestones/M00_scope_and_terminology.md) | Research questions, definitions, and acceptance set | Draft for joint review |
 | [Development guide](docs/development-guide.md) | Existing checker architecture | Existing |
 | [Canonical Skill](skills/math-proof-repair-agent/SKILL.md) | Existing evaluator/checker behavior | Existing |
 | [Result schema](schemas/algebra_obligation_result.schema.json) | Existing checker output contract | Existing; to be mapped |
@@ -60,4 +61,3 @@ The system does not claim formal soundness and must preserve an explicit
 
 Update only statuses and links here. Put design details, experiment results,
 and discussions in their corresponding documents or directories.
-
