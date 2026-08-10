@@ -1,39 +1,30 @@
-# Research Roadmap
+# 研究路线图
 
-The default plan targets a paper-quality research artifact in 16 weeks. An
-8-week prototype path is obtained by stopping after M5 with a small algebra
-benchmark and one model pair.
+默认目标是在 16 周内形成具有投稿质量的研究成果。若只做原型，可在 M5 后停止，形成约 8 周的小型代数 benchmark 和单一模型组合演示。
 
-## Milestones
-
-| ID | Weeks | Deliverable | Exit gate |
+| 阶段 | 周期 | 主要交付 | 退出条件 |
 |---|---:|---|---|
-| M0 | 1 | Scope, terminology, and frozen research questions | Both owners approve every status definition and non-goal |
-| M1 | 2-3 | Shared schemas and deterministic state machine | Contract tests pass; two end-to-end fixtures replay without a model |
-| M2 | 3-5 | Annotation guide and 50-instance pilot benchmark | Double annotation completed; disagreements adjudicated and logged |
-| M3 | 4-6 | Evaluator v1: nodes, dependencies, local obligations | Module metrics reported on gold data; no whole-proof leakage in fixtures |
-| M4 | 6-8 | Counterexample certificates and checking tools | Every accepted counterexample satisfies premises and refutes its target |
-| M5 | 7-10 | Repair Generator and patch-review loop | Versioning, revocation, retry limits, and descendant recheck pass tests |
-| M6 | 10-12 | Baselines and ablations | Direct judge, self-refine, ordinary critic, and full system are comparable |
-| M7 | 12-14 | Expanded benchmark and multi-model experiments | Runs are reproducible from manifests; primary metrics have confidence intervals |
-| M8 | 14-16 | Error analysis, paper draft, and artifact release | Claims trace to tables; limitations and failed cases are documented |
+| M0 | 第 1 周 | 研究边界、术语、研究问题 | 两人独立标注验收案例并完成分歧裁决 |
+| M1 | 第 2–3 周 | 共享 Schema 与确定性状态机 | 契约测试通过；两个无模型 fixture 可回放 |
+| M2 | 第 3–5 周 | 标注指南与 50 题 pilot benchmark | 双人独立标注、分歧报告和裁决完成 |
+| M3 | 第 4–6 周 | Evaluator v1 | 分模块报告节点、依赖、定位与裁决指标 |
+| M4 | 第 6–8 周 | 反例证书与核验工具 | 每个接受反例均满足前提且否定目标 |
+| M5 | 第 7–10 周 | Repair Generator 与闭环 | 版本、撤销、重试、后代重验测试通过 |
+| M6 | 第 10–12 周 | 基线与消融 | 各方法在可比模型和预算下运行 |
+| M7 | 第 12–14 周 | 扩展 benchmark 与多模型实验 | `RunManifest` 可复现，核心指标含置信区间 |
+| M8 | 第 14–16 周 | 错误分析、论文和发布材料 | 论文主张可追溯到表格，限制与失败案例完整 |
 
-## Gate policy
+## 验收门规则
 
-Do not start the next milestone merely because its calendar week has arrived.
-A milestone advances only when its exit gate is satisfied. If blocked, reduce
-scope before weakening the acceptance criterion.
+不能因为日历进入下一周就自动推进阶段。只有满足退出条件才能进入下一里程碑。发生阻塞时优先缩小范围，不降低验收标准。
 
-## Minimum publishable package
+## 最低可发表成果包
 
-- a precise task definition;
-- a versioned benchmark with node, edge, verdict, first-error, and
-  counterexample annotations;
-- a deterministic controller and reproducible run manifests;
-- the asymmetric Evaluator/Repair Generator protocol;
-- strong single-agent and ordinary critic baselines;
-- ablations for dependency graph, error certificate, counterexample search,
-  revocation, and multiple repair rounds;
-- false-acceptance analysis and a clear statement that natural-language
-  verification is not formal verification.
+- 明确、可复现的任务定义；
+- 含节点、依赖边、裁决、第一处错误和反例标注的版本化 benchmark；
+- 确定性 Controller 和可复现 `RunManifest`；
+- 非对称 Evaluator / Repair Generator 协议；
+- 强单 Agent 基线和普通 Critic 基线；
+- 对依赖图、错误证书、反例、撤销和多轮修复的消融；
+- 错误接受率分析，以及“自然语言验证并非形式验证”的明确声明。
 

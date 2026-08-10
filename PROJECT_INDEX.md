@@ -1,36 +1,29 @@
-# Dual-Agent Natural-Language Proof Auditing: Project Index
+# 双 Agent 自然语言证明审计：项目索引
 
-This file is the navigation and status index for the dual-agent research
-project. It should link to authoritative artifacts instead of duplicating
-their content.
+本文是双 Agent 研究项目的导航与状态索引，只链接权威成果位置，不重复保存详细内容。代码字段、Schema 枚举和文件名保留英文。
 
-## Project objective
+## 项目目标
 
-Build a training-free, natural-language proof-auditing harness with two
-asymmetric mathematical agents:
+构建一个无需训练、只使用自然语言核心表示的证明审计 harness，包含两个职责非对称的数学 Agent：
 
-1. the Evaluator constructs and checks a dependency-grounded proof graph,
-   locates the failed inference edge, and emits an error or counterexample
-   certificate;
-2. the Repair Generator proposes a minimal local patch;
-3. the Evaluator independently reviews the patch, while the deterministic
-   controller invalidates and rechecks every affected descendant.
+1. Evaluator 构建并检查依赖图，定位失败推理边，输出错误证书或反例证书；
+2. Repair Generator 提交最小局部补丁；
+3. Evaluator 独立复核补丁，确定性 Controller 撤销并重验全部受影响后代。
 
-The system does not claim formal soundness and must preserve an explicit
-`undetermined` outcome.
+系统不声称形式可靠性，必须保留显式的 `undetermined` 结果。
 
-## Current authoritative documents
+## 当前权威文档
 
-| Artifact | Purpose | Status |
+| 文档 | 用途 | 状态 |
 |---|---|---|
-| [Research proposal](docs/dual_agent_natural_language_proof_harness_proposal.docx) | Full Chinese design summary | Draft complete |
-| [Two-person work plan](docs/two_person_work_plan.md) | Roles, schedule, gates, and collaboration protocol | Active |
-| [Research roadmap](ROADMAP.md) | Milestones and acceptance gates | Active |
-| [Collaborator AI prompt](prompts/collaborator_onboarding_prompt.md) | Self-contained prompt for the second computer | Ready |
-| [M0 scope and terminology](docs/milestones/M00_scope_and_terminology.md) | Research questions, definitions, and acceptance set | Draft for joint review |
-| [Development guide](docs/development-guide.md) | Existing checker architecture | Existing |
-| [Canonical Skill](skills/math-proof-repair-agent/SKILL.md) | Existing evaluator/checker behavior | Existing |
-| [Result schema](schemas/algebra_obligation_result.schema.json) | Existing checker output contract | Existing; to be mapped |
+| [研究方案](docs/dual_agent_natural_language_proof_harness_proposal.docx) | 完整中文设计总结 | 草案完成 |
+| [两人工作计划](docs/two_person_work_plan.md) | 分工、进度、验收门和协作协议 | 生效中 |
+| [研究路线图](ROADMAP.md) | 里程碑与验收条件 | 生效中 |
+| [同学 AI 接手提示词](prompts/collaborator_onboarding_prompt.md) | 另一台电脑的自包含上下文 | 可使用 |
+| [M0 范围与术语](docs/milestones/M00_scope_and_terminology.md) | 研究问题、定义与验收案例 | 待双人审阅 |
+| [开发指南](docs/development-guide.md) | 现有 checker 架构 | 已有 |
+| [Canonical Skill](skills/math-proof-repair-agent/SKILL.md) | 现有 Evaluator/checker 行为 | 已有 |
+| [结果 Schema](schemas/algebra_obligation_result.schema.json) | 现有 checker 输出契约 | 已有，待映射 |
 
 ## Workstream ownership
 

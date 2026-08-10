@@ -1,169 +1,116 @@
-# Prompt for the Second Collaborator's AI
+# 另一位协作者的 AI 接手提示词
 
-Copy the prompt below into a new AI coding session opened at the repository
-root. Replace `[MY_ROLE]` with `Person B` unless the team explicitly changes
-the ownership plan.
+将下方完整提示词复制到另一台电脑、仓库根目录中的新 AI 编程会话。默认该同学为“成员 B”。
 
 ---
 
-You are joining an existing two-person research project. Work as a careful
-research engineer and collaborator. Do not assume the project is a generic
-proof-generation agent, and do not start by rewriting the repository.
+你正在加入一个已有的两人研究项目。请作为严谨的研究工程师协作，不要把它理解成普通的证明生成 Agent，也不要一开始就重写仓库。
 
-## Project objective
+## 项目目标
 
-We are building a training-free, dual-agent harness for auditing and locally
-repairing natural-language mathematical proofs. We deliberately do not require
-formal languages such as Lean in the core workflow.
+我们正在构建一个无需训练的双 Agent harness，用于审计和局部修复自然语言数学证明。核心工作流不要求 Lean 等形式语言。
 
-The two mathematical agents are asymmetric:
+两个数学 Agent 的职责非对称：
 
-1. **Evaluator Agent**: segments and classifies proof nodes, builds their
-   direct dependency graph, checks local proof obligations, searches for and
-   validates counterexamples, locates the exact failed inference edge, and
-   emits a structured ErrorCertificate.
-2. **Repair Generator Agent**: receives only the problem, failed node, direct
-   dependencies, ErrorCertificate, available evidence, and a repair budget. It
-   proposes a minimal local PatchProposal. It has no authority to accept its
-   own patch.
+1. **Evaluator Agent**：切分和分类证明节点，构建直接依赖图，检查局部证明义务，搜索并核验反例，定位精确的失败推理边，并输出结构化 `ErrorCertificate`。
+2. **Repair Generator Agent**：只接收原题、错误节点、直接依赖、`ErrorCertificate`、合法证据和修复预算，然后提交最小局部 `PatchProposal`。它无权接受自己的补丁。
 
-A deterministic software controller coordinates the two agents. It is not a
-third mathematical agent. It validates schemas, stores node versions, applies
-patches, invalidates all descendants of a changed node, controls retries and
-termination, and records reproducible run manifests. The Evaluator then
-independently reviews the patch.
+一个确定性软件 Controller 协调二者。Controller 不是第三个数学 Agent。它负责 Schema 校验、节点版本、补丁应用、后代失效、重试与终止以及可复现的 `RunManifest`。补丁完成后仍由 Evaluator 独立复核。
 
-The central loop is:
+核心闭环：
 
-`Evaluator -> ErrorCertificate -> Repair Generator -> PatchProposal -> Evaluator PatchReview -> accept/reject/undetermined`
+```text
+Evaluator -> ErrorCertificate -> Repair Generator -> PatchProposal
+          -> Evaluator PatchReview -> accept / reject / undetermined
+```
 
-## Non-negotiable principles
+## 不可违反的原则
 
-- Two mathematical agents remain the core architecture.
-- Natural-language acceptance is not formal proof and must not be presented as
-  absolute correctness.
-- Failure to find a counterexample is not proof of correctness.
-- Retrieval similarity alone never closes a node.
-- The Evaluator must be able to return `undetermined`.
-- Repairs should be local patches, not full-proof rewrites.
-- Adding an assumption changes the original problem and is not a successful
-  repair of that problem.
-- Changing a node invalidates every result depending on its earlier version.
-- Agent communication must use versioned structured contracts, not only free
-  text.
+- 两个数学 Agent 是核心架构。
+- 自然语言裁决不是形式证明，不能表述为绝对正确。
+- 未找到反例不等于证明正确。
+- 检索到相似定理不能单独关闭节点。
+- Evaluator 必须允许输出 `undetermined`。
+- 修复应为局部补丁，而非整篇重写。
+- 增加假设等于改变原问题，不计为修复成功。
+- 节点变化后，所有依赖旧版本的后代裁决都必须失效。
+- Agent 之间通过版本化结构契约通信，不能只传自由文本。
 
-## Research hypothesis
+## 研究假设
 
-We want to test whether an error-certificate-driven, dependency-aware dual
-agent is more reliable than whole-proof judging, single-agent self-reflection,
-and an unconstrained generator-critic loop for:
+我们需要比较完整双 Agent 系统与整篇直接判断、单 Agent 自我反思、普通 Generator–Critic，重点评估：第一处错误定位、错误接受率、有效反例、最小局部修复以及下游错误传播控制。
 
-- first-error localization;
-- false-acceptance reduction;
-- valid counterexample discovery;
-- minimal local repair;
-- prevention of downstream error propagation.
+## 你的默认职责：成员 B
 
-## Your role
+你主要负责：
 
-Your human collaborator is `[MY_ROLE]`. By default, treat this as **Person B:
-Harness and Repair Generator lead**. Primary ownership includes:
+- 确定性 Controller 和状态机；
+- Repair Generator 的提示词和响应契约；
+- `ErrorCertificate -> PatchProposal` 接口；
+- 节点版本、失效、回滚、重试和终止；
+- `RunManifest`、缓存、可复现性和成本记录；
+- 评估运行器、指标、基线和实验自动化。
 
-- deterministic controller and state machine;
-- Repair Generator prompt and response contract;
-- ErrorCertificate-to-PatchProposal interface;
-- node versions, invalidation, rollback, retry, and termination;
-- run manifests, caching, reproducibility, cost tracking;
-- evaluation runner, metrics, baselines, and experiment automation.
+成员 A 主要负责 Evaluator 数学语义、依赖含义、反例语义和标注规范。共享 Schema 与金标必须由两人共同审查。
 
-Person A owns Evaluator semantics, mathematical validity, dependency meaning,
-counterexample semantics, and the annotation guide. Shared schemas and gold
-labels require review by both people.
-
-## Required repository reading order
-
-Before proposing or editing code, read these files completely:
+## 必须按顺序完整阅读
 
 1. `PROJECT_INDEX.md`
 2. `ROADMAP.md`
 3. `docs/two_person_work_plan.md`
-4. `skills/math-proof-repair-agent/SKILL.md`
-5. `docs/development-guide.md`
-6. the existing canonical schemas and tests relevant to your immediate task
+4. `docs/milestones/M00_scope_and_terminology.md`
+5. `skills/math-proof-repair-agent/SKILL.md`
+6. `docs/development-guide.md`
+7. 与当前任务有关的 Schema 和测试
 
-Treat `skills/math-proof-repair-agent/` as the current checker source of truth.
-Do not create a duplicate checker implementation elsewhere.
+将 `skills/math-proof-repair-agent/` 视为现有 checker 的单一事实来源，不要在其他目录复制第二套 checker。
 
-## First assignment
+## 第一次任务
 
-Do not implement model calls yet. First perform a read-only architecture audit
-and produce:
+先不要实现模型调用。完成只读架构审计，并提交：
 
-1. a concise map from existing repository modules to the new dual-agent
-   objects;
-2. a proposed state-transition table covering pending evaluation, rejected,
-   pending repair, patch submitted, pending recheck, accepted, stale,
-   irreparable, and undetermined;
-3. draft JSON object shapes for `ErrorCertificate`, `PatchProposal`,
-   `PatchReview`, `NodeVersion`, and `RunManifest`;
-4. two no-model end-to-end fixture scenarios: one accepted repair and one
-   rejected or stale repair;
-5. a list of decisions that genuinely require agreement with Person A.
+1. 现有仓库模块到新双 Agent 对象的简明映射；
+2. 状态转换表，覆盖 pending evaluation、rejected、pending repair、patch submitted、pending recheck、accepted、stale、irreparable 和 undetermined；
+3. `ErrorCertificate`、`PatchProposal`、`PatchReview`、`NodeVersion`、`RunManifest` 的 JSON 对象草案；
+4. 两个不调用模型的端到端 fixture：一个补丁被接受，一个补丁被拒绝或因版本过期失效；
+5. 必须与成员 A 共同决定的问题清单。
 
-Do not edit files until you have inspected the current implementation and
-identified how to preserve compatible components. Preserve unrelated changes.
+在检查现有实现并说明如何复用兼容模块之前，不要修改代码。保留与任务无关的已有改动。
 
-## Working protocol for every task
+## 每次任务的工作协议
 
-At the beginning:
+开始时：
 
-- state the milestone and exact acceptance criterion;
-- identify which shared contracts may be affected;
-- inspect current tests and implementation before proposing changes.
+- 明确当前里程碑和验收标准；
+- 指出可能受影响的共享契约；
+- 先检查现有测试和实现。
 
-During work:
+工作时：
 
-- make minimal, reviewable changes;
-- add positive and negative tests;
-- version prompt and schema changes;
-- never silently reinterpret a mathematical status;
-- record assumptions and unresolved design questions.
+- 只做小而可审查的改动；
+- 同时增加正例和反例测试；
+- prompt 和 Schema 的变化必须版本化；
+- 不得静默改变数学状态含义；
+- 记录假设和未决问题。
 
-At handoff, report exactly:
+交接时严格报告：
 
-1. Outcome
-2. Files changed
-3. Tests and observed results
-4. Contract or schema impact
-5. Mathematical assumptions made
-6. Known limitations
-7. Decisions needed from Person A
-8. Recommended next task
+1. 结果
+2. 修改文件
+3. 测试及实际结果
+4. 契约或 Schema 影响
+5. 使用的数学假设
+6. 已知限制
+7. 需要成员 A 决定的问题
+8. 推荐的下一任务
 
-If the request would cross the agreed ownership boundary or change a shared
-schema without review, stop after producing a concrete proposal and ask for
-coordination rather than implementing it unilaterally.
+若任务越过既定职责边界，或需要未经审查地修改共享 Schema，请先提交具体方案并等待协调，不要单方面实现。
 
-Begin by reading the required files and completing the read-only first
-assignment.
+现在从阅读指定文件和完成只读第一次任务开始。
 
 ---
 
-## Short prompt for later sessions
+## 后续会话的简短提示词
 
-After the first onboarding session, use this shorter continuation prompt:
-
-> Continue work on the dual-agent natural-language proof-auditing harness in
-> this repository. Read `PROJECT_INDEX.md`, `ROADMAP.md`, and
-> `docs/two_person_work_plan.md`, then inspect the current milestone artifacts.
-> I am Person B, responsible for the deterministic controller, Repair
-> Generator, node versioning/revocation, reproducible runs, and evaluation
-> automation. Preserve the asymmetric protocol: Evaluator emits a structured
-> ErrorCertificate; Repair Generator submits a local PatchProposal; only the
-> Evaluator may accept it; changed nodes invalidate their descendants. Do not
-> alter shared schemas or mathematical status meanings without presenting the
-> exact change and its test/migration impact. For this session, work on:
-> `[INSERT ONE CONCRETE TASK AND ACCEPTANCE CRITERION]`. At handoff, report
-> outcome, files, tests, schema impact, assumptions, limitations, and decisions
-> needed from Person A.
+> 继续本仓库的双 Agent 自然语言证明审计 harness 项目。先阅读 `PROJECT_INDEX.md`、`ROADMAP.md`、`docs/two_person_work_plan.md` 和当前里程碑文档。我是成员 B，负责确定性 Controller、Repair Generator、节点版本与撤销、可复现运行和评估自动化。保持非对称协议：Evaluator 输出结构化 `ErrorCertificate`；Repair Generator 提交局部 `PatchProposal`；只有 Evaluator 可以接受补丁；节点变化必须使后代失效。未经共同审查，不得改变共享 Schema 或数学状态含义。本次任务是：`[填写一个具体任务及验收标准]`。交接时报告结果、文件、测试、Schema 影响、假设、限制以及需要成员 A 决定的问题。
 

@@ -1,473 +1,351 @@
-# M0: Scope and Terminology Contract
+# M0：研究范围与术语契约
 
-Status: `draft_for_joint_review`
+状态：`draft_for_joint_review`（待双人共同审阅）
+负责人：成员 A（数学语义）、成员 B（执行语义）
 
-Owners: Person A (mathematical semantics), Person B (execution semantics)
+退出条件：两位成员在互不查看对方答案的情况下，能够使用本文定义独立标注文末验收案例；所有分歧均形成书面裁决记录。完成后将本文冻结为 `v0.1`，方可进入 M1。
 
-Exit gate: both owners can independently label the acceptance set at the end
-of this document without changing any definition. Every disagreement must be
-resolved in a written adjudication note before this contract becomes `v0.1`.
+## 1. 系统目标
 
-## 1. System objective
+构建一个无需训练的双 Agent harness，用于审计已有的自然语言数学证明。系统需要定位最早的不受支持推理、尝试构造并核验反例，并可选择将结构化错误证书交给独立的 Repair Generator 生成最小局部修复。
 
-Build a training-free, dual-agent harness that audits an existing
-natural-language mathematical proof, locates the earliest unsupported local
-inference, attempts to construct a checked counterexample, and optionally
-requests a minimal local repair from a separate Repair Generator.
+本系统是可审计的自然语言验证框架，不是形式证明助手。模型给出的“接受”不能被表述为具有形式可靠性保证的证明。
 
-The system is an auditable natural-language verifier harness. It is not a
-formal proof assistant and must not present model acceptance as a theorem of
-soundness.
+## 2. 核心研究问题
 
-## 2. Research questions
+### RQ1：错误定位
 
-### RQ1: Error localization
+相较于一次性判断整篇证明，基于依赖图的节点局部验证能否降低错误接受率，并提高第一处错误的定位准确率？
 
-Does dependency-grounded, node-local evaluation reduce false acceptance and
-improve first-error localization compared with judging the whole proof in one
-prompt?
+### RQ2：反例引导
 
-### RQ2: Counterexample guidance
+显式的“生成反例—逐项核验前提—核验结论为假”协议，能否提高错误命题检出率，同时控制无效反例比例？
 
-Does an explicit counterexample-generation and premise-checking protocol
-improve detection of false local claims without increasing invalid
-counterexamples?
+### RQ3：双 Agent 修复
 
-### RQ3: Dual-agent repair
+相较于单 Agent 自我反思或无约束的 Generator–Critic，由 `ErrorCertificate` 驱动的非对称双 Agent 闭环，能否产生更正确、更局部且较少引入新错误的修复？
 
-Does an asymmetric ErrorCertificate-to-PatchProposal loop produce more valid
-and more local repairs, with fewer newly introduced errors, than single-agent
-self-reflection or an unconstrained generator-critic loop?
+## 3. 第一篇论文的非目标
 
-## 3. Non-goals for the first paper
+- 不训练或微调新的基础模型。
+- 不声称自然语言验证等价于形式化、机器认证的正确性。
+- 不以自主解决研究级开放问题为第一阶段目标。
+- 不要求使用 Lean、Coq、Isabelle 等形式语言作为核心表示。
+- 第一版不覆盖所有数学领域，先聚焦代数。
+- 不把定理检索相似度当作证明。
+- 不把“未找到反例”当作正确性证据。
+- 可以局部修复时，不重写整篇证明。
 
-- Training or fine-tuning a new foundation model.
-- Claiming formal or mechanically certified correctness.
-- Autonomously solving research-level open problems from scratch.
-- Using Lean, Coq, Isabelle, or another formal language as a required core
-  representation.
-- Supporting every mathematical domain in the first benchmark.
-- Treating theorem retrieval score as proof.
-- Treating failure to find a counterexample as evidence of truth.
-- Rewriting the entire proof when a local patch is sufficient.
+## 4. 核心对象
 
-## 4. Core objects
+### 4.1 证明实例（ProofInstance）
 
-### 4.1 Proof instance
+一个证明实例至少包含：定理或问题、显式全局假设、有序自然语言证明，以及可选的领域和来源信息。
 
-A proof instance contains:
+### 4.2 证明节点（ProofNode）
 
-- the theorem or question;
-- explicit global assumptions;
-- an ordered natural-language proof;
-- optional domain and source metadata.
+证明节点是能够表达一个可检查数学角色、同时又不构成语法或数学残片的最小连续文本片段。
 
-### 4.2 Proof node
+每个节点必须保存：
 
-A proof node is the smallest contiguous span that expresses one checkable
-mathematical role without becoming a grammatical or mathematical fragment.
+- 在当前证明版本中稳定的 `node_id`；
+- 原始文本和 `source_span`；
+- `node_type`；
+- 消解代词、编号引用后的 `self_contained_claim`。
 
-Each node must retain:
+节点切分属于表示层决策，不属于数学裁决。错误切分必须标记为表示错误，不能伪装成证明缺口。
 
-- a stable `node_id` within its proof version;
-- exact source text;
-- source span;
-- node type;
-- self-contained claim when references or pronouns must be resolved.
+### 4.3 节点类型（node_type）
 
-Splitting is a representation decision, not a mathematical verdict. A bad
-split is a segmentation error and must not be relabeled as a proof error.
+- 定义 `definition`：首次规定术语、符号或对象的含义。
+- 假设 `assumption`：引入局部假设、反证条件或分类讨论条件。
+- 引入 `introduction`：重述题设、已知定理、记号或证明策略。
+- 待证断言 `claim`：宣布后续子证明需要建立的目标。
+- 计算 `calculation`：执行代数、数值、不等式或符号变换。
+- 结论 `conclusion`：声称某结果应由当前合法上下文推出。
+- 引用 `citation`：调用需要核验陈述与适用条件的外部定理。
 
-### 4.3 Node type
+若一个节点既引用定理又推出结果，以主要可检查角色分类，并将引用单独保存在证据字段中。
 
-The initial node-type set is:
+### 4.4 直接依赖（DependencyEdge）
 
-- `definition`: introduces the meaning of a new term, symbol, or object;
-- `assumption`: introduces a local hypothetical premise or case condition;
-- `introduction`: restates a given, known theorem, notation, or proof strategy;
-- `claim`: announces a target that requires a subsequent subargument;
-- `calculation`: performs an algebraic, numerical, inequality, or symbolic
-  transformation;
-- `conclusion`: asserts a consequence that should follow from available
-  context;
-- `citation`: invokes a named external theorem or result where applicability
-  must be checked.
+当且仅当按照原证明路线验证节点 B 时必须使用节点 A，并且没有更近的已接受中间节点已经承载 A 的必要贡献，A 才是 B 的直接依赖。边方向固定为 `A -> B`。
 
-If a node both cites a theorem and derives a result, classify it by its primary
-checkable role and preserve the citation separately as evidence metadata.
+约束：
 
-### 4.4 Direct dependency
+- 只能依赖更早节点；
+- 不允许自环和重复边；
+- 整体必须为 DAG；
+- 主题相关不等于逻辑依赖；
+- 标准背景知识应进入显式 ambient context 或规则引用，不能伪造成证明节点依赖。
 
-Node A is a direct dependency of node B exactly when B's asserted conclusion
-cannot be checked under the global assumptions in the intended proof route
-without using A, and no accepted intermediate node already represents the
-needed contribution of A.
+### 4.5 局部证明义务（LocalObligation）
 
-The edge direction is `A -> B`.
+若 B 的直接父节点为 A1…Ak，则局部义务为：
 
-Constraints:
+```text
+全局假设 + 已核验背景事实 + claim(A1...Ak) |- claim(B)
+```
 
-- dependencies must refer to earlier nodes;
-- no self-edge or duplicate edge is allowed;
-- the graph must be acyclic;
-- a dependency is not added merely because a node is topically related;
-- standard background mathematics belongs in explicit ambient context or a
-  cited rule, not as a fabricated proof-node dependency.
+Evaluator 可以查看原文以理解语义，但不得把后续节点、无关前序节点或最终期望结论当作数学证据。
 
-### 4.5 Local proof obligation
+### 4.6 失败推理边（failed_inference_edge）
 
-For node B with direct parents A1...Ak, the local obligation is:
+失败推理边是 Evaluator 无法验证的最小局部推理关系，应明确：
 
-`global assumptions + validated ambient facts + claims(A1...Ak) |- claim(B)`
+- 实际使用的全局假设或父节点；
+- 目标节点；
+- 若可识别，原证明试图使用的规则；
+- 缺失条件、非法操作、目标错配或反例。
 
-The Evaluator may inspect the original wording for interpretation, but it may
-not use later nodes, unrelated earlier claims, or the desired final conclusion
-as mathematical evidence.
+## 5. 节点裁决（verdict）
 
-### 4.6 Failed inference edge
+每个完成检查的节点只能获得一个最终裁决。
 
-A failed inference edge is the smallest identified relation between the
-available local premises and the current target that the Evaluator cannot
-validate. It should specify:
+### 已接受 `accepted`
 
-- the exact premise nodes or global assumptions used;
-- the target node;
-- the proposed rule or inference, if identifiable;
-- the missing condition, invalid operation, target mismatch, or counterexample
-  that explains the failure.
+当前命题可以通过一个明确且适用的规则、定义或已核验原子计算，直接由合法局部上下文推出，不需要补充数学桥接步骤。
 
-## 5. Node verdicts
+这是 harness 裁决，不是形式正确性保证。
 
-Every checked node receives exactly one final verdict from this set.
+### 存在可修复缺口 `accepted_with_gap`
 
-### `accepted`
+目标确实能从合法局部上下文推出，但原证明省略了非空、最小且连续的中间推理链。Evaluator 必须能够构造并核验该桥接链；仅凭“看起来应该成立”不能使用此标签。
 
-The claim follows directly from the permitted local context by one explicit
-and applicable rule, definition, or checked atomic calculation. No omitted
-mathematical bridge is needed.
+### 不受支持 `unsupported`
 
-This is a harness verdict, not a formal soundness guarantee.
+根据目前合法上下文，当前结论尚未得到证明。缺少假设、定理误用、非法运算等均可能导致此裁决；若已有完整反例证书，应使用 `counterexample_found`。
 
-### `accepted_with_gap`
+### 已找到反例 `counterexample_found`
 
-The target is derivable from the permitted local context, but the submitted
-proof omits a nonempty, minimal, connected chain of intermediate inferences.
-The bridge must be constructible and checked; mere evaluator intuition is not
-enough.
+已经核验一份反例证书：所有相关前提成立而目标结论为假。必须同时标明反例范围为局部命题 `local_claim` 或原定理 `global_theorem`。
 
-### `unsupported`
+### 语义歧义 `ambiguous`
 
-The current conclusion has not been shown to follow from its permitted local
-context. This covers missing assumptions, theorem misuse, invalid operations,
-and other failed inferences when no checked counterexample certificate is
-available.
+原自然语言存在两个或更多实质不同的合理解释，并且裁决取决于解释选择。必须记录候选解释和分歧点。
 
-### `counterexample_found`
+### 无法确定 `undetermined`
 
-A counterexample certificate has been validated: all relevant premises hold
-and the target conclusion is false under the supplied interpretation.
+系统缺少足够的已核验证据来接受、反驳或进一步分类节点。检索不到定理或找不到反例，不能自动改变此状态。
 
-The certificate must state whether its scope is `local_claim` or
-`global_theorem`.
+### 被无效依赖阻塞 `blocked_by_invalid_dependency`
 
-### `ambiguous`
+至少一个必要父节点处于拒绝、过期或未解决状态，因而当前节点暂时无法检查。这是依赖传播状态，不是独立数学错误类型。
 
-The natural-language statement has two or more materially different plausible
-interpretations, and the verdict depends on which interpretation is chosen.
-The ambiguity and candidate readings must be recorded.
+## 6. 诊断错误类型（error_type）
 
-### `undetermined`
+错误类型解释 `unsupported` 或 `counterexample_found`，但不代替最终裁决。
 
-The system lacks sufficient validated evidence to accept, refute, or classify
-the node. Failure to retrieve a theorem or find a counterexample is not enough
-to move a node out of this state.
+- 缺少假设 `missing_assumption`：合法上下文中缺少必要前提。
+- 定理误用 `theorem_misuse`：定理陈述不匹配或适用条件不满足。
+- 代数无效 `algebraic_invalidity`：代数或符号操作不合法。
+- 目标错配 `target_mismatch`：推导结果不是节点声称的目标。
+- 依赖错误 `dependency_error`：遗漏必要父节点或使用非法来源。
+- 局部假命题 `false_local_claim`：当前节点被局部反例推翻，但原定理未必为假。
+- 原定理为假 `false_theorem`：反例满足原题全部假设并否定最终结论。
+- 切分错误 `segmentation_error`：节点切分或合并改变了真实局部义务。
+- 解释歧义 `interpretation_ambiguity`：不同合理解释导致不同裁决。
 
-### `blocked_by_invalid_dependency`
+## 7. 反例术语
 
-The node cannot yet be evaluated because at least one required direct parent
-is rejected, stale, or unresolved. This is a propagation state, not an
-independent mathematical diagnosis.
+### 候选反例（CandidateCounterexample）
 
-## 6. Diagnostic error types
+模型提出、试图推翻目标的赋值、对象或构造。未经核验时不能作为数学证据。
 
-Diagnostics explain `unsupported` or `counterexample_found`; they do not
-replace the verdict.
+### 已核验反例证书（CounterexampleCertificate）
 
-- `missing_assumption`: a necessary premise is absent from the legal context;
-- `theorem_misuse`: a cited rule does not match the statement or its
-  conditions are unmet;
-- `algebraic_invalidity`: an algebraic or symbolic operation is invalid;
-- `target_mismatch`: the derived result is not the node's asserted target;
-- `dependency_error`: the declared direct parents omit a necessary earlier
-  claim or include an illicit source;
-- `false_local_claim`: the node is refuted under its local premises, but this
-  does not by itself refute the original theorem;
-- `false_theorem`: a checked example satisfies every original assumption and
-  refutes the theorem conclusion;
-- `segmentation_error`: the proof representation split or merged claims in a
-  way that changes the local obligation;
-- `interpretation_ambiguity`: the source text supports multiple materially
-  different readings.
+至少包含：目标节点及版本、数学结构、显式对象或赋值、每项相关前提及检查结果、目标结论为假的检查结果、局部或全局范围、可执行工具轨迹，以及仍然存在的解释假设。
 
-## 7. Counterexample terminology
+### 无效反例
 
-### Candidate counterexample
+违反任一必要前提、没有真正否定目标、擅自改变数学结构或依赖未经允许解释的候选反例。
 
-A model-proposed assignment, construction, object, or scenario intended to
-refute a target. It is not evidence until checked.
+## 8. 修复术语
 
-### Validated counterexample certificate
+### 局部补丁（PatchProposal）
 
-A record containing:
+为解决一份 `ErrorCertificate` 而插入、替换或删除有限节点，同时保持原定理和无关证明分支不变。
 
-- target node and version;
-- mathematical domain or structure;
-- explicit object or assignment;
-- each relevant premise and its check result;
-- target conclusion and its false check result;
-- local or global scope;
-- tool trace when executable checking is used;
-- remaining interpretation assumptions.
+### 修复成功
 
-### Invalid counterexample
+必须同时满足：
 
-A candidate that violates at least one required premise, fails to refute the
-target, changes the mathematical structure, or depends on an unlicensed
-interpretation.
+1. 所有新增或替换节点通过 Evaluator 检查；
+2. 被修复目标符合实验预先规定的成功裁决；
+3. 所有受影响后代已经重新验证；
+4. 目标依赖路径上没有引入新的无效或未解决节点；
+5. 原定理和原假设均未改变。
 
-## 8. Repair terminology
+### 改变问题的建议
 
-### Local patch
+增加假设、削弱结论或改变定义域的方案可以作为反馈，但不计为原问题的修复成功。
 
-A bounded edit that inserts, replaces, or deletes nodes needed to address one
-ErrorCertificate while preserving the original theorem and unrelated proof
-structure.
+### 最小修复
 
-### Successful repair
+在 harness 实际考虑并接受的候选补丁中，如果删除任一新增或替换推理都会导致复核失败，则称其满足操作意义上的最小性。这里不声称找到全局最短证明。
 
-A patch is successful only when:
+## 9. 节点版本与撤销
 
-1. the Evaluator accepts every inserted or replacement node;
-2. the repaired target is accepted or accepted-with-gap according to the
-   experiment's declared success policy;
-3. every affected descendant has been rechecked;
-4. no new unresolved or invalid node is introduced on the target dependency
-   path;
-5. the original theorem and assumptions are unchanged.
+- 可编辑节点由 `(proof_id, node_id, version)` 唯一标识。
+- `PatchProposal` 必须指向一个精确存在的版本。
+- `N@v1` 被 `N@v2` 替换后，所有依赖闭包中包含 `N@v1` 的旧裁决都变为 `stale`。
+- `stale` 是控制器生命周期状态，不是数学裁决。
+- 过期节点必须按拓扑顺序重验后才能重新进入已接受证明状态。
+- 任何依赖指纹改变后都不能复用旧模型缓存。
 
-### Problem-changing proposal
+## 10. 权限边界
 
-A proposal that adds an assumption, weakens the conclusion, or changes the
-domain. It may be useful feedback but is not counted as a repair success.
+### Evaluator 可以
 
-### Minimal repair
+- 解释、切分、分类、建图、验证、找反例、诊断和复核补丁；
+- 输出 `accepted`、`accepted_with_gap`、`unsupported`、`counterexample_found`、`ambiguous` 或 `undetermined`；
+- 拒绝格式错误或数学上不成立的补丁。
 
-Among accepted candidate patches considered by the harness, a repair is
-minimal when it contains no inserted or replaced inference that can be removed
-without causing re-evaluation failure. This is operational minimality, not a
-claim of global proof-length optimality.
+### Evaluator 不可以
 
-## 9. Versioning and revocation
+- 在仅验证模式中静默修改证明；
+- 使用后续节点作为前提；
+- 仅因检索到相似定理就接受节点；
+- 把未找到反例转换为接受。
 
-- Every editable node is identified by `(proof_id, node_id, version)`.
-- A PatchProposal must target an exact existing version.
-- Once node `N@v1` is replaced by `N@v2`, all verdicts whose validated
-  dependency closure includes `N@v1` become `stale`.
-- `stale` is a controller lifecycle state, not a mathematical verdict.
-- A stale node must be rechecked in topological order before it can re-enter
-  the accepted proof state.
-- Cached model output is never reused across a changed dependency fingerprint.
+### Repair Generator 可以
 
-## 10. Agent authority boundary
+- 根据错误证书提出受限局部补丁；
+- 报告在原题条件下无法修复；
+- 明确标记改变问题的建议。
 
-### Evaluator may
+### Repair Generator 不可以
 
-- interpret, segment, classify, build dependencies, verify, search for
-  counterexamples, diagnose, and review patches;
-- emit `accepted`, `accepted_with_gap`, `unsupported`,
-  `counterexample_found`, `ambiguous`, or `undetermined`;
-- reject malformed or mathematically unsupported patches.
+- 接受自己的补丁；
+- 不加说明地改变原定理或假设；
+- 使用没有提供给它的隐藏上下文；
+- 重写无关证明分支。
 
-### Evaluator may not
+### Controller 可以
 
-- silently repair the proof during grading;
-- use later nodes as premises;
-- accept a claim solely because retrieval returned a similar theorem;
-- convert lack of a counterexample into acceptance.
+- 校验契约、执行合法状态转换、管理版本、撤销后代、限制重试、缓存精确状态并记录运行清单。
 
-### Repair Generator may
+### Controller 不可以
 
-- propose a bounded local patch based on the supplied ErrorCertificate;
-- declare that no repair is available under the original conditions;
-- label a suggestion as problem-changing.
+- 自行创造数学裁决；
+- 仅因模型回答通过 JSON Schema 就把它当作数学证据。
 
-### Repair Generator may not
+## 11. M0 固定的核心指标
 
-- accept its own patch;
-- change the theorem or assumptions without explicit labeling;
-- cite inaccessible hidden context;
-- rewrite unrelated proof branches.
+- 第一处错误定位准确率；
+- 节点裁决 macro-F1；
+- 错误接受率（false acceptance rate）；
+- 依赖边 precision、recall 和 F1；
+- 反例发现率与反例有效率；
+- 修复成功率与新错误引入率；
+- 后代重验证正确率；
+- `undetermined`/弃权率；
+- 调用次数、token、延迟和估算成本。
 
-### Controller may
+第一篇论文的首要安全指标是错误接受率，但必须同时报告弃权率，防止系统仅靠拒绝所有样本获得表面安全性。
 
-- validate contracts, apply accepted transitions, manage versions, revoke
-  descendants, limit retries, cache exact states, and record manifests.
+## 12. M0 双人独立标注案例
 
-### Controller may not
+两位成员分别判断：节点类型、直接依赖、最终裁决和错误类型（如适用）。独立标注完成前不得查看对方答案。
 
-- invent a mathematical verdict;
-- convert a schema-valid model answer into mathematical evidence without an
-  Evaluator decision.
+### 案例 A：显式消去
 
-## 11. Primary metrics fixed at M0
+假设：`a, x, y` 为实数，`a != 0` 且 `ax = ay`。
+节点：`根据消去律，因此 x = y。`
 
-- first-error localization accuracy;
-- node-verdict macro-F1;
-- false acceptance rate;
-- dependency edge precision, recall, and F1;
-- counterexample discovery rate;
-- counterexample validity rate;
-- repair success rate;
-- new-error introduction rate;
-- descendant revalidation correctness;
-- abstention/undetermined rate;
-- calls, tokens, latency, and estimated cost.
+讨论点：显式引用消去律后应为 `accepted`，还是仍为 `accepted_with_gap`？
 
-The first paper's primary safety metric is false acceptance rate. Results must
-also report abstention so that a system cannot appear safer merely by refusing
-every case.
+### 案例 B：缺失非零条件
 
-## 12. M0 acceptance set
+假设：`a, x, y` 为实数且 `ax = ay`。
+节点：`因此 x = y。`
+候选反例：`a = 0, x = 1, y = 2`。
 
-Both owners must independently assign node type, direct dependencies, verdict,
-and diagnostic type where applicable. Store their answers separately before
-adjudication.
+### 案例 C：省略桥接步骤
 
-### Case A: direct cancellation
+假设：`a, x, y` 为实数，`a != 0` 且 `ax = ay`。
+节点：`所以 x = y。`
+原证明没有写明规则或中间操作。
 
-Theorem assumptions: `a, x, y are real numbers; a != 0; ax = ay`.
+讨论点：一个标准规则的直接应用与真正缺失桥接链之间如何划界？
 
-Proof node: `Therefore x = y by cancellation.`
+### 案例 D：局部命题错误，但原定理仍可修复
 
-Expected issue to discuss: whether explicit citation of cancellation makes the
-step `accepted` rather than `accepted_with_gap`.
+定理：若整数 `n` 为偶数，则 `n^2` 为偶数。
 
-### Case B: cancellation without nonzero premise
+1. `令 n = 2k，其中 k 为整数。`
+2. `于是 n^2 = 2k^2。`
+3. `所以 n^2 为偶数。`
 
-Theorem assumptions: `a, x, y are real numbers; ax = ay`.
+节点 2 的候选反例：`k = 1` 时，`n^2 = 4`，而 `2k^2 = 2`。
 
-Proof node: `Therefore x = y.`
+讨论点：节点 2 是 `false_local_claim`，但原定理为真，可替换为 `n^2 = 4k^2`。
 
-Candidate counterexample: `a = 0, x = 1, y = 2`.
+### 案例 E：群中错误交换
 
-### Case C: omitted two-step bridge
+假设：`G` 是群，`a,b` 属于 `G`。
+节点：`因此 ab = ba。`
 
-Theorem assumptions: `a, x, y are real numbers; a != 0; ax = ay`.
+讨论点：没有交换性时不是“解释不足”，非阿贝尔群能够给出反例。
 
-Proof node: `Thus x = y.`
+### 案例 F：下游无效
 
-No rule or intermediate operation is stated in the submitted proof.
+假设：`x` 为实数。
 
-Expected issue to discuss: operational boundary between direct standard rule
-and a genuine omitted bridge.
+1. `x^2 = -1。`
+2. `因此 x^4 = 1。`
 
-### Case D: local false claim but valid theorem route remains possible
+讨论点：节点 2 在形式上依赖节点 1，但节点 1 与实数背景矛盾。分别给出数学裁决与 Controller 状态。
 
-Theorem: `If n is an even integer, then n^2 is even.`
+### 案例 G：定义还是推理
 
-Proof nodes:
+节点：`定义 f(x) = x^2 + 1。`
 
-1. `Let n = 2k for an integer k.`
-2. `Then n^2 = 2k^2.`
-3. `Therefore n^2 is even.`
+讨论点：通常是无需推导的定义，但良定义性仍可能依赖未写出的定义域。
 
-Candidate counterexample for node 2 under node 1: `k = 1`, since `n^2 = 4`
-but `2k^2 = 2`.
+### 案例 H：定理适用条件
 
-Expected issue to discuss: node 2 is locally false while the original theorem
-is true and repairable by replacing it with `n^2 = 4k^2`.
+假设：`f` 在 `(0,1)` 上可微。
+节点：`根据极值定理，f 在 (0,1) 上取得最大值。`
 
-### Case E: ambiguous operation domain
+讨论点：极值定理需要闭区间上的连续性。应区分 `theorem_misuse`、`missing_assumption` 与反例范围。
 
-Theorem assumptions: `G is a group; a, b are in G`.
+### 案例 I：切分错误
 
-Proof node: `Hence ab = ba.`
+原文：`如果 a = 0，那么对任意 x,y 都有 ax = ay。`
 
-Expected issue to discuss: absence of commutativity is not merely a missing
-explanation; finite non-abelian groups provide counterexamples.
+错误切分：
 
-### Case F: downstream invalidity
+1. `如果 a = 0，`
+2. `那么对任意 x,y 都有 ax = ay。`
 
-Theorem assumptions: `x is a real number`.
+讨论点：节点 1 是残片，应先修复表示，不能诊断为数学证明缺口。
 
-Proof nodes:
+### 案例 J：信息不足的定理引用
 
-1. `x^2 = -1.`
-2. `Therefore x^4 = 1.`
+节点：`根据标准延拓引理，该映射可以唯一延拓。`
 
-Expected issue to discuss: node 2 is algebraically conditional on node 1, but
-the branch is impossible under the global real-number context. Determine the
-controller and mathematical labels separately.
+没有提供引理陈述、定义域、值域或适用条件。
 
-### Case G: definition versus inference
+讨论点：不能仅根据名称可信度接受；在检索和适用条件核验完成前应为 `undetermined`。
 
-Proof node: `Define f(x) = x^2 + 1.`
+## 13. 审阅清单
 
-Expected issue to discuss: this is a definition and normally requires no
-derivation, but its well-formedness still depends on an understood domain.
+每位审阅者回答：
 
-### Case H: theorem applicability
+1. 是否存在循环定义或仅依赖模型置信度的定义？
+2. `accepted` 与 `accepted_with_gap` 能否稳定区分？
+3. `unsupported`、`ambiguous` 与 `undetermined` 能否稳定区分？
+4. 局部反例与全局反例的范围是否明确？
+5. 修复成功的每个条件是否可以由程序检查，或明确指定给 Evaluator？
+6. Controller 生命周期状态是否与数学裁决分离？
+7. 哪些案例仍产生分歧，根本原因是什么？
 
-Theorem assumptions: `f is differentiable on (0,1)`.
+## 14. 冻结流程
 
-Proof node: `By the Extreme Value Theorem, f attains a maximum on (0,1).`
-
-Expected issue to discuss: theorem misuse caused by absence of continuity on a
-compact closed interval; distinguish missing assumption from false local
-claim and provide a candidate function if possible.
-
-### Case I: segmentation error
-
-Raw text: `If a = 0, then ax = ay for all x and y.`
-
-Bad split:
-
-1. `If a = 0,`
-2. `then ax = ay for all x and y.`
-
-Expected issue to discuss: node 1 is a fragment; evaluation must first repair
-the representation rather than diagnose a mathematical gap.
-
-### Case J: underdetermined cited result
-
-Proof node: `By the standard extension lemma, the map extends uniquely.`
-
-No statement of the lemma, domain, codomain, or required conditions is
-available.
-
-Expected issue to discuss: do not accept from theorem-name plausibility; use
-`undetermined` unless retrieval and applicability checks resolve the claim.
-
-## 13. Review checklist
-
-Each reviewer answers:
-
-1. Are any terms circular or dependent on model confidence alone?
-2. Can `accepted` and `accepted_with_gap` be consistently distinguished?
-3. Can `unsupported`, `ambiguous`, and `undetermined` be consistently
-   distinguished?
-4. Is local versus global counterexample scope unambiguous?
-5. Does every repair-success condition admit a deterministic check or an
-   explicitly assigned Evaluator judgment?
-6. Are controller states separated from mathematical verdicts?
-7. Which acceptance cases still cause disagreement, and why?
-
-## 14. Freeze procedure
-
-1. Person A creates `M00_review_person_a.md` without reading Person B's labels.
-2. Person B creates `M00_review_person_b.md` without reading Person A's labels.
-3. A script or manual table compares the labels.
-4. Both owners write `M00_adjudication.md` for disagreements.
-5. Update this contract once, set version to `v0.1`, and record the date.
-6. Begin M1 schema work only after the M0 exit gate is satisfied.
-
+1. 成员 A 在不看成员 B 答案的情况下填写 `M00_review_person_a.md`。
+2. 成员 B 独立填写 `M00_review_person_b.md`。
+3. 比较两份标签。
+4. 对所有分歧共同填写 `M00_adjudication.md`。
+5. 只进行一次集中修订，将本文标记为 `v0.1` 并记录日期。
+6. M0 退出条件满足后，才开始 M1 Schema 工作。

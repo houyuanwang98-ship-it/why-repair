@@ -1,248 +1,156 @@
-# Two-Person Work Plan
+# 两人协作计划
 
-## 1. Goal and working hypothesis
+## 1. 共同目标
 
-The project tests whether an error-certificate-driven dual-agent harness can
-locate, refute, and locally repair errors in natural-language mathematical
-proofs more reliably than whole-proof judging, single-agent self-reflection,
-or an unconstrained generator-critic loop.
+验证以下研究假设：由结构化错误证书驱动的双 Agent harness，相较于整篇证明直接判断、单 Agent 自我反思和无约束 Generator–Critic，能否更可靠地定位、反驳并局部修复自然语言数学证明中的错误。
 
-The first domain is algebra. Expansion to other domains happens only after the
-algebra benchmark and contracts are stable.
+第一阶段只聚焦代数；只有代数 benchmark 和共享契约稳定后才扩展领域。
 
-## 2. Roles
+## 2. 分工
 
-### Person A: Evaluator and mathematical validity lead
+### 成员 A：Evaluator 与数学有效性
 
-Primary responsibilities:
+主要负责：
 
-- node segmentation and classification;
-- direct dependency graph and self-contained claims;
-- local proof obligations;
-- error taxonomy and failed-edge diagnosis;
-- theorem applicability and counterexample semantics;
-- annotation guide and mathematical review of gold labels;
-- Evaluator prompt and response contract.
+- 节点切分与分类；
+- 直接依赖图和自包含命题；
+- 局部证明义务；
+- 错误类型与失败推理边；
+- 定理适用性和反例语义；
+- 标注指南与金标的数学审查；
+- Evaluator prompt 和响应契约。
 
-Person A owns mathematical meaning, but cannot unilaterally change a shared
-schema or experiment protocol.
+成员 A 对数学含义负主要责任，但不能单方面修改共享 Schema 或实验协议。
 
-### Person B: Harness and Repair Generator lead
+### 成员 B：Harness 与 Repair Generator
 
-Primary responsibilities:
+主要负责：
 
-- deterministic controller and state machine;
-- ErrorCertificate-to-PatchProposal interface;
-- Repair Generator prompt and response contract;
-- node versions, invalidation, rollback, retry, and termination;
-- run manifests, caching, cost tracking, and reproducibility;
-- evaluation runner, metrics, baselines, and experiment automation.
+- 确定性 Controller 和状态机；
+- `ErrorCertificate -> PatchProposal` 接口；
+- Repair Generator prompt 和响应契约；
+- 节点版本、撤销、回滚、重试和终止；
+- `RunManifest`、缓存、成本与可复现性；
+- 评估运行器、指标、基线和实验自动化。
 
-Person B owns execution semantics, but cannot unilaterally reinterpret a
-mathematical status or gold label.
+成员 B 对执行语义负主要责任，但不能单方面改变数学状态或金标含义。
 
-### Joint responsibilities
+### 共同负责
 
-- approve all shared schemas;
-- double-annotate the pilot benchmark;
-- adjudicate disagreements without seeing model outputs when possible;
-- define research questions and primary metrics before the main experiment;
-- review pull requests that cross ownership boundaries;
-- write the paper and limitations together.
+- 审批共享 Schema；
+- 对 pilot benchmark 进行双人独立标注；
+- 尽量在不查看模型输出时裁决标注分歧；
+- 主实验前冻结研究问题和核心指标；
+- 交叉审查跨职责边界的 Pull Request；
+- 共同撰写论文、限制与失败分析。
 
-## 3. Sixteen-week schedule
+## 3. 16 周实施计划
 
-### Week 1: Freeze the research contract
+### 第 1 周：M0 研究契约
 
-Joint outputs:
+交付：问题定义、术语、非目标、3 个研究问题、共同盲点威胁模型和 10 个验收案例。
 
-- one-page problem statement;
-- exact definitions of node, direct dependency, local obligation, accepted,
-  accepted-with-gap, unsupported, counterexample-found, and undetermined;
-- explicit non-goals;
-- three primary research questions;
-- initial threat model for evaluator-generator collusion.
+退出条件：两人可使用同一规则独立标注案例；分歧得到书面裁决。
 
-Acceptance gate: ten hand-written examples can be labeled consistently by
-both people without changing the definitions.
+### 第 2–3 周：M1 Schema 与 Controller 骨架
 
-### Weeks 2-3: Shared schemas and controller skeleton
+- 成员 A 起草 `ProofNode`、`DependencyEdge`、`EvaluationRecord`、`ErrorCertificate` 和 `CounterexampleCertificate` 的数学字段。
+- 成员 B 起草 `PatchProposal`、`PatchReview`、`NodeVersion`、`RunManifest` 和状态机。
+- 两人冻结 Schema v0.1，建立正反 fixture、Schema 校验和 DAG 校验。
 
-Person A drafts mathematical fields for ProofNode, DependencyEdge,
-EvaluationRecord, ErrorCertificate, and CounterexampleCertificate.
+退出条件：缺失版本、未来边、无效反例、针对过期节点的补丁均被测试拒绝；两个不调用 LLM 的修复会话可完整回放。
 
-Person B drafts PatchProposal, PatchReview, NodeVersion, RunManifest, and the
-controller state machine.
+### 第 3–5 周：M2 Pilot benchmark
 
-Joint integration:
+成员 A 建立 50 个代数样本：10 个正确证明、10 个遗漏桥接、10 个不受支持推理、10 个有有限反例的局部假命题、10 个定理误用或计算错误。两人独立标注；成员 B 实现标注校验和一致性报告。
 
-- freeze schema v0.1;
-- create at least one valid and one invalid fixture for every object;
-- implement schema and DAG validation;
-- replay two complete synthetic repair sessions without calling an LLM.
+退出条件：全部分歧被分类并裁决，金标不能仅凭某个人“更有信心”确定。
 
-Acceptance gate: contract tests fail for missing node versions, forward edges,
-invalid counterexamples, and patches against stale nodes.
+### 第 4–6 周：M3 Evaluator v1
 
-### Weeks 3-5: Pilot benchmark
+成员 A 将现有 Skill 改造成分阶段调用：切分、分类、建图、节点裁决。成员 B 提供模型适配器、`RunManifest` 和独立模块运行器。
 
-Person A creates the annotation guide and proposes 50 algebra instances:
+必须分别报告：切分 F1、节点分类 macro-F1、依赖边 P/R/F1、第一处错误定位、节点裁决 macro-F1 和错误接受率。
 
-- 10 correct proofs;
-- 10 valid proofs with an omitted bridge;
-- 10 unsupported inferences;
-- 10 false local claims with finite counterexamples;
-- 10 theorem-misuse or calculation-error cases.
+退出条件：每个模块可以使用上游金标单独测量，不能把切分错误静默算成验证错误。
 
-Both people label every pilot instance independently. Person B implements the
-annotation validator and agreement report.
+### 第 6–8 周：M4 反例模块
 
-Acceptance gate: disagreements are categorized and adjudicated; no gold item
-is accepted merely because one annotator is more confident.
+成员 A 定义反例证书及 `false_local_claim` / `false_theorem` 范围；成员 B 实现可执行核验和审计日志。
 
-### Weeks 4-6: Evaluator v1
+退出条件：每个被接受反例必须证明全部相关前提为真且目标为假；找不到反例时保持开放或 `undetermined`。
 
-Person A adapts the existing Skill into staged calls for segmentation,
-classification, graph building, and node adjudication. Person B supplies the
-model adapter, manifests, and isolated module runners.
+### 第 7–10 周：M5 Repair Generator 与闭环
 
-Required reports:
+成员 B 实现补丁生成、版本、后代失效、重试与回滚；成员 A 设计对抗性补丁复核和数学最小性判断。
 
-- segmentation F1;
-- node-type macro-F1;
-- dependency edge precision/recall/F1;
-- first-error localization;
-- node-verdict macro-F1;
-- false-acceptance rate.
+退出条件：Repair Generator 不能接受自己的补丁；修改 N 必须使依赖旧版本的后代失效；新增假设被标记为改变问题；重复等价补丁会终止；接受的补丁均经独立复核。
 
-Acceptance gate: each module can be evaluated with gold upstream inputs, so a
-segmentation error is not silently counted as a verification error.
+### 第 10–12 周：M6 基线和消融
 
-### Weeks 6-8: Counterexample subsystem
+必须包括：整篇直接判断、单 Agent 自我反思、普通 Generator–Critic、无依赖图双 Agent、无反例双 Agent、无撤销双 Agent和完整系统。成员 B 运行，成员 A 审查数学可比性。
 
-Person A specifies the mathematical certificate and scope distinction between
-false local claim and false theorem. Person B implements executable checking
-where possible, plus complete audit logs.
+### 第 12–14 周：M7 主实验
 
-Acceptance gate: an accepted counterexample must show that all relevant
-premises are true and the target is false. Failure to find one leaves the node
-open or undetermined.
+pilot 审计完成后再扩展数据。优先选择 200–500 个高质量样本，而不是大量弱标注数据。至少测试一组同模型双角色和一组异模型组合。
 
-### Weeks 7-10: Repair Generator and closed loop
+退出条件：运行清单可复现聚合指标；核心指标有 bootstrap 置信区间；失败运行不得删除。
 
-Person B implements PatchProposal generation, versioning, descendant
-invalidation, retry limits, and rollback. Person A designs adversarial patch
-review and checks mathematical minimality.
+### 第 14–16 周：M8 论文与发布
 
-Acceptance gate:
+交付论文草稿、数据说明、标注指南、系统卡、限制、消融表格、错误分类和复现命令。
 
-- Repair Generator cannot mark its own patch accepted;
-- editing node N invalidates every descendant bound to N's old version;
-- adding an assumption is recorded as problem-changing;
-- repeated equivalent patches terminate;
-- every accepted repair is independently rechecked.
+退出条件：每项核心主张均对应预先规定的指标，或明确标记为定性发现。
 
-### Weeks 10-12: Baselines and ablations
+## 4. 每周节奏
 
-Person B owns execution. Person A audits mathematical comparability.
+- 周一 30 分钟：每人确定一个可测量成果。
+- 周中异步：更新里程碑证据与阻塞问题。
+- 周五 60 分钟：只演示已完成成果和失败案例，判断验收门是否通过。
+- 每两周冻结一个 Schema、prompt 和数据版本用于比较。
 
-Required methods:
+状态汇报以成果、测试和指标为中心，不以“忙了多久”为中心。
 
-1. whole-proof direct judge;
-2. single-agent self-reflection;
-3. unconstrained generator-critic;
-4. dual agent without dependency graph;
-5. dual agent without counterexample search;
-6. dual agent without revocation;
-7. complete method.
+## 5. 变更控制
 
-Acceptance gate: methods use the same base-model family and comparable token
-budgets where the research question requires it. Extra calls are reported.
+1. 共享 Schema 必须两人批准。
+2. Schema 修改必须提供迁移说明、更新 fixture 和测试。
+3. Prompt 修改必须有版本号和简短理由。
+4. 金标修改必须有裁决记录。
+5. 主实验配置必须在查看结果前冻结。
+6. 缓存或重复出现的模型输出不会自动成为数学证据。
 
-### Weeks 12-14: Main experiments
+## 6. 功能完成定义
 
-Expand the benchmark only after the pilot audit. Prefer 200-500 high-quality
-instances over a large weakly checked dataset. Run at least one same-model
-dual-role setting and one cross-model setting.
+一个功能只有同时具备以下内容才算完成：书面契约、实现、正反测试、至少一个金标案例、非作者审查、`PROJECT_INDEX.md` 链接和已知限制。
 
-Acceptance gate: manifests reproduce aggregate metrics; primary metrics have
-bootstrap confidence intervals; failed runs are retained rather than erased.
+## 7. 科学性保障
 
-### Weeks 14-16: Paper and release
+- 分模块评估与端到端评估分开。
+- 保留 `undetermined`，不能为了准确率消灭弃权。
+- 错误接受率作为首要安全指标。
+- 记录 token 预算和模型调用次数。
+- 比较同模型与异模型双 Agent。
+- 尽可能在不知道模型结果时裁决金标。
+- 分别报告反例发现率和反例有效率。
+- 分别报告修复成功率和新错误引入率。
+- 不在保留测试集上调 prompt。
 
-Joint outputs:
+## 8. 当前立即任务
 
-- paper draft;
-- data statement and annotation guide;
-- system card and limitations;
-- ablation tables;
-- error taxonomy with representative failures;
-- repository index and reproduction commands.
+### 成员 A
 
-Acceptance gate: every central claim maps to a preregistered metric or a
-clearly labeled qualitative finding.
+1. 审阅 `docs/milestones/M00_scope_and_terminology.md`。
+2. 独立标注 M0 的 10 个案例。
+3. 从当前样本和测试中选择后续 pilot 候选题。
 
-## 4. Weekly operating rhythm
+### 成员 B
 
-- Monday, 30 minutes: choose one measurable outcome per person.
-- Midweek, asynchronous: update milestone evidence and blockers in the repo.
-- Friday, 60 minutes: demo only completed artifacts; review failed examples;
-  decide whether the milestone gate is met.
-- Every two weeks: freeze a tagged schema/prompt/data version for comparison.
+1. 使用接手提示词完整阅读仓库。
+2. 独立标注相同的 M0 案例。
+3. 只读审计现有模块，起草状态转换表和共享对象草案。
 
-Avoid status meetings based only on activity. Report artifacts, tests, and
-measured results.
+### 下一次共同会议
 
-## 5. Change-control rules
-
-1. Shared schemas require approval from both people.
-2. A schema change must include migration notes, updated fixtures, and tests.
-3. Prompt changes require a version identifier and a short rationale.
-4. Gold-label changes require an adjudication note.
-5. Main experiment configurations are frozen before results are inspected.
-6. Runtime outputs do not become mathematical evidence merely because they
-   are cached or repeated.
-
-## 6. Definition of done for a feature
-
-A feature is complete only when it has:
-
-- a written contract;
-- an implementation;
-- positive and negative tests;
-- at least one gold example;
-- an owner-independent review;
-- a link from `PROJECT_INDEX.md`;
-- documented limitations.
-
-## 7. Scientific safeguards
-
-- Separate module evaluation from end-to-end evaluation.
-- Preserve `undetermined`; do not optimize it away for headline accuracy.
-- Make false acceptance a primary safety metric.
-- Track token budget and number of model calls.
-- Compare same-model and cross-model dual agents.
-- Blind gold-label adjudication to model outputs when feasible.
-- Report counterexample validity separately from counterexample discovery.
-- Report repair success separately from new-error introduction.
-- Do not tune prompts on the held-out test set.
-
-## 8. Immediate next actions
-
-### Person A
-
-1. Draft the status and error-type definitions for M0.
-2. Select 10 representative algebra proofs from current samples/tests.
-3. Map existing checker fields to the proposed shared objects.
-
-### Person B
-
-1. Read the onboarding prompt and repository index.
-2. Draft the state-transition table and shared schema skeletons.
-3. Implement two no-model end-to-end fixtures for contract discussion.
-
-### Joint meeting after these actions
-
-Freeze M0 and schema v0.1 before either person begins a major rewrite of the
-existing checker.
+先冻结 M0 和 Schema v0.1 的讨论输入，再开始大规模修改现有 checker。
 
