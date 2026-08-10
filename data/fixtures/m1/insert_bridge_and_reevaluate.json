@@ -1,0 +1,21 @@
+{
+  "description": "Insert a bridge before node 2, evaluate the bridge first, then re-evaluate node 2 while its descendants remain stale.",
+  "target": {"proof_id": "p1", "node_id": 2, "version": 1},
+  "patch": {
+    "operation": "insert_before",
+    "inserted_node_id": "bridge-1",
+    "inserted_order_key": 1500,
+    "inserted_claim": "From n=2k, n^2=4k^2.",
+    "target_dependencies_after": ["bridge-1"]
+  },
+  "expected_after_patch": {
+    "inserted_lifecycle": "pending_evaluation",
+    "target_version": 2,
+    "target_lifecycle": "pending_evaluation",
+    "descendant_lifecycle": "stale"
+  },
+  "expected_after_recheck": {
+    "inserted_lifecycle": "active",
+    "target_lifecycle": "active"
+  }
+}
