@@ -15,6 +15,7 @@ class DiagnosisTest(CheckerTestCase):
                     "由零乘积定理可知 x=1 或 x=-1。": "introduction",
                     "假设 x<0。": "assumption",
                     "两边开平方。": "calculation_step",
+                    "等式两边同时除以 c。": "calculation_step",
                     "由 x^2-1=0 得 (x-1)(x+1)=0。": "calculation_step",
                     "因此 x=1 或 x=-1。": "conclusion",
                     "因为 m+n 是整数，所以 x+y 是偶数。": "conclusion",
