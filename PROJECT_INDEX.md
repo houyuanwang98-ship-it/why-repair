@@ -24,6 +24,11 @@
 | [M0 裁决记录](docs/milestones/M00_adjudication.md) | 双人评审分歧与最终裁决 | 已完成 |
 | [M1 共享契约与 Controller](docs/milestones/M01_shared_contracts_and_controller.md) | Schema、版本化状态机与无模型回放 | `v0.1` 已冻结 |
 | [M1 冻结记录](docs/milestones/M01_freeze_record.md) | 冻结范围、验证依据与变更规则 | 已完成 |
+| [M2 Person A 协议](docs/milestones/M02_person_a_protocol.md) | Person A 独立工作边界、盲标隔离与退出条件 | 进行中 |
+| [M2 Person A 标注指南](docs/annotation/M02_person_a_annotation_guideline.md) | 节点、依赖、裁决、首错与反例的独立标注规则 | `v0.1` 草案 |
+| [M2 50 题试点集](data/benchmarks/m2/pilot_50.jsonl) | 共享题目原文，不含任何一方答案 | `m2-pilot-v0.1` 已冻结 |
+| [M2 50 题冻结记录](docs/milestones/M02_pilot_freeze_record.md) | `m2-pilot-v0.1` 摘要、独立性与变更控制 | 已冻结 |
+| [M2 Person A 空白模板](data/benchmarks/m2/person_a_annotation_template.jsonl) | 仅供 Person A 独立填写 | 已建立 |
 | [开发指南](docs/development-guide.md) | 现有 checker 架构 | 已有 |
 | [Canonical Skill](skills/math-proof-repair-agent/SKILL.md) | 现有 Evaluator/checker 行为 | 已有 |
 | [结果 Schema](schemas/algebra_obligation_result.schema.json) | 现有 checker 输出契约 | 已有，待映射 |
