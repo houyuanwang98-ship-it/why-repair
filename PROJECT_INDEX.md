@@ -29,8 +29,9 @@
 | [M2 Person A 标注指南](docs/annotation/M02_person_a_annotation_guideline.md) | 节点、依赖、裁决、首错与反例的独立标注规则 | `v0.1` 已用于审核 |
 | [M2 50 题试点集](data/benchmarks/m2/source/pilot_50.jsonl) | 双方独立审核的同一份冻结题目 | `m2-pilot-v0.1` 已冻结 |
 | [M2 50 题冻结记录](docs/milestones/M02_pilot_freeze_record.md) | `m2-pilot-v0.1` 摘要与变更控制 | 已冻结 |
-| [M2 Pilot benchmark 基础设施](docs/milestones/M02_pilot_benchmark_infrastructure.md) | 标注校验、一致性报告、裁决与 Gold 生成 | Person A、Person B 均完成审核；待格式对齐与一致性报告 |
-| [M2 标签映射](docs/milestones/M02_label_mapping.md) | M2 benchmark 标签到 M1 v0.3 运行时结果的显式转换边界 | 等待双方批准 |
+| [M2 Pilot benchmark 基础设施](docs/milestones/M02_pilot_benchmark_infrastructure.md) | 标注校验、一致性报告、裁决与 Gold 生成 | `m2.2` Gold 已冻结 |
+| [M2 标签映射](docs/milestones/M02_label_mapping.md) | M2 benchmark 标签到 M1 v0.3 运行时结果的显式转换边界 | 已用于冻结 Gold |
+| [M2 Gold 冻结记录](docs/milestones/M02_gold_freeze_record.md) | 双人标注、一致性、共同裁决、Gold 摘要与变更控制 | 已完成 |
 | [M2 可移植 Schema](schemas/m2_benchmark_v0_2.schema.json) | Source、annotation、反例、分歧、裁决与 Gold manifest 契约 | `m2.2` 已实现 |
 | [开发指南](docs/development-guide.md) | 现有 checker 架构 | 已有 |
 | [Canonical Skill](skills/math-proof-repair-agent/SKILL.md) | 现有 Evaluator/checker 行为 | 已有 |
@@ -43,9 +44,9 @@
 | Evaluator, node model, dependency graph | Person A | Person B | Existing prototype |
 | Controller, Repair Generator, versioning | Person B | Person A | M1 controller/versioning and A/B contract integration complete; model generation remains for M5 |
 | Shared schemas and state transitions | Joint | Both approve | M1 v0.3 frozen |
-| Benchmark annotation policy | Person A | Person B | M2 |
-| Evaluation runner and metrics | Person B | Person A | M2 infrastructure and Person B annotation complete; awaiting Person A annotation |
-| Gold-label review | Joint | Disagreements logged | M2 onward |
+| Benchmark annotation policy | Person A | Person B | M2 completed and frozen |
+| Evaluation runner and metrics | Person B | Person A | M2 infrastructure, agreement report and Gold generation complete |
+| Gold-label review | Joint | Disagreements logged | M2 pilot Gold frozen; continue for later benchmark expansions |
 | Paper experiments and writing | Joint | Joint | M7-M8 |
 
 ## Non-negotiable design decisions
