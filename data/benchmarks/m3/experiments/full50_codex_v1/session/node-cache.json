@@ -4,7 +4,7 @@
     "m2-001": {
       "nodes": {
         "1": {
-          "fingerprint": "a5308aa7c1ebadb48a0cd53c5fac7c1a0b4d58e6027c1e6a47e7e1023d00d43d",
+          "fingerprint": "31921751f1320010b6172d0eab2d17155ac068df859d8b61385bcd3849078c72",
           "node": {
             "node_id": 1,
             "claim": "存在整数 m,n，使 x=2m，y=2n。",
@@ -12,7 +12,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x、y 为偶整数。"
             ],
@@ -80,7 +80,7 @@
           }
         },
         "2": {
-          "fingerprint": "b40a66f673ad44997085c27f5c74a11b14349520768655cedb02f92764b4360b",
+          "fingerprint": "74805c2fe77d606e0396d1f1be62806d690f580179c5ced0d0d0da60c693685f",
           "node": {
             "node_id": 2,
             "claim": "于是 x+y=2m+2n=2(m+n)。",
@@ -90,7 +90,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x、y 为偶整数。",
               "存在整数 m,n，使 x=2m，y=2n。"
@@ -346,7 +346,7 @@
           }
         },
         "3": {
-          "fingerprint": "eae841d32ff33a827a755a81b4ea482e4ba7c87a20c0ca288ec3f2d38dea450b",
+          "fingerprint": "87c826acb29758524a95cd5576d7c2e224885efce1d31f82b5a0e500c5d4d605",
           "node": {
             "node_id": 3,
             "claim": "因为 m+n 是整数，所以 x+y 是偶数。",
@@ -356,10 +356,10 @@
             "depends_on": [
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x、y 为偶整数。",
-              "存在整数 m,n，使 x=2m，y=2n。"
+              "于是 x+y=2m+2n=2(m+n)。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 因为 m+n 是整数，所以 x+y 是偶数。",
@@ -605,7 +605,7 @@
     "m2-002": {
       "nodes": {
         "1": {
-          "fingerprint": "8acdcc046b05d6508697e4236620c290a57ad5dd857bc04f898a1c156c45d6c1",
+          "fingerprint": "c3f4062fd98483edb38b5683c7f45e0f652a8acc3f8b71b95c7645468e059b95",
           "node": {
             "node_id": 1,
             "claim": "由 x>2 得 x-2>0，并且 x+2>0。",
@@ -613,7 +613,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x 为实数且 x>2。"
             ],
@@ -694,7 +694,7 @@
           }
         },
         "2": {
-          "fingerprint": "d1382005e48a9c1551e4695dab28a40c3219a45b5f3f4283c91800e0cd7492dd",
+          "fingerprint": "c405d6562b298273dd76c208a5852771d25ebd64abb909dd5e1a677f3d005a86",
           "node": {
             "node_id": 2,
             "claim": "两个正数的乘积为正，所以 (x-2)(x+2)>0，即 x^2-4>0。",
@@ -704,9 +704,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "x 为实数且 x>2。"
+              "x 为实数且 x>2。",
+              "由 x>2 得 x-2>0，并且 x+2>0。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 两个正数的乘积为正，所以 (x-2)(x+2)>0，即 x^2-4>0。",
@@ -809,7 +810,7 @@
           }
         },
         "3": {
-          "fingerprint": "520eaeb3a9d38ce97f4287319419a04c28b66397693b45600e1f9fb26287b441",
+          "fingerprint": "b7bdde7817671fb7b7f77f01a5b5a83b99d3daebe2b438ebd1dcdede9a8c531e",
           "node": {
             "node_id": 3,
             "claim": "因此 x^2>4。",
@@ -819,9 +820,10 @@
             "depends_on": [
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "x 为实数且 x>2。"
+              "x 为实数且 x>2。",
+              "两个正数的乘积为正，所以 (x-2)(x+2)>0，即 x^2-4>0。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 因此 x^2>4。",
@@ -928,7 +930,7 @@
     "m2-003": {
       "nodes": {
         "1": {
-          "fingerprint": "9bdec583be0c409fecb8a008216f56d230a4947bd1c8c1f876f4647b4d238977",
+          "fingerprint": "5a2e5bad23ef993a83b14c2ec3751ad734904b2fa98b369aa55e35aa539268db",
           "node": {
             "node_id": 1,
             "claim": "相邻整数 n 与 n+1 中至少有一个是偶数，所以 n(n+1) 是偶数。",
@@ -936,7 +938,7 @@
             "source_reliability": "unknown",
             "node_type": "conclusion",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为整数。"
             ],
@@ -1004,7 +1006,7 @@
           }
         },
         "2": {
-          "fingerprint": "130965eed5ad705c4e2505b7a7434c93579cadd02d97a4a37650e5570593bbec",
+          "fingerprint": "57643f742bf85aff9119c2fb903a86dba21e8e84f1f18ebd5ed194f3c9f8a0a4",
           "node": {
             "node_id": 2,
             "claim": "因此存在整数 k，使 n(n+1)=2k。",
@@ -1014,7 +1016,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为整数。",
               "相邻整数 n 与 n+1 中至少有一个是偶数，所以 n(n+1) 是偶数。"
@@ -1261,7 +1263,7 @@
           }
         },
         "3": {
-          "fingerprint": "4536a618346c6122c567dd8233069d165302322465f793e40f66dfc2d6f8590c",
+          "fingerprint": "7d0b602e15181480f4f5b7db3b7c8ce96f2c8d86485e612a1b6d79efa04fadc1",
           "node": {
             "node_id": 3,
             "claim": "于是 n^2+n+1=n(n+1)+1=2k+1，所以 n^2+n+1 是奇数。",
@@ -1269,12 +1271,12 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [
-              1
+              2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为整数。",
-              "相邻整数 n 与 n+1 中至少有一个是偶数，所以 n(n+1) 是偶数。"
+              "因此存在整数 k，使 n(n+1)=2k。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 于是 n^2+n+1=n(n+1)+1=2k+1，所以 n^2+n+1 是奇数。",
@@ -1288,12 +1290,12 @@
                 "n 为整数。"
               ],
               "predecessor_node_ids": [
-                1
+                2
               ],
               "predecessor_claims": [
-                "相邻整数 n 与 n+1 中至少有一个是偶数，所以 n(n+1) 是偶数。"
+                "因此存在整数 k，使 n(n+1)=2k。"
               ],
-              "formal_obligation": "n 为整数。, 相邻整数 n 与 n+1 中至少有一个是偶数，所以 n(n+1) 是偶数。 |- 于是 n^2+n+1=n(n+1)+1=2k+1，所以 n^2+n+1 是奇数。",
+              "formal_obligation": "n 为整数。, 因此存在整数 k，使 n(n+1)=2k。 |- 于是 n^2+n+1=n(n+1)+1=2k+1，所以 n^2+n+1 是奇数。",
               "normalized_query": {
                 "topic_tokens": [
                   "algebra",
@@ -1303,7 +1305,9 @@
                   "equal"
                 ],
                 "assumption_tokens": [],
-                "predecessor_tokens": []
+                "predecessor_tokens": [
+                  "equal"
+                ]
               }
             },
             "retrieval_scope": "global",
@@ -1314,17 +1318,18 @@
               {
                 "id": "grp_normal_quotient",
                 "name": "Quotient group criterion",
-                "score": 2.0,
+                "score": 5.0,
                 "score_breakdown": {
                   "goal": 4.0,
-                  "predecessors": 0.0,
+                  "predecessors": 3.0,
                   "assumptions": 0.0,
                   "topic": 0.0,
                   "domain": 0.0,
                   "topic_conflict": -2.0
                 },
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "matched_rule_fields": [
                   "statement"
@@ -1336,17 +1341,18 @@
               {
                 "id": "lin_rank_nullity",
                 "name": "Rank-nullity theorem",
-                "score": 2.0,
+                "score": 5.0,
                 "score_breakdown": {
                   "goal": 4.0,
-                  "predecessors": 0.0,
+                  "predecessors": 3.0,
                   "assumptions": 0.0,
                   "topic": 0.0,
                   "domain": 0.0,
                   "topic_conflict": -2.0
                 },
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "matched_rule_fields": [
                   "conclusion",
@@ -1360,24 +1366,27 @@
               {
                 "id": "lin_same_dim_subspace",
                 "name": "Same dimension subspace criterion",
-                "score": 2.0,
+                "score": 5.0,
                 "score_breakdown": {
                   "goal": 4.0,
-                  "predecessors": 0.0,
+                  "predecessors": 3.0,
                   "assumptions": 0.0,
                   "topic": 0.0,
                   "domain": 0.0,
                   "topic_conflict": -2.0
                 },
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "matched_rule_fields": [
                   "conclusion",
+                  "conditions",
                   "statement"
                 ],
                 "matched_fields": [
                   "conclusion",
+                  "conditions",
                   "statement"
                 ]
               }
@@ -1397,9 +1406,10 @@
                   "forming G/N when N is not known to be normal",
                   "assuming coset multiplication is well-defined without checking normality"
                 ],
-                "retrieval_score": 2.0,
+                "retrieval_score": 5.0,
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "deterministic_safe": false,
                 "deterministic_safe_kind": null,
@@ -1419,9 +1429,10 @@
                   "using rank-nullity without finite-dimensionality",
                   "concluding im(T) = W from equal dimensions without im(T) being a subspace of W"
                 ],
-                "retrieval_score": 2.0,
+                "retrieval_score": 5.0,
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "deterministic_safe": false,
                 "deterministic_safe_kind": null,
@@ -1442,9 +1453,10 @@
                   "using dimension equality without a subspace relation",
                   "using the criterion in infinite-dimensional settings"
                 ],
-                "retrieval_score": 2.0,
+                "retrieval_score": 5.0,
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "deterministic_safe": false,
                 "deterministic_safe_kind": null,
@@ -1491,10 +1503,10 @@
               "context_changed": false,
               "change_reason": null
             },
-            "calculation_source_expression": "相邻整数 n 与 n+1 中至少有一个是偶数，所以 n(n+1) 是偶数。",
+            "calculation_source_expression": "因此存在整数 k，使 n(n+1)=2k。",
             "calculation_adjudication": {
               "decision": "undetermined",
-              "source_expression": "相邻整数 n 与 n+1 中至少有一个是偶数，所以 n(n+1) 是偶数。",
+              "source_expression": "因此存在整数 k，使 n(n+1)=2k。",
               "target_expression": "于是 n^2+n+1=n(n+1)+1=2k+1，所以 n^2+n+1 是奇数。",
               "atomic_steps": [],
               "used_axioms": [],
@@ -1521,7 +1533,7 @@
     "m2-004": {
       "nodes": {
         "1": {
-          "fingerprint": "d7d69531603c0149319a0492cbd606d461e820203628bf39e00e6acabffb6010",
+          "fingerprint": "6d25a4485d9746e01c8df26c1f337dd7ab3811be0e1def607ad8fba4e54ae406",
           "node": {
             "node_id": 1,
             "claim": "假设 n 是奇数。",
@@ -1529,7 +1541,7 @@
             "source_reliability": "unknown",
             "node_type": "assumption",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为整数且 n^2 为偶数。"
             ],
@@ -1600,7 +1612,7 @@
           }
         },
         "2": {
-          "fingerprint": "0928ea57729004409f144f5fef76d68cf147619b2a781af6cd3c7ce38a927bcc",
+          "fingerprint": "7fdb87f302c3b9c64dd21ef6c49c84350d42b93755068be2b9eb24f39f9d8777",
           "node": {
             "node_id": 2,
             "claim": "那么存在整数 k 使 n=2k+1，从而 n^2=4k^2+4k+1 是奇数。",
@@ -1610,7 +1622,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为整数且 n^2 为偶数。",
               "假设 n 是奇数。"
@@ -1859,7 +1871,7 @@
           }
         },
         "3": {
-          "fingerprint": "1a52d5b87d407c9e4bdddd2e12a7ab9508f021cf89cba93d5688145deae50276",
+          "fingerprint": "a4ab11fc826c9fc3ae5987d923159734892624f418f50625f17fd1433f8f92c4",
           "node": {
             "node_id": 3,
             "claim": "这与 n^2 为偶数矛盾，所以 n 为偶数。",
@@ -1867,12 +1879,14 @@
             "source_reliability": "unknown",
             "node_type": "conclusion",
             "depends_on": [
+              1,
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为整数且 n^2 为偶数。",
-              "假设 n 是奇数。"
+              "假设 n 是奇数。",
+              "那么存在整数 k 使 n=2k+1，从而 n^2=4k^2+4k+1 是奇数。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 这与 n^2 为偶数矛盾，所以 n 为偶数。",
@@ -1886,12 +1900,14 @@
                 "n 为整数且 n^2 为偶数。"
               ],
               "predecessor_node_ids": [
+                1,
                 2
               ],
               "predecessor_claims": [
+                "假设 n 是奇数。",
                 "那么存在整数 k 使 n=2k+1，从而 n^2=4k^2+4k+1 是奇数。"
               ],
-              "formal_obligation": "n 为整数且 n^2 为偶数。, 那么存在整数 k 使 n=2k+1，从而 n^2=4k^2+4k+1 是奇数。 |- 这与 n^2 为偶数矛盾，所以 n 为偶数。",
+              "formal_obligation": "n 为整数且 n^2 为偶数。, 假设 n 是奇数。, 那么存在整数 k 使 n=2k+1，从而 n^2=4k^2+4k+1 是奇数。 |- 这与 n^2 为偶数矛盾，所以 n 为偶数。",
               "normalized_query": {
                 "topic_tokens": [
                   "algebra",
@@ -2121,7 +2137,7 @@
     "m2-005": {
       "nodes": {
         "1": {
-          "fingerprint": "a3ed0b506f881cb8d318b6a12e906b91d8817dab8f69b08220f45996146a6f45",
+          "fingerprint": "13babf659073da9b9c308669512f9ed5b63c951df8b87492409caefdd1d9bb4c",
           "node": {
             "node_id": 1,
             "claim": "在不等式 a<b 两边同时加 c。",
@@ -2129,7 +2145,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b,c 为实数且 a<b。"
             ],
@@ -2210,7 +2226,7 @@
           }
         },
         "2": {
-          "fingerprint": "775ce1ab6802601cf009eba62e21170a3eeb9d51b00f9ecd07c464291395ce04",
+          "fingerprint": "47e9c9640d7d9a12d35403f3ea107e35bfee080bfd08d3643eebe40b78cdf4a0",
           "node": {
             "node_id": 2,
             "claim": "得到 a+c<b+c。",
@@ -2220,9 +2236,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "a,b,c 为实数且 a<b。"
+              "a,b,c 为实数且 a<b。",
+              "在不等式 a<b 两边同时加 c。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 得到 a+c<b+c。",
@@ -2329,7 +2346,7 @@
     "m2-006": {
       "nodes": {
         "1": {
-          "fingerprint": "763408b0664fc5880d99640fe2f570372b2e3807dda61ebabfcf4580e749561e",
+          "fingerprint": "39436c21ecf25ed958845581cde0bdcc08f9b3d882e212a2bdf54eb892fb0846",
           "node": {
             "node_id": 1,
             "claim": "存在整数 m,n 使 b=am 且 c=an。",
@@ -2337,7 +2354,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b,c 为整数，a|b 且 a|c。"
             ],
@@ -2405,7 +2422,7 @@
           }
         },
         "2": {
-          "fingerprint": "aa88f3152827c31722d58777d3521a1d95b3b6d7e963b7032291cd9477e4608c",
+          "fingerprint": "02183c8678e65b55fbdf9a1200f272db0dd5fa28dc6e232010c0bc5dfae8ae9d",
           "node": {
             "node_id": 2,
             "claim": "于是 b+c=a(m+n)。",
@@ -2415,7 +2432,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b,c 为整数，a|b 且 a|c。",
               "存在整数 m,n 使 b=am 且 c=an。"
@@ -2662,7 +2679,7 @@
           }
         },
         "3": {
-          "fingerprint": "79859af8c9f042fb8fe06d9351c4df91de984dea136156f0fe77f3f4d323f17a",
+          "fingerprint": "777c722c9c880bdfffa3529b42e30bf08bd0d4e562918661bcd0f42ea4b4bebe",
           "node": {
             "node_id": 3,
             "claim": "所以 a|b+c。",
@@ -2672,10 +2689,10 @@
             "depends_on": [
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b,c 为整数，a|b 且 a|c。",
-              "存在整数 m,n 使 b=am 且 c=an。"
+              "于是 b+c=a(m+n)。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 所以 a|b+c。",
@@ -2745,7 +2762,7 @@
     "m2-007": {
       "nodes": {
         "1": {
-          "fingerprint": "a39c6bbd04cd076ce7b6b7a10d8ca57346aba9d812260b2da9b276a1b176ab5f",
+          "fingerprint": "ca93d98ac09fc134935003714f8c5b2fc5ebb5499df6d378e47893987dd3a1d6",
           "node": {
             "node_id": 1,
             "claim": "实数的平方非负。",
@@ -2753,7 +2770,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x 为实数。"
             ],
@@ -2835,7 +2852,7 @@
           }
         },
         "2": {
-          "fingerprint": "f65543ae0782299bc453d1001436b2dba29162b385cfa66f1610d662310f509d",
+          "fingerprint": "c7fa59d0df8379a6aa994b486a99ffafbf841bb85c672352086b2cbaabb60405",
           "node": {
             "node_id": 2,
             "claim": "所以 (x+1)^2≥0。",
@@ -2845,9 +2862,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "x 为实数。"
+              "x 为实数。",
+              "实数的平方非负。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 所以 (x+1)^2≥0。",
@@ -3099,7 +3117,7 @@
     "m2-008": {
       "nodes": {
         "1": {
-          "fingerprint": "8ea530e5d7cfc54b4a0bc772c7a4f64a4009e8efdf390d1c5a0a60f185f3347a",
+          "fingerprint": "489c4557a19e3760109835d461712efcd60d67ab87ba0d75664eaa5a8ee0dcd1",
           "node": {
             "node_id": 1,
             "claim": "正数相乘仍为正数。",
@@ -3107,7 +3125,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为实数且 x>0、y>0。"
             ],
@@ -3178,7 +3196,7 @@
           }
         },
         "2": {
-          "fingerprint": "554f3fbff891118214b3d3e38eaa7c2315f3d595978fab8bdd4f696eba4c1918",
+          "fingerprint": "7cf7a2921f23973a18bc4344eb9c2c03ab062f009c7d845252eccf3016e861f9",
           "node": {
             "node_id": 2,
             "claim": "因此 xy>0。",
@@ -3188,7 +3206,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为实数且 x>0、y>0。",
               "正数相乘仍为正数。"
@@ -3298,7 +3316,7 @@
     "m2-009": {
       "nodes": {
         "1": {
-          "fingerprint": "e746c040434b62cd883e2a493412287b7eeef9e0ff4bc2c77a76fbff61bb8c4f",
+          "fingerprint": "220a3ee70cf7d13062426b56e06e204c248087c5efdeffb91b7468ec19267727",
           "node": {
             "node_id": 1,
             "claim": "存在整数 m,n，使 x=2m+1，y=2n。",
@@ -3306,7 +3324,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x 为奇整数，y 为偶整数。"
             ],
@@ -3374,7 +3392,7 @@
           }
         },
         "2": {
-          "fingerprint": "74e21e52a10f3603095e1ebbb80c7cae203a2ce5d3d0e30fc8a46ced9c8387a4",
+          "fingerprint": "679eb53148ad17631fde4f7ad47a2cb995cfec4405fa2eb3de220f165dd9c070",
           "node": {
             "node_id": 2,
             "claim": "于是 xy=(2m+1)2n=2((2m+1)n)。",
@@ -3384,7 +3402,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x 为奇整数，y 为偶整数。",
               "存在整数 m,n，使 x=2m+1，y=2n。"
@@ -3640,7 +3658,7 @@
           }
         },
         "3": {
-          "fingerprint": "f42f589d7164852c361b0405f3a4bb84395f8f3a5c4375bae61e837e8cea57dc",
+          "fingerprint": "b436c9c6d6c0aeab454616c7f63b6c170474bf683569df7bca0db6f5c9f3e925",
           "node": {
             "node_id": 3,
             "claim": "所以 xy 是偶数。",
@@ -3650,10 +3668,10 @@
             "depends_on": [
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x 为奇整数，y 为偶整数。",
-              "存在整数 m,n，使 x=2m+1，y=2n。"
+              "于是 xy=(2m+1)2n=2((2m+1)n)。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 所以 xy 是偶数。",
@@ -3899,7 +3917,7 @@
     "m2-010": {
       "nodes": {
         "1": {
-          "fingerprint": "5a0a559b343ab0b0a850b81ba8a851a794322df4ca25c138666d5b4da639dfc1",
+          "fingerprint": "3b91e71dd712244e7de6d5ec6f5c2a1db70c1c009df1581a59d5cd32a52c9c14",
           "node": {
             "node_id": 1,
             "claim": "等式两边同时加 z。",
@@ -3907,7 +3925,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y,z 为实数且 x=y。"
             ],
@@ -3988,7 +4006,7 @@
           }
         },
         "2": {
-          "fingerprint": "c4b3fb2c0e5d758ddee47d08e3639a173e298565c14536e91bd91371804549ca",
+          "fingerprint": "a2915bd7d97be137b3a56bad5c6d58a08edf4b9545d0cb08ce33cd75ce04ae6f",
           "node": {
             "node_id": 2,
             "claim": "得到 x+z=y+z。",
@@ -3998,9 +4016,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "x,y,z 为实数且 x=y。"
+              "x,y,z 为实数且 x=y。",
+              "等式两边同时加 z。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 得到 x+z=y+z。",
@@ -4247,7 +4266,7 @@
     "m2-011": {
       "nodes": {
         "1": {
-          "fingerprint": "6a1ff6cb7513ea124c8f7ae6f73ce3e23775c98242c5f1903ad103138e45aa78",
+          "fingerprint": "8f59b2d5d61f2b6e30ea26244fb41c8e33ff40e09177cff6b3ebdb86626eaebf",
           "node": {
             "node_id": 1,
             "claim": "存在整数 m,n，使 x=2m+1，y=2n+1。",
@@ -4255,7 +4274,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x、y 为奇整数。"
             ],
@@ -4323,7 +4342,7 @@
           }
         },
         "2": {
-          "fingerprint": "cde814a538700991598078634436ef5b456149af58d93307864a034d30b06635",
+          "fingerprint": "2e4683f9c6f34efcb8a6ada57126e023854e4e24410a5a9e8946ba16afe229df",
           "node": {
             "node_id": 2,
             "claim": "所以 x+y 是偶数。",
@@ -4333,7 +4352,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x、y 为奇整数。",
               "存在整数 m,n，使 x=2m+1，y=2n+1。"
@@ -4582,7 +4601,7 @@
     "m2-012": {
       "nodes": {
         "1": {
-          "fingerprint": "65fb15dd30d01188171858f49daa3d8fc2f9faa96006f25acb105ad1204e81a2",
+          "fingerprint": "5bd99159317cc68f488806afa773d3e994a843f440d2ff9f294611dca654968b",
           "node": {
             "node_id": 1,
             "claim": "存在整数 m,n 使 b=am 且 c=bn。",
@@ -4590,7 +4609,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b,c 为整数，a|b 且 b|c。"
             ],
@@ -4658,7 +4677,7 @@
           }
         },
         "2": {
-          "fingerprint": "461f2001832c2fb8f9a6e6949d78f828b1d82b48335cc14312575c8c70c23a1a",
+          "fingerprint": "75a6170f4d7e6858c4c81df8d1964c577fe30a8feab947e1454282e4e7b417c7",
           "node": {
             "node_id": 2,
             "claim": "因此 a|c。",
@@ -4668,7 +4687,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b,c 为整数，a|b 且 b|c。",
               "存在整数 m,n 使 b=am 且 c=bn。"
@@ -4917,7 +4936,7 @@
     "m2-013": {
       "nodes": {
         "1": {
-          "fingerprint": "6d2732ca6f65170e8da954a5717bf5135985f0dc8d86944a9def294f56836960",
+          "fingerprint": "a8dd7313ca42d72dc3428897b5944ba3ef24da0d34bbe6377a705dc62e64b355",
           "node": {
             "node_id": 1,
             "claim": "实数平方非负。",
@@ -4925,7 +4944,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x 为实数且 x≠0。"
             ],
@@ -5007,7 +5026,7 @@
           }
         },
         "2": {
-          "fingerprint": "fa84a6e2a2763737b75a34164e3209afa5f36348d741a50fc4d20681e57aad2b",
+          "fingerprint": "bf5eaf28809dfd01fbce0e2dc30d2eb8b9919aeacb09d944bda152144933dff0",
           "node": {
             "node_id": 2,
             "claim": "所以 x^2>0。",
@@ -5017,9 +5036,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "x 为实数且 x≠0。"
+              "x 为实数且 x≠0。",
+              "实数平方非负。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 所以 x^2>0。",
@@ -5128,7 +5148,7 @@
     "m2-014": {
       "nodes": {
         "1": {
-          "fingerprint": "58d2f6e0deeaa0420339e70f72237b8c8d7bd77e31e6a3fd29553d31a8460c6a",
+          "fingerprint": "ffa39ce00fa4793b617560ff53cd70133e76e86be4630901297cd76ef19ebcab",
           "node": {
             "node_id": 1,
             "claim": "存在整数 k 使 n=2k。",
@@ -5136,7 +5156,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为偶整数。"
             ],
@@ -5204,7 +5224,7 @@
           }
         },
         "2": {
-          "fingerprint": "28c4b171f74f5f37b0b441a63dd741f337e25e62d9aacd137e19069455ec198e",
+          "fingerprint": "2b0d1b62ada26bdf5ce9ea8d85503d2c1ea77939e3cb1b1a3c21ac47544a0350",
           "node": {
             "node_id": 2,
             "claim": "因此 n^2 是 4 的倍数。",
@@ -5214,7 +5234,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为偶整数。",
               "存在整数 k 使 n=2k。"
@@ -5463,7 +5483,7 @@
     "m2-015": {
       "nodes": {
         "1": {
-          "fingerprint": "f151b43bef03dbc364fb58a02ff08be6c9fa4c4cc8f32e4ee93294d49eedd885",
+          "fingerprint": "c8f8ff3e26d786d34d279085a9dc758a7c4d289ee86619327df4bf028433562f",
           "node": {
             "node_id": 1,
             "claim": "正数的倒数为正数。",
@@ -5471,7 +5491,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b 为实数且 a>0、b>0。"
             ],
@@ -5542,7 +5562,7 @@
           }
         },
         "2": {
-          "fingerprint": "667b43db76d3f76bd0a68ad95411acfdfa1f381ea1e34c00b3326084cd3a02b7",
+          "fingerprint": "63c49779464d820babca28d3bda4afbd44d5960f7075f3be5d1670bdd8aca05c",
           "node": {
             "node_id": 2,
             "claim": "因此 a/b>0。",
@@ -5552,7 +5572,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b 为实数且 a>0、b>0。",
               "正数的倒数为正数。"
@@ -5794,7 +5814,7 @@
     "m2-016": {
       "nodes": {
         "1": {
-          "fingerprint": "64a08a9a594f3bb9f62a8965b7b48a9bcaf718cba18930c0b36bab22acdb7a00",
+          "fingerprint": "b3d2bc16347896878d9567ab8375fec65803a83a1414e00dbe651037ebeb6d04",
           "node": {
             "node_id": 1,
             "claim": "存在整数 k 使 n=6k。",
@@ -5802,7 +5822,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为整数且 6|n。"
             ],
@@ -5870,7 +5890,7 @@
           }
         },
         "2": {
-          "fingerprint": "b66c0ac86f4069ed3b1722464eb3ed8d4b4ff861dd87133353dc497df545f4e2",
+          "fingerprint": "8bf55dcd29fd494cb9924981ea4db5c93743c68326a95423b7b97482ced59ca8",
           "node": {
             "node_id": 2,
             "claim": "所以 3|n。",
@@ -5880,7 +5900,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为整数且 6|n。",
               "存在整数 k 使 n=6k。"
@@ -6129,7 +6149,7 @@
     "m2-017": {
       "nodes": {
         "1": {
-          "fingerprint": "652e2383b6ae93aa6f5aacc33d083b7c2212396d0ad3fd390a1444fb37e91147",
+          "fingerprint": "dfb6217bf9b69e2dd035eb6fcbdef99357e72d3d4894dd8eacd283b9599b1681",
           "node": {
             "node_id": 1,
             "claim": "它们的和为 3n+3。",
@@ -6137,7 +6157,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为整数，三个整数为 n,n+1,n+2。"
             ],
@@ -6215,7 +6235,7 @@
           }
         },
         "2": {
-          "fingerprint": "250bdb6ac2ba4e2511acc9dc513de38dc5702f13371571bfb32655fabfb05c7c",
+          "fingerprint": "6ebd3f4c33cb0f7c344053214a0d6032e32bc12bd669fa7801175108606cfd82",
           "node": {
             "node_id": 2,
             "claim": "所以该和能被 3 整除。",
@@ -6225,9 +6245,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "n 为整数，三个整数为 n,n+1,n+2。"
+              "n 为整数，三个整数为 n,n+1,n+2。",
+              "它们的和为 3n+3。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 所以该和能被 3 整除。",
@@ -6331,7 +6352,7 @@
     "m2-018": {
       "nodes": {
         "1": {
-          "fingerprint": "ba839dd5b1658e05573485dacbb9c351f806b2405aba5959670a455d9adf1cf2",
+          "fingerprint": "d529014f1e11a09d712c1cbb10dd0b338f7e126f95c39ffcbfe3d6c4e6781a76",
           "node": {
             "node_id": 1,
             "claim": "等式两边分别乘以 x 和 y。",
@@ -6339,7 +6360,7 @@
             "source_reliability": "unknown",
             "node_type": "conclusion",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为实数且 x=y。"
             ],
@@ -6410,7 +6431,7 @@
           }
         },
         "2": {
-          "fingerprint": "e7380ba73e21e10eeea18f4a414748be962c997f20a4071e66df0796791c6328",
+          "fingerprint": "00b0fb9fb74c6ddd5f10952f5477bb67799d592d03eaad3ae448de389418d23a",
           "node": {
             "node_id": 2,
             "claim": "因此 x^2=y^2。",
@@ -6420,7 +6441,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为实数且 x=y。",
               "等式两边分别乘以 x 和 y。"
@@ -6680,7 +6701,7 @@
     "m2-019": {
       "nodes": {
         "1": {
-          "fingerprint": "e49dca0d09c8b96116affaa62f727e9aae2e8ff55c8b47df24fe0ea4f5aea186",
+          "fingerprint": "f512181e96999c6ebeffb6670c4edf5d792b8f343e894d1c6dbad68f9ff2cb07",
           "node": {
             "node_id": 1,
             "claim": "写 a=5m，b=5n。",
@@ -6688,7 +6709,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b 为整数且 5|a、5|b。"
             ],
@@ -6756,7 +6777,7 @@
           }
         },
         "2": {
-          "fingerprint": "464ef81f0959336b31a4383dd68a48e28304093dea7c3c0d3d58ea44376024dd",
+          "fingerprint": "04f772a7eddc98e9b7d8988869dba9d2f835a83b0fc7bdf5096bacb04864e685",
           "node": {
             "node_id": 2,
             "claim": "所以 a-b 是 5 的倍数。",
@@ -6766,7 +6787,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b 为整数且 5|a、5|b。",
               "写 a=5m，b=5n。"
@@ -7015,7 +7036,7 @@
     "m2-020": {
       "nodes": {
         "1": {
-          "fingerprint": "7ce4632c3806581d0223c6490c01d264f677bc6dcc1acc609667100f2874503e",
+          "fingerprint": "758347cc158bdf8f295b5f9f9a926719a9f25afefcdf80ac1ba50e796ed649c5",
           "node": {
             "node_id": 1,
             "claim": "不等式 x<1 两边乘以 x。",
@@ -7023,7 +7044,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x 为实数且 0<x<1。"
             ],
@@ -7104,7 +7125,7 @@
           }
         },
         "2": {
-          "fingerprint": "05e43ea8ad08d2cfc09d94a27a24ce7041d948982fdf4e2ea771f64e9340dec8",
+          "fingerprint": "d5714dd716566dd53c53f16856207c49daf3c6ca9300f6ea653fe77a449e31be",
           "node": {
             "node_id": 2,
             "claim": "得到 x^2<x。",
@@ -7114,9 +7135,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "x 为实数且 0<x<1。"
+              "x 为实数且 0<x<1。",
+              "不等式 x<1 两边乘以 x。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 得到 x^2<x。",
@@ -7223,7 +7245,7 @@
     "m2-021": {
       "nodes": {
         "1": {
-          "fingerprint": "fedb838e767c1b2cf2bb6a205ab8b046f6ca6983e10101e3a9de72969d448e3e",
+          "fingerprint": "fca952c81af8ab8cfbdd42fac4885b0301ecd1b8be028b009f49a27abb9135fb",
           "node": {
             "node_id": 1,
             "claim": "偶数可以写成 2k。",
@@ -7231,7 +7253,7 @@
             "source_reliability": "unknown",
             "node_type": "conclusion",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b 为整数且 a+b 为偶数。"
             ],
@@ -7299,7 +7321,7 @@
           }
         },
         "2": {
-          "fingerprint": "8616f005ca49dade5eaf52779d545b86882c06e8cb34768945adf661502164d6",
+          "fingerprint": "64b5a27d29b9c11f2abed4b24d94f52a92185145b9ba61423a562e9b589da51b",
           "node": {
             "node_id": 2,
             "claim": "因此 a=2m 且 b=2n。",
@@ -7309,7 +7331,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b 为整数且 a+b 为偶数。",
               "偶数可以写成 2k。"
@@ -7556,7 +7578,7 @@
           }
         },
         "3": {
-          "fingerprint": "549b1048ec2b35759747e46ce317080efb15364ac72b38d1c47c52ce52306f37",
+          "fingerprint": "9455971a8e68e794c691eb16cfc7b9ba425ab866e69a9515470b8138688e271b",
           "node": {
             "node_id": 3,
             "claim": "所以 a、b 都为偶数。",
@@ -7566,10 +7588,10 @@
             "depends_on": [
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b 为整数且 a+b 为偶数。",
-              "偶数可以写成 2k。"
+              "因此 a=2m 且 b=2n。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 所以 a、b 都为偶数。",
@@ -7815,7 +7837,7 @@
     "m2-022": {
       "nodes": {
         "1": {
-          "fingerprint": "a4bdc54469b1a68abb6dd7c1372ddc6a5c0364792a5e7a95d68393b0981cadb0",
+          "fingerprint": "e7d97520fc48b55f412ff83775efe81145e9fa1c49bd8d45146827919698168b",
           "node": {
             "node_id": 1,
             "claim": "非零数相加仍非零。",
@@ -7823,7 +7845,7 @@
             "source_reliability": "unknown",
             "node_type": "conclusion",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为非零实数。"
             ],
@@ -7894,7 +7916,7 @@
           }
         },
         "2": {
-          "fingerprint": "bf165e77a8f8cb2251fe13b6c6ab36cc39d501c01d256a8c1857fd6ec52a2d60",
+          "fingerprint": "96698412253361f4dc0a37c47e55aacb3deec1935492df87f4f6941f8ed7f806",
           "node": {
             "node_id": 2,
             "claim": "所以 x+y≠0。",
@@ -7904,7 +7926,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为非零实数。",
               "非零数相加仍非零。"
@@ -8019,7 +8041,7 @@
     "m2-023": {
       "nodes": {
         "1": {
-          "fingerprint": "6b9d3c314b6ec1c87fe4e972cbb5e4b8b80a43a32b1b75c79e8cb69f9de11168",
+          "fingerprint": "dbe30181815c0496f242bceecbcb6b3f6e1c60c35f505c918f1c6f66456e23de",
           "node": {
             "node_id": 1,
             "claim": "因为 4|n^2，所以 2|n。",
@@ -8027,7 +8049,7 @@
             "source_reliability": "unknown",
             "node_type": "conclusion",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为整数且 4|n^2。"
             ],
@@ -8095,7 +8117,7 @@
           }
         },
         "2": {
-          "fingerprint": "dc2d1aeed10a81295dc1c7b1b1e1d8daf66d476cc5223cc0c9ce476d41d8794c",
+          "fingerprint": "c8f1d7a7ea17e21620677a9820c1fbfd9f176787afa7454a6c382e7a28f1f538",
           "node": {
             "node_id": 2,
             "claim": "因此 4|n。",
@@ -8105,7 +8127,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为整数且 4|n^2。",
               "因为 4|n^2，所以 2|n。"
@@ -8212,7 +8234,7 @@
     "m2-024": {
       "nodes": {
         "1": {
-          "fingerprint": "33d1782e5f37962aa0512bd0f7dc5ce3f7c5c7483ddf510edcd68c5f0326cf17",
+          "fingerprint": "b7aaed719983ecc2cf5f7f22209e4ca3d6e8f873a4a8a9eeb9476dc690bf20af",
           "node": {
             "node_id": 1,
             "claim": "素数只有 1 和自身两个正因数。",
@@ -8220,7 +8242,7 @@
             "source_reliability": "unknown",
             "node_type": "conclusion",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "p 为素数。"
             ],
@@ -8274,7 +8296,7 @@
           }
         },
         "2": {
-          "fingerprint": "a5a6867f7cad19f1e0adad0631364bf748e38d449c0efca786f1b64575418042",
+          "fingerprint": "623b90a513804de8c23e3735fb1d68113e07a791ee437ad693b4964ecfc650d7",
           "node": {
             "node_id": 2,
             "claim": "所以 p 不能被 2 整除。",
@@ -8284,7 +8306,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "p 为素数。",
               "素数只有 1 和自身两个正因数。"
@@ -8373,7 +8395,7 @@
           }
         },
         "3": {
-          "fingerprint": "f2501d988286bee0458abb5487be36859ab7a9b5b1b662902af1a2d1c4b16b79",
+          "fingerprint": "d01faea25e2214a7766353b9cc1ad36b3d14540ec5ea0e90430fd05534f55cc3",
           "node": {
             "node_id": 3,
             "claim": "因此 p 是奇数。",
@@ -8383,10 +8405,10 @@
             "depends_on": [
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "p 为素数。",
-              "素数只有 1 和自身两个正因数。"
+              "所以 p 不能被 2 整除。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 因此 p 是奇数。",
@@ -8476,7 +8498,7 @@
     "m2-025": {
       "nodes": {
         "1": {
-          "fingerprint": "5d9dd9e276185702f71749ab51598c9569dafcc2bf200cb2be9200fbb2695298",
+          "fingerprint": "927bcb02ca294526599597cd66825160d249bcddc7b6fa5e4e7f3afaade8187a",
           "node": {
             "node_id": 1,
             "claim": "两边开平方。",
@@ -8484,7 +8506,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为实数且 x^2=y^2。"
             ],
@@ -8586,7 +8608,7 @@
           }
         },
         "2": {
-          "fingerprint": "00549e436b8b94e2448a16ab49056eb195d81d9690da1ee8f90dad7080c715bd",
+          "fingerprint": "efe39650aaded36206aa82b0b80fcd7fa3930d80f336ea640e6232ae0aa1ccd9",
           "node": {
             "node_id": 2,
             "claim": "得到 x=y。",
@@ -8596,9 +8618,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "x,y 为实数且 x^2=y^2。"
+              "x,y 为实数且 x^2=y^2。",
+              "两边开平方。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 得到 x=y。",
@@ -8845,7 +8868,7 @@
     "m2-026": {
       "nodes": {
         "1": {
-          "fingerprint": "926fcd9a3d8c8607e3b46a8dfc22bed6d25b418baf653076650f2911ac43def0",
+          "fingerprint": "3e5f7188bf3e04c6ecce09f68cf685cd6874b0c17c8f87f5c70cbde102bdb31a",
           "node": {
             "node_id": 1,
             "claim": "偶数乘积只能由两个偶因子产生。",
@@ -8853,7 +8876,7 @@
             "source_reliability": "unknown",
             "node_type": "conclusion",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b 为整数且 ab 为偶数。"
             ],
@@ -8921,7 +8944,7 @@
           }
         },
         "2": {
-          "fingerprint": "1000fdec182765d2caf892b44b1ec2568e3d58ac83ffc167152cbdd2ad5bc979",
+          "fingerprint": "854ef64934d72237145c1c84c5e1d71f61110d664003fcb03b8aa02699d1f3c0",
           "node": {
             "node_id": 2,
             "claim": "因此 a、b 都是偶数。",
@@ -8931,7 +8954,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b 为整数且 ab 为偶数。",
               "偶数乘积只能由两个偶因子产生。"
@@ -9038,7 +9061,7 @@
     "m2-027": {
       "nodes": {
         "1": {
-          "fingerprint": "0bf5a26041c4f17fd74716b6c0208825c3670af9d188dbd0b0aa30d24a307f43",
+          "fingerprint": "dcec83fe446422073a02e6681f5abd921b4699cd3e81d9e1f5e3cdac444a4c50",
           "node": {
             "node_id": 1,
             "claim": "取倒数保持不等号方向。",
@@ -9046,7 +9069,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b 为正实数且 a<b。"
             ],
@@ -9128,7 +9151,7 @@
           }
         },
         "2": {
-          "fingerprint": "70a45867feb439c75f961078e1f84c5d4b4849987689ce18fd5b54338229fb60",
+          "fingerprint": "441eb65f464c4d13c9708d28d12066de5d5a956f8653b57de1b7ca40c04ac623",
           "node": {
             "node_id": 2,
             "claim": "所以 1/a<1/b。",
@@ -9138,9 +9161,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "a,b 为正实数且 a<b。"
+              "a,b 为正实数且 a<b。",
+              "取倒数保持不等号方向。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 所以 1/a<1/b。",
@@ -9379,7 +9403,7 @@
     "m2-028": {
       "nodes": {
         "1": {
-          "fingerprint": "15ffce745a6d3c65197cec2b8f4611a083bc785df214a6d6078abb0876f009b7",
+          "fingerprint": "9a77ca6a1b9824abf1cf925e89290e614696e06892762b6a6de5ec6ad53a6542",
           "node": {
             "node_id": 1,
             "claim": "因为 n^2 是非负数。",
@@ -9387,7 +9411,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为整数。"
             ],
@@ -9465,7 +9489,7 @@
           }
         },
         "2": {
-          "fingerprint": "0c0aedbd3479cc68f9f5b0c00aaabd2beeb3a8cb943240c7a2f17f61a1f9332a",
+          "fingerprint": "7dc41e4471e785b611ea15cb1756ef45103eae440a2b6e6a2706f9f24ebb7518",
           "node": {
             "node_id": 2,
             "claim": "所以 n^2≥n。",
@@ -9475,9 +9499,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "n 为整数。"
+              "n 为整数。",
+              "因为 n^2 是非负数。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 所以 n^2≥n。",
@@ -9726,7 +9751,7 @@
     "m2-029": {
       "nodes": {
         "1": {
-          "fingerprint": "ff382ef19927e0a24e7bf7bb53674c5bd9e15ecc1812e9179b1b71ece3202f17",
+          "fingerprint": "4035a21719d0a3065a0b31e003e4779fd5d0c8787d98a6588c65c81ba66be275",
           "node": {
             "node_id": 1,
             "claim": "和为零时每个加数都必须为零。",
@@ -9734,7 +9759,7 @@
             "source_reliability": "unknown",
             "node_type": "conclusion",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为实数且 x+y=0。"
             ],
@@ -9805,7 +9830,7 @@
           }
         },
         "2": {
-          "fingerprint": "b91e413a47b9cc6c29254d835b24661f2f7bf8b435e5ab784edd685c3f01fb47",
+          "fingerprint": "b1cf24fad8fa4cfdb6d80b59e83c6b0284a52c02f67d16039a4e008eb3512e5f",
           "node": {
             "node_id": 2,
             "claim": "因此 x=0 且 y=0。",
@@ -9815,7 +9840,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为实数且 x+y=0。",
               "和为零时每个加数都必须为零。"
@@ -10075,7 +10100,7 @@
     "m2-030": {
       "nodes": {
         "1": {
-          "fingerprint": "cb0318660e4ff71e2201e20f17d4883a83c1f18f805b9f5b50ab455434180fc4",
+          "fingerprint": "b9a1f566deb0fc9282ab6a9d39ca8b282861091878a916f30bf22749d00a0ba3",
           "node": {
             "node_id": 1,
             "claim": "无理数不属于有理数集，而有理数属于有理数集。",
@@ -10083,7 +10108,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x 为无理实数，r 为有理数。"
             ],
@@ -10154,7 +10179,7 @@
           }
         },
         "2": {
-          "fingerprint": "02dc1088fb7faab15f0dec8dfce795637e4dfb8c99494d23ec31160b7fefd506",
+          "fingerprint": "c1e486f6e46e978501cec2cada50265c3d5261e17c1d393c1f53cb11e506b4e3",
           "node": {
             "node_id": 2,
             "claim": "一个不属于有理数集的数与一个属于有理数集的数相加，结果仍不属于有理数集。",
@@ -10164,7 +10189,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x 为无理实数，r 为有理数。",
               "无理数不属于有理数集，而有理数属于有理数集。"
@@ -10270,7 +10295,7 @@
           }
         },
         "3": {
-          "fingerprint": "2cc14ce47a2f0ed813b915a2d9167584ba8a4619c6d9a4379562abcd886845e6",
+          "fingerprint": "c90ce7d48a70c5c747df132be38e149d85204587e3c67c7968690983269703dc",
           "node": {
             "node_id": 3,
             "claim": "因此 x+r 是无理数。",
@@ -10280,10 +10305,10 @@
             "depends_on": [
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x 为无理实数，r 为有理数。",
-              "无理数不属于有理数集，而有理数属于有理数集。"
+              "一个不属于有理数集的数与一个属于有理数集的数相加，结果仍不属于有理数集。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 因此 x+r 是无理数。",
@@ -10390,7 +10415,7 @@
     "m2-031": {
       "nodes": {
         "1": {
-          "fingerprint": "fd415195915187d4da3cabda688ca316abe7177796f8d058428969304597eb89",
+          "fingerprint": "971b832e3a8a16299526cf608079422d3897d5ced44874ddf5e56f7c8a5c31b7",
           "node": {
             "node_id": 1,
             "claim": "存在整数 k，使 n=2k。",
@@ -10398,7 +10423,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为偶整数。"
             ],
@@ -10466,7 +10491,7 @@
           }
         },
         "2": {
-          "fingerprint": "481a6411ff8ba94c202bb388aaa30c3606a2aad0fd060b8800c7ce786c933793",
+          "fingerprint": "7be24689d9bce7a5ee137d3ebead619b2c8b01445cde9a598e65264a4586c5a0",
           "node": {
             "node_id": 2,
             "claim": "于是 n+1=2k+2。",
@@ -10476,7 +10501,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为偶整数。",
               "存在整数 k，使 n=2k。"
@@ -10732,7 +10757,7 @@
           }
         },
         "3": {
-          "fingerprint": "842182978eec58bf5bbafea167e920b330d2d769bdcdbb229676c77a2a6b2dd3",
+          "fingerprint": "f17a3328650437c18a6bccb8d591423cf3937c7791bb82f22f53f1854551cdca",
           "node": {
             "node_id": 3,
             "claim": "所以 n+1 可以写成 2k+1 的形式，是奇数。",
@@ -10742,10 +10767,10 @@
             "depends_on": [
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为偶整数。",
-              "存在整数 k，使 n=2k。"
+              "于是 n+1=2k+2。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 所以 n+1 可以写成 2k+1 的形式，是奇数。",
@@ -10991,7 +11016,7 @@
     "m2-032": {
       "nodes": {
         "1": {
-          "fingerprint": "09f269f12cc6ae6f3536b34adf2a2ec21743091a168ae0f4d7cd67f037cca80a",
+          "fingerprint": "598ee4998ce0274a66cc65365d5d3ab09479bc0cc55755237a08fc181cd2a346",
           "node": {
             "node_id": 1,
             "claim": "由 x>1 可知 x^2>1。",
@@ -10999,7 +11024,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x 为实数且 x>1。"
             ],
@@ -11080,7 +11105,7 @@
           }
         },
         "2": {
-          "fingerprint": "1b6af1a00d45711096d3b0a1625013bc3ae06883eaa149adb229e2bd9272cc9a",
+          "fingerprint": "4e3714bf5a4626517f5057c12310b48711f4fedba19d7a999e5c8f0ca0717d60",
           "node": {
             "node_id": 2,
             "claim": "因此 x^2>x。",
@@ -11090,9 +11115,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "x 为实数且 x>1。"
+              "x 为实数且 x>1。",
+              "由 x>1 可知 x^2>1。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 因此 x^2>x。",
@@ -11199,7 +11225,7 @@
     "m2-033": {
       "nodes": {
         "1": {
-          "fingerprint": "832a743b01b3eb5be35b8996d9aedd4b8e16c900a807c044ce5bbc4837f3eb22",
+          "fingerprint": "26c94611c4fcd0a7c6b30e0746a10ea0c8bc0e6bf3f5cc9d3b7cb7d766c4c72c",
           "node": {
             "node_id": 1,
             "claim": "由 x^2-1=0 得 (x-1)(x+1)=0。",
@@ -11207,7 +11233,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x 为实数且 x^2=1。"
             ],
@@ -11288,17 +11314,20 @@
           }
         },
         "2": {
-          "fingerprint": "caa7cc4601130d790acdcf662f6b26fcd1d008e99c48be59e9e6740a7dd416bf",
+          "fingerprint": "1eb58806cd5632b245b486e33a39a08a3e994bccf7da448943e8602fbd069ef9",
           "node": {
             "node_id": 2,
             "claim": "等式两边约去因子 x-1，得到 x+1=0。",
             "self_contained_claim": "等式两边约去因子 x-1，得到 x+1=0。",
             "source_reliability": "unknown",
             "node_type": "calculation_step",
-            "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "depends_on": [
+              1
+            ],
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "x 为实数且 x^2=1。"
+              "x 为实数且 x^2=1。",
+              "由 x^2-1=0 得 (x-1)(x+1)=0。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 等式两边约去因子 x-1，得到 x+1=0。",
@@ -11311,9 +11340,13 @@
               "assumptions": [
                 "x 为实数且 x^2=1。"
               ],
-              "predecessor_node_ids": [],
-              "predecessor_claims": [],
-              "formal_obligation": "x 为实数且 x^2=1。 |- 等式两边约去因子 x-1，得到 x+1=0。",
+              "predecessor_node_ids": [
+                1
+              ],
+              "predecessor_claims": [
+                "由 x^2-1=0 得 (x-1)(x+1)=0。"
+              ],
+              "formal_obligation": "x 为实数且 x^2=1。, 由 x^2-1=0 得 (x-1)(x+1)=0。 |- 等式两边约去因子 x-1，得到 x+1=0。",
               "normalized_query": {
                 "topic_tokens": [
                   "algebra",
@@ -11325,7 +11358,9 @@
                 "assumption_tokens": [
                   "equal"
                 ],
-                "predecessor_tokens": []
+                "predecessor_tokens": [
+                  "equal"
+                ]
               }
             },
             "retrieval_scope": "global",
@@ -11336,10 +11371,10 @@
               {
                 "id": "lin_same_dim_subspace",
                 "name": "Same dimension subspace criterion",
-                "score": 4.0,
+                "score": 7.0,
                 "score_breakdown": {
                   "goal": 4.0,
-                  "predecessors": 0.0,
+                  "predecessors": 3.0,
                   "assumptions": 2.0,
                   "topic": 0.0,
                   "domain": 0.0,
@@ -11347,6 +11382,7 @@
                 },
                 "matched_query_fields": [
                   "goal",
+                  "predecessors",
                   "assumptions"
                 ],
                 "matched_rule_fields": [
@@ -11363,17 +11399,18 @@
               {
                 "id": "grp_normal_quotient",
                 "name": "Quotient group criterion",
-                "score": 2.0,
+                "score": 5.0,
                 "score_breakdown": {
                   "goal": 4.0,
-                  "predecessors": 0.0,
+                  "predecessors": 3.0,
                   "assumptions": 0.0,
                   "topic": 0.0,
                   "domain": 0.0,
                   "topic_conflict": -2.0
                 },
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "matched_rule_fields": [
                   "statement"
@@ -11385,17 +11422,18 @@
               {
                 "id": "lin_rank_nullity",
                 "name": "Rank-nullity theorem",
-                "score": 2.0,
+                "score": 5.0,
                 "score_breakdown": {
                   "goal": 4.0,
-                  "predecessors": 0.0,
+                  "predecessors": 3.0,
                   "assumptions": 0.0,
                   "topic": 0.0,
                   "domain": 0.0,
                   "topic_conflict": -2.0
                 },
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "matched_rule_fields": [
                   "conclusion",
@@ -11423,9 +11461,10 @@
                   "using dimension equality without a subspace relation",
                   "using the criterion in infinite-dimensional settings"
                 ],
-                "retrieval_score": 4.0,
+                "retrieval_score": 7.0,
                 "matched_query_fields": [
                   "goal",
+                  "predecessors",
                   "assumptions"
                 ],
                 "deterministic_safe": false,
@@ -11446,9 +11485,10 @@
                   "forming G/N when N is not known to be normal",
                   "assuming coset multiplication is well-defined without checking normality"
                 ],
-                "retrieval_score": 2.0,
+                "retrieval_score": 5.0,
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "deterministic_safe": false,
                 "deterministic_safe_kind": null,
@@ -11468,9 +11508,10 @@
                   "using rank-nullity without finite-dimensionality",
                   "concluding im(T) = W from equal dimensions without im(T) being a subspace of W"
                 ],
-                "retrieval_score": 2.0,
+                "retrieval_score": 5.0,
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "deterministic_safe": false,
                 "deterministic_safe_kind": null,
@@ -11536,7 +11577,7 @@
           }
         },
         "3": {
-          "fingerprint": "b73fc2875ac1728a46be1b915f9c766fc167234510b9381a6d8ad4ed40efbc83",
+          "fingerprint": "6f026477d08950602800ee1b7942a1adaf0d743833883f96c031e46e46b7c93e",
           "node": {
             "node_id": 3,
             "claim": "因此 x=1 或 x=-1。",
@@ -11544,30 +11585,223 @@
             "source_reliability": "unknown",
             "node_type": "conclusion",
             "depends_on": [
-              2
+              1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "x 为实数且 x^2=1。"
+              "x 为实数且 x^2=1。",
+              "由 x^2-1=0 得 (x-1)(x+1)=0。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 因此 x=1 或 x=-1。",
-            "retrieval_required": false,
-            "retrieval_reason": "Repair the earlier invalid node before retrieving rules here.",
-            "retrieval_query": null,
-            "retrieval_scope": null,
-            "candidate_pool_size": 0,
-            "retrieval_role": null,
-            "verification_source": "deterministic_checker",
-            "retrieved_rules": [],
-            "rule_applicability": [],
+            "retrieval_required": true,
+            "retrieval_reason": "The conclusion does not follow directly from the accepted context.",
+            "retrieval_query": {
+              "domain": "elementary_algebra",
+              "topic": "elementary_algebra",
+              "goal": "因此 x=1 或 x=-1。",
+              "assumptions": [
+                "x 为实数且 x^2=1。"
+              ],
+              "predecessor_node_ids": [
+                1
+              ],
+              "predecessor_claims": [
+                "由 x^2-1=0 得 (x-1)(x+1)=0。"
+              ],
+              "formal_obligation": "x 为实数且 x^2=1。, 由 x^2-1=0 得 (x-1)(x+1)=0。 |- 因此 x=1 或 x=-1。",
+              "normalized_query": {
+                "topic_tokens": [
+                  "algebra",
+                  "elementary"
+                ],
+                "goal_tokens": [
+                  "equal"
+                ],
+                "assumption_tokens": [
+                  "equal"
+                ],
+                "predecessor_tokens": [
+                  "equal"
+                ]
+              }
+            },
+            "retrieval_scope": "global",
+            "candidate_pool_size": 9,
+            "retrieval_role": "diagnostic_only",
+            "verification_source": "model_adjudicator",
+            "retrieved_rules": [
+              {
+                "id": "lin_same_dim_subspace",
+                "name": "Same dimension subspace criterion",
+                "score": 7.0,
+                "score_breakdown": {
+                  "goal": 4.0,
+                  "predecessors": 3.0,
+                  "assumptions": 2.0,
+                  "topic": 0.0,
+                  "domain": 0.0,
+                  "topic_conflict": -2.0
+                },
+                "matched_query_fields": [
+                  "goal",
+                  "predecessors",
+                  "assumptions"
+                ],
+                "matched_rule_fields": [
+                  "conclusion",
+                  "conditions",
+                  "statement"
+                ],
+                "matched_fields": [
+                  "conclusion",
+                  "conditions",
+                  "statement"
+                ]
+              },
+              {
+                "id": "grp_normal_quotient",
+                "name": "Quotient group criterion",
+                "score": 5.0,
+                "score_breakdown": {
+                  "goal": 4.0,
+                  "predecessors": 3.0,
+                  "assumptions": 0.0,
+                  "topic": 0.0,
+                  "domain": 0.0,
+                  "topic_conflict": -2.0
+                },
+                "matched_query_fields": [
+                  "goal",
+                  "predecessors"
+                ],
+                "matched_rule_fields": [
+                  "statement"
+                ],
+                "matched_fields": [
+                  "statement"
+                ]
+              },
+              {
+                "id": "lin_rank_nullity",
+                "name": "Rank-nullity theorem",
+                "score": 5.0,
+                "score_breakdown": {
+                  "goal": 4.0,
+                  "predecessors": 3.0,
+                  "assumptions": 0.0,
+                  "topic": 0.0,
+                  "domain": 0.0,
+                  "topic_conflict": -2.0
+                },
+                "matched_query_fields": [
+                  "goal",
+                  "predecessors"
+                ],
+                "matched_rule_fields": [
+                  "conclusion",
+                  "statement"
+                ],
+                "matched_fields": [
+                  "conclusion",
+                  "statement"
+                ]
+              }
+            ],
+            "rule_applicability": [
+              {
+                "rule_id": "lin_same_dim_subspace",
+                "rule_name": "Same dimension subspace criterion",
+                "satisfied_conditions": [],
+                "missing_conditions": [
+                  "W is a subspace of V",
+                  "V is finite-dimensional",
+                  "dim W = dim V"
+                ],
+                "matched_conclusion": false,
+                "applicable": false,
+                "common_misuses": [
+                  "using dimension equality without a subspace relation",
+                  "using the criterion in infinite-dimensional settings"
+                ],
+                "retrieval_score": 7.0,
+                "matched_query_fields": [
+                  "goal",
+                  "predecessors",
+                  "assumptions"
+                ],
+                "deterministic_safe": false,
+                "deterministic_safe_kind": null,
+                "deterministic_safe_goal_match": false
+              },
+              {
+                "rule_id": "grp_normal_quotient",
+                "rule_name": "Quotient group criterion",
+                "satisfied_conditions": [],
+                "missing_conditions": [
+                  "N is a subgroup of G",
+                  "N is normal in G"
+                ],
+                "matched_conclusion": false,
+                "applicable": false,
+                "common_misuses": [
+                  "forming G/N when N is not known to be normal",
+                  "assuming coset multiplication is well-defined without checking normality"
+                ],
+                "retrieval_score": 5.0,
+                "matched_query_fields": [
+                  "goal",
+                  "predecessors"
+                ],
+                "deterministic_safe": false,
+                "deterministic_safe_kind": null,
+                "deterministic_safe_goal_match": false
+              },
+              {
+                "rule_id": "lin_rank_nullity",
+                "rule_name": "Rank-nullity theorem",
+                "satisfied_conditions": [],
+                "missing_conditions": [
+                  "T is linear",
+                  "V is finite-dimensional"
+                ],
+                "matched_conclusion": false,
+                "applicable": false,
+                "common_misuses": [
+                  "using rank-nullity without finite-dimensionality",
+                  "concluding im(T) = W from equal dimensions without im(T) being a subspace of W"
+                ],
+                "retrieval_score": 5.0,
+                "matched_query_fields": [
+                  "goal",
+                  "predecessors"
+                ],
+                "deterministic_safe": false,
+                "deterministic_safe_kind": null,
+                "deterministic_safe_goal_match": false
+              }
+            ],
             "satisfied_conditions": [],
-            "missing_conditions": [],
-            "matched_conclusion": null,
+            "missing_conditions": [
+              "N is a subgroup of G",
+              "N is normal in G"
+            ],
+            "matched_conclusion": false,
             "applicable_rule_id": null,
             "operation_check": null,
             "counterexample": null,
-            "model_adjudication": null,
+            "model_adjudication": {
+              "decision": "undetermined",
+              "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
+              "proof_outline": [],
+              "completion_assessment": "not_applicable",
+              "original_step_requires_completion": false,
+              "bridge_steps": [],
+              "bridge_length": 0,
+              "counterexample_description": null,
+              "counterexample_verification": null,
+              "confidence": "low"
+            },
             "calculation_context": {
               "structure": "real_numbers",
               "carrier": "R",
@@ -11606,13 +11840,13 @@
             "diagnosis_adjudication": null,
             "theorem_candidates": [],
             "theorem_verification": null,
-            "status": "downstream_invalid",
-            "logic_class": "downstream_dependency",
-            "repair_scope": "repair_predecessor",
+            "status": "undetermined",
+            "logic_class": "indeterminate",
+            "repair_scope": "manual_review",
             "gap_type": null,
-            "error_type": "downstream_invalid",
-            "diagnosis": "This node explicitly depends on an earlier invalid node.",
-            "repair_action": null,
+            "error_type": "undetermined",
+            "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
+            "repair_action": "manual_review",
             "minimal_repair": null
           }
         }
@@ -11621,7 +11855,7 @@
     "m2-034": {
       "nodes": {
         "1": {
-          "fingerprint": "0d2dc1b4dbdc6c06dfb5ccd89ade6b4f70b7ef8ecbb6fea4b678481e8389202f",
+          "fingerprint": "2a4541e5c675bafc76650e24742671d732ec12faa75e204fccf83275949fe6dd",
           "node": {
             "node_id": 1,
             "claim": "平方与开平方互相抵消，所以 sqrt(a^2)=a。",
@@ -11629,7 +11863,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a 为实数。"
             ],
@@ -11874,17 +12108,20 @@
           }
         },
         "2": {
-          "fingerprint": "a9737b9675f02bdb873ff7be50bef812a7fee58e341d6130dc9aa1bdd1515a32",
+          "fingerprint": "b64155ca24297d1922a96761d955979129993a0971e746c98c65bc42a1a7b07d",
           "node": {
             "node_id": 2,
             "claim": "又因为每个实数 a 都等于 |a|，所以 sqrt(a^2)=|a|。",
             "self_contained_claim": "又因为每个实数 a 都等于 |a|，所以 sqrt(a^2)=|a|。",
             "source_reliability": "unknown",
             "node_type": "calculation_step",
-            "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "depends_on": [
+              1
+            ],
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "a 为实数。"
+              "a 为实数。",
+              "平方与开平方互相抵消，所以 sqrt(a^2)=a。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 又因为每个实数 a 都等于 |a|，所以 sqrt(a^2)=|a|。",
@@ -11897,9 +12134,13 @@
               "assumptions": [
                 "a 为实数。"
               ],
-              "predecessor_node_ids": [],
-              "predecessor_claims": [],
-              "formal_obligation": "a 为实数。 |- 又因为每个实数 a 都等于 |a|，所以 sqrt(a^2)=|a|。",
+              "predecessor_node_ids": [
+                1
+              ],
+              "predecessor_claims": [
+                "平方与开平方互相抵消，所以 sqrt(a^2)=a。"
+              ],
+              "formal_obligation": "a 为实数。, 平方与开平方互相抵消，所以 sqrt(a^2)=a。 |- 又因为每个实数 a 都等于 |a|，所以 sqrt(a^2)=|a|。",
               "normalized_query": {
                 "topic_tokens": [
                   "algebra",
@@ -11910,7 +12151,10 @@
                   "sqrt"
                 ],
                 "assumption_tokens": [],
-                "predecessor_tokens": []
+                "predecessor_tokens": [
+                  "equal",
+                  "sqrt"
+                ]
               }
             },
             "retrieval_scope": "global",
@@ -11921,17 +12165,18 @@
               {
                 "id": "grp_normal_quotient",
                 "name": "Quotient group criterion",
-                "score": 2.0,
+                "score": 5.0,
                 "score_breakdown": {
                   "goal": 4.0,
-                  "predecessors": 0.0,
+                  "predecessors": 3.0,
                   "assumptions": 0.0,
                   "topic": 0.0,
                   "domain": 0.0,
                   "topic_conflict": -2.0
                 },
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "matched_rule_fields": [
                   "statement"
@@ -11943,17 +12188,18 @@
               {
                 "id": "lin_rank_nullity",
                 "name": "Rank-nullity theorem",
-                "score": 2.0,
+                "score": 5.0,
                 "score_breakdown": {
                   "goal": 4.0,
-                  "predecessors": 0.0,
+                  "predecessors": 3.0,
                   "assumptions": 0.0,
                   "topic": 0.0,
                   "domain": 0.0,
                   "topic_conflict": -2.0
                 },
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "matched_rule_fields": [
                   "conclusion",
@@ -11967,24 +12213,27 @@
               {
                 "id": "lin_same_dim_subspace",
                 "name": "Same dimension subspace criterion",
-                "score": 2.0,
+                "score": 5.0,
                 "score_breakdown": {
                   "goal": 4.0,
-                  "predecessors": 0.0,
+                  "predecessors": 3.0,
                   "assumptions": 0.0,
                   "topic": 0.0,
                   "domain": 0.0,
                   "topic_conflict": -2.0
                 },
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "matched_rule_fields": [
                   "conclusion",
+                  "conditions",
                   "statement"
                 ],
                 "matched_fields": [
                   "conclusion",
+                  "conditions",
                   "statement"
                 ]
               }
@@ -12004,9 +12253,10 @@
                   "forming G/N when N is not known to be normal",
                   "assuming coset multiplication is well-defined without checking normality"
                 ],
-                "retrieval_score": 2.0,
+                "retrieval_score": 5.0,
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "deterministic_safe": false,
                 "deterministic_safe_kind": null,
@@ -12026,9 +12276,10 @@
                   "using rank-nullity without finite-dimensionality",
                   "concluding im(T) = W from equal dimensions without im(T) being a subspace of W"
                 ],
-                "retrieval_score": 2.0,
+                "retrieval_score": 5.0,
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "deterministic_safe": false,
                 "deterministic_safe_kind": null,
@@ -12049,9 +12300,10 @@
                   "using dimension equality without a subspace relation",
                   "using the criterion in infinite-dimensional settings"
                 ],
-                "retrieval_score": 2.0,
+                "retrieval_score": 5.0,
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "deterministic_safe": false,
                 "deterministic_safe_kind": null,
@@ -12101,10 +12353,10 @@
               "context_changed": false,
               "change_reason": null
             },
-            "calculation_source_expression": "a 为实数。",
+            "calculation_source_expression": "平方与开平方互相抵消，所以 sqrt(a^2)=a。",
             "calculation_adjudication": {
               "decision": "undetermined",
-              "source_expression": "a 为实数。",
+              "source_expression": "平方与开平方互相抵消，所以 sqrt(a^2)=a。",
               "target_expression": "又因为每个实数 a 都等于 |a|，所以 sqrt(a^2)=|a|。",
               "atomic_steps": [],
               "used_axioms": [],
@@ -12131,7 +12383,7 @@
     "m2-035": {
       "nodes": {
         "1": {
-          "fingerprint": "9972dd854a3445fefced287d4f98b7257d2b5efa0878e5bd7412cb74017e3126",
+          "fingerprint": "d9860e0835de2bd2d218490a648b70877984fed7a6f2903c3c285887e189f797",
           "node": {
             "node_id": 1,
             "claim": "将不等式 a<b 两边同时乘以 c，得到 ac<bc。",
@@ -12139,7 +12391,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b,c 为实数，a<b 且 c<0。"
             ],
@@ -12239,7 +12491,7 @@
           }
         },
         "2": {
-          "fingerprint": "010c4948601b7a60de4d18ee9df0b6acb135efbd5528fd4fc0eb6b2f2ed3df7c",
+          "fingerprint": "c82448f834dda8268f8d9cccab113ae494978813089b90dedc0309cabe352788",
           "node": {
             "node_id": 2,
             "claim": "因为 c 是负数，所以把不等号改为相反方向，得到 ac>bc。",
@@ -12249,9 +12501,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "a,b,c 为实数，a<b 且 c<0。"
+              "a,b,c 为实数，a<b 且 c<0。",
+              "将不等式 a<b 两边同时乘以 c，得到 ac<bc。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 因为 c 是负数，所以把不等号改为相反方向，得到 ac>bc。",
@@ -12354,7 +12607,7 @@
           }
         },
         "3": {
-          "fingerprint": "62f3e3db929670080284b369ff26006b8fa9e5dcd56824938444c2b1ba27891d",
+          "fingerprint": "88158b992dcb9830b96b400ad3bb1b034b21425e85da0962874503f9ddda3fa4",
           "node": {
             "node_id": 3,
             "claim": "因此 ac>bc。",
@@ -12364,9 +12617,10 @@
             "depends_on": [
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "a,b,c 为实数，a<b 且 c<0。"
+              "a,b,c 为实数，a<b 且 c<0。",
+              "因为 c 是负数，所以把不等号改为相反方向，得到 ac>bc。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 因此 ac>bc。",
@@ -12473,7 +12727,7 @@
     "m2-036": {
       "nodes": {
         "1": {
-          "fingerprint": "a00bca2630ddf3e35633eb4ceda2b0688f64b337a7ed4cd6ecdfbef7bb3ee8e3",
+          "fingerprint": "f3afb3636369e48a3c607b5669061512936fcea3ef0888ea63f3977a32e1e992",
           "node": {
             "node_id": 1,
             "claim": "当 n=1 时，n^2+n=2 是偶数。",
@@ -12481,7 +12735,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为正整数。"
             ],
@@ -12559,17 +12813,20 @@
           }
         },
         "2": {
-          "fingerprint": "e8cb77e48314fc6a50f99c10fa781eae02d51f27126b6692c55b9a79657b6ec9",
+          "fingerprint": "9a88976a1ea0b467b90dece9a362a843ef9276a7c9948360c94528576ca4f045",
           "node": {
             "node_id": 2,
             "claim": "当 n=2 时，n^2+n=6 是偶数。",
             "self_contained_claim": "当 n=2 时，n^2+n=6 是偶数。",
             "source_reliability": "unknown",
             "node_type": "calculation_step",
-            "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "depends_on": [
+              1
+            ],
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "n 为正整数。"
+              "n 为正整数。",
+              "当 n=1 时，n^2+n=2 是偶数。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 当 n=2 时，n^2+n=6 是偶数。",
@@ -12582,9 +12839,13 @@
               "assumptions": [
                 "n 为正整数。"
               ],
-              "predecessor_node_ids": [],
-              "predecessor_claims": [],
-              "formal_obligation": "n 为正整数。 |- 当 n=2 时，n^2+n=6 是偶数。",
+              "predecessor_node_ids": [
+                1
+              ],
+              "predecessor_claims": [
+                "当 n=1 时，n^2+n=2 是偶数。"
+              ],
+              "formal_obligation": "n 为正整数。, 当 n=1 时，n^2+n=2 是偶数。 |- 当 n=2 时，n^2+n=6 是偶数。",
               "normalized_query": {
                 "topic_tokens": [
                   "algebra",
@@ -12594,7 +12855,9 @@
                   "equal"
                 ],
                 "assumption_tokens": [],
-                "predecessor_tokens": []
+                "predecessor_tokens": [
+                  "equal"
+                ]
               }
             },
             "retrieval_scope": "global",
@@ -12605,17 +12868,18 @@
               {
                 "id": "grp_normal_quotient",
                 "name": "Quotient group criterion",
-                "score": 2.0,
+                "score": 5.0,
                 "score_breakdown": {
                   "goal": 4.0,
-                  "predecessors": 0.0,
+                  "predecessors": 3.0,
                   "assumptions": 0.0,
                   "topic": 0.0,
                   "domain": 0.0,
                   "topic_conflict": -2.0
                 },
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "matched_rule_fields": [
                   "statement"
@@ -12627,17 +12891,18 @@
               {
                 "id": "lin_rank_nullity",
                 "name": "Rank-nullity theorem",
-                "score": 2.0,
+                "score": 5.0,
                 "score_breakdown": {
                   "goal": 4.0,
-                  "predecessors": 0.0,
+                  "predecessors": 3.0,
                   "assumptions": 0.0,
                   "topic": 0.0,
                   "domain": 0.0,
                   "topic_conflict": -2.0
                 },
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "matched_rule_fields": [
                   "conclusion",
@@ -12651,24 +12916,27 @@
               {
                 "id": "lin_same_dim_subspace",
                 "name": "Same dimension subspace criterion",
-                "score": 2.0,
+                "score": 5.0,
                 "score_breakdown": {
                   "goal": 4.0,
-                  "predecessors": 0.0,
+                  "predecessors": 3.0,
                   "assumptions": 0.0,
                   "topic": 0.0,
                   "domain": 0.0,
                   "topic_conflict": -2.0
                 },
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "matched_rule_fields": [
                   "conclusion",
+                  "conditions",
                   "statement"
                 ],
                 "matched_fields": [
                   "conclusion",
+                  "conditions",
                   "statement"
                 ]
               }
@@ -12688,9 +12956,10 @@
                   "forming G/N when N is not known to be normal",
                   "assuming coset multiplication is well-defined without checking normality"
                 ],
-                "retrieval_score": 2.0,
+                "retrieval_score": 5.0,
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "deterministic_safe": false,
                 "deterministic_safe_kind": null,
@@ -12710,9 +12979,10 @@
                   "using rank-nullity without finite-dimensionality",
                   "concluding im(T) = W from equal dimensions without im(T) being a subspace of W"
                 ],
-                "retrieval_score": 2.0,
+                "retrieval_score": 5.0,
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "deterministic_safe": false,
                 "deterministic_safe_kind": null,
@@ -12733,9 +13003,10 @@
                   "using dimension equality without a subspace relation",
                   "using the criterion in infinite-dimensional settings"
                 ],
-                "retrieval_score": 2.0,
+                "retrieval_score": 5.0,
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "deterministic_safe": false,
                 "deterministic_safe_kind": null,
@@ -12782,10 +13053,10 @@
               "context_changed": false,
               "change_reason": null
             },
-            "calculation_source_expression": "n 为正整数。",
+            "calculation_source_expression": "当 n=1 时，n^2+n=2 是偶数。",
             "calculation_adjudication": {
               "decision": "undetermined",
-              "source_expression": "n 为正整数。",
+              "source_expression": "当 n=1 时，n^2+n=2 是偶数。",
               "target_expression": "当 n=2 时，n^2+n=6 是偶数。",
               "atomic_steps": [],
               "used_axioms": [],
@@ -12808,7 +13079,7 @@
           }
         },
         "3": {
-          "fingerprint": "96d5529032c5e87d238ced0a649bc147ce1f79b323e53353155cc5b59df5ac67",
+          "fingerprint": "c25bd566f63db666b13eddf031416c3fe957efcdd8a973c5c25428d2193a45e1",
           "node": {
             "node_id": 3,
             "claim": "因此对任意正整数 n，n^2+n 都是偶数。",
@@ -12816,11 +13087,14 @@
             "source_reliability": "unknown",
             "node_type": "conclusion",
             "depends_on": [
+              1,
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "n 为正整数。"
+              "n 为正整数。",
+              "当 n=1 时，n^2+n=2 是偶数。",
+              "当 n=2 时，n^2+n=6 是偶数。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 因此对任意正整数 n，n^2+n 都是偶数。",
@@ -12834,12 +13108,14 @@
                 "n 为正整数。"
               ],
               "predecessor_node_ids": [
+                1,
                 2
               ],
               "predecessor_claims": [
+                "当 n=1 时，n^2+n=2 是偶数。",
                 "当 n=2 时，n^2+n=6 是偶数。"
               ],
-              "formal_obligation": "n 为正整数。, 当 n=2 时，n^2+n=6 是偶数。 |- 因此对任意正整数 n，n^2+n 都是偶数。",
+              "formal_obligation": "n 为正整数。, 当 n=1 时，n^2+n=2 是偶数。, 当 n=2 时，n^2+n=6 是偶数。 |- 因此对任意正整数 n，n^2+n 都是偶数。",
               "normalized_query": {
                 "topic_tokens": [
                   "algebra",
@@ -13066,7 +13342,7 @@
     "m2-037": {
       "nodes": {
         "1": {
-          "fingerprint": "459b63d31dbfecfbd1564655e44fa4b1b3fff8afdab168a4798a85a8429edeaa",
+          "fingerprint": "647cf8a9c599a0db973ce0eab0bda2224fe6123e705d3e001efdfc4637cf8829",
           "node": {
             "node_id": 1,
             "claim": "因为两个偶整数之和为偶数，所以 x+y 为偶数。",
@@ -13074,7 +13350,7 @@
             "source_reliability": "unknown",
             "node_type": "conclusion",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为偶整数。"
             ],
@@ -13142,7 +13418,7 @@
           }
         },
         "2": {
-          "fingerprint": "5e86ed32f9b20dfce5180bcbec5dd5aab52a575aa211b36492c9c0fe48fcef28",
+          "fingerprint": "690a17aa5eae534dacfe3ee7e25014d7b31a7951e8dba86dbe603ff764fa5106",
           "node": {
             "node_id": 2,
             "claim": "因此命题成立。",
@@ -13152,7 +13428,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为偶整数。",
               "因为两个偶整数之和为偶数，所以 x+y 为偶数。"
@@ -13259,7 +13535,7 @@
     "m2-038": {
       "nodes": {
         "1": {
-          "fingerprint": "85aa6e0cf03a1264277538cf6b75e2d689fe280b39fd567ae4423ad3a83b0ddd",
+          "fingerprint": "1197d0a4cfce2cdbc7eb04a4e41ad47831ddf1a95f1c5e2eb78d052f3ddda83d",
           "node": {
             "node_id": 1,
             "claim": "实数的平方总是非负，所以 x^2≥0。",
@@ -13267,7 +13543,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x 为实数。"
             ],
@@ -13512,7 +13788,7 @@
           }
         },
         "2": {
-          "fingerprint": "757a0ab3b58a377b0370adcd45b22ef9151f023dc262abfef7c360197ac7cffd",
+          "fingerprint": "14adc4a7a15aa23ccb63dd299162fe56d734a410d3963ad7790d370587f0198c",
           "node": {
             "node_id": 2,
             "claim": "因此 |x|≥x。",
@@ -13522,9 +13798,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "x 为实数。"
+              "x 为实数。",
+              "实数的平方总是非负，所以 x^2≥0。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 因此 |x|≥x。",
@@ -13787,7 +14064,7 @@
     "m2-039": {
       "nodes": {
         "1": {
-          "fingerprint": "00de7b85a23ac7dbef1b7d7f446a1fde0f4a2ca1a4642fc647737c263179d830",
+          "fingerprint": "950ac384d5d8393615837ce9d429bb4b1fdd54877558c41f6bd2e9aebad6e151",
           "node": {
             "node_id": 1,
             "claim": "由 a|b 可反向得到 b|a，由 b|c 可反向得到 c|b。",
@@ -13795,7 +14072,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b,c 为整数，a|b 且 b|c。"
             ],
@@ -13873,7 +14150,7 @@
           }
         },
         "2": {
-          "fingerprint": "4c5c32d21a62ccde0cfc4406c02fd64207ed4a8dbb798446ce8f1c703951dcc1",
+          "fingerprint": "b3a734c4006a2f0d5950581d68f1589409c0e55ed59c38f1db56a56796716d22",
           "node": {
             "node_id": 2,
             "claim": "根据整除的传递性，由 c|b 和 b|a 得 c|a。",
@@ -13883,9 +14160,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "a,b,c 为整数，a|b 且 b|c。"
+              "a,b,c 为整数，a|b 且 b|c。",
+              "由 a|b 可反向得到 b|a，由 b|c 可反向得到 c|b。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 根据整除的传递性，由 c|b 和 b|a 得 c|a。",
@@ -13985,7 +14263,7 @@
           }
         },
         "3": {
-          "fingerprint": "832f5ce3bdd3ffb4d7cb92bb778f64f84564f741d27722283ed83ff00b2c95b9",
+          "fingerprint": "908ab898b0386a413534ea7bea878726e8d689f21108aafe397413325977c2cd",
           "node": {
             "node_id": 3,
             "claim": "因此 a|c。",
@@ -13995,9 +14273,10 @@
             "depends_on": [
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "a,b,c 为整数，a|b 且 b|c。"
+              "a,b,c 为整数，a|b 且 b|c。",
+              "根据整除的传递性，由 c|b 和 b|a 得 c|a。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 因此 a|c。",
@@ -14101,7 +14380,7 @@
     "m2-040": {
       "nodes": {
         "1": {
-          "fingerprint": "3b151ea46a179bcc748ee6e46de9aa0f06c4ec583062d493d7d1fb281a70b3e7",
+          "fingerprint": "ba99f9bd9a2c8bf1e37025efd9e8eb2bb22a9e14d32d0ed2f2da861e293fbdc1",
           "node": {
             "node_id": 1,
             "claim": "存在整数 m,n，使 x=2m 且 y=2n。",
@@ -14109,7 +14388,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为偶整数。"
             ],
@@ -14177,7 +14456,7 @@
           }
         },
         "2": {
-          "fingerprint": "6a733749c1de3a87b5db44f067251c922791d0242ad61c193d4d42ba496ba408",
+          "fingerprint": "c100b2a0c533d5bd6815fb1cfa73324cc10d01538f6ac278bc616af4b3520e7f",
           "node": {
             "node_id": 2,
             "claim": "于是 x+y=2mn。",
@@ -14187,7 +14466,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为偶整数。",
               "存在整数 m,n，使 x=2m 且 y=2n。"
@@ -14443,7 +14722,7 @@
           }
         },
         "3": {
-          "fingerprint": "f489f3272e306ac464f62e0af70d3c28847bb4eefb267610bc082ac99b8016ae",
+          "fingerprint": "212f20059f64878cd5747d7eb4fce3a7bbc08bedba7701f1f7b4dcc2bccc8991",
           "node": {
             "node_id": 3,
             "claim": "因为 2mn 是偶数，所以 x+y 是偶数。",
@@ -14453,10 +14732,10 @@
             "depends_on": [
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为偶整数。",
-              "存在整数 m,n，使 x=2m 且 y=2n。"
+              "于是 x+y=2mn。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 因为 2mn 是偶数，所以 x+y 是偶数。",
@@ -14702,7 +14981,7 @@
     "m2-041": {
       "nodes": {
         "1": {
-          "fingerprint": "fa7fbbdd719f241002d9ab0e7e3a1ce4e097648969bd0fab1b6caf59268743fe",
+          "fingerprint": "24a5a0d8f621a259caf6ee2514fefae7472d0655569a5b159323407d34700377",
           "node": {
             "node_id": 1,
             "claim": "等式两边同时除以 c。",
@@ -14710,7 +14989,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b,c 为实数且 a=b。"
             ],
@@ -14812,7 +15091,7 @@
           }
         },
         "2": {
-          "fingerprint": "704c97fb0de8184f8ab5f2844d01808f7cf25e384c25d1976c0a51a99051dd18",
+          "fingerprint": "9ae96039e9072c208e4db6f7b99dd42688fcc9e1fb7ae87ccd620739ddce6142",
           "node": {
             "node_id": 2,
             "claim": "得到 a/c=b/c。",
@@ -14822,9 +15101,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "a,b,c 为实数且 a=b。"
+              "a,b,c 为实数且 a=b。",
+              "等式两边同时除以 c。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 得到 a/c=b/c。",
@@ -15163,7 +15443,7 @@
     "m2-042": {
       "nodes": {
         "1": {
-          "fingerprint": "20d61001796f89e699320b09e838a9093f93182bbc3d7d86c1e3020e79e3ad0e",
+          "fingerprint": "9bb92a4f672609fec8644830c0c08a74aa4f996f36b3535337ada67c25ad4da0",
           "node": {
             "node_id": 1,
             "claim": "平方函数严格递增。",
@@ -15171,7 +15451,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为实数且 x<y。"
             ],
@@ -15271,7 +15551,7 @@
           }
         },
         "2": {
-          "fingerprint": "0f0fae0aef95e0c1f7c6026815418698996743383dc2edb9ab27b96aff86b83f",
+          "fingerprint": "e142cdf2db21f79990c47509db3f7729440fe650ebb453f0551aed2ee2d15637",
           "node": {
             "node_id": 2,
             "claim": "因此 x^2<y^2。",
@@ -15281,9 +15561,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "x,y 为实数且 x<y。"
+              "x,y 为实数且 x<y。",
+              "平方函数严格递增。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 因此 x^2<y^2。",
@@ -15390,7 +15671,7 @@
     "m2-043": {
       "nodes": {
         "1": {
-          "fingerprint": "2103dbce96757e43318761d7f12c2c2328874ff4b2c8db4f59e6e394eadcc479",
+          "fingerprint": "7713e69559ba704ab7e0985c4b2ea717325d8574cf612cd81b12cd2fa5a10691",
           "node": {
             "node_id": 1,
             "claim": "由欧几里得引理，a|b 或 a|c。",
@@ -15398,7 +15679,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b,c 为整数且 a|bc。"
             ],
@@ -15466,7 +15747,7 @@
           }
         },
         "2": {
-          "fingerprint": "9556b43b9e89fb25794e54270c0b94ad279586c1bf5a2af49613b8680e6947d6",
+          "fingerprint": "2a8958166cfca54e87871588eace49bf3c5c42f03f71468634fef9d70f0e4975",
           "node": {
             "node_id": 2,
             "claim": "结论成立。",
@@ -15476,7 +15757,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b,c 为整数且 a|bc。",
               "由欧几里得引理，a|b 或 a|c。"
@@ -15583,7 +15864,7 @@
     "m2-044": {
       "nodes": {
         "1": {
-          "fingerprint": "bddac6d73aecd4cf3ed2862905ccd3f1d2c7763169a5079dac71e1c350193f09",
+          "fingerprint": "25e0e2c6156d10dc6907037923994f2a6deb2e6eb82a0cca7799505aeaf46e5f",
           "node": {
             "node_id": 1,
             "claim": "展开两边，得到 (a+c)^2=a^2+2ac+c^2，且 (b+c)^2=b^2+bc+c^2。",
@@ -15591,7 +15872,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b,c 为实数且 a=b。"
             ],
@@ -15841,7 +16122,7 @@
           }
         },
         "2": {
-          "fingerprint": "177b8094ce1c3b738c7b230fcc164ceefa7d641bd415af9748d3c4e626e6fab5",
+          "fingerprint": "23d9fa11bc95a9086d1843dd459474367e564f435f8693301ec6fb6d11ca0515",
           "node": {
             "node_id": 2,
             "claim": "因为 a=b，所以 a^2+2ac+c^2=b^2+bc+c^2。",
@@ -15851,9 +16132,10 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "a,b,c 为实数且 a=b。"
+              "a,b,c 为实数且 a=b。",
+              "展开两边，得到 (a+c)^2=a^2+2ac+c^2，且 (b+c)^2=b^2+bc+c^2。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 因为 a=b，所以 a^2+2ac+c^2=b^2+bc+c^2。",
@@ -16104,7 +16386,7 @@
           }
         },
         "3": {
-          "fingerprint": "968096254fecc1120f67994246ef5ef2796f5d76cd057bc24bbcf098d955fee8",
+          "fingerprint": "194e1501eeeb11dea0a8d9c39b25813dc422cefe73a83498e89670f9b99dd1b2",
           "node": {
             "node_id": 3,
             "claim": "因此 (a+c)^2=(b+c)^2。",
@@ -16112,11 +16394,14 @@
             "source_reliability": "unknown",
             "node_type": "conclusion",
             "depends_on": [
+              1,
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "a,b,c 为实数且 a=b。"
+              "a,b,c 为实数且 a=b。",
+              "展开两边，得到 (a+c)^2=a^2+2ac+c^2，且 (b+c)^2=b^2+bc+c^2。",
+              "因为 a=b，所以 a^2+2ac+c^2=b^2+bc+c^2。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 因此 (a+c)^2=(b+c)^2。",
@@ -16189,7 +16474,7 @@
     "m2-045": {
       "nodes": {
         "1": {
-          "fingerprint": "b359d3e1cc24257d16b7489171e4902f7c5b68ced423d97cfaa45f97a0a7d097",
+          "fingerprint": "db7bcdb336bc6113242da950abd482414b3f838afc6f7598e97cce6abd53562a",
           "node": {
             "node_id": 1,
             "claim": "存在整数 k 使 b=ak。",
@@ -16197,7 +16482,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b 为整数且 a|b。"
             ],
@@ -16265,7 +16550,7 @@
           }
         },
         "2": {
-          "fingerprint": "009c8c93888c41e98e2f85a28d74ebfa9de70831d6977deac682dd553549b4ae",
+          "fingerprint": "7b74020889f9ff68c7faddcced2c145d4ae55579d5ef3aa0b5ca346277b6f07d",
           "node": {
             "node_id": 2,
             "claim": "平方得 b^2=a^2k。",
@@ -16275,7 +16560,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b 为整数且 a|b。",
               "存在整数 k 使 b=ak。"
@@ -16531,7 +16816,7 @@
           }
         },
         "3": {
-          "fingerprint": "39afd4bd6cfe8b8b4de30551a264aa5e9750a31899c0f56202268635ecaf823f",
+          "fingerprint": "7d0ebe15d5538e6e8e06fdcce7de0c3c316d2e2f0775be8652a67462f1c88a54",
           "node": {
             "node_id": 3,
             "claim": "所以 a^2|b^2。",
@@ -16541,10 +16826,10 @@
             "depends_on": [
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b 为整数且 a|b。",
-              "存在整数 k 使 b=ak。"
+              "平方得 b^2=a^2k。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 所以 a^2|b^2。",
@@ -16790,7 +17075,7 @@
     "m2-046": {
       "nodes": {
         "1": {
-          "fingerprint": "dde40f6599911d72628262dbace02892adb75baa3c472641ba47a4f559b03759",
+          "fingerprint": "7d53463e19f2a0624ca15e4fc47bfb149a023040697f78efac98ebee8437a77f",
           "node": {
             "node_id": 1,
             "claim": "因为 |a+b|=sqrt(a^2+b^2)。",
@@ -16798,7 +17083,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b 为实数。"
             ],
@@ -16879,17 +17164,20 @@
           }
         },
         "2": {
-          "fingerprint": "59a495bccb8b975d8519e42fe1d70bc721c5a9acaae2b955cae525162f156cf1",
+          "fingerprint": "015b665901ec56d9e9e4f301b5edcdb0ed658b5b0598982b8b49dfe9e25b26af",
           "node": {
             "node_id": 2,
             "claim": "又因为 sqrt(a^2+b^2)≤sqrt(a^2)+sqrt(b^2)=|a|+|b|。",
             "self_contained_claim": "又因为 sqrt(a^2+b^2)≤sqrt(a^2)+sqrt(b^2)=|a|+|b|。",
             "source_reliability": "unknown",
             "node_type": "calculation_step",
-            "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "depends_on": [
+              1
+            ],
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "a,b 为实数。"
+              "a,b 为实数。",
+              "因为 |a+b|=sqrt(a^2+b^2)。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 又因为 sqrt(a^2+b^2)≤sqrt(a^2)+sqrt(b^2)=|a|+|b|。",
@@ -16902,9 +17190,13 @@
               "assumptions": [
                 "a,b 为实数。"
               ],
-              "predecessor_node_ids": [],
-              "predecessor_claims": [],
-              "formal_obligation": "a,b 为实数。 |- 又因为 sqrt(a^2+b^2)≤sqrt(a^2)+sqrt(b^2)=|a|+|b|。",
+              "predecessor_node_ids": [
+                1
+              ],
+              "predecessor_claims": [
+                "因为 |a+b|=sqrt(a^2+b^2)。"
+              ],
+              "formal_obligation": "a,b 为实数。, 因为 |a+b|=sqrt(a^2+b^2)。 |- 又因为 sqrt(a^2+b^2)≤sqrt(a^2)+sqrt(b^2)=|a|+|b|。",
               "normalized_query": {
                 "topic_tokens": [
                   "algebra",
@@ -16916,7 +17208,10 @@
                   "sqrt"
                 ],
                 "assumption_tokens": [],
-                "predecessor_tokens": []
+                "predecessor_tokens": [
+                  "equal",
+                  "sqrt"
+                ]
               }
             },
             "retrieval_scope": "global",
@@ -16927,17 +17222,18 @@
               {
                 "id": "grp_normal_quotient",
                 "name": "Quotient group criterion",
-                "score": 2.0,
+                "score": 5.0,
                 "score_breakdown": {
                   "goal": 4.0,
-                  "predecessors": 0.0,
+                  "predecessors": 3.0,
                   "assumptions": 0.0,
                   "topic": 0.0,
                   "domain": 0.0,
                   "topic_conflict": -2.0
                 },
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "matched_rule_fields": [
                   "statement"
@@ -16949,17 +17245,18 @@
               {
                 "id": "lin_rank_nullity",
                 "name": "Rank-nullity theorem",
-                "score": 2.0,
+                "score": 5.0,
                 "score_breakdown": {
                   "goal": 4.0,
-                  "predecessors": 0.0,
+                  "predecessors": 3.0,
                   "assumptions": 0.0,
                   "topic": 0.0,
                   "domain": 0.0,
                   "topic_conflict": -2.0
                 },
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "matched_rule_fields": [
                   "conclusion",
@@ -16973,24 +17270,27 @@
               {
                 "id": "lin_same_dim_subspace",
                 "name": "Same dimension subspace criterion",
-                "score": 2.0,
+                "score": 5.0,
                 "score_breakdown": {
                   "goal": 4.0,
-                  "predecessors": 0.0,
+                  "predecessors": 3.0,
                   "assumptions": 0.0,
                   "topic": 0.0,
                   "domain": 0.0,
                   "topic_conflict": -2.0
                 },
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "matched_rule_fields": [
                   "conclusion",
+                  "conditions",
                   "statement"
                 ],
                 "matched_fields": [
                   "conclusion",
+                  "conditions",
                   "statement"
                 ]
               }
@@ -17010,9 +17310,10 @@
                   "forming G/N when N is not known to be normal",
                   "assuming coset multiplication is well-defined without checking normality"
                 ],
-                "retrieval_score": 2.0,
+                "retrieval_score": 5.0,
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "deterministic_safe": false,
                 "deterministic_safe_kind": null,
@@ -17032,9 +17333,10 @@
                   "using rank-nullity without finite-dimensionality",
                   "concluding im(T) = W from equal dimensions without im(T) being a subspace of W"
                 ],
-                "retrieval_score": 2.0,
+                "retrieval_score": 5.0,
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "deterministic_safe": false,
                 "deterministic_safe_kind": null,
@@ -17055,9 +17357,10 @@
                   "using dimension equality without a subspace relation",
                   "using the criterion in infinite-dimensional settings"
                 ],
-                "retrieval_score": 2.0,
+                "retrieval_score": 5.0,
                 "matched_query_fields": [
-                  "goal"
+                  "goal",
+                  "predecessors"
                 ],
                 "deterministic_safe": false,
                 "deterministic_safe_kind": null,
@@ -17107,10 +17410,10 @@
               "context_changed": false,
               "change_reason": null
             },
-            "calculation_source_expression": "a,b 为实数。",
+            "calculation_source_expression": "因为 |a+b|=sqrt(a^2+b^2)。",
             "calculation_adjudication": {
               "decision": "undetermined",
-              "source_expression": "a,b 为实数。",
+              "source_expression": "因为 |a+b|=sqrt(a^2+b^2)。",
               "target_expression": "又因为 sqrt(a^2+b^2)≤sqrt(a^2)+sqrt(b^2)=|a|+|b|。",
               "atomic_steps": [],
               "used_axioms": [],
@@ -17133,7 +17436,7 @@
           }
         },
         "3": {
-          "fingerprint": "08853e8b9bb54ae514e4d6dfed1994cbd14f57980904a4dec2a896179fd6c20a",
+          "fingerprint": "0ce6bffa6cfee10167e9eaf7b5c7f6cf9071dd8ba4d5f4b17f14d2d363b22d9e",
           "node": {
             "node_id": 3,
             "claim": "所以 |a+b|≤|a|+|b|。",
@@ -17143,9 +17446,10 @@
             "depends_on": [
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "a,b 为实数。"
+              "a,b 为实数。",
+              "又因为 sqrt(a^2+b^2)≤sqrt(a^2)+sqrt(b^2)=|a|+|b|。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 所以 |a+b|≤|a|+|b|。",
@@ -17409,7 +17713,7 @@
     "m2-047": {
       "nodes": {
         "1": {
-          "fingerprint": "c6092088fb189d80dbcc8614ecd0eb6557e5052f503680761aba2c2e3e180a86",
+          "fingerprint": "4d81b73727ee99518617953f8e0710aaacb806e454326edd1da347b264e5832a",
           "node": {
             "node_id": 1,
             "claim": "写 n=2k+1。",
@@ -17417,7 +17721,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为奇整数。"
             ],
@@ -17485,7 +17789,7 @@
           }
         },
         "2": {
-          "fingerprint": "34c4e219eb80b6184dc0f0da3afb8478bc1b4f147a5649e57a65f4dbd431fc5a",
+          "fingerprint": "e37a8f12a3858f26ae8995fa2d12892523268d090164770a392f31943fe69a2e",
           "node": {
             "node_id": 2,
             "claim": "则 n^2=4k^2+2k+1。",
@@ -17495,7 +17799,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为奇整数。",
               "写 n=2k+1。"
@@ -17751,7 +18055,7 @@
           }
         },
         "3": {
-          "fingerprint": "6e84071a72a14d2c76b5a72c039201468bfc2b3ec6922384e90b954ea5543927",
+          "fingerprint": "f6703e4006ac3553779ef6bbb784c7e5ac177400f2fc20f7a964c0ddcb417062",
           "node": {
             "node_id": 3,
             "claim": "所以 n^2 为奇数。",
@@ -17761,10 +18065,10 @@
             "depends_on": [
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为奇整数。",
-              "写 n=2k+1。"
+              "则 n^2=4k^2+2k+1。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 所以 n^2 为奇数。",
@@ -18010,7 +18314,7 @@
     "m2-048": {
       "nodes": {
         "1": {
-          "fingerprint": "d3d2c9dc6ec5eeb0336ac6006f436bb07efa8bf0a4c08a6bb22c3ade55b8ca17",
+          "fingerprint": "1906c3108cb495f19493536d47d96c227ff09d0f5945519e47842fda5897fdbf",
           "node": {
             "node_id": 1,
             "claim": "由零乘积性质可知 a=0 或 b=0。",
@@ -18018,7 +18322,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b 为实数且 ab=0。"
             ],
@@ -18089,7 +18393,7 @@
           }
         },
         "2": {
-          "fingerprint": "2110225fd9939bfff727cb36a996a34a73e2a2e2cc498eb316eb5ef591e20338",
+          "fingerprint": "a066e18284debeae5e0fc05617d01e530598a947aa2626ee3a93aecf1db2e9d6",
           "node": {
             "node_id": 2,
             "claim": "所以 a=0 且 b=0。",
@@ -18099,7 +18403,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "a,b 为实数且 ab=0。",
               "由零乘积性质可知 a=0 或 b=0。"
@@ -18367,7 +18671,7 @@
     "m2-049": {
       "nodes": {
         "1": {
-          "fingerprint": "b1ead574820f23d3ee310a222867581d49295151b3591c22e66c48a1a0a0b4dc",
+          "fingerprint": "6505446cb81ab7135f7f7339e5af4f1793023ed9a7ea206dcce3b5e55226b82b",
           "node": {
             "node_id": 1,
             "claim": "存在整数 p,q,r,s，且 q,s≠0，使 x=p/q，y=r/s。",
@@ -18375,7 +18679,7 @@
             "source_reliability": "unknown",
             "node_type": "introduction",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为有理数。"
             ],
@@ -18446,7 +18750,7 @@
           }
         },
         "2": {
-          "fingerprint": "519035b878e89444d34fd0f7de5e007a6055109e780f3991f678e5eed86312c3",
+          "fingerprint": "8beb58181a8723530b258522a1afbcda93c0a4a45f7ac2594d669bc39b121261",
           "node": {
             "node_id": 2,
             "claim": "于是 x+y=(p+r)/(qs)。",
@@ -18456,7 +18760,7 @@
             "depends_on": [
               1
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为有理数。",
               "存在整数 p,q,r,s，且 q,s≠0，使 x=p/q，y=r/s。"
@@ -18804,7 +19108,7 @@
           }
         },
         "3": {
-          "fingerprint": "104bdcb9755fe0ba99c41547201a6dea76ef5808339a794d554373c41498fdf1",
+          "fingerprint": "c3fdb96009c8f2000ea92c61e426b1d24875de6fb5a4202eb3edbd63ab9bae09",
           "node": {
             "node_id": 3,
             "claim": "因为 p+r 与 qs 都是整数且 qs≠0，所以 x+y 是有理数。",
@@ -18814,10 +19118,10 @@
             "depends_on": [
               2
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "x,y 为有理数。",
-              "存在整数 p,q,r,s，且 q,s≠0，使 x=p/q，y=r/s。"
+              "于是 x+y=(p+r)/(qs)。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 因为 p+r 与 qs 都是整数且 qs≠0，所以 x+y 是有理数。",
@@ -18892,7 +19196,7 @@
     "m2-050": {
       "nodes": {
         "1": {
-          "fingerprint": "b104e77b029d1daf2e1043dc0dad23c07dad239f28428112633f6ff396caf9fa",
+          "fingerprint": "9c1960250badfed758b13c444c40a4363945b98011f3029f1254f7c14ea5dad2",
           "node": {
             "node_id": 1,
             "claim": "当 n=1 时，等式 1=1^2 成立。",
@@ -18900,7 +19204,7 @@
             "source_reliability": "unknown",
             "node_type": "calculation_step",
             "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
               "n 为正整数。"
             ],
@@ -18978,17 +19282,20 @@
           }
         },
         "2": {
-          "fingerprint": "2e4ab272c0218758bed2c56d3db7773e59a6cf3d01d2bdc689edfa6646105fd8",
+          "fingerprint": "06c676d4fe0eef101f28d1e27035667f9a95cd3f3d31bd6a265c7fcc9e57f96c",
           "node": {
             "node_id": 2,
             "claim": "假设前 n 个正奇数之和等于 n^2。",
             "self_contained_claim": "假设前 n 个正奇数之和等于 n^2。",
             "source_reliability": "unknown",
             "node_type": "assumption",
-            "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "depends_on": [
+              1
+            ],
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "n 为正整数。"
+              "n 为正整数。",
+              "当 n=1 时，等式 1=1^2 成立。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 假设前 n 个正奇数之和等于 n^2。",
@@ -19068,17 +19375,20 @@
           }
         },
         "3": {
-          "fingerprint": "455423a7d9ae9577a38129b62f6b7a0a8b995f404f5e2ab94a418f56e45d7e52",
+          "fingerprint": "7038ca4572d01410fcee1534bfbd3cd7a2da12b63f03f2d0f5b8434a2f35ba93",
           "node": {
             "node_id": 3,
             "claim": "加入下一个奇数 2n+1 后，总和为 n^2+2n+1=n+1。",
             "self_contained_claim": "加入下一个奇数 2n+1 后，总和为 n^2+2n+1=n+1。",
             "source_reliability": "unknown",
             "node_type": "calculation_step",
-            "depends_on": [],
-            "dependency_source": "heuristic_fallback",
+            "depends_on": [
+              2
+            ],
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "n 为正整数。"
+              "n 为正整数。",
+              "假设前 n 个正奇数之和等于 n^2。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 加入下一个奇数 2n+1 后，总和为 n^2+2n+1=n+1。",
@@ -19091,9 +19401,13 @@
               "assumptions": [
                 "n 为正整数。"
               ],
-              "predecessor_node_ids": [],
-              "predecessor_claims": [],
-              "formal_obligation": "n 为正整数。 |- 加入下一个奇数 2n+1 后，总和为 n^2+2n+1=n+1。",
+              "predecessor_node_ids": [
+                2
+              ],
+              "predecessor_claims": [
+                "假设前 n 个正奇数之和等于 n^2。"
+              ],
+              "formal_obligation": "n 为正整数。, 假设前 n 个正奇数之和等于 n^2。 |- 加入下一个奇数 2n+1 后，总和为 n^2+2n+1=n+1。",
               "normalized_query": {
                 "topic_tokens": [
                   "algebra",
@@ -19291,10 +19605,10 @@
               "context_changed": false,
               "change_reason": null
             },
-            "calculation_source_expression": "n 为正整数。",
+            "calculation_source_expression": "假设前 n 个正奇数之和等于 n^2。",
             "calculation_adjudication": {
               "decision": "undetermined",
-              "source_expression": "n 为正整数。",
+              "source_expression": "假设前 n 个正奇数之和等于 n^2。",
               "target_expression": "加入下一个奇数 2n+1 后，总和为 n^2+2n+1=n+1。",
               "atomic_steps": [],
               "used_axioms": [],
@@ -19317,7 +19631,7 @@
           }
         },
         "4": {
-          "fingerprint": "d527fa39e01e29068157b261407c2c050bde4507a8d4950bcee2db7c05c07bda",
+          "fingerprint": "27c1274205dcc20fbc8dcafc05cda3b8b893f7f7679f1343cc1c205415140c4c",
           "node": {
             "node_id": 4,
             "claim": "所以前 n+1 个正奇数之和等于 (n+1)^2，归纳完成。",
@@ -19327,9 +19641,10 @@
             "depends_on": [
               3
             ],
-            "dependency_source": "heuristic_fallback",
+            "dependency_source": "host_agent_graph_builder",
             "local_context": [
-              "n 为正整数。"
+              "n 为正整数。",
+              "加入下一个奇数 2n+1 后，总和为 n^2+2n+1=n+1。"
             ],
             "ambient_facts": [],
             "obligation": "Given the local context, prove: 所以前 n+1 个正奇数之和等于 (n+1)^2，归纳完成。",

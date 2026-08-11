@@ -17,7 +17,7 @@
       "source_reliability": "unknown",
       "node_type": "assumption",
       "depends_on": [],
-      "dependency_source": "heuristic_fallback",
+      "dependency_source": "host_agent_graph_builder",
       "local_context": [
         "n 为整数且 n^2 为偶数。"
       ],
@@ -95,7 +95,7 @@
       "depends_on": [
         1
       ],
-      "dependency_source": "heuristic_fallback",
+      "dependency_source": "host_agent_graph_builder",
       "local_context": [
         "n 为整数且 n^2 为偶数。",
         "假设 n 是奇数。"
@@ -349,12 +349,14 @@
       "source_reliability": "unknown",
       "node_type": "conclusion",
       "depends_on": [
+        1,
         2
       ],
-      "dependency_source": "heuristic_fallback",
+      "dependency_source": "host_agent_graph_builder",
       "local_context": [
         "n 为整数且 n^2 为偶数。",
-        "假设 n 是奇数。"
+        "假设 n 是奇数。",
+        "那么存在整数 k 使 n=2k+1，从而 n^2=4k^2+4k+1 是奇数。"
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 这与 n^2 为偶数矛盾，所以 n 为偶数。",
@@ -368,12 +370,14 @@
           "n 为整数且 n^2 为偶数。"
         ],
         "predecessor_node_ids": [
+          1,
           2
         ],
         "predecessor_claims": [
+          "假设 n 是奇数。",
           "那么存在整数 k 使 n=2k+1，从而 n^2=4k^2+4k+1 是奇数。"
         ],
-        "formal_obligation": "n 为整数且 n^2 为偶数。, 那么存在整数 k 使 n=2k+1，从而 n^2=4k^2+4k+1 是奇数。 |- 这与 n^2 为偶数矛盾，所以 n 为偶数。",
+        "formal_obligation": "n 为整数且 n^2 为偶数。, 假设 n 是奇数。, 那么存在整数 k 使 n=2k+1，从而 n^2=4k^2+4k+1 是奇数。 |- 这与 n^2 为偶数矛盾，所以 n 为偶数。",
         "normalized_query": {
           "topic_tokens": [
             "algebra",

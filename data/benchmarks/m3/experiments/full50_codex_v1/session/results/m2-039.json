@@ -17,7 +17,7 @@
       "source_reliability": "unknown",
       "node_type": "calculation_step",
       "depends_on": [],
-      "dependency_source": "heuristic_fallback",
+      "dependency_source": "host_agent_graph_builder",
       "local_context": [
         "a,b,c 为整数，a|b 且 b|c。"
       ],
@@ -102,9 +102,10 @@
       "depends_on": [
         1
       ],
-      "dependency_source": "heuristic_fallback",
+      "dependency_source": "host_agent_graph_builder",
       "local_context": [
-        "a,b,c 为整数，a|b 且 b|c。"
+        "a,b,c 为整数，a|b 且 b|c。",
+        "由 a|b 可反向得到 b|a，由 b|c 可反向得到 c|b。"
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 根据整除的传递性，由 c|b 和 b|a 得 c|a。",
@@ -211,9 +212,10 @@
       "depends_on": [
         2
       ],
-      "dependency_source": "heuristic_fallback",
+      "dependency_source": "host_agent_graph_builder",
       "local_context": [
-        "a,b,c 为整数，a|b 且 b|c。"
+        "a,b,c 为整数，a|b 且 b|c。",
+        "根据整除的传递性，由 c|b 和 b|a 得 c|a。"
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 因此 a|c。",

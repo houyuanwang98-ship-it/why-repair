@@ -17,7 +17,7 @@
       "source_reliability": "unknown",
       "node_type": "calculation_step",
       "depends_on": [],
-      "dependency_source": "heuristic_fallback",
+      "dependency_source": "host_agent_graph_builder",
       "local_context": [
         "a,b,c 为实数，a<b 且 c<0。"
       ],
@@ -124,9 +124,10 @@
       "depends_on": [
         1
       ],
-      "dependency_source": "heuristic_fallback",
+      "dependency_source": "host_agent_graph_builder",
       "local_context": [
-        "a,b,c 为实数，a<b 且 c<0。"
+        "a,b,c 为实数，a<b 且 c<0。",
+        "将不等式 a<b 两边同时乘以 c，得到 ac<bc。"
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 因为 c 是负数，所以把不等号改为相反方向，得到 ac>bc。",
@@ -236,9 +237,10 @@
       "depends_on": [
         2
       ],
-      "dependency_source": "heuristic_fallback",
+      "dependency_source": "host_agent_graph_builder",
       "local_context": [
-        "a,b,c 为实数，a<b 且 c<0。"
+        "a,b,c 为实数，a<b 且 c<0。",
+        "因为 c 是负数，所以把不等号改为相反方向，得到 ac>bc。"
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 因此 ac>bc。",

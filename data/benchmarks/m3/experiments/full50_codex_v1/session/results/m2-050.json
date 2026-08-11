@@ -17,7 +17,7 @@
       "source_reliability": "unknown",
       "node_type": "calculation_step",
       "depends_on": [],
-      "dependency_source": "heuristic_fallback",
+      "dependency_source": "host_agent_graph_builder",
       "local_context": [
         "n 为正整数。"
       ],
@@ -99,10 +99,13 @@
       "self_contained_claim": "假设前 n 个正奇数之和等于 n^2。",
       "source_reliability": "unknown",
       "node_type": "assumption",
-      "depends_on": [],
-      "dependency_source": "heuristic_fallback",
+      "depends_on": [
+        1
+      ],
+      "dependency_source": "host_agent_graph_builder",
       "local_context": [
-        "n 为正整数。"
+        "n 为正整数。",
+        "当 n=1 时，等式 1=1^2 成立。"
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 假设前 n 个正奇数之和等于 n^2。",
@@ -186,10 +189,13 @@
       "self_contained_claim": "加入下一个奇数 2n+1 后，总和为 n^2+2n+1=n+1。",
       "source_reliability": "unknown",
       "node_type": "calculation_step",
-      "depends_on": [],
-      "dependency_source": "heuristic_fallback",
+      "depends_on": [
+        2
+      ],
+      "dependency_source": "host_agent_graph_builder",
       "local_context": [
-        "n 为正整数。"
+        "n 为正整数。",
+        "假设前 n 个正奇数之和等于 n^2。"
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 加入下一个奇数 2n+1 后，总和为 n^2+2n+1=n+1。",
@@ -202,9 +208,13 @@
         "assumptions": [
           "n 为正整数。"
         ],
-        "predecessor_node_ids": [],
-        "predecessor_claims": [],
-        "formal_obligation": "n 为正整数。 |- 加入下一个奇数 2n+1 后，总和为 n^2+2n+1=n+1。",
+        "predecessor_node_ids": [
+          2
+        ],
+        "predecessor_claims": [
+          "假设前 n 个正奇数之和等于 n^2。"
+        ],
+        "formal_obligation": "n 为正整数。, 假设前 n 个正奇数之和等于 n^2。 |- 加入下一个奇数 2n+1 后，总和为 n^2+2n+1=n+1。",
         "normalized_query": {
           "topic_tokens": [
             "algebra",
@@ -402,10 +412,10 @@
         "context_changed": false,
         "change_reason": null
       },
-      "calculation_source_expression": "n 为正整数。",
+      "calculation_source_expression": "假设前 n 个正奇数之和等于 n^2。",
       "calculation_adjudication": {
         "decision": "undetermined",
-        "source_expression": "n 为正整数。",
+        "source_expression": "假设前 n 个正奇数之和等于 n^2。",
         "target_expression": "加入下一个奇数 2n+1 后，总和为 n^2+2n+1=n+1。",
         "atomic_steps": [],
         "used_axioms": [],
@@ -435,9 +445,10 @@
       "depends_on": [
         3
       ],
-      "dependency_source": "heuristic_fallback",
+      "dependency_source": "host_agent_graph_builder",
       "local_context": [
-        "n 为正整数。"
+        "n 为正整数。",
+        "加入下一个奇数 2n+1 后，总和为 n^2+2n+1=n+1。"
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 所以前 n+1 个正奇数之和等于 (n+1)^2，归纳完成。",

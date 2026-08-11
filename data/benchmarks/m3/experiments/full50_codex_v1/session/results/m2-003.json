@@ -17,7 +17,7 @@
       "source_reliability": "unknown",
       "node_type": "conclusion",
       "depends_on": [],
-      "dependency_source": "heuristic_fallback",
+      "dependency_source": "host_agent_graph_builder",
       "local_context": [
         "n 为整数。"
       ],
@@ -92,7 +92,7 @@
       "depends_on": [
         1
       ],
-      "dependency_source": "heuristic_fallback",
+      "dependency_source": "host_agent_graph_builder",
       "local_context": [
         "n 为整数。",
         "相邻整数 n 与 n+1 中至少有一个是偶数，所以 n(n+1) 是偶数。"
@@ -344,12 +344,12 @@
       "source_reliability": "unknown",
       "node_type": "calculation_step",
       "depends_on": [
-        1
+        2
       ],
-      "dependency_source": "heuristic_fallback",
+      "dependency_source": "host_agent_graph_builder",
       "local_context": [
         "n 为整数。",
-        "相邻整数 n 与 n+1 中至少有一个是偶数，所以 n(n+1) 是偶数。"
+        "因此存在整数 k，使 n(n+1)=2k。"
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 于是 n^2+n+1=n(n+1)+1=2k+1，所以 n^2+n+1 是奇数。",
@@ -363,12 +363,12 @@
           "n 为整数。"
         ],
         "predecessor_node_ids": [
-          1
+          2
         ],
         "predecessor_claims": [
-          "相邻整数 n 与 n+1 中至少有一个是偶数，所以 n(n+1) 是偶数。"
+          "因此存在整数 k，使 n(n+1)=2k。"
         ],
-        "formal_obligation": "n 为整数。, 相邻整数 n 与 n+1 中至少有一个是偶数，所以 n(n+1) 是偶数。 |- 于是 n^2+n+1=n(n+1)+1=2k+1，所以 n^2+n+1 是奇数。",
+        "formal_obligation": "n 为整数。, 因此存在整数 k，使 n(n+1)=2k。 |- 于是 n^2+n+1=n(n+1)+1=2k+1，所以 n^2+n+1 是奇数。",
         "normalized_query": {
           "topic_tokens": [
             "algebra",
@@ -378,7 +378,9 @@
             "equal"
           ],
           "assumption_tokens": [],
-          "predecessor_tokens": []
+          "predecessor_tokens": [
+            "equal"
+          ]
         }
       },
       "retrieval_scope": "global",
@@ -389,17 +391,18 @@
         {
           "id": "grp_normal_quotient",
           "name": "Quotient group criterion",
-          "score": 2.0,
+          "score": 5.0,
           "score_breakdown": {
             "goal": 4.0,
-            "predecessors": 0.0,
+            "predecessors": 3.0,
             "assumptions": 0.0,
             "topic": 0.0,
             "domain": 0.0,
             "topic_conflict": -2.0
           },
           "matched_query_fields": [
-            "goal"
+            "goal",
+            "predecessors"
           ],
           "matched_rule_fields": [
             "statement"
@@ -411,17 +414,18 @@
         {
           "id": "lin_rank_nullity",
           "name": "Rank-nullity theorem",
-          "score": 2.0,
+          "score": 5.0,
           "score_breakdown": {
             "goal": 4.0,
-            "predecessors": 0.0,
+            "predecessors": 3.0,
             "assumptions": 0.0,
             "topic": 0.0,
             "domain": 0.0,
             "topic_conflict": -2.0
           },
           "matched_query_fields": [
-            "goal"
+            "goal",
+            "predecessors"
           ],
           "matched_rule_fields": [
             "conclusion",
@@ -435,24 +439,27 @@
         {
           "id": "lin_same_dim_subspace",
           "name": "Same dimension subspace criterion",
-          "score": 2.0,
+          "score": 5.0,
           "score_breakdown": {
             "goal": 4.0,
-            "predecessors": 0.0,
+            "predecessors": 3.0,
             "assumptions": 0.0,
             "topic": 0.0,
             "domain": 0.0,
             "topic_conflict": -2.0
           },
           "matched_query_fields": [
-            "goal"
+            "goal",
+            "predecessors"
           ],
           "matched_rule_fields": [
             "conclusion",
+            "conditions",
             "statement"
           ],
           "matched_fields": [
             "conclusion",
+            "conditions",
             "statement"
           ]
         }
@@ -472,9 +479,10 @@
             "forming G/N when N is not known to be normal",
             "assuming coset multiplication is well-defined without checking normality"
           ],
-          "retrieval_score": 2.0,
+          "retrieval_score": 5.0,
           "matched_query_fields": [
-            "goal"
+            "goal",
+            "predecessors"
           ],
           "deterministic_safe": false,
           "deterministic_safe_kind": null,
@@ -494,9 +502,10 @@
             "using rank-nullity without finite-dimensionality",
             "concluding im(T) = W from equal dimensions without im(T) being a subspace of W"
           ],
-          "retrieval_score": 2.0,
+          "retrieval_score": 5.0,
           "matched_query_fields": [
-            "goal"
+            "goal",
+            "predecessors"
           ],
           "deterministic_safe": false,
           "deterministic_safe_kind": null,
@@ -517,9 +526,10 @@
             "using dimension equality without a subspace relation",
             "using the criterion in infinite-dimensional settings"
           ],
-          "retrieval_score": 2.0,
+          "retrieval_score": 5.0,
           "matched_query_fields": [
-            "goal"
+            "goal",
+            "predecessors"
           ],
           "deterministic_safe": false,
           "deterministic_safe_kind": null,
@@ -566,10 +576,10 @@
         "context_changed": false,
         "change_reason": null
       },
-      "calculation_source_expression": "相邻整数 n 与 n+1 中至少有一个是偶数，所以 n(n+1) 是偶数。",
+      "calculation_source_expression": "因此存在整数 k，使 n(n+1)=2k。",
       "calculation_adjudication": {
         "decision": "undetermined",
-        "source_expression": "相邻整数 n 与 n+1 中至少有一个是偶数，所以 n(n+1) 是偶数。",
+        "source_expression": "因此存在整数 k，使 n(n+1)=2k。",
         "target_expression": "于是 n^2+n+1=n(n+1)+1=2k+1，所以 n^2+n+1 是奇数。",
         "atomic_steps": [],
         "used_axioms": [],
