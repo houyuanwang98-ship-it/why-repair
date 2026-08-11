@@ -6,12 +6,15 @@ from .controller import (
     InvalidTransitionError,
     StaleVersionError,
 )
+from .integration import CheckerIntegrationError, ingest_person_a_result
 
 __all__ = [
     "ContractError",
     "DualAgentController",
     "InvalidTransitionError",
     "StaleVersionError",
+    "CheckerIntegrationError",
+    "ingest_person_a_result",
     "validate_contract",
 ]
 
