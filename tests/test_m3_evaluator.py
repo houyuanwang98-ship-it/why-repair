@@ -67,6 +67,7 @@ class M3EvaluatorTests(unittest.TestCase):
         self.assertEqual(M3.prediction_error_type({"validity_status": "valid"}), "no_error")
         self.assertEqual(M3.prediction_error_type({"validity_status": "valid_with_gap"}), "proof_gap")
         self.assertEqual(M3.prediction_error_type({"validity_status": "undetermined"}), "undetermined")
+        self.assertEqual(M3.prediction_validity({"validity_status": "false_theorem"}), "invalid")
 
 
 if __name__ == "__main__":

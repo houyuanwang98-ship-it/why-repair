@@ -1,0 +1,42 @@
+{
+  "workflow_mode": "grading",
+  "rule_dictionary": {},
+  "adjudications": [
+    {
+      "result_id": "__ambient_facts__",
+      "node_id": 0,
+      "kind": "ambient",
+      "response": {
+        "results": [
+          {"result_id":"m2-001","facts":[],"abstained_conditions":["整数类型已在题设中直接给出，不增加环境事实。"]},
+          {"result_id":"m2-011","facts":[],"abstained_conditions":["整数类型已在题设中直接给出，不增加环境事实。"]},
+          {"result_id":"m2-018","facts":[{"kind":"real_numbers","subject":"x,y","object":null,"source_text":"x,y 为实数且 x=y。","derivation_rule":"explicit_statement","reasoning":"题设直接声明 x,y 为实数。"}],"abstained_conditions":[]},
+          {"result_id":"m2-025","facts":[{"kind":"real_numbers","subject":"x,y","object":null,"source_text":"x,y 为实数且 x^2=y^2。","derivation_rule":"explicit_statement","reasoning":"题设直接声明 x,y 为实数。"}],"abstained_conditions":[]},
+          {"result_id":"m2-033","facts":[{"kind":"real_numbers","subject":"x","object":null,"source_text":"x 为实数且 x^2=1。","derivation_rule":"explicit_statement","reasoning":"题设直接声明 x 为实数。"}],"abstained_conditions":[]}
+        ]
+      }
+    },
+    {"result_id":"m2-001","node_id":0,"kind":"graph","response":{"nodes":[
+      {"node_id":1,"depends_on":[],"self_contained_claim":"由 x、y 为偶整数，存在整数 m,n，使 x=2m 且 y=2n。"},
+      {"node_id":2,"depends_on":[1],"self_contained_claim":"由 x=2m、y=2n，得到 x+y=2m+2n=2(m+n)。"},
+      {"node_id":3,"depends_on":[2],"self_contained_claim":"由 x+y=2(m+n) 且 m+n 为整数，得到 x+y 为偶数。"}
+    ]}},
+    {"result_id":"m2-011","node_id":0,"kind":"graph","response":{"nodes":[
+      {"node_id":1,"depends_on":[],"self_contained_claim":"由 x、y 为奇整数，存在整数 m,n，使 x=2m+1 且 y=2n+1。"},
+      {"node_id":2,"depends_on":[1],"self_contained_claim":"由 x=2m+1、y=2n+1，得到 x+y 为偶数。"}
+    ]}},
+    {"result_id":"m2-018","node_id":0,"kind":"graph","response":{"nodes":[
+      {"node_id":1,"depends_on":[],"self_contained_claim":"由 x=y，将等式左边乘以 x、右边乘以 y。"},
+      {"node_id":2,"depends_on":[1],"self_contained_claim":"由前述分别相乘的操作得到 x^2=y^2。"}
+    ]}},
+    {"result_id":"m2-025","node_id":0,"kind":"graph","response":{"nodes":[
+      {"node_id":1,"depends_on":[],"self_contained_claim":"由实数 x,y 满足 x^2=y^2，对等式两边开平方。"},
+      {"node_id":2,"depends_on":[1],"self_contained_claim":"由对 x^2=y^2 两边开平方，断言 x=y。"}
+    ]}},
+    {"result_id":"m2-033","node_id":0,"kind":"graph","response":{"nodes":[
+      {"node_id":1,"depends_on":[],"self_contained_claim":"由 x^2=1 得 x^2-1=0，因式分解为 (x-1)(x+1)=0。"},
+      {"node_id":2,"depends_on":[1],"self_contained_claim":"由 (x-1)(x+1)=0，约去因子 x-1 并断言 x+1=0。"},
+      {"node_id":3,"depends_on":[1,2],"self_contained_claim":"由前述因式分解和约去操作，断言 x=1 或 x=-1。"}
+    ]}}
+  ]
+}

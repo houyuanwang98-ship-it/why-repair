@@ -99,6 +99,11 @@ def prediction_error_type(row: dict[str, Any]) -> Any:
     return ERROR_TYPE_MAP.get(value, value)
 
 
+def prediction_validity(row: dict[str, Any]) -> Any:
+    value = row.get("validity_status", MISSING)
+    return "invalid" if value == "false_theorem" else value
+
+
 def classification_metrics(gold: list[Any], predicted: list[Any]) -> dict[str, Any]:
     if len(gold) != len(predicted):
         raise ValueError("gold and predicted label arrays must have equal length")
@@ -172,7 +177,7 @@ def evaluate(gold_rows: list[dict[str, Any]], prediction_rows: list[dict[str, An
         gold = gold_map[item_id]
         pred = pred_map.get(item_id, {})
         proof_gold.append(gold["gold_validity_status"])
-        proof_pred.append(pred.get("validity_status", MISSING))
+        proof_pred.append(prediction_validity(pred))
         error_gold.append(gold["gold_error_type"])
         error_pred.append(prediction_error_type(pred) if pred else MISSING)
         gap_gold.append(gold.get("gold_first_gap_step"))
@@ -258,8 +263,18 @@ def main() -> int:
     parser.add_argument("--predictions", required=True, help="JSONL file or directory of JSON predictions")
     parser.add_argument("--report", required=True)
     parser.add_argument("--details")
+    parser.add_argument("--ids", nargs="*", help="Optional proof IDs to evaluate")
     args = parser.parse_args()
-    report, details = evaluate(read_jsonl(args.gold), load_predictions(args.predictions))
+    gold_rows = read_jsonl(args.gold)
+    prediction_rows = load_predictions(args.predictions)
+    if args.ids:
+        selected = set(args.ids)
+        gold_rows = [row for row in gold_rows if sample_id(row) in selected]
+        prediction_rows = [row for row in prediction_rows if sample_id(row) in selected]
+        missing = selected - {sample_id(row) for row in gold_rows}
+        if missing:
+            raise SystemExit(f"Unknown gold IDs: {', '.join(sorted(missing))}")
+    report, details = evaluate(gold_rows, prediction_rows)
     report["inputs"] = {
         "gold_sha256": sha256_path(args.gold),
         "predictions_sha256": sha256_path(args.predictions),

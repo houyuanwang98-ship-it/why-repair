@@ -1,0 +1,26 @@
+{
+  "workflow_mode": "grading",
+  "rule_dictionary": {},
+  "adjudications": [
+    {
+      "result_id":"m2-001","node_id":2,"kind":"proof_diagnosis",
+      "response":{"primary_response":{"decision":"derivable","reasoning_summary":"代入 x=2m、y=2n 并按分配律合并即可。","proof_outline":["x+y=2m+2n","2m+2n=2(m+n)"],"completion_assessment":"directly_justified","original_step_requires_completion":false,"bridge_steps":[],"bridge_length":0,"counterexample_description":null,"counterexample_verification":null,"confidence":"high"},"diagnosis_response":null}
+    },
+    {
+      "result_id":"m2-011","node_id":2,"kind":"proof_diagnosis",
+      "response":{"primary_response":{"decision":"derivable","reasoning_summary":"结论成立，但原文省略了把两个奇数表示式相加并提取因子 2 的桥接。","proof_outline":["x+y=(2m+1)+(2n+1)","x+y=2(m+n+1)","m+n+1 为整数，所以 x+y 为偶数"],"completion_assessment":"omitted_intermediate_steps","original_step_requires_completion":true,"bridge_steps":[{"claim":"x+y=2(m+n+1)，且 m+n+1 为整数。","justification":"代入奇数表示式、使用分配律与整数加法封闭性。","depends_on_context":["存在整数 m,n，使 x=2m+1，y=2n+1。"]}],"bridge_length":1,"counterexample_description":null,"counterexample_verification":null,"confidence":"high"},"diagnosis_response":null}
+    },
+    {
+      "result_id":"m2-018","node_id":2,"kind":"proof_diagnosis",
+      "response":{"primary_response":{"decision":"undetermined","reasoning_summary":"目标由题设 x=y 可证，但前驱步骤‘两边分别乘以 x 和 y’存在多种语义解释；按冻结的歧义策略，在解释分支复核前不选择其中一种。","proof_outline":[],"completion_assessment":"not_applicable","original_step_requires_completion":false,"bridge_steps":[],"bridge_length":0,"counterexample_description":null,"counterexample_verification":null,"confidence":"high"},"diagnosis_response":{"diagnosis_review":"uncertain","error_category":"undetermined","failed_inference":"无法唯一确定‘分别乘以 x 和 y’表示合法代换还是在等式两边使用不同乘数。","violated_obligation":"当前自然语言步骤必须有唯一、可复核的局部推理含义。","error_scope":"source_text","evidence":["原句未明确先利用 x=y 进行代换。","合法与非法两种解释均与字面表述相容。"],"counterexample_or_witness":null,"claim_globally_derivable":true,"repairability":"manual_review","minimal_repair":null,"theorem_dependency":null,"confidence":"high"}}
+    },
+    {
+      "result_id":"m2-025","node_id":2,"kind":"diagnosis",
+      "response":{"diagnosis_review":"confirmed","error_category":"false_theorem","failed_inference":"由 x^2=y^2 只能推出 |x|=|y|，不能推出 x=y。","violated_obligation":"该节点必须从题设推出 x=y，但题设允许 x=-y。","error_scope":"original_theorem","evidence":["取 x=1、y=-1 时 x^2=y^2=1。","同一赋值下 x≠y。"],"counterexample_or_witness":"x=1, y=-1","claim_globally_derivable":false,"repairability":"change_target","minimal_repair":"将结论改为 x=y 或 x=-y。","theorem_dependency":null,"confidence":"high"}
+    },
+    {
+      "result_id":"m2-033","node_id":2,"kind":"diagnosis",
+      "response":{"diagnosis_review":"confirmed","error_category":"algebraic_invalidity","failed_inference":"从 (x-1)(x+1)=0 约去 x-1，未证明 x-1 非零。","violated_obligation":"消去乘法因子前必须证明该因子非零。","error_scope":"local_node","evidence":["当 x=1 时，x-1=0，不能约去。","题设 x^2=1 允许 x=1。"],"counterexample_or_witness":"x=1 使被约因子 x-1 为零","claim_globally_derivable":false,"repairability":"replace_step","minimal_repair":"使用零乘积性质分情况得到 x-1=0 或 x+1=0。","theorem_dependency":null,"confidence":"high"}
+    }
+  ]
+}
