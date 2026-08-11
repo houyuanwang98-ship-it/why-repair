@@ -719,6 +719,7 @@ def classify_node_type(claim):
         r"\blet\b.+:=",
         r"\blet\b.+=",
         r"\bis the set of\b",
+        r"(?:\u5b9a\u4e49|\u79f0.+\u4e3a|\u8bb0.+\u4e3a|\u8bb0\u4f5c|\u4ee4.+:=)",
     ]
     if any(re.search(pattern, lowered) for pattern in definition_patterns):
         return "definition"
@@ -732,6 +733,7 @@ def classify_node_type(claim):
         r"\bwe wish to prove that\b",
         r"\bwe first prove a lemma\b",
         r"\bwe begin by showing that\b",
+        r"(?:\u6211\u4eec|\u4e0b\u6587)?(?:\u8bc1\u660e|\u58f0\u79f0|\u65ad\u8a00|\u4e3b\u5f20)(?:\u547d\u9898|\u7ed3\u8bba|\u5f15\u7406)?",
     ]
     if any(re.search(pattern, lowered) for pattern in claim_patterns):
         return "claim"
@@ -746,9 +748,27 @@ def classify_node_type(claim):
         "otherwise",
         "unless ",
         "provided that",
+        "\u5047\u8bbe",
+        "\u5047\u5b9a",
+        "\u4e0d\u59a8\u8bbe",
+        "\u82e5",
+        "\u5982\u679c",
+        "\u5206\u60c5\u51b5",
+        "\u60c5\u5f62",
     )
     if lowered.startswith(assumption_starts):
         return "assumption"
+
+    # In Chinese stepwise proofs, a standalone "obtained ..." sentence normally
+    # reports the result of the preceding operation.  Keep it as a conclusion
+    # instead of reclassifying it as the operation itself.
+    if re.match(r"^(?:\u5f97\u5230|\u53ef\u5f97\u7ed3\u8bba|\u6545\u6709)", text):
+        return "conclusion"
+    # The Chinese "because P, therefore Q" form presents Q as the result.
+    # symbols inside P or Q do not by themselves turn the sentence into an
+    # operation node.
+    if re.match(r"^(?:\u56e0\u4e3a|\u7531\u4e8e).+(?:\u6240\u4ee5|\u56e0\u6b64|\u6545|\u4ece\u800c)", text):
+        return "conclusion"
 
     introduction_patterns = [
         r"\bit suffices to show\b",
@@ -762,8 +782,21 @@ def classify_node_type(claim):
         r"\blet\b",
         r"\btake\b",
         r"\bfor each\b",
+        r"(?:\u6839\u636e|\u4f9d\u636e|\u5229\u7528|\u5f15\u7528).+(?:\u5b9a\u7406|\u5f15\u7406|\u6027\u8d28|\u5b9a\u4e49|\u6cd5\u5219)",
+        r"(?:\u7531|\u6309).+(?:\u5b9a\u7406|\u5f15\u7406|\u5b9a\u4e49|\u6027\u8d28|\u6cd5\u5219)",
+        r"^(?:\u8bbe|\u4ee4|\u53d6|\u9009\u53d6|\u8bb0|\u5b58\u5728)(?:\u6709)?",
+        r"(?:\u53ea\u9700|\u8db3\u4ee5|\u5f52\u7ed3\u4e3a|\u5316\u5f52\u4e3a)(?:\u8bc1\u660e|\u8bf4\u660e)",
     ]
     if any(re.search(pattern, lowered) for pattern in introduction_patterns):
+        return "introduction"
+
+    chinese_known_fact_patterns = [
+        r"^(?:\u56e0\u4e3a)?(?:\u5b9e\u6570)?(?:\u7684)?\u5e73\u65b9(?:\u662f|\u6052\u4e3a)?\u975e\u8d1f",
+        r"^\u6b63\u6570(?:\u76f8\u4e58|\u7684\u4e58\u79ef|\u7684\u5012\u6570)",
+        r"^\u65e0\u7406\u6570\u4e0d\u5c5e\u4e8e\u6709\u7406\u6570\u96c6",
+        r"^(?:\u5199|\u8bbe|\u4ee4|\u53d6|\u8bb0)\s*[^\uff0c\u3002]+[=\u4e3a]",
+    ]
+    if any(re.search(pattern, text) for pattern in chinese_known_fact_patterns):
         return "introduction"
 
     has_symbolic_relation = bool(re.search(r"(=|<=|>=|<|>|\\le|\\ge)", text))
@@ -771,15 +804,26 @@ def classify_node_type(claim):
         r"\b(calculate|compute|evaluate|simplify|expand|factor|cancel|substitut|"
         r"rearrang|rationaliz|reduce|arithmetic|equivalent to)\b",
         lowered,
+    )) or bool(re.search(
+        r"(?:\u4ee3\u5165|\u5c55\u5f00|\u56e0\u5f0f\u5206\u89e3|\u914d\u65b9|\u79fb\u9879|\u5408\u5e76\u540c\u7c7b\u9879|\u7ea6\u53bb|\u6d88\u53bb|\u901a\u5206|\u5316\u7b80|"
+        r"\u4e24\u8fb9(?:\u540c\u52a0|\u540c\u51cf|\u540c\u4e58|\u540c\u9664|\u5e73\u65b9|\u5f00\u5e73\u65b9)|\u53d6\u5012\u6570|\u5e73\u65b9|\u5f00\u5e73\u65b9|\u8ba1\u7b97|\u6574\u7406)",
+        text,
     ))
     complete_relation = is_complete_calculation_relation(text)
     relation_count = len(re.findall(r"<=|>=|(?<![<>])=|(?<!\\)[<>]|\\le|\\ge", text))
     has_operation = any(
         marker in text for marker in ("+", "-", "*", "/", "\\cdot", "^", "|", "\\sqrt", "\\frac")
     )
-    if has_symbolic_relation and (
+    chinese_derivation = bool(re.search(r"(?:\u5f97\u5230|\u5f97|\u53ef\u5f97|\u63a8\u51fa|\u5316\u4e3a|\u7b49\u4ef7\u4e8e)", text))
+    chinese_calculation_shape = bool(re.search(
+        r"^(?:\u4e8e\u662f|\u90a3\u4e48|\u5219|\u5f53|\u7531|\u56e0\u4e3a|\u53c8\u56e0\u4e3a)|(?:\u5b83\u4eec\u7684\u548c|\u603b\u548c)\u4e3a|\u4ece\u800c.+[=<>\u2264\u2265]",
+        text,
+    ))
+    if (has_symbolic_relation or calculation_cue or chinese_calculation_shape) and (
         (complete_relation and (has_operation or relation_count >= 2))
         or calculation_cue
+        or (chinese_derivation and has_operation)
+        or (chinese_calculation_shape and (has_operation or has_symbolic_relation))
         or (
             relation_count >= 2
             and contains_any(lowered, ["claim ", "we have", "we obtain", "which gives"])
@@ -797,6 +841,13 @@ def classify_node_type(claim):
         "this implies",
         "so ",
         "which contradicts",
+        "\u56e0\u6b64",
+        "\u6240\u4ee5",
+        "\u4ece\u800c",
+        "\u6545",
+        "\u4e8e\u662f",
+        "\u53ef\u77e5",
+        "\u8fd9\u8bf4\u660e",
     )
     if lowered.startswith(conclusion_starts):
         return "conclusion"

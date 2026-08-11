@@ -405,19 +405,26 @@ def classification_from_calculation_adjudication(
 
 def infer_structure(text):
     lowered = normalized_key(text)
-    if contains_any(lowered, ["real numbers", "real field", " r is a field"]):
+    if contains_any(lowered, [
+        "real numbers", "real field", " r is a field",
+        "\u5b9e\u6570", "\u5b9e\u6570\u57df", "\u5728\u5b9e\u6570\u8303\u56f4\u5185",
+    ]):
         return "real_numbers", "R"
-    if contains_any(lowered, ["vector space", "linear map"]):
+    if contains_any(lowered, ["vector space", "linear map", "\u5411\u91cf\u7a7a\u95f4", "\u7ebf\u6027\u6620\u5c04"]):
         return "vector_space", "V"
-    if contains_any(lowered, ["commutative ring"]):
+    if contains_any(lowered, [
+        "commutative ring", "\u4ea4\u6362\u73af", "\u6574\u6570", "\u6574\u7cfb\u6570", "integer",
+    ]):
         return "commutative_ring", "R"
-    if contains_any(lowered, ["field"]):
+    if contains_any(lowered, ["field", "\u57df"]):
         return "field", "F"
-    if contains_any(lowered, ["abelian group", "commutative group"]):
+    if contains_any(lowered, [
+        "abelian group", "commutative group", "\u963f\u8d1d\u5c14\u7fa4", "\u4ea4\u6362\u7fa4",
+    ]):
         return "abelian_group", "G"
-    if contains_any(lowered, ["group"]):
+    if contains_any(lowered, ["group", "\u7fa4"]):
         return "group", "G"
-    if contains_any(lowered, ["ring"]):
+    if contains_any(lowered, ["ring", "\u73af"]):
         return "ring", "R"
     return "unknown", None
 

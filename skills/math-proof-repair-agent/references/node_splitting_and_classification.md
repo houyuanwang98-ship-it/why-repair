@@ -149,6 +149,8 @@ Let d be the metric on E.
 Recall that every compact subset of a metric space is closed.
 Use l to denote the limit of the sequence.
 It suffices to show that the sequence is bounded and monotone.
+There exist integers m,n such that x=2m and y=2n.
+By the zero-product theorem, at least one factor of a zero product is zero.
 ```
 
 A reductive declaration is `introduction`, not `claim`, because it changes the
@@ -166,6 +168,8 @@ Assume for contradiction that p is in A.
 If x is a limit point of E, ...
 Case 1: A and B are finite.
 Otherwise, suppose x is negative.
+Assume x<0.
+Without loss of generality, suppose a<=b.
 ```
 
 ### Claim
@@ -201,6 +205,9 @@ Typical evidence includes:
 - substitution, expansion, cancellation, or limit evaluation;
 - applying a named rule to derive a new formula;
 - a contradiction derived from earlier formulas.
+- Chinese operation cues corresponding to substitution, expansion,
+  factorization, cancellation, applying the same operation to both sides,
+  squaring, taking square roots, or taking reciprocals.
 
 Examples:
 
@@ -208,10 +215,15 @@ Examples:
 By the triangle inequality, d(x,z) <= d(x,y) + d(y,z) < epsilon.
 This is equivalent to |a| <= |a-b| + |b|.
 Taking n to infinity gives L = f(L).
+Thus x+y=2m+2n=2(m+n).
+Take square roots on both sides of the equation.
 ```
 
 A lone statement such as `B(p,r) intersect E is empty` is normally a
 `conclusion`, unless its surrounding text supplies an explicit derivation.
+An opening operation is not automatically valid merely because it is the
+first proof node. It must pass calculation adjudication; this keeps the first
+invalid location at the operation rather than a later consequence.
 
 ### Conclusion
 

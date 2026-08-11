@@ -1,0 +1,88 @@
+{
+  "workflow_mode": "grading",
+  "rule_dictionary": {},
+  "adjudications": [
+    {
+      "result_id": "m2-001",
+      "node_id": 2,
+      "kind": "calculation_diagnosis",
+      "response": {
+        "primary_response": {
+          "decision": "valid_transformation",
+          "source_expression": "存在整数 m,n，使 x=2m，y=2n。",
+          "target_expression": "于是 x+y=2m+2n=2(m+n)。",
+          "atomic_steps": [
+            {
+              "expression": "x+y=2m+2n=2(m+n)",
+              "rule": "distributivity",
+              "required_conditions": []
+            }
+          ],
+          "used_axioms": ["distributivity"],
+          "introduced_assumptions": [],
+          "missing_conditions": [],
+          "reasoning_summary": "Substitute the established representations x=2m and y=2n, then factor out 2 in the commutative ring of integers.",
+          "confidence": "high"
+        },
+        "diagnosis_response": null
+      }
+    },
+    {
+      "result_id": "m2-025",
+      "node_id": 1,
+      "kind": "calculation_diagnosis",
+      "response": {
+        "primary_response": {
+          "decision": "invalid_transformation",
+          "source_expression": "x,y 为实数且 x^2=y^2。",
+          "target_expression": "两边开平方。",
+          "atomic_steps": [],
+          "used_axioms": [],
+          "introduced_assumptions": [],
+          "missing_conditions": [],
+          "reasoning_summary": "Taking square roots yields |x|=|y|, equivalently x=±y; it does not justify x=y without a sign condition.",
+          "confidence": "high"
+        },
+        "diagnosis_response": {
+          "diagnosis_review": "confirmed",
+          "error_category": "false_theorem",
+          "failed_inference": "The square-root operation discards the negative branch and therefore cannot establish x=y from x^2=y^2.",
+          "violated_obligation": "Preserve every real solution branch when taking square roots.",
+          "error_scope": "original_theorem",
+          "evidence": ["From x^2=y^2 one obtains |x|=|y|, not x=y."],
+          "counterexample_or_witness": "x=1 and y=-1 satisfy x^2=y^2 but not x=y.",
+          "claim_globally_derivable": false,
+          "repairability": "change_target",
+          "minimal_repair": "Change the conclusion to x=y or x=-y, or add a same-sign assumption.",
+          "theorem_dependency": null,
+          "confidence": "high"
+        }
+      }
+    },
+    {
+      "result_id": "m2-033",
+      "node_id": 1,
+      "kind": "calculation_diagnosis",
+      "response": {
+        "primary_response": {
+          "decision": "valid_transformation",
+          "source_expression": "x 为实数且 x^2=1。",
+          "target_expression": "由 x^2-1=0 得 (x-1)(x+1)=0。",
+          "atomic_steps": [
+            {
+              "expression": "x^2-1=(x-1)(x+1)=0",
+              "rule": "distributivity",
+              "required_conditions": []
+            }
+          ],
+          "used_axioms": ["distributivity"],
+          "introduced_assumptions": [],
+          "missing_conditions": [],
+          "reasoning_summary": "Subtracting 1 and applying the difference-of-squares factorization are valid over the real numbers.",
+          "confidence": "high"
+        },
+        "diagnosis_response": null
+      }
+    }
+  ]
+}

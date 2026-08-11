@@ -715,7 +715,13 @@ def classify_node(item, step_id, claim, previous_claims):
     if "because" in text and contains_any(text, ["subgroup", "normal", "rank-nullity", "kernel", "image"]):
         return closed("The claim gives an explicit algebraic justification.")
 
-    if step_id == 1 and not text.startswith(
+    opening_operation_cues = (
+        "calculate", "compute", "expand", "factor", "cancel", "square",
+        "take square root", "divide both", "multiply both", "reciprocal",
+        "\u8ba1\u7b97", "\u5c55\u5f00", "\u56e0\u5f0f\u5206\u89e3", "\u7ea6\u53bb", "\u6d88\u53bb", "\u5e73\u65b9", "\u5f00\u5e73\u65b9",
+        "\u4e24\u8fb9\u540c\u4e58", "\u4e24\u8fb9\u540c\u9664", "\u53d6\u5012\u6570", "\u79fb\u9879", "\u5316\u7b80", "\u4ee3\u5165",
+    )
+    if step_id == 1 and not contains_any(text, opening_operation_cues) and not text.startswith(
         ("hence", "therefore", "thus", "consequently", "so ")
     ):
         return closed("The opening step is consistent with the stated assumptions.")

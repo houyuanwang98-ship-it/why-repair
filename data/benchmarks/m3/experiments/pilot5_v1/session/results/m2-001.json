@@ -15,7 +15,7 @@
       "claim": "存在整数 m,n，使 x=2m，y=2n。",
       "self_contained_claim": "由 x、y 为偶整数，存在整数 m,n，使 x=2m 且 y=2n。",
       "source_reliability": "unknown",
-      "node_type": "conclusion",
+      "node_type": "introduction",
       "depends_on": [],
       "dependency_source": "host_agent_graph_builder",
       "local_context": [
@@ -24,7 +24,7 @@
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 由 x、y 为偶整数，存在整数 m,n，使 x=2m 且 y=2n。",
       "retrieval_required": false,
-      "retrieval_reason": "The local obligation is already closed.",
+      "retrieval_reason": "Introduction nodes only organize the proof context.",
       "retrieval_query": null,
       "retrieval_scope": null,
       "candidate_pool_size": 0,
@@ -40,13 +40,27 @@
       "counterexample": null,
       "model_adjudication": null,
       "calculation_context": {
-        "structure": "unknown",
-        "carrier": null,
-        "operations": [],
-        "axioms": [
-          "equality_substitution"
+        "structure": "commutative_ring",
+        "carrier": "R",
+        "operations": [
+          "addition",
+          "multiplication",
+          "negation"
         ],
-        "properties": [],
+        "axioms": [
+          "additive_associativity",
+          "additive_commutativity",
+          "additive_identity",
+          "additive_inverse",
+          "distributivity",
+          "equality_substitution",
+          "multiplicative_associativity",
+          "multiplicative_commutativity",
+          "multiplicative_identity"
+        ],
+        "properties": [
+          "commutative_multiplication"
+        ],
         "local_conditions": [
           "x、y 为偶整数。"
         ],
@@ -74,7 +88,7 @@
       "claim": "于是 x+y=2m+2n=2(m+n)。",
       "self_contained_claim": "由 x=2m、y=2n，得到 x+y=2m+2n=2(m+n)。",
       "source_reliability": "unknown",
-      "node_type": "conclusion",
+      "node_type": "calculation_step",
       "depends_on": [
         1
       ],
@@ -86,7 +100,7 @@
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 由 x=2m、y=2n，得到 x+y=2m+2n=2(m+n)。",
       "retrieval_required": true,
-      "retrieval_reason": "The conclusion does not follow directly from the accepted context.",
+      "retrieval_reason": "The calculation is not locally closed and needs a justification rule.",
       "retrieval_query": {
         "domain": "elementary_algebra",
         "topic": "elementary_algebra",
@@ -277,29 +291,29 @@
       "applicable_rule_id": null,
       "operation_check": null,
       "counterexample": null,
-      "model_adjudication": {
-        "decision": "derivable",
-        "reasoning_summary": "代入 x=2m、y=2n 并按分配律合并即可。",
-        "proof_outline": [
-          "x+y=2m+2n",
-          "2m+2n=2(m+n)"
-        ],
-        "completion_assessment": "directly_justified",
-        "original_step_requires_completion": false,
-        "bridge_steps": [],
-        "bridge_length": 0,
-        "counterexample_description": null,
-        "counterexample_verification": null,
-        "confidence": "high"
-      },
+      "model_adjudication": null,
       "calculation_context": {
-        "structure": "unknown",
-        "carrier": null,
-        "operations": [],
-        "axioms": [
-          "equality_substitution"
+        "structure": "commutative_ring",
+        "carrier": "R",
+        "operations": [
+          "addition",
+          "multiplication",
+          "negation"
         ],
-        "properties": [],
+        "axioms": [
+          "additive_associativity",
+          "additive_commutativity",
+          "additive_identity",
+          "additive_inverse",
+          "distributivity",
+          "equality_substitution",
+          "multiplicative_associativity",
+          "multiplicative_commutativity",
+          "multiplicative_identity"
+        ],
+        "properties": [
+          "commutative_multiplication"
+        ],
         "local_conditions": [
           "x、y 为偶整数。"
         ],
@@ -308,8 +322,26 @@
         "context_changed": false,
         "change_reason": null
       },
-      "calculation_source_expression": null,
-      "calculation_adjudication": null,
+      "calculation_source_expression": "存在整数 m,n，使 x=2m，y=2n。",
+      "calculation_adjudication": {
+        "decision": "valid_transformation",
+        "source_expression": "存在整数 m,n，使 x=2m，y=2n。",
+        "target_expression": "于是 x+y=2m+2n=2(m+n)。",
+        "atomic_steps": [
+          {
+            "expression": "x+y=2m+2n=2(m+n)",
+            "rule": "distributivity",
+            "required_conditions": []
+          }
+        ],
+        "used_axioms": [
+          "distributivity"
+        ],
+        "introduced_assumptions": [],
+        "missing_conditions": [],
+        "reasoning_summary": "Substitute the established representations x=2m and y=2n, then factor out 2 in the commutative ring of integers.",
+        "confidence": "high"
+      },
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
@@ -318,7 +350,7 @@
       "repair_scope": "none",
       "gap_type": null,
       "error_type": null,
-      "diagnosis": "代入 x=2m、y=2n 并按分配律合并即可。",
+      "diagnosis": "Substitute the established representations x=2m and y=2n, then factor out 2 in the commutative ring of integers.",
       "repair_action": null,
       "minimal_repair": null
     },
@@ -547,13 +579,27 @@
         "confidence": "high"
       },
       "calculation_context": {
-        "structure": "unknown",
-        "carrier": null,
-        "operations": [],
-        "axioms": [
-          "equality_substitution"
+        "structure": "commutative_ring",
+        "carrier": "R",
+        "operations": [
+          "addition",
+          "multiplication",
+          "negation"
         ],
-        "properties": [],
+        "axioms": [
+          "additive_associativity",
+          "additive_commutativity",
+          "additive_identity",
+          "additive_inverse",
+          "distributivity",
+          "equality_substitution",
+          "multiplicative_associativity",
+          "multiplicative_commutativity",
+          "multiplicative_identity"
+        ],
+        "properties": [
+          "commutative_multiplication"
+        ],
         "local_conditions": [
           "x、y 为偶整数。"
         ],

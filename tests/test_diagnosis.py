@@ -9,6 +9,68 @@ from checker_test_case import CHECKER, ROOT, CheckerTestCase
 
 
 class DiagnosisTest(CheckerTestCase):
+    def test_chinese_node_types_use_math_structure_before_fallback(self):
+                cases = {
+                    "存在整数 m,n，使 x=2m，y=2n。": "introduction",
+                    "由零乘积定理可知 x=1 或 x=-1。": "introduction",
+                    "假设 x<0。": "assumption",
+                    "两边开平方。": "calculation_step",
+                    "由 x^2-1=0 得 (x-1)(x+1)=0。": "calculation_step",
+                    "因此 x=1 或 x=-1。": "conclusion",
+                    "因为 m+n 是整数，所以 x+y 是偶数。": "conclusion",
+                }
+                for claim, expected in cases.items():
+                    with self.subTest(claim=claim):
+                        self.assertEqual(expected, CHECKER.classify_node_type(claim))
+
+    def test_opening_operation_is_not_automatically_closed(self):
+                item = {
+                    "id": "unsafe_opening_operation",
+                    "domain": "elementary_algebra",
+                    "topic": "elementary_algebra",
+                    "theorem": "若 x^2=y^2，则 x=y。",
+                    "assumptions": ["x,y 为实数且 x^2=y^2。"],
+                    "flawed_proof_steps": ["两边开平方。", "得到 x=y。"],
+                }
+                result = self.build(item)
+                self.assertNotEqual("closed", result["proof_graph"][0]["status"])
+                self.assertEqual(1, result["first_undetermined_step"])
+
+    def test_invalid_opening_operation_is_first_invalid_step(self):
+                item = {
+                    "id": "invalid_square_root_opening",
+                    "domain": "elementary_algebra",
+                    "topic": "elementary_algebra",
+                    "theorem": "若 x^2=y^2，则 x=y。",
+                    "assumptions": ["x,y 为实数且 x^2=y^2。"],
+                    "flawed_proof_steps": ["两边开平方。", "得到 x=y。"],
+                }
+
+                def reject_opening(source, target, _context):
+                    return {
+                        "decision": "invalid_transformation",
+                        "source_expression": source,
+                        "target_expression": target,
+                        "atomic_steps": [],
+                        "used_axioms": [],
+                        "introduced_assumptions": [],
+                        "missing_conditions": [],
+                        "reasoning_summary": "Principal square roots give |x|=|y|, not x=y.",
+                        "confidence": "high",
+                    }
+
+                result = CHECKER.build_result(
+                    item, self.bank, max_rules=5,
+                    calculation_adjudicator=reject_opening,
+                )
+                self.assertEqual(1, result["first_invalid_step"])
+                self.assertEqual("algebraic_invalidity", result["proof_graph"][0]["status"])
+
+    def test_chinese_number_systems_infer_calculation_structure(self):
+                self.assertEqual(("commutative_ring", "R"), CHECKER.infer_structure("设 x,y 为整数"))
+                self.assertEqual(("real_numbers", "R"), CHECKER.infer_structure("对任意实数 x"))
+                self.assertEqual(("commutative_ring", "R"), CHECKER.infer_structure("设 R 是交换环"))
+
     def test_pilot_localization_is_preserved(self):
                 items = CHECKER.read_jsonl(ROOT / "data/samples/algebra_pilot_3.jsonl")
                 results = {item["id"]: self.build(item) for item in items}
