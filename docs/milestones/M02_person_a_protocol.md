@@ -2,9 +2,9 @@
 
 ## 1. 本阶段目标
 
-Person A 建立 50 个自然语言代数证明样本，并在不查看 Person B 答案的情况下独立完成节点切分、节点分类、直接依赖、局部裁决、首个问题节点和反例标注。
+Person A 建立并审核自己的 50 个自然语言代数证明样本，完成节点切分、节点分类、直接依赖、局部裁决、首个问题节点和反例标注。Person B 在自己的分支建立并审核另一组 50 题，双方完成后合并为 100 题 benchmark。
 
-本文件只规定 Person A 的工作。Person B 的标注、校验程序、一致性报告和最终争议裁决不在本分支实现。
+本文件只规定 Person A 的工作。Person B 的独立题目分片、标注和审核不在本分支实现。由于双方审核不同样本，本阶段不报告同题标注者一致性。
 
 ## 2. 样本构成
 
@@ -25,7 +25,7 @@ Person A 建立 50 个自然语言代数证明样本，并在不查看 Person B 
 - Person A 私有答案：`data/benchmarks/m2/private/person_a_annotations.jsonl`
 - Person A 标注指南：`docs/annotation/M02_person_a_annotation_guideline.md`
 
-`private/` 已加入 `.gitignore`。在 Person A 与 Person B 都写明“已锁定”之前，不提交、不推送、不互看答案。公共题目编号与原文一旦开始双人标注就不得静默修改。
+`private/` 已加入 `.gitignore`。在各自分片完成审核和锁定前，不提交或推送私有答案。公共题目编号与原文一旦开始人工审核就不得静默修改。
 
 ## 4. Person A 工作边界
 
@@ -42,18 +42,18 @@ Person A 本阶段负责：
 Person A 本阶段不负责：
 
 - 填写或推测 Person B 的答案；
-- 实现 Person B 所属的一致性报告与标注校验器；
-- 提前合并两人的标签；
+- 实现或填写 Person B 的题目与标注分片；
+- 在 Person B 分片锁定前提前合并两批数据；
 - 单方面修改 M1 共享 Schema；
-- 在分歧裁决前把自己的判断称为最终金标。
+- 把未经本人审核的 AI 预标注称为最终金标。
 
 ## 5. 状态
 
 - [x] 独立工作协议建立
 - [x] 50 个公共样本建立并冻结（`m2-pilot-v0.1`）
-- [ ] Person A 独立标注完成（AI 预标注草稿已生成，等待 Person A 逐题审核）
-- [ ] Person A 自检完成并锁定
-- [ ] 等待 Person B 独立锁定（不在本分支代做）
+- [x] Person A 的 50 题标注完成并逐题审核
+- [x] Person A 自检完成并私有锁定
+- [ ] 等待 Person B 的另一组 50 题独立审核并锁定（不在本分支代做）
 
 ## 6. Person A 退出条件
 
