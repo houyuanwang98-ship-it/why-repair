@@ -48,7 +48,7 @@
       "retrieval_scope": "global",
       "candidate_pool_size": 9,
       "retrieval_role": "diagnostic_only",
-      "verification_source": "calculation_model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [],
       "rule_applicability": [],
       "satisfied_conditions": [],
@@ -91,29 +91,34 @@
         "context_changed": false,
         "change_reason": null
       },
-      "calculation_source_expression": "a,b,c 为实数，a<b 且 c<0。",
-      "calculation_adjudication": {
-        "decision": "undetermined",
-        "source_expression": "a,b,c 为实数，a<b 且 c<0。",
-        "target_expression": "将不等式 a<b 两边同时乘以 c，得到 ac<bc。",
-        "atomic_steps": [],
-        "used_axioms": [],
-        "introduced_assumptions": [],
-        "missing_conditions": [],
-        "reasoning_summary": "No calculation adjudicator was configured.",
-        "confidence": "low"
+      "calculation_source_expression": null,
+      "calculation_adjudication": null,
+      "diagnosis_adjudication": {
+        "diagnosis_review": "confirmed",
+        "error_category": "algebraic_invalidity",
+        "failed_inference": "Multiplication by the negative c must reverse the inequality immediately.",
+        "violated_obligation": "Establish the claimed inference from the stated assumptions.",
+        "error_scope": "local_node",
+        "evidence": [
+          "Multiplication by the negative c must reverse the inequality immediately."
+        ],
+        "counterexample_or_witness": null,
+        "claim_globally_derivable": false,
+        "repairability": "replace_step",
+        "minimal_repair": "Replace the invalid step with a valid argument under the stated conditions.",
+        "theorem_dependency": null,
+        "confidence": "high"
       },
-      "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "algebraic_invalidity",
+      "logic_class": "unsupported_inference",
+      "repair_scope": "replace_local_step",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "No calculation adjudicator was configured.",
-      "repair_action": "manual_review",
-      "minimal_repair": null
+      "error_type": "algebraic_invalidity",
+      "diagnosis": "Multiplication by the negative c must reverse the inequality immediately. Violated obligation: Establish the claimed inference from the stated assumptions. Evidence: Multiplication by the negative c must reverse the inequality immediately.",
+      "repair_action": "replace_step",
+      "minimal_repair": "Replace the invalid step with a valid argument under the stated conditions."
     },
     {
       "node_id": 2,
@@ -131,36 +136,13 @@
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 因为 c 是负数，所以把不等号改为相反方向，得到 ac>bc。",
-      "retrieval_required": true,
-      "retrieval_reason": "The conclusion does not follow directly from the accepted context.",
-      "retrieval_query": {
-        "domain": "elementary_algebra",
-        "topic": "elementary_algebra",
-        "goal": "因为 c 是负数，所以把不等号改为相反方向，得到 ac>bc。",
-        "assumptions": [
-          "a,b,c 为实数，a<b 且 c<0。"
-        ],
-        "predecessor_node_ids": [
-          1
-        ],
-        "predecessor_claims": [
-          "将不等式 a<b 两边同时乘以 c，得到 ac<bc。"
-        ],
-        "formal_obligation": "a,b,c 为实数，a<b 且 c<0。, 将不等式 a<b 两边同时乘以 c，得到 ac<bc。 |- 因为 c 是负数，所以把不等号改为相反方向，得到 ac>bc。",
-        "normalized_query": {
-          "topic_tokens": [
-            "algebra",
-            "elementary"
-          ],
-          "goal_tokens": [],
-          "assumption_tokens": [],
-          "predecessor_tokens": []
-        }
-      },
-      "retrieval_scope": "global",
-      "candidate_pool_size": 9,
-      "retrieval_role": "diagnostic_only",
-      "verification_source": "model_adjudicator",
+      "retrieval_required": false,
+      "retrieval_reason": "Repair the earlier invalid node before retrieving rules here.",
+      "retrieval_query": null,
+      "retrieval_scope": null,
+      "candidate_pool_size": 0,
+      "retrieval_role": null,
+      "verification_source": "deterministic_checker",
       "retrieved_rules": [],
       "rule_applicability": [],
       "satisfied_conditions": [],
@@ -169,18 +151,7 @@
       "applicable_rule_id": null,
       "operation_check": null,
       "counterexample": null,
-      "model_adjudication": {
-        "decision": "undetermined",
-        "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-        "proof_outline": [],
-        "completion_assessment": "not_applicable",
-        "original_step_requires_completion": false,
-        "bridge_steps": [],
-        "bridge_length": 0,
-        "counterexample_description": null,
-        "counterexample_verification": null,
-        "confidence": "low"
-      },
+      "model_adjudication": null,
       "calculation_context": {
         "structure": "real_numbers",
         "carrier": "R",
@@ -219,13 +190,13 @@
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "downstream_invalid",
+      "logic_class": "downstream_dependency",
+      "repair_scope": "repair_predecessor",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-      "repair_action": "manual_review",
+      "error_type": "downstream_invalid",
+      "diagnosis": "This node explicitly depends on an earlier invalid node.",
+      "repair_action": null,
       "minimal_repair": null
     },
     {
@@ -244,36 +215,13 @@
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 因此 ac>bc。",
-      "retrieval_required": true,
-      "retrieval_reason": "The conclusion does not follow directly from the accepted context.",
-      "retrieval_query": {
-        "domain": "elementary_algebra",
-        "topic": "elementary_algebra",
-        "goal": "因此 ac>bc。",
-        "assumptions": [
-          "a,b,c 为实数，a<b 且 c<0。"
-        ],
-        "predecessor_node_ids": [
-          2
-        ],
-        "predecessor_claims": [
-          "因为 c 是负数，所以把不等号改为相反方向，得到 ac>bc。"
-        ],
-        "formal_obligation": "a,b,c 为实数，a<b 且 c<0。, 因为 c 是负数，所以把不等号改为相反方向，得到 ac>bc。 |- 因此 ac>bc。",
-        "normalized_query": {
-          "topic_tokens": [
-            "algebra",
-            "elementary"
-          ],
-          "goal_tokens": [],
-          "assumption_tokens": [],
-          "predecessor_tokens": []
-        }
-      },
-      "retrieval_scope": "global",
-      "candidate_pool_size": 9,
-      "retrieval_role": "diagnostic_only",
-      "verification_source": "model_adjudicator",
+      "retrieval_required": false,
+      "retrieval_reason": "Repair the earlier invalid node before retrieving rules here.",
+      "retrieval_query": null,
+      "retrieval_scope": null,
+      "candidate_pool_size": 0,
+      "retrieval_role": null,
+      "verification_source": "deterministic_checker",
       "retrieved_rules": [],
       "rule_applicability": [],
       "satisfied_conditions": [],
@@ -282,18 +230,7 @@
       "applicable_rule_id": null,
       "operation_check": null,
       "counterexample": null,
-      "model_adjudication": {
-        "decision": "undetermined",
-        "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-        "proof_outline": [],
-        "completion_assessment": "not_applicable",
-        "original_step_requires_completion": false,
-        "bridge_steps": [],
-        "bridge_length": 0,
-        "counterexample_description": null,
-        "counterexample_verification": null,
-        "confidence": "low"
-      },
+      "model_adjudication": null,
       "calculation_context": {
         "structure": "real_numbers",
         "carrier": "R",
@@ -332,20 +269,20 @@
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "downstream_invalid",
+      "logic_class": "downstream_dependency",
+      "repair_scope": "repair_predecessor",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-      "repair_action": "manual_review",
+      "error_type": "downstream_invalid",
+      "diagnosis": "This node explicitly depends on an earlier invalid node.",
+      "repair_action": null,
       "minimal_repair": null
     }
   ],
-  "validity_status": "undetermined",
+  "validity_status": "invalid",
   "first_gap_step": null,
-  "first_invalid_step": null,
-  "first_undetermined_step": 1,
-  "summary_diagnosis": "No calculation adjudicator was configured.",
-  "summary_repair": null
+  "first_invalid_step": 1,
+  "first_undetermined_step": null,
+  "summary_diagnosis": "Multiplication by the negative c must reverse the inequality immediately. Violated obligation: Establish the claimed inference from the stated assumptions. Evidence: Multiplication by the negative c must reverse the inequality immediately.",
+  "summary_repair": "Replace the invalid step with a valid argument under the stated conditions."
 }

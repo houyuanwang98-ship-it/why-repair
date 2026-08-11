@@ -114,7 +114,7 @@
       "retrieval_scope": "global",
       "candidate_pool_size": 9,
       "retrieval_role": "diagnostic_only",
-      "verification_source": "model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [],
       "rule_applicability": [],
       "satisfied_conditions": [],
@@ -123,18 +123,7 @@
       "applicable_rule_id": null,
       "operation_check": null,
       "counterexample": null,
-      "model_adjudication": {
-        "decision": "undetermined",
-        "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-        "proof_outline": [],
-        "completion_assessment": "not_applicable",
-        "original_step_requires_completion": false,
-        "bridge_steps": [],
-        "bridge_length": 0,
-        "counterexample_description": null,
-        "counterexample_verification": null,
-        "confidence": "low"
-      },
+      "model_adjudication": null,
       "calculation_context": {
         "structure": "unknown",
         "carrier": null,
@@ -153,17 +142,32 @@
       },
       "calculation_source_expression": null,
       "calculation_adjudication": null,
-      "diagnosis_adjudication": null,
+      "diagnosis_adjudication": {
+        "diagnosis_review": "confirmed",
+        "error_category": "false_theorem",
+        "failed_inference": "The claimed general implication is false under the original assumptions.",
+        "violated_obligation": "Establish the claimed inference from the stated assumptions.",
+        "error_scope": "original_theorem",
+        "evidence": [
+          "The claimed general implication is false under the original assumptions."
+        ],
+        "counterexample_or_witness": "p=2 is prime and is not odd.",
+        "claim_globally_derivable": false,
+        "repairability": "change_target",
+        "minimal_repair": "Replace the invalid step with a valid argument under the stated conditions.",
+        "theorem_dependency": null,
+        "confidence": "high"
+      },
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "false_theorem",
+      "logic_class": "false_claim",
+      "repair_scope": "change_theorem_or_give_counterexample",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-      "repair_action": "manual_review",
-      "minimal_repair": null
+      "error_type": "false_theorem",
+      "diagnosis": "The claimed general implication is false under the original assumptions. Violated obligation: Establish the claimed inference from the stated assumptions. Evidence: The claimed general implication is false under the original assumptions.",
+      "repair_action": "counterexample",
+      "minimal_repair": "Replace the invalid step with a valid argument under the stated conditions."
     },
     {
       "node_id": 3,
@@ -181,36 +185,13 @@
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 因此 p 是奇数。",
-      "retrieval_required": true,
-      "retrieval_reason": "The conclusion does not follow directly from the accepted context.",
-      "retrieval_query": {
-        "domain": "elementary_algebra",
-        "topic": "elementary_algebra",
-        "goal": "因此 p 是奇数。",
-        "assumptions": [
-          "p 为素数。"
-        ],
-        "predecessor_node_ids": [
-          2
-        ],
-        "predecessor_claims": [
-          "所以 p 不能被 2 整除。"
-        ],
-        "formal_obligation": "p 为素数。, 所以 p 不能被 2 整除。 |- 因此 p 是奇数。",
-        "normalized_query": {
-          "topic_tokens": [
-            "algebra",
-            "elementary"
-          ],
-          "goal_tokens": [],
-          "assumption_tokens": [],
-          "predecessor_tokens": []
-        }
-      },
-      "retrieval_scope": "global",
-      "candidate_pool_size": 9,
-      "retrieval_role": "diagnostic_only",
-      "verification_source": "model_adjudicator",
+      "retrieval_required": false,
+      "retrieval_reason": "Repair the earlier invalid node before retrieving rules here.",
+      "retrieval_query": null,
+      "retrieval_scope": null,
+      "candidate_pool_size": 0,
+      "retrieval_role": null,
+      "verification_source": "deterministic_checker",
       "retrieved_rules": [],
       "rule_applicability": [],
       "satisfied_conditions": [],
@@ -219,18 +200,7 @@
       "applicable_rule_id": null,
       "operation_check": null,
       "counterexample": null,
-      "model_adjudication": {
-        "decision": "undetermined",
-        "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-        "proof_outline": [],
-        "completion_assessment": "not_applicable",
-        "original_step_requires_completion": false,
-        "bridge_steps": [],
-        "bridge_length": 0,
-        "counterexample_description": null,
-        "counterexample_verification": null,
-        "confidence": "low"
-      },
+      "model_adjudication": null,
       "calculation_context": {
         "structure": "unknown",
         "carrier": null,
@@ -252,20 +222,20 @@
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "downstream_invalid",
+      "logic_class": "downstream_dependency",
+      "repair_scope": "repair_predecessor",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-      "repair_action": "manual_review",
+      "error_type": "downstream_invalid",
+      "diagnosis": "This node explicitly depends on an earlier invalid node.",
+      "repair_action": null,
       "minimal_repair": null
     }
   ],
-  "validity_status": "undetermined",
+  "validity_status": "false_theorem",
   "first_gap_step": null,
-  "first_invalid_step": null,
-  "first_undetermined_step": 2,
-  "summary_diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-  "summary_repair": null
+  "first_invalid_step": 2,
+  "first_undetermined_step": null,
+  "summary_diagnosis": "The claimed general implication is false under the original assumptions. Violated obligation: Establish the claimed inference from the stated assumptions. Evidence: The claimed general implication is false under the original assumptions.",
+  "summary_repair": "Replace the invalid step with a valid argument under the stated conditions."
 }

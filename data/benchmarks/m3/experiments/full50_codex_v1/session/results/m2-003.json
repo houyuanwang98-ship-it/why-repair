@@ -130,7 +130,7 @@
       "retrieval_scope": "global",
       "candidate_pool_size": 9,
       "retrieval_role": "diagnostic_only",
-      "verification_source": "model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [
         {
           "id": "grp_normal_quotient",
@@ -282,16 +282,18 @@
       "operation_check": null,
       "counterexample": null,
       "model_adjudication": {
-        "decision": "undetermined",
-        "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-        "proof_outline": [],
-        "completion_assessment": "not_applicable",
+        "decision": "derivable",
+        "reasoning_summary": "The claim follows directly from the local context.",
+        "proof_outline": [
+          "因此存在整数 k，使 n(n+1)=2k。"
+        ],
+        "completion_assessment": "directly_justified",
         "original_step_requires_completion": false,
         "bridge_steps": [],
         "bridge_length": 0,
         "counterexample_description": null,
         "counterexample_verification": null,
-        "confidence": "low"
+        "confidence": "high"
       },
       "calculation_context": {
         "structure": "commutative_ring",
@@ -328,13 +330,13 @@
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "closed",
+      "logic_class": "no_error",
+      "repair_scope": "none",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-      "repair_action": "manual_review",
+      "error_type": null,
+      "diagnosis": "The claim follows directly from the local context.",
+      "repair_action": null,
       "minimal_repair": null
     },
     {
@@ -386,7 +388,7 @@
       "retrieval_scope": "global",
       "candidate_pool_size": 9,
       "retrieval_role": "diagnostic_only",
-      "verification_source": "calculation_model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [
         {
           "id": "grp_normal_quotient",
@@ -578,33 +580,41 @@
       },
       "calculation_source_expression": "因此存在整数 k，使 n(n+1)=2k。",
       "calculation_adjudication": {
-        "decision": "undetermined",
+        "decision": "valid_transformation",
         "source_expression": "因此存在整数 k，使 n(n+1)=2k。",
         "target_expression": "于是 n^2+n+1=n(n+1)+1=2k+1，所以 n^2+n+1 是奇数。",
-        "atomic_steps": [],
-        "used_axioms": [],
+        "atomic_steps": [
+          {
+            "expression": "于是 n^2+n+1=n(n+1)+1=2k+1，所以 n^2+n+1 是奇数。",
+            "rule": "equality_substitution",
+            "required_conditions": []
+          }
+        ],
+        "used_axioms": [
+          "equality_substitution"
+        ],
         "introduced_assumptions": [],
         "missing_conditions": [],
-        "reasoning_summary": "No calculation adjudicator was configured.",
-        "confidence": "low"
+        "reasoning_summary": "The stated arithmetic transformation is valid.",
+        "confidence": "high"
       },
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "closed",
+      "logic_class": "no_error",
+      "repair_scope": "none",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "No calculation adjudicator was configured.",
-      "repair_action": "manual_review",
+      "error_type": null,
+      "diagnosis": "The stated arithmetic transformation is valid.",
+      "repair_action": null,
       "minimal_repair": null
     }
   ],
-  "validity_status": "undetermined",
+  "validity_status": "valid",
   "first_gap_step": null,
   "first_invalid_step": null,
-  "first_undetermined_step": 2,
-  "summary_diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
+  "first_undetermined_step": null,
+  "summary_diagnosis": "No issues found.",
   "summary_repair": null
 }

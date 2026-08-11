@@ -29,7 +29,7 @@
       "retrieval_scope": null,
       "candidate_pool_size": 0,
       "retrieval_role": null,
-      "verification_source": "calculation_model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [],
       "rule_applicability": [],
       "satisfied_conditions": [],
@@ -74,26 +74,34 @@
       },
       "calculation_source_expression": "x,y,z 为实数且 x=y。",
       "calculation_adjudication": {
-        "decision": "undetermined",
+        "decision": "valid_transformation",
         "source_expression": "x,y,z 为实数且 x=y。",
         "target_expression": "等式两边同时加 z。",
-        "atomic_steps": [],
-        "used_axioms": [],
+        "atomic_steps": [
+          {
+            "expression": "等式两边同时加 z。",
+            "rule": "ordered_field",
+            "required_conditions": []
+          }
+        ],
+        "used_axioms": [
+          "ordered_field"
+        ],
         "introduced_assumptions": [],
         "missing_conditions": [],
-        "reasoning_summary": "No calculation adjudicator was configured.",
-        "confidence": "low"
+        "reasoning_summary": "The stated transformation is valid in the active structure.",
+        "confidence": "high"
       },
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "closed",
+      "logic_class": "no_error",
+      "repair_scope": "none",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "No calculation adjudicator was configured.",
-      "repair_action": "manual_review",
+      "error_type": null,
+      "diagnosis": "The stated transformation is valid in the active structure.",
+      "repair_action": null,
       "minimal_repair": null
     },
     {
@@ -145,7 +153,7 @@
       "retrieval_scope": "global",
       "candidate_pool_size": 9,
       "retrieval_role": "diagnostic_only",
-      "verification_source": "deterministic_checker",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [
         {
           "id": "lin_same_dim_subspace",
@@ -337,23 +345,38 @@
       },
       "calculation_source_expression": null,
       "calculation_adjudication": null,
-      "diagnosis_adjudication": null,
+      "diagnosis_adjudication": {
+        "diagnosis_review": "false_positive",
+        "error_category": "directly_justified",
+        "failed_inference": "No inference failed; equality is preserved by adding the same term.",
+        "violated_obligation": "No obligation is violated.",
+        "error_scope": "none",
+        "evidence": [
+          "Both sides receive the same addend."
+        ],
+        "counterexample_or_witness": null,
+        "claim_globally_derivable": true,
+        "repairability": "none",
+        "minimal_repair": null,
+        "theorem_dependency": null,
+        "confidence": "high"
+      },
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "missing_assumption",
-      "logic_class": "unsupported_inference",
-      "repair_scope": "establish_or_add_premise",
+      "status": "closed",
+      "logic_class": "no_error",
+      "repair_scope": "none",
       "gap_type": null,
-      "error_type": "missing_assumption",
-      "diagnosis": "The candidate rule Same dimension subspace criterion needs conditions not established in the proof state: W is a subspace of V; V is finite-dimensional; dim W = dim V.",
-      "repair_action": "add_assumption",
-      "minimal_repair": "Check if the conclusion is derivable from the problem conditions. If yes, generate a derivation from the conditions using earlier proof nodes; if not, mark as irreparable error. Missing condition: W is a subspace of V; V is finite-dimensional; dim W = dim V."
+      "error_type": null,
+      "diagnosis": "No inference failed; equality is preserved by adding the same term. Evidence that the original step is justified: Both sides receive the same addend.",
+      "repair_action": null,
+      "minimal_repair": null
     }
   ],
-  "validity_status": "invalid",
+  "validity_status": "valid",
   "first_gap_step": null,
-  "first_invalid_step": 2,
-  "first_undetermined_step": 1,
-  "summary_diagnosis": "The candidate rule Same dimension subspace criterion needs conditions not established in the proof state: W is a subspace of V; V is finite-dimensional; dim W = dim V.",
-  "summary_repair": "Check if the conclusion is derivable from the problem conditions. If yes, generate a derivation from the conditions using earlier proof nodes; if not, mark as irreparable error. Missing condition: W is a subspace of V; V is finite-dimensional; dim W = dim V."
+  "first_invalid_step": null,
+  "first_undetermined_step": null,
+  "summary_diagnosis": "No issues found.",
+  "summary_repair": null
 }

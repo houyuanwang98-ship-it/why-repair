@@ -130,7 +130,7 @@
       "retrieval_scope": "global",
       "candidate_pool_size": 9,
       "retrieval_role": "diagnostic_only",
-      "verification_source": "model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [
         {
           "id": "grp_normal_quotient",
@@ -281,18 +281,7 @@
       "applicable_rule_id": null,
       "operation_check": null,
       "counterexample": null,
-      "model_adjudication": {
-        "decision": "undetermined",
-        "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-        "proof_outline": [],
-        "completion_assessment": "not_applicable",
-        "original_step_requires_completion": false,
-        "bridge_steps": [],
-        "bridge_length": 0,
-        "counterexample_description": null,
-        "counterexample_verification": null,
-        "confidence": "low"
-      },
+      "model_adjudication": null,
       "calculation_context": {
         "structure": "commutative_ring",
         "carrier": "R",
@@ -325,17 +314,32 @@
       },
       "calculation_source_expression": null,
       "calculation_adjudication": null,
-      "diagnosis_adjudication": null,
+      "diagnosis_adjudication": {
+        "diagnosis_review": "confirmed",
+        "error_category": "false_theorem",
+        "failed_inference": "The claimed general implication is false under the original assumptions.",
+        "violated_obligation": "Establish the claimed inference from the stated assumptions.",
+        "error_scope": "original_theorem",
+        "evidence": [
+          "The claimed general implication is false under the original assumptions."
+        ],
+        "counterexample_or_witness": "a=1 and b=1 give an even sum although both integers are odd.",
+        "claim_globally_derivable": false,
+        "repairability": "change_target",
+        "minimal_repair": "Replace the invalid step with a valid argument under the stated conditions.",
+        "theorem_dependency": null,
+        "confidence": "high"
+      },
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "false_theorem",
+      "logic_class": "false_claim",
+      "repair_scope": "change_theorem_or_give_counterexample",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-      "repair_action": "manual_review",
-      "minimal_repair": null
+      "error_type": "false_theorem",
+      "diagnosis": "The claimed general implication is false under the original assumptions. Violated obligation: Establish the claimed inference from the stated assumptions. Evidence: The claimed general implication is false under the original assumptions.",
+      "repair_action": "counterexample",
+      "minimal_repair": "Replace the invalid step with a valid argument under the stated conditions."
     },
     {
       "node_id": 3,
@@ -353,198 +357,22 @@
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 所以 a、b 都为偶数。",
-      "retrieval_required": true,
-      "retrieval_reason": "The conclusion does not follow directly from the accepted context.",
-      "retrieval_query": {
-        "domain": "elementary_algebra",
-        "topic": "elementary_algebra",
-        "goal": "所以 a、b 都为偶数。",
-        "assumptions": [
-          "a,b 为整数且 a+b 为偶数。"
-        ],
-        "predecessor_node_ids": [
-          2
-        ],
-        "predecessor_claims": [
-          "因此 a=2m 且 b=2n。"
-        ],
-        "formal_obligation": "a,b 为整数且 a+b 为偶数。, 因此 a=2m 且 b=2n。 |- 所以 a、b 都为偶数。",
-        "normalized_query": {
-          "topic_tokens": [
-            "algebra",
-            "elementary"
-          ],
-          "goal_tokens": [],
-          "assumption_tokens": [],
-          "predecessor_tokens": [
-            "equal"
-          ]
-        }
-      },
-      "retrieval_scope": "global",
-      "candidate_pool_size": 9,
-      "retrieval_role": "diagnostic_only",
-      "verification_source": "model_adjudicator",
-      "retrieved_rules": [
-        {
-          "id": "grp_normal_quotient",
-          "name": "Quotient group criterion",
-          "score": 1.0,
-          "score_breakdown": {
-            "goal": 0.0,
-            "predecessors": 3.0,
-            "assumptions": 0.0,
-            "topic": 0.0,
-            "domain": 0.0,
-            "topic_conflict": -2.0
-          },
-          "matched_query_fields": [
-            "predecessors"
-          ],
-          "matched_rule_fields": [
-            "statement"
-          ],
-          "matched_fields": [
-            "statement"
-          ]
-        },
-        {
-          "id": "lin_rank_nullity",
-          "name": "Rank-nullity theorem",
-          "score": 1.0,
-          "score_breakdown": {
-            "goal": 0.0,
-            "predecessors": 3.0,
-            "assumptions": 0.0,
-            "topic": 0.0,
-            "domain": 0.0,
-            "topic_conflict": -2.0
-          },
-          "matched_query_fields": [
-            "predecessors"
-          ],
-          "matched_rule_fields": [
-            "statement"
-          ],
-          "matched_fields": [
-            "statement"
-          ]
-        },
-        {
-          "id": "lin_same_dim_subspace",
-          "name": "Same dimension subspace criterion",
-          "score": 1.0,
-          "score_breakdown": {
-            "goal": 0.0,
-            "predecessors": 3.0,
-            "assumptions": 0.0,
-            "topic": 0.0,
-            "domain": 0.0,
-            "topic_conflict": -2.0
-          },
-          "matched_query_fields": [
-            "predecessors"
-          ],
-          "matched_rule_fields": [
-            "conditions",
-            "statement"
-          ],
-          "matched_fields": [
-            "conditions",
-            "statement"
-          ]
-        }
-      ],
-      "rule_applicability": [
-        {
-          "rule_id": "grp_normal_quotient",
-          "rule_name": "Quotient group criterion",
-          "satisfied_conditions": [],
-          "missing_conditions": [
-            "N is a subgroup of G",
-            "N is normal in G"
-          ],
-          "matched_conclusion": false,
-          "applicable": false,
-          "common_misuses": [
-            "forming G/N when N is not known to be normal",
-            "assuming coset multiplication is well-defined without checking normality"
-          ],
-          "retrieval_score": 1.0,
-          "matched_query_fields": [
-            "predecessors"
-          ],
-          "deterministic_safe": false,
-          "deterministic_safe_kind": null,
-          "deterministic_safe_goal_match": false
-        },
-        {
-          "rule_id": "lin_rank_nullity",
-          "rule_name": "Rank-nullity theorem",
-          "satisfied_conditions": [],
-          "missing_conditions": [
-            "T is linear",
-            "V is finite-dimensional"
-          ],
-          "matched_conclusion": false,
-          "applicable": false,
-          "common_misuses": [
-            "using rank-nullity without finite-dimensionality",
-            "concluding im(T) = W from equal dimensions without im(T) being a subspace of W"
-          ],
-          "retrieval_score": 1.0,
-          "matched_query_fields": [
-            "predecessors"
-          ],
-          "deterministic_safe": false,
-          "deterministic_safe_kind": null,
-          "deterministic_safe_goal_match": false
-        },
-        {
-          "rule_id": "lin_same_dim_subspace",
-          "rule_name": "Same dimension subspace criterion",
-          "satisfied_conditions": [],
-          "missing_conditions": [
-            "W is a subspace of V",
-            "V is finite-dimensional",
-            "dim W = dim V"
-          ],
-          "matched_conclusion": false,
-          "applicable": false,
-          "common_misuses": [
-            "using dimension equality without a subspace relation",
-            "using the criterion in infinite-dimensional settings"
-          ],
-          "retrieval_score": 1.0,
-          "matched_query_fields": [
-            "predecessors"
-          ],
-          "deterministic_safe": false,
-          "deterministic_safe_kind": null,
-          "deterministic_safe_goal_match": false
-        }
-      ],
+      "retrieval_required": false,
+      "retrieval_reason": "Repair the earlier invalid node before retrieving rules here.",
+      "retrieval_query": null,
+      "retrieval_scope": null,
+      "candidate_pool_size": 0,
+      "retrieval_role": null,
+      "verification_source": "deterministic_checker",
+      "retrieved_rules": [],
+      "rule_applicability": [],
       "satisfied_conditions": [],
-      "missing_conditions": [
-        "N is a subgroup of G",
-        "N is normal in G"
-      ],
-      "matched_conclusion": false,
+      "missing_conditions": [],
+      "matched_conclusion": null,
       "applicable_rule_id": null,
       "operation_check": null,
       "counterexample": null,
-      "model_adjudication": {
-        "decision": "undetermined",
-        "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-        "proof_outline": [],
-        "completion_assessment": "not_applicable",
-        "original_step_requires_completion": false,
-        "bridge_steps": [],
-        "bridge_length": 0,
-        "counterexample_description": null,
-        "counterexample_verification": null,
-        "confidence": "low"
-      },
+      "model_adjudication": null,
       "calculation_context": {
         "structure": "commutative_ring",
         "carrier": "R",
@@ -580,20 +408,20 @@
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "downstream_invalid",
+      "logic_class": "downstream_dependency",
+      "repair_scope": "repair_predecessor",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-      "repair_action": "manual_review",
+      "error_type": "downstream_invalid",
+      "diagnosis": "This node explicitly depends on an earlier invalid node.",
+      "repair_action": null,
       "minimal_repair": null
     }
   ],
-  "validity_status": "undetermined",
+  "validity_status": "false_theorem",
   "first_gap_step": null,
-  "first_invalid_step": null,
-  "first_undetermined_step": 2,
-  "summary_diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-  "summary_repair": null
+  "first_invalid_step": 2,
+  "first_undetermined_step": null,
+  "summary_diagnosis": "The claimed general implication is false under the original assumptions. Violated obligation: Establish the claimed inference from the stated assumptions. Evidence: The claimed general implication is false under the original assumptions.",
+  "summary_repair": "Replace the invalid step with a valid argument under the stated conditions."
 }

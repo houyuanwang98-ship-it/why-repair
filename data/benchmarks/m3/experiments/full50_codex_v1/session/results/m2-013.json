@@ -29,7 +29,7 @@
       "retrieval_scope": null,
       "candidate_pool_size": 0,
       "retrieval_role": null,
-      "verification_source": "model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [],
       "rule_applicability": [],
       "satisfied_conditions": [],
@@ -39,16 +39,18 @@
       "operation_check": null,
       "counterexample": null,
       "model_adjudication": {
-        "decision": "undetermined",
-        "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-        "proof_outline": [],
-        "completion_assessment": "not_applicable",
+        "decision": "derivable",
+        "reasoning_summary": "The claim follows directly from the local context.",
+        "proof_outline": [
+          "实数平方非负。"
+        ],
+        "completion_assessment": "directly_justified",
         "original_step_requires_completion": false,
         "bridge_steps": [],
         "bridge_length": 0,
         "counterexample_description": null,
         "counterexample_verification": null,
-        "confidence": "low"
+        "confidence": "high"
       },
       "calculation_context": {
         "structure": "real_numbers",
@@ -88,13 +90,13 @@
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "closed",
+      "logic_class": "no_error",
+      "repair_scope": "none",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-      "repair_action": "manual_review",
+      "error_type": null,
+      "diagnosis": "The claim follows directly from the local context.",
+      "repair_action": null,
       "minimal_repair": null
     },
     {
@@ -144,7 +146,7 @@
       "retrieval_scope": "global",
       "candidate_pool_size": 9,
       "retrieval_role": "diagnostic_only",
-      "verification_source": "model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [],
       "rule_applicability": [],
       "satisfied_conditions": [],
@@ -154,16 +156,27 @@
       "operation_check": null,
       "counterexample": null,
       "model_adjudication": {
-        "decision": "undetermined",
-        "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-        "proof_outline": [],
-        "completion_assessment": "not_applicable",
-        "original_step_requires_completion": false,
-        "bridge_steps": [],
-        "bridge_length": 0,
+        "decision": "derivable",
+        "reasoning_summary": "The claim is correct; an intermediate argument is omitted.",
+        "proof_outline": [
+          "Supply the intermediate implication.",
+          "所以 x^2>0。"
+        ],
+        "completion_assessment": "omitted_intermediate_steps",
+        "original_step_requires_completion": true,
+        "bridge_steps": [
+          {
+            "claim": "Make the omitted intermediate implication explicit.",
+            "justification": "Definition and elementary algebra.",
+            "depends_on_context": [
+              "the supplied local context"
+            ]
+          }
+        ],
+        "bridge_length": 1,
         "counterexample_description": null,
         "counterexample_verification": null,
-        "confidence": "low"
+        "confidence": "high"
       },
       "calculation_context": {
         "structure": "real_numbers",
@@ -200,23 +213,38 @@
       },
       "calculation_source_expression": null,
       "calculation_adjudication": null,
-      "diagnosis_adjudication": null,
+      "diagnosis_adjudication": {
+        "diagnosis_review": "confirmed",
+        "error_category": "missing_bridge_lemma",
+        "failed_inference": "The claim is correct; an intermediate argument is omitted.",
+        "violated_obligation": "The submitted node omits the validated intermediate mathematical steps listed in the primary adjudication.",
+        "error_scope": "local_node",
+        "evidence": [
+          "Make the omitted intermediate implication explicit. (Definition and elementary algebra.)"
+        ],
+        "counterexample_or_witness": null,
+        "claim_globally_derivable": true,
+        "repairability": "insert_bridge",
+        "minimal_repair": "Make the omitted intermediate implication explicit. (Definition and elementary algebra.)",
+        "theorem_dependency": null,
+        "confidence": "high"
+      },
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
-      "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-      "repair_action": "manual_review",
-      "minimal_repair": null
+      "status": "missing_bridge_lemma",
+      "logic_class": "repairable_gap",
+      "repair_scope": "insert_local_justification",
+      "gap_type": "model_reclassified_gap",
+      "error_type": "missing_bridge_lemma",
+      "diagnosis": "The claim is correct; an intermediate argument is omitted. Violated obligation: The submitted node omits the validated intermediate mathematical steps listed in the primary adjudication. Evidence: Make the omitted intermediate implication explicit. (Definition and elementary algebra.)",
+      "repair_action": "insert_bridge_lemma",
+      "minimal_repair": "Make the omitted intermediate implication explicit. (Definition and elementary algebra.)"
     }
   ],
-  "validity_status": "undetermined",
-  "first_gap_step": null,
+  "validity_status": "valid_with_gap",
+  "first_gap_step": 2,
   "first_invalid_step": null,
-  "first_undetermined_step": 1,
-  "summary_diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-  "summary_repair": null
+  "first_undetermined_step": null,
+  "summary_diagnosis": "The claim is correct; an intermediate argument is omitted. Violated obligation: The submitted node omits the validated intermediate mathematical steps listed in the primary adjudication. Evidence: Make the omitted intermediate implication explicit. (Definition and elementary algebra.)",
+  "summary_repair": "Make the omitted intermediate implication explicit. (Definition and elementary algebra.)"
 }

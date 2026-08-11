@@ -29,7 +29,7 @@
       "retrieval_scope": null,
       "candidate_pool_size": 0,
       "retrieval_role": null,
-      "verification_source": "calculation_model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [],
       "rule_applicability": [],
       "satisfied_conditions": [],
@@ -71,26 +71,34 @@
       },
       "calculation_source_expression": "n 为正整数。",
       "calculation_adjudication": {
-        "decision": "undetermined",
+        "decision": "valid_transformation",
         "source_expression": "n 为正整数。",
         "target_expression": "当 n=1 时，n^2+n=2 是偶数。",
-        "atomic_steps": [],
-        "used_axioms": [],
+        "atomic_steps": [
+          {
+            "expression": "当 n=1 时，n^2+n=2 是偶数。",
+            "rule": "equality_substitution",
+            "required_conditions": []
+          }
+        ],
+        "used_axioms": [
+          "equality_substitution"
+        ],
         "introduced_assumptions": [],
         "missing_conditions": [],
-        "reasoning_summary": "No calculation adjudicator was configured.",
-        "confidence": "low"
+        "reasoning_summary": "The stated transformation is valid in the active structure.",
+        "confidence": "high"
       },
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "closed",
+      "logic_class": "no_error",
+      "repair_scope": "none",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "No calculation adjudicator was configured.",
-      "repair_action": "manual_review",
+      "error_type": null,
+      "diagnosis": "The stated transformation is valid in the active structure.",
+      "repair_action": null,
       "minimal_repair": null
     },
     {
@@ -142,7 +150,7 @@
       "retrieval_scope": "global",
       "candidate_pool_size": 9,
       "retrieval_role": "diagnostic_only",
-      "verification_source": "calculation_model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [
         {
           "id": "grp_normal_quotient",
@@ -334,26 +342,34 @@
       },
       "calculation_source_expression": "当 n=1 时，n^2+n=2 是偶数。",
       "calculation_adjudication": {
-        "decision": "undetermined",
+        "decision": "valid_transformation",
         "source_expression": "当 n=1 时，n^2+n=2 是偶数。",
         "target_expression": "当 n=2 时，n^2+n=6 是偶数。",
-        "atomic_steps": [],
-        "used_axioms": [],
+        "atomic_steps": [
+          {
+            "expression": "当 n=2 时，n^2+n=6 是偶数。",
+            "rule": "equality_substitution",
+            "required_conditions": []
+          }
+        ],
+        "used_axioms": [
+          "equality_substitution"
+        ],
         "introduced_assumptions": [],
         "missing_conditions": [],
-        "reasoning_summary": "No calculation adjudicator was configured.",
-        "confidence": "low"
+        "reasoning_summary": "The stated arithmetic transformation is valid.",
+        "confidence": "high"
       },
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "closed",
+      "logic_class": "no_error",
+      "repair_scope": "none",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "No calculation adjudicator was configured.",
-      "repair_action": "manual_review",
+      "error_type": null,
+      "diagnosis": "The stated arithmetic transformation is valid.",
+      "repair_action": null,
       "minimal_repair": null
     },
     {
@@ -407,7 +423,7 @@
       "retrieval_scope": "global",
       "candidate_pool_size": 9,
       "retrieval_role": "diagnostic_only",
-      "verification_source": "model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [
         {
           "id": "grp_normal_quotient",
@@ -556,18 +572,7 @@
       "applicable_rule_id": null,
       "operation_check": null,
       "counterexample": null,
-      "model_adjudication": {
-        "decision": "undetermined",
-        "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-        "proof_outline": [],
-        "completion_assessment": "not_applicable",
-        "original_step_requires_completion": false,
-        "bridge_steps": [],
-        "bridge_length": 0,
-        "counterexample_description": null,
-        "counterexample_verification": null,
-        "confidence": "low"
-      },
+      "model_adjudication": null,
       "calculation_context": {
         "structure": "commutative_ring",
         "carrier": "R",
@@ -600,23 +605,38 @@
       },
       "calculation_source_expression": null,
       "calculation_adjudication": null,
-      "diagnosis_adjudication": null,
+      "diagnosis_adjudication": {
+        "diagnosis_review": "confirmed",
+        "error_category": "theorem_misuse",
+        "failed_inference": "The proof generalizes from two checked cases to every positive integer without induction or a parity argument.",
+        "violated_obligation": "Justify the universal quantifier for all positive integers.",
+        "error_scope": "local_node",
+        "evidence": [
+          "Only n=1 and n=2 were checked."
+        ],
+        "counterexample_or_witness": null,
+        "claim_globally_derivable": true,
+        "repairability": "replace_step",
+        "minimal_repair": "Write n(n+1) and observe that one of two consecutive integers is even.",
+        "theorem_dependency": null,
+        "confidence": "high"
+      },
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "theorem_misuse",
+      "logic_class": "unsupported_inference",
+      "repair_scope": "replace_local_step",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-      "repair_action": "manual_review",
-      "minimal_repair": null
+      "error_type": "theorem_misuse",
+      "diagnosis": "The proof generalizes from two checked cases to every positive integer without induction or a parity argument. Violated obligation: Justify the universal quantifier for all positive integers. Evidence: Only n=1 and n=2 were checked.",
+      "repair_action": "replace_theorem",
+      "minimal_repair": "Write n(n+1) and observe that one of two consecutive integers is even."
     }
   ],
-  "validity_status": "undetermined",
+  "validity_status": "invalid",
   "first_gap_step": null,
-  "first_invalid_step": null,
-  "first_undetermined_step": 1,
-  "summary_diagnosis": "No calculation adjudicator was configured.",
-  "summary_repair": null
+  "first_invalid_step": 3,
+  "first_undetermined_step": null,
+  "summary_diagnosis": "The proof generalizes from two checked cases to every positive integer without induction or a parity argument. Violated obligation: Justify the universal quantifier for all positive integers. Evidence: Only n=1 and n=2 were checked.",
+  "summary_repair": "Write n(n+1) and observe that one of two consecutive integers is even."
 }

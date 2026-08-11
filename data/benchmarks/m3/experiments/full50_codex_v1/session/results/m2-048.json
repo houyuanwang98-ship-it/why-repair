@@ -137,7 +137,7 @@
       "retrieval_scope": "global",
       "candidate_pool_size": 9,
       "retrieval_role": "diagnostic_only",
-      "verification_source": "model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [
         {
           "id": "lin_same_dim_subspace",
@@ -298,18 +298,7 @@
       "applicable_rule_id": null,
       "operation_check": null,
       "counterexample": null,
-      "model_adjudication": {
-        "decision": "undetermined",
-        "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-        "proof_outline": [],
-        "completion_assessment": "not_applicable",
-        "original_step_requires_completion": false,
-        "bridge_steps": [],
-        "bridge_length": 0,
-        "counterexample_description": null,
-        "counterexample_verification": null,
-        "confidence": "low"
-      },
+      "model_adjudication": null,
       "calculation_context": {
         "structure": "real_numbers",
         "carrier": "R",
@@ -345,23 +334,38 @@
       },
       "calculation_source_expression": null,
       "calculation_adjudication": null,
-      "diagnosis_adjudication": null,
+      "diagnosis_adjudication": {
+        "diagnosis_review": "confirmed",
+        "error_category": "false_theorem",
+        "failed_inference": "The claimed general implication is false under the original assumptions.",
+        "violated_obligation": "Establish the claimed inference from the stated assumptions.",
+        "error_scope": "original_theorem",
+        "evidence": [
+          "The claimed general implication is false under the original assumptions."
+        ],
+        "counterexample_or_witness": "a=0 and b=1 satisfy ab=0 but b is not zero.",
+        "claim_globally_derivable": false,
+        "repairability": "change_target",
+        "minimal_repair": "Replace the invalid step with a valid argument under the stated conditions.",
+        "theorem_dependency": null,
+        "confidence": "high"
+      },
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "false_theorem",
+      "logic_class": "false_claim",
+      "repair_scope": "change_theorem_or_give_counterexample",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-      "repair_action": "manual_review",
-      "minimal_repair": null
+      "error_type": "false_theorem",
+      "diagnosis": "The claimed general implication is false under the original assumptions. Violated obligation: Establish the claimed inference from the stated assumptions. Evidence: The claimed general implication is false under the original assumptions.",
+      "repair_action": "counterexample",
+      "minimal_repair": "Replace the invalid step with a valid argument under the stated conditions."
     }
   ],
-  "validity_status": "undetermined",
+  "validity_status": "false_theorem",
   "first_gap_step": null,
-  "first_invalid_step": null,
-  "first_undetermined_step": 2,
-  "summary_diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-  "summary_repair": null
+  "first_invalid_step": 2,
+  "first_undetermined_step": null,
+  "summary_diagnosis": "The claimed general implication is false under the original assumptions. Violated obligation: Establish the claimed inference from the stated assumptions. Evidence: The claimed general implication is false under the original assumptions.",
+  "summary_repair": "Replace the invalid step with a valid argument under the stated conditions."
 }

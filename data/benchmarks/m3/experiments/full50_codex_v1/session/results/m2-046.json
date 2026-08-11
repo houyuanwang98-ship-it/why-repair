@@ -29,7 +29,7 @@
       "retrieval_scope": null,
       "candidate_pool_size": 0,
       "retrieval_role": null,
-      "verification_source": "calculation_model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [],
       "rule_applicability": [],
       "satisfied_conditions": [],
@@ -74,27 +74,42 @@
       },
       "calculation_source_expression": "a,b 为实数。",
       "calculation_adjudication": {
-        "decision": "undetermined",
+        "decision": "invalid_transformation",
         "source_expression": "a,b 为实数。",
         "target_expression": "因为 |a+b|=sqrt(a^2+b^2)。",
         "atomic_steps": [],
         "used_axioms": [],
         "introduced_assumptions": [],
         "missing_conditions": [],
-        "reasoning_summary": "No calculation adjudicator was configured.",
-        "confidence": "low"
+        "reasoning_summary": "The identity |a+b|=sqrt(a^2+b^2) is false in general.",
+        "confidence": "high"
       },
-      "diagnosis_adjudication": null,
+      "diagnosis_adjudication": {
+        "diagnosis_review": "confirmed",
+        "error_category": "algebraic_invalidity",
+        "failed_inference": "The identity |a+b|=sqrt(a^2+b^2) is false in general.",
+        "violated_obligation": "Establish the claimed inference from the stated assumptions.",
+        "error_scope": "local_node",
+        "evidence": [
+          "The identity |a+b|=sqrt(a^2+b^2) is false in general."
+        ],
+        "counterexample_or_witness": null,
+        "claim_globally_derivable": false,
+        "repairability": "replace_step",
+        "minimal_repair": "Replace the invalid step with a valid argument under the stated conditions.",
+        "theorem_dependency": null,
+        "confidence": "high"
+      },
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "algebraic_invalidity",
+      "logic_class": "unsupported_inference",
+      "repair_scope": "replace_local_step",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "No calculation adjudicator was configured.",
-      "repair_action": "manual_review",
-      "minimal_repair": null
+      "error_type": "algebraic_invalidity",
+      "diagnosis": "The identity |a+b|=sqrt(a^2+b^2) is false in general. Violated obligation: Establish the claimed inference from the stated assumptions. Evidence: The identity |a+b|=sqrt(a^2+b^2) is false in general.",
+      "repair_action": "replace_step",
+      "minimal_repair": "Replace the invalid step with a valid argument under the stated conditions."
     },
     {
       "node_id": 2,
@@ -112,198 +127,18 @@
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 又因为 sqrt(a^2+b^2)≤sqrt(a^2)+sqrt(b^2)=|a|+|b|。",
-      "retrieval_required": true,
-      "retrieval_reason": "The calculation is not locally closed and needs a justification rule.",
-      "retrieval_query": {
-        "domain": "elementary_algebra",
-        "topic": "elementary_algebra",
-        "goal": "又因为 sqrt(a^2+b^2)≤sqrt(a^2)+sqrt(b^2)=|a|+|b|。",
-        "assumptions": [
-          "a,b 为实数。"
-        ],
-        "predecessor_node_ids": [
-          1
-        ],
-        "predecessor_claims": [
-          "因为 |a+b|=sqrt(a^2+b^2)。"
-        ],
-        "formal_obligation": "a,b 为实数。, 因为 |a+b|=sqrt(a^2+b^2)。 |- 又因为 sqrt(a^2+b^2)≤sqrt(a^2)+sqrt(b^2)=|a|+|b|。",
-        "normalized_query": {
-          "topic_tokens": [
-            "algebra",
-            "elementary"
-          ],
-          "goal_tokens": [
-            "equal",
-            "less",
-            "sqrt"
-          ],
-          "assumption_tokens": [],
-          "predecessor_tokens": [
-            "equal",
-            "sqrt"
-          ]
-        }
-      },
-      "retrieval_scope": "global",
-      "candidate_pool_size": 9,
-      "retrieval_role": "diagnostic_only",
-      "verification_source": "calculation_model_adjudicator",
-      "retrieved_rules": [
-        {
-          "id": "grp_normal_quotient",
-          "name": "Quotient group criterion",
-          "score": 5.0,
-          "score_breakdown": {
-            "goal": 4.0,
-            "predecessors": 3.0,
-            "assumptions": 0.0,
-            "topic": 0.0,
-            "domain": 0.0,
-            "topic_conflict": -2.0
-          },
-          "matched_query_fields": [
-            "goal",
-            "predecessors"
-          ],
-          "matched_rule_fields": [
-            "statement"
-          ],
-          "matched_fields": [
-            "statement"
-          ]
-        },
-        {
-          "id": "lin_rank_nullity",
-          "name": "Rank-nullity theorem",
-          "score": 5.0,
-          "score_breakdown": {
-            "goal": 4.0,
-            "predecessors": 3.0,
-            "assumptions": 0.0,
-            "topic": 0.0,
-            "domain": 0.0,
-            "topic_conflict": -2.0
-          },
-          "matched_query_fields": [
-            "goal",
-            "predecessors"
-          ],
-          "matched_rule_fields": [
-            "conclusion",
-            "statement"
-          ],
-          "matched_fields": [
-            "conclusion",
-            "statement"
-          ]
-        },
-        {
-          "id": "lin_same_dim_subspace",
-          "name": "Same dimension subspace criterion",
-          "score": 5.0,
-          "score_breakdown": {
-            "goal": 4.0,
-            "predecessors": 3.0,
-            "assumptions": 0.0,
-            "topic": 0.0,
-            "domain": 0.0,
-            "topic_conflict": -2.0
-          },
-          "matched_query_fields": [
-            "goal",
-            "predecessors"
-          ],
-          "matched_rule_fields": [
-            "conclusion",
-            "conditions",
-            "statement"
-          ],
-          "matched_fields": [
-            "conclusion",
-            "conditions",
-            "statement"
-          ]
-        }
-      ],
-      "rule_applicability": [
-        {
-          "rule_id": "grp_normal_quotient",
-          "rule_name": "Quotient group criterion",
-          "satisfied_conditions": [],
-          "missing_conditions": [
-            "N is a subgroup of G",
-            "N is normal in G"
-          ],
-          "matched_conclusion": false,
-          "applicable": false,
-          "common_misuses": [
-            "forming G/N when N is not known to be normal",
-            "assuming coset multiplication is well-defined without checking normality"
-          ],
-          "retrieval_score": 5.0,
-          "matched_query_fields": [
-            "goal",
-            "predecessors"
-          ],
-          "deterministic_safe": false,
-          "deterministic_safe_kind": null,
-          "deterministic_safe_goal_match": false
-        },
-        {
-          "rule_id": "lin_rank_nullity",
-          "rule_name": "Rank-nullity theorem",
-          "satisfied_conditions": [],
-          "missing_conditions": [
-            "T is linear",
-            "V is finite-dimensional"
-          ],
-          "matched_conclusion": false,
-          "applicable": false,
-          "common_misuses": [
-            "using rank-nullity without finite-dimensionality",
-            "concluding im(T) = W from equal dimensions without im(T) being a subspace of W"
-          ],
-          "retrieval_score": 5.0,
-          "matched_query_fields": [
-            "goal",
-            "predecessors"
-          ],
-          "deterministic_safe": false,
-          "deterministic_safe_kind": null,
-          "deterministic_safe_goal_match": false
-        },
-        {
-          "rule_id": "lin_same_dim_subspace",
-          "rule_name": "Same dimension subspace criterion",
-          "satisfied_conditions": [],
-          "missing_conditions": [
-            "W is a subspace of V",
-            "V is finite-dimensional",
-            "dim W = dim V"
-          ],
-          "matched_conclusion": false,
-          "applicable": false,
-          "common_misuses": [
-            "using dimension equality without a subspace relation",
-            "using the criterion in infinite-dimensional settings"
-          ],
-          "retrieval_score": 5.0,
-          "matched_query_fields": [
-            "goal",
-            "predecessors"
-          ],
-          "deterministic_safe": false,
-          "deterministic_safe_kind": null,
-          "deterministic_safe_goal_match": false
-        }
-      ],
+      "retrieval_required": false,
+      "retrieval_reason": "Repair the earlier invalid node before retrieving rules here.",
+      "retrieval_query": null,
+      "retrieval_scope": null,
+      "candidate_pool_size": 0,
+      "retrieval_role": null,
+      "verification_source": "deterministic_checker",
+      "retrieved_rules": [],
+      "rule_applicability": [],
       "satisfied_conditions": [],
-      "missing_conditions": [
-        "N is a subgroup of G",
-        "N is normal in G"
-      ],
-      "matched_conclusion": false,
+      "missing_conditions": [],
+      "matched_conclusion": null,
       "applicable_rule_id": null,
       "operation_check": null,
       "counterexample": null,
@@ -341,28 +176,18 @@
         "context_changed": false,
         "change_reason": null
       },
-      "calculation_source_expression": "因为 |a+b|=sqrt(a^2+b^2)。",
-      "calculation_adjudication": {
-        "decision": "undetermined",
-        "source_expression": "因为 |a+b|=sqrt(a^2+b^2)。",
-        "target_expression": "又因为 sqrt(a^2+b^2)≤sqrt(a^2)+sqrt(b^2)=|a|+|b|。",
-        "atomic_steps": [],
-        "used_axioms": [],
-        "introduced_assumptions": [],
-        "missing_conditions": [],
-        "reasoning_summary": "No calculation adjudicator was configured.",
-        "confidence": "low"
-      },
+      "calculation_source_expression": null,
+      "calculation_adjudication": null,
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "downstream_invalid",
+      "logic_class": "downstream_dependency",
+      "repair_scope": "repair_predecessor",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "No calculation adjudicator was configured.",
-      "repair_action": "manual_review",
+      "error_type": "downstream_invalid",
+      "diagnosis": "This node explicitly depends on an earlier invalid node.",
+      "repair_action": null,
       "minimal_repair": null
     },
     {
@@ -381,213 +206,22 @@
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 所以 |a+b|≤|a|+|b|。",
-      "retrieval_required": true,
-      "retrieval_reason": "The conclusion does not follow directly from the accepted context.",
-      "retrieval_query": {
-        "domain": "elementary_algebra",
-        "topic": "elementary_algebra",
-        "goal": "所以 |a+b|≤|a|+|b|。",
-        "assumptions": [
-          "a,b 为实数。"
-        ],
-        "predecessor_node_ids": [
-          2
-        ],
-        "predecessor_claims": [
-          "又因为 sqrt(a^2+b^2)≤sqrt(a^2)+sqrt(b^2)=|a|+|b|。"
-        ],
-        "formal_obligation": "a,b 为实数。, 又因为 sqrt(a^2+b^2)≤sqrt(a^2)+sqrt(b^2)=|a|+|b|。 |- 所以 |a+b|≤|a|+|b|。",
-        "normalized_query": {
-          "topic_tokens": [
-            "algebra",
-            "elementary"
-          ],
-          "goal_tokens": [
-            "equal",
-            "less"
-          ],
-          "assumption_tokens": [],
-          "predecessor_tokens": [
-            "equal",
-            "less",
-            "sqrt"
-          ]
-        }
-      },
-      "retrieval_scope": "global",
-      "candidate_pool_size": 9,
-      "retrieval_role": "diagnostic_only",
-      "verification_source": "model_adjudicator",
-      "retrieved_rules": [
-        {
-          "id": "grp_normal_quotient",
-          "name": "Quotient group criterion",
-          "score": 5.0,
-          "score_breakdown": {
-            "goal": 4.0,
-            "predecessors": 3.0,
-            "assumptions": 0.0,
-            "topic": 0.0,
-            "domain": 0.0,
-            "topic_conflict": -2.0
-          },
-          "matched_query_fields": [
-            "goal",
-            "predecessors"
-          ],
-          "matched_rule_fields": [
-            "statement"
-          ],
-          "matched_fields": [
-            "statement"
-          ]
-        },
-        {
-          "id": "lin_rank_nullity",
-          "name": "Rank-nullity theorem",
-          "score": 5.0,
-          "score_breakdown": {
-            "goal": 4.0,
-            "predecessors": 3.0,
-            "assumptions": 0.0,
-            "topic": 0.0,
-            "domain": 0.0,
-            "topic_conflict": -2.0
-          },
-          "matched_query_fields": [
-            "goal",
-            "predecessors"
-          ],
-          "matched_rule_fields": [
-            "conclusion",
-            "statement"
-          ],
-          "matched_fields": [
-            "conclusion",
-            "statement"
-          ]
-        },
-        {
-          "id": "lin_same_dim_subspace",
-          "name": "Same dimension subspace criterion",
-          "score": 5.0,
-          "score_breakdown": {
-            "goal": 4.0,
-            "predecessors": 3.0,
-            "assumptions": 0.0,
-            "topic": 0.0,
-            "domain": 0.0,
-            "topic_conflict": -2.0
-          },
-          "matched_query_fields": [
-            "goal",
-            "predecessors"
-          ],
-          "matched_rule_fields": [
-            "conclusion",
-            "conditions",
-            "statement"
-          ],
-          "matched_fields": [
-            "conclusion",
-            "conditions",
-            "statement"
-          ]
-        }
-      ],
-      "rule_applicability": [
-        {
-          "rule_id": "grp_normal_quotient",
-          "rule_name": "Quotient group criterion",
-          "satisfied_conditions": [],
-          "missing_conditions": [
-            "N is a subgroup of G",
-            "N is normal in G"
-          ],
-          "matched_conclusion": false,
-          "applicable": false,
-          "common_misuses": [
-            "forming G/N when N is not known to be normal",
-            "assuming coset multiplication is well-defined without checking normality"
-          ],
-          "retrieval_score": 5.0,
-          "matched_query_fields": [
-            "goal",
-            "predecessors"
-          ],
-          "deterministic_safe": false,
-          "deterministic_safe_kind": null,
-          "deterministic_safe_goal_match": false
-        },
-        {
-          "rule_id": "lin_rank_nullity",
-          "rule_name": "Rank-nullity theorem",
-          "satisfied_conditions": [],
-          "missing_conditions": [
-            "T is linear",
-            "V is finite-dimensional"
-          ],
-          "matched_conclusion": false,
-          "applicable": false,
-          "common_misuses": [
-            "using rank-nullity without finite-dimensionality",
-            "concluding im(T) = W from equal dimensions without im(T) being a subspace of W"
-          ],
-          "retrieval_score": 5.0,
-          "matched_query_fields": [
-            "goal",
-            "predecessors"
-          ],
-          "deterministic_safe": false,
-          "deterministic_safe_kind": null,
-          "deterministic_safe_goal_match": false
-        },
-        {
-          "rule_id": "lin_same_dim_subspace",
-          "rule_name": "Same dimension subspace criterion",
-          "satisfied_conditions": [],
-          "missing_conditions": [
-            "W is a subspace of V",
-            "V is finite-dimensional",
-            "dim W = dim V"
-          ],
-          "matched_conclusion": false,
-          "applicable": false,
-          "common_misuses": [
-            "using dimension equality without a subspace relation",
-            "using the criterion in infinite-dimensional settings"
-          ],
-          "retrieval_score": 5.0,
-          "matched_query_fields": [
-            "goal",
-            "predecessors"
-          ],
-          "deterministic_safe": false,
-          "deterministic_safe_kind": null,
-          "deterministic_safe_goal_match": false
-        }
-      ],
+      "retrieval_required": false,
+      "retrieval_reason": "Repair the earlier invalid node before retrieving rules here.",
+      "retrieval_query": null,
+      "retrieval_scope": null,
+      "candidate_pool_size": 0,
+      "retrieval_role": null,
+      "verification_source": "deterministic_checker",
+      "retrieved_rules": [],
+      "rule_applicability": [],
       "satisfied_conditions": [],
-      "missing_conditions": [
-        "N is a subgroup of G",
-        "N is normal in G"
-      ],
-      "matched_conclusion": false,
+      "missing_conditions": [],
+      "matched_conclusion": null,
       "applicable_rule_id": null,
       "operation_check": null,
       "counterexample": null,
-      "model_adjudication": {
-        "decision": "undetermined",
-        "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-        "proof_outline": [],
-        "completion_assessment": "not_applicable",
-        "original_step_requires_completion": false,
-        "bridge_steps": [],
-        "bridge_length": 0,
-        "counterexample_description": null,
-        "counterexample_verification": null,
-        "confidence": "low"
-      },
+      "model_adjudication": null,
       "calculation_context": {
         "structure": "real_numbers",
         "carrier": "R",
@@ -626,20 +260,20 @@
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "downstream_invalid",
+      "logic_class": "downstream_dependency",
+      "repair_scope": "repair_predecessor",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-      "repair_action": "manual_review",
+      "error_type": "downstream_invalid",
+      "diagnosis": "This node explicitly depends on an earlier invalid node.",
+      "repair_action": null,
       "minimal_repair": null
     }
   ],
-  "validity_status": "undetermined",
+  "validity_status": "invalid",
   "first_gap_step": null,
-  "first_invalid_step": null,
-  "first_undetermined_step": 1,
-  "summary_diagnosis": "No calculation adjudicator was configured.",
-  "summary_repair": null
+  "first_invalid_step": 1,
+  "first_undetermined_step": null,
+  "summary_diagnosis": "The identity |a+b|=sqrt(a^2+b^2) is false in general. Violated obligation: Establish the claimed inference from the stated assumptions. Evidence: The identity |a+b|=sqrt(a^2+b^2) is false in general.",
+  "summary_repair": "Replace the invalid step with a valid argument under the stated conditions."
 }

@@ -29,7 +29,7 @@
       "retrieval_scope": null,
       "candidate_pool_size": 0,
       "retrieval_role": null,
-      "verification_source": "calculation_model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [],
       "rule_applicability": [],
       "satisfied_conditions": [],
@@ -74,26 +74,34 @@
       },
       "calculation_source_expression": "x 为实数且 x^2=1。",
       "calculation_adjudication": {
-        "decision": "undetermined",
+        "decision": "valid_transformation",
         "source_expression": "x 为实数且 x^2=1。",
         "target_expression": "由 x^2-1=0 得 (x-1)(x+1)=0。",
-        "atomic_steps": [],
-        "used_axioms": [],
+        "atomic_steps": [
+          {
+            "expression": "由 x^2-1=0 得 (x-1)(x+1)=0。",
+            "rule": "ordered_field",
+            "required_conditions": []
+          }
+        ],
+        "used_axioms": [
+          "ordered_field"
+        ],
         "introduced_assumptions": [],
         "missing_conditions": [],
-        "reasoning_summary": "No calculation adjudicator was configured.",
-        "confidence": "low"
+        "reasoning_summary": "The stated transformation is valid in the active structure.",
+        "confidence": "high"
       },
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "closed",
+      "logic_class": "no_error",
+      "repair_scope": "none",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "No calculation adjudicator was configured.",
-      "repair_action": "manual_review",
+      "error_type": null,
+      "diagnosis": "The stated transformation is valid in the active structure.",
+      "repair_action": null,
       "minimal_repair": null
     },
     {
@@ -147,7 +155,7 @@
       "retrieval_scope": "global",
       "candidate_pool_size": 9,
       "retrieval_role": "diagnostic_only",
-      "verification_source": "deterministic_checker",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [
         {
           "id": "lin_same_dim_subspace",
@@ -306,7 +314,7 @@
       ],
       "matched_conclusion": false,
       "applicable_rule_id": null,
-      "operation_check": "false_numeric_equality",
+      "operation_check": null,
       "counterexample": null,
       "model_adjudication": null,
       "calculation_context": {
@@ -344,7 +352,22 @@
       },
       "calculation_source_expression": null,
       "calculation_adjudication": null,
-      "diagnosis_adjudication": null,
+      "diagnosis_adjudication": {
+        "diagnosis_review": "confirmed",
+        "error_category": "algebraic_invalidity",
+        "failed_inference": "The factor x-1 may be zero, so it cannot be cancelled without a nonzero premise.",
+        "violated_obligation": "Establish a nonzero factor before cancellation.",
+        "error_scope": "local_node",
+        "evidence": [
+          "The factor x-1 may be zero, so it cannot be cancelled without a nonzero premise."
+        ],
+        "counterexample_or_witness": "At x=1 the cancelled factor is zero.",
+        "claim_globally_derivable": false,
+        "repairability": "replace_step",
+        "minimal_repair": "Apply the zero-product property and split into x=1 or x=-1.",
+        "theorem_dependency": null,
+        "confidence": "high"
+      },
       "theorem_candidates": [],
       "theorem_verification": null,
       "status": "algebraic_invalidity",
@@ -352,9 +375,9 @@
       "repair_scope": "replace_local_step",
       "gap_type": null,
       "error_type": "algebraic_invalidity",
-      "diagnosis": "The claimed numerical equality 1 = 0 is false.",
+      "diagnosis": "The factor x-1 may be zero, so it cannot be cancelled without a nonzero premise. Violated obligation: Establish a nonzero factor before cancellation. Evidence: The factor x-1 may be zero, so it cannot be cancelled without a nonzero premise.",
       "repair_action": "replace_step",
-      "minimal_repair": "Replace the step with a valid equality-preserving calculation."
+      "minimal_repair": "Apply the zero-product property and split into x=1 or x=-1."
     },
     {
       "node_id": 3,
@@ -407,7 +430,7 @@
       "retrieval_scope": "global",
       "candidate_pool_size": 9,
       "retrieval_role": "diagnostic_only",
-      "verification_source": "model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [
         {
           "id": "lin_same_dim_subspace",
@@ -569,16 +592,18 @@
       "operation_check": null,
       "counterexample": null,
       "model_adjudication": {
-        "decision": "undetermined",
-        "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-        "proof_outline": [],
-        "completion_assessment": "not_applicable",
+        "decision": "derivable",
+        "reasoning_summary": "The claim follows directly from the local context.",
+        "proof_outline": [
+          "因此 x=1 或 x=-1。"
+        ],
+        "completion_assessment": "directly_justified",
         "original_step_requires_completion": false,
         "bridge_steps": [],
         "bridge_length": 0,
         "counterexample_description": null,
         "counterexample_verification": null,
-        "confidence": "low"
+        "confidence": "high"
       },
       "calculation_context": {
         "structure": "real_numbers",
@@ -618,20 +643,20 @@
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "closed",
+      "logic_class": "no_error",
+      "repair_scope": "none",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-      "repair_action": "manual_review",
+      "error_type": null,
+      "diagnosis": "The claim follows directly from the local context.",
+      "repair_action": null,
       "minimal_repair": null
     }
   ],
   "validity_status": "invalid",
   "first_gap_step": null,
   "first_invalid_step": 2,
-  "first_undetermined_step": 1,
-  "summary_diagnosis": "The claimed numerical equality 1 = 0 is false.",
-  "summary_repair": "Replace the step with a valid equality-preserving calculation."
+  "first_undetermined_step": null,
+  "summary_diagnosis": "The factor x-1 may be zero, so it cannot be cancelled without a nonzero premise. Violated obligation: Establish a nonzero factor before cancellation. Evidence: The factor x-1 may be zero, so it cannot be cancelled without a nonzero premise.",
+  "summary_repair": "Apply the zero-product property and split into x=1 or x=-1."
 }

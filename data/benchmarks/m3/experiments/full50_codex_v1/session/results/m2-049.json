@@ -138,7 +138,7 @@
       "retrieval_scope": "global",
       "candidate_pool_size": 9,
       "retrieval_role": "diagnostic_only",
-      "verification_source": "deterministic_checker",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [
         {
           "id": "grp_normal_quotient",
@@ -429,17 +429,32 @@
       },
       "calculation_source_expression": null,
       "calculation_adjudication": null,
-      "diagnosis_adjudication": null,
+      "diagnosis_adjudication": {
+        "diagnosis_review": "confirmed",
+        "error_category": "algebraic_invalidity",
+        "failed_inference": "Adding p/q and r/s requires numerator ps+rq, not p+r.",
+        "violated_obligation": "Establish the claimed inference from the stated assumptions.",
+        "error_scope": "local_node",
+        "evidence": [
+          "Adding p/q and r/s requires numerator ps+rq, not p+r."
+        ],
+        "counterexample_or_witness": null,
+        "claim_globally_derivable": false,
+        "repairability": "replace_step",
+        "minimal_repair": "Replace the invalid step with a valid argument under the stated conditions.",
+        "theorem_dependency": null,
+        "confidence": "high"
+      },
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "missing_assumption",
+      "status": "algebraic_invalidity",
       "logic_class": "unsupported_inference",
-      "repair_scope": "establish_or_add_premise",
+      "repair_scope": "replace_local_step",
       "gap_type": null,
-      "error_type": "missing_assumption",
-      "diagnosis": "The candidate rule Quotient ring criterion needs conditions not established in the proof state: I is a two-sided ideal of R.",
-      "repair_action": "add_assumption",
-      "minimal_repair": "Check if the conclusion is derivable from the problem conditions. If yes, generate a derivation from the conditions using earlier proof nodes; if not, mark as irreparable error. Missing condition: I is a two-sided ideal of R."
+      "error_type": "algebraic_invalidity",
+      "diagnosis": "Adding p/q and r/s requires numerator ps+rq, not p+r. Violated obligation: Establish the claimed inference from the stated assumptions. Evidence: Adding p/q and r/s requires numerator ps+rq, not p+r.",
+      "repair_action": "replace_step",
+      "minimal_repair": "Replace the invalid step with a valid argument under the stated conditions."
     },
     {
       "node_id": 3,
@@ -527,6 +542,6 @@
   "first_gap_step": null,
   "first_invalid_step": 2,
   "first_undetermined_step": null,
-  "summary_diagnosis": "The candidate rule Quotient ring criterion needs conditions not established in the proof state: I is a two-sided ideal of R.",
-  "summary_repair": "Check if the conclusion is derivable from the problem conditions. If yes, generate a derivation from the conditions using earlier proof nodes; if not, mark as irreparable error. Missing condition: I is a two-sided ideal of R."
+  "summary_diagnosis": "Adding p/q and r/s requires numerator ps+rq, not p+r. Violated obligation: Establish the claimed inference from the stated assumptions. Evidence: Adding p/q and r/s requires numerator ps+rq, not p+r.",
+  "summary_repair": "Replace the invalid step with a valid argument under the stated conditions."
 }

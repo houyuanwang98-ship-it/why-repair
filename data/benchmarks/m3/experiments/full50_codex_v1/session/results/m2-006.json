@@ -132,7 +132,7 @@
       "retrieval_scope": "global",
       "candidate_pool_size": 9,
       "retrieval_role": "diagnostic_only",
-      "verification_source": "deterministic_checker",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [
         {
           "id": "grp_normal_quotient",
@@ -325,17 +325,32 @@
       },
       "calculation_source_expression": null,
       "calculation_adjudication": null,
-      "diagnosis_adjudication": null,
+      "diagnosis_adjudication": {
+        "diagnosis_review": "false_positive",
+        "error_category": "directly_justified",
+        "failed_inference": "No inference failed; the local claim follows from the displayed representation and assumptions.",
+        "violated_obligation": "No obligation is violated.",
+        "error_scope": "none",
+        "evidence": [
+          "Direct substitution verifies the claim."
+        ],
+        "counterexample_or_witness": null,
+        "claim_globally_derivable": true,
+        "repairability": "none",
+        "minimal_repair": null,
+        "theorem_dependency": null,
+        "confidence": "high"
+      },
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "missing_assumption",
-      "logic_class": "unsupported_inference",
-      "repair_scope": "establish_or_add_premise",
+      "status": "closed",
+      "logic_class": "no_error",
+      "repair_scope": "none",
       "gap_type": null,
-      "error_type": "missing_assumption",
-      "diagnosis": "The candidate rule Same dimension subspace criterion needs conditions not established in the proof state: W is a subspace of V; V is finite-dimensional; dim W = dim V.",
-      "repair_action": "add_assumption",
-      "minimal_repair": "Check if the conclusion is derivable from the problem conditions. If yes, generate a derivation from the conditions using earlier proof nodes; if not, mark as irreparable error. Missing condition: W is a subspace of V; V is finite-dimensional; dim W = dim V."
+      "error_type": null,
+      "diagnosis": "No inference failed; the local claim follows from the displayed representation and assumptions. Evidence that the original step is justified: Direct substitution verifies the claim.",
+      "repair_action": null,
+      "minimal_repair": null
     },
     {
       "node_id": 3,
@@ -353,22 +368,200 @@
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 所以 a|b+c。",
-      "retrieval_required": false,
-      "retrieval_reason": "Repair the earlier invalid node before retrieving rules here.",
-      "retrieval_query": null,
-      "retrieval_scope": null,
-      "candidate_pool_size": 0,
-      "retrieval_role": null,
-      "verification_source": "deterministic_checker",
-      "retrieved_rules": [],
-      "rule_applicability": [],
+      "retrieval_required": true,
+      "retrieval_reason": "The conclusion does not follow directly from the accepted context.",
+      "retrieval_query": {
+        "domain": "elementary_algebra",
+        "topic": "elementary_algebra",
+        "goal": "所以 a|b+c。",
+        "assumptions": [
+          "a,b,c 为整数，a|b 且 a|c。"
+        ],
+        "predecessor_node_ids": [
+          2
+        ],
+        "predecessor_claims": [
+          "于是 b+c=a(m+n)。"
+        ],
+        "formal_obligation": "a,b,c 为整数，a|b 且 a|c。, 于是 b+c=a(m+n)。 |- 所以 a|b+c。",
+        "normalized_query": {
+          "topic_tokens": [
+            "algebra",
+            "elementary"
+          ],
+          "goal_tokens": [],
+          "assumption_tokens": [],
+          "predecessor_tokens": [
+            "equal"
+          ]
+        }
+      },
+      "retrieval_scope": "global",
+      "candidate_pool_size": 9,
+      "retrieval_role": "diagnostic_only",
+      "verification_source": "host_agent_adjudication",
+      "retrieved_rules": [
+        {
+          "id": "grp_normal_quotient",
+          "name": "Quotient group criterion",
+          "score": 1.0,
+          "score_breakdown": {
+            "goal": 0.0,
+            "predecessors": 3.0,
+            "assumptions": 0.0,
+            "topic": 0.0,
+            "domain": 0.0,
+            "topic_conflict": -2.0
+          },
+          "matched_query_fields": [
+            "predecessors"
+          ],
+          "matched_rule_fields": [
+            "statement"
+          ],
+          "matched_fields": [
+            "statement"
+          ]
+        },
+        {
+          "id": "lin_rank_nullity",
+          "name": "Rank-nullity theorem",
+          "score": 1.0,
+          "score_breakdown": {
+            "goal": 0.0,
+            "predecessors": 3.0,
+            "assumptions": 0.0,
+            "topic": 0.0,
+            "domain": 0.0,
+            "topic_conflict": -2.0
+          },
+          "matched_query_fields": [
+            "predecessors"
+          ],
+          "matched_rule_fields": [
+            "statement"
+          ],
+          "matched_fields": [
+            "statement"
+          ]
+        },
+        {
+          "id": "lin_same_dim_subspace",
+          "name": "Same dimension subspace criterion",
+          "score": 1.0,
+          "score_breakdown": {
+            "goal": 0.0,
+            "predecessors": 3.0,
+            "assumptions": 0.0,
+            "topic": 0.0,
+            "domain": 0.0,
+            "topic_conflict": -2.0
+          },
+          "matched_query_fields": [
+            "predecessors"
+          ],
+          "matched_rule_fields": [
+            "conditions",
+            "statement"
+          ],
+          "matched_fields": [
+            "conditions",
+            "statement"
+          ]
+        }
+      ],
+      "rule_applicability": [
+        {
+          "rule_id": "grp_normal_quotient",
+          "rule_name": "Quotient group criterion",
+          "satisfied_conditions": [],
+          "missing_conditions": [
+            "N is a subgroup of G",
+            "N is normal in G"
+          ],
+          "matched_conclusion": false,
+          "applicable": false,
+          "common_misuses": [
+            "forming G/N when N is not known to be normal",
+            "assuming coset multiplication is well-defined without checking normality"
+          ],
+          "retrieval_score": 1.0,
+          "matched_query_fields": [
+            "predecessors"
+          ],
+          "deterministic_safe": false,
+          "deterministic_safe_kind": null,
+          "deterministic_safe_goal_match": false
+        },
+        {
+          "rule_id": "lin_rank_nullity",
+          "rule_name": "Rank-nullity theorem",
+          "satisfied_conditions": [],
+          "missing_conditions": [
+            "T is linear",
+            "V is finite-dimensional"
+          ],
+          "matched_conclusion": false,
+          "applicable": false,
+          "common_misuses": [
+            "using rank-nullity without finite-dimensionality",
+            "concluding im(T) = W from equal dimensions without im(T) being a subspace of W"
+          ],
+          "retrieval_score": 1.0,
+          "matched_query_fields": [
+            "predecessors"
+          ],
+          "deterministic_safe": false,
+          "deterministic_safe_kind": null,
+          "deterministic_safe_goal_match": false
+        },
+        {
+          "rule_id": "lin_same_dim_subspace",
+          "rule_name": "Same dimension subspace criterion",
+          "satisfied_conditions": [],
+          "missing_conditions": [
+            "W is a subspace of V",
+            "V is finite-dimensional",
+            "dim W = dim V"
+          ],
+          "matched_conclusion": false,
+          "applicable": false,
+          "common_misuses": [
+            "using dimension equality without a subspace relation",
+            "using the criterion in infinite-dimensional settings"
+          ],
+          "retrieval_score": 1.0,
+          "matched_query_fields": [
+            "predecessors"
+          ],
+          "deterministic_safe": false,
+          "deterministic_safe_kind": null,
+          "deterministic_safe_goal_match": false
+        }
+      ],
       "satisfied_conditions": [],
-      "missing_conditions": [],
-      "matched_conclusion": null,
+      "missing_conditions": [
+        "N is a subgroup of G",
+        "N is normal in G"
+      ],
+      "matched_conclusion": false,
       "applicable_rule_id": null,
       "operation_check": null,
       "counterexample": null,
-      "model_adjudication": null,
+      "model_adjudication": {
+        "decision": "derivable",
+        "reasoning_summary": "The claim follows directly from the local context.",
+        "proof_outline": [
+          "所以 a|b+c。"
+        ],
+        "completion_assessment": "directly_justified",
+        "original_step_requires_completion": false,
+        "bridge_steps": [],
+        "bridge_length": 0,
+        "counterexample_description": null,
+        "counterexample_verification": null,
+        "confidence": "high"
+      },
       "calculation_context": {
         "structure": "commutative_ring",
         "carrier": "R",
@@ -404,20 +597,20 @@
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "downstream_invalid",
-      "logic_class": "downstream_dependency",
-      "repair_scope": "repair_predecessor",
+      "status": "closed",
+      "logic_class": "no_error",
+      "repair_scope": "none",
       "gap_type": null,
-      "error_type": "downstream_invalid",
-      "diagnosis": "This node explicitly depends on an earlier invalid node.",
+      "error_type": null,
+      "diagnosis": "The claim follows directly from the local context.",
       "repair_action": null,
       "minimal_repair": null
     }
   ],
-  "validity_status": "invalid",
+  "validity_status": "valid",
   "first_gap_step": null,
-  "first_invalid_step": 2,
+  "first_invalid_step": null,
   "first_undetermined_step": null,
-  "summary_diagnosis": "The candidate rule Same dimension subspace criterion needs conditions not established in the proof state: W is a subspace of V; V is finite-dimensional; dim W = dim V.",
-  "summary_repair": "Check if the conclusion is derivable from the problem conditions. If yes, generate a derivation from the conditions using earlier proof nodes; if not, mark as irreparable error. Missing condition: W is a subspace of V; V is finite-dimensional; dim W = dim V."
+  "summary_diagnosis": "No issues found.",
+  "summary_repair": null
 }

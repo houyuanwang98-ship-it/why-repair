@@ -29,7 +29,7 @@
       "retrieval_scope": null,
       "candidate_pool_size": 0,
       "retrieval_role": null,
-      "verification_source": "calculation_model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [],
       "rule_applicability": [],
       "satisfied_conditions": [],
@@ -71,27 +71,42 @@
       },
       "calculation_source_expression": "a,b,c 为整数，a|b 且 b|c。",
       "calculation_adjudication": {
-        "decision": "undetermined",
+        "decision": "context_mismatch",
         "source_expression": "a,b,c 为整数，a|b 且 b|c。",
         "target_expression": "由 a|b 可反向得到 b|a，由 b|c 可反向得到 c|b。",
         "atomic_steps": [],
         "used_axioms": [],
         "introduced_assumptions": [],
         "missing_conditions": [],
-        "reasoning_summary": "No calculation adjudicator was configured.",
-        "confidence": "low"
+        "reasoning_summary": "Divisibility is not symmetric.",
+        "confidence": "high"
       },
-      "diagnosis_adjudication": null,
+      "diagnosis_adjudication": {
+        "diagnosis_review": "confirmed",
+        "error_category": "theorem_misuse",
+        "failed_inference": "Divisibility is not symmetric.",
+        "violated_obligation": "Establish the claimed inference from the stated assumptions.",
+        "error_scope": "local_node",
+        "evidence": [
+          "Divisibility is not symmetric."
+        ],
+        "counterexample_or_witness": "2 divides 4 but 4 does not divide 2.",
+        "claim_globally_derivable": false,
+        "repairability": "replace_step",
+        "minimal_repair": "Replace the invalid step with a valid argument under the stated conditions.",
+        "theorem_dependency": null,
+        "confidence": "high"
+      },
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "theorem_misuse",
+      "logic_class": "unsupported_inference",
+      "repair_scope": "replace_local_step",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "No calculation adjudicator was configured.",
-      "repair_action": "manual_review",
-      "minimal_repair": null
+      "error_type": "theorem_misuse",
+      "diagnosis": "Divisibility is not symmetric. Violated obligation: Establish the claimed inference from the stated assumptions. Evidence: Divisibility is not symmetric.",
+      "repair_action": "replace_theorem",
+      "minimal_repair": "Replace the invalid step with a valid argument under the stated conditions."
     },
     {
       "node_id": 2,
@@ -109,36 +124,13 @@
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 根据整除的传递性，由 c|b 和 b|a 得 c|a。",
-      "retrieval_required": true,
-      "retrieval_reason": "The conclusion does not follow directly from the accepted context.",
-      "retrieval_query": {
-        "domain": "elementary_algebra",
-        "topic": "elementary_algebra",
-        "goal": "根据整除的传递性，由 c|b 和 b|a 得 c|a。",
-        "assumptions": [
-          "a,b,c 为整数，a|b 且 b|c。"
-        ],
-        "predecessor_node_ids": [
-          1
-        ],
-        "predecessor_claims": [
-          "由 a|b 可反向得到 b|a，由 b|c 可反向得到 c|b。"
-        ],
-        "formal_obligation": "a,b,c 为整数，a|b 且 b|c。, 由 a|b 可反向得到 b|a，由 b|c 可反向得到 c|b。 |- 根据整除的传递性，由 c|b 和 b|a 得 c|a。",
-        "normalized_query": {
-          "topic_tokens": [
-            "algebra",
-            "elementary"
-          ],
-          "goal_tokens": [],
-          "assumption_tokens": [],
-          "predecessor_tokens": []
-        }
-      },
-      "retrieval_scope": "global",
-      "candidate_pool_size": 9,
-      "retrieval_role": "diagnostic_only",
-      "verification_source": "model_adjudicator",
+      "retrieval_required": false,
+      "retrieval_reason": "Repair the earlier invalid node before retrieving rules here.",
+      "retrieval_query": null,
+      "retrieval_scope": null,
+      "candidate_pool_size": 0,
+      "retrieval_role": null,
+      "verification_source": "deterministic_checker",
       "retrieved_rules": [],
       "rule_applicability": [],
       "satisfied_conditions": [],
@@ -147,18 +139,7 @@
       "applicable_rule_id": null,
       "operation_check": null,
       "counterexample": null,
-      "model_adjudication": {
-        "decision": "undetermined",
-        "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-        "proof_outline": [],
-        "completion_assessment": "not_applicable",
-        "original_step_requires_completion": false,
-        "bridge_steps": [],
-        "bridge_length": 0,
-        "counterexample_description": null,
-        "counterexample_verification": null,
-        "confidence": "low"
-      },
+      "model_adjudication": null,
       "calculation_context": {
         "structure": "commutative_ring",
         "carrier": "R",
@@ -194,13 +175,13 @@
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "downstream_invalid",
+      "logic_class": "downstream_dependency",
+      "repair_scope": "repair_predecessor",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-      "repair_action": "manual_review",
+      "error_type": "downstream_invalid",
+      "diagnosis": "This node explicitly depends on an earlier invalid node.",
+      "repair_action": null,
       "minimal_repair": null
     },
     {
@@ -219,36 +200,13 @@
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 因此 a|c。",
-      "retrieval_required": true,
-      "retrieval_reason": "The conclusion does not follow directly from the accepted context.",
-      "retrieval_query": {
-        "domain": "elementary_algebra",
-        "topic": "elementary_algebra",
-        "goal": "因此 a|c。",
-        "assumptions": [
-          "a,b,c 为整数，a|b 且 b|c。"
-        ],
-        "predecessor_node_ids": [
-          2
-        ],
-        "predecessor_claims": [
-          "根据整除的传递性，由 c|b 和 b|a 得 c|a。"
-        ],
-        "formal_obligation": "a,b,c 为整数，a|b 且 b|c。, 根据整除的传递性，由 c|b 和 b|a 得 c|a。 |- 因此 a|c。",
-        "normalized_query": {
-          "topic_tokens": [
-            "algebra",
-            "elementary"
-          ],
-          "goal_tokens": [],
-          "assumption_tokens": [],
-          "predecessor_tokens": []
-        }
-      },
-      "retrieval_scope": "global",
-      "candidate_pool_size": 9,
-      "retrieval_role": "diagnostic_only",
-      "verification_source": "model_adjudicator",
+      "retrieval_required": false,
+      "retrieval_reason": "Repair the earlier invalid node before retrieving rules here.",
+      "retrieval_query": null,
+      "retrieval_scope": null,
+      "candidate_pool_size": 0,
+      "retrieval_role": null,
+      "verification_source": "deterministic_checker",
       "retrieved_rules": [],
       "rule_applicability": [],
       "satisfied_conditions": [],
@@ -257,18 +215,7 @@
       "applicable_rule_id": null,
       "operation_check": null,
       "counterexample": null,
-      "model_adjudication": {
-        "decision": "undetermined",
-        "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-        "proof_outline": [],
-        "completion_assessment": "not_applicable",
-        "original_step_requires_completion": false,
-        "bridge_steps": [],
-        "bridge_length": 0,
-        "counterexample_description": null,
-        "counterexample_verification": null,
-        "confidence": "low"
-      },
+      "model_adjudication": null,
       "calculation_context": {
         "structure": "commutative_ring",
         "carrier": "R",
@@ -304,20 +251,20 @@
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "downstream_invalid",
+      "logic_class": "downstream_dependency",
+      "repair_scope": "repair_predecessor",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-      "repair_action": "manual_review",
+      "error_type": "downstream_invalid",
+      "diagnosis": "This node explicitly depends on an earlier invalid node.",
+      "repair_action": null,
       "minimal_repair": null
     }
   ],
-  "validity_status": "undetermined",
+  "validity_status": "invalid",
   "first_gap_step": null,
-  "first_invalid_step": null,
-  "first_undetermined_step": 1,
-  "summary_diagnosis": "No calculation adjudicator was configured.",
-  "summary_repair": null
+  "first_invalid_step": 1,
+  "first_undetermined_step": null,
+  "summary_diagnosis": "Divisibility is not symmetric. Violated obligation: Establish the claimed inference from the stated assumptions. Evidence: Divisibility is not symmetric.",
+  "summary_repair": "Replace the invalid step with a valid argument under the stated conditions."
 }

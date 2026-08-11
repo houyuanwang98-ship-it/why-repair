@@ -50,7 +50,7 @@
       "retrieval_scope": "global",
       "candidate_pool_size": 9,
       "retrieval_role": "diagnostic_only",
-      "verification_source": "calculation_model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [],
       "rule_applicability": [],
       "satisfied_conditions": [],
@@ -93,29 +93,34 @@
         "context_changed": false,
         "change_reason": null
       },
-      "calculation_source_expression": "a,b,c 为实数且 a=b。",
-      "calculation_adjudication": {
-        "decision": "undetermined",
-        "source_expression": "a,b,c 为实数且 a=b。",
-        "target_expression": "等式两边同时除以 c。",
-        "atomic_steps": [],
-        "used_axioms": [],
-        "introduced_assumptions": [],
-        "missing_conditions": [],
-        "reasoning_summary": "No calculation adjudicator was configured.",
-        "confidence": "low"
+      "calculation_source_expression": null,
+      "calculation_adjudication": null,
+      "diagnosis_adjudication": {
+        "diagnosis_review": "confirmed",
+        "error_category": "missing_assumption",
+        "failed_inference": "The proof divides by c without assuming c is nonzero.",
+        "violated_obligation": "Establish the claimed inference from the stated assumptions.",
+        "error_scope": "local_node",
+        "evidence": [
+          "The proof divides by c without assuming c is nonzero."
+        ],
+        "counterexample_or_witness": "At c=0 the quotient is undefined.",
+        "claim_globally_derivable": false,
+        "repairability": "change_assumption",
+        "minimal_repair": "Replace the invalid step with a valid argument under the stated conditions.",
+        "theorem_dependency": null,
+        "confidence": "high"
       },
-      "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
+      "status": "missing_assumption",
+      "logic_class": "unsupported_inference",
+      "repair_scope": "establish_or_add_premise",
       "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "No calculation adjudicator was configured.",
-      "repair_action": "manual_review",
-      "minimal_repair": null
+      "error_type": "missing_assumption",
+      "diagnosis": "The proof divides by c without assuming c is nonzero. Violated obligation: Establish the claimed inference from the stated assumptions. Evidence: The proof divides by c without assuming c is nonzero.",
+      "repair_action": "add_assumption",
+      "minimal_repair": "Replace the invalid step with a valid argument under the stated conditions."
     },
     {
       "node_id": 2,
@@ -133,284 +138,18 @@
       ],
       "ambient_facts": [],
       "obligation": "Given the local context, prove: 得到 a/c=b/c。",
-      "retrieval_required": true,
-      "retrieval_reason": "The conclusion does not follow directly from the accepted context.",
-      "retrieval_query": {
-        "domain": "elementary_algebra",
-        "topic": "elementary_algebra",
-        "goal": "得到 a/c=b/c。",
-        "assumptions": [
-          "a,b,c 为实数且 a=b。"
-        ],
-        "predecessor_node_ids": [
-          1
-        ],
-        "predecessor_claims": [
-          "等式两边同时除以 c。"
-        ],
-        "formal_obligation": "a,b,c 为实数且 a=b。, 等式两边同时除以 c。 |- 得到 a/c=b/c。",
-        "normalized_query": {
-          "topic_tokens": [
-            "algebra",
-            "elementary"
-          ],
-          "goal_tokens": [
-            "divide",
-            "equal"
-          ],
-          "assumption_tokens": [
-            "equal"
-          ],
-          "predecessor_tokens": []
-        }
-      },
-      "retrieval_scope": "global",
-      "candidate_pool_size": 9,
-      "retrieval_role": "diagnostic_only",
+      "retrieval_required": false,
+      "retrieval_reason": "Repair the earlier invalid node before retrieving rules here.",
+      "retrieval_query": null,
+      "retrieval_scope": null,
+      "candidate_pool_size": 0,
+      "retrieval_role": null,
       "verification_source": "deterministic_checker",
-      "retrieved_rules": [
-        {
-          "id": "grp_normal_quotient",
-          "name": "Quotient group criterion",
-          "score": 6.0,
-          "score_breakdown": {
-            "goal": 8.0,
-            "predecessors": 0.0,
-            "assumptions": 0.0,
-            "topic": 0.0,
-            "domain": 0.0,
-            "topic_conflict": -2.0
-          },
-          "matched_query_fields": [
-            "goal"
-          ],
-          "matched_rule_fields": [
-            "conclusion",
-            "statement"
-          ],
-          "matched_fields": [
-            "conclusion",
-            "statement"
-          ]
-        },
-        {
-          "id": "lin_same_dim_subspace",
-          "name": "Same dimension subspace criterion",
-          "score": 4.0,
-          "score_breakdown": {
-            "goal": 4.0,
-            "predecessors": 0.0,
-            "assumptions": 2.0,
-            "topic": 0.0,
-            "domain": 0.0,
-            "topic_conflict": -2.0
-          },
-          "matched_query_fields": [
-            "goal",
-            "assumptions"
-          ],
-          "matched_rule_fields": [
-            "conclusion",
-            "conditions",
-            "statement"
-          ],
-          "matched_fields": [
-            "conclusion",
-            "conditions",
-            "statement"
-          ]
-        },
-        {
-          "id": "grp_first_iso",
-          "name": "First isomorphism theorem for groups",
-          "score": 2.0,
-          "score_breakdown": {
-            "goal": 4.0,
-            "predecessors": 0.0,
-            "assumptions": 0.0,
-            "topic": 0.0,
-            "domain": 0.0,
-            "topic_conflict": -2.0
-          },
-          "matched_query_fields": [
-            "goal"
-          ],
-          "matched_rule_fields": [
-            "conclusion",
-            "statement"
-          ],
-          "matched_fields": [
-            "conclusion",
-            "statement"
-          ]
-        },
-        {
-          "id": "lin_rank_nullity",
-          "name": "Rank-nullity theorem",
-          "score": 2.0,
-          "score_breakdown": {
-            "goal": 4.0,
-            "predecessors": 0.0,
-            "assumptions": 0.0,
-            "topic": 0.0,
-            "domain": 0.0,
-            "topic_conflict": -2.0
-          },
-          "matched_query_fields": [
-            "goal"
-          ],
-          "matched_rule_fields": [
-            "conclusion",
-            "statement"
-          ],
-          "matched_fields": [
-            "conclusion",
-            "statement"
-          ]
-        },
-        {
-          "id": "ring_quotient_ideal",
-          "name": "Quotient ring criterion",
-          "score": 2.0,
-          "score_breakdown": {
-            "goal": 4.0,
-            "predecessors": 0.0,
-            "assumptions": 0.0,
-            "topic": 0.0,
-            "domain": 0.0,
-            "topic_conflict": -2.0
-          },
-          "matched_query_fields": [
-            "goal"
-          ],
-          "matched_rule_fields": [
-            "conclusion",
-            "statement"
-          ],
-          "matched_fields": [
-            "conclusion",
-            "statement"
-          ]
-        }
-      ],
-      "rule_applicability": [
-        {
-          "rule_id": "grp_normal_quotient",
-          "rule_name": "Quotient group criterion",
-          "satisfied_conditions": [],
-          "missing_conditions": [
-            "N is a subgroup of G",
-            "N is normal in G"
-          ],
-          "matched_conclusion": true,
-          "applicable": false,
-          "common_misuses": [
-            "forming G/N when N is not known to be normal",
-            "assuming coset multiplication is well-defined without checking normality"
-          ],
-          "retrieval_score": 6.0,
-          "matched_query_fields": [
-            "goal"
-          ],
-          "deterministic_safe": false,
-          "deterministic_safe_kind": null,
-          "deterministic_safe_goal_match": false
-        },
-        {
-          "rule_id": "lin_same_dim_subspace",
-          "rule_name": "Same dimension subspace criterion",
-          "satisfied_conditions": [],
-          "missing_conditions": [
-            "W is a subspace of V",
-            "V is finite-dimensional",
-            "dim W = dim V"
-          ],
-          "matched_conclusion": true,
-          "applicable": false,
-          "common_misuses": [
-            "using dimension equality without a subspace relation",
-            "using the criterion in infinite-dimensional settings"
-          ],
-          "retrieval_score": 4.0,
-          "matched_query_fields": [
-            "goal",
-            "assumptions"
-          ],
-          "deterministic_safe": false,
-          "deterministic_safe_kind": null,
-          "deterministic_safe_goal_match": false
-        },
-        {
-          "rule_id": "grp_first_iso",
-          "rule_name": "First isomorphism theorem for groups",
-          "satisfied_conditions": [],
-          "missing_conditions": [
-            "phi is a group homomorphism",
-            "ker(phi) is the kernel of phi"
-          ],
-          "matched_conclusion": true,
-          "applicable": false,
-          "common_misuses": [
-            "quotienting by a subgroup that is not the kernel",
-            "claiming G is isomorphic to H without surjectivity"
-          ],
-          "retrieval_score": 2.0,
-          "matched_query_fields": [
-            "goal"
-          ],
-          "deterministic_safe": false,
-          "deterministic_safe_kind": null,
-          "deterministic_safe_goal_match": false
-        },
-        {
-          "rule_id": "lin_rank_nullity",
-          "rule_name": "Rank-nullity theorem",
-          "satisfied_conditions": [],
-          "missing_conditions": [
-            "T is linear",
-            "V is finite-dimensional"
-          ],
-          "matched_conclusion": false,
-          "applicable": false,
-          "common_misuses": [
-            "using rank-nullity without finite-dimensionality",
-            "concluding im(T) = W from equal dimensions without im(T) being a subspace of W"
-          ],
-          "retrieval_score": 2.0,
-          "matched_query_fields": [
-            "goal"
-          ],
-          "deterministic_safe": false,
-          "deterministic_safe_kind": null,
-          "deterministic_safe_goal_match": false
-        },
-        {
-          "rule_id": "ring_quotient_ideal",
-          "rule_name": "Quotient ring criterion",
-          "satisfied_conditions": [],
-          "missing_conditions": [
-            "I is a two-sided ideal of R"
-          ],
-          "matched_conclusion": true,
-          "applicable": false,
-          "common_misuses": [
-            "quotienting by a subset that is not an ideal",
-            "using a one-sided ideal when a two-sided ideal is required"
-          ],
-          "retrieval_score": 2.0,
-          "matched_query_fields": [
-            "goal"
-          ],
-          "deterministic_safe": false,
-          "deterministic_safe_kind": null,
-          "deterministic_safe_goal_match": false
-        }
-      ],
+      "retrieved_rules": [],
+      "rule_applicability": [],
       "satisfied_conditions": [],
-      "missing_conditions": [
-        "I is a two-sided ideal of R"
-      ],
-      "matched_conclusion": true,
+      "missing_conditions": [],
+      "matched_conclusion": null,
       "applicable_rule_id": null,
       "operation_check": null,
       "counterexample": null,
@@ -453,20 +192,20 @@
       "diagnosis_adjudication": null,
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "valid_with_gap",
-      "logic_class": "repairable_gap",
-      "repair_scope": "insert_local_justification",
-      "gap_type": "implicit_standard_step",
-      "error_type": "proof_gap",
-      "diagnosis": "The step appears plausible but the deterministic checker did not find a fully explicit local justification.",
-      "repair_action": "expand_step",
-      "minimal_repair": "Expand this step with a full step-by-step derivation from its dependency claims to this conclusion, using named algebra rules or short bridge arguments."
+      "status": "downstream_invalid",
+      "logic_class": "downstream_dependency",
+      "repair_scope": "repair_predecessor",
+      "gap_type": null,
+      "error_type": "downstream_invalid",
+      "diagnosis": "This node explicitly depends on an earlier invalid node.",
+      "repair_action": null,
+      "minimal_repair": null
     }
   ],
-  "validity_status": "undetermined",
-  "first_gap_step": 2,
-  "first_invalid_step": null,
-  "first_undetermined_step": 1,
-  "summary_diagnosis": "The step appears plausible but the deterministic checker did not find a fully explicit local justification.",
-  "summary_repair": "Expand this step with a full step-by-step derivation from its dependency claims to this conclusion, using named algebra rules or short bridge arguments."
+  "validity_status": "invalid",
+  "first_gap_step": null,
+  "first_invalid_step": 1,
+  "first_undetermined_step": null,
+  "summary_diagnosis": "The proof divides by c without assuming c is nonzero. Violated obligation: Establish the claimed inference from the stated assumptions. Evidence: The proof divides by c without assuming c is nonzero.",
+  "summary_repair": "Replace the invalid step with a valid argument under the stated conditions."
 }

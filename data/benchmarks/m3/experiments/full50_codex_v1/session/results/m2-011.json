@@ -130,7 +130,7 @@
       "retrieval_scope": "global",
       "candidate_pool_size": 9,
       "retrieval_role": "diagnostic_only",
-      "verification_source": "model_adjudicator",
+      "verification_source": "host_agent_adjudication",
       "retrieved_rules": [
         {
           "id": "grp_normal_quotient",
@@ -280,16 +280,27 @@
       "operation_check": null,
       "counterexample": null,
       "model_adjudication": {
-        "decision": "undetermined",
-        "reasoning_summary": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-        "proof_outline": [],
-        "completion_assessment": "not_applicable",
-        "original_step_requires_completion": false,
-        "bridge_steps": [],
-        "bridge_length": 0,
+        "decision": "derivable",
+        "reasoning_summary": "The conclusion is correct but an intermediate definition or substitution is omitted.",
+        "proof_outline": [
+          "Apply the relevant definition or substitution.",
+          "所以 x+y 是偶数。"
+        ],
+        "completion_assessment": "omitted_intermediate_steps",
+        "original_step_requires_completion": true,
+        "bridge_steps": [
+          {
+            "claim": "Make the omitted intermediate substitution explicit.",
+            "justification": "Definition and elementary algebra.",
+            "depends_on_context": [
+              "the supplied local context"
+            ]
+          }
+        ],
+        "bridge_length": 1,
         "counterexample_description": null,
         "counterexample_verification": null,
-        "confidence": "low"
+        "confidence": "high"
       },
       "calculation_context": {
         "structure": "commutative_ring",
@@ -323,23 +334,38 @@
       },
       "calculation_source_expression": null,
       "calculation_adjudication": null,
-      "diagnosis_adjudication": null,
+      "diagnosis_adjudication": {
+        "diagnosis_review": "confirmed",
+        "error_category": "missing_bridge_lemma",
+        "failed_inference": "The conclusion is correct but an intermediate definition or substitution is omitted.",
+        "violated_obligation": "The submitted node omits the validated intermediate mathematical steps listed in the primary adjudication.",
+        "error_scope": "local_node",
+        "evidence": [
+          "Make the omitted intermediate substitution explicit. (Definition and elementary algebra.)"
+        ],
+        "counterexample_or_witness": null,
+        "claim_globally_derivable": true,
+        "repairability": "insert_bridge",
+        "minimal_repair": "Make the omitted intermediate substitution explicit. (Definition and elementary algebra.)",
+        "theorem_dependency": null,
+        "confidence": "high"
+      },
       "theorem_candidates": [],
       "theorem_verification": null,
-      "status": "undetermined",
-      "logic_class": "indeterminate",
-      "repair_scope": "manual_review",
-      "gap_type": null,
-      "error_type": "undetermined",
-      "diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-      "repair_action": "manual_review",
-      "minimal_repair": null
+      "status": "missing_bridge_lemma",
+      "logic_class": "repairable_gap",
+      "repair_scope": "insert_local_justification",
+      "gap_type": "model_reclassified_gap",
+      "error_type": "missing_bridge_lemma",
+      "diagnosis": "The conclusion is correct but an intermediate definition or substitution is omitted. Violated obligation: The submitted node omits the validated intermediate mathematical steps listed in the primary adjudication. Evidence: Make the omitted intermediate substitution explicit. (Definition and elementary algebra.)",
+      "repair_action": "insert_bridge_lemma",
+      "minimal_repair": "Make the omitted intermediate substitution explicit. (Definition and elementary algebra.)"
     }
   ],
-  "validity_status": "undetermined",
-  "first_gap_step": null,
+  "validity_status": "valid_with_gap",
+  "first_gap_step": 2,
   "first_invalid_step": null,
-  "first_undetermined_step": 2,
-  "summary_diagnosis": "Deterministic checks were inconclusive and no model adjudicator was configured.",
-  "summary_repair": null
+  "first_undetermined_step": null,
+  "summary_diagnosis": "The conclusion is correct but an intermediate definition or substitution is omitted. Violated obligation: The submitted node omits the validated intermediate mathematical steps listed in the primary adjudication. Evidence: Make the omitted intermediate substitution explicit. (Definition and elementary algebra.)",
+  "summary_repair": "Make the omitted intermediate substitution explicit. (Definition and elementary algebra.)"
 }
