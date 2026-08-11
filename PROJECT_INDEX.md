@@ -26,6 +26,7 @@
 | [M1 冻结记录](docs/milestones/M01_freeze_record.md) | 冻结范围、验证依据与变更规则 | 已完成 |
 | [M1 A/B 集成](docs/milestones/M01_person_a_b_integration.md) | Person A checker 到证书、Person B 补丁及独立复核的衔接 | `v0.3` 已完成 |
 | [M2 Pilot benchmark 基础设施](docs/milestones/M02_pilot_benchmark_infrastructure.md) | 标注校验、一致性报告、裁决与 Gold 生成 | 50 题已入库，Person B 独立标注完成，等待 Person A 标注 |
+| [M2 Person B 完成与交接](docs/milestones/M02_person_b_completion_and_handoff.md) | 冻结输入、复核证据、Person A 隔离模板与后续联合流程 | Person B 范围已完成，等待 Person A 独立标注 |
 | [M2 标签映射](docs/milestones/M02_label_mapping.md) | M2 benchmark 标签到 M1 v0.3 运行时结果的显式转换边界 | 等待双方批准 |
 | [M2 可移植 Schema](schemas/m2_benchmark_v0_2.schema.json) | Source、annotation、反例、分歧、裁决与 Gold manifest 契约 | `m2.2` 已实现 |
 | [开发指南](docs/development-guide.md) | 现有 checker 架构 | 已有 |

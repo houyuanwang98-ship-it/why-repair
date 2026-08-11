@@ -17,6 +17,11 @@ reports/agreement.json
 gold/algebra_pilot_v1.jsonl
 ```
 
+`annotations/person_a.template.jsonl` is an abstaining handoff template only.
+Person A must review the source independently and save the completed result as
+`annotations/person_a.jsonl`. The template must never be passed to the
+agreement command as if it were a completed annotation.
+
 The source JSONL uses the frozen source contract `m2-source-0.1`: `proof_id`,
 `theorem_version`, `domain`, `theorem`, `assumptions`, and ordered `proof_steps`
 objects containing stable `node_id` and `text` fields.
