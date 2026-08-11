@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "M3 Evaluator v1 Metric Report",
+  "type": "object",
+  "required": [
+    "schema_version", "sample_count", "prediction_coverage", "proof_validity",
+    "error_type", "first_gap_localization", "first_invalid_localization",
+    "node_type", "node_verdict_group", "dependency_edges", "node_gold_coverage", "inputs",
+    "unexpected_prediction_ids"
+  ],
+  "properties": {
+    "schema_version": {"const": "m3-evaluator-report-0.1"},
+    "sample_count": {"type": "integer", "minimum": 0},
+    "prediction_coverage": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "proof_validity": {"$ref": "#/$defs/classificationMetric"},
+    "error_type": {"$ref": "#/$defs/classificationMetric"},
+    "node_type": {"$ref": "#/$defs/classificationMetric"},
+    "node_verdict_group": {"$ref": "#/$defs/classificationMetric"},
+    "first_gap_localization": {"$ref": "#/$defs/localizationMetric"},
+    "first_invalid_localization": {"$ref": "#/$defs/localizationMetric"},
+    "dependency_edges": {
+      "type": "object",
+      "required": ["gold_count", "predicted_count", "true_positive", "precision", "recall", "f1"]
+    },
+    "node_gold_coverage": {
+      "type": "object",
+      "required": ["samples", "nodes"]
+    },
+    "unexpected_prediction_ids": {"type": "array", "items": {"type": "string"}}
+    ,"inputs": {
+      "type": "object",
+      "required": ["gold_sha256", "predictions_sha256"],
+      "properties": {
+        "gold_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "predictions_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  },
+  "$defs": {
+    "classificationMetric": {
+      "type": "object",
+      "required": ["count", "accuracy", "macro_f1", "per_label"]
+    },
+    "localizationMetric": {
+      "type": "object",
+      "required": ["applicable_count", "exact_accuracy", "false_positive_rate_when_absent"]
+    }
+  }
+}
