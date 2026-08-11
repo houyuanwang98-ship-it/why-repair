@@ -10,7 +10,13 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from m2_benchmark import (  # noqa: E402
+    COUNTEREXAMPLE_METHODS,
+    COUNTEREXAMPLE_SCOPES,
+    COUNTEREXAMPLE_STATUSES,
+    ERROR_TYPES,
     M2ValidationError,
+    SCHEMA_VERSION,
+    VALIDITY_STATUSES,
     build_agreement_report,
     build_gold,
     build_gold_manifest,
@@ -63,7 +69,7 @@ def m2_sources():
 def annotations(annotator="person_a"):
     return [
         {
-            "schema_version": "m2.1",
+            "schema_version": "m2.2",
             "sample_id": "m2_001",
             "annotator_id": annotator,
             "validity_status": "valid",
@@ -71,11 +77,12 @@ def annotations(annotator="person_a"):
             "first_invalid_step": None,
             "error_type": "no_error",
             "counterexample_status": "not_applicable",
+            "counterexample": None,
             "minimal_repair": None,
             "notes": "",
         },
         {
-            "schema_version": "m2.1",
+            "schema_version": "m2.2",
             "sample_id": "m2_002",
             "annotator_id": annotator,
             "validity_status": "valid",
@@ -83,6 +90,7 @@ def annotations(annotator="person_a"):
             "first_invalid_step": None,
             "error_type": "no_error",
             "counterexample_status": "not_applicable",
+            "counterexample": None,
             "minimal_repair": None,
             "notes": "",
         },
@@ -90,6 +98,17 @@ def annotations(annotator="person_a"):
 
 
 class M2ValidationTests(unittest.TestCase):
+    def test_portable_schema_matches_runtime_enums(self):
+        schema = json.loads((ROOT / "schemas" / "m2_benchmark_v0_2.schema.json").read_text(encoding="utf-8"))
+        annotation = schema["$defs"]["AnnotationRow"]["properties"]
+        certificate = schema["$defs"]["CounterexampleCertificate"]["properties"]
+        self.assertEqual(annotation["schema_version"]["const"], SCHEMA_VERSION)
+        self.assertEqual(set(annotation["validity_status"]["enum"]), VALIDITY_STATUSES)
+        self.assertEqual(set(annotation["error_type"]["enum"]), ERROR_TYPES)
+        self.assertEqual(set(annotation["counterexample_status"]["enum"]), COUNTEREXAMPLE_STATUSES)
+        self.assertEqual(set(certificate["scope"]["enum"]), COUNTEREXAMPLE_SCOPES)
+        self.assertEqual(set(certificate["verification_method"]["enum"]), COUNTEREXAMPLE_METHODS)
+
     def test_valid_sources_and_annotations(self):
         validate_sources(sources(), expected_count=2)
         validate_annotations(annotations(), sources(), expected_annotator="person_a")
@@ -129,8 +148,60 @@ class M2ValidationTests(unittest.TestCase):
     def test_validity_and_location_conflict_is_rejected(self):
         rows = annotations()
         rows[0]["first_invalid_step"] = 1
-        with self.assertRaisesRegex(M2ValidationError, "valid annotations"):
+        with self.assertRaisesRegex(M2ValidationError, "valid requires no_error"):
             validate_annotations(rows, sources())
+
+    def test_valid_cannot_carry_an_error_type(self):
+        rows = annotations()
+        rows[0]["error_type"] = "theorem_misuse"
+        with self.assertRaisesRegex(M2ValidationError, "valid requires no_error"):
+            validate_annotations(rows, sources())
+
+    def test_gap_cannot_name_an_invalid_step(self):
+        rows = annotations()
+        rows[0].update(
+            validity_status="valid_with_gap",
+            error_type="proof_gap",
+            first_gap_step=1,
+            first_invalid_step=1,
+            minimal_repair="Insert a bridge.",
+        )
+        with self.assertRaisesRegex(M2ValidationError, "no invalid step"):
+            validate_annotations(rows, sources())
+
+    def test_valid_counterexample_requires_a_certificate(self):
+        rows = annotations()
+        rows[0].update(
+            validity_status="invalid",
+            error_type="false_generalization",
+            first_invalid_step=1,
+            minimal_repair="Mark theorem false.",
+            counterexample_status="valid",
+        )
+        with self.assertRaisesRegex(M2ValidationError, "structured certificate"):
+            validate_annotations(rows, sources())
+
+    def test_structured_counterexample_checks_every_assumption(self):
+        rows = annotations()
+        rows[0].update(
+            validity_status="invalid",
+            error_type="false_generalization",
+            first_invalid_step=1,
+            minimal_repair="Mark theorem false.",
+            counterexample_status="valid",
+            counterexample={
+                "scope": "original_theorem",
+                "claim_ref": "theorem",
+                "assignments": {"x": 1},
+                "assumption_checks": [
+                    {"assumption": "G is a group.", "satisfied": True, "evidence": "Given."}
+                ],
+                "target_false": True,
+                "verification_method": "manual_exact",
+                "verification_notes": "The assigned value refutes the target.",
+            },
+        )
+        validate_annotations(rows, sources())
 
     def test_write_jsonl_is_deterministic(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -182,6 +253,8 @@ class M2AgreementTests(unittest.TestCase):
         )
         self.assertFalse(report["fields"]["minimal_repair"]["cohen_kappa_applicable"])
         self.assertIsNone(report["fields"]["minimal_repair"]["cohen_kappa"])
+        self.assertFalse(report["fields"]["counterexample"]["confusion_matrix_applicable"])
+        self.assertIsNone(report["fields"]["counterexample"]["confusion_matrix"])
 
     def test_kappa_handles_constant_agreement(self):
         self.assertEqual(cohen_kappa([None, None], [None, None]), 1.0)

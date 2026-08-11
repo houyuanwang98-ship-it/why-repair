@@ -28,6 +28,9 @@ Fill `outputs/algebra_pilot_session/pending.json`, then run the same command aga
 
 ## Documentation
 
+- [Dual-Agent project index](PROJECT_INDEX.md): current M0-M8 status, ownership, contracts, and implementation links.
+- [Research roadmap](ROADMAP.md): milestone deliverables and exit gates.
+- [M2 benchmark workspace](data/benchmarks/m2/README.md): source, independent annotation, agreement, adjudication, and Gold commands.
 - [Usage guide](docs/usage-guide.md): installation, commands, resumable sessions, evaluation, and input data.
 - [Development guide](docs/development-guide.md): architecture, schemas, retrieval, diagnosis, and theorem-bank maintenance.
 - [Changelog](CHANGELOG.md): dated releases grouped by change type.
@@ -42,6 +45,7 @@ Before changing proof segmentation, retrieval, diagnosis, model adjudication, sc
 
 ```text
 data/samples/                  Example proof datasets (JSONL)
+data/benchmarks/m2/            Versioned M2 source, annotations, manifests, reports, and Gold workflow
 data/theorem_bank/             Theorem and rule banks (JSONL only)
 docs/                          Detailed documentation
 prompts/                       Baseline prompt templates
@@ -50,5 +54,11 @@ scripts/                       Baselines, evaluation, extraction, and maintenanc
 skills/math-proof-repair-agent Portable Agent Skill and checker
 tests/                         Automated tests
 ```
+
+The frozen M1 dual-agent harness lives in `harness/`; the M2 benchmark tools
+live in `scripts/m2_benchmark.py` and the related `scripts/*m2*` CLIs. The
+portable checker remains the mathematical source used by Person A, while the
+deterministic harness and benchmark pipeline preserve version, identity,
+adjudication, and reproducibility boundaries.
 
 Use `data/theorem_bank/all_clean_seed_rules.jsonl` for the merged cross-domain rule bank. Runtime outputs and session caches belong under `outputs/`; Python bytecode, local settings, backups, and packaged archives are intentionally excluded from version control.

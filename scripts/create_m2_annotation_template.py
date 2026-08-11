@@ -23,6 +23,7 @@ def main() -> int:
             "first_invalid_step": None,
             "error_type": "undetermined",
             "counterexample_status": "undetermined",
+            "counterexample": None,
             "minimal_repair": None,
             "notes": "",
         }

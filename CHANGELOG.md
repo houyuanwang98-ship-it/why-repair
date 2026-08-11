@@ -2,6 +2,30 @@
 
 Notable project changes are grouped by release date and change type. Dates use Hong Kong time (`+08:00`).
 
+## 2026-08-11 +08:00 — Add and harden M2 benchmark infrastructure
+
+### Added
+
+- Added versioned M2 source datasets, Person B independent annotations,
+  agreement metrics, field-level disagreement and adjudication tools,
+  deterministic Gold generation, and input/output hash manifests.
+- Added sparse confusion matrices, annotator identity isolation, stale
+  adjudication rejection, and M2 regression coverage.
+- Added the portable `m2.2` JSON Schema, structured counterexample evidence,
+  a complete cross-field annotation state matrix, and an explicit proposed
+  mapping from M2 labels to M1 v0.3 runtime outcomes.
+
+### Reproducibility
+
+- Added `.gitattributes` to keep JSON, JSONL, Python, Markdown, and YAML files
+  on LF across platforms so recorded SHA-256 values remain stable.
+- Added a manifest for the supplemental B01-B50 challenge set.
+
+### Validation
+
+- M2 source, annotation, counterexample, identity, adjudication, report, Gold,
+  manifest, and negative contract tests run as part of the full suite.
+
 ## 2026-08-11 +08:00 — Align frozen M1 semantics with the M0 execution review
 
 ### Fixed

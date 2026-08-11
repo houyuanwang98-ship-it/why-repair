@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 
-SCHEMA_VERSION = "m2.1"
+SCHEMA_VERSION = "m2.2"
 VALIDITY_STATUSES = {"valid", "valid_with_gap", "invalid", "undetermined"}
 ERROR_TYPES = {
     "quantifier_error",
@@ -28,15 +28,19 @@ ERROR_TYPES = {
     "undetermined",
 }
 COUNTEREXAMPLE_STATUSES = {"not_applicable", "valid", "invalid", "undetermined"}
+COUNTEREXAMPLE_SCOPES = {"local_node", "original_theorem"}
+COUNTEREXAMPLE_METHODS = {"manual_exact", "python", "sympy", "exhaustive"}
 AGREEMENT_FIELDS = (
     "validity_status",
     "first_gap_step",
     "first_invalid_step",
     "error_type",
     "counterexample_status",
+    "counterexample",
     "minimal_repair",
 )
-KAPPA_FIELDS = frozenset(AGREEMENT_FIELDS) - {"minimal_repair"}
+EXACT_ONLY_FIELDS = {"counterexample", "minimal_repair"}
+KAPPA_FIELDS = frozenset(AGREEMENT_FIELDS) - EXACT_ONLY_FIELDS
 
 
 class M2ValidationError(ValueError):
@@ -189,6 +193,7 @@ def validate_annotations(
         "first_invalid_step",
         "error_type",
         "counterexample_status",
+        "counterexample",
         "minimal_repair",
         "notes",
     )
@@ -210,18 +215,78 @@ def validate_annotations(
         step_count = len(source_steps(source_map[row["sample_id"]]))
         _validate_step(row["first_gap_step"], step_count, "first_gap_step", context)
         _validate_step(row["first_invalid_step"], step_count, "first_invalid_step", context)
-        if row["validity_status"] == "valid" and (row["first_gap_step"] is not None or row["first_invalid_step"] is not None):
-            raise M2ValidationError(f"{context}: valid annotations cannot name a gap or invalid step")
-        if row["validity_status"] == "valid_with_gap" and row["first_gap_step"] is None:
-            raise M2ValidationError(f"{context}: valid_with_gap requires first_gap_step")
-        if row["validity_status"] == "invalid" and row["first_invalid_step"] is None:
-            raise M2ValidationError(f"{context}: invalid requires first_invalid_step")
-        if row["error_type"] == "no_error" and row["validity_status"] not in {"valid", "valid_with_gap"}:
-            raise M2ValidationError(f"{context}: no_error conflicts with {row['validity_status']!r}")
+        validity = row["validity_status"]
+        if validity == "valid":
+            if row["error_type"] != "no_error" or row["first_gap_step"] is not None or row["first_invalid_step"] is not None:
+                raise M2ValidationError(f"{context}: valid requires no_error and null gap/invalid locations")
+            if row["minimal_repair"] is not None:
+                raise M2ValidationError(f"{context}: valid requires minimal_repair=null")
+            if row["counterexample_status"] != "not_applicable":
+                raise M2ValidationError(f"{context}: valid requires counterexample_status=not_applicable")
+        elif validity == "valid_with_gap":
+            if row["error_type"] != "proof_gap" or row["first_gap_step"] is None or row["first_invalid_step"] is not None:
+                raise M2ValidationError(f"{context}: valid_with_gap requires proof_gap, a gap step, and no invalid step")
+            if not isinstance(row["minimal_repair"], str) or not row["minimal_repair"].strip():
+                raise M2ValidationError(f"{context}: valid_with_gap requires a non-empty minimal_repair")
+            if row["counterexample_status"] != "not_applicable":
+                raise M2ValidationError(f"{context}: valid_with_gap requires counterexample_status=not_applicable")
+        elif validity == "invalid":
+            if row["first_invalid_step"] is None:
+                raise M2ValidationError(f"{context}: invalid requires first_invalid_step")
+            if row["error_type"] in {"no_error", "proof_gap", "undetermined"}:
+                raise M2ValidationError(f"{context}: invalid requires a concrete invalid error_type")
+            if not isinstance(row["minimal_repair"], str) or not row["minimal_repair"].strip():
+                raise M2ValidationError(f"{context}: invalid requires a non-empty minimal_repair")
+        elif validity == "undetermined":
+            if row["error_type"] != "undetermined" or row["first_gap_step"] is not None or row["first_invalid_step"] is not None:
+                raise M2ValidationError(f"{context}: undetermined requires undetermined error_type and null locations")
+            if row["minimal_repair"] is not None or row["counterexample_status"] != "undetermined":
+                raise M2ValidationError(f"{context}: undetermined requires no repair and undetermined counterexample status")
         if row["minimal_repair"] is not None and not isinstance(row["minimal_repair"], str):
             raise M2ValidationError(f"{context}: minimal_repair must be null or a string")
+        _validate_counterexample(row, source_map[row["sample_id"]], context)
         if not isinstance(row["notes"], str):
             raise M2ValidationError(f"{context}: notes must be a string")
+
+
+def _validate_counterexample(row: dict[str, Any], source: dict[str, Any], context: str) -> None:
+    certificate = row["counterexample"]
+    status = row["counterexample_status"]
+    if status != "valid":
+        if certificate is not None:
+            raise M2ValidationError(f"{context}: only a valid counterexample may carry a certificate")
+        return
+    if not isinstance(certificate, dict):
+        raise M2ValidationError(f"{context}: valid counterexample requires a structured certificate")
+    _require(
+        certificate,
+        ("scope", "claim_ref", "assignments", "assumption_checks", "target_false", "verification_method", "verification_notes"),
+        f"{context} counterexample",
+    )
+    if certificate["scope"] not in COUNTEREXAMPLE_SCOPES:
+        raise M2ValidationError(f"{context}: invalid counterexample scope")
+    node_ids = {step["node_id"] for step in source_steps(source) if isinstance(step, dict)}
+    expected_ref = "theorem" if certificate["scope"] == "original_theorem" else certificate["claim_ref"]
+    if certificate["scope"] == "original_theorem" and certificate["claim_ref"] != "theorem":
+        raise M2ValidationError(f"{context}: original theorem counterexample must use claim_ref='theorem'")
+    if certificate["scope"] == "local_node" and expected_ref not in node_ids:
+        raise M2ValidationError(f"{context}: local counterexample claim_ref must name an existing node")
+    if not isinstance(certificate["assignments"], dict) or not certificate["assignments"]:
+        raise M2ValidationError(f"{context}: counterexample assignments must be a non-empty object")
+    checks = certificate["assumption_checks"]
+    if not isinstance(checks, list) or len(checks) != len(source["assumptions"]):
+        raise M2ValidationError(f"{context}: counterexample must check every source assumption exactly once")
+    checked_assumptions = [check.get("assumption") for check in checks if isinstance(check, dict)]
+    if Counter(checked_assumptions) != Counter(source["assumptions"]):
+        raise M2ValidationError(f"{context}: counterexample assumption checks must match source assumptions")
+    if not all(check.get("satisfied") is True and isinstance(check.get("evidence"), str) and check["evidence"].strip() for check in checks):
+        raise M2ValidationError(f"{context}: every counterexample assumption check must be true with evidence")
+    if certificate["target_false"] is not True:
+        raise M2ValidationError(f"{context}: valid counterexample must establish target_false=true")
+    if certificate["verification_method"] not in COUNTEREXAMPLE_METHODS:
+        raise M2ValidationError(f"{context}: invalid counterexample verification_method")
+    if not isinstance(certificate["verification_notes"], str) or not certificate["verification_notes"].strip():
+        raise M2ValidationError(f"{context}: counterexample verification_notes must be non-empty")
 
 
 def cohen_kappa(left: list[Any], right: list[Any]) -> float | None:
@@ -274,7 +339,8 @@ def build_agreement_report(
             "matches": matches,
             "total": len(sample_ids),
             "exact_agreement": matches / len(sample_ids) if sample_ids else None,
-            "confusion_matrix": confusion_matrix(left_values, right_values),
+            "confusion_matrix": confusion_matrix(left_values, right_values) if field not in EXACT_ONLY_FIELDS else None,
+            "confusion_matrix_applicable": field not in EXACT_ONLY_FIELDS,
             "cohen_kappa_applicable": field in KAPPA_FIELDS,
         }
         field_metrics["cohen_kappa"] = cohen_kappa(left_values, right_values) if field in KAPPA_FIELDS else None
@@ -323,6 +389,8 @@ def _validate_adjudicated_field(field: str, value: Any, context: str) -> None:
         raise M2ValidationError(f"{context}: invalid final error_type {value!r}")
     if field == "counterexample_status" and value not in COUNTEREXAMPLE_STATUSES:
         raise M2ValidationError(f"{context}: invalid final counterexample_status {value!r}")
+    if field == "counterexample" and value is not None and not isinstance(value, dict):
+        raise M2ValidationError(f"{context}: final counterexample must be null or an object")
     if field in {"first_gap_step", "first_invalid_step"}:
         if value is not None and (not isinstance(value, int) or isinstance(value, bool) or value < 1):
             raise M2ValidationError(f"{context}: final {field} must be null or a positive integer")

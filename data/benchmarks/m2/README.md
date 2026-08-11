@@ -21,11 +21,14 @@ The source JSONL uses the frozen source contract `m2-source-0.1`: `proof_id`,
 `theorem_version`, `domain`, `theorem`, `assumptions`, and ordered `proof_steps`
 objects containing stable `node_id` and `text` fields.
 
-Each independent annotation row uses `schema_version: "m2.1"` and contains:
+Each independent annotation row uses `schema_version: "m2.2"` and contains.
+The portable schema is `schemas/m2_benchmark_v0_2.schema.json`; the Python
+validator additionally checks source membership, step bounds, exact assumption
+coverage, and cross-file identity constraints.
 
 ```json
 {
-  "schema_version": "m2.1",
+  "schema_version": "m2.2",
   "sample_id": "alg_001",
   "annotator_id": "person_b",
   "validity_status": "undetermined",
@@ -33,10 +36,17 @@ Each independent annotation row uses `schema_version: "m2.1"` and contains:
   "first_invalid_step": null,
   "error_type": "undetermined",
   "counterexample_status": "undetermined",
+  "counterexample": null,
   "minimal_repair": null,
   "notes": ""
 }
 ```
+
+When `counterexample_status` is `valid`, `counterexample` must be a structured
+certificate containing its local/theorem scope, exact claim reference,
+assignments, one true evidence-backed check for every source assumption,
+`target_false: true`, a verification method, and verification notes. Free text
+in `notes` is never sufficient counterexample evidence.
 
 Run structural validation (this does not judge mathematical correctness):
 
@@ -72,3 +82,7 @@ Gold generation fails closed when any disagreement lacks adjudication.
 It always writes a companion manifest (the default is `<output>.manifest.json`)
 that binds the gold bytes to source, both annotation files, the adjudication
 file, the contract version, and the deterministic generator name.
+
+The proposed M2-to-M1 conversion is documented in
+`docs/milestones/M02_label_mapping.md`. No automatic conversion is permitted
+until both project members approve it.

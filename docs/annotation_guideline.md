@@ -76,3 +76,28 @@ The smallest change that makes the proof valid. Prefer:
 4. Add a well-definedness check.
 
 Do not rewrite the whole proof unless a local repair is impossible.
+
+## M2 annotation contract addendum
+
+M2 independent annotations use `schema_version: "m2.2"`. The authoritative
+portable shape is `schemas/m2_benchmark_v0_2.schema.json`; the executable
+cross-file checks are in `scripts/m2_benchmark.py`.
+
+The allowed state combinations are:
+
+| validity_status | error_type | locations | repair | counterexample |
+|---|---|---|---|---|
+| `valid` | `no_error` | both null | null | `not_applicable`, certificate null |
+| `valid_with_gap` | `proof_gap` | gap required, invalid null | nonempty | `not_applicable`, certificate null |
+| `invalid` | concrete invalid label | invalid required; an earlier gap may also be recorded | nonempty | valid only with a structured certificate |
+| `undetermined` | `undetermined` | both null | null | `undetermined`, certificate null |
+
+A valid counterexample certificate must identify whether it refutes a local
+node or the original theorem, bind the exact claim, record concrete
+assignments, check every source assumption exactly once with evidence, confirm
+that the target is false, and record the verification method. A free-text
+example in `notes` is not a valid certificate.
+
+The proposed conversion from these benchmark labels to M1 v0.3 runtime labels
+is documented in `docs/milestones/M02_label_mapping.md`. It is not automatic
+and requires approval from both project members.
