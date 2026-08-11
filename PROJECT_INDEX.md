@@ -25,6 +25,7 @@
 | [M1 共享契约与 Controller](docs/milestones/M01_shared_contracts_and_controller.md) | Schema、版本化状态机与无模型回放 | `v0.3` 已冻结 |
 | [M1 冻结记录](docs/milestones/M01_freeze_record.md) | 冻结范围、验证依据与变更规则 | 已完成 |
 | [M1 A/B 集成](docs/milestones/M01_person_a_b_integration.md) | Person A checker 到证书、Person B 补丁及独立复核的衔接 | `v0.3` 已完成 |
+| [M2 Pilot benchmark 基础设施](docs/milestones/M02_pilot_benchmark_infrastructure.md) | 标注校验、一致性报告、裁决与 Gold 生成 | 50 题已入库，Person B 独立标注完成，等待 Person A 标注 |
 | [开发指南](docs/development-guide.md) | 现有 checker 架构 | 已有 |
 | [Canonical Skill](skills/math-proof-repair-agent/SKILL.md) | 现有 Evaluator/checker 行为 | 已有 |
 | [结果 Schema](schemas/algebra_obligation_result.schema.json) | 现有 checker 输出契约 | 已有，待映射 |
@@ -37,7 +38,7 @@
 | Controller, Repair Generator, versioning | Person B | Person A | M1 controller/versioning and A/B contract integration complete; model generation remains for M5 |
 | Shared schemas and state transitions | Joint | Both approve | M1 v0.3 frozen |
 | Benchmark annotation policy | Person A | Person B | M2 |
-| Evaluation runner and metrics | Person B | Person A | M2 |
+| Evaluation runner and metrics | Person B | Person A | M2 infrastructure and Person B annotation complete; awaiting Person A annotation |
 | Gold-label review | Joint | Disagreements logged | M2 onward |
 | Paper experiments and writing | Joint | Joint | M7-M8 |
 
