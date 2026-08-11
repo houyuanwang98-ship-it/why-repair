@@ -1,0 +1,613 @@
+{
+  "id": "m2-044",
+  "parent_id": null,
+  "subquestion_label": null,
+  "prior_subquestion_rule_ids": [],
+  "domain": "elementary_algebra",
+  "topic": "elementary_algebra",
+  "theorem": "证明若实数 a=b，则 (a+c)^2=(b+c)^2。",
+  "assumptions": [
+    "a,b,c 为实数且 a=b。"
+  ],
+  "proof_graph": [
+    {
+      "node_id": 1,
+      "claim": "展开两边，得到 (a+c)^2=a^2+2ac+c^2，且 (b+c)^2=b^2+bc+c^2。",
+      "self_contained_claim": "展开两边，得到 (a+c)^2=a^2+2ac+c^2，且 (b+c)^2=b^2+bc+c^2。",
+      "source_reliability": "unknown",
+      "node_type": "calculation_step",
+      "depends_on": [],
+      "dependency_source": "heuristic_fallback",
+      "local_context": [
+        "a,b,c 为实数且 a=b。"
+      ],
+      "ambient_facts": [],
+      "obligation": "Given the local context, prove: 展开两边，得到 (a+c)^2=a^2+2ac+c^2，且 (b+c)^2=b^2+bc+c^2。",
+      "retrieval_required": true,
+      "retrieval_reason": "The calculation is not locally closed and needs a justification rule.",
+      "retrieval_query": {
+        "domain": "elementary_algebra",
+        "topic": "elementary_algebra",
+        "goal": "展开两边，得到 (a+c)^2=a^2+2ac+c^2，且 (b+c)^2=b^2+bc+c^2。",
+        "assumptions": [
+          "a,b,c 为实数且 a=b。"
+        ],
+        "predecessor_node_ids": [],
+        "predecessor_claims": [],
+        "formal_obligation": "a,b,c 为实数且 a=b。 |- 展开两边，得到 (a+c)^2=a^2+2ac+c^2，且 (b+c)^2=b^2+bc+c^2。",
+        "normalized_query": {
+          "topic_tokens": [
+            "algebra",
+            "elementary"
+          ],
+          "goal_tokens": [
+            "equal"
+          ],
+          "assumption_tokens": [
+            "equal"
+          ],
+          "predecessor_tokens": []
+        }
+      },
+      "retrieval_scope": "global",
+      "candidate_pool_size": 9,
+      "retrieval_role": "diagnostic_only",
+      "verification_source": "calculation_model_adjudicator",
+      "retrieved_rules": [
+        {
+          "id": "lin_same_dim_subspace",
+          "name": "Same dimension subspace criterion",
+          "score": 4.0,
+          "score_breakdown": {
+            "goal": 4.0,
+            "predecessors": 0.0,
+            "assumptions": 2.0,
+            "topic": 0.0,
+            "domain": 0.0,
+            "topic_conflict": -2.0
+          },
+          "matched_query_fields": [
+            "goal",
+            "assumptions"
+          ],
+          "matched_rule_fields": [
+            "conclusion",
+            "conditions",
+            "statement"
+          ],
+          "matched_fields": [
+            "conclusion",
+            "conditions",
+            "statement"
+          ]
+        },
+        {
+          "id": "grp_normal_quotient",
+          "name": "Quotient group criterion",
+          "score": 2.0,
+          "score_breakdown": {
+            "goal": 4.0,
+            "predecessors": 0.0,
+            "assumptions": 0.0,
+            "topic": 0.0,
+            "domain": 0.0,
+            "topic_conflict": -2.0
+          },
+          "matched_query_fields": [
+            "goal"
+          ],
+          "matched_rule_fields": [
+            "statement"
+          ],
+          "matched_fields": [
+            "statement"
+          ]
+        },
+        {
+          "id": "lin_rank_nullity",
+          "name": "Rank-nullity theorem",
+          "score": 2.0,
+          "score_breakdown": {
+            "goal": 4.0,
+            "predecessors": 0.0,
+            "assumptions": 0.0,
+            "topic": 0.0,
+            "domain": 0.0,
+            "topic_conflict": -2.0
+          },
+          "matched_query_fields": [
+            "goal"
+          ],
+          "matched_rule_fields": [
+            "conclusion",
+            "statement"
+          ],
+          "matched_fields": [
+            "conclusion",
+            "statement"
+          ]
+        }
+      ],
+      "rule_applicability": [
+        {
+          "rule_id": "lin_same_dim_subspace",
+          "rule_name": "Same dimension subspace criterion",
+          "satisfied_conditions": [],
+          "missing_conditions": [
+            "W is a subspace of V",
+            "V is finite-dimensional",
+            "dim W = dim V"
+          ],
+          "matched_conclusion": false,
+          "applicable": false,
+          "common_misuses": [
+            "using dimension equality without a subspace relation",
+            "using the criterion in infinite-dimensional settings"
+          ],
+          "retrieval_score": 4.0,
+          "matched_query_fields": [
+            "goal",
+            "assumptions"
+          ],
+          "deterministic_safe": false,
+          "deterministic_safe_kind": null,
+          "deterministic_safe_goal_match": false
+        },
+        {
+          "rule_id": "grp_normal_quotient",
+          "rule_name": "Quotient group criterion",
+          "satisfied_conditions": [],
+          "missing_conditions": [
+            "N is a subgroup of G",
+            "N is normal in G"
+          ],
+          "matched_conclusion": false,
+          "applicable": false,
+          "common_misuses": [
+            "forming G/N when N is not known to be normal",
+            "assuming coset multiplication is well-defined without checking normality"
+          ],
+          "retrieval_score": 2.0,
+          "matched_query_fields": [
+            "goal"
+          ],
+          "deterministic_safe": false,
+          "deterministic_safe_kind": null,
+          "deterministic_safe_goal_match": false
+        },
+        {
+          "rule_id": "lin_rank_nullity",
+          "rule_name": "Rank-nullity theorem",
+          "satisfied_conditions": [],
+          "missing_conditions": [
+            "T is linear",
+            "V is finite-dimensional"
+          ],
+          "matched_conclusion": false,
+          "applicable": false,
+          "common_misuses": [
+            "using rank-nullity without finite-dimensionality",
+            "concluding im(T) = W from equal dimensions without im(T) being a subspace of W"
+          ],
+          "retrieval_score": 2.0,
+          "matched_query_fields": [
+            "goal"
+          ],
+          "deterministic_safe": false,
+          "deterministic_safe_kind": null,
+          "deterministic_safe_goal_match": false
+        }
+      ],
+      "satisfied_conditions": [],
+      "missing_conditions": [
+        "N is a subgroup of G",
+        "N is normal in G"
+      ],
+      "matched_conclusion": false,
+      "applicable_rule_id": null,
+      "operation_check": null,
+      "counterexample": null,
+      "model_adjudication": null,
+      "calculation_context": {
+        "structure": "real_numbers",
+        "carrier": "R",
+        "operations": [
+          "addition",
+          "multiplication",
+          "negation",
+          "inverse"
+        ],
+        "axioms": [
+          "additive_associativity",
+          "additive_commutativity",
+          "additive_identity",
+          "additive_inverse",
+          "distributivity",
+          "equality_substitution",
+          "multiplicative_associativity",
+          "multiplicative_commutativity",
+          "multiplicative_identity",
+          "multiplicative_inverse",
+          "ordered_field"
+        ],
+        "properties": [
+          "commutative_multiplication"
+        ],
+        "local_conditions": [
+          "a,b,c 为实数且 a=b。"
+        ],
+        "source_node_ids": [],
+        "inherited_from_node_id": null,
+        "context_changed": false,
+        "change_reason": null
+      },
+      "calculation_source_expression": "a,b,c 为实数且 a=b。",
+      "calculation_adjudication": {
+        "decision": "undetermined",
+        "source_expression": "a,b,c 为实数且 a=b。",
+        "target_expression": "展开两边，得到 (a+c)^2=a^2+2ac+c^2，且 (b+c)^2=b^2+bc+c^2。",
+        "atomic_steps": [],
+        "used_axioms": [],
+        "introduced_assumptions": [],
+        "missing_conditions": [],
+        "reasoning_summary": "No calculation adjudicator was configured.",
+        "confidence": "low"
+      },
+      "diagnosis_adjudication": null,
+      "theorem_candidates": [],
+      "theorem_verification": null,
+      "status": "undetermined",
+      "logic_class": "indeterminate",
+      "repair_scope": "manual_review",
+      "gap_type": null,
+      "error_type": "undetermined",
+      "diagnosis": "No calculation adjudicator was configured.",
+      "repair_action": "manual_review",
+      "minimal_repair": null
+    },
+    {
+      "node_id": 2,
+      "claim": "因为 a=b，所以 a^2+2ac+c^2=b^2+bc+c^2。",
+      "self_contained_claim": "因为 a=b，所以 a^2+2ac+c^2=b^2+bc+c^2。",
+      "source_reliability": "unknown",
+      "node_type": "conclusion",
+      "depends_on": [
+        1
+      ],
+      "dependency_source": "heuristic_fallback",
+      "local_context": [
+        "a,b,c 为实数且 a=b。"
+      ],
+      "ambient_facts": [],
+      "obligation": "Given the local context, prove: 因为 a=b，所以 a^2+2ac+c^2=b^2+bc+c^2。",
+      "retrieval_required": true,
+      "retrieval_reason": "The conclusion does not follow directly from the accepted context.",
+      "retrieval_query": {
+        "domain": "elementary_algebra",
+        "topic": "elementary_algebra",
+        "goal": "因为 a=b，所以 a^2+2ac+c^2=b^2+bc+c^2。",
+        "assumptions": [
+          "a,b,c 为实数且 a=b。"
+        ],
+        "predecessor_node_ids": [
+          1
+        ],
+        "predecessor_claims": [
+          "展开两边，得到 (a+c)^2=a^2+2ac+c^2，且 (b+c)^2=b^2+bc+c^2。"
+        ],
+        "formal_obligation": "a,b,c 为实数且 a=b。, 展开两边，得到 (a+c)^2=a^2+2ac+c^2，且 (b+c)^2=b^2+bc+c^2。 |- 因为 a=b，所以 a^2+2ac+c^2=b^2+bc+c^2。",
+        "normalized_query": {
+          "topic_tokens": [
+            "algebra",
+            "elementary"
+          ],
+          "goal_tokens": [
+            "equal"
+          ],
+          "assumption_tokens": [
+            "equal"
+          ],
+          "predecessor_tokens": [
+            "equal"
+          ]
+        }
+      },
+      "retrieval_scope": "global",
+      "candidate_pool_size": 9,
+      "retrieval_role": "diagnostic_only",
+      "verification_source": "deterministic_checker",
+      "retrieved_rules": [
+        {
+          "id": "lin_same_dim_subspace",
+          "name": "Same dimension subspace criterion",
+          "score": 7.0,
+          "score_breakdown": {
+            "goal": 4.0,
+            "predecessors": 3.0,
+            "assumptions": 2.0,
+            "topic": 0.0,
+            "domain": 0.0,
+            "topic_conflict": -2.0
+          },
+          "matched_query_fields": [
+            "goal",
+            "predecessors",
+            "assumptions"
+          ],
+          "matched_rule_fields": [
+            "conclusion",
+            "conditions",
+            "statement"
+          ],
+          "matched_fields": [
+            "conclusion",
+            "conditions",
+            "statement"
+          ]
+        },
+        {
+          "id": "grp_normal_quotient",
+          "name": "Quotient group criterion",
+          "score": 5.0,
+          "score_breakdown": {
+            "goal": 4.0,
+            "predecessors": 3.0,
+            "assumptions": 0.0,
+            "topic": 0.0,
+            "domain": 0.0,
+            "topic_conflict": -2.0
+          },
+          "matched_query_fields": [
+            "goal",
+            "predecessors"
+          ],
+          "matched_rule_fields": [
+            "statement"
+          ],
+          "matched_fields": [
+            "statement"
+          ]
+        },
+        {
+          "id": "lin_rank_nullity",
+          "name": "Rank-nullity theorem",
+          "score": 5.0,
+          "score_breakdown": {
+            "goal": 4.0,
+            "predecessors": 3.0,
+            "assumptions": 0.0,
+            "topic": 0.0,
+            "domain": 0.0,
+            "topic_conflict": -2.0
+          },
+          "matched_query_fields": [
+            "goal",
+            "predecessors"
+          ],
+          "matched_rule_fields": [
+            "conclusion",
+            "statement"
+          ],
+          "matched_fields": [
+            "conclusion",
+            "statement"
+          ]
+        }
+      ],
+      "rule_applicability": [
+        {
+          "rule_id": "lin_same_dim_subspace",
+          "rule_name": "Same dimension subspace criterion",
+          "satisfied_conditions": [],
+          "missing_conditions": [
+            "W is a subspace of V",
+            "V is finite-dimensional",
+            "dim W = dim V"
+          ],
+          "matched_conclusion": true,
+          "applicable": false,
+          "common_misuses": [
+            "using dimension equality without a subspace relation",
+            "using the criterion in infinite-dimensional settings"
+          ],
+          "retrieval_score": 7.0,
+          "matched_query_fields": [
+            "goal",
+            "predecessors",
+            "assumptions"
+          ],
+          "deterministic_safe": false,
+          "deterministic_safe_kind": null,
+          "deterministic_safe_goal_match": false
+        },
+        {
+          "rule_id": "grp_normal_quotient",
+          "rule_name": "Quotient group criterion",
+          "satisfied_conditions": [],
+          "missing_conditions": [
+            "N is a subgroup of G",
+            "N is normal in G"
+          ],
+          "matched_conclusion": false,
+          "applicable": false,
+          "common_misuses": [
+            "forming G/N when N is not known to be normal",
+            "assuming coset multiplication is well-defined without checking normality"
+          ],
+          "retrieval_score": 5.0,
+          "matched_query_fields": [
+            "goal",
+            "predecessors"
+          ],
+          "deterministic_safe": false,
+          "deterministic_safe_kind": null,
+          "deterministic_safe_goal_match": false
+        },
+        {
+          "rule_id": "lin_rank_nullity",
+          "rule_name": "Rank-nullity theorem",
+          "satisfied_conditions": [],
+          "missing_conditions": [
+            "T is linear",
+            "V is finite-dimensional"
+          ],
+          "matched_conclusion": false,
+          "applicable": false,
+          "common_misuses": [
+            "using rank-nullity without finite-dimensionality",
+            "concluding im(T) = W from equal dimensions without im(T) being a subspace of W"
+          ],
+          "retrieval_score": 5.0,
+          "matched_query_fields": [
+            "goal",
+            "predecessors"
+          ],
+          "deterministic_safe": false,
+          "deterministic_safe_kind": null,
+          "deterministic_safe_goal_match": false
+        }
+      ],
+      "satisfied_conditions": [],
+      "missing_conditions": [
+        "W is a subspace of V",
+        "V is finite-dimensional",
+        "dim W = dim V"
+      ],
+      "matched_conclusion": true,
+      "applicable_rule_id": null,
+      "operation_check": null,
+      "counterexample": null,
+      "model_adjudication": null,
+      "calculation_context": {
+        "structure": "real_numbers",
+        "carrier": "R",
+        "operations": [
+          "addition",
+          "multiplication",
+          "negation",
+          "inverse"
+        ],
+        "axioms": [
+          "additive_associativity",
+          "additive_commutativity",
+          "additive_identity",
+          "additive_inverse",
+          "distributivity",
+          "equality_substitution",
+          "multiplicative_associativity",
+          "multiplicative_commutativity",
+          "multiplicative_identity",
+          "multiplicative_inverse",
+          "ordered_field"
+        ],
+        "properties": [
+          "commutative_multiplication"
+        ],
+        "local_conditions": [
+          "a,b,c 为实数且 a=b。"
+        ],
+        "source_node_ids": [],
+        "inherited_from_node_id": 1,
+        "context_changed": false,
+        "change_reason": null
+      },
+      "calculation_source_expression": null,
+      "calculation_adjudication": null,
+      "diagnosis_adjudication": null,
+      "theorem_candidates": [],
+      "theorem_verification": null,
+      "status": "missing_assumption",
+      "logic_class": "unsupported_inference",
+      "repair_scope": "establish_or_add_premise",
+      "gap_type": null,
+      "error_type": "missing_assumption",
+      "diagnosis": "The candidate rule Same dimension subspace criterion needs conditions not established in the proof state: W is a subspace of V; V is finite-dimensional; dim W = dim V.",
+      "repair_action": "add_assumption",
+      "minimal_repair": "Check if the conclusion is derivable from the problem conditions. If yes, generate a derivation from the conditions using earlier proof nodes; if not, mark as irreparable error. Missing condition: W is a subspace of V; V is finite-dimensional; dim W = dim V."
+    },
+    {
+      "node_id": 3,
+      "claim": "因此 (a+c)^2=(b+c)^2。",
+      "self_contained_claim": "因此 (a+c)^2=(b+c)^2。",
+      "source_reliability": "unknown",
+      "node_type": "conclusion",
+      "depends_on": [
+        2
+      ],
+      "dependency_source": "heuristic_fallback",
+      "local_context": [
+        "a,b,c 为实数且 a=b。"
+      ],
+      "ambient_facts": [],
+      "obligation": "Given the local context, prove: 因此 (a+c)^2=(b+c)^2。",
+      "retrieval_required": false,
+      "retrieval_reason": "Repair the earlier invalid node before retrieving rules here.",
+      "retrieval_query": null,
+      "retrieval_scope": null,
+      "candidate_pool_size": 0,
+      "retrieval_role": null,
+      "verification_source": "deterministic_checker",
+      "retrieved_rules": [],
+      "rule_applicability": [],
+      "satisfied_conditions": [],
+      "missing_conditions": [],
+      "matched_conclusion": null,
+      "applicable_rule_id": null,
+      "operation_check": null,
+      "counterexample": null,
+      "model_adjudication": null,
+      "calculation_context": {
+        "structure": "real_numbers",
+        "carrier": "R",
+        "operations": [
+          "addition",
+          "multiplication",
+          "negation",
+          "inverse"
+        ],
+        "axioms": [
+          "additive_associativity",
+          "additive_commutativity",
+          "additive_identity",
+          "additive_inverse",
+          "distributivity",
+          "equality_substitution",
+          "multiplicative_associativity",
+          "multiplicative_commutativity",
+          "multiplicative_identity",
+          "multiplicative_inverse",
+          "ordered_field"
+        ],
+        "properties": [
+          "commutative_multiplication"
+        ],
+        "local_conditions": [
+          "a,b,c 为实数且 a=b。"
+        ],
+        "source_node_ids": [],
+        "inherited_from_node_id": 2,
+        "context_changed": false,
+        "change_reason": null
+      },
+      "calculation_source_expression": null,
+      "calculation_adjudication": null,
+      "diagnosis_adjudication": null,
+      "theorem_candidates": [],
+      "theorem_verification": null,
+      "status": "downstream_invalid",
+      "logic_class": "downstream_dependency",
+      "repair_scope": "repair_predecessor",
+      "gap_type": null,
+      "error_type": "downstream_invalid",
+      "diagnosis": "This node explicitly depends on an earlier invalid node.",
+      "repair_action": null,
+      "minimal_repair": null
+    }
+  ],
+  "validity_status": "invalid",
+  "first_gap_step": null,
+  "first_invalid_step": 2,
+  "first_undetermined_step": 1,
+  "summary_diagnosis": "The candidate rule Same dimension subspace criterion needs conditions not established in the proof state: W is a subspace of V; V is finite-dimensional; dim W = dim V.",
+  "summary_repair": "Check if the conclusion is derivable from the problem conditions. If yes, generate a derivation from the conditions using earlier proof nodes; if not, mark as irreparable error. Missing condition: W is a subspace of V; V is finite-dimensional; dim W = dim V."
+}
