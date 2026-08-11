@@ -27,8 +27,10 @@
 | [M1 A/B 集成](docs/milestones/M01_person_a_b_integration.md) | Person A checker 到证书、Person B 补丁及独立复核的衔接 | `v0.3` 已完成 |
 | [M2 Pilot benchmark 基础设施](docs/milestones/M02_pilot_benchmark_infrastructure.md) | 标注校验、一致性报告、裁决与 Gold 生成 | 50 题已入库，Person B 独立标注完成，等待 Person A 标注 |
 | [M2 Person B 完成与交接](docs/milestones/M02_person_b_completion_and_handoff.md) | 冻结输入、复核证据、Person A 隔离模板与后续联合流程 | Person B 范围已完成，等待 Person A 独立标注 |
+| [M2 Person B 50 题自然语言批改](docs/milestones/M02_person_b_50_natural_language_review.md) | 原题、完整证明、逐题结论、错误定位、反例与最小修改 | 已完成 |
 | [M2 标签映射](docs/milestones/M02_label_mapping.md) | M2 benchmark 标签到 M1 v0.3 运行时结果的显式转换边界 | 等待双方批准 |
 | [M2 可移植 Schema](schemas/m2_benchmark_v0_2.schema.json) | Source、annotation、反例、分歧、裁决与 Gold manifest 契约 | `m2.2` 已实现 |
+| [M3-alpha Person B 运行器与指标](docs/milestones/M03_alpha_person_b_runner_and_metrics.md) | 模型适配器接口、独立模块运行、审计清单与六类指标 | alpha 已实现，等待 Person A Gold 与联合冻结 |
 | [开发指南](docs/development-guide.md) | 现有 checker 架构 | 已有 |
 | [Canonical Skill](skills/math-proof-repair-agent/SKILL.md) | 现有 Evaluator/checker 行为 | 已有 |
 | [结果 Schema](schemas/algebra_obligation_result.schema.json) | 现有 checker 输出契约 | 已有，待映射 |

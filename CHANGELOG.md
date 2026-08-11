@@ -2,6 +2,38 @@
 
 Notable project changes are grouped by release date and change type. Dates use Hong Kong time (`+08:00`).
 
+## 2026-08-11 +08:00 — Start M3-alpha module evaluation infrastructure
+
+### Added
+
+- Added an adapter-neutral Person B module runner for segmentation, node
+  classification, dependency construction, first-error localization, and node
+  verdict evaluation.
+- Added strict fail-closed output contracts, explicit `gold_upstream` and
+  `predicted_upstream` isolation modes, and exact dataset alignment by
+  `sample_id`.
+- Added segmentation boundary F1, node classification macro-F1, directed
+  dependency-edge P/R/F1, first-error accuracy, verdict macro-F1, and false
+  acceptance rate.
+- Added a stable normalized-Gold seam for later Person A integration without
+  enabling the unapproved M2-to-M1 label mapping.
+
+### Reproducibility and failure audit
+
+- Bound every module run to the exact input digest, Evaluator identity, prompt
+  version, and model recorded in a validated M1 v0.3 `RunManifest`.
+- Recorded per-call and aggregate token usage, estimated cost, and latency.
+- Preserved completed, partial, and failed calls, including malformed adapter
+  outputs and provider exceptions, instead of silently dropping failed runs.
+
+### Validation
+
+- Added 17 positive and negative M3-alpha tests; the complete repository suite
+  passes 153 tests.
+- M3 remains an alpha milestone until Person A's independent M2 annotation,
+  joint adjudication, approved Gold mapping, official metrics, and joint freeze
+  are complete.
+
 ## 2026-08-11 +08:00 — Add and harden M2 benchmark infrastructure
 
 ### Added
