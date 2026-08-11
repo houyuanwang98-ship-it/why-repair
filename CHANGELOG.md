@@ -2,6 +2,19 @@
 
 Notable project changes are grouped by release date and change type. Dates use Hong Kong time (`+08:00`).
 
+## 2026-08-11 +08:00 — Align frozen M1 semantics with the M0 execution review
+
+### Fixed
+
+- Moved `blocked_by_invalid_dependency` from mathematical verdicts to Controller lifecycle propagation.
+- Required replacement node versions to receive their own version-bound evaluation before activation.
+- Split local-node and global-theorem counterexample targets and bound global certificates to a theorem version and digest.
+- Aligned the portable JSON Schema `current_verdict` enum with runtime validation.
+
+### Validation
+
+- Passed JSON Schema parsing and the complete 88-test suite after alignment.
+
 ## 2026-08-10 +08:00 — Freeze M1 shared harness contracts v0.1
 
 ### Added

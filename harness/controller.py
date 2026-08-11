@@ -23,14 +23,15 @@ class StaleVersionError(RuntimeError):
 
 
 ALLOWED_TRANSITIONS = {
-    "pending_evaluation": {"evaluating", "terminated"},
+    "pending_evaluation": {"evaluating", "blocked_by_invalid_dependency", "terminated"},
     "evaluating": {"active", "pending_repair", "resolving_ambiguity", "undetermined", "irreparable"},
     "pending_repair": {"patch_submitted", "irreparable", "terminated"},
     "patch_submitted": {"pending_recheck", "pending_repair", "terminated"},
     "pending_recheck": {"active", "pending_repair", "resolving_ambiguity", "undetermined", "irreparable"},
     "resolving_ambiguity": {"active", "pending_repair", "undetermined", "terminated"},
-    "active": {"stale"},
+    "active": {"stale", "blocked_by_invalid_dependency"},
     "stale": {"pending_evaluation", "terminated"},
+    "blocked_by_invalid_dependency": {"pending_evaluation", "stale", "terminated"},
     "undetermined": {"pending_evaluation", "terminated"},
     "irreparable": {"terminated"},
     "terminated": set(),
@@ -128,7 +129,7 @@ class DualAgentController:
                         f"cannot evaluate before dependency is active: {dependency_key}"
                     )
         record["lifecycle_state"] = new_state
-        if new_state == "stale":
+        if new_state in {"stale", "blocked_by_invalid_dependency"}:
             record["stale_reason"] = reason
             record["current_verdict"] = None
         self._events.append({
@@ -174,7 +175,7 @@ class DualAgentController:
         record["current_verdict"] = verdict
         if verdict in {"accepted", "accepted_with_gap"}:
             destination = "active"
-        elif verdict in {"unsupported", "counterexample_found", "blocked_by_invalid_dependency"}:
+        elif verdict in {"unsupported", "counterexample_found"}:
             destination = "pending_repair"
         elif verdict == "ambiguous":
             destination = "resolving_ambiguity"
@@ -183,6 +184,10 @@ class DualAgentController:
         else:
             raise InvalidTransitionError(f"no lifecycle mapping for verdict: {verdict}")
         self.transition(key.ref(), destination, reason=f"evaluation {evaluation['evaluation_id']}")
+        if destination == "pending_repair":
+            self._block_descendants(key)
+        elif destination == "active":
+            self._release_blocked_descendants(key)
         self._events.append({"event": "evaluation_recorded", "target": key.ref(), "evaluation_id": evaluation["evaluation_id"]})
 
     def record_ambiguity_analysis(self, analysis: dict[str, Any]) -> None:
@@ -264,8 +269,8 @@ class DualAgentController:
         new_record = {
             "schema_version": SCHEMA_VERSION,
             "node": new_node,
-            "lifecycle_state": "active",
-            "current_verdict": review["verdict"],
+            "lifecycle_state": "pending_evaluation",
+            "current_verdict": None,
             "created_by": "repair_generator",
             "supersedes": old_key.ref(),
         }
@@ -274,6 +279,51 @@ class DualAgentController:
         self._invalidate_descendants(old_key, new_key)
         self._events.append({"event": "patch_accepted", "patch_id": review["patch_id"], "target": new_key.ref()})
         return new_key.ref()
+
+    def _block_descendants(self, invalid_key: NodeKey) -> None:
+        blocked_keys = {invalid_key}
+        changed = True
+        while changed:
+            changed = False
+            for logical, key in list(self._current.items()):
+                if key.proof_id != invalid_key.proof_id or key in blocked_keys:
+                    continue
+                dependencies = {
+                    NodeKey.from_ref(ref) for ref in self._versions[key]["node"]["depends_on"]
+                }
+                if dependencies & blocked_keys:
+                    record = self._versions[key]
+                    if record["lifecycle_state"] not in {"terminated", "irreparable"}:
+                        old_state = record["lifecycle_state"]
+                        record["lifecycle_state"] = "blocked_by_invalid_dependency"
+                        record["current_verdict"] = None
+                        record["stale_reason"] = (
+                            f"dependency {invalid_key.node_id}@v{invalid_key.version} is invalid"
+                        )
+                        self._events.append({
+                            "event": "lifecycle_transition", "target": key.ref(),
+                            "from": old_state, "to": "blocked_by_invalid_dependency",
+                            "reason": record["stale_reason"],
+                        })
+                    blocked_keys.add(key)
+                    changed = True
+
+    def _release_blocked_descendants(self, accepted_key: NodeKey) -> None:
+        changed = True
+        while changed:
+            changed = False
+            for logical, key in list(self._current.items()):
+                record = self._versions[key]
+                if key.proof_id != accepted_key.proof_id or record["lifecycle_state"] != "blocked_by_invalid_dependency":
+                    continue
+                dependencies = [NodeKey.from_ref(ref) for ref in record["node"]["depends_on"]]
+                if all(
+                    dependency in self._versions
+                    and self._versions[dependency]["lifecycle_state"] == "active"
+                    for dependency in dependencies
+                ):
+                    self.transition(key.ref(), "pending_evaluation", reason="all dependencies are active")
+                    changed = True
 
     def _apply_insert_before(
         self, patch: dict[str, Any], review: dict[str, Any], old_key: NodeKey

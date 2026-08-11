@@ -46,6 +46,8 @@ pending_repair -> patch_submitted | irreparable | terminated
 patch_submitted -> pending_recheck
 pending_recheck -> active | pending_repair | undetermined | irreparable
 active -> stale
+active | pending_evaluation -> blocked_by_invalid_dependency
+blocked_by_invalid_dependency -> pending_evaluation | stale | terminated
 stale -> pending_evaluation | terminated
 ```
 
@@ -66,7 +68,7 @@ stale -> pending_evaluation | terminated
 
 Schema 能表达 `insert_before`、`replace`、`delete` 和 `add_assumption`。M1 Controller 实际执行 `replace` 与 `insert_before`：
 
-- `replace` 保留原节点的稳定 `node_id` 和 `order_key`，创建新版本并使依赖旧版本的后代失效。
+- `replace` 保留原节点的稳定 `node_id` 和 `order_key`，创建 `pending_evaluation` 新版本并使依赖旧版本的后代失效。补丁审查不能直接激活新版本；Evaluator 必须针对新版本另行提交 `EvaluationRecord`。
 - `insert_before` 一次最多插入三个节点。新节点拥有独立稳定 `node_id`，通过 `order_key` 排在目标节点之前；原目标创建新版本并显式依赖至少一个插入节点。
 - 插入节点不能因补丁获批而自动成为正确节点，必须从 `pending_evaluation` 开始。插入节点全部按依赖顺序通过后，原目标才能重新进入 `evaluating`。
 - 原目标重新通过后，其失效后代仍需基于新版本更新依赖并重新检查。
@@ -83,6 +85,8 @@ Schema 能表达 `insert_before`、`replace`、`delete` 和 `add_assumption`。M
 - Evaluator 结果必须声明实际使用的依赖版本。
 - 新节点版本必须声明 `supersedes`。
 - 接受替换补丁后，所有依赖旧版本的后代变为 `stale` 且旧裁决清空。
+- 无效前置节点使后代进入生命周期 `blocked_by_invalid_dependency`；该标签不属于数学裁决，也不会把后代交给 Generator 独立修复。
+- 局部反例必须绑定精确 `NodeRef`；全局反例必须绑定包含 `proof_id`、`theorem_version` 和 `theorem_digest` 的 `TheoremRef`。
 - 接受插入补丁后，新节点与目标新版本均须重新评估；依赖未变为 `active` 前，Controller 禁止评估其后继。
 - Repair Generator 不能接受自己的补丁。
 - Controller 不产生数学裁决，只执行 Evaluator 已给出的结构化裁决。

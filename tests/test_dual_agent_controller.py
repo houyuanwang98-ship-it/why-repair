@@ -106,9 +106,20 @@ class DualAgentControllerTest(unittest.TestCase):
         controller.begin_patch_review("patch-1")
         new_ref = controller.review_patch(review(True))
         self.assertEqual(ref(2, 2), new_ref)
-        self.assertEqual("active", controller.lifecycle(ref(2, 2)))
+        self.assertEqual("pending_evaluation", controller.lifecycle(ref(2, 2)))
         self.assertEqual("stale", controller.lifecycle(ref(3)))
         self.assertIsNone(controller.node_version(ref(3))["current_verdict"])
+        controller.transition(new_ref, "evaluating", reason="evaluate exact replacement version")
+        controller.record_evaluation(evaluation(2, "accepted", [1], evaluation_id="eval-v2", target_version=2))
+        self.assertEqual("active", controller.lifecycle(new_ref))
+
+    def test_invalid_parent_blocks_descendants_without_math_verdict(self):
+        controller = self.controller_with_three_nodes()
+        controller.transition(ref(2), "evaluating", reason="start")
+        controller.record_evaluation(evaluation(2, "unsupported", [1], error_type="algebraic_invalidity"))
+        descendant = controller.node_version(ref(3))
+        self.assertEqual("blocked_by_invalid_dependency", descendant["lifecycle_state"])
+        self.assertIsNone(descendant["current_verdict"])
 
     def test_patch_against_superseded_version_is_rejected(self):
         controller = self.controller_with_three_nodes()
@@ -231,6 +242,8 @@ class M1FixtureReplayTest(unittest.TestCase):
         controller.submit_patch(proposal)
         controller.begin_patch_review(proposal["patch_id"])
         new_ref = controller.review_patch(review(fixture["review"]["accepted"]))
+        controller.transition(new_ref, "evaluating", reason="fixture replacement recheck")
+        controller.record_evaluation(evaluation(2, "accepted", [1], evaluation_id="fixture-v2", target_version=2))
         return fixture, controller, new_ref
 
     def test_accepted_repair_fixture_replays_completely(self):

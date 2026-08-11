@@ -37,6 +37,7 @@ class DualAgentContractTest(unittest.TestCase):
     def test_counterexample_requires_true_premises_and_false_target(self):
         base = {
             "schema_version": "0.1", "certificate_id": "cex-1", "target": REF2,
+            "theorem_ref": None,
             "scope": "local_claim", "structure": "real numbers",
             "assignment": {"a": 0, "x": 1, "y": 2},
             "premise_checks": [{"statement": "ax=ay", "holds": True, "evidence": "0=0"}],
@@ -47,6 +48,35 @@ class DualAgentContractTest(unittest.TestCase):
         invalid = {**base, "target_check": {"statement": "x=y", "holds": True, "evidence": "wrong"}}
         with self.assertRaises(ContractError):
             validate_contract("counterexample_certificate", invalid)
+
+    def test_global_counterexample_binds_exact_theorem_version(self):
+        value = {
+            "schema_version": "0.1", "certificate_id": "cex-global",
+            "target": None,
+            "theorem_ref": {
+                "proof_id": "p1", "theorem_version": 2,
+                "theorem_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+            },
+            "scope": "global_theorem", "structure": "real numbers",
+            "assignment": {"a": 0, "x": 1, "y": 2},
+            "premise_checks": [{"statement": "ax=ay", "holds": True, "evidence": "0=0"}],
+            "target_check": {"statement": "x=y", "holds": False, "evidence": "1!=2"},
+            "checker": "deterministic_fixture",
+        }
+        self.assertIs(value, validate_contract("counterexample_certificate", value))
+        invalid = {**value, "theorem_ref": None}
+        with self.assertRaisesRegex(ContractError, "requires theorem_ref"):
+            validate_contract("counterexample_certificate", invalid)
+
+    def test_blocked_dependency_is_not_a_mathematical_verdict(self):
+        value = {
+            "schema_version": "0.1", "evaluation_id": "eval-blocked", "target": REF2,
+            "verdict": "blocked_by_invalid_dependency", "error_type": None,
+            "reason": "parent failed", "dependency_versions": {"1": 1},
+            "evaluator_id": "eval",
+        }
+        with self.assertRaises(ContractError):
+            validate_contract("evaluation_record", value)
 
     def test_add_assumption_must_change_problem(self):
         patch = {

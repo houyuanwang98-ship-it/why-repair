@@ -7,6 +7,7 @@ invariants at runtime without adding a jsonschema dependency.
 
 from __future__ import annotations
 
+import re
 from typing import Any, Callable
 
 
@@ -19,7 +20,7 @@ NODE_TYPES = {
 
 MATHEMATICAL_VERDICTS = {
     "accepted", "accepted_with_gap", "unsupported", "counterexample_found",
-    "ambiguous", "undetermined", "blocked_by_invalid_dependency",
+    "ambiguous", "undetermined",
 }
 
 ERROR_TYPES = {
@@ -31,7 +32,7 @@ ERROR_TYPES = {
 LIFECYCLE_STATES = {
     "pending_evaluation", "evaluating", "pending_repair", "patch_submitted",
     "pending_recheck", "active", "stale", "irreparable", "undetermined",
-    "resolving_ambiguity", "terminated",
+    "resolving_ambiguity", "blocked_by_invalid_dependency", "terminated",
 }
 
 INTERPRETATION_COVERAGE = {
@@ -130,6 +131,15 @@ def validate_node_ref(value: Any, path: str = "node_ref") -> dict[str, Any]:
     return obj
 
 
+def validate_theorem_ref(value: Any, path: str = "theorem_ref") -> dict[str, Any]:
+    obj = _object(value, path)
+    _exact_keys(obj, {"proof_id", "theorem_version", "theorem_digest"}, set(), path)
+    _string(obj["proof_id"], f"{path}.proof_id")
+    _integer(obj["theorem_version"], f"{path}.theorem_version")
+    _string(obj["theorem_digest"], f"{path}.theorem_digest")
+    return obj
+
+
 def validate_dependency_edge(value: Any, path: str = "dependency_edge") -> dict[str, Any]:
     obj = _object(value, path)
     _exact_keys(
@@ -223,7 +233,7 @@ def ambiguity_outcome(value: dict[str, Any]) -> str:
     ]
     verdicts = [item["verdict"] for item in interpretations]
     accepted = [verdict in {"accepted", "accepted_with_gap"} for verdict in verdicts]
-    if any(verdict in {"ambiguous", "undetermined", "blocked_by_invalid_dependency"} for verdict in verdicts):
+    if any(verdict in {"ambiguous", "undetermined"} for verdict in verdicts):
         return "undetermined"
     if any(accepted) and not all(accepted):
         return "requires_clarification"
@@ -339,14 +349,23 @@ def validate_error_certificate(value: Any, path: str = "error_certificate") -> d
 def validate_counterexample_certificate(value: Any, path: str = "counterexample_certificate") -> dict[str, Any]:
     obj = _object(value, path)
     required = {
-        "schema_version", "certificate_id", "target", "scope", "structure",
+        "schema_version", "certificate_id", "target", "theorem_ref", "scope", "structure",
         "assignment", "premise_checks", "target_check", "checker",
     }
     _exact_keys(obj, required, {"tool_trace", "interpretation_assumptions"}, path)
     _schema_header(obj, path)
     _string(obj["certificate_id"], f"{path}.certificate_id")
-    validate_node_ref(obj["target"], f"{path}.target")
-    _enum(obj["scope"], {"local_claim", "global_theorem"}, f"{path}.scope")
+    scope = _enum(obj["scope"], {"local_claim", "global_theorem"}, f"{path}.scope")
+    if scope == "local_claim":
+        if obj["target"] is None or obj["theorem_ref"] is not None:
+            _fail(path, "local_claim requires target and forbids theorem_ref")
+        validate_node_ref(obj["target"], f"{path}.target")
+    else:
+        if obj["target"] is not None or obj["theorem_ref"] is None:
+            _fail(path, "global_theorem requires theorem_ref and forbids target")
+        theorem_ref = validate_theorem_ref(obj["theorem_ref"], f"{path}.theorem_ref")
+        if re.fullmatch(r"sha256:[0-9a-f]{64}", theorem_ref["theorem_digest"]) is None:
+            _fail(f"{path}.theorem_ref.theorem_digest", "must be a lowercase SHA-256 digest")
     _string(obj["structure"], f"{path}.structure")
     _object(obj["assignment"], f"{path}.assignment")
     if not isinstance(obj["premise_checks"], list) or not obj["premise_checks"]:
