@@ -1,12 +1,12 @@
 # M1：共享契约与确定性 Controller
 
-状态：`frozen_v0.1`
+状态：`frozen_v0.3`
 
-目标版本：`0.1`
+目标版本：`0.3`
 
 冻结日期：`2026-08-10`
 
-冻结说明：项目负责人确认采用分工开发、接口集成的协作方式，不要求两位成员重复审查同一实现。M1 的共享 Schema、Controller、解释分支、替换与插入修复协议以当前 `v0.1` 为后续开发基线。冻结后的不兼容修改必须提升契约版本并记录迁移方案。
+冻结说明：项目负责人确认采用分工开发、接口集成的协作方式，不要求两位成员重复审查同一实现。M1 的共享 Schema、Controller、解释分支、替换与插入修复协议以当前 `v0.3` 为后续开发基线。`v0.3` 增加可信身份、当前评估证书绑定、原子导入、来源标记与反例上下文绑定。冻结后的不兼容修改必须提升契约版本并记录迁移方案。
 
 ## 1. 范围
 
@@ -32,7 +32,7 @@ M1 只实现双 Agent 之间的共享数据对象、严格运行时校验、节�
 - `NodeVersion`
 - `RunManifest`
 
-便携 JSON 定义位于 `schemas/dual_agent_harness_v0_1.schema.json`；不依赖第三方库的严格运行时校验位于 `harness/contracts.py`。
+便携 JSON 定义位于 `schemas/dual_agent_harness_v0_3.schema.json`；不依赖第三方库的严格运行时校验位于 `harness/contracts.py`。
 
 ## 4. 生命周期与数学裁决分离
 
@@ -49,9 +49,12 @@ active -> stale
 active | pending_evaluation -> blocked_by_invalid_dependency
 blocked_by_invalid_dependency -> pending_evaluation | stale | terminated
 stale -> pending_evaluation | terminated
+blocked_by_invalid_dependency -> pending_evaluation | terminated
 ```
 
 数学裁决单独保存在 `current_verdict`。`stale` 等生命周期状态不会被当作数学错误。
+
+`blocked_by_invalid_dependency` 仅为生命周期状态，`current_verdict` 必须为空；它不再属于数学裁决枚举。
 
 ### 多解释分支检查
 
@@ -78,15 +81,18 @@ Schema 能表达 `insert_before`、`replace`、`delete` 和 `add_assumption`。M
 
 ## 6. 确定性不变量
 
-- 所有对象必须携带 `schema_version=0.1`。
+- 所有对象必须携带 `schema_version=0.3`。
 - 依赖只能指向同一证明中更早的精确节点版本。
 - “更早”由 `order_key` 判断，而不是比较 `node_id`。
 - Patch 必须指向当前版本；旧版本触发 `StaleVersionError`。
 - Evaluator 结果必须声明实际使用的依赖版本。
 - 新节点版本必须声明 `supersedes`。
+- 原始节点必须从版本 1 开始；后续版本必须精确递增 1，不允许跳号。
+- 补丁中的所有既有依赖引用必须绑定当前版本；过期依赖与过期目标同样被拒绝。
 - 接受替换补丁后，所有依赖旧版本的后代变为 `stale` 且旧裁决清空。
 - 无效前置节点使后代进入生命周期 `blocked_by_invalid_dependency`；该标签不属于数学裁决，也不会把后代交给 Generator 独立修复。
 - 局部反例必须绑定精确 `NodeRef`；全局反例必须绑定包含 `proof_id`、`theorem_version` 和 `theorem_digest` 的 `TheoremRef`。
+- `replace` 和 `insert_before` 都以原子事务方式应用；图校验失败时不得留下部分节点版本或事件。
 - 接受插入补丁后，新节点与目标新版本均须重新评估；依赖未变为 `active` 前，Controller 禁止评估其后继。
 - Repair Generator 不能接受自己的补丁。
 - Controller 不产生数学裁决，只执行 Evaluator 已给出的结构化裁决。
@@ -106,3 +112,7 @@ Schema 能表达 `insert_before`、`replace`、`delete` 和 `add_assumption`。M
 - [x] 四个无模型 fixture 可由测试完整回放。
 - [x] 现有 checker 全部回归测试通过。
 - [x] 项目负责人完成接口验收，并确认采用 A/B 分工开发与最终集成测试。
+
+## 9. Person A / Person B 集成
+
+`harness/integration.py` 以事务方式将现有 Person A checker 输出转换为 v0.3 公共对象。Controller 保存当前评估及错误证书，并要求 Person B 的每个补丁绑定当前 Person A 评估引用的证书且遵守其操作范围和节点预算。Person A 随后以配置的独立 Evaluator 身份通过 `PatchReview` 复核补丁。具体映射和安全降级规则见 `M01_person_a_b_integration.md`。

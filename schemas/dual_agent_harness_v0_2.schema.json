@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://why-repair.local/schemas/dual_agent_harness_v0_2.schema.json",
+  "title": "Dual-Agent Natural-Language Proof Auditing Contracts v0.2",
+  "description": "Portable interchange definitions. Runtime invariants are mirrored by harness/contracts.py.",
+  "$defs": {
+    "NodeRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["proof_id", "node_id", "version"],
+      "properties": {
+        "proof_id": {"type": "string", "minLength": 1},
+        "node_id": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "string", "minLength": 1}]},
+        "version": {"type": "integer", "minimum": 1}
+      }
+    },
+    "ProofNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "proof_id", "node_id", "version", "order_key", "claim", "self_contained_claim", "node_type", "source_span", "depends_on"],
+      "properties": {
+        "schema_version": {"const": "0.2"},
+        "proof_id": {"type": "string", "minLength": 1},
+        "node_id": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "string", "minLength": 1}]},
+        "version": {"type": "integer", "minimum": 1},
+        "order_key": {"type": "integer", "minimum": 1},
+        "claim": {"type": "string", "minLength": 1},
+        "self_contained_claim": {"type": "string", "minLength": 1},
+        "node_type": {"enum": ["definition", "assumption", "introduction", "claim", "calculation", "conclusion", "citation"]},
+        "source_span": {
+          "type": "object", "additionalProperties": false,
+          "required": ["start", "end"],
+          "properties": {"start": {"type": "integer", "minimum": 0}, "end": {"type": "integer", "minimum": 1}}
+        },
+        "depends_on": {"type": "array", "items": {"$ref": "#/$defs/NodeRef"}}
+      }
+    },
+    "DependencyEdge": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "source", "target", "relation", "reason"],
+      "properties": {
+        "schema_version": {"const": "0.2"},
+        "source": {"$ref": "#/$defs/NodeRef"},
+        "target": {"$ref": "#/$defs/NodeRef"},
+        "relation": {"enum": ["used_as_premise", "applies_definition", "case_scope"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "EvaluationRecord": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "evaluation_id", "target", "verdict", "error_type", "reason", "dependency_versions", "evaluator_id"],
+      "properties": {
+        "schema_version": {"const": "0.2"},
+        "evaluation_id": {"type": "string", "minLength": 1},
+        "target": {"$ref": "#/$defs/NodeRef"},
+        "verdict": {"enum": ["accepted", "accepted_with_gap", "unsupported", "counterexample_found", "ambiguous", "undetermined"]},
+        "error_type": {"type": ["string", "null"], "enum": ["missing_assumption", "theorem_misuse", "algebraic_invalidity", "target_mismatch", "dependency_error", "false_local_claim", "false_theorem", "segmentation_error", "interpretation_ambiguity", null]},
+        "reason": {"type": "string", "minLength": 1},
+        "dependency_versions": {"type": "object", "propertyNames": {"minLength": 1}, "additionalProperties": {"type": "integer", "minimum": 1}},
+        "evaluator_id": {"type": "string", "minLength": 1},
+        "error_certificate_id": {"type": ["string", "null"]},
+        "counterexample_certificate_id": {"type": ["string", "null"]},
+        "ambiguity_analysis_id": {"type": ["string", "null"]}
+      }
+    },
+    "AmbiguityAnalysis": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "analysis_id", "target", "ambiguous_span", "ambiguity_type", "declared_scope", "coverage_status", "meaning_relation", "interpretations", "dependency_versions", "outcome", "evaluator_id"],
+      "properties": {
+        "schema_version": {"const": "0.2"},
+        "analysis_id": {"type": "string", "minLength": 1},
+        "target": {"$ref": "#/$defs/NodeRef"},
+        "ambiguous_span": {"type": "string", "minLength": 1},
+        "ambiguity_type": {"enum": ["unclear_reference", "scope_ambiguity", "notation_ambiguity", "syntactic_ambiguity", "other"]},
+        "declared_scope": {"type": "string", "minLength": 1},
+        "coverage_status": {"enum": ["exhaustive_within_declared_scope", "best_effort", "non_exhaustive"]},
+        "meaning_relation": {"enum": ["equivalent", "distinct", "undetermined"]},
+        "interpretations": {
+          "type": "array", "minItems": 2,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["interpretation_id", "normalized_claim", "plausibility", "verdict", "reason"],
+            "properties": {
+              "interpretation_id": {"type": "string", "minLength": 1},
+              "normalized_claim": {"type": "string", "minLength": 1},
+              "plausibility": {"enum": ["reasonable", "remote"]},
+              "verdict": {"enum": ["accepted", "accepted_with_gap", "unsupported", "ambiguous", "undetermined"]},
+              "reason": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "dependency_versions": {"type": "object", "propertyNames": {"minLength": 1}, "additionalProperties": {"type": "integer", "minimum": 1}},
+        "outcome": {"enum": ["robustly_accepted", "requires_clarification", "unsupported_under_all_checked", "undetermined"]},
+        "evaluator_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "ErrorCertificate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "certificate_id", "target", "premises", "error_type", "failed_inference", "evidence", "repair_constraints"],
+      "properties": {
+        "schema_version": {"const": "0.2"},
+        "certificate_id": {"type": "string", "minLength": 1},
+        "target": {"$ref": "#/$defs/NodeRef"},
+        "premises": {"type": "array", "items": {"$ref": "#/$defs/NodeRef"}},
+        "error_type": {"enum": ["missing_assumption", "theorem_misuse", "algebraic_invalidity", "target_mismatch", "dependency_error", "false_local_claim", "false_theorem", "segmentation_error", "interpretation_ambiguity"]},
+        "failed_inference": {"type": "string", "minLength": 1},
+        "evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "repair_constraints": {
+          "type": "object", "additionalProperties": false,
+          "required": ["allowed_operations", "max_new_nodes", "preserve_theorem", "preserve_assumptions"],
+          "properties": {
+            "allowed_operations": {"type": "array", "minItems": 1, "items": {"enum": ["insert_before", "replace", "delete", "add_assumption"]}},
+            "max_new_nodes": {"type": "integer", "minimum": 0},
+            "preserve_theorem": {"type": "boolean"},
+            "preserve_assumptions": {"type": "boolean"}
+          }
+        },
+        "missing_condition": {"type": ["string", "null"]},
+        "counterexample_certificate_id": {"type": ["string", "null"]}
+      }
+    },
+    "CounterexampleCertificate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "certificate_id", "target", "scope", "structure", "assignment", "premise_checks", "target_check", "checker"],
+      "properties": {
+        "schema_version": {"const": "0.2"}, "certificate_id": {"type": "string"},
+        "target": {"$ref": "#/$defs/NodeRef"}, "scope": {"enum": ["local_claim", "global_theorem"]},
+        "structure": {"type": "string"}, "assignment": {"type": "object"},
+        "premise_checks": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/BooleanCheck"}},
+        "target_check": {"$ref": "#/$defs/BooleanCheck"}, "checker": {"type": "string"},
+        "tool_trace": {"type": "array", "items": {"type": "string"}},
+        "interpretation_assumptions": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "BooleanCheck": {
+      "type": "object", "additionalProperties": false, "required": ["statement", "holds", "evidence"],
+      "properties": {"statement": {"type": "string"}, "holds": {"type": "boolean"}, "evidence": {"type": "string"}}
+    },
+    "PatchProposal": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "patch_id", "error_certificate_id", "target", "operation", "replacement_nodes", "target_dependencies_after", "used_dependencies", "rationale", "changes_problem"],
+      "properties": {
+        "schema_version": {"const": "0.2"}, "patch_id": {"type": "string"}, "error_certificate_id": {"type": "string"},
+        "target": {"$ref": "#/$defs/NodeRef"}, "operation": {"enum": ["insert_before", "replace", "delete", "add_assumption"]},
+        "replacement_nodes": {"type": "array", "maxItems": 3, "items": {"$ref": "#/$defs/PatchNodeDraft"}},
+        "target_dependencies_after": {"type": "array", "items": {"$ref": "#/$defs/NodeRef"}},
+        "used_dependencies": {"type": "array", "items": {"$ref": "#/$defs/NodeRef"}},
+        "rationale": {"type": "string"}, "changes_problem": {"type": "boolean"}
+      }
+    },
+    "PatchNodeDraft": {
+      "type": "object", "additionalProperties": false,
+      "required": ["node_id", "order_key", "claim", "self_contained_claim", "node_type", "depends_on"],
+      "properties": {
+        "node_id": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "string", "minLength": 1}]},
+        "order_key": {"type": "integer", "minimum": 1},
+        "claim": {"type": "string", "minLength": 1},
+        "self_contained_claim": {"type": "string", "minLength": 1},
+        "node_type": {"enum": ["definition", "assumption", "introduction", "claim", "calculation", "conclusion", "citation"]},
+        "depends_on": {"type": "array", "items": {"$ref": "#/$defs/NodeRef"}}
+      }
+    },
+    "PatchReview": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "review_id", "patch_id", "target", "accepted", "verdict", "reason", "reviewer_id"],
+      "properties": {
+        "schema_version": {"const": "0.2"}, "review_id": {"type": "string"}, "patch_id": {"type": "string"},
+        "target": {"$ref": "#/$defs/NodeRef"}, "accepted": {"type": "boolean"},
+        "verdict": {"enum": ["accepted", "accepted_with_gap", "unsupported", "counterexample_found", "ambiguous", "undetermined"]},
+        "reason": {"type": "string"}, "reviewer_id": {"type": "string"},
+        "rejection_code": {"enum": ["mathematical_error", "changes_problem", "not_minimal", "stale_target", "malformed"]}
+      }
+    },
+    "NodeVersion": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "node", "lifecycle_state", "current_verdict", "created_by", "supersedes"],
+      "properties": {
+        "schema_version": {"const": "0.2"}, "node": {"$ref": "#/$defs/ProofNode"},
+        "lifecycle_state": {"enum": ["pending_evaluation", "evaluating", "resolving_ambiguity", "pending_repair", "patch_submitted", "pending_recheck", "active", "stale", "irreparable", "undetermined", "blocked_by_invalid_dependency", "terminated"]},
+        "current_verdict": {"type": ["string", "null"]}, "created_by": {"enum": ["original", "repair_generator", "human"]},
+        "supersedes": {"oneOf": [{"$ref": "#/$defs/NodeRef"}, {"type": "null"}]}, "stale_reason": {"type": "string"}
+      }
+    },
+    "RunManifest": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "run_id", "created_at", "controller_version", "contract_version", "input_digest", "theorem_bank_digest", "agents", "prompt_versions", "model_parameters", "events"],
+      "properties": {
+        "schema_version": {"const": "0.2"},
+        "run_id": {"type": "string", "minLength": 1},
+        "created_at": {"type": "string", "minLength": 1},
+        "controller_version": {"type": "string", "minLength": 1},
+        "contract_version": {"const": "0.2"},
+        "input_digest": {"type": "string", "minLength": 1},
+        "theorem_bank_digest": {"type": ["string", "null"]},
+        "agents": {
+          "type": "object", "additionalProperties": false,
+          "required": ["evaluator", "repair_generator"],
+          "properties": {"evaluator": {"type": "string", "minLength": 1}, "repair_generator": {"type": "string", "minLength": 1}}
+        },
+        "prompt_versions": {
+          "type": "object", "additionalProperties": false,
+          "required": ["evaluator", "repair_generator"],
+          "properties": {"evaluator": {"type": "string", "minLength": 1}, "repair_generator": {"type": "string", "minLength": 1}}
+        },
+        "model_parameters": {"type": "object"},
+        "events": {"type": "array", "items": {"type": "object"}}
+      }
+    }
+  },
+  "oneOf": [
+    {"$ref": "#/$defs/ProofNode"}, {"$ref": "#/$defs/DependencyEdge"},
+    {"$ref": "#/$defs/EvaluationRecord"}, {"$ref": "#/$defs/AmbiguityAnalysis"},
+    {"$ref": "#/$defs/ErrorCertificate"},
+    {"$ref": "#/$defs/CounterexampleCertificate"}, {"$ref": "#/$defs/PatchProposal"},
+    {"$ref": "#/$defs/PatchReview"}, {"$ref": "#/$defs/NodeVersion"},
+    {"$ref": "#/$defs/RunManifest"}
+  ]
+}

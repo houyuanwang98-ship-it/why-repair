@@ -2,6 +2,30 @@
 
 Notable project changes are grouped by release date and change type. Dates use Hong Kong time (`+08:00`).
 
+## 2026-08-11 +08:00 — Add and harden M2 benchmark infrastructure
+
+### Added
+
+- Added versioned M2 source datasets, Person B independent annotations,
+  agreement metrics, field-level disagreement and adjudication tools,
+  deterministic Gold generation, and input/output hash manifests.
+- Added sparse confusion matrices, annotator identity isolation, stale
+  adjudication rejection, and M2 regression coverage.
+- Added the portable `m2.2` JSON Schema, structured counterexample evidence,
+  a complete cross-field annotation state matrix, and an explicit proposed
+  mapping from M2 labels to M1 v0.3 runtime outcomes.
+
+### Reproducibility
+
+- Added `.gitattributes` to keep JSON, JSONL, Python, Markdown, and YAML files
+  on LF across platforms so recorded SHA-256 values remain stable.
+- Added a manifest for the supplemental B01-B50 challenge set.
+
+### Validation
+
+- M2 source, annotation, counterexample, identity, adjudication, report, Gold,
+  manifest, and negative contract tests run as part of the full suite.
+
 ## 2026-08-11 +08:00 — Align frozen M1 semantics with the M0 execution review
 
 ### Fixed
@@ -14,6 +38,36 @@ Notable project changes are grouped by release date and change type. Dates use H
 ### Validation
 
 - Passed JSON Schema parsing and the complete 88-test suite after alignment.
+
+## 2026-08-11 +08:00 — Harden M1 integration contracts v0.3
+
+- Added configured Evaluator identities and rejected evaluations, ambiguity analyses, and patch reviews from untrusted identities.
+- Bound each Person B patch to the error certificate of the target's current Person A evaluation.
+- Made Person A result ingestion transactional, including complete rollback of nodes, certificates, evaluations, proof context, and events.
+- Marked generated source spans as `synthetic_compatibility` instead of presenting them as original source locations.
+- Downgraded legacy free-text false-claim labels to `unverified_counterexample` until a structured counterexample is verified.
+- Bound counterexample certificates to the target's exact premise references and the digest of the proof's global assumptions.
+- Added the v0.3 portable schema and regression coverage; after integrating the latest remote M1 alignment, full repository verification passes 109 tests.
+
+## 2026-08-11 +08:00 — Freeze corrected M1 contracts v0.2
+
+- Enforced node version sequences: original nodes start at v1 and later versions increment exactly once.
+- Required every pre-existing dependency referenced by a patch to bind to its current exact version.
+- Made `replace` application atomic: graph validation now runs before commit and invalid replacements roll back fully.
+- Added direct positive and negative `RunManifest` contract tests plus version, stale-dependency and rollback regression tests.
+- Moved `blocked_by_invalid_dependency` from mathematical verdicts to lifecycle state and added a deterministic blocking API.
+- Configured the Controller with the Repair Generator identity and reject reviews from that identity.
+- Required `replace` dependency declarations to agree and made every descendant invalidation event replayable.
+- Bumped the shared contract to v0.2 with a documented migration from v0.1.
+- Full repository verification now passes 96 tests.
+
+### Person A / Person B integration
+
+- Added a single adapter from the existing Person A checker output to v0.2 node versions, evaluations, lifecycle states and error certificates.
+- Added Controller registries for error and counterexample certificates.
+- Required every Person B patch to reference a registered, current Person A error certificate and obey its operation and node budget.
+- Added an end-to-end no-model flow covering Person A evaluation, Person B repair, Person A review and descendant invalidation.
+- Full repository verification after integration passes 102 tests.
 
 ## 2026-08-10 +08:00 — Freeze M1 shared harness contracts v0.1
 

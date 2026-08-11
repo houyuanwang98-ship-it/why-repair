@@ -1,6 +1,6 @@
-"""Strict standard-library validators for shared dual-agent contracts v0.1.
+"""Strict standard-library validators for shared dual-agent contracts v0.3.
 
-The JSON Schema in ``schemas/dual_agent_harness_v0_1.schema.json`` is the
+The JSON Schema in ``schemas/dual_agent_harness_v0_3.schema.json`` is the
 portable interchange definition. These validators enforce the same critical
 invariants at runtime without adding a jsonschema dependency.
 """
@@ -11,7 +11,7 @@ import re
 from typing import Any, Callable
 
 
-SCHEMA_VERSION = "0.1"
+SCHEMA_VERSION = "0.3"
 
 NODE_TYPES = {
     "definition", "assumption", "introduction", "claim", "calculation",
@@ -27,6 +27,7 @@ ERROR_TYPES = {
     "missing_assumption", "theorem_misuse", "algebraic_invalidity",
     "target_mismatch", "dependency_error", "false_local_claim",
     "false_theorem", "segmentation_error", "interpretation_ambiguity",
+    "unverified_counterexample",
 }
 
 LIFECYCLE_STATES = {
@@ -48,7 +49,7 @@ PATCH_OPERATIONS = {"insert_before", "replace", "delete", "add_assumption"}
 
 
 class ContractError(ValueError):
-    """Raised when a shared object violates contract v0.1."""
+    """Raised when a shared object violates contract v0.3."""
 
 
 def _fail(path: str, message: str) -> None:
@@ -159,7 +160,7 @@ def validate_proof_node(value: Any, path: str = "proof_node") -> dict[str, Any]:
     obj = _object(value, path)
     required = {
         "schema_version", "proof_id", "node_id", "version", "order_key", "claim",
-        "self_contained_claim", "node_type", "source_span", "depends_on",
+        "self_contained_claim", "node_type", "source_span", "source_span_source", "depends_on",
     }
     _exact_keys(obj, required, set(), path)
     _schema_header(obj, path)
@@ -176,6 +177,7 @@ def validate_proof_node(value: Any, path: str = "proof_node") -> dict[str, Any]:
     end = _integer(span["end"], f"{path}.source_span.end", minimum=0)
     if end <= start:
         _fail(f"{path}.source_span", "end must be greater than start")
+    _enum(obj["source_span_source"], {"original", "synthetic_compatibility"}, f"{path}.source_span_source")
     if not isinstance(obj["depends_on"], list):
         _fail(f"{path}.depends_on", "must be an array")
     seen: set[tuple[str, int, int]] = set()
@@ -350,7 +352,8 @@ def validate_counterexample_certificate(value: Any, path: str = "counterexample_
     obj = _object(value, path)
     required = {
         "schema_version", "certificate_id", "target", "theorem_ref", "scope", "structure",
-        "assignment", "premise_checks", "target_check", "checker",
+        "assignment", "premise_checks", "checked_premise_refs",
+        "global_assumption_digest", "target_check", "checker",
     }
     _exact_keys(obj, required, {"tool_trace", "interpretation_assumptions"}, path)
     _schema_header(obj, path)
@@ -359,7 +362,7 @@ def validate_counterexample_certificate(value: Any, path: str = "counterexample_
     if scope == "local_claim":
         if obj["target"] is None or obj["theorem_ref"] is not None:
             _fail(path, "local_claim requires target and forbids theorem_ref")
-        validate_node_ref(obj["target"], f"{path}.target")
+        target = validate_node_ref(obj["target"], f"{path}.target")
     else:
         if obj["target"] is not None or obj["theorem_ref"] is None:
             _fail(path, "global_theorem requires theorem_ref and forbids target")
@@ -377,6 +380,21 @@ def validate_counterexample_certificate(value: Any, path: str = "counterexample_
         if not _boolean(check["holds"], f"{path}.premise_checks[{index}].holds"):
             _fail(f"{path}.premise_checks[{index}].holds", "must be true for a valid certificate")
         _string(check["evidence"], f"{path}.premise_checks[{index}].evidence")
+    refs = obj["checked_premise_refs"]
+    if not isinstance(refs, list):
+        _fail(f"{path}.checked_premise_refs", "must be an array")
+    seen_refs: set[tuple[str, int | str, int]] = set()
+    for index, ref_value in enumerate(refs):
+        ref = validate_node_ref(ref_value, f"{path}.checked_premise_refs[{index}]")
+        key = (ref["proof_id"], ref["node_id"], ref["version"])
+        if key in seen_refs:
+            _fail(f"{path}.checked_premise_refs", "contains duplicate references")
+        seen_refs.add(key)
+        if scope == "local_claim" and (
+            ref["proof_id"] != target["proof_id"] or ref["node_id"] == target["node_id"]
+        ):
+            _fail(f"{path}.checked_premise_refs[{index}]", "must reference another node in the same proof")
+    _string(obj["global_assumption_digest"], f"{path}.global_assumption_digest")
     target_check = _object(obj["target_check"], f"{path}.target_check")
     _exact_keys(target_check, {"statement", "holds", "evidence"}, set(), f"{path}.target_check")
     _string(target_check["statement"], f"{path}.target_check.statement")
@@ -437,6 +455,12 @@ def validate_patch_proposal(value: Any, path: str = "patch_proposal") -> dict[st
         _fail(f"{path}.target_dependencies_after", "must be an array")
     for index, dep in enumerate(obj["target_dependencies_after"]):
         validate_node_ref(dep, f"{path}.target_dependencies_after[{index}]")
+    if operation == "replace" and len(obj["replacement_nodes"]) == 1:
+        if obj["replacement_nodes"][0]["depends_on"] != obj["target_dependencies_after"]:
+            _fail(
+                path,
+                "replace draft dependencies must equal target_dependencies_after",
+            )
     if not isinstance(obj["used_dependencies"], list):
         _fail(f"{path}.used_dependencies", "must be an array")
     for index, dep in enumerate(obj["used_dependencies"]):
@@ -538,7 +562,7 @@ VALIDATORS: dict[str, Callable[[Any, str], dict[str, Any]]] = {
 
 
 def validate_contract(kind: str, value: Any) -> dict[str, Any]:
-    """Validate one v0.1 contract object and return it unchanged."""
+    """Validate one v0.3 contract object and return it unchanged."""
     try:
         validator = VALIDATORS[kind]
     except KeyError as exc:

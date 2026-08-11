@@ -11,12 +11,13 @@ def ref(node_id, version=1):
 
 def node_record(node_id, claim, depends_on=(), state="pending_evaluation", verdict=None):
     return {
-        "schema_version": "0.1",
+        "schema_version": "0.3",
         "node": {
-            "schema_version": "0.1", "proof_id": "p1", "node_id": node_id,
+            "schema_version": "0.3", "proof_id": "p1", "node_id": node_id,
             "version": 1, "order_key": node_id * 1000,
             "claim": claim, "self_contained_claim": claim,
             "node_type": "conclusion", "source_span": {"start": node_id * 10, "end": node_id * 10 + 5},
+            "source_span_source": "original",
             "depends_on": list(depends_on),
         },
         "lifecycle_state": state, "current_verdict": verdict,
@@ -26,7 +27,7 @@ def node_record(node_id, claim, depends_on=(), state="pending_evaluation", verdi
 
 def evaluation(node_id, verdict, dependencies, evaluation_id="eval-1", error_type=None, target_version=1):
     value = {
-        "schema_version": "0.1", "evaluation_id": evaluation_id, "target": ref(node_id, target_version),
+        "schema_version": "0.3", "evaluation_id": evaluation_id, "target": ref(node_id, target_version),
         "verdict": verdict, "error_type": error_type, "reason": "fixture result",
         "dependency_versions": {str(i): 1 for i in dependencies}, "evaluator_id": "fixture-evaluator",
     }
@@ -35,7 +36,7 @@ def evaluation(node_id, verdict, dependencies, evaluation_id="eval-1", error_typ
 
 def patch(target_version=1):
     return {
-        "schema_version": "0.1", "patch_id": "patch-1", "error_certificate_id": "err-1",
+        "schema_version": "0.3", "patch_id": "patch-1", "error_certificate_id": "err-1",
         "target": ref(2, target_version), "operation": "replace",
         "replacement_nodes": [{
             "node_id": 2, "order_key": 2000, "claim": "n^2 = 4k^2.",
@@ -49,7 +50,7 @@ def patch(target_version=1):
 
 def review(accepted=True):
     return {
-        "schema_version": "0.1", "review_id": "review-1", "patch_id": "patch-1",
+        "schema_version": "0.3", "review_id": "review-1", "patch_id": "patch-1",
         "target": ref(2), "accepted": accepted,
         "verdict": "accepted" if accepted else "unsupported",
         "reason": "fixture review", "reviewer_id": "fixture-evaluator",
@@ -57,10 +58,38 @@ def review(accepted=True):
     }
 
 
+def submit_registered_patch(controller, proposal):
+    controller.submit_patch(proposal)
+
+
+def record_repair_evaluation(controller, node_id=2, dependencies=(1,), *, target_version=1):
+    target = ref(node_id, target_version)
+    target_record = controller.node_version(target)
+    certificate = {
+        "schema_version": "0.3", "certificate_id": "err-1",
+        "target": target,
+        "premises": target_record["node"]["depends_on"],
+        "error_type": "algebraic_invalidity", "failed_inference": "fixture failure",
+        "evidence": ["fixture evidence"],
+        "repair_constraints": {
+            "allowed_operations": ["replace", "insert_before"],
+            "max_new_nodes": 3,
+            "preserve_theorem": True, "preserve_assumptions": True,
+        },
+    }
+    controller.record_error_certificate(certificate)
+    value = evaluation(
+        node_id, "unsupported", list(dependencies), error_type="algebraic_invalidity",
+        target_version=target_version,
+    )
+    value["error_certificate_id"] = "err-1"
+    controller.record_evaluation(value)
+
+
 def insertion_patch():
     inserted_ref = {"proof_id": "p1", "node_id": "bridge-1", "version": 1}
     return {
-        "schema_version": "0.1", "patch_id": "patch-1", "error_certificate_id": "err-1",
+        "schema_version": "0.3", "patch_id": "patch-1", "error_certificate_id": "err-1",
         "target": ref(2), "operation": "insert_before",
         "replacement_nodes": [{
             "node_id": "bridge-1", "order_key": 1500,
@@ -76,7 +105,7 @@ def insertion_patch():
 
 def ambiguity_analysis(outcome="requires_clarification", meaning_relation="distinct"):
     return {
-        "schema_version": "0.1", "analysis_id": "amb-1", "target": ref(2),
+        "schema_version": "0.3", "analysis_id": "amb-1", "target": ref(2),
         "ambiguous_span": "it is zero", "ambiguity_type": "unclear_reference",
         "declared_scope": "reasonable antecedents in the local obligation",
         "coverage_status": "exhaustive_within_declared_scope",
@@ -91,7 +120,7 @@ def ambiguity_analysis(outcome="requires_clarification", meaning_relation="disti
 
 class DualAgentControllerTest(unittest.TestCase):
     def controller_with_three_nodes(self):
-        controller = DualAgentController()
+        controller = DualAgentController(evaluator_ids={"fixture-evaluator", "eval"})
         controller.register_node(node_record(1, "n=2k", state="active", verdict="accepted"))
         controller.register_node(node_record(2, "n^2=2k^2", [ref(1)]))
         controller.register_node(node_record(3, "n^2 is even", [ref(2)], state="active", verdict="accepted"))
@@ -101,8 +130,8 @@ class DualAgentControllerTest(unittest.TestCase):
     def test_accepted_patch_creates_version_and_invalidates_descendant(self):
         controller = self.controller_with_three_nodes()
         controller.transition(ref(2), "evaluating", reason="start")
-        controller.record_evaluation(evaluation(2, "unsupported", [1], error_type="algebraic_invalidity"))
-        controller.submit_patch(patch())
+        record_repair_evaluation(controller)
+        submit_registered_patch(controller, patch())
         controller.begin_patch_review("patch-1")
         new_ref = controller.review_patch(review(True))
         self.assertEqual(ref(2, 2), new_ref)
@@ -124,24 +153,107 @@ class DualAgentControllerTest(unittest.TestCase):
     def test_patch_against_superseded_version_is_rejected(self):
         controller = self.controller_with_three_nodes()
         controller.transition(ref(2), "evaluating", reason="start")
-        controller.record_evaluation(evaluation(2, "unsupported", [1], error_type="algebraic_invalidity"))
-        controller.submit_patch(patch())
+        record_repair_evaluation(controller)
+        submit_registered_patch(controller, patch())
         controller.begin_patch_review("patch-1")
         controller.review_patch(review(True))
         with self.assertRaises(StaleVersionError):
             controller.submit_patch({**patch(), "patch_id": "late-patch"})
 
+    def test_patch_with_stale_dependency_version_is_rejected(self):
+        controller = self.controller_with_three_nodes()
+        controller.transition(ref(2), "evaluating", reason="start")
+        record_repair_evaluation(controller)
+        proposal = patch()
+        proposal["used_dependencies"] = [ref(1, 2)]
+        with self.assertRaises(StaleVersionError):
+            submit_registered_patch(controller, proposal)
+
+    def test_initial_node_version_must_start_at_one(self):
+        controller = DualAgentController(evaluator_ids={"fixture-evaluator", "eval"})
+        record = node_record(1, "P")
+        record["node"]["version"] = 2
+        with self.assertRaisesRegex(ValueError, "initial node version must be 1"):
+            controller.register_node(record)
+
+    def test_new_node_version_cannot_skip_versions(self):
+        controller = DualAgentController(evaluator_ids={"fixture-evaluator", "eval"})
+        controller.register_node(node_record(1, "P", state="active", verdict="accepted"))
+        record = node_record(1, "P revised", state="active", verdict="accepted")
+        record["node"]["version"] = 3
+        record["supersedes"] = ref(1)
+        record["created_by"] = "repair_generator"
+        with self.assertRaisesRegex(ValueError, "increment the current version by one"):
+            controller.register_node(record)
+
+    def test_invalid_replace_graph_rolls_back_new_version(self):
+        controller = self.controller_with_three_nodes()
+        controller.transition(ref(2), "evaluating", reason="start")
+        record_repair_evaluation(controller)
+        proposal = patch()
+        proposal["target_dependencies_after"] = [ref(3)]
+        proposal["replacement_nodes"][0]["depends_on"] = [ref(3)]
+        proposal["used_dependencies"] = [ref(3)]
+        submit_registered_patch(controller, proposal)
+        controller.begin_patch_review(proposal["patch_id"])
+        with self.assertRaisesRegex(ValueError, "earlier order_key"):
+            controller.review_patch(review(True))
+        self.assertEqual(ref(2), controller.current_ref("p1", 2))
+        self.assertEqual("pending_recheck", controller.lifecycle(ref(2)))
+        with self.assertRaises(KeyError):
+            controller.node_version(ref(2, 2))
+
     def test_rejected_patch_returns_to_pending_repair(self):
         controller = self.controller_with_three_nodes()
         controller.transition(ref(2), "evaluating", reason="start")
-        controller.record_evaluation(evaluation(2, "unsupported", [1], error_type="algebraic_invalidity"))
-        controller.submit_patch(patch())
+        record_repair_evaluation(controller)
+        submit_registered_patch(controller, patch())
         controller.begin_patch_review("patch-1")
         self.assertIsNone(controller.review_patch(review(False)))
         self.assertEqual("pending_repair", controller.lifecycle(ref(2)))
 
+    def test_repair_generator_cannot_review_own_patch(self):
+        controller = self.controller_with_three_nodes()
+        controller.transition(ref(2), "evaluating", reason="start")
+        record_repair_evaluation(controller)
+        submit_registered_patch(controller, patch())
+        controller.begin_patch_review("patch-1")
+        own_review = review(True)
+        own_review["reviewer_id"] = "repair_generator"
+        with self.assertRaisesRegex(ValueError, "configured evaluator"):
+            controller.review_patch(own_review)
+        self.assertEqual("pending_recheck", controller.lifecycle(ref(2)))
+
+    def test_dependency_blocking_is_lifecycle_only(self):
+        controller = DualAgentController(evaluator_ids={"fixture-evaluator", "eval"})
+        controller.register_node(node_record(1, "invalid parent", state="stale", verdict=None))
+        controller.register_node(node_record(2, "child", [ref(1)]))
+        controller.mark_blocked_by_invalid_dependency(ref(2), reason="node 1 is stale")
+        record = controller.node_version(ref(2))
+        self.assertEqual("blocked_by_invalid_dependency", record["lifecycle_state"])
+        self.assertIsNone(record["current_verdict"])
+
+    def test_non_active_descendant_invalidation_is_recorded(self):
+        controller = DualAgentController(evaluator_ids={"fixture-evaluator", "eval"})
+        controller.register_node(node_record(1, "n=2k", state="active", verdict="accepted"))
+        controller.register_node(node_record(2, "n^2=2k^2", [ref(1)]))
+        controller.register_node(node_record(3, "n^2 is even", [ref(2)]))
+        controller.validate_graph("p1")
+        controller.transition(ref(2), "evaluating", reason="start")
+        record_repair_evaluation(controller)
+        submit_registered_patch(controller, patch())
+        controller.begin_patch_review("patch-1")
+        controller.review_patch(review(True))
+        transitions = [
+            event for event in controller.events
+            if event.get("event") == "lifecycle_transition"
+            and event.get("target") == ref(3)
+            and event.get("to") == "stale"
+        ]
+        self.assertEqual(1, len(transitions))
+
     def test_invalid_transition_is_rejected(self):
-        controller = DualAgentController()
+        controller = DualAgentController(evaluator_ids={"fixture-evaluator", "eval"})
         controller.register_node(node_record(1, "P"))
         with self.assertRaises(InvalidTransitionError):
             controller.transition(ref(1), "active", reason="skip evaluator")
@@ -154,15 +266,31 @@ class DualAgentControllerTest(unittest.TestCase):
         with self.assertRaises(StaleVersionError):
             controller.record_evaluation(value)
 
+    def test_evaluation_cannot_reference_unregistered_error_certificate(self):
+        controller = self.controller_with_three_nodes()
+        controller.transition(ref(2), "evaluating", reason="start")
+        value = evaluation(2, "unsupported", [1], error_type="algebraic_invalidity")
+        value["error_certificate_id"] = "missing-error-certificate"
+        with self.assertRaisesRegex(ValueError, "registered error certificate"):
+            controller.record_evaluation(value)
+
+    def test_counterexample_verdict_requires_registered_certificate(self):
+        controller = self.controller_with_three_nodes()
+        controller.transition(ref(2), "evaluating", reason="start")
+        value = evaluation(2, "counterexample_found", [1], error_type="false_local_claim")
+        value["counterexample_certificate_id"] = "missing-counterexample"
+        with self.assertRaisesRegex(ValueError, "registered certificate"):
+            controller.record_evaluation(value)
+
     def test_graph_with_missing_dependency_version_is_rejected(self):
-        controller = DualAgentController()
+        controller = DualAgentController(evaluator_ids={"fixture-evaluator", "eval"})
         controller.register_node(node_record(1, "P", state="active", verdict="accepted"))
         controller.register_node(node_record(2, "Q", [ref(1, 2)]))
         with self.assertRaisesRegex(ValueError, "missing dependency version"):
             controller.validate_graph("p1")
 
     def test_graph_rejects_dependency_with_later_order_key(self):
-        controller = DualAgentController()
+        controller = DualAgentController(evaluator_ids={"fixture-evaluator", "eval"})
         controller.register_node(node_record(1, "P", [ref(2)]))
         controller.register_node(node_record(2, "Q", state="active", verdict="accepted"))
         with self.assertRaisesRegex(ValueError, "earlier order_key"):
@@ -171,9 +299,9 @@ class DualAgentControllerTest(unittest.TestCase):
     def test_insert_before_creates_pending_node_and_requeues_target(self):
         controller = self.controller_with_three_nodes()
         controller.transition(ref(2), "evaluating", reason="start")
-        controller.record_evaluation(evaluation(2, "unsupported", [1], error_type="algebraic_invalidity"))
+        record_repair_evaluation(controller)
         proposal = insertion_patch()
-        controller.submit_patch(proposal)
+        submit_registered_patch(controller, proposal)
         controller.begin_patch_review(proposal["patch_id"])
         result = controller.review_patch(review(True))
         inserted_ref = result["inserted_refs"][0]
@@ -221,7 +349,7 @@ class M1FixtureReplayTest(unittest.TestCase):
 
     def replay_accepted_repair(self):
         fixture = self.load_fixture("accepted_repair.json")
-        controller = DualAgentController()
+        controller = DualAgentController(evaluator_ids={"fixture-evaluator", "eval"})
         for item in fixture["initial_nodes"]:
             dependencies = [ref(node_id) for node_id in item["depends_on"]]
             controller.register_node(node_record(
@@ -231,15 +359,14 @@ class M1FixtureReplayTest(unittest.TestCase):
         controller.validate_graph("p1")
         spec = fixture["evaluation"]
         controller.transition(ref(spec["target_node_id"]), "evaluating", reason="fixture replay")
-        controller.record_evaluation(evaluation(
-            spec["target_node_id"], spec["verdict"], spec["dependencies"],
-            error_type=spec["error_type"],
-        ))
+        record_repair_evaluation(
+            controller, spec["target_node_id"], spec["dependencies"]
+        )
         patch_spec = fixture["patch"]
         proposal = patch(patch_spec["target_version"])
         proposal["replacement_nodes"][0]["claim"] = patch_spec["replacement"]
         proposal["replacement_nodes"][0]["self_contained_claim"] = patch_spec["replacement"]
-        controller.submit_patch(proposal)
+        submit_registered_patch(controller, proposal)
         controller.begin_patch_review(proposal["patch_id"])
         new_ref = controller.review_patch(review(fixture["review"]["accepted"]))
         controller.transition(new_ref, "evaluating", reason="fixture replacement recheck")
@@ -267,7 +394,7 @@ class M1FixtureReplayTest(unittest.TestCase):
 
     def test_ambiguity_branching_fixture_replays_completely(self):
         fixture = self.load_fixture("ambiguity_branching.json")
-        controller = DualAgentController()
+        controller = DualAgentController(evaluator_ids={"fixture-evaluator", "eval"})
         controller.register_node(node_record(1, "a=0", state="active", verdict="accepted"))
         controller.register_node(node_record(2, "It is zero, so the sides are equal.", [ref(1)]))
         controller.transition(fixture["target"], "evaluating", reason="fixture replay")
@@ -281,9 +408,9 @@ class M1FixtureReplayTest(unittest.TestCase):
         fixture = self.load_fixture("insert_bridge_and_reevaluate.json")
         controller = DualAgentControllerTest().controller_with_three_nodes()
         controller.transition(fixture["target"], "evaluating", reason="fixture start")
-        controller.record_evaluation(evaluation(2, "unsupported", [1], error_type="algebraic_invalidity"))
+        record_repair_evaluation(controller)
         proposal = insertion_patch()
-        controller.submit_patch(proposal)
+        submit_registered_patch(controller, proposal)
         controller.begin_patch_review(proposal["patch_id"])
         result = controller.review_patch(review(True))
         inserted_ref, target_ref = result["inserted_refs"][0], result["target_ref"]
