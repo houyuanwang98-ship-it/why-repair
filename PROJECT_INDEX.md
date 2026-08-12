@@ -32,10 +32,13 @@
 | [M2 Pilot benchmark 基础设施](docs/milestones/M02_pilot_benchmark_infrastructure.md) | 标注校验、一致性报告、裁决与 Gold 生成 | `m2.2` Gold 已冻结 |
 | [M2 标签映射](docs/milestones/M02_label_mapping.md) | M2 benchmark 标签到 M1 v0.3 运行时结果的显式转换边界 | 已用于冻结 Gold |
 | [M2 Gold 冻结记录](docs/milestones/M02_gold_freeze_record.md) | 双人标注、一致性、共同裁决、Gold 摘要与变更控制 | 已完成 |
-| [M3 Evaluator v1](docs/milestones/M03_evaluator_v1.md) | M2→checker 适配、节点/依赖/定位/裁决指标与验收步骤 | 基础设施和确定性基线完成，待模型运行 |
+| [M2 Person B 完成与交接](docs/milestones/M02_person_b_completion_and_handoff.md) | 冻结输入、复核证据、Person A 隔离模板与后续联合流程 | Person B 范围已完成并纳入联合 Gold |
+| [M2 Person B 50 题自然语言批改](docs/milestones/M02_person_b_50_natural_language_review.md) | 原题、完整证明、逐题结论、错误定位、反例与最小修改 | 已完成 |
+| [M3 Evaluator v1](docs/milestones/M03_evaluator_v1.md) | M2→checker 适配、节点/依赖/定位/裁决指标与验收步骤 | 全 50 题模型运行完成，待分歧人工审计 |
 | [M3 Evaluator Gold](data/benchmarks/m3/gold/evaluator_pilot_v1.jsonl) | 50 题证明级 Gold 与 39 题、98 节点的节点级 Gold | `m3-evaluator-gold-0.1` |
 | [M3 指标 Schema](schemas/m3_evaluator_report_v0_1.schema.json) | Evaluator v1 模块化报告契约 | `v0.1` |
 | [M2 可移植 Schema](schemas/m2_benchmark_v0_2.schema.json) | Source、annotation、反例、分歧、裁决与 Gold manifest 契约 | `m2.2` 已实现 |
+| [M3-alpha Person B 运行器与指标](docs/milestones/M03_alpha_person_b_runner_and_metrics.md) | 模型适配器接口、独立模块运行、审计清单与六类指标 | alpha 已实现并保留为并行基础设施 |
 | [开发指南](docs/development-guide.md) | 现有 checker 架构 | 已有 |
 | [Canonical Skill](skills/math-proof-repair-agent/SKILL.md) | 现有 Evaluator/checker 行为 | 已有 |
 | [结果 Schema](schemas/algebra_obligation_result.schema.json) | 现有 checker 输出契约 | 已有，待映射 |
