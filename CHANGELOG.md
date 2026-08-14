@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-08-15 +08:00 — Lock M6 Person A pre-results protocol candidate
+
+- Locked the pre-results candidate for RQ1–RQ3, mathematical outcome definitions, primary/secondary metrics, stratification, fairness, model-budget comparability, failure scoring, and change control in `docs/milestones/M06_person_a_preregistered_protocol.md`; a real Person A digest signature is still required for formal freeze.
+- Added the blinded per-case mathematical error-analysis and leakage-audit template in `docs/milestones/M06_person_a_blind_error_analysis_template.md`.
+- Added a strict machine-readable candidate manifest and Schema binding both document digests, the evidence strength of the no-results-viewed statement, pending signatures, and the closed M5 entry gate.
+- Kept the M6 execution gate fail-closed: these are pre-registration artifacts, not evidence that pending M5 human gates or M6 experiments have completed.
+
 ## 2026-08-15 +08:00 — Complete M5 Controller revalidation gate
 
 - Separated mathematical PatchReview acceptance from whole-repair success.

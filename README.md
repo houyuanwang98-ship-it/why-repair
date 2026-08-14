@@ -8,6 +8,8 @@ Dependency-guided diagnosis and minimal repair for natural-language mathematical
 
 当前 M0–M5 已完成研究契约、共享 Schema、50 题代数 Pilot Gold、分阶段 Evaluator、可执行反例核验，以及 Repair Generator—独立复核—后代重验的确定性工程闭环。M5 的自动化与 Gold 工程验收已经通过，但真实生产模型 Pilot、全量人工数学复核、真实成本审计和外部代码审查仍需独立人工证据，因此项目没有提前把 M5 标记为整体完成，也尚未开放 M6 主实验入口。
 
+M6 Person A 的结果前预注册协议候选和盲态错误分析模板内容已锁定，等待真实 Person A 对精确摘要签署后正式冻结；这不改变上述 M5 阻塞状态，也不构成 M6 实验结果。
+
 ## 推荐的 M0–M8 研究总顺序
 
 > Person A 负责数学语义与 Evaluator；Person B 负责 Repair Generator、执行语义与实验工程；Controller 是确定性程序，只负责契约、状态、版本、失效传播和运行审计，不作为第三个数学 Agent。

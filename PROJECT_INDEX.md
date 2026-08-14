@@ -65,6 +65,10 @@
 | [M5 Person B 发布清单](data/benchmarks/m5/person_b_release_v0_1.json) | 冻结前序版本、核心产物 SHA-256、回归测试与已知限制 | `m5-person-b-v0.1` |
 | [M5 A/B/Controller 阶段性联合验收](docs/milestones/M05_a_b_controller_joint_acceptance.md) | 三方职责、强制门、Gold 闭环、待办和 M6 fail-closed 边界 | 工程联合通过；Pilot 与全量人工复核待完成 |
 | [M5 联合验收机器清单](data/benchmarks/m5/joint_acceptance_v0_1.json) | 角色状态、逐门证据、核心产物 SHA-256 与禁止提前进入 M6 | `m5-joint-engineering-v0.1` |
+| [M6 Person A 预注册协议](docs/milestones/M06_person_a_preregistered_protocol.md) | RQ1–RQ3、数学定义、主次指标、分层、公平性、预算、失败计分与冻结规则 | `v0.1` 内容已锁定；M5 运行门关闭，待真人摘要签署 |
+| [M6 Person A 盲态错误分析模板](docs/milestones/M06_person_a_blind_error_analysis_template.md) | 匿名逐例数学审查、泄漏检查、false accept/repair 与揭盲后混杂因素 | `v0.1` 内容已锁定，尚未填入正式结果 |
+| [M6 Person A 协议候选清单](data/benchmarks/m6/person_a_protocol_candidate_v0_1.json) | 两份内容摘要、结果暴露证据强度、签署状态及 M5 fail-closed 绑定 | 内容已锁定；三方签署/Manifest pending，执行禁止 |
+| [M6 Person A 协议清单 Schema](schemas/m6_person_a_protocol_manifest_v0_1.schema.json) | 拒绝把自述、待签署候选或关闭的 M5 门误报为正式冻结/可运行 | `v0.1` |
 | [M5 人工审核：真实 Repair Generator Pilot](docs/m5_manual_review/01_real_repair_generator_pilot.md) | 生产模型运行、输入隔离、失败保留、抽查和签署细则 | 待人工执行 |
 | [M5 人工审核：Person A 全量补丁复核](docs/m5_manual_review/02_person_a_full_patch_review.md) | 数学有效性、问题保持、新错误、最小性、false repair 和分歧处理 | 待独立 Person A 执行 |
 | [M5 人工校验：Pilot 成本与失败率](docs/m5_manual_review/03_pilot_cost_failure_audit.md) | token、延迟、计价、重试、失败分母和人工复算细则 | 待真实 Pilot 后执行 |

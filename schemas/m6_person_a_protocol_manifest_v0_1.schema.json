@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m6_person_a_protocol_manifest_v0_1.schema.json",
+  "title": "M6 Person A pre-results protocol candidate manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "candidate_version", "status", "content_locked_at", "result_exposure", "artifacts", "signatures", "m5_gate", "m6_execution_allowed"],
+  "properties": {
+    "schema_version": {"const": "m6-person-a-protocol-manifest-0.1"},
+    "candidate_version": {"const": "m6-person-a-protocol-v0.1"},
+    "status": {"const": "content_locked_pending_human_signature_and_m5_entry"},
+    "content_locked_at": {"type": "string", "format": "date-time"},
+    "result_exposure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evidence_strength"],
+      "properties": {
+        "status": {"const": "no_m6_results_viewed"},
+        "evidence_strength": {"const": "self_attested_unverified"}
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "minProperties": 2,
+      "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+    },
+    "signatures": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["person_a", "person_b_cross_review", "controller_manifest"],
+      "properties": {
+        "person_a": {"const": "pending_human_signature"},
+        "person_b_cross_review": {"const": "pending_cross_review"},
+        "controller_manifest": {"const": "pending_manifest"}
+      }
+    },
+    "m5_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "m6_entry_allowed"],
+      "properties": {
+        "path": {"const": "data/benchmarks/m5/joint_acceptance_v0_1.json"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "m6_entry_allowed": {"const": false}
+      }
+    },
+    "m6_execution_allowed": {"const": false}
+  }
+}
