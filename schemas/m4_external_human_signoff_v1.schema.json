@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "M4 external independent human signoff packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "review_target", "review_protocol", "signoffs"],
+  "properties": {
+    "schema_version": {"const": "m4-external-human-signoff-1.0"},
+    "status": {"enum": ["awaiting_external_signatures", "complete"]},
+    "review_target": {
+      "type": "object",
+      "required": ["archive_file", "archive_sha256"]
+    },
+    "review_protocol": {
+      "type": "object",
+      "required": ["independent_before_comparison", "no_model_assistance", "verify_all_premises", "verify_target_false", "verify_scope", "compare_only_after_lock"]
+    },
+    "signoffs": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["slot", "reviewer_id", "organization", "decision", "reviewed_sample_ids", "locked_at", "signature_method", "public_key_fingerprint", "detached_signature_file", "allowed_signers_file"],
+        "properties": {
+          "slot": {"enum": ["external_reviewer_1", "external_reviewer_2"]},
+          "reviewer_id": {"type": ["string", "null"]},
+          "organization": {"type": ["string", "null"]},
+          "decision": {"enum": ["pending", "pass", "fail"]},
+          "reviewed_sample_ids": {"type": "array", "items": {"type": "string"}},
+          "locked_at": {"type": ["string", "null"]},
+          "signature_method": {"enum": ["pending", "pgp", "minisign", "ssh"]},
+          "public_key_fingerprint": {"type": ["string", "null"]},
+          "detached_signature_file": {"type": ["string", "null"]},
+          "allowed_signers_file": {"type": ["string", "null"]}
+        }
+      }
+    }
+  }
+}

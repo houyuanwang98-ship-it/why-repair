@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "M4 revalidation archive v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "source", "reviewer_id", "verifier_id", "results", "audit_records", "events", "negative_controls", "audit_chain_valid", "verification_environment", "verification_cost", "metrics"],
+  "properties": {
+    "schema_version": {"const": "m4-revalidation-1.0"},
+    "source": {
+      "type": "object",
+      "required": ["gold_file", "gold_sha256", "mapping_file", "mapping_sha256", "nonblind_response_ledger", "nonblind_response_ledger_sha256"]
+    },
+    "reviewer_id": {"type": "string", "minLength": 1},
+    "verifier_id": {"type": "string", "minLength": 1},
+    "results": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+    "audit_records": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+    "events": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+    "negative_controls": {"type": "array", "minItems": 2, "items": {"type": "object"}},
+    "audit_chain_valid": {"const": true},
+    "verification_environment": {
+      "type": "object",
+      "required": ["engine", "engine_profile", "max_ast_nodes", "max_expression_length", "max_integer_bits", "max_abs_exponent", "timeout_policy"]
+    },
+    "verification_cost": {
+      "type": "object",
+      "required": ["global_verifier_calls", "negative_control_verifier_calls", "total_verifier_calls", "external_tool_calls", "external_cost_usd", "latency_status"]
+    },
+    "metrics": {
+      "type": "object",
+      "required": ["candidate_count", "accepted_count", "verified_count", "verification_validity_rate", "accepted_false_counterexample_count", "accepted_false_counterexample_rate", "premise_satisfaction_rate", "global_scope_accuracy", "engineering_nonblind_discovered_count", "engineering_nonblind_discovery_denominator", "engineering_nonblind_discovery_rate", "publication_blind_discovery_rate", "discovery_scope_note", "negative_control_count", "negative_control_accepted_count", "unsupported_controls_kept_undetermined"]
+    }
+  }
+}
