@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "M4 Person B Executable Verification Audit Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["sequence", "previous_digest", "profile_version", "verifier_id", "certificate_id", "scope", "certificate_digest", "verification_method", "status", "assignment", "premise_bindings", "target_binding", "reason", "record_digest"],
+  "properties": {
+    "sequence": {"type": "integer", "minimum": 1},
+    "previous_digest": {"anyOf": [{"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, {"type": "null"}]},
+    "profile_version": {"const": "m4-counterexample-person-b-v0.1"},
+    "verifier_id": {"type": "string", "minLength": 1},
+    "certificate_id": {"type": "string", "minLength": 1},
+    "scope": {"enum": ["local_claim", "global_theorem"]},
+    "certificate_digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "verification_method": {"const": "executable_exact"},
+    "status": {"enum": ["verified", "failed", "undetermined"]},
+    "assignment": {"type": "object"},
+    "premise_bindings": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["statement", "expression", "holds"],
+        "properties": {
+          "statement": {"type": "string", "minLength": 1},
+          "expression": {"type": "string", "minLength": 1},
+          "holds": {"type": ["boolean", "null"]}
+        }
+      }
+    },
+    "target_binding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["statement", "expression", "holds"],
+      "properties": {
+        "statement": {"type": "string", "minLength": 1},
+        "expression": {"type": "string", "minLength": 1},
+        "holds": {"type": ["boolean", "null"]}
+      }
+    },
+    "reason": {"type": "string", "minLength": 1},
+    "record_digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "verified"}}, "required": ["status"]},
+      "then": {
+        "properties": {
+          "premise_bindings": {"items": {"properties": {"holds": {"const": true}}}},
+          "target_binding": {"properties": {"holds": {"const": false}}}
+        }
+      }
+    }
+  ]
+}

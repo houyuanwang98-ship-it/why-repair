@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-08-14 +08:00 — Implement M4 Person B executable verification
+
+- Added a safe, fail-closed exact arithmetic verifier using rational arithmetic,
+  with explicit `failed` and `undetermined` outcomes.
+- Added a batch runner and immutable SHA-256 hash-chained audit records.
+- Added an explicit theorem-level registry for `target=null` certificates while
+  leaving the frozen Controller v0.3 semantic content unchanged; normalized its
+  M3 manifest digest to the repository's required LF representation.
+- Bound audit records to the canonical certificate digest, assignment, and all
+  statement/expression/result triples; exported chains can be independently replayed.
+- Added resource bounds, portable-JSON rejection, a conversion prompt, executable
+  frozen-scope fixtures, and ten focused tests; the complete 198-test suite passes.
+
 ## 2026-08-14 +08:00 — Implement M4 Person A counterexample gate
 
 - Defined the exclusive `local_claim`/`false_local_claim` and
