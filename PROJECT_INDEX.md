@@ -58,8 +58,10 @@
 | [M4 Person A 初始验收](docs/milestones/M04_person_a_cross_review_and_acceptance.md) | 11 个 Gold 反例全量复核、问题修复、限制与退出签核 | `m4-integrated-v1.0` 历史基线 |
 | [M5 Person A 补丁数学复核](docs/milestones/M05_person_a_mathematical_patch_review.md) | 允许证据、成功/最小性定义、对抗式 Prompt 与 fail-closed 独立复核门 | `v0.1` 已实现，等待 B/Controller 接入 |
 | [M5 Person B Repair Generator 与 Controller](docs/milestones/M05_person_b_repair_generator_and_controller.md) | 四类补丁、版本/预算/引用门、等价终止、事务回滚、后代失效与 M4 v1.1 只读接入 | `m5-person-b-v0.1` 已实现，等待联合 pilot 验收 |
+| [M5 Controller 拓扑重验门](docs/milestones/M05_controller_revalidation_gate.md) | 补丁接受与修复成功分离、可信 Evaluator 重验、后代版本重建、最终路径门与失败闭合 | `m5-controller-revalidation-v0.1` 已实现 |
 | [M5 Person B 输入 Schema](schemas/m5_person_b_repair_input_v0_1.schema.json) | 冻结局部修复上下文、预算与 M4 只读证据摘要 | `v0.1` |
 | [M5 Person B 补丁 Schema](schemas/m5_person_b_patch_proposal_v0_1.schema.json) | `insert_before` / `replace` / `delete` / `mark_irreparable` 响应契约 | `v0.1` |
+| [M5 Controller 重验 Schema](schemas/m5_controller_revalidation_v0_1.schema.json) | 受信 Evaluator 针对精确新版本的独立重验记录 | `v0.1` |
 | [M5 Person B 发布清单](data/benchmarks/m5/person_b_release_v0_1.json) | 冻结前序版本、核心产物 SHA-256、回归测试与已知限制 | `m5-person-b-v0.1` |
 | [M4 Person B 逆向复核](docs/milestones/M04_person_b_cross_review_and_joint_acceptance.md) | 目标、结构、解释与 theorem digest 攻击面复核及修复 | A/B 联合通过 |
 | [M4 v1.0 验收清单](data/benchmarks/m4/integrated_acceptance_v1.json) | Person A 初始验收的历史冻结边界 | 保留，不原地改写 |

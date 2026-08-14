@@ -14,7 +14,7 @@ from .m5_person_a_review import canonical_digest, review_patch_math
 
 
 OPERATIONS = {"insert_before", "replace", "delete", "mark_irreparable"}
-STOP_REASONS = {"accepted", "irreparable", "equivalent_patch", "max_rounds"}
+STOP_REASONS = {"accepted", "revalidation_failed", "irreparable", "equivalent_patch", "max_rounds"}
 
 
 class M5RepairError(ValueError):
@@ -62,9 +62,13 @@ class M5RepairController:
     def __init__(self, *, proof_id: str, nodes: list[dict[str, Any]],
                  error_certificate: dict[str, Any], repair_generator_id: str = "person-b",
                  budget: RepairBudget | None = None,
+                 evaluator_ids: set[str] | None = None,
                  m4_accepted_certificates: list[dict[str, Any]] | None = None) -> None:
         self.proof_id = proof_id
         self.generator_id = repair_generator_id
+        self.evaluator_ids = set(evaluator_ids or {"person-a"})
+        _require(self.generator_id not in self.evaluator_ids,
+                 "repair generator cannot be a revalidation evaluator")
         self.budget = budget or RepairBudget()
         self._nodes = deepcopy(nodes)
         self._history: list[dict[str, Any]] = []
@@ -79,6 +83,8 @@ class M5RepairController:
         self._events: list[dict[str, Any]] = []
         self._stale: list[dict[str, Any]] = []
         self._revalidation_queue: list[dict[str, Any]] = []
+        self._revalidation_records: list[dict[str, Any]] = []
+        self._dependency_redirects: dict[tuple[str, int | str, int], list[dict[str, Any]]] = {}
         self._stop_reason: str | None = None
         self._validate_initial_state()
         self._assert_dag()
@@ -117,6 +123,12 @@ class M5RepairController:
                 "nodes": deepcopy(self._nodes), "version_history": deepcopy(self._history),
                 "stale": deepcopy(self._stale),
                 "revalidation_queue": deepcopy(self._revalidation_queue),
+                "revalidation_records": deepcopy(self._revalidation_records),
+                "dependency_redirects": [
+                    {"from": {"proof_id": key[0], "node_id": key[1], "version": key[2]},
+                     "to": deepcopy(value)}
+                    for key, value in sorted(self._dependency_redirects.items(), key=lambda item: str(item[0]))
+                ],
                 "rounds": len(self._attempts), "stop_reason": self._stop_reason,
                 "m4_input_digest": self._m4_digest}
 
@@ -243,17 +255,128 @@ class M5RepairController:
                 self._terminate("max_rounds")
             return self.snapshot()
         before = deepcopy((self._nodes, self._history, self._stale, self._revalidation_queue,
+                           self._revalidation_records, self._dependency_redirects,
                            self._events, self._stop_reason))
         try:
             self._apply(patch)
             self._assert_dag()
+            self._release_next_descendants()
         except Exception:
             (self._nodes, self._history, self._stale, self._revalidation_queue,
+             self._revalidation_records, self._dependency_redirects,
              self._events, self._stop_reason) = before
             raise
         self._pending_patch_id = None
-        self._terminate("irreparable" if patch["operation"] == "mark_irreparable" else "accepted")
+        if patch["operation"] == "mark_irreparable":
+            self._terminate("irreparable")
+        elif not self._revalidation_queue:
+            self._terminate("accepted")
         return self.snapshot()
+
+    def record_revalidation(self, record: dict[str, Any]) -> dict[str, Any]:
+        """Consume one trusted Evaluator result in deterministic topological order.
+
+        PatchReview authorizes the graph edit; it does not prove the edited proof path.
+        This separate record is therefore required before the session can succeed.
+        """
+        before = deepcopy((self._nodes, self._history, self._stale, self._revalidation_queue,
+                           self._revalidation_records, self._dependency_redirects,
+                           self._events, self._stop_reason))
+        try:
+            return self._record_revalidation(record)
+        except Exception:
+            (self._nodes, self._history, self._stale, self._revalidation_queue,
+             self._revalidation_records, self._dependency_redirects,
+             self._events, self._stop_reason) = before
+            raise
+
+    def _record_revalidation(self, record: dict[str, Any]) -> dict[str, Any]:
+        self._assert_frozen_inputs()
+        _require(self._stop_reason is None, "repair session already terminated")
+        _require(self._pending_patch_id is None and self._attempts,
+                 "patch must be reviewed and applied before revalidation")
+        required = {"schema_version", "evaluation_id", "evaluator_id", "target", "verdict", "reason"}
+        _require(set(record) == required, "revalidation fields do not match M5 v0.1 contract")
+        _require(record["schema_version"] == "0.1", "revalidation schema_version must be 0.1")
+        _require(record["evaluator_id"] in self.evaluator_ids, "untrusted revalidation evaluator")
+        _require(record["evaluator_id"] != self.generator_id,
+                 "repair generator cannot revalidate its own patch")
+        _require(record["verdict"] in {"accepted", "rejected", "undetermined"},
+                 "invalid revalidation verdict")
+        for field in ("evaluation_id", "evaluator_id", "reason"):
+            _require(isinstance(record[field], str) and record[field].strip(), f"{field} must be nonempty")
+        _require(all(existing["evaluation_id"] != record["evaluation_id"]
+                     for existing in self._revalidation_records), "duplicate revalidation evaluation_id")
+        pending = next((item for item in self._revalidation_queue
+                        if item["status"] == "pending_evaluation"), None)
+        _require(pending is not None, "no node is ready for revalidation")
+        _require(record["target"] == pending["target"], "revalidation is out of topological order")
+        pending["status"] = "active" if record["verdict"] == "accepted" else record["verdict"]
+        self._revalidation_records.append(deepcopy(record))
+        self._events.append({"event": "node_revalidated", "target": deepcopy(record["target"]),
+                             "evaluation_id": record["evaluation_id"],
+                             "verdict": record["verdict"]})
+        if record["verdict"] != "accepted":
+            self._terminate("revalidation_failed")
+            return self.snapshot()
+        current = self._find_current(record["target"]["node_id"])
+        if current is not None and current["version"] == record["target"]["version"]:
+            current["lifecycle_state"] = "active"
+        self._release_next_descendants()
+        if all(item["status"] == "active" for item in self._revalidation_queue):
+            self._assert_final_target_path()
+            self._terminate("accepted")
+        return self.snapshot()
+
+    def _release_next_descendants(self) -> None:
+        """Recreate stale descendants only when all their dependencies are current and active."""
+        active_refs = {_node_key(item["target"]) for item in self._revalidation_queue
+                       if item["status"] == "active"}
+        queued_refs = {_node_key(item["target"]) for item in self._revalidation_queue}
+        current_by_id = {node["node_id"]: node for node in self._nodes}
+        for item in self._revalidation_queue:
+            if item["status"] != "blocked_by_stale_dependency":
+                continue
+            old = next(node for node in self._stale
+                       if _node_key({k: node[k] for k in ("proof_id", "node_id", "version")})
+                       == _node_key(item["target"]))
+            rebased = []
+            ready = True
+            for ref in old.get("depends_on", []):
+                candidates = self._dependency_redirects.get(_node_key(ref), [ref])
+                for candidate in candidates:
+                    current = current_by_id.get(candidate["node_id"])
+                    if current is None:
+                        ready = False; break
+                    new_ref = {key: current[key] for key in ("proof_id", "node_id", "version")}
+                    key = _node_key(new_ref)
+                    # Existing nodes outside the affected queue retain their prior
+                    # accepted status; queued nodes require an explicit new acceptance.
+                    if key in queued_refs and key not in active_refs:
+                        ready = False; break
+                    rebased.append(new_ref)
+                if not ready:
+                    break
+            if not ready:
+                continue
+            new = deepcopy(old)
+            new.pop("stale_reason", None)
+            new["version"] += 1
+            new["depends_on"] = rebased
+            new["lifecycle_state"] = "pending_evaluation"
+            self._nodes.append(new)
+            item["target"] = {key: new[key] for key in ("proof_id", "node_id", "version")}
+            item["status"] = "pending_evaluation"
+            self._events.append({"event": "descendant_rebased", "from": {
+                key: old[key] for key in ("proof_id", "node_id", "version")},
+                "to": deepcopy(item["target"])})
+            break
+
+    def _assert_final_target_path(self) -> None:
+        _require(self._revalidation_queue, "successful repair requires revalidation evidence")
+        _require(all(item["status"] == "active" for item in self._revalidation_queue),
+                 "final target path contains unresolved nodes")
+        self._assert_dag()
 
     def _find_current(self, node_id: int | str) -> dict[str, Any] | None:
         return next((node for node in self._nodes if node["node_id"] == node_id), None)
@@ -268,6 +391,7 @@ class M5RepairController:
         descendants = self._descendants(target)
         created_refs: list[dict[str, Any]] = []
         if operation == "delete":
+            self._dependency_redirects[_node_key(target)] = deepcopy(old.get("depends_on", []))
             self._nodes.remove(old)
             historical = deepcopy(old); historical["lifecycle_state"] = "deleted"
             self._history.append(historical)

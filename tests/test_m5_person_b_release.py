@@ -13,7 +13,8 @@ class M5PersonBReleaseTest(unittest.TestCase):
         release = json.loads(MANIFEST.read_text(encoding="utf-8"))
         self.assertEqual(release["schema_version"], "m5-person-b-release-0.1")
         self.assertEqual(release["release"], "m5-person-b-v0.1")
-        self.assertEqual(release["status"], "person_b_complete_pending_joint_pilot_acceptance")
+        self.assertEqual(release["status"],
+                         "person_b_and_controller_complete_pending_joint_pilot_acceptance")
         self.assertIn("m4-integrated-v1.1", release["frozen_predecessors"])
         self.assertGreaterEqual(release["tests"]["passed"], 276)
         self.assertTrue(release["known_limitations"])

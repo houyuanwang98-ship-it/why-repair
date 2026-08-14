@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-08-15 +08:00 — Complete M5 Controller revalidation gate
+
+- Separated mathematical PatchReview acceptance from whole-repair success.
+- Added trusted, topologically ordered Evaluator revalidation, deterministic stale-descendant version rebuilding, final affected-path checks, and fail-closed rejection/undetermined termination.
+- Hardened revalidation rollback, unaffected multi-dependency handling, delete dependency splicing, and added a strict machine-readable revalidation contract.
+- Added adversarial Controller regressions and kept M5 open for real-model pilot and Person A full-pilot review.
+
 ## 2026-08-14 +08:00 — Implement M5 Person A mathematical patch review
 
 - Added a separately versioned, fail-closed review contract bound to immutable certificate and patch digests without changing the frozen M1 Schema.

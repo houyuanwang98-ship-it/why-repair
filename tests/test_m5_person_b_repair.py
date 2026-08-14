@@ -1,6 +1,7 @@
 import copy
 import json
 import unittest
+from unittest.mock import patch as mock_patch
 from pathlib import Path
 
 from harness.m5_repair import M5RepairController, M5RepairError, RepairBudget
@@ -51,16 +52,26 @@ class M5PersonBRepairTest(unittest.TestCase):
                   "rejection_codes": codes, "reason": "accepted" if accepted else "rejected"}
         return context, review
 
+    def revalidation(self, target, *, verdict="accepted", evaluator="person-a", suffix="1"):
+        return {"schema_version": "0.1", "evaluation_id": "recheck-" + suffix,
+                "evaluator_id": evaluator, "target": copy.deepcopy(target),
+                "verdict": verdict, "reason": "independent node recheck"}
+
     def test_gold_replace_invalidates_full_descendant_closure(self):
         case = self.case(); controller = self.controller()
         controller.submit(case["patch"])
         result = controller.review_and_apply(case["review_context"], case["review"])
-        self.assertEqual(result["stop_reason"], "accepted")
+        self.assertIsNone(result["stop_reason"])
         self.assertEqual(controller._find_current(2)["version"], 2)
         self.assertEqual([node["node_id"] for node in result["stale"]], [3])
         self.assertEqual([item["target"]["node_id"] for item in result["revalidation_queue"]], [2, 3])
         self.assertEqual(result["revalidation_queue"][1]["status"], "blocked_by_stale_dependency")
         self.assertTrue(any(event["event"] == "cache_cleared" for event in controller.events))
+        result = controller.record_revalidation(self.revalidation(result["revalidation_queue"][0]["target"]))
+        self.assertEqual(result["revalidation_queue"][1]["target"]["version"], 2)
+        result = controller.record_revalidation(self.revalidation(
+            result["revalidation_queue"][1]["target"], suffix="2"))
+        self.assertEqual(result["stop_reason"], "accepted")
         self.assertEqual(controller.audit_manifest("gold-run")["release"], "m5-person-b-v0.1")
 
     def test_generator_cannot_accept_own_patch(self):
@@ -107,7 +118,7 @@ class M5PersonBRepairTest(unittest.TestCase):
         insert["target_dependencies_after"] = [{"proof_id": case["proof_id"], "node_id": "bridge", "version": 1}]
         controller = self.controller(); controller.submit(insert)
         result = controller.review_and_apply(*self.review_pair(controller, insert))
-        self.assertIsNotNone(controller._find_current("bridge")); self.assertEqual(result["stop_reason"], "accepted")
+        self.assertIsNotNone(controller._find_current("bridge")); self.assertIsNone(result["stop_reason"])
 
         delete = copy.deepcopy(case["patch"]); delete.update({"patch_id": "delete", "operation": "delete", "replacement_nodes": [], "target_dependencies_after": [], "used_dependencies": []})
         controller = self.controller(); controller.submit(delete)
@@ -148,6 +159,68 @@ class M5PersonBRepairTest(unittest.TestCase):
         self.assertEqual([node["version"] for node in current], [2])
         self.assertEqual(result["version_history"][0]["version"], 1)
         self.assertEqual(result["version_history"][0]["lifecycle_state"], "superseded")
+
+    def test_patch_review_alone_cannot_claim_success(self):
+        case = self.case(); controller = self.controller(); controller.submit(case["patch"])
+        result = controller.review_and_apply(*self.review_pair(controller, case["patch"]))
+        self.assertIsNone(result["stop_reason"])
+        self.assertEqual(result["revalidation_queue"][0]["status"], "pending_evaluation")
+
+    def test_revalidation_is_trusted_topological_and_fail_closed(self):
+        case = self.case(); controller = self.controller(); controller.submit(case["patch"])
+        result = controller.review_and_apply(*self.review_pair(controller, case["patch"]))
+        with self.assertRaisesRegex(M5RepairError, "topological order"):
+            controller.record_revalidation(self.revalidation(result["revalidation_queue"][1]["target"]))
+        with self.assertRaisesRegex(M5RepairError, "untrusted"):
+            controller.record_revalidation(self.revalidation(
+                result["revalidation_queue"][0]["target"], evaluator="outsider"))
+        result = controller.record_revalidation(self.revalidation(
+            result["revalidation_queue"][0]["target"], verdict="rejected"))
+        self.assertEqual(result["stop_reason"], "revalidation_failed")
+
+    def test_unaffected_dependency_does_not_deadlock_stale_descendant(self):
+        case = self.case()
+        case["nodes"].insert(1, {"proof_id": case["proof_id"], "node_id": 4, "version": 1,
+            "order_key": 15, "claim": "k is an integer.",
+            "self_contained_claim": "The witness k is an integer.",
+            "node_type": "premise", "depends_on": []})
+        case["nodes"][-1]["depends_on"].append(
+            {"proof_id": case["proof_id"], "node_id": 4, "version": 1})
+        controller = M5RepairController(proof_id=case["proof_id"], nodes=case["nodes"],
+                                        error_certificate=case["error_certificate"])
+        controller.submit(case["patch"])
+        result = controller.review_and_apply(*self.review_pair(controller, case["patch"]))
+        result = controller.record_revalidation(self.revalidation(
+            result["revalidation_queue"][0]["target"]))
+        self.assertEqual(result["revalidation_queue"][1]["status"], "pending_evaluation")
+        self.assertEqual({ref["node_id"] for ref in controller._find_current(3)["depends_on"]}, {2, 4})
+
+    def test_delete_splices_dependencies_and_revalidates_descendant(self):
+        case = self.case(); delete = copy.deepcopy(case["patch"])
+        delete.update({"patch_id": "delete-redundant", "operation": "delete",
+                       "replacement_nodes": [], "target_dependencies_after": [],
+                       "used_dependencies": []})
+        controller = self.controller(); controller.submit(delete)
+        result = controller.review_and_apply(*self.review_pair(controller, delete))
+        self.assertEqual(result["revalidation_queue"][0]["status"], "pending_evaluation")
+        self.assertEqual(result["revalidation_queue"][0]["target"]["node_id"], 3)
+        self.assertEqual([ref["node_id"] for ref in controller._find_current(3)["depends_on"]], [1])
+        result = controller.record_revalidation(self.revalidation(
+            result["revalidation_queue"][0]["target"]))
+        self.assertEqual(result["stop_reason"], "accepted")
+
+    def test_revalidation_exception_rolls_back_atomically(self):
+        case = self.case(); controller = self.controller(); controller.submit(case["patch"])
+        result = controller.review_and_apply(*self.review_pair(controller, case["patch"]))
+        result = controller.record_revalidation(self.revalidation(
+            result["revalidation_queue"][0]["target"]))
+        before = controller.snapshot()
+        final = self.revalidation(result["revalidation_queue"][1]["target"], suffix="2")
+        with mock_patch.object(controller, "_assert_final_target_path",
+                               side_effect=M5RepairError("forced final gate failure")):
+            with self.assertRaisesRegex(M5RepairError, "forced final gate failure"):
+                controller.record_revalidation(final)
+        self.assertEqual(controller.snapshot(), before)
 
     def test_generator_context_only_exposes_certificate_operations(self):
         controller = self.controller()
