@@ -69,6 +69,16 @@
 | [M5 人工审核：Person A 全量补丁复核](docs/m5_manual_review/02_person_a_full_patch_review.md) | 数学有效性、问题保持、新错误、最小性、false repair 和分歧处理 | 待独立 Person A 执行 |
 | [M5 人工校验：Pilot 成本与失败率](docs/m5_manual_review/03_pilot_cost_failure_audit.md) | token、延迟、计价、重试、失败分母和人工复算细则 | 待真实 Pilot 后执行 |
 | [M5 外部审核：Controller、缓存和指标](docs/m5_manual_review/04_external_controller_code_review.md) | 权限、版本、DAG、事务、缓存、指标、对抗测试和 finding 模板 | 待外部审查者执行 |
+| [M0 人工证据：严格双盲重标](docs/m5_manual_review/05_m0_blind_independent_reannotation.md) | A–J 全案例、隔离标注、锁定、分歧裁决和签名 | 待两名未暴露审核者 |
+| [M1 人工证据：A/B 契约签署](docs/m5_manual_review/06_m1_ab_contract_signoff.md) | 数学对象、执行对象、负向案例和 v0.3.1 双人签署 | 待真实 A/B 负责人 |
+| [M2 人工证据：来源与盲态 Gold](docs/m5_manual_review/07_m2_provenance_blind_gold_review.md) | 50 题逐题来源、资格、盲态标注、数学复核和裁决 | 历史盲态不可追溯，需前瞻重做 |
+| [M3 人工证据：held-out 盲测与审计](docs/m5_manual_review/08_m3_heldout_blind_evaluation_and_audit.md) | 50 题逐题工程审计、新 held-out 隔离、输出锁定和人工评分 | 历史运行非盲 |
+| [M4 人工证据：双外部反例签署](docs/m5_manual_review/09_m4_external_counterexample_signoff.md) | 11 个反例逐题双人复核、独立锁定和密码学签名 | 两个外部 slot 均 pending |
+| [M4 人工证据：语义转换忠实性](docs/m5_manual_review/10_m4_semantic_translation_fidelity.md) | 11 题自然语言、结构、前提、目标、逻辑连接词和范围映射 | 待真人逐题确认 |
+| [M4 人工证据：前瞻性盲测](docs/m5_manual_review/11_m4_prospective_blind_run.md) | 新挑战、Gold 保管、候选先锁定、后揭示与独立评分 | 现有语料已暴露 |
+| [跨 M0–M5：Person A 按案例验证包](docs/m5_manual_review/12_person_a_verification_by_case.md) | A–J、50 题、11 反例及补丁的纯数学审核职责 | 与 B/Controller 分离 |
+| [跨 M0–M5：Person B 按案例验证包](docs/m5_manual_review/13_person_b_verification_by_case.md) | 数据、模型、执行、成本和证据完整性职责 | 不含数学接受权 |
+| [跨 M0–M5：Controller 按案例验证包](docs/m5_manual_review/14_controller_verification_by_case.md) | 状态、版本、依赖、缓存、重验、回滚和审计链职责 | 不作数学裁决 |
 | [M4 Person B 逆向复核](docs/milestones/M04_person_b_cross_review_and_joint_acceptance.md) | 目标、结构、解释与 theorem digest 攻击面复核及修复 | A/B 联合通过 |
 | [M4 v1.0 验收清单](data/benchmarks/m4/integrated_acceptance_v1.json) | Person A 初始验收的历史冻结边界 | 保留，不原地改写 |
 | [M4 v1.1 联合验收清单](data/benchmarks/m4/integrated_acceptance_v1_1.json) | Gold 覆盖、双人签核、限制及关键产物 SHA-256 冻结边界 | `m4-integrated-v1.1` A/B 联合接受 |
