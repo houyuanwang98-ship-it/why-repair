@@ -44,6 +44,7 @@
 | [M4 Person B 可执行核验](docs/milestones/M04_person_b_executable_verifier.md) | 精确算术重放、链式审计、批量运行与 theorem-level 登记 | `m4-counterexample-person-b-v0.1` 已实现，待 Person A 交叉验收 |
 | [M4 Person B 核验 Schema](schemas/m4_person_b_verification_v0_1.schema.json) | 可执行核验状态与 SHA-256 审计记录契约 | `v0.1` |
 | [M4 Person B 转换协议](prompts/m4_counterexample_person_b.md) | 将已审数学陈述保守转换为精确表达式并交接审计记录 | `v0.1` |
+| [M4 Controller 衔接](docs/milestones/M04_controller_handoff.md) | 上下文冻结、B 执行、A 独立复核、事务回滚与统一审计链 | `m4-counterexample-controller-v0.1` 已实现 |
 | [M3 分歧人工审计](data/benchmarks/m3/experiments/full50_codex_v1/HUMAN_AUDIT.md) | 全部分歧裁定及 `m2-028` 已知 Gold 缺陷 | Person B 审计完成 |
 | [M3 Evaluator Gold](data/benchmarks/m3/gold/evaluator_pilot_v1.jsonl) | 50 题证明级 Gold 与 39 题、98 节点的节点级 Gold | `m3-evaluator-gold-0.1` |
 | [M3 指标 Schema](schemas/m3_evaluator_report_v0_1.schema.json) | Evaluator v1 模块化报告契约 | `v0.1` |

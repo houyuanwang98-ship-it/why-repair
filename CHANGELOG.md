@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-08-14 +08:00 — Complete M4 Controller A/B handoff
+
+- Added one deterministic M4 Controller for context freeze, Person B exact
+  verification, Person A independent acceptance, and terminal-state recording.
+- Moved local and theorem-level certificates behind the same orchestration API,
+  with optional current-node checks against the frozen v0.3 Controller.
+- Added atomic rollback of theorem registration, audit records and events;
+  stale, duplicate, identity-conflicting, failed and undetermined inputs fail closed.
+- Exported deep-copy snapshots with a revalidated hash chain and added focused
+  end-to-end regressions for the complete A→B→A seam.
+
 ## 2026-08-14 +08:00 — Implement M4 Person B executable verification
 
 - Added a safe, fail-closed exact arithmetic verifier using rational arithmetic,
