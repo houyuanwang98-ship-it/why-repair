@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-08-14 +08:00 — Implement M4 Person A counterexample gate
+
+- Defined the exclusive `local_claim`/`false_local_claim` and
+  `global_theorem`/`false_theorem` scope mapping without changing frozen v0.3.
+- Added a fail-closed Person A review gate requiring the complete direct-premise
+  frontier, current assumption digest, and independent verification.
+- Added the M4 review prompt, handoff protocol, and positive/negative tests;
+  executable checking and audit logging remain assigned to Person B.
+- Added a portable review-result Schema, enforced reviewer/verifier separation,
+  and bound scope regressions to frozen M2 samples `m2-021` and `m2-034`.
+
 ## 2026-08-14 +08:00 — Freeze integrated M3 A/B/Controller release
 
 - Added the immutable `m3-integrated-v1.0` release boundary above the unchanged
