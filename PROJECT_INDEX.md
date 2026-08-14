@@ -23,6 +23,9 @@
 | [M0 范围与术语](docs/milestones/M00_scope_and_terminology.md) | 研究问题、定义与验收案例 | `v0.1` 已冻结 |
 | [M0 裁决记录](docs/milestones/M00_adjudication.md) | 双人评审分歧与最终裁决 | 已完成 |
 | [M0 评审完整性说明](docs/milestones/M00_integrity_limitation.md) | 区分工程契约完成与无法追溯证明的严格双盲证据 | 限制生效 |
+| [M0 v0.1 证据状态勘误](docs/milestones/M00_v0_1_evidence_erratum.md) | 明确 frozen 工程语义与严格盲审门失败之间的解释优先级 | 当前有效 |
+| [M0 逐角色复核](docs/milestones/M00_role_by_role_revalidation.md) | 依次验证 Person A、Person B、Evaluator、Repair Generator 与 Controller，并逐条映射 M0 验收门 | 工程通过但严格研究证据不通过 |
+| [M0 逐角色复核 Schema](schemas/m0_role_revalidation_v1.schema.json) | 强制每条记录包含标准十字段并拒绝额外字段 | `v1.1` |
 | [M1 共享契约与 Controller](docs/milestones/M01_shared_contracts_and_controller.md) | Schema、版本化状态机与无模型回放 | `v0.3` 已冻结 |
 | [M1 冻结记录](docs/milestones/M01_freeze_record.md) | 冻结范围、验证依据与变更规则 | 已完成 |
 | [M1 A/B 集成](docs/milestones/M01_person_a_b_integration.md) | Person A checker 到证书、Person B 补丁及独立复核的衔接 | `v0.3` 已完成 |

@@ -1,0 +1,100 @@
+{
+  "schema_version": "m0-role-revalidation-1.1",
+  "validation_date": "2026-08-14",
+  "engineering_exit": "pass_with_declared_limitation",
+  "strict_research_evidence_exit": "fail",
+  "records": [
+    {
+      "validation_id": "M0-RV-PA-001",
+      "target": "Person A M0 mathematical-semantics review at frozen contract v0.1",
+      "owner": "repository_m0_revalidation_auditor",
+      "reviewer": "unassigned_independent_human_reviewer",
+      "method": "documentary review against the M0 execution sequence and acceptance plan",
+      "inputs": ["docs/milestones/M00_review_person_a.md", "docs/milestones/M00_adjudication.md", "docs/milestones/M00_scope_and_terminology.md"],
+      "result": "needs_revision",
+      "evidence": ["Ten raw case responses are preserved", "Cases C/E/F contain positions superseded by adjudication", "Case J and checklist questions 1/7 have no substantive raw answer"],
+      "limitations": ["Blind independence is not reconstructable", "No new independent human reviewer signed this self-audit"],
+      "timestamp": "2026-08-14T19:56:43+08:00"
+    },
+    {
+      "validation_id": "M0-RV-PB-001",
+      "target": "Person B M0 execution-semantics review at frozen contract v0.1",
+      "owner": "repository_m0_revalidation_auditor",
+      "reviewer": "unassigned_independent_human_reviewer",
+      "method": "documentary review against the M0 execution sequence and acceptance plan",
+      "inputs": ["docs/milestones/M00_review_person_b.md", "docs/milestones/M00_adjudication.md", "docs/milestones/M00_integrity_limitation.md"],
+      "result": "pass_with_limitation",
+      "evidence": ["All ten cases and seven checklist questions are addressed", "Mechanical and mathematical checks are separated", "Prior visibility of existing materials is disclosed"],
+      "limitations": ["The record is not valid strict-blind evidence", "No new independent human reviewer signed this self-audit"],
+      "timestamp": "2026-08-14T19:56:43+08:00"
+    },
+    {
+      "validation_id": "M0-RV-EVAL-001",
+      "target": "Evaluator Agent M0 authority and information-boundary contract v0.1",
+      "owner": "repository_m0_revalidation_auditor",
+      "reviewer": "automated_contract_regression",
+      "method": "contract traceability review with later implementation behavior excluded",
+      "inputs": ["docs/milestones/M00_scope_and_terminology.md", "docs/project_validation_and_acceptance_plan.md"],
+      "result": "pass",
+      "evidence": ["Evaluator may adjudicate but may not silently edit", "Future-node and evidence-free acceptance paths are prohibited", "Lifecycle states are excluded from mathematical verdicts"],
+      "limitations": ["M3, not M0, validates staged model calls and empirical behavior"],
+      "timestamp": "2026-08-14T19:56:43+08:00"
+    },
+    {
+      "validation_id": "M0-RV-REPAIR-001",
+      "target": "Repair Generator Agent M0 authority and isolation contract v0.1",
+      "owner": "repository_m0_revalidation_auditor",
+      "reviewer": "automated_contract_regression",
+      "method": "contract traceability review with model-backed generation excluded",
+      "inputs": ["docs/milestones/M00_scope_and_terminology.md", "docs/project_validation_and_acceptance_plan.md"],
+      "result": "pass",
+      "evidence": ["Repair Generator proposes but cannot accept patches", "Hidden context and problem changes are prohibited", "Repair success requires independent review and descendant revalidation"],
+      "limitations": ["M5, not M0, validates generation, budgets and repair-loop behavior"],
+      "timestamp": "2026-08-14T19:56:43+08:00"
+    },
+    {
+      "validation_id": "M0-RV-CTRL-001",
+      "target": "Controller M0 deterministic authority boundary v0.1",
+      "owner": "repository_m0_revalidation_auditor",
+      "reviewer": "automated_contract_regression",
+      "method": "authority-boundary and state-category traceability review",
+      "inputs": ["docs/milestones/M00_scope_and_terminology.md", "docs/project_validation_and_acceptance_plan.md", "data/benchmarks/m0_m4_completion_audit_v1.json"],
+      "result": "pass",
+      "evidence": ["Controller cannot create mathematical verdicts", "Verdict, error type, scope and lifecycle are distinct", "M0.controller=false means implementation is not required at M0"],
+      "limitations": ["Complete implementation is not applicable to M0 and is validated from M1 onward"],
+      "timestamp": "2026-08-14T19:56:43+08:00"
+    },
+    {
+      "validation_id": "M0-RV-GATE-001",
+      "target": "M0 strict blind independent-annotation acceptance gate",
+      "owner": "repository_m0_revalidation_auditor",
+      "reviewer": "unassigned_independent_human_reviewer",
+      "method": "provenance audit of raw reviews and adjudication chronology",
+      "inputs": ["docs/milestones/M00_review_person_a.md", "docs/milestones/M00_review_person_b.md", "docs/milestones/M00_adjudication.md", "docs/milestones/M00_integrity_limitation.md"],
+      "result": "fail",
+      "evidence": ["Person B records prior visibility of Person A and adjudication material", "No isolation log or sealed submissions exist"],
+      "limitations": ["Historical independence cannot be repaired retrospectively; fresh isolated reviewers are required"],
+      "timestamp": "2026-08-14T19:56:43+08:00"
+    }
+  ],
+  "requirement_results": {
+    "target_scope_and_evidence_strength": "pass",
+    "stable_core_terms": "pass_with_limitation",
+    "separated_state_categories": "pass",
+    "ten_boundary_cases": "pass",
+    "blind_independent_annotation": "fail",
+    "reasons_before_comparison": "undetermined",
+    "written_adjudication": "pass",
+    "third_expert_escalation": "not_applicable",
+    "controller_authority_boundary": "pass",
+    "expressible_nonoverlapping_enums": "pass",
+    "research_question_metric_mapping": "pass",
+    "freeze_and_change_control": "pass_with_limitation"
+  },
+  "limitations": [
+    "Strict blind-review independence cannot be reconstructed from the existing handoff evidence.",
+    "The original Person A response is incomplete and contains positions later superseded by written adjudication.",
+    "M0 validates authority contracts, not later-stage implementations.",
+    "This self-audit has automated regression review but no new independent human signature."
+  ]
+}

@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-08-14 +08:00 — Revalidate M0 role by role
+
+- Added a requirement-level M0 revalidation for Person A, Person B, Evaluator,
+  Repair Generator, and Controller without rewriting either raw review.
+- Separated the usable adjudicated engineering contract from the failed strict
+  blind-review evidence gate and clarified that M0 tests Controller authority,
+  not a complete Controller implementation.
+- Added a machine-readable validation record and regression tests for the M0
+  role order, outcomes, and evidence limitation.
+- Upgraded the record to v1.1 with all ten mandatory validation fields, a
+  fail-closed JSON Schema, explicit missing-human-reviewer disclosure, and an
+  evidence erratum that resolves frozen-document status ambiguity.
+
 ## 2026-08-14 +08:00 — Audit M0–M4 cross-milestone consistency
 
 - Recorded that M0's engineering contract is usable but its strict blind-review
