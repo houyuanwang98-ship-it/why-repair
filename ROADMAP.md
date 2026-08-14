@@ -10,7 +10,7 @@
 | M3 | 第 4–6 周 | Evaluator v1 | **工程链路完成：Evaluator `m3-evaluator-v1.0` 与 A/B/Controller 集成包 `m3-integrated-v1.1` 已冻结；v1.1 仅重验 M1 v0.3.1 兼容补全，`m2-028` 语义勘误和冻结分数不变** |
 | M4 | 第 6–8 周 | 反例证书与核验工具 | **已完成：`m4-integrated-v1.1`；11/11 冻结 Gold 有效反例及 `m2-034` 局部回归通过 A/B/Controller 双向复核与联合验收，209 项测试通过** |
 | M5 | 第 7–10 周 | Repair Generator 与闭环 | **Controller 阶段完成：版本、撤销、重试、拓扑后代重验与最终路径门已实现；仍待真实 Repair Generator pilot、Person A 全量补丁复核及联合端到端验收** |
-| M6 | 第 10–12 周 | 基线与消融 | **Person A v0.1 预注册协议与盲态错误分析模板内容已锁定，待真人摘要签署；M5 人工门未完成，基线、消融和正式运行仍禁止启动** |
+| M6 | 第 10–12 周 | 基线与消融 | **Person A v0.1 协议、Person B 九配置及 Controller 冻结/账本/统计 fixture 已实现；待真人签署与 M5 开门，smoke、Pilot、正式运行仍禁止启动** |
 | M7 | 第 12–14 周 | 扩展 benchmark 与多模型实验 | `RunManifest` 可复现，核心指标含置信区间 |
 | M8 | 第 14–16 周 | 错误分析、论文和发布材料 | 论文主张可追溯到表格，限制与失败案例完整 |
 

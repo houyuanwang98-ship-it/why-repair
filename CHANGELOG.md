@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-08-15 — M6 Controller fixture-only protocol freeze and run ledger
+
+- Added deterministic artifact/config/sample freezing and a content-bound Controller Manifest candidate.
+- Added complete experiment-by-sample run-ledger validation that preserves failed attempts, retries, timeouts, token use, cost, and latency.
+- Added intention-to-treat aggregation, seeded paired bootstrap intervals, and within-hypothesis Holm adjustment.
+- Added Controller milestone documentation and tests while keeping real M6 execution fail-closed behind the M5 and human-signature gates.
+
 ## 2026-08-15 - M6 Person B fixture-only experiment surface
 
 - Registered the nine locked baseline, ablation, and full-system method surfaces with unique content-bound experiment IDs.

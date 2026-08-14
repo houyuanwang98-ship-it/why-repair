@@ -8,7 +8,7 @@ Dependency-guided diagnosis and minimal repair for natural-language mathematical
 
 当前 M0–M5 已完成研究契约、共享 Schema、50 题代数 Pilot Gold、分阶段 Evaluator、可执行反例核验，以及 Repair Generator—独立复核—后代重验的确定性工程闭环。M5 的自动化与 Gold 工程验收已经通过，但真实生产模型 Pilot、全量人工数学复核、真实成本审计和外部代码审查仍需独立人工证据，因此项目没有提前把 M5 标记为整体完成，也尚未开放 M6 主实验入口。
 
-M6 Person A 的结果前预注册协议候选和盲态错误分析模板内容已锁定；Person B 已补充九种基线/消融的 fixture-only 工程候选、预算与功效输入候选以及运行门测试。两者仍等待真实签署和 M5 开门，不构成 M6 实验结果，也不授权真实运行。
+M6 Person A 的结果前预注册协议候选和盲态错误分析模板内容已锁定；Person B 已补充九种基线/消融的 fixture-only 工程候选、预算与功效输入候选以及运行门测试；Controller 已补充 artifact/配置/样本冻结、全量运行账本、失败与重试保留、完整性审计、配对 bootstrap 和 Holm 校正 fixture。三方仍等待真实签署和 M5 开门，不构成 M6 实验结果，也不授权真实运行。
 
 ## 推荐的 M0–M8 研究总顺序
 
@@ -156,6 +156,7 @@ Fill `outputs/algebra_pilot_session/pending.json`, then run the same command aga
 - [Usage guide](docs/usage-guide.md): installation, commands, resumable sessions, evaluation, and input data.
 - [Development guide](docs/development-guide.md): architecture, schemas, retrieval, diagnosis, and theorem-bank maintenance.
 - [Changelog](CHANGELOG.md): dated releases grouped by change type.
+- [M6 Controller protocol freeze and run ledger](docs/milestones/M06_controller_protocol_freeze_and_run_ledger.md): fixture-only manifest, coverage, failure preservation, bootstrap, and Holm machinery.
 - [Skill usage](docs/skill_usage.md): practical Skill workflow.
 - [Annotation guideline](docs/annotation_guideline.md): dataset labeling conventions.
 - [Training objectives](docs/training_objectives.md): planned learning objectives.
