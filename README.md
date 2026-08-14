@@ -8,7 +8,7 @@ Dependency-guided diagnosis and minimal repair for natural-language mathematical
 
 当前 M0–M5 已完成研究契约、共享 Schema、50 题代数 Pilot Gold、分阶段 Evaluator、可执行反例核验，以及 Repair Generator—独立复核—后代重验的确定性工程闭环。M5 的自动化与 Gold 工程验收已经通过，但真实生产模型 Pilot、全量人工数学复核、真实成本审计和外部代码审查仍需独立人工证据，因此项目没有提前把 M5 标记为整体完成，也尚未开放 M6 主实验入口。
 
-M6 Person A 的结果前预注册协议候选和盲态错误分析模板内容已锁定，等待真实 Person A 对精确摘要签署后正式冻结；这不改变上述 M5 阻塞状态，也不构成 M6 实验结果。
+M6 Person A 的结果前预注册协议候选和盲态错误分析模板内容已锁定；Person B 已补充九种基线/消融的 fixture-only 工程候选、预算与功效输入候选以及运行门测试。两者仍等待真实签署和 M5 开门，不构成 M6 实验结果，也不授权真实运行。
 
 ## 推荐的 M0–M8 研究总顺序
 

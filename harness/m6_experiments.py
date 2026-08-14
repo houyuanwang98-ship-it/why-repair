@@ -1,0 +1,320 @@
+"""M6 Person B experiment definitions and pre-entry fixture machinery.
+
+This module deliberately cannot run a pilot while the bound M5 gate is closed.
+It implements configuration, isolation and scoring contracts only; model/provider
+execution remains a later Controller action after human sign-off.
+"""
+
+from __future__ import annotations
+
+from dataclasses import asdict, dataclass
+import hashlib
+import json
+from pathlib import Path
+from typing import Any, Iterable, Mapping
+
+
+M6_PERSON_B_VERSION = "m6-person-b-0.1"
+METHOD_IDS = (
+    "direct_judgment", "self_reflection", "generator_critic", "no_graph",
+    "no_structured_certificate", "no_counterexample_protocol",
+    "no_descendant_invalidation", "single_round_repair", "full_system",
+)
+FAILURE_TYPES = {
+    "api_error", "timeout", "budget_exhausted", "schema_invalid",
+    "tool_error", "retry_exhausted",
+}
+GOLD_VERDICTS = {"accepted", "gap", "invalid", "undetermined"}
+PREDICTED_VERDICTS = GOLD_VERDICTS | {"accepted_with_gap"}
+
+
+class M6ExperimentError(ValueError):
+    """Raised when a proposed M6 configuration violates the locked protocol."""
+
+
+@dataclass(frozen=True)
+class MethodSpec:
+    method_id: str
+    sees_nodes: bool
+    sees_graph: bool
+    structured_certificate: bool
+    counterexample_protocol: bool
+    descendant_invalidation: bool
+    produces_patch: bool
+    max_patch_rounds: int
+    role_calls: int
+
+
+METHOD_SPECS = {
+    spec.method_id: spec for spec in (
+        MethodSpec("direct_judgment", False, False, False, False, False, False, 0, 1),
+        MethodSpec("self_reflection", False, False, False, False, False, False, 0, 2),
+        MethodSpec("generator_critic", False, False, False, False, False, False, 0, 2),
+        MethodSpec("no_graph", True, False, True, True, False, True, 3, 4),
+        MethodSpec("no_structured_certificate", True, True, False, True, True, True, 3, 4),
+        MethodSpec("no_counterexample_protocol", True, True, True, False, True, True, 3, 4),
+        MethodSpec("no_descendant_invalidation", True, True, True, True, False, True, 3, 4),
+        MethodSpec("single_round_repair", True, True, True, True, True, True, 1, 4),
+        MethodSpec("full_system", True, True, True, True, True, True, 3, 4),
+    )
+}
+ABLATION_DIFFERENCES = {
+    "no_graph": {"sees_graph", "descendant_invalidation"},
+    "no_structured_certificate": {"structured_certificate"},
+    "no_counterexample_protocol": {"counterexample_protocol"},
+    "no_descendant_invalidation": {"descendant_invalidation"},
+    "single_round_repair": {"max_patch_rounds"},
+}
+
+
+def validate_ablation_purity() -> None:
+    """Ensure every causal ablation differs from the full method only as locked."""
+    full = asdict(METHOD_SPECS["full_system"])
+    for method_id, allowed in ABLATION_DIFFERENCES.items():
+        candidate = asdict(METHOD_SPECS[method_id])
+        differences = {key for key in full if key != "method_id" and full[key] != candidate[key]}
+        if differences != allowed:
+            raise M6ExperimentError(
+                f"{method_id} changes {sorted(differences)}; expected exactly {sorted(allowed)}"
+            )
+
+
+def canonical_digest(value: Any) -> str:
+    payload = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def build_experiment_config(
+    method_id: str, *, model_id: str | Mapping[str, str], prompt_digest: str,
+    dataset_digest: str, theorem_bank_digest: str, tool_digest: str,
+    code_digest: str = "fixture-code", scorer_digest: str = "fixture-scorer",
+    schema_digest: str = "fixture-schema", sampling_digest: str = "fixture-sampling",
+    truncation_digest: str = "fixture-truncation", token_limit: int,
+    call_limit: int, timeout_seconds: int, retry_limit: int = 1,
+    role_mode: str = "same_model",
+) -> dict[str, Any]:
+    """Build one immutable, uniquely identified, budget-comparable config."""
+    if method_id not in METHOD_SPECS:
+        raise M6ExperimentError(f"unknown method_id: {method_id!r}")
+    if role_mode not in {"same_model", "different_models"}:
+        raise M6ExperimentError("role_mode must be same_model or different_models")
+    if isinstance(model_id, str):
+        models = {"generator": model_id, "critic": model_id}
+    elif isinstance(model_id, Mapping):
+        models = dict(model_id)
+    else:
+        models = {}
+    if set(models) != {"generator", "critic"} or any(not isinstance(v, str) or not v for v in models.values()):
+        raise M6ExperimentError("model_id must be a nonempty string or exact generator/critic mapping")
+    if role_mode == "same_model" and len(set(models.values())) != 1:
+        raise M6ExperimentError("same_model requires identical generator and critic models")
+    if role_mode == "different_models" and len(set(models.values())) != 2:
+        raise M6ExperimentError("different_models requires distinct generator and critic models")
+    if any(not isinstance(v, str) or not v for v in (
+        prompt_digest, dataset_digest, theorem_bank_digest, tool_digest,
+        code_digest, scorer_digest, schema_digest, sampling_digest, truncation_digest,
+    )):
+        raise M6ExperimentError("model and digest fields must be nonempty strings")
+    for name, value in {
+        "token_limit": token_limit, "call_limit": call_limit,
+        "timeout_seconds": timeout_seconds,
+    }.items():
+        if not isinstance(value, int) or isinstance(value, bool) or value < 1:
+            raise M6ExperimentError(f"{name} must be a positive integer")
+    if not isinstance(retry_limit, int) or isinstance(retry_limit, bool) or retry_limit < 0:
+        raise M6ExperimentError("retry_limit must be a nonnegative integer")
+    body = {
+        "schema_version": M6_PERSON_B_VERSION,
+        "method": asdict(METHOD_SPECS[method_id]),
+        "models": models, "role_mode": role_mode,
+        "prompt_digest": prompt_digest, "dataset_digest": dataset_digest,
+        "theorem_bank_digest": theorem_bank_digest, "tool_digest": tool_digest,
+        "code_digest": code_digest, "scorer_digest": scorer_digest,
+        "schema_digest": schema_digest, "sampling_digest": sampling_digest,
+        "truncation_digest": truncation_digest,
+        "budget": {"total_tokens": token_limit, "model_calls": call_limit,
+                   "timeout_seconds": timeout_seconds, "retry_limit": retry_limit},
+    }
+    return {**body, "experiment_id": f"m6-{method_id}-{canonical_digest(body)[:16]}"}
+
+
+def validate_experiment_config(config: Mapping[str, Any]) -> dict[str, Any]:
+    """Reject stale, incomplete, or post-build-mutated experiment configs."""
+    row = dict(config)
+    expected_fields = {
+        "schema_version", "method", "models", "role_mode", "prompt_digest",
+        "dataset_digest", "theorem_bank_digest", "tool_digest", "code_digest",
+        "scorer_digest", "schema_digest", "sampling_digest", "truncation_digest",
+        "budget", "experiment_id",
+    }
+    if set(row) != expected_fields:
+        raise M6ExperimentError(f"config fields must be exactly {sorted(expected_fields)}")
+    if row["schema_version"] != M6_PERSON_B_VERSION:
+        raise M6ExperimentError("unsupported schema_version")
+    method = row.get("method")
+    method_id = method.get("method_id") if isinstance(method, Mapping) else None
+    if method_id not in METHOD_SPECS or method != asdict(METHOD_SPECS[method_id]):
+        raise M6ExperimentError("method spec is unknown or mutated")
+    models = row.get("models")
+    if not isinstance(models, Mapping) or set(models) != {"generator", "critic"} or any(
+        not isinstance(value, str) or not value for value in models.values()
+    ):
+        raise M6ExperimentError("models must bind exact nonempty generator/critic IDs")
+    if row["role_mode"] == "same_model" and len(set(models.values())) != 1:
+        raise M6ExperimentError("same_model config contains different models")
+    if row["role_mode"] == "different_models" and len(set(models.values())) != 2:
+        raise M6ExperimentError("different_models config does not contain distinct models")
+    if row["role_mode"] not in {"same_model", "different_models"}:
+        raise M6ExperimentError("unknown role_mode")
+    digest_fields = expected_fields - {"schema_version", "method", "models", "role_mode", "budget", "experiment_id"}
+    if any(not isinstance(row[field], str) or not row[field] for field in digest_fields):
+        raise M6ExperimentError("all artifact digest fields must be nonempty strings")
+    budget = row.get("budget")
+    if not isinstance(budget, Mapping) or set(budget) != {"total_tokens", "model_calls", "timeout_seconds", "retry_limit"}:
+        raise M6ExperimentError("budget has an invalid shape")
+    for key in ("total_tokens", "model_calls", "timeout_seconds"):
+        if not isinstance(budget[key], int) or isinstance(budget[key], bool) or budget[key] < 1:
+            raise M6ExperimentError(f"budget.{key} must be a positive integer")
+    if not isinstance(budget["retry_limit"], int) or isinstance(budget["retry_limit"], bool) or budget["retry_limit"] < 0:
+        raise M6ExperimentError("budget.retry_limit must be a nonnegative integer")
+    body = {key: row[key] for key in row if key != "experiment_id"}
+    expected_id = f"m6-{method_id}-{canonical_digest(body)[:16]}"
+    if row["experiment_id"] != expected_id:
+        raise M6ExperimentError("experiment_id does not bind current config content")
+    return row
+
+
+def validate_comparison(configs: Iterable[Mapping[str, Any]]) -> None:
+    """Enforce shared inputs and hard budgets across a comparison family."""
+    validate_ablation_purity()
+    rows = [validate_experiment_config(row) for row in configs]
+    if not rows:
+        raise M6ExperimentError("comparison requires at least one config")
+    if len({row.get("experiment_id") for row in rows}) != len(rows):
+        raise M6ExperimentError("experiment_id values must be unique")
+    shared = ("models", "role_mode", "dataset_digest", "theorem_bank_digest", "tool_digest", "code_digest",
+              "scorer_digest", "schema_digest", "sampling_digest", "truncation_digest", "budget")
+    for field in shared:
+        if len({canonical_digest(row.get(field)) for row in rows}) != 1:
+            raise M6ExperimentError(f"comparison configs differ on {field}")
+
+
+def cache_fingerprint(config: Mapping[str, Any], sample_id: str, serialized_input: Any) -> str:
+    """Bind cache entries to method/config/prompt/model/data/tool and exact input."""
+    if not isinstance(sample_id, str) or not sample_id:
+        raise M6ExperimentError("sample_id must be nonempty")
+    row = validate_experiment_config(config)
+    required = set(row)
+    return canonical_digest({key: row[key] for key in sorted(required)} |
+                            {"sample_id": sample_id, "serialized_input": serialized_input})
+
+
+def assert_execution_allowed(m5_gate: Mapping[str, Any], signatures: Mapping[str, Any], *, fixture_only: bool) -> None:
+    """Fail closed for any non-fixture execution until every prerequisite is signed."""
+    if fixture_only:
+        return
+    if m5_gate.get("m6_entry_allowed") is not True:
+        raise M6ExperimentError("M6 execution blocked: M5 m6_entry_allowed is not true")
+    expected = {"person_a": "signed", "person_b_cross_review": "signed",
+                "controller_manifest": "frozen"}
+    if any(signatures.get(key) != value for key, value in expected.items()):
+        raise M6ExperimentError("M6 execution blocked: required signatures/manifest are incomplete")
+
+
+def score_records(records: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
+    """Score hand fixtures using the locked M6 intention-to-treat definitions."""
+    rows = [dict(row) for row in records]
+    if len({row.get("sample_id") for row in rows}) != len(rows):
+        raise M6ExperimentError("sample_id values must be nonempty and unique")
+    for row in rows:
+        if not isinstance(row.get("sample_id"), str) or not row["sample_id"]:
+            raise M6ExperimentError("sample_id values must be nonempty and unique")
+        if row.get("failure_type") is not None and row["failure_type"] not in FAILURE_TYPES:
+            raise M6ExperimentError("unknown failure_type")
+        if row.get("gold_verdict") not in GOLD_VERDICTS:
+            raise M6ExperimentError("unknown gold_verdict")
+        if row.get("predicted_verdict") is not None and row["predicted_verdict"] not in PREDICTED_VERDICTS:
+            raise M6ExperimentError("unknown predicted_verdict")
+        for field in ("gold_first_error", "predicted_first_error"):
+            value = row.get(field)
+            if value is not None and (not isinstance(value, int) or isinstance(value, bool) or value < 1):
+                raise M6ExperimentError(f"{field} must be null or a positive node id")
+        if row.get("gold_first_error_evaluable") is True and row.get("gold_first_error") is None:
+            raise M6ExperimentError("evaluable Gold first error requires a node id")
+        if row.get("gold_first_error_reason") == "absent" and row.get("gold_first_error") is not None:
+            raise M6ExperimentError("absent Gold first error cannot have a node id")
+        if row.get("failure_type") is not None and any(row.get(field) is not None for field in ("predicted_verdict", "predicted_first_error")):
+            raise M6ExperimentError("infrastructure failure cannot contain a mathematical prediction")
+        if row.get("failure_type") is not None and any(row.get(field) is True for field in (
+            "claimed_repair_success", "patch_applied", "verified_repair_success", "false_repair",
+        )):
+            raise M6ExperimentError("infrastructure failure cannot claim a patch outcome")
+        if row.get("verified_repair_success") is True and not (
+            row.get("gold_repairability") == "repairable"
+            and row.get("claimed_repair_success") is True
+            and row.get("patch_applied") is True
+            and row.get("false_repair") is not True
+        ):
+            raise M6ExperimentError("verified repair success has inconsistent prerequisites")
+        if row.get("false_repair") is True and row.get("claimed_repair_success") is not True:
+            raise M6ExperimentError("false repair requires a claimed repair success")
+        new_error_count = row.get("new_error_count", 1 if row.get("new_error_introduced") is True else 0)
+        if not isinstance(new_error_count, int) or isinstance(new_error_count, bool) or new_error_count < 0:
+            raise M6ExperimentError("new_error_count must be a nonnegative integer")
+        if (new_error_count > 0) != (row.get("new_error_introduced") is True):
+            raise M6ExperimentError("new_error_count and new_error_introduced disagree")
+
+    def ratio(n: int, d: int) -> float | str:
+        return n / d if d else "undefined (0/0)"
+
+    evaluable = [r for r in rows if r.get("gold_first_error_evaluable") is True]
+    exact = sum(r.get("failure_type") is None and r.get("predicted_first_error") == r.get("gold_first_error") for r in evaluable)
+    absent = [r for r in rows if r.get("gold_first_error_reason") == "absent"]
+    absent_fp = sum(r.get("failure_type") is None and r.get("predicted_first_error") is not None for r in absent)
+    invalid = [r for r in rows if r["gold_verdict"] == "invalid"]
+    false_accepts = sum(r.get("failure_type") is None and r.get("predicted_verdict") in {"accepted", "accepted_with_gap"} for r in invalid)
+    unsupported_gold = [r for r in rows if r["gold_verdict"] in {"gap", "undetermined"}]
+    unsupported = sum(r.get("failure_type") is None and r.get("predicted_verdict") in {"accepted", "accepted_with_gap"} for r in unsupported_gold)
+    counterexample_eligible = [r for r in rows if r.get("gold_counterexample_eligible") is True]
+    false_claim_detected = sum(r.get("failure_type") is None and r.get("predicted_verdict") == "invalid" for r in counterexample_eligible)
+    if any(
+        not isinstance(r.get(field, 0), int) or isinstance(r.get(field, 0), bool) or r.get(field, 0) < 0
+        for r in rows for field in ("counterexample_candidate_count", "valid_counterexample_count")
+    ) or any(r.get("valid_counterexample_count", 0) > r.get("counterexample_candidate_count", 0) for r in rows):
+        raise M6ExperimentError("counterexample counts are invalid")
+    counterexample_candidates = sum(r.get("counterexample_candidate_count", 0) for r in rows if r.get("failure_type") is None)
+    valid_counterexamples = sum(r.get("valid_counterexample_count", 0) for r in rows if r.get("failure_type") is None)
+    covered = sum(r.get("failure_type") is None and r.get("valid_counterexample_count", 0) > 0 for r in counterexample_eligible)
+    repairable = [r for r in rows if r.get("gold_repairability") == "repairable"]
+    verified = sum(r.get("failure_type") is None and r.get("verified_repair_success") is True for r in repairable)
+    claimed = [r for r in rows if r.get("claimed_repair_success") is True and r.get("failure_type") is None]
+    false_repairs = sum(r.get("false_repair") is True for r in claimed)
+    applied = [r for r in rows if r.get("patch_applied") is True and r.get("failure_type") is None]
+    new_errors = sum(r.get("new_error_introduced") is True for r in applied)
+    new_error_total = sum(r.get("new_error_count", 1 if r.get("new_error_introduced") is True else 0) for r in applied)
+    failures = sum(r.get("failure_type") is not None for r in rows)
+    abstentions = sum(r.get("failure_type") is None and r.get("predicted_verdict") == "undetermined" for r in rows)
+    return {
+        "sample_count_intention_to_treat": len(rows),
+        "first_error_exact_accuracy": {"value": ratio(exact, len(evaluable)), "numerator": exact, "denominator": len(evaluable)},
+        "first_error_false_positive_rate_when_absent": {"value": ratio(absent_fp, len(absent)), "numerator": absent_fp, "denominator": len(absent)},
+        "false_accept_rate": {"value": ratio(false_accepts, len(invalid)), "numerator": false_accepts, "denominator": len(invalid),
+                              "worst_case_upper": ratio(false_accepts + sum(r.get("failure_type") is not None for r in invalid), len(invalid))},
+        "unsupported_resolution_rate": {"value": ratio(unsupported, len(unsupported_gold)), "numerator": unsupported, "denominator": len(unsupported_gold)},
+        "false_claim_detection_rate": {"value": ratio(false_claim_detected, len(counterexample_eligible)),
+                                       "numerator": false_claim_detected, "denominator": len(counterexample_eligible)},
+        "valid_counterexample_coverage": {"value": ratio(covered, len(counterexample_eligible)),
+                                          "numerator": covered, "denominator": len(counterexample_eligible)},
+        "counterexample_candidate_precision": {"value": ratio(valid_counterexamples, counterexample_candidates),
+                                               "numerator": valid_counterexamples, "denominator": counterexample_candidates},
+        "proof_abstention_rate": {"value": ratio(abstentions, len(rows)), "numerator": abstentions, "denominator": len(rows)},
+        "verified_repair_success_rate": {"value": ratio(verified, len(repairable)), "numerator": verified, "denominator": len(repairable)},
+        "false_repair_rate": {"value": ratio(false_repairs, len(claimed)), "numerator": false_repairs, "denominator": len(claimed)},
+        "new_error_introduction_rate": {"value": ratio(new_errors, len(applied)), "numerator": new_errors,
+                                        "denominator": len(applied), "introduced_error_total": new_error_total},
+        "infrastructure_failure_rate": {"value": ratio(failures, len(rows)), "numerator": failures, "denominator": len(rows)},
+    }
+
+
+def load_m5_gate(root: Path) -> dict[str, Any]:
+    return json.loads((root / "data/benchmarks/m5/joint_acceptance_v0_1.json").read_text(encoding="utf-8"))

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-15 - M6 Person B fixture-only experiment surface
+
+- Registered the nine locked baseline, ablation, and full-system method surfaces with unique content-bound experiment IDs.
+- Added equal-budget comparison checks, method-isolated cache fingerprints, intention-to-treat metric fixtures, and an M5/signature fail-closed execution gate.
+- Documented pre-results budget and power-analysis inputs without claiming M6 entry, human sign-off, Pilot execution, or experimental results.
+
 ## 2026-08-15 +08:00 — Lock M6 Person A pre-results protocol candidate
 
 - Locked the pre-results candidate for RQ1–RQ3, mathematical outcome definitions, primary/secondary metrics, stratification, fairness, model-budget comparability, failure scoring, and change control in `docs/milestones/M06_person_a_preregistered_protocol.md`; a real Person A digest signature is still required for formal freeze.
