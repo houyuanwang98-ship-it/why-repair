@@ -38,6 +38,7 @@
 | [M3 冻结记录](docs/milestones/M03_freeze_record.md) | 50 题运行、指标、人工审计、哈希与变更规则 | 2026-08-14 已完成 |
 | [M3 A/B 联合验收](docs/milestones/M03_person_a_b_acceptance.md) | Person A 冻结后复核、Person B 审计证据与双人退出签核 | 双人通过（保留 `m2-028` 限制） |
 | [M3 Controller 衔接](docs/milestones/M03_controller_handoff.md) | 冻结 M3 checker 结果到 v0.3 Controller 的事务导入、状态审计与修复交接 | 50 题兼容回归通过 |
+| [M3 A/B/Controller 集成冻结](docs/milestones/M03_integrated_freeze_record.md) | 联合验收、Controller、适配层、测试与机器清单的统一发布边界 | `m3-integrated-v1.0` 已冻结 |
 | [M3 分歧人工审计](data/benchmarks/m3/experiments/full50_codex_v1/HUMAN_AUDIT.md) | 全部分歧裁定及 `m2-028` 已知 Gold 缺陷 | Person B 审计完成 |
 | [M3 Evaluator Gold](data/benchmarks/m3/gold/evaluator_pilot_v1.jsonl) | 50 题证明级 Gold 与 39 题、98 节点的节点级 Gold | `m3-evaluator-gold-0.1` |
 | [M3 指标 Schema](schemas/m3_evaluator_report_v0_1.schema.json) | Evaluator v1 模块化报告契约 | `v0.1` |

@@ -196,6 +196,19 @@ class PersonAControllerIntegrationTest(unittest.TestCase):
         artifacts = ingest_person_a_result(controller, person_a_result())
         self.assertEqual(3, len(artifacts["node_versions"]))
 
+    def test_unknown_repair_action_fails_closed_and_rolls_back(self):
+        controller = DualAgentController(
+            repair_generator_id="person_b_repair_generator",
+            evaluator_ids={"person_a_evaluator"},
+        )
+        invalid = person_a_result()
+        invalid["proof_graph"][1]["repair_action"] = "silently_guess_a_repair"
+        with self.assertRaisesRegex(CheckerIntegrationError, "unsupported Person A repair action"):
+            ingest_person_a_result(controller, invalid)
+        self.assertEqual([], controller.events)
+        with self.assertRaises(KeyError):
+            controller.current_ref("integration-proof", 1)
+
     def test_legacy_false_label_is_not_preserved_as_verified_error_type(self):
         controller = DualAgentController(
             repair_generator_id="person_b_repair_generator",

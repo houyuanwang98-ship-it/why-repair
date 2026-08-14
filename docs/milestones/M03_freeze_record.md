@@ -46,7 +46,7 @@ M3 已完成冻结 M2 Gold 到 checker 输入的适配、50 题模型支持运�
 - `schemas/m3_evaluator_report_v0_1.schema.json`: `522787b6531b4736b2cdbc85c09675279a1597896c5c245247dacb0331e99893`
 - `config.json`: `a4272bd6b9b6bb4d30121eed0f1c3c4d948e40d2cc887b7c65a5c14bfec348ca`
 - 机器可验证的完整工件清单：`data/benchmarks/m3/experiments/full50_codex_v1/freeze_manifest.json`。
-- 全仓库测试：165 项通过，其中冻结完整性测试会检查工件哈希、50 题覆盖和报告 provenance。
+- Evaluator 冻结时全仓库 165 项测试通过；后续 A/B/Controller 集成冻结共 177 项通过。
 
 ## 变更规则
 
@@ -54,3 +54,5 @@ M3 已完成冻结 M2 Gold 到 checker 输入的适配、50 题模型支持运�
 
 冻结后的双人退出验收见 `M03_person_a_b_acceptance.md`。该记录不属于冻结工件，
 不改变本页列出的任何哈希；其机器可验证凭据通过冻结清单摘要绑定原版本。
+包含联合验收与 Controller 的更高层冻结见 `M03_integrated_freeze_record.md`；它使用
+独立版本和清单，不移动本 Evaluator 冻结点。

@@ -31,6 +31,9 @@ _REPAIR_OPERATION_MAP = {
     "replace_step": "replace",
     "replace_theorem": "replace",
     "add_assumption": "add_assumption",
+    # Legacy checker counterexample text is not a verified certificate.  The
+    # only safe executable handoff is an explicit replacement of the claim.
+    "counterexample": "replace",
 }
 
 
@@ -107,7 +110,12 @@ def _error_certificate(
     )
     if error_type is None:
         raise CheckerIntegrationError(f"status cannot produce an error certificate: {status}")
-    operation = _REPAIR_OPERATION_MAP.get(node.get("repair_action"), "replace")
+    repair_action = node.get("repair_action")
+    operation = _REPAIR_OPERATION_MAP.get(repair_action)
+    if operation is None:
+        raise CheckerIntegrationError(
+            f"unsupported Person A repair action: {repair_action!r}"
+        )
     max_new_nodes = 3 if operation == "insert_before" else 1
     evidence = [
         text for text in (

@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-14 +08:00 — Freeze integrated M3 A/B/Controller release
+
+- Added the immutable `m3-integrated-v1.0` release boundary above the unchanged
+  `m3-evaluator-v1.0` evaluator freeze.
+- Bound joint acceptance, Controller, checker adapter, contracts, handoff
+  documentation and focused tests in a machine-verifiable integrated manifest.
+- Made unknown Person A repair actions fail closed and roll back atomically;
+  retained legacy `counterexample` only through an explicit `replace` mapping.
+- Re-ran the complete repository suite: 177 tests passed.
+
 ## 2026-08-14 +08:00 — Close M3 Controller repair dead ends
 
 - Changed the M3 repair handoff to distinguish executable repairs from problem
@@ -49,7 +59,7 @@ Notable project changes are grouped by release date and change type. Dates use H
   and artifacts; correction requires a future benchmark version.
 - Added a machine-verifiable freeze manifest and regression checks for artifact
   hashes, complete coverage, frozen status, and current report provenance.
-- Re-ran the complete repository suite: 165 tests passed.
+- At the Evaluator freeze point, the complete repository suite passed 165 tests.
 
 ## 2026-08-11 +08:00 — Start M3-alpha module evaluation infrastructure
 

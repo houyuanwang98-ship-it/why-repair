@@ -2,6 +2,8 @@
 
 状态：`controller_compatible_with_frozen_m3`
 
+集成冻结版本：`m3-integrated-v1.0`
+
 日期：2026-08-14（Asia/Shanghai）
 
 ## 边界
@@ -48,6 +50,10 @@ CounterexampleCertificate，旧 checker 的自由文本反例不会被提升为�
 会原子生成绑定该分析的当前 EvaluationRecord 和 `interpretation_ambiguity`
 ErrorCertificate，仅允许 Person B 通过 `replace` 明确原句；不再产生无法提交补丁的
 `pending_repair` 死路。
+
+Person A 的 `repair_action` 必须属于显式兼容映射；未知或缺失动作会使整题/整批事务
+回滚，不再默认猜测为 `replace`。旧 checker 的 `counterexample` 动作显式降级为
+`replace`，因为自由文本反例不会被提升为已核验 CounterexampleCertificate。
 
 阻塞释放同时要求每个依赖既是 `active`，又是该逻辑节点的当前精确版本；仍引用已
 被取代版本的后继不会被提前送回评估队列。
