@@ -8,24 +8,63 @@ Dependency-guided diagnosis and minimal repair for natural-language mathematical
 
 当前 M0–M5 已完成研究契约、共享 Schema、50 题代数 Pilot Gold、分阶段 Evaluator、可执行反例核验，以及 Repair Generator—独立复核—后代重验的确定性工程闭环。M5 的自动化与 Gold 工程验收已经通过，但真实生产模型 Pilot、全量人工数学复核、真实成本审计和外部代码审查仍需独立人工证据，因此项目没有提前把 M5 标记为整体完成，也尚未开放 M6 主实验入口。
 
-## M5 必须人工完成的四项审查
+## ⚠️ M0–M5 必须人工审核的全部事项
 
 > [!IMPORTANT]
-> 以下四项不能由本项目代码、同一 Agent 自检或单元测试独立证明。每项都必须按对应文档由真人执行、记录并签署；未完成时相关验收门保持 `pending`。
+> **下列事项尚不能仅凭代码、测试、哈希或同一 Agent 自检得到证明。** 必须由文档指定的真人独立执行、逐例记录并签署。未取得对应人工证据前，只能声称相关工程检查通过；严格研究验收门必须保持 `pending`，不得写成“已完成人工验收”。
 
-1. **[真实 Repair Generator Pilot 审核](docs/m5_manual_review/01_real_repair_generator_pilot.md)**
-   核对真实生产模型及版本、冻结输入、API 调用来源、Gold 隔离、原始响应、失败运行保留、重试和运行清单。重点防止用 fixture、人工补丁或挑选后的成功结果冒充真实 Pilot。
+### M0：范围、术语与基础案例
 
-2. **[Person A 全量补丁数学复核](docs/m5_manual_review/02_person_a_full_patch_review.md)**
-   由独立 Person A 对全部成功补丁和 false repair 逐例检查数学有效性、原失败边、隐藏假设、定理/目标/定义域保持、新错误、操作最小性及后代重验。文档内已附 50 个 Pilot 例子的原题、假设和完整证明文本。
+1. **[严格双盲独立重标](docs/m5_manual_review/05_m0_blind_independent_reannotation.md) — 待人工审核**
+   两名未接触现有答案的合格审核者须对 A–J 全部案例分别完成隔离标注、先行锁定、分歧比较、第三方裁决和签名。机器不能证明审核者身份、数学资格、真正独立、未提前查看答案或未使用模型辅助。
 
-3. **[Pilot 成本、延迟、重试与失败率校验](docs/m5_manual_review/03_pilot_cost_failure_audit.md)**
-   对照未删减调用明细与外部账单，复算 token、费用、延迟、轮次和失败率，确认 fixture、缓存、调试调用与真实付费 Pilot 被正确区分，且失败样本没有从分母中删除。
+### M1：A/B 契约与 Controller 边界
 
-4. **[Controller、缓存和指标外部代码审查](docs/m5_manual_review/04_external_controller_code_review.md)**
-   由未参与实现的真人或独立团队检查角色权限、版本与 DAG、事务回滚、后代和缓存失效、拓扑重验、指标重算及对抗绕过路径，并提交 finding、复验结果、独立性声明和最终签名。
+1. **[Person A / Person B 契约签署](docs/m5_manual_review/06_m1_ab_contract_signoff.md) — 待人工审核**
+   真实 A/B 负责人须逐项确认数学对象与执行对象的语义、角色权限、负向案例、状态转换及 `v0.3.1` 冻结边界。Schema 能检查字段，却不能证明双方理解一致、签署者真实或职责隔离确实发生。
 
-阶段性联合验收边界和仍为 pending 的门见 [M5 A/B/Controller 联合验收记录](docs/milestones/M05_a_b_controller_joint_acceptance.md)。
+### M2：50 题 Pilot Gold
+
+1. **[来源、资格与盲态 Gold 复核](docs/m5_manual_review/07_m2_provenance_blind_gold_review.md) — 待人工审核/前瞻重做**
+   对 `m2-001`–`m2-050` 每题核验来源授权、题面完整性、审核者资格、盲态独立标注、数学裁决和分歧处理。现有文件可证明内容与哈希，不能追溯证明历史盲态、真实作者身份或当时没有答案泄漏。
+
+### M3：Evaluator held-out 评估
+
+1. **[held-out 双盲评估与人工审计](docs/m5_manual_review/08_m3_heldout_blind_evaluation_and_audit.md) — 待人工审核/前瞻重做**
+   对 50 题现有结果逐题做人工工程审计，并使用未暴露的新 held-out 集重新执行隔离、输出锁定和独立评分。机器不能证明数据从未泄漏、评分者没有看 Gold、数学评分可靠或模型未被题目污染。
+
+### M4：可执行反例
+
+1. **[11 个反例的双外部复核与签名](docs/m5_manual_review/09_m4_external_counterexample_signoff.md) — 待人工审核**
+   两名外部 reviewer 分别核验每题前提为真、目标为假、赋值合法和反例范围，独立锁定后再比较，并绑定同一归档签名。两个外部签名 slot 目前均为 `pending`。
+
+2. **[自然语言到可执行表达式的语义忠实性](docs/m5_manual_review/10_m4_semantic_translation_fidelity.md) — 待人工审核**
+   逐题确认定义域、量词、前提、目标、严格/非严格关系、逻辑连接词及 theorem-level / step-level 范围没有在翻译中改变。程序只能执行给定表达式，不能自行证明表达式忠实代表原文。
+
+3. **[新挑战集前瞻性盲测](docs/m5_manual_review/11_m4_prospective_blind_run.md) — 待人工创建题目并审核**
+   由独立人员创建未暴露的新反例挑战，隔离 Gold，先锁定候选再揭示答案并评分。现有语料已经暴露，不能把回放结果当作新的盲测证据；新题尚不存在，因此必须由真人先行创建和登记。
+
+### M5：Repair Generator、补丁复核与 Controller
+
+1. **[真实 Repair Generator Pilot](docs/m5_manual_review/01_real_repair_generator_pilot.md) — 待人工审核**
+   核对真实生产模型及版本、冻结输入、API 来源、Gold 隔离、原始响应、失败运行、重试和完整运行清单，防止 fixture、人工补丁或筛选后的成功结果冒充真实 Pilot。
+
+2. **[Person A 全量补丁数学复核](docs/m5_manual_review/02_person_a_full_patch_review.md) — 待独立 Person A 审核**
+   对全部成功补丁和 false repair 逐例检查数学有效性、原失败边、隐藏假设、问题与定义域保持、新错误、原子编辑最小性及最终后代路径。文档包含 50 个 Pilot 例子的完整审核文本。
+
+3. **[Pilot 成本、延迟、重试与失败率校验](docs/m5_manual_review/03_pilot_cost_failure_audit.md) — 待真实 Pilot 后人工审核**
+   对照未删减调用明细、模型提供方记录和外部账单，人工复算 token、费用、延迟、轮次与失败率，确认 fixture、缓存、调试调用和真实付费调用被正确区分，失败样本没有从分母删除。
+
+4. **[Controller、缓存和指标外部代码审查](docs/m5_manual_review/04_external_controller_code_review.md) — 待外部审核**
+   由未参与实现的 reviewer 检查角色权限、版本与 DAG、事务回滚、后代与缓存失效、拓扑重验、指标重算及对抗绕过路径，并提交逐项 finding、修复复验、独立性声明和签名。
+
+### 按角色执行的统一入口
+
+- **[Person A 按案例验证包](docs/m5_manual_review/12_person_a_verification_by_case.md)**：集中列出 M0–M5 的数学判断、首错、反例和补丁复核职责；不混入 Person B 或 Controller 的结论。
+- **[Person B 按案例验证包](docs/m5_manual_review/13_person_b_verification_by_case.md)**：集中列出数据、模型、执行、成本和证据完整性职责；Person B 无权代签数学接受结论。
+- **[Controller 按案例验证包](docs/m5_manual_review/14_controller_verification_by_case.md)**：集中列出状态、版本、依赖、缓存、回滚、重验和审计链职责；Controller 不作数学裁决。
+
+阶段性工程验收边界和仍为 `pending` 的门见 [M5 A/B/Controller 联合验收记录](docs/milestones/M05_a_b_controller_joint_acceptance.md)。
 
 ## Quick start
 
