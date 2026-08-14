@@ -1,0 +1,51 @@
+{
+  "schema_version": "m5-joint-acceptance-0.1",
+  "release": "m5-joint-engineering-v0.1",
+  "status": "engineering_joint_acceptance_passed_pilot_pending",
+  "scope": "deterministic fixtures, contracts, role isolation, Gold replay, and regression only",
+  "roles": {
+    "person_a": {"status": "passed_current_scope", "evidence_status": "existing protocol, adversarial gate, and Gold review artifacts pass automated checks; no new human signature"},
+    "person_b": {"status": "passed_current_scope", "evidence_status": "repair contracts, four operations, adapter audit, retry and loop controls pass automated checks; no new human signature"},
+    "controller": {"status": "passed_current_scope", "evidence_status": "transaction, invalidation, cache, topological revalidation and final path gates pass automated checks"}
+  },
+  "mandatory_gates": [
+    {"gate": "generator_cannot_self_review", "status": "passed", "evidence": "tests.test_m5_person_a_review and tests.test_m5_person_b_repair"},
+    {"gate": "exact_target_version_and_references", "status": "passed", "evidence": "test_stale_target_and_unknown_dependency_are_rejected"},
+    {"gate": "problem_change_not_counted_as_repair", "status": "passed", "evidence": "test_problem_changing_patch_cannot_be_accepted"},
+    {"gate": "four_patch_operations", "status": "passed", "evidence": "test_insert_delete_and_irreparable plus Gold replace"},
+    {"gate": "descendant_closure_invalidated", "status": "passed", "evidence": "test_gold_replace_invalidates_full_descendant_closure"},
+    {"gate": "cache_cleared", "status": "passed", "evidence": "cache_cleared event asserted in Gold regression"},
+    {"gate": "equivalent_patch_terminates", "status": "passed", "evidence": "test_equivalent_patch_terminates_even_when_id_and_rationale_change"},
+    {"gate": "retry_budget_terminates", "status": "passed", "evidence": "test_retries_end_at_max_rounds"},
+    {"gate": "independent_topological_revalidation", "status": "passed", "evidence": "test_revalidation_is_trusted_topological_and_fail_closed"},
+    {"gate": "patch_review_is_not_success", "status": "passed", "evidence": "test_patch_review_alone_cannot_claim_success"},
+    {"gate": "transactional_rollback", "status": "passed", "evidence": "patch and revalidation exception rollback tests"},
+    {"gate": "m4_v1_1_read_only_input", "status": "passed", "evidence": "test_m4_input_is_accepted_v1_1_and_digest_bound"},
+    {"gate": "model_success_and_failure_audit", "status": "passed", "evidence": "test_model_adapter_success_and_failure_are_audited"},
+    {"gate": "real_repair_generator_pilot", "status": "pending", "evidence": "no frozen production Pilot run exists"},
+    {"gate": "person_a_full_pilot_review", "status": "pending", "evidence": "all successful patches and false repairs not yet manually reviewed"},
+    {"gate": "external_controller_code_review", "status": "pending", "evidence": "no external reviewer sign-off artifact exists"}
+  ],
+  "gold_replay": {"case_id": "m5-gold-even-square", "status": "passed", "final_stop_reason": "accepted", "revalidated_versions": ["2@v2", "3@v2"]},
+  "tests": {"command": "python -m unittest discover -s tests", "passed": 285},
+  "m6_entry_allowed": false,
+  "pending_work": [
+    "Run the frozen Repair Generator on the complete Pilot with production model metadata.",
+    "Have Person A manually review every successful patch and false repair.",
+    "Freeze Pilot repair, error-introduction, cost, latency, retry, and failure-rate reports.",
+    "Obtain external code review for Controller, cache invalidation, and metrics."
+  ],
+  "artifacts": {
+    "docs/milestones/M05_person_a_mathematical_patch_review.md": "18b4cc37f5dd2ae8102a87535b8ebae15df07a78d16a22fa2e40cb6817444b78",
+    "harness/m5_person_a_review.py": "bd35494357f588c6414538d10855fee5d467880c1368a068d0bdc2d5a9128020",
+    "schemas/m5_person_a_patch_review_v0_1.schema.json": "bc6f5607ee9a54340218156c466b50aca22547a68e0c9efe2182afd7e56f21e7",
+    "docs/milestones/M05_person_b_repair_generator_and_controller.md": "f068ece1e6fbc2091bbbf0f1fab1a7b9895967dfd5c69724e935bba06b628bd0",
+    "harness/m5_repair.py": "81ad0085be9c96948a53c279f60046953c10f0b35a4cac1e8bed7b9c77a05936",
+    "data/benchmarks/m5/person_b_release_v0_1.json": "26c1d45cb2a38cb5fe8dfe36ff8260a9481f57e9fb3944f6de62c36e6554b32c",
+    "docs/milestones/M05_controller_revalidation_gate.md": "4e7cdd5013b162a52e4cc933ba3dba4330b1e0e4586c1e13ea6e2d057807df63",
+    "schemas/m5_controller_revalidation_v0_1.schema.json": "5d7a636adf1ecf8b64dba94b301e9ed5f5af2ac39a40697f45769e4afbb53652",
+    "data/fixtures/m5/person_b_gold_repair.json": "cf349d78a33c5a921984b3d05b4aed77d4e8490c3bc4f0cd20a1ba85345a9300",
+    "docs/milestones/M05_a_b_controller_joint_acceptance.md": "4f9d5afc3fdb679b34400452618ec8dba4bec158af03d2d558f5862e20c2ab0d",
+    "schemas/m5_joint_acceptance_v0_1.schema.json": "b43a94790602ac62865da36e127458c894eb77020d998c8524be0cd9e9b5588c"
+  }
+}
