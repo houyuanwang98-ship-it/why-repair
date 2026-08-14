@@ -56,6 +56,7 @@
 | [M4 Person B 转换协议](prompts/m4_counterexample_person_b.md) | 将已审数学陈述保守转换为精确表达式并交接审计记录 | `v0.1` |
 | [M4 Controller 衔接](docs/milestones/M04_controller_handoff.md) | 上下文冻结、B 执行、A 独立复核、事务回滚与统一审计链 | `m4-counterexample-controller-v0.2` 已实现 |
 | [M4 Person A 初始验收](docs/milestones/M04_person_a_cross_review_and_acceptance.md) | 11 个 Gold 反例全量复核、问题修复、限制与退出签核 | `m4-integrated-v1.0` 历史基线 |
+| [M5 Person A 补丁数学复核](docs/milestones/M05_person_a_mathematical_patch_review.md) | 允许证据、成功/最小性定义、对抗式 Prompt 与 fail-closed 独立复核门 | `v0.1` 已实现，等待 B/Controller 接入 |
 | [M4 Person B 逆向复核](docs/milestones/M04_person_b_cross_review_and_joint_acceptance.md) | 目标、结构、解释与 theorem digest 攻击面复核及修复 | A/B 联合通过 |
 | [M4 v1.0 验收清单](data/benchmarks/m4/integrated_acceptance_v1.json) | Person A 初始验收的历史冻结边界 | 保留，不原地改写 |
 | [M4 v1.1 联合验收清单](data/benchmarks/m4/integrated_acceptance_v1_1.json) | Gold 覆盖、双人签核、限制及关键产物 SHA-256 冻结边界 | `m4-integrated-v1.1` A/B 联合接受 |

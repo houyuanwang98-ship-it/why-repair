@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-14 +08:00 — Implement M5 Person A mathematical patch review
+
+- Added a separately versioned, fail-closed review contract bound to immutable certificate and patch digests without changing the frozen M1 Schema.
+- Defined allowed evidence, repair success, operational minimality and adversarial rejection of hidden assumptions, target/domain drift, unrelated rewrites and new errors.
+- Added positive and adversarial tests; overall M5 remains open for Person B and Controller integration.
+
 ## 2026-08-14 +08:00 — Revalidate and complete M1 contracts
 
 - Completed the M1 portable and runtime contract set with ProofInstance,
