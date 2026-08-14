@@ -65,6 +65,10 @@
 | [M5 Person B 发布清单](data/benchmarks/m5/person_b_release_v0_1.json) | 冻结前序版本、核心产物 SHA-256、回归测试与已知限制 | `m5-person-b-v0.1` |
 | [M5 A/B/Controller 阶段性联合验收](docs/milestones/M05_a_b_controller_joint_acceptance.md) | 三方职责、强制门、Gold 闭环、待办和 M6 fail-closed 边界 | 工程联合通过；Pilot 与全量人工复核待完成 |
 | [M5 联合验收机器清单](data/benchmarks/m5/joint_acceptance_v0_1.json) | 角色状态、逐门证据、核心产物 SHA-256 与禁止提前进入 M6 | `m5-joint-engineering-v0.1` |
+| [M5 人工审核：真实 Repair Generator Pilot](docs/m5_manual_review/01_real_repair_generator_pilot.md) | 生产模型运行、输入隔离、失败保留、抽查和签署细则 | 待人工执行 |
+| [M5 人工审核：Person A 全量补丁复核](docs/m5_manual_review/02_person_a_full_patch_review.md) | 数学有效性、问题保持、新错误、最小性、false repair 和分歧处理 | 待独立 Person A 执行 |
+| [M5 人工校验：Pilot 成本与失败率](docs/m5_manual_review/03_pilot_cost_failure_audit.md) | token、延迟、计价、重试、失败分母和人工复算细则 | 待真实 Pilot 后执行 |
+| [M5 外部审核：Controller、缓存和指标](docs/m5_manual_review/04_external_controller_code_review.md) | 权限、版本、DAG、事务、缓存、指标、对抗测试和 finding 模板 | 待外部审查者执行 |
 | [M4 Person B 逆向复核](docs/milestones/M04_person_b_cross_review_and_joint_acceptance.md) | 目标、结构、解释与 theorem digest 攻击面复核及修复 | A/B 联合通过 |
 | [M4 v1.0 验收清单](data/benchmarks/m4/integrated_acceptance_v1.json) | Person A 初始验收的历史冻结边界 | 保留，不原地改写 |
 | [M4 v1.1 联合验收清单](data/benchmarks/m4/integrated_acceptance_v1_1.json) | Gold 覆盖、双人签核、限制及关键产物 SHA-256 冻结边界 | `m4-integrated-v1.1` A/B 联合接受 |
