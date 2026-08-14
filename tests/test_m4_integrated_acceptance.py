@@ -5,8 +5,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MANIFEST = ROOT / "data/benchmarks/m4/integrated_acceptance_v1.json"
-SCHEMA = ROOT / "schemas/m4_integrated_acceptance_v1.schema.json"
+MANIFEST = ROOT / "data/benchmarks/m4/integrated_acceptance_v1_1.json"
+SCHEMA = ROOT / "schemas/m4_integrated_acceptance_v1_1.schema.json"
 
 
 class M4IntegratedAcceptanceTest(unittest.TestCase):
@@ -14,9 +14,12 @@ class M4IntegratedAcceptanceTest(unittest.TestCase):
         manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
         schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
         self.assertEqual(set(schema["required"]), set(manifest))
-        self.assertEqual("m4-integrated-v1.0", manifest["release"])
-        self.assertEqual("accepted_by_person_a", manifest["status"])
+        self.assertEqual("m4-integrated-v1.1", manifest["release"])
+        self.assertEqual("m4-integrated-v1.0", manifest["supersedes"])
+        self.assertEqual("accepted_by_person_a_and_person_b", manifest["status"])
         self.assertNotEqual(manifest["reviewer_id"], manifest["verifier_id"])
+        self.assertEqual("accepted_after_fixes", manifest["person_b_review"]["status"])
+        self.assertTrue((ROOT / manifest["person_b_review"]["review_document"]).is_file())
 
         gold = [
             json.loads(line)

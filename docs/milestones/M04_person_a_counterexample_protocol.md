@@ -1,6 +1,6 @@
 # M4 Person A 反例证书与范围协议
 
-状态：`m4-counterexample-person-a-v0.1` 已实现并完成 Person B/Controller 交叉验收，纳入 `m4-integrated-v1.0`。
+状态：`m4-counterexample-person-a-v0.2` 已实现；Person B 逆向复核加固后纳入 `m4-integrated-v1.1`。v0.1 Schema 保留为历史兼容边界。
 
 ## 1. 边界
 
@@ -34,7 +34,7 @@ Person A 负责反例的数学含义、作用域分类和接受门；Person B �
 ## 4. 实现与交接
 
 - `harness/m4_counterexample.py`：作用域映射和 fail-closed Person A 审查门；
-- `schemas/m4_person_a_counterexample_review_v0_1.schema.json`：Person A 审查输出契约；
+- `schemas/m4_person_a_counterexample_review_v0_2.schema.json`：当前 Person A 审查输出契约，含审核上下文摘要；
 - `prompts/m4_counterexample_person_a.md`：逐证书生成与审核提示词；
 - `tests/test_m4_counterexample_person_a.py`：全局/局部正例、错配、漏前提、过期上下文、无证书和独立核验失败；
 - `data/fixtures/m4/person_a_gold_scope_cases.json`：绑定冻结 M2 `m2-021` 的全局反例，以及从 `m2-034` 已冻结错误说明导出的局部反例回归样例；不修改 M2 Gold；
@@ -43,4 +43,4 @@ Person A 负责反例的数学含义、作用域分类和接受门；Person B �
 
 ## 5. 联合完成状态
 
-Person B 已实现实际表达式核验与不可变审计日志，M4 Controller 已增加独立 theorem-level 路径且未伪造节点目标。Person A 对全部 11 个冻结 Gold 有效反例完成联合复核；详见 `M04_person_a_cross_review_and_acceptance.md`。
+Person B 已实现实际表达式核验与不可变审计日志，M4 Controller 已增加独立 theorem-level 路径且未伪造节点目标。Person A 对全部 11 个冻结 Gold 有效反例完成复核；Person B 随后逆向复核并补齐目标原文、结构、解释假设与定理摘要绑定。详见 `M04_person_a_cross_review_and_acceptance.md` 和 `M04_person_b_cross_review_and_joint_acceptance.md`。

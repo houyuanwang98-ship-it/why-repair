@@ -1,6 +1,6 @@
 # M2 benchmark labels to M1 v0.3 runtime mapping
 
-Status: `proposed_for_joint_approval`
+Status: `approved_for_m2.2_and_m1_v0.3`
 
 This document makes the conversion boundary explicit. Person B does not apply
 the mapping implicitly; Person A and Person B must approve it before a Gold
@@ -34,5 +34,6 @@ created by the adapter.
 
 ## Approval gate
 
-Until both project members approve this document, `scripts/m2_benchmark.py`
-must not convert M2 labels into M1 verdicts automatically.
+Person A and Person B approved this boundary for the frozen `m2.2` Gold and
+M1 v0.3 adapter. Future label or contract changes require a new mapping version;
+tools must not infer mappings beyond the table above.

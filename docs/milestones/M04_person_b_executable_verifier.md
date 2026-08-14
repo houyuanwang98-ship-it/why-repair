@@ -1,6 +1,6 @@
 # M4 Person B 可执行反例核验
 
-状态：`m4-counterexample-person-b-v0.1` 已实现，Person A 交叉验收通过并纳入 `m4-integrated-v1.0`。
+状态：`m4-counterexample-person-b-v0.1` 已实现；初始版本纳入 `m4-integrated-v1.0`，逆向复核加固后纳入 A/B 联合发布 `m4-integrated-v1.1`。
 
 ## 1. 交付边界
 
@@ -25,5 +25,5 @@ Person B 不重新裁定 Person A 的数学语义，而是对同一赋值重放�
 - 表达式转换协议：`prompts/m4_counterexample_person_b.md`；
 - 冻结样例重放：`data/fixtures/m4/person_b_executable_cases.json`，覆盖 Person A 的 `m2-021` 全局反例和 `m2-034` 局部反例；
 - 回归：`tests/test_m4_counterexample_person_b.py`；
-- 全仓 206 项测试通过；冻结 Gold 中 11/11 个有效反例完成联合重放；
+- 全仓 209 项测试通过；冻结 Gold 中 11/11 个有效反例及 `m2-034` 完成真实 Controller 联合重放；
 - Person A 已对核验器、审计证据、表达式绑定和边界完成交叉验收。

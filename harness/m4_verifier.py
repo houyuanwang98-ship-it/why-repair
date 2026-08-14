@@ -278,7 +278,9 @@ class TheoremCounterexampleRegistry:
         return deepcopy(list(self._events))
 
     def register_context(self, theorem_ref: dict[str, Any], *, global_assumption_digest: str,
-                         premise_statements: list[str]) -> None:
+                         premise_statements: list[str], theorem_statement: str,
+                         target_statement: str,
+                         structure: str, interpretation_assumptions: list[str] | None = None) -> None:
         validate_theorem_ref(theorem_ref)
         proof_id = theorem_ref["proof_id"]
         if proof_id in self._contexts:
@@ -290,9 +292,26 @@ class TheoremCounterexampleRegistry:
             raise ContractError("premise_statements must be a nonempty array of strings")
         if len(set(premise_statements)) != len(premise_statements):
             raise ContractError("premise_statements must not contain duplicates")
+        if not isinstance(target_statement, str) or not target_statement.strip():
+            raise ContractError("target_statement must be nonempty")
+        if not isinstance(theorem_statement, str) or not theorem_statement.strip():
+            raise ContractError("theorem_statement must be nonempty")
+        if not isinstance(structure, str) or not structure.strip():
+            raise ContractError("structure must be nonempty")
+        interpretations = [] if interpretation_assumptions is None else interpretation_assumptions
+        if (not isinstance(interpretations, list) or
+                any(not isinstance(item, str) or not item.strip() for item in interpretations) or
+                len(set(interpretations)) != len(interpretations)):
+            raise ContractError("interpretation_assumptions must be a unique string array")
+        theorem_digest = "sha256:" + hashlib.sha256(theorem_statement.encode("utf-8")).hexdigest()
+        if theorem_ref["theorem_digest"] != theorem_digest:
+            raise StaleVersionError("theorem digest does not bind the exact theorem statement")
         self._contexts[proof_id] = {"theorem_ref": deepcopy(theorem_ref),
             "global_assumption_digest": global_assumption_digest,
-            "premise_statements": deepcopy(premise_statements)}
+            "premise_statements": deepcopy(premise_statements),
+            "theorem_statement": theorem_statement, "target_statement": target_statement,
+            "structure": structure,
+            "interpretation_assumptions": deepcopy(interpretations)}
         self._events += ({"event": "theorem_context_registered", "theorem_ref": deepcopy(theorem_ref)},)
 
     def record(self, certificate: dict[str, Any]) -> None:
@@ -307,6 +326,10 @@ class TheoremCounterexampleRegistry:
             raise StaleVersionError("counterexample assumption digest does not match theorem context")
         if certificate["checked_premise_refs"] or [x["statement"] for x in certificate["premise_checks"]] != context["premise_statements"]:
             raise StaleVersionError("global counterexample does not cover registered theorem premises")
+        if (certificate["target_check"]["statement"] != context["target_statement"] or
+                certificate["structure"] != context["structure"] or
+                certificate.get("interpretation_assumptions", []) != context["interpretation_assumptions"]):
+            raise StaleVersionError("global counterexample target, structure, or interpretation is stale")
         certificate_id = certificate["certificate_id"]
         if certificate_id in self._certificates:
             raise ContractError(f"duplicate counterexample certificate id: {certificate_id}")
@@ -401,7 +424,10 @@ def run_counterexample_cases(cases: Iterable[dict[str, Any]], *, verifier_id: st
             registry = TheoremCounterexampleRegistry()
             registry.register_context(case["certificate"]["theorem_ref"],
                 global_assumption_digest=context["global_assumption_digest"],
-                premise_statements=context["premise_statements"])
+                premise_statements=context["premise_statements"],
+                theorem_statement=context["theorem_statement"],
+                target_statement=context["target_statement"], structure=context["structure"],
+                interpretation_assumptions=context.get("interpretation_assumptions", []))
             registry.record(case["certificate"])
         records.append(verify_counterexample(case["certificate"],
             premise_expressions=case["premise_expressions"], target_expression=case["target_expression"],

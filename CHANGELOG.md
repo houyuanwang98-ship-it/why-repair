@@ -1,5 +1,30 @@
 # Changelog
 
+## 2026-08-14 +08:00 — Audit M0–M4 cross-milestone consistency
+
+- Recorded that M0's engineering contract is usable but its strict blind-review
+  evidence cannot be reconstructed from the existing Person B handoff.
+- Corrected the current interpretation of `m2-028`: the theorem is true, but the
+  supplied inference is invalid and requires replacement, so the M2 Gold is sound.
+- Preserved all frozen M3 v1.0 artifacts and added a semantic erratum instead of
+  rewriting historical audit evidence or scores.
+- Aligned M1 freeze dates, M2 mapping approval/status paths, and the active
+  two-person work plan with the actual M0–M4 repository state.
+
+## 2026-08-14 +08:00 — Complete M4 Person B reverse review
+
+- Closed target-binding gaps in the standalone Person A gate and integrated
+  Controller by freezing exact target refs, target text, mathematical structure,
+  and interpretation assumptions.
+- Made theorem-level registration recompute the digest from the full theorem
+  text while binding the refuted conclusion separately.
+- Versioned the hardened Person A gate and M4 Controller as v0.2 and added a
+  deterministic review-context digest without overwriting the v0.1 Schema.
+- Added adversarial regressions for target, structure, interpretation, and
+  theorem-context substitution; all 11 frozen valid counterexamples still pass.
+- Preserved the Person A-only `m4-integrated-v1.0` history, recorded Person B
+  acceptance after four fixes as joint `m4-integrated-v1.1`, and passed all 209 tests.
+
 ## 2026-08-14 +08:00 — Complete M4 Person A cross-review
 
 - Closed a false-acceptance path by freezing Person A-approved natural-language

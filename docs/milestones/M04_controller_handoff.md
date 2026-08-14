@@ -1,10 +1,10 @@
 # M4 Controller：Person A / Person B 反例闭环
 
-状态：`m4-counterexample-controller-v0.1` 已实现并通过 Person A 交叉验收，纳入 `m4-integrated-v1.0`。
+状态：`m4-counterexample-controller-v0.2` 已实现；通过 Person A 初始验收及 Person B 逆向复核，纳入 `m4-integrated-v1.1`。
 
 ## 职责与顺序
 
-Controller 只编排，不作数学判断。它冻结目标、完整前提、假设摘要和 A/B 身份，然后严格执行：
+Controller 只编排，不作数学判断。它冻结目标引用与原文、完整定理原文、数学结构、解释假设、完整前提、假设摘要和 A/B 身份，然后严格执行：
 
 1. 登记局部节点或全局定理上下文；
 2. 接收 Person A 反例证书，并检查其目标、版本、作用域和完整前提绑定；Person A 同时冻结批准后的逐项“命题—表达式”映射；

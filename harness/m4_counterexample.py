@@ -9,12 +9,19 @@ from the mere presence of prose evidence.
 from __future__ import annotations
 
 from copy import deepcopy
+import hashlib
+import json
 from typing import Any, Iterable
 
-from .contracts import ContractError, validate_contract, validate_node_ref
+from .contracts import (
+    ContractError,
+    validate_contract,
+    validate_node_ref,
+    validate_theorem_ref,
+)
 
 
-M4_PERSON_A_PROFILE = "m4-counterexample-person-a-v0.1"
+M4_PERSON_A_PROFILE = "m4-counterexample-person-a-v0.2"
 SCOPE_ERROR_TYPE = {
     "local_claim": "false_local_claim",
     "global_theorem": "false_theorem",
@@ -62,6 +69,11 @@ def review_counterexample(
     expected_premise_refs: Iterable[dict[str, Any]],
     expected_premise_statements: Iterable[str],
     expected_global_assumption_digest: str,
+    expected_target: dict[str, Any] | None,
+    expected_theorem_ref: dict[str, Any] | None,
+    expected_target_statement: str,
+    expected_structure: str,
+    expected_interpretation_assumptions: Iterable[str],
     verification_status: str,
     verification_method: str,
     verification_notes: str,
@@ -94,9 +106,43 @@ def review_counterexample(
         raise ContractError("verifier_id must differ from reviewer_id")
     if not isinstance(expected_global_assumption_digest, str) or not expected_global_assumption_digest.strip():
         raise ContractError("expected_global_assumption_digest must be nonempty")
+    if not isinstance(expected_target_statement, str) or not expected_target_statement.strip():
+        raise ContractError("expected_target_statement must be nonempty")
+    if not isinstance(expected_structure, str) or not expected_structure.strip():
+        raise ContractError("expected_structure must be nonempty")
+    if expected_target is not None:
+        validate_node_ref(expected_target, "expected_target")
+    if expected_theorem_ref is not None:
+        validate_theorem_ref(expected_theorem_ref, "expected_theorem_ref")
+    if (expected_target is None) == (expected_theorem_ref is None):
+        raise ContractError("exactly one expected target or theorem ref is required")
+    if isinstance(expected_interpretation_assumptions, (str, bytes)):
+        raise ContractError("expected_interpretation_assumptions must be an array")
+    try:
+        expected_interpretations = list(expected_interpretation_assumptions)
+    except TypeError as exc:
+        raise ContractError("expected_interpretation_assumptions must be an array") from exc
+    if any(not isinstance(item, str) or not item.strip() for item in expected_interpretations):
+        raise ContractError("expected_interpretation_assumptions must contain nonempty strings")
+    if len(set(expected_interpretations)) != len(expected_interpretations):
+        raise ContractError("expected_interpretation_assumptions must not contain duplicates")
 
     expected_refs = _canonical_refs(expected_premise_refs)
     expected_statements = _premise_statements(expected_premise_statements)
+    review_context = {
+        "target": deepcopy(expected_target),
+        "theorem_ref": deepcopy(expected_theorem_ref),
+        "target_statement": expected_target_statement,
+        "structure": expected_structure,
+        "interpretation_assumptions": expected_interpretations,
+        "premise_refs": expected_refs,
+        "premise_statements": expected_statements,
+        "global_assumption_digest": expected_global_assumption_digest,
+    }
+    review_context_digest = "sha256:" + hashlib.sha256(
+        json.dumps(review_context, ensure_ascii=False, sort_keys=True,
+                   separators=(",", ":"), allow_nan=False).encode("utf-8")
+    ).hexdigest()
     reasons: list[str] = []
     structural_error = False
     scope = None
@@ -118,6 +164,18 @@ def review_counterexample(
                 reasons.append(
                     f"{scope} requires error type {required_error_type}, got {claimed_error_type}"
                 )
+                structural_error = True
+            if certificate["target"] != expected_target or certificate["theorem_ref"] != expected_theorem_ref:
+                reasons.append("certificate target binding does not match the reviewed target")
+                structural_error = True
+            if certificate["target_check"]["statement"] != expected_target_statement:
+                reasons.append("target check statement does not match the reviewed target statement")
+                structural_error = True
+            if certificate["structure"] != expected_structure:
+                reasons.append("certificate structure does not match the reviewed mathematical structure")
+                structural_error = True
+            if certificate.get("interpretation_assumptions", []) != expected_interpretations:
+                reasons.append("certificate interpretation assumptions do not match the reviewed interpretation")
                 structural_error = True
             if certificate["checked_premise_refs"] != expected_refs:
                 reasons.append("checked premise refs do not equal the complete direct-premise frontier")
@@ -152,4 +210,5 @@ def review_counterexample(
         "decision": decision,
         "reasons": reasons,
         "verification_notes": verification_notes,
+        "review_context_digest": review_context_digest,
     }

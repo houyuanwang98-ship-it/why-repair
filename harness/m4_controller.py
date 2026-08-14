@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import hashlib
 from typing import Any
 
 from .contracts import ContractError, validate_contract, validate_node_ref, validate_theorem_ref
@@ -16,7 +17,7 @@ from .m4_verifier import (
 )
 
 
-M4_CONTROLLER_PROFILE = "m4-counterexample-controller-v0.1"
+M4_CONTROLLER_PROFILE = "m4-counterexample-controller-v0.2"
 
 
 class M4CounterexampleController:
@@ -55,7 +56,11 @@ class M4CounterexampleController:
                          premise_refs: list[dict[str, Any]], premise_statements: list[str],
                          approved_premise_expressions: list[str],
                          approved_target_expression: str,
+                         target_statement: str,
+                         structure: str,
                          global_assumption_digest: str,
+                         interpretation_assumptions: list[str] | None = None,
+                         theorem_statement: str | None = None,
                          target: dict[str, Any] | None = None,
                          theorem_ref: dict[str, Any] | None = None) -> None:
         if not isinstance(context_id, str) or not context_id.strip():
@@ -79,10 +84,19 @@ class M4CounterexampleController:
             raise ContractError("Person A approved expressions must cover every premise statement")
         if not isinstance(approved_target_expression, str) or not approved_target_expression.strip():
             raise ContractError("Person A approved target expression must be nonempty")
+        if not isinstance(target_statement, str) or not target_statement.strip():
+            raise ContractError("target_statement must be nonempty")
+        if not isinstance(structure, str) or not structure.strip():
+            raise ContractError("structure must be nonempty")
+        interpretations = [] if interpretation_assumptions is None else interpretation_assumptions
+        if (not isinstance(interpretations, list) or
+                any(not isinstance(x, str) or not x.strip() for x in interpretations) or
+                len(set(interpretations)) != len(interpretations)):
+            raise ContractError("interpretation_assumptions must be a unique string array")
         if not isinstance(global_assumption_digest, str) or not global_assumption_digest.strip():
             raise ContractError("global_assumption_digest must be nonempty")
         if scope == "local_claim":
-            if target is None or theorem_ref is not None:
+            if target is None or theorem_ref is not None or theorem_statement is not None:
                 raise ContractError("local context requires target and forbids theorem_ref")
             validate_node_ref(target, "target")
             if self._node_controller is not None:
@@ -91,18 +105,30 @@ class M4CounterexampleController:
                 node = self._node_controller.node_version(target)["node"]
                 if node["depends_on"] != premise_refs:
                     raise StaleVersionError("local M4 premise refs do not match target dependencies")
+                if target_statement not in {node["claim"], node["self_contained_claim"]}:
+                    raise StaleVersionError("local M4 target statement does not match the current node")
         else:
             if theorem_ref is None or target is not None or premise_refs:
                 raise ContractError("global context requires theorem_ref, no target, and no node premise refs")
             validate_theorem_ref(theorem_ref)
+            if not isinstance(theorem_statement, str) or not theorem_statement.strip():
+                raise ContractError("global context requires theorem_statement")
+            expected_theorem_digest = "sha256:" + hashlib.sha256(theorem_statement.encode("utf-8")).hexdigest()
+            if theorem_ref["theorem_digest"] != expected_theorem_digest:
+                raise StaleVersionError("theorem digest does not bind the exact theorem statement")
             self._theorems.register_context(theorem_ref,
                 global_assumption_digest=global_assumption_digest,
-                premise_statements=premise_statements)
+                premise_statements=premise_statements, target_statement=target_statement,
+                theorem_statement=theorem_statement, structure=structure,
+                interpretation_assumptions=interpretations)
         self._contexts[context_id] = deepcopy({
             "scope": scope, "target": target, "theorem_ref": theorem_ref,
             "premise_refs": premise_refs, "premise_statements": premise_statements,
             "approved_premise_expressions": approved_premise_expressions,
             "approved_target_expression": approved_target_expression,
+            "target_statement": target_statement, "structure": structure,
+            "theorem_statement": theorem_statement,
+            "interpretation_assumptions": interpretations,
             "global_assumption_digest": global_assumption_digest,
         })
         self._events.append({"event": "m4_context_registered", "context_id": context_id})
@@ -124,6 +150,10 @@ class M4CounterexampleController:
                 [x["statement"] for x in certificate["premise_checks"]] != context["premise_statements"] or
                 certificate["global_assumption_digest"] != context["global_assumption_digest"]):
             raise StaleVersionError("certificate premises or assumptions do not match the frozen M4 context")
+        if (certificate["target_check"]["statement"] != context["target_statement"] or
+                certificate["structure"] != context["structure"] or
+                certificate.get("interpretation_assumptions", []) != context["interpretation_assumptions"]):
+            raise StaleVersionError("certificate target, structure, or interpretation does not match the frozen M4 context")
         if (premise_expressions != context["approved_premise_expressions"] or
                 target_expression != context["approved_target_expression"]):
             raise ContractError("executable bindings do not match Person A's frozen approval")
@@ -148,6 +178,10 @@ class M4CounterexampleController:
                 expected_premise_refs=context["premise_refs"],
                 expected_premise_statements=context["premise_statements"],
                 expected_global_assumption_digest=context["global_assumption_digest"],
+                expected_target=context["target"], expected_theorem_ref=context["theorem_ref"],
+                expected_target_statement=context["target_statement"],
+                expected_structure=context["structure"],
+                expected_interpretation_assumptions=context["interpretation_assumptions"],
                 verification_status=verification["status"],
                 verification_method=verification["verification_method"],
                 verification_notes=verification["reason"],

@@ -20,9 +20,9 @@ Person A 建立并审核 50 个自然语言代数证明样本，完成节点切�
 
 ## 3. 文件隔离
 
-- 公共题目：`data/benchmarks/m2/pilot_50.jsonl`
-- Person A 空白模板：`data/benchmarks/m2/person_a_annotation_template.jsonl`
-- Person A 私有答案：`data/benchmarks/m2/private/person_a_annotations.jsonl`
+- 公共题目：`data/benchmarks/m2/source/pilot_50.jsonl`
+- Person A 可移植标注：`data/benchmarks/m2/annotations/person_a.jsonl`
+- Person A 空白模板：`data/benchmarks/m2/annotations/person_a.template.jsonl`
 - Person A 标注指南：`docs/annotation/M02_person_a_annotation_guideline.md`
 
 `private/` 已加入 `.gitignore`。在双方独立审核和锁定前，不向对方提供私有答案。公共题目编号与原文一旦开始人工审核就不得静默修改。
@@ -42,7 +42,6 @@ Person A 本阶段负责：
 Person A 本阶段不负责：
 
 - 填写或推测 Person B 的答案；
-- 填写或推测 Person B 的答案；
 - 在 Person B 锁定前提前比较两份标注；
 - 单方面修改 M1 共享 Schema；
 - 把未经本人审核的 AI 预标注称为最终金标。
@@ -53,7 +52,7 @@ Person A 本阶段不负责：
 - [x] 50 个公共样本建立并冻结（`m2-pilot-v0.1`）
 - [x] Person A 的 50 题标注完成并逐题审核
 - [x] Person A 自检完成并私有锁定
-- [x] Person B 对同一组 50 题的独立标注已上传（待本地校验与 Schema 对齐）
+- [x] Person B 对同一组 50 题的独立标注已上传并完成 Schema 校验、比较与共同裁决
 
 ## 6. Person A 退出条件
 

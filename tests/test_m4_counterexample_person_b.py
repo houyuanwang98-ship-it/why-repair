@@ -1,3 +1,4 @@
+import hashlib
 import json
 import unittest
 from pathlib import Path
@@ -9,14 +10,15 @@ from harness.m4_verifier import CounterexampleAuditLog, TheoremCounterexampleReg
 
 def certificate(scope="local_claim"):
     global_scope = scope == "global_theorem"
+    target_statement = "sqrt(a^2)=a"
     return {
         "schema_version": "0.3", "certificate_id": "cex-1",
         "target": None if global_scope else {"proof_id": "p", "node_id": "n", "version": 1},
-        "theorem_ref": {"proof_id": "p", "theorem_version": 1, "theorem_digest": "sha256:" + "0" * 64} if global_scope else None,
+        "theorem_ref": {"proof_id": "p", "theorem_version": 1, "theorem_digest": "sha256:" + hashlib.sha256(target_statement.encode()).hexdigest()} if global_scope else None,
         "scope": scope, "structure": "rational_numbers", "assignment": {"a": -1},
         "premise_checks": [{"statement": "a is real", "holds": True, "evidence": "-1 is real"}],
         "checked_premise_refs": [], "global_assumption_digest": "sha256:context",
-        "target_check": {"statement": "sqrt(a^2)=a", "holds": False, "evidence": "1 != -1"},
+        "target_check": {"statement": target_statement, "holds": False, "evidence": "1 != -1"},
         "checker": "person_a_manual_exact",
     }
 
@@ -92,7 +94,9 @@ class M4PersonBTest(unittest.TestCase):
     def test_controller_has_explicit_theorem_level_path(self):
         controller = TheoremCounterexampleRegistry()
         value = certificate("global_theorem")
-        controller.register_context(value["theorem_ref"], global_assumption_digest="sha256:context", premise_statements=["a is real"])
+        controller.register_context(value["theorem_ref"], global_assumption_digest="sha256:context",
+            premise_statements=["a is real"], theorem_statement="sqrt(a^2)=a",
+            target_statement="sqrt(a^2)=a", structure="rational_numbers")
         controller.record(value)
         self.assertEqual("theorem_counterexample_certificate_recorded", controller.events[-1]["event"])
         with self.assertRaises(ContractError):
@@ -101,12 +105,16 @@ class M4PersonBTest(unittest.TestCase):
     def test_theorem_level_path_rejects_stale_context(self):
         controller = TheoremCounterexampleRegistry()
         value = certificate("global_theorem")
-        controller.register_context(value["theorem_ref"], global_assumption_digest="sha256:other", premise_statements=["a is real"])
+        controller.register_context(value["theorem_ref"], global_assumption_digest="sha256:other",
+            premise_statements=["a is real"], theorem_statement="sqrt(a^2)=a",
+            target_statement="sqrt(a^2)=a", structure="rational_numbers")
         with self.assertRaises(StaleVersionError):
             controller.record(value)
         duplicate_context = TheoremCounterexampleRegistry()
         with self.assertRaisesRegex(ContractError, "duplicates"):
-            duplicate_context.register_context(value["theorem_ref"], global_assumption_digest="sha256:context", premise_statements=["P", "P"])
+            duplicate_context.register_context(value["theorem_ref"], global_assumption_digest="sha256:context",
+                premise_statements=["P", "P"], theorem_statement="sqrt(a^2)=a",
+                target_statement="sqrt(a^2)=a", structure="rational_numbers")
         with self.assertRaisesRegex(ContractError, "requires a theorem registry"):
             verify_counterexample(value, premise_expressions=["a == -1"], target_expression="a == 1")
 

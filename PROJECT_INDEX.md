@@ -22,6 +22,7 @@
 | [同学 AI 接手提示词](prompts/collaborator_onboarding_prompt.md) | 另一台电脑的自包含上下文 | 可使用 |
 | [M0 范围与术语](docs/milestones/M00_scope_and_terminology.md) | 研究问题、定义与验收案例 | `v0.1` 已冻结 |
 | [M0 裁决记录](docs/milestones/M00_adjudication.md) | 双人评审分歧与最终裁决 | 已完成 |
+| [M0 评审完整性说明](docs/milestones/M00_integrity_limitation.md) | 区分工程契约完成与无法追溯证明的严格双盲证据 | 限制生效 |
 | [M1 共享契约与 Controller](docs/milestones/M01_shared_contracts_and_controller.md) | Schema、版本化状态机与无模型回放 | `v0.3` 已冻结 |
 | [M1 冻结记录](docs/milestones/M01_freeze_record.md) | 冻结范围、验证依据与变更规则 | 已完成 |
 | [M1 A/B 集成](docs/milestones/M01_person_a_b_integration.md) | Person A checker 到证书、Person B 补丁及独立复核的衔接 | `v0.3` 已完成 |
@@ -36,18 +37,24 @@
 | [M2 Person B 50 题自然语言批改](docs/milestones/M02_person_b_50_natural_language_review.md) | 原题、完整证明、逐题结论、错误定位、反例与最小修改 | 已完成 |
 | [M3 Evaluator v1](docs/milestones/M03_evaluator_v1.md) | M2→checker 适配、节点/依赖/定位/裁决指标与验收步骤 | `m3-evaluator-v1.0` 已冻结 |
 | [M3 冻结记录](docs/milestones/M03_freeze_record.md) | 50 题运行、指标、人工审计、哈希与变更规则 | 2026-08-14 已完成 |
-| [M3 A/B 联合验收](docs/milestones/M03_person_a_b_acceptance.md) | Person A 冻结后复核、Person B 审计证据与双人退出签核 | 双人通过（保留 `m2-028` 限制） |
+| [M3 A/B 联合验收](docs/milestones/M03_person_a_b_acceptance.md) | Person A 冻结后复核、Person B 审计证据与双人退出签核 | 历史 v1.0 验收 |
+| [M3 `m2-028` 语义勘误](docs/milestones/M03_m2_028_semantic_erratum.md) | 纠正“真定理即有效证明”的后冻结审计误判 | 当前解释生效 |
 | [M3 Controller 衔接](docs/milestones/M03_controller_handoff.md) | 冻结 M3 checker 结果到 v0.3 Controller 的事务导入、状态审计与修复交接 | 50 题兼容回归通过 |
 | [M3 A/B/Controller 集成冻结](docs/milestones/M03_integrated_freeze_record.md) | 联合验收、Controller、适配层、测试与机器清单的统一发布边界 | `m3-integrated-v1.0` 已冻结 |
-| [M4 Person A 反例协议](docs/milestones/M04_person_a_counterexample_protocol.md) | 反例证书数学接受门及 `false_local_claim` / `false_theorem` 范围 | 已纳入 `m4-integrated-v1.0` |
-| [M4 Person A 审查 Schema](schemas/m4_person_a_counterexample_review_v0_1.schema.json) | 独立核验身份、方法和接受结果的可移植契约 | `v0.1` |
+| [M4 Person A 反例协议](docs/milestones/M04_person_a_counterexample_protocol.md) | 反例证书数学接受门、上下文摘要及范围映射 | `v0.2`，已纳入 `m4-integrated-v1.1` |
+| [M4 Person A 审查 Schema](schemas/m4_person_a_counterexample_review_v0_1.schema.json) | 独立核验身份、方法和接受结果的历史契约 | `v0.1` 保留 |
+| [M4 Person A 审查 Schema v0.2](schemas/m4_person_a_counterexample_review_v0_2.schema.json) | 增加确定性审核上下文摘要的当前契约 | `v0.2` |
 | [M4 Person B 可执行核验](docs/milestones/M04_person_b_executable_verifier.md) | 精确算术重放、链式审计、批量运行与 theorem-level 登记 | Person A 交叉验收通过 |
 | [M4 Person B 核验 Schema](schemas/m4_person_b_verification_v0_1.schema.json) | 可执行核验状态与 SHA-256 审计记录契约 | `v0.1` |
 | [M4 Person B 转换协议](prompts/m4_counterexample_person_b.md) | 将已审数学陈述保守转换为精确表达式并交接审计记录 | `v0.1` |
-| [M4 Controller 衔接](docs/milestones/M04_controller_handoff.md) | 上下文冻结、B 执行、A 独立复核、事务回滚与统一审计链 | `m4-counterexample-controller-v0.1` 已实现 |
-| [M4 Person A 联合验收](docs/milestones/M04_person_a_cross_review_and_acceptance.md) | 11 个 Gold 反例全量复核、问题修复、限制与退出签核 | `m4-integrated-v1.0` 通过 |
-| [M4 集成验收清单](data/benchmarks/m4/integrated_acceptance_v1.json) | Gold 覆盖、身份、限制及关键产物 SHA-256 冻结边界 | `m4-integrated-v1.0` |
-| [M3 分歧人工审计](data/benchmarks/m3/experiments/full50_codex_v1/HUMAN_AUDIT.md) | 全部分歧裁定及 `m2-028` 已知 Gold 缺陷 | Person B 审计完成 |
+| [M4 Controller 衔接](docs/milestones/M04_controller_handoff.md) | 上下文冻结、B 执行、A 独立复核、事务回滚与统一审计链 | `m4-counterexample-controller-v0.2` 已实现 |
+| [M4 Person A 初始验收](docs/milestones/M04_person_a_cross_review_and_acceptance.md) | 11 个 Gold 反例全量复核、问题修复、限制与退出签核 | `m4-integrated-v1.0` 历史基线 |
+| [M4 Person B 逆向复核](docs/milestones/M04_person_b_cross_review_and_joint_acceptance.md) | 目标、结构、解释与 theorem digest 攻击面复核及修复 | A/B 联合通过 |
+| [M4 v1.0 验收清单](data/benchmarks/m4/integrated_acceptance_v1.json) | Person A 初始验收的历史冻结边界 | 保留，不原地改写 |
+| [M4 v1.1 联合验收清单](data/benchmarks/m4/integrated_acceptance_v1_1.json) | Gold 覆盖、双人签核、限制及关键产物 SHA-256 冻结边界 | `m4-integrated-v1.1` A/B 联合接受 |
+| [M0–M4 跨阶段完成审计](data/benchmarks/m0_m4_completion_audit_v1.json) | 统一区分工程完成、角色覆盖、Controller 范围和证据限制 | 机器校验生效 |
+| [M0–M4 完成审计 Schema](schemas/m0_m4_completion_audit_v1.schema.json) | 跨阶段状态与摘要契约 | `v1.0` |
+| [M3 分歧人工审计](data/benchmarks/m3/experiments/full50_codex_v1/HUMAN_AUDIT.md) | v1.0 历史分歧裁定；`m2-028` 解释已被勘误 | 冻结保留 |
 | [M3 Evaluator Gold](data/benchmarks/m3/gold/evaluator_pilot_v1.jsonl) | 50 题证明级 Gold 与 39 题、98 节点的节点级 Gold | `m3-evaluator-gold-0.1` |
 | [M3 指标 Schema](schemas/m3_evaluator_report_v0_1.schema.json) | Evaluator v1 模块化报告契约 | `v0.1` |
 | [M3 联合验收 Schema](schemas/m3_joint_acceptance_v1.schema.json) | A/B 身份、证据摘要、分歧覆盖与已知限制契约 | `v1.0` |

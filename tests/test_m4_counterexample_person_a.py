@@ -15,6 +15,13 @@ VERIFY = {
     "verification_method": "manual_exact",
     "verifier_id": "person_b_fixture",
 }
+LOCAL_BINDING = {
+    "expected_target": R2,
+    "expected_theorem_ref": None,
+    "expected_target_statement": "x=y",
+    "expected_structure": "real_numbers",
+    "expected_interpretation_assumptions": [],
+}
 
 
 def local_certificate():
@@ -42,7 +49,7 @@ class M4PersonACounterexampleTest(unittest.TestCase):
             expected_premise_refs=[R1], expected_global_assumption_digest=DIGEST,
             expected_premise_statements=STATEMENTS,
             verification_status="verified", verification_notes="exact substitution checked",
-            **VERIFY,
+            **VERIFY, **LOCAL_BINDING,
         )
         self.assertTrue(result["accepted"])
         self.assertEqual("accepted", result["decision"])
@@ -60,7 +67,9 @@ class M4PersonACounterexampleTest(unittest.TestCase):
             expected_premise_statements=STATEMENTS,
             expected_global_assumption_digest=DIGEST, verification_status="verified",
             verification_notes="theorem assumptions and conclusion checked",
-            **VERIFY,
+            expected_target=None, expected_theorem_ref=value["theorem_ref"],
+            expected_target_statement="x=y", expected_structure="real_numbers",
+            expected_interpretation_assumptions=[], **VERIFY,
         )
         self.assertTrue(result["accepted"])
 
@@ -70,7 +79,7 @@ class M4PersonACounterexampleTest(unittest.TestCase):
             expected_premise_refs=[R1], expected_global_assumption_digest=DIGEST,
             expected_premise_statements=STATEMENTS,
             verification_status="verified", verification_notes="checked",
-            **VERIFY,
+            **VERIFY, **LOCAL_BINDING,
         )
         self.assertFalse(result["accepted"])
         self.assertEqual("rejected", result["decision"])
@@ -82,7 +91,7 @@ class M4PersonACounterexampleTest(unittest.TestCase):
             expected_premise_statements=STATEMENTS,
             expected_global_assumption_digest="sha256:new",
             verification_status="verified", verification_notes="checked",
-            **VERIFY,
+            **VERIFY, **LOCAL_BINDING,
         )
         self.assertEqual("rejected", result["decision"])
         self.assertEqual(2, len(result["reasons"]))
@@ -93,7 +102,7 @@ class M4PersonACounterexampleTest(unittest.TestCase):
             expected_premise_refs=[R1], expected_global_assumption_digest=DIGEST,
             expected_premise_statements=STATEMENTS,
             verification_status="failed", verification_notes="target evaluates true",
-            **VERIFY,
+            **VERIFY, **LOCAL_BINDING,
         )
         self.assertEqual("rejected", failed["decision"])
         absent = review_counterexample(
@@ -101,7 +110,7 @@ class M4PersonACounterexampleTest(unittest.TestCase):
             expected_premise_statements=STATEMENTS,
             expected_global_assumption_digest=DIGEST, verification_status="undetermined",
             verification_notes="bounded search exhausted",
-            **VERIFY,
+            **VERIFY, **LOCAL_BINDING,
         )
         self.assertEqual("undetermined", absent["decision"])
         self.assertFalse(absent["accepted"])
@@ -114,7 +123,7 @@ class M4PersonACounterexampleTest(unittest.TestCase):
             expected_premise_statements=STATEMENTS,
             expected_global_assumption_digest=DIGEST, verification_status="verified",
             verification_notes="claimed checked",
-            **VERIFY,
+            **VERIFY, **LOCAL_BINDING,
         )
         self.assertEqual("rejected", result["decision"])
 
@@ -125,7 +134,7 @@ class M4PersonACounterexampleTest(unittest.TestCase):
                 expected_premise_refs=[R1], expected_global_assumption_digest=DIGEST,
                 expected_premise_statements=STATEMENTS,
                 verification_status="verified", verification_method="manual_exact",
-                verification_notes="self checked", verifier_id="person_a",
+                verification_notes="self checked", verifier_id="person_a", **LOCAL_BINDING,
             )
 
     def test_frozen_gold_derived_scope_cases_are_accepted(self):
@@ -158,13 +167,18 @@ class M4PersonACounterexampleTest(unittest.TestCase):
                 expected_global_assumption_digest=case["expected_global_assumption_digest"],
                 verification_status="verified", verification_method="manual_exact",
                 verification_notes="independent regression replay", verifier_id="person_b_fixture",
+                expected_target=case["certificate"]["target"],
+                expected_theorem_ref=case["certificate"]["theorem_ref"],
+                expected_target_statement=case["certificate"]["target_check"]["statement"],
+                expected_structure=case["certificate"]["structure"],
+                expected_interpretation_assumptions=case["certificate"].get("interpretation_assumptions", []),
             )
             self.assertTrue(result["accepted"], case["source_sample_id"])
 
     def test_review_schema_covers_exact_runtime_output(self):
         root = Path(__file__).resolve().parents[1]
         schema = json.loads(
-            (root / "schemas/m4_person_a_counterexample_review_v0_1.schema.json")
+            (root / "schemas/m4_person_a_counterexample_review_v0_2.schema.json")
             .read_text(encoding="utf-8")
         )
         result = review_counterexample(
@@ -172,8 +186,26 @@ class M4PersonACounterexampleTest(unittest.TestCase):
             expected_premise_refs=[R1], expected_global_assumption_digest=DIGEST,
             expected_premise_statements=STATEMENTS,
             verification_status="verified", verification_notes="checked", **VERIFY,
+            **LOCAL_BINDING,
         )
         self.assertEqual(set(schema["required"]), set(result))
+        replay = review_counterexample(
+            local_certificate(), claimed_error_type="false_local_claim",
+            expected_premise_refs=[R1], expected_global_assumption_digest=DIGEST,
+            expected_premise_statements=STATEMENTS,
+            verification_status="verified", verification_notes="checked", **VERIFY,
+            **LOCAL_BINDING,
+        )
+        self.assertEqual(result["review_context_digest"], replay["review_context_digest"])
+        changed_binding = {**LOCAL_BINDING, "expected_structure": "integers"}
+        changed = review_counterexample(
+            local_certificate(), claimed_error_type="false_local_claim",
+            expected_premise_refs=[R1], expected_global_assumption_digest=DIGEST,
+            expected_premise_statements=STATEMENTS,
+            verification_status="verified", verification_notes="checked", **VERIFY,
+            **changed_binding,
+        )
+        self.assertNotEqual(result["review_context_digest"], changed["review_context_digest"])
 
     def test_rejects_omitted_reviewed_assumption(self):
         result = review_counterexample(
@@ -181,10 +213,24 @@ class M4PersonACounterexampleTest(unittest.TestCase):
             expected_premise_refs=[R1],
             expected_premise_statements=["a is real", "ax=ay"],
             expected_global_assumption_digest=DIGEST, verification_status="verified",
-            verification_notes="only one premise was checked", **VERIFY,
+            verification_notes="only one premise was checked", **VERIFY, **LOCAL_BINDING,
         )
         self.assertEqual("rejected", result["decision"])
         self.assertIn("complete reviewed premise statements", result["reasons"][0])
+
+    def test_rejects_target_structure_and_interpretation_binding_mismatch(self):
+        value = local_certificate()
+        value["target_check"]["statement"] = "x=z"
+        value["structure"] = "integers"
+        value["interpretation_assumptions"] = ["equality is modulo 2"]
+        result = review_counterexample(
+            value, claimed_error_type="false_local_claim", expected_premise_refs=[R1],
+            expected_premise_statements=STATEMENTS,
+            expected_global_assumption_digest=DIGEST, verification_status="verified",
+            verification_notes="checked", **VERIFY, **LOCAL_BINDING,
+        )
+        self.assertEqual("rejected", result["decision"])
+        self.assertEqual(3, len(result["reasons"]))
 
 
 if __name__ == "__main__":

@@ -13,10 +13,11 @@ TARGET = {"proof_id": "p", "node_id": "n", "version": 1}
 
 def certificate(scope="local_claim"):
     global_scope = scope == "global_theorem"
+    target_statement = "a=1"
     return {"schema_version": "0.3", "certificate_id": "c1",
         "target": None if global_scope else TARGET,
         "theorem_ref": {"proof_id": "p", "theorem_version": 1,
-            "theorem_digest": "sha256:" + "0" * 64} if global_scope else None,
+            "theorem_digest": "sha256:" + hashlib.sha256(target_statement.encode()).hexdigest()} if global_scope else None,
         "scope": scope, "structure": "rational_numbers", "assignment": {"a": -1},
         "premise_checks": [{"statement": "a is real", "holds": True, "evidence": "-1 is real"}],
         "checked_premise_refs": [], "global_assumption_digest": "sha256:ctx",
@@ -31,6 +32,7 @@ class M4ControllerTest(unittest.TestCase):
             premise_refs=[], premise_statements=["a is real"],
             approved_premise_expressions=["is_real(a)"],
             approved_target_expression="a == 1",
+            target_statement="a=1", structure="rational_numbers",
             global_assumption_digest="sha256:ctx")
         return ctl
 
@@ -52,7 +54,8 @@ class M4ControllerTest(unittest.TestCase):
         undecidable.register_context("local", scope="local_claim", target=TARGET,
             premise_refs=[], premise_statements=["a is real"],
             approved_premise_expressions=["is_rational(a)"],
-            approved_target_expression="a == 1", global_assumption_digest="sha256:ctx")
+            approved_target_expression="a == 1", target_statement="a=1",
+            structure="rational_numbers", global_assumption_digest="sha256:ctx")
         unknown = undecidable.process("local", certificate(), claimed_error_type="false_local_claim",
             premise_expressions=["is_rational(a)"], target_expression="a == 1")
         self.assertEqual("undetermined", unknown["state"])
@@ -63,6 +66,8 @@ class M4ControllerTest(unittest.TestCase):
         ctl.register_context("global", scope="global_theorem", theorem_ref=value["theorem_ref"],
             premise_refs=[], premise_statements=["a is real"],
             approved_premise_expressions=["is_real(a)"], approved_target_expression="a == 1",
+            target_statement="a=1", structure="rational_numbers",
+            theorem_statement="a=1",
             global_assumption_digest="sha256:ctx")
         result = ctl.process("global", value, claimed_error_type="false_theorem",
             premise_expressions=["is_real(a)"], target_expression="a == 1")
@@ -74,6 +79,8 @@ class M4ControllerTest(unittest.TestCase):
         ctl.register_context("global", scope="global_theorem", theorem_ref=value["theorem_ref"],
             premise_refs=[], premise_statements=["a is real"],
             approved_premise_expressions=["is_real(a)"], approved_target_expression="a == 1",
+            target_statement="a=1", structure="rational_numbers",
+            theorem_statement="a=1",
             global_assumption_digest="sha256:ctx")
         with self.assertRaises(ContractError):
             ctl.process("global", value, claimed_error_type="false_theorem",
@@ -108,6 +115,21 @@ class M4ControllerTest(unittest.TestCase):
             ctl.process("local", certificate(), claimed_error_type="false_local_claim",
                 premise_expressions=["is_real(a)"], target_expression="a == 2")
         self.assertEqual([], ctl.audit_records)
+
+    def test_rejects_target_structure_and_interpretation_substitution(self):
+        for mutation in ("target", "structure", "interpretation"):
+            ctl = self.local()
+            value = certificate()
+            if mutation == "target":
+                value["target_check"]["statement"] = "a=2"
+            elif mutation == "structure":
+                value["structure"] = "integers"
+            else:
+                value["interpretation_assumptions"] = ["a is interpreted modulo 2"]
+            with self.assertRaisesRegex(StaleVersionError, "target, structure, or interpretation"):
+                ctl.process("local", value, claimed_error_type="false_local_claim",
+                    premise_expressions=["is_real(a)"], target_expression="a == 1")
+            self.assertEqual([], ctl.audit_records)
 
     def test_person_a_rechecks_every_frozen_valid_gold_counterexample(self):
         root = Path(__file__).resolve().parents[1]
@@ -148,6 +170,8 @@ class M4ControllerTest(unittest.TestCase):
                 premise_refs=[], premise_statements=row["assumptions"],
                 approved_premise_expressions=[case["premise_expression"]],
                 approved_target_expression=case["target_expression"],
+                target_statement=row["theorem"], structure=row["domain"],
+                theorem_statement=row["theorem"],
                 global_assumption_digest=assumption_digest)
             result = ctl.process(row["proof_id"], value, claimed_error_type="false_theorem",
                 premise_expressions=[case["premise_expression"]],
@@ -156,6 +180,33 @@ class M4ControllerTest(unittest.TestCase):
             self.assertTrue(ctl.snapshot()["audit_chain_valid"])
             accepted.append(row["proof_id"])
         self.assertEqual(11, len(accepted))
+
+    def test_m2_034_local_regression_uses_complete_controller_path(self):
+        root = Path(__file__).resolve().parents[1]
+        person_a = json.loads(
+            (root / "data/fixtures/m4/person_a_gold_scope_cases.json").read_text(encoding="utf-8")
+        )
+        person_b = json.loads(
+            (root / "data/fixtures/m4/person_b_executable_cases.json").read_text(encoding="utf-8")
+        )
+        case_a = next(item for item in person_a["cases"] if item["source_sample_id"] == "m2-034")
+        case_b = next(item for item in person_b["cases"] if item["source_sample_id"] == "m2-034")
+        value = case_a["certificate"]
+        ctl = M4CounterexampleController()
+        ctl.register_context("m2-034", scope="local_claim", target=value["target"],
+            premise_refs=case_a["expected_premise_refs"],
+            premise_statements=[item["statement"] for item in value["premise_checks"]],
+            approved_premise_expressions=case_b["premise_expressions"],
+            approved_target_expression=case_b["target_expression"],
+            target_statement=value["target_check"]["statement"], structure=value["structure"],
+            interpretation_assumptions=value.get("interpretation_assumptions", []),
+            global_assumption_digest=case_a["expected_global_assumption_digest"])
+        result = ctl.process("m2-034", value, claimed_error_type="false_local_claim",
+            premise_expressions=case_b["premise_expressions"],
+            target_expression=case_b["target_expression"])
+        self.assertEqual("accepted", result["state"])
+        self.assertEqual("local_claim", result["review"]["scope"])
+        self.assertTrue(ctl.snapshot()["audit_chain_valid"])
 
 
 if __name__ == "__main__":
