@@ -16,12 +16,32 @@ from typing import Any, Iterable, Mapping, Sequence
 
 from harness.m6_experiments import (
     FAILURE_TYPES, M6ExperimentError, canonical_digest, score_records,
-    validate_comparison, validate_experiment_config,
+    validate_experiment_config, validate_experiment_suite,
 )
 
 
 M6_CONTROLLER_VERSION = "m6-controller-0.1"
 RUN_STATUSES = {"success", *FAILURE_TYPES}
+CONFIRMATORY_FAMILIES = {
+    "H1": {
+        f"{method}:{endpoint}"
+        for method in ("direct_judgment", "self_reflection", "generator_critic")
+        for endpoint in ("first_error_exact_accuracy",
+                         "first_error_false_positive_rate_when_absent", "false_accept_rate")
+    },
+    "H2": {
+        f"{method}:{endpoint}"
+        for method in ("no_structured_certificate", "no_counterexample_protocol")
+        for endpoint in ("false_accept_rate", "false_claim_detection_rate",
+                         "valid_counterexample_coverage")
+    },
+    "H3": {
+        f"{method}:{endpoint}"
+        for method in ("no_graph", "no_descendant_invalidation", "single_round_repair")
+        for endpoint in ("verified_repair_success_rate", "false_repair_rate",
+                         "new_error_introduction_rate")
+    },
+}
 
 
 def _is_sha256(value: Any) -> bool:
@@ -59,12 +79,12 @@ def freeze_artifacts(root: Path, paths: Iterable[str]) -> dict[str, str]:
 def build_controller_manifest(
     *, configs: Sequence[Mapping[str, Any]], sample_ids: Sequence[str],
     artifacts: Mapping[str, str], metric_digest: str, statistics_digest: str,
-    bootstrap_seeds: Sequence[int], m5_gate_digest: str,
+    bootstrap_seeds: Sequence[int], randomization_seeds: Sequence[int], m5_gate_digest: str,
     signatures: Mapping[str, str], m5_entry_allowed: bool = False,
     fixture_only: bool = True,
 ) -> dict[str, Any]:
     """Build an immutable pre-results Controller manifest candidate."""
-    validate_comparison(configs)
+    validate_experiment_suite(configs)
     if not sample_ids or any(not isinstance(item, str) or not item for item in sample_ids):
         raise M6ExperimentError("sample_ids must be nonempty strings")
     if len(set(sample_ids)) != len(sample_ids):
@@ -72,32 +92,40 @@ def build_controller_manifest(
     if not artifacts or any(not isinstance(path, str) or not path or not _is_sha256(digest)
                             for path, digest in artifacts.items()):
         raise M6ExperimentError("artifacts must map paths to SHA-256 digests")
-    if any(not isinstance(seed, int) or isinstance(seed, bool) for seed in bootstrap_seeds) or not bootstrap_seeds:
-        raise M6ExperimentError("bootstrap_seeds must be a nonempty integer list")
-    if len(set(bootstrap_seeds)) != len(bootstrap_seeds):
-        raise M6ExperimentError("bootstrap_seeds must be unique")
+    for name, seeds in (("bootstrap_seeds", bootstrap_seeds),
+                        ("randomization_seeds", randomization_seeds)):
+        if any(not isinstance(seed, int) or isinstance(seed, bool) for seed in seeds) or not seeds:
+            raise M6ExperimentError(f"{name} must be a nonempty integer list")
+        if len(set(seeds)) != len(seeds):
+            raise M6ExperimentError(f"{name} must be unique")
     if any(not _is_sha256(value) for value in (metric_digest, statistics_digest, m5_gate_digest)):
         raise M6ExperimentError("manifest digest fields must be SHA-256 digests")
     required_signatures = {"person_a", "person_b_cross_review", "controller"}
     if set(signatures) != required_signatures:
         raise M6ExperimentError("manifest requires exact Person A, Person B, and Controller signature slots")
+    if not isinstance(fixture_only, bool):
+        raise M6ExperimentError("fixture_only must be boolean")
     if not isinstance(m5_entry_allowed, bool):
         raise M6ExperimentError("m5_entry_allowed must be boolean")
+    pending_signatures = {"person_a": "pending_human_signature",
+                          "person_b_cross_review": "pending_cross_review",
+                          "controller": "candidate_unsigned"}
+    if fixture_only and (m5_entry_allowed or dict(signatures) != pending_signatures):
+        raise M6ExperimentError("fixture manifest must preserve the closed M5 gate and pending signatures")
     if not fixture_only:
-        expected_signatures = {
-            "person_a": "signed", "person_b_cross_review": "signed", "controller": "signed",
-        }
-        if not m5_entry_allowed:
-            raise M6ExperimentError("formal M6 manifest blocked: M5 entry is not allowed")
-        if dict(signatures) != expected_signatures:
-            raise M6ExperimentError("formal M6 manifest blocked: signatures are incomplete")
-        if len(bootstrap_seeds) != 10_000:
-            raise M6ExperimentError("formal M6 manifest requires exactly 10,000 bootstrap seeds")
+        # v0.1 has no trusted signature verifier and receives the M5 flag/digest from
+        # its caller.  Accepting strings such as "signed" here would turn assertions
+        # into authority.  A later formal version must verify the live M5 artifact and
+        # detached signatures before this branch can construct an executable manifest.
+        raise M6ExperimentError(
+            "formal M6 manifest blocked: authentic M5 gate and detached-signature verification are not implemented"
+        )
     body = {
         "schema_version": M6_CONTROLLER_VERSION,
         "status": "fixture_candidate_m5_entry_blocked" if fixture_only else "frozen_for_execution",
         "fixture_only": fixture_only,
-        "result_exposure": "no_m6_results_viewed",
+        "result_exposure": {"status": "no_m6_results_viewed",
+                            "evidence_strength": "self_attested_unverified"},
         "configs": [validate_experiment_config(row) for row in configs],
         "sample_ids": list(sample_ids),
         "sample_set_digest": canonical_digest(list(sample_ids)),
@@ -105,6 +133,7 @@ def build_controller_manifest(
         "metric_digest": metric_digest,
         "statistics_digest": statistics_digest,
         "bootstrap_seeds": list(bootstrap_seeds),
+        "randomization_seeds": list(randomization_seeds),
         "m5_gate_digest": m5_gate_digest,
         "m5_entry_allowed": m5_entry_allowed,
         "signatures": dict(signatures),
@@ -166,8 +195,8 @@ def validate_run_ledger(
             raise M6ExperimentError("run ledger exceeds the per-sample token limit")
         if sum(row["model_calls"] for row in attempts) > budget["model_calls"]:
             raise M6ExperimentError("run ledger exceeds the per-sample model-call limit")
-        if any(row["latency_seconds"] > budget["timeout_seconds"] for row in attempts):
-            raise M6ExperimentError("run ledger exceeds the frozen attempt timeout")
+        if sum(row["latency_seconds"] for row in attempts) > budget["timeout_seconds"]:
+            raise M6ExperimentError("run ledger exceeds the frozen per-sample wall-clock limit")
     if duplicate_attempts:
         raise M6ExperimentError("attempts must be contiguous from zero")
     if nonterminal:
@@ -221,7 +250,7 @@ def validate_controller_manifest(manifest: Mapping[str, Any]) -> dict[str, Any]:
     expected_fields = {
         "schema_version", "status", "fixture_only", "result_exposure", "configs",
         "sample_ids", "sample_set_digest", "artifacts", "metric_digest",
-        "statistics_digest", "bootstrap_seeds", "m5_gate_digest", "m5_entry_allowed",
+        "statistics_digest", "bootstrap_seeds", "randomization_seeds", "m5_gate_digest", "m5_entry_allowed",
         "signatures", "manifest_id",
     }
     if set(row) != expected_fields or row["schema_version"] != M6_CONTROLLER_VERSION:
@@ -229,7 +258,8 @@ def validate_controller_manifest(manifest: Mapping[str, Any]) -> dict[str, Any]:
     rebuilt = build_controller_manifest(
         configs=row["configs"], sample_ids=row["sample_ids"], artifacts=row["artifacts"],
         metric_digest=row["metric_digest"], statistics_digest=row["statistics_digest"],
-        bootstrap_seeds=row["bootstrap_seeds"], m5_gate_digest=row["m5_gate_digest"],
+        bootstrap_seeds=row["bootstrap_seeds"], randomization_seeds=row["randomization_seeds"],
+        m5_gate_digest=row["m5_gate_digest"],
         signatures=row["signatures"], m5_entry_allowed=row["m5_entry_allowed"],
         fixture_only=row["fixture_only"],
     )
@@ -241,10 +271,17 @@ def validate_controller_manifest(manifest: Mapping[str, Any]) -> dict[str, Any]:
 def paired_bootstrap_difference(
     left: Sequence[float], right: Sequence[float], *, seeds: Sequence[int], alpha: float = 0.05,
 ) -> dict[str, Any]:
-    """Deterministic paired bootstrap CI and two-sided sign-tail p-value."""
+    """Deterministic paired bootstrap confidence interval for a mean difference.
+
+    This function intentionally does not manufacture a hypothesis-test p-value
+    from bootstrap sign tails.  Confirmatory Holm input must come from the paired
+    randomization test below (or another preregistered valid test).
+    """
     if len(left) != len(right) or not left:
         raise M6ExperimentError("paired bootstrap requires equal nonempty samples")
-    if not 0 < alpha < 1 or not seeds or any(not isinstance(seed, int) or isinstance(seed, bool) for seed in seeds):
+    if (not 0 < alpha < 1 or not seeds
+            or any(not isinstance(seed, int) or isinstance(seed, bool) for seed in seeds)
+            or len(set(seeds)) != len(seeds)):
         raise M6ExperimentError("invalid bootstrap alpha or seeds")
     try:
         diffs = [float(a) - float(b) for a, b in zip(left, right)]
@@ -264,16 +301,36 @@ def paired_bootstrap_difference(
         low, high = math.floor(position), math.ceil(position)
         return estimates[low] if low == high else estimates[low] + (estimates[high] - estimates[low]) * (position - low)
 
-    # The +1 correction prevents a finite Monte Carlo run from reporting p=0.
-    nonpositive = (1 + sum(value <= 0 for value in estimates)) / (len(estimates) + 1)
-    nonnegative = (1 + sum(value >= 0 for value in estimates)) / (len(estimates) + 1)
     return {
         "paired_count": n,
         "absolute_difference": sum(diffs) / n,
         "ci": [quantile(alpha / 2), quantile(1 - alpha / 2)],
-        "p_value_unadjusted": min(1.0, 2 * min(nonpositive, nonnegative)),
         "bootstrap_replicates": len(seeds),
     }
+
+
+def paired_randomization_p_value(
+    left: Sequence[float], right: Sequence[float], *, seeds: Sequence[int],
+) -> float:
+    """Two-sided paired sign-flip randomization p-value with +1 correction."""
+    if len(left) != len(right) or not left:
+        raise M6ExperimentError("paired randomization requires equal nonempty samples")
+    if (not seeds or any(not isinstance(seed, int) or isinstance(seed, bool) for seed in seeds)
+            or len(set(seeds)) != len(seeds)):
+        raise M6ExperimentError("paired randomization requires unique integer seeds")
+    try:
+        diffs = [float(a) - float(b) for a, b in zip(left, right)]
+    except (TypeError, ValueError) as exc:
+        raise M6ExperimentError("paired randomization values must be finite numbers") from exc
+    if any(not math.isfinite(value) for value in diffs):
+        raise M6ExperimentError("paired randomization values must be finite numbers")
+    observed = abs(sum(diffs) / len(diffs))
+    extreme = 0
+    for seed in seeds:
+        rng = random.Random(seed)
+        permuted = abs(sum(value if rng.randrange(2) else -value for value in diffs) / len(diffs))
+        extreme += permuted >= observed
+    return (extreme + 1) / (len(seeds) + 1)
 
 
 def holm_adjust(p_values: Mapping[str, float]) -> dict[str, float]:
@@ -290,6 +347,16 @@ def holm_adjust(p_values: Mapping[str, float]) -> dict[str, float]:
         running = max(running, min(1.0, (size - index) * value))
         adjusted[name] = running
     return adjusted
+
+
+def holm_adjust_preregistered(hypothesis: str, p_values: Mapping[str, float]) -> dict[str, float]:
+    """Reject missing/extra tests before adjusting one exact preregistered family."""
+    expected = CONFIRMATORY_FAMILIES.get(hypothesis)
+    if expected is None:
+        raise M6ExperimentError("unknown preregistered hypothesis family")
+    if set(p_values) != expected:
+        raise M6ExperimentError("Holm input must contain the complete preregistered hypothesis family")
+    return holm_adjust(p_values)
 
 
 def aggregate_by_experiment(records: Iterable[Mapping[str, Any]]) -> dict[str, Any]:

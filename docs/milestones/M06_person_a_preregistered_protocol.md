@@ -32,7 +32,7 @@ RQ1–RQ3 是共同主要问题，不得在看到结果后把未支持的问题�
 
 - **首个错误（first error）**：沿冻结的稳定拓扑顺序检查时，Gold 标注的首个失败位置。为兼容 M3，分别保留 `first_gap`、`first_invalid`，并以二者中更早者作为组合 `first_error`；同位置时按 Gold 的冻结裁决记录，不由评分器猜测。较早节点若为 `undetermined`，则该样本的组合首错 Gold 也必须为 `undetermined/not_evaluable`，不得越过它宣称后续确定首错。全局假命题沿用冻结 Gold 的哨兵位置约定，不在 M6 重写。
 - **首错精确命中**：仅在 Gold 存在可评分 `first_error` 位置时，预测 `node_id` 与 Gold 完全一致。Gold 不存在位置时另计“首错假阳性率”；不得把大量 `none` 并入 accuracy 抬高分数。宽松相邻命中只作次要误差分析。
-- **错误接受（false accept）**：沿用 M3 冻结安全口径：Gold proof verdict 为 `invalid`，方法却输出 `accepted`（历史输出 `accepted_with_gap` 也按接受计）。分母是全部 Gold `invalid` 证明。Gold 为 `gap` 或 `undetermined` 却被输出为 `accepted`，另记 `unsupported_resolution_rate`，不得与 false accept 混名或隐藏。
+- **错误接受（false accept）**：沿用 M3 冻结安全口径：Gold proof verdict 为 `invalid`，方法却输出 `accepted`（历史输出 `accepted_with_gap` 也按接受计）。分母是全部 Gold `invalid` 证明。Gold 为 `gap` 却输出 `accepted`，或 Gold 为 `undetermined` 却输出 `accepted`/`accepted_with_gap`，另记 `unsupported_resolution_rate`；Gold `gap` 对应预测 `accepted_with_gap` 不属于过度解决。该指标不得与 false accept 混名或隐藏。
 - **有效反例**：赋值满足冻结结构、定义域和全部相关前提，并使命题目标为假；还必须绑定正确 local/theorem scope。仅有候选赋值、程序可运行或部分前提成立不算有效。
 - **修复成功**：补丁保持原定理、假设、定义域、目标和无关分支，修复原失败边，不引入新错误，满足操作最小性，并由非 Generator 的 Person A 接受；Controller 随后对新目标版本及全部受影响后代按拓扑顺序独立重验通过，最终路径无 `stale`、`rejected` 或 `undetermined`。
 - **错误修复（false repair）**：方法宣称成功，但上述任一修复成功条件不成立。改变题目、隐藏新增假设、只验证局部补丁或遗漏后代均属于 false repair。
@@ -64,7 +64,7 @@ RQ1 以指标 1 的 accuracy、假阳性率和指标 2 共同裁决，RQ2 以指
 
 只按冻结 Gold 字段分层：证明有效性状态、首错类型、局部/全局反例、证明长度四分位、依赖图深度四分位、可修复/不可修复。每层必须报告样本量；`n < 20` 只作描述，不作确认性显著性结论。模型组合分析分为同模型双角色与异模型双角色，不在看到效果后合并或拆分新组。
 
-统计比较以样本为配对单位，使用同一组 bootstrap resample，固定 10,000 次；seed 列表及统计库版本由 Controller 在任何聚合前写入 Manifest。确认性比较预先限定为：H1 完整系统分别对直接判断、自我反思、Generator–Critic；H2 完整系统分别对无结构化证书、无反例协议；H3 完整系统分别对无图、无后代撤销、单轮修复。每个 H 内对其比较使用 Holm 校正，双侧 `alpha=0.05`；同时报告配对绝对差、相对差（基线分母非零时）、未校正 CI、校正后的 p 值及原始计数，不以显著性替代数学重要性。若最终样本量小于预运行功效分析要求，该 H 只报告估计与区间，不作“无差异”结论。Person B 必须在不知道正式结果时提交效应阈值、基线率假设和功效计算；Person A 复核后绑定到运行 Manifest，未完成则阻止确认性运行。
+统计比较以每个端点共同适用的同一样本为配对单位，使用同一组 bootstrap resample 生成 CI，并使用独立的 paired sign-flip randomization 生成确认性 p 值；二者各固定 10,000 个预注册 seed，禁止把 bootstrap sign-tail 冒充 p 值。seed 列表及统计库版本由 Controller 在任何聚合前写入 Manifest。确认性方法比较预先限定为：H1 完整系统分别对直接判断、自我反思、Generator–Critic；H2 完整系统分别对无结构化证书、无反例协议；H3 完整系统分别对无图、无后代撤销、单轮修复。Holm family 按 H 划分，并包含该 H 的全部方法 × 共同主要端点：H1 为首错 exact、无首错假阳性和 false accept 共 9 项；H2 为 false accept、false-claim detection、有效反例覆盖共 6 项，候选精确率另报告按样本配对 bootstrap CI，且“完整系统减基线”的绝对差下界不得低于 `-0.05`；H3 为 verified repair success、false repair 和新错误引入共 9 项。每个 family 双侧 `alpha=0.05`；同时报告配对绝对差、相对差（基线分母非零时）、未校正 CI、校正后的 p 值及原始计数，不以显著性替代数学重要性。若最终样本量小于预运行功效分析要求，该 H 只报告估计与区间，不作“无差异”结论。Person B 必须在不知道正式结果时提交效应阈值、基线率假设和功效计算；Person A 复核后绑定到运行 Manifest，未完成则阻止确认性运行。
 
 ## 4. 方法信息与工具权限
 
@@ -113,7 +113,7 @@ Person A 在锁定逐例数学判断前不得看到方法真实名称、聚合�
 
 任何变更必须新建版本并记录：变更前后文本、原因、提出者、所见结果范围和受影响 RQ。看到正式结果后的改动一律标记 `post_result_exploratory`，不得回写 v0.1 或用于确认性主张。
 
-M6 运行前仍需同时满足：M5 的 `m6_entry_allowed=true`；Person B 完成方法/消融实现；Controller 冻结数据、代码、Prompt、模型、工具、预算、统计环境和指标 hash；手算指标 fixture 通过；功效分析完成；真实 Person A 与 Person B 交叉审查并签署。当前签署状态：Person A `pending_human_signature`，Person B `pending_cross_review`，Controller `pending_manifest`。因此当前退出决定为“不通过运行门；协议候选内容已锁定”。
+M6 运行前仍需同时满足：M5 的 `m6_entry_allowed=true`；Person B 完成方法/消融实现；Controller 冻结数据、代码、Prompt、模型、工具、预算、统计环境和指标 hash；手算指标 fixture 通过；功效分析完成；真实 Person A 与 Person B 交叉审查并签署；程序验证当前 M5 原始字节摘要和真实 detached signature。当前 v0.1 尚无可信签名验证器，因此即使调用者传入 `true` 或字符串 `signed` 也必须拒绝正式 Manifest/执行。当前签署状态：Person A `pending_human_signature`，Person B `pending_cross_review`，Controller `pending_manifest`。因此当前退出决定为“不通过运行门；协议候选内容已锁定”。
 
 ## 9. 两份总控 Markdown 逐条映射
 

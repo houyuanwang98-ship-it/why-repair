@@ -1,16 +1,16 @@
 # M6 Controller：协议冻结、运行账本与统计候选 v0.1
 
-状态：`implemented_fixture_only_m5_entry_blocked`。本交付机械化两份 M6 Person A Markdown 和 Person B 九种配置，但不冒充真人签署、不运行模型 smoke test、Pilot 或正式实验。`data/benchmarks/m5/joint_acceptance_v0_1.json` 的 `m6_entry_allowed=false` 仍是硬阻塞。
+状态：`person_a_engineering_cross_review_passed_fixture_only`。本交付机械化两份 M6 Person A Markdown 和 Person B 九种配置，但不冒充真人签署、不运行模型 smoke test、Pilot 或正式实验。`data/benchmarks/m5/joint_acceptance_v0_1.json` 的 `m6_entry_allowed=false` 仍是硬阻塞。
 
 ## 1. Controller 已实现范围
 
 `harness/m6_controller.py` 提供以下确定性边界：
 
 1. `freeze_artifacts` 只接受仓库内显式相对路径并计算 SHA-256，供冻结数据、代码、定理库、Prompt、工具、Schema、评分器和统计环境。
-2. `build_controller_manifest` 绑定完整实验配置、稳定样本顺序、样本集合摘要、artifact hash、指标/统计摘要、bootstrap seed、M5 门摘要及三方签署 slot；`validate_controller_manifest` 重建并核对内容 ID。正式清单还强制 M5 开门、三方签署和恰好 10,000 个 seed。
-3. `validate_run_ledger` 要求每个配置 × 样本都有分配记录，技术重试从 attempt 0 连续编号，只能有一个最终 terminal attempt；首轮失败、token、模型调用、成本和延迟不能被成功重试覆盖，并逐样本执行冻结的 token、调用、重试和超时硬上限。
+2. `build_controller_manifest` 绑定完整实验配置、稳定样本顺序、样本集合摘要、artifact hash、指标/统计摘要、各自独立记录的 bootstrap/randomization seed 清单、M5 门摘要及三方签署 slot；`validate_controller_manifest` 重建并核对内容 ID。由于 v0.1 未实现 live M5 原始字节与 detached signature 验证，正式清单构造无条件 fail closed，调用者自报 `true`/`signed` 不构成权限。
+3. `validate_run_ledger` 要求每个配置 × 样本都有分配记录，技术重试从 attempt 0 连续编号，只能有一个最终 terminal attempt；首轮失败、token、模型调用、成本和延迟不能被成功重试覆盖，并逐样本执行冻结的 token、调用、重试和**跨全部尝试累计**墙钟硬上限。
 4. `aggregate_by_experiment` 沿 intention-to-treat 口径保留基础设施失败并调用冻结的手算指标评分器。
-5. `paired_bootstrap_difference` 使用 Controller Manifest 的明确 seed 列表进行配对重采样；`holm_adjust` 对每个预注册 H 内的比较执行 Holm 校正。
+5. `paired_bootstrap_difference` 只生成配对效应差和 CI；`paired_randomization_p_value` 生成可供确认性 Holm 输入的双侧 sign-flip p 值；`holm_adjust_preregistered` 要求 H1/H2/H3 的 9/6/9 项输入完整无增删后才执行校正。禁止把 bootstrap sign-tail 当作确认性 p 值或事后遗漏不显著比较。
 
 ## 2. 字段级完整性与失败保留
 
@@ -27,7 +27,7 @@
 - 模型快照、价格表、统一截断器、provider runner、功效计算输入和统计库版本冻结；
 - 开发集 smoke test、Pilot 基线/消融和主实验配置正式冻结。
 
-因此当前只允许 fixture 测试。上述门全部通过后，必须新建正式 Manifest，不得把本候选原地改写为已签署结果。
+因此当前只允许 fixture 测试。上述门全部通过且新增可信验证器后，必须新建更高版本正式 Manifest，不得把本候选原地改写为已签署结果。当前 `result_exposure` 仅为 `self_attested_unverified`，不冒充程序可证明的盲态事实。
 
 ## 4. 验收命令
 
@@ -35,4 +35,4 @@
 python -m unittest tests.test_m6_person_a_protocol tests.test_m6_person_b_experiments tests.test_m6_controller
 ```
 
-验收覆盖 artifact 路径隔离、配置/样本绑定、缺失运行检测、重试失败历史保留、成本汇总、配对 bootstrap、Holm 校正及 intention-to-treat 失败计分。
+验收覆盖 artifact 路径隔离、配置/样本绑定、缺失运行检测、重试失败历史保留、累计墙钟预算、成本汇总、配对 bootstrap CI、配对 randomization、Holm 校正及 intention-to-treat 失败计分。

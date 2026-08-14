@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-15 — M6 Person A cross-review hardening
+
+- Completed a Person A mathematical-comparability review of the M6 A/B/Controller fixture surface and recorded twelve corrected findings.
+- Closed caller-asserted formal execution, derived verified repair/false repair from complete mathematical gates, enforced preregistered comparison families and SHA-256 config bindings, and made wall-clock budgets cumulative across retries.
+- Corrected gap/undetermined scoring, separated bootstrap confidence intervals from paired randomization p-values, added worst-case safety bounds, and kept all human, M5, signature-verification, smoke, Pilot, and M7 gates fail-closed.
+
 ## 2026-08-15 — M6 Controller fixture-only protocol freeze and run ledger
 
 - Added deterministic artifact/config/sample freezing and a content-bound Controller Manifest candidate.

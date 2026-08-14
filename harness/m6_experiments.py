@@ -65,6 +65,16 @@ ABLATION_DIFFERENCES = {
     "no_descendant_invalidation": {"descendant_invalidation"},
     "single_round_repair": {"max_patch_rounds"},
 }
+COMPARISON_FAMILIES = {
+    "H1": {"full_system", "direct_judgment", "self_reflection", "generator_critic"},
+    "H2": {"full_system", "no_structured_certificate", "no_counterexample_protocol"},
+    "H3": {"full_system", "no_graph", "no_descendant_invalidation", "single_round_repair"},
+}
+REPAIR_SUCCESS_GATES = (
+    "independent_review_accepted", "problem_preserved", "failed_edge_resolved",
+    "no_new_errors", "operationally_minimal", "descendants_revalidated",
+    "final_path_clear",
+)
 
 
 def validate_ablation_purity() -> None:
@@ -84,12 +94,19 @@ def canonical_digest(value: Any) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+FIXTURE_DIGEST = canonical_digest("m6-fixture-placeholder")
+
+
+def _is_sha256(value: Any) -> bool:
+    return isinstance(value, str) and len(value) == 64 and all(char in "0123456789abcdef" for char in value)
+
+
 def build_experiment_config(
     method_id: str, *, model_id: str | Mapping[str, str], prompt_digest: str,
     dataset_digest: str, theorem_bank_digest: str, tool_digest: str,
-    code_digest: str = "fixture-code", scorer_digest: str = "fixture-scorer",
-    schema_digest: str = "fixture-schema", sampling_digest: str = "fixture-sampling",
-    truncation_digest: str = "fixture-truncation", token_limit: int,
+    code_digest: str = FIXTURE_DIGEST, scorer_digest: str = FIXTURE_DIGEST,
+    schema_digest: str = FIXTURE_DIGEST, sampling_digest: str = FIXTURE_DIGEST,
+    truncation_digest: str = FIXTURE_DIGEST, token_limit: int,
     call_limit: int, timeout_seconds: int, retry_limit: int = 1,
     role_mode: str = "same_model",
 ) -> dict[str, Any]:
@@ -110,11 +127,11 @@ def build_experiment_config(
         raise M6ExperimentError("same_model requires identical generator and critic models")
     if role_mode == "different_models" and len(set(models.values())) != 2:
         raise M6ExperimentError("different_models requires distinct generator and critic models")
-    if any(not isinstance(v, str) or not v for v in (
+    if any(not _is_sha256(v) for v in (
         prompt_digest, dataset_digest, theorem_bank_digest, tool_digest,
         code_digest, scorer_digest, schema_digest, sampling_digest, truncation_digest,
     )):
-        raise M6ExperimentError("model and digest fields must be nonempty strings")
+        raise M6ExperimentError("all artifact digest fields must be lowercase SHA-256 values")
     for name, value in {
         "token_limit": token_limit, "call_limit": call_limit,
         "timeout_seconds": timeout_seconds,
@@ -167,8 +184,8 @@ def validate_experiment_config(config: Mapping[str, Any]) -> dict[str, Any]:
     if row["role_mode"] not in {"same_model", "different_models"}:
         raise M6ExperimentError("unknown role_mode")
     digest_fields = expected_fields - {"schema_version", "method", "models", "role_mode", "budget", "experiment_id"}
-    if any(not isinstance(row[field], str) or not row[field] for field in digest_fields):
-        raise M6ExperimentError("all artifact digest fields must be nonempty strings")
+    if any(not _is_sha256(row[field]) for field in digest_fields):
+        raise M6ExperimentError("all artifact digest fields must be lowercase SHA-256 values")
     budget = row.get("budget")
     if not isinstance(budget, Mapping) or set(budget) != {"total_tokens", "model_calls", "timeout_seconds", "retry_limit"}:
         raise M6ExperimentError("budget has an invalid shape")
@@ -184,12 +201,12 @@ def validate_experiment_config(config: Mapping[str, Any]) -> dict[str, Any]:
     return row
 
 
-def validate_comparison(configs: Iterable[Mapping[str, Any]]) -> None:
-    """Enforce shared inputs and hard budgets across a comparison family."""
+def _validate_shared_configs(configs: Iterable[Mapping[str, Any]]) -> list[dict[str, Any]]:
+    """Validate configs and enforce the assets/budgets shared by every method."""
     validate_ablation_purity()
     rows = [validate_experiment_config(row) for row in configs]
-    if not rows:
-        raise M6ExperimentError("comparison requires at least one config")
+    if len(rows) < 2:
+        raise M6ExperimentError("experiment set requires at least two configs")
     if len({row.get("experiment_id") for row in rows}) != len(rows):
         raise M6ExperimentError("experiment_id values must be unique")
     shared = ("models", "role_mode", "dataset_digest", "theorem_bank_digest", "tool_digest", "code_digest",
@@ -197,6 +214,25 @@ def validate_comparison(configs: Iterable[Mapping[str, Any]]) -> None:
     for field in shared:
         if len({canonical_digest(row.get(field)) for row in rows}) != 1:
             raise M6ExperimentError(f"comparison configs differ on {field}")
+    return rows
+
+
+def validate_comparison(configs: Iterable[Mapping[str, Any]]) -> None:
+    """Require one complete preregistered H1, H2, or H3 comparison family."""
+    rows = _validate_shared_configs(configs)
+    method_ids = {row["method"]["method_id"] for row in rows}
+    matching = [family for family, required in COMPARISON_FAMILIES.items()
+                if method_ids == required]
+    if len(matching) != 1:
+        raise M6ExperimentError("comparison must contain one complete preregistered H1/H2/H3 family")
+
+
+def validate_experiment_suite(configs: Iterable[Mapping[str, Any]]) -> None:
+    """Require the complete nine-method suite for one model/role configuration."""
+    rows = _validate_shared_configs(configs)
+    method_ids = [row["method"]["method_id"] for row in rows]
+    if len(method_ids) != len(METHOD_IDS) or set(method_ids) != set(METHOD_IDS):
+        raise M6ExperimentError("experiment suite must contain every preregistered method exactly once")
 
 
 def cache_fingerprint(config: Mapping[str, Any], sample_id: str, serialized_input: Any) -> str:
@@ -215,10 +251,9 @@ def assert_execution_allowed(m5_gate: Mapping[str, Any], signatures: Mapping[str
         return
     if m5_gate.get("m6_entry_allowed") is not True:
         raise M6ExperimentError("M6 execution blocked: M5 m6_entry_allowed is not true")
-    expected = {"person_a": "signed", "person_b_cross_review": "signed",
-                "controller_manifest": "frozen"}
-    if any(signatures.get(key) != value for key, value in expected.items()):
-        raise M6ExperimentError("M6 execution blocked: required signatures/manifest are incomplete")
+    raise M6ExperimentError(
+        "M6 execution blocked: authentic detached-signature and live-manifest verification are not implemented"
+    )
 
 
 def score_records(records: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
@@ -227,42 +262,86 @@ def score_records(records: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
     if len({row.get("sample_id") for row in rows}) != len(rows):
         raise M6ExperimentError("sample_id values must be nonempty and unique")
     for row in rows:
+        required = {"sample_id", "gold_verdict", "gold_first_error_evaluable",
+                    "gold_first_error_reason", "gold_repairability",
+                    "gold_counterexample_eligible", "failure_type"}
+        if not required.issubset(row):
+            raise M6ExperimentError("scoring record is missing required Gold or failure fields")
         if not isinstance(row.get("sample_id"), str) or not row["sample_id"]:
             raise M6ExperimentError("sample_id values must be nonempty and unique")
         if row.get("failure_type") is not None and row["failure_type"] not in FAILURE_TYPES:
             raise M6ExperimentError("unknown failure_type")
         if row.get("gold_verdict") not in GOLD_VERDICTS:
             raise M6ExperimentError("unknown gold_verdict")
+        if not isinstance(row.get("gold_first_error_evaluable"), bool):
+            raise M6ExperimentError("gold_first_error_evaluable must be boolean")
+        if row.get("gold_repairability") not in {"repairable", "irreparable", "undetermined"}:
+            raise M6ExperimentError("unknown gold_repairability")
+        if not isinstance(row["gold_counterexample_eligible"], bool):
+            raise M6ExperimentError("gold_counterexample_eligible must be boolean")
+        if row.get("gold_counterexample_eligible") is True and row["gold_verdict"] != "invalid":
+            raise M6ExperimentError("counterexample-eligible Gold must be invalid")
         if row.get("predicted_verdict") is not None and row["predicted_verdict"] not in PREDICTED_VERDICTS:
             raise M6ExperimentError("unknown predicted_verdict")
+        if row.get("failure_type") is None and row.get("predicted_verdict") is None:
+            raise M6ExperimentError("successful infrastructure record requires a mathematical prediction")
         for field in ("gold_first_error", "predicted_first_error"):
             value = row.get(field)
             if value is not None and (not isinstance(value, int) or isinstance(value, bool) or value < 1):
                 raise M6ExperimentError(f"{field} must be null or a positive node id")
         if row.get("gold_first_error_evaluable") is True and row.get("gold_first_error") is None:
             raise M6ExperimentError("evaluable Gold first error requires a node id")
+        if row.get("gold_first_error_evaluable") is True and row.get("gold_first_error_reason") != "evaluable":
+            raise M6ExperimentError("evaluable Gold first error requires reason=evaluable")
+        if row.get("gold_first_error_evaluable") is False and row.get("gold_first_error") is not None:
+            raise M6ExperimentError("nonevaluable Gold first error cannot have a node id")
+        if row.get("gold_first_error_evaluable") is False and row.get("gold_first_error_reason") not in {
+            "absent", "undetermined", "not_evaluable",
+        }:
+            raise M6ExperimentError("nonevaluable Gold first error requires a frozen reason")
         if row.get("gold_first_error_reason") == "absent" and row.get("gold_first_error") is not None:
             raise M6ExperimentError("absent Gold first error cannot have a node id")
         if row.get("failure_type") is not None and any(row.get(field) is not None for field in ("predicted_verdict", "predicted_first_error")):
             raise M6ExperimentError("infrastructure failure cannot contain a mathematical prediction")
+        if row.get("failure_type") is not None and any(row.get(field, 0) != 0 for field in (
+            "counterexample_candidate_count", "valid_counterexample_count", "new_error_count",
+        )):
+            raise M6ExperimentError("infrastructure failure cannot contain mathematical evidence counts")
         if row.get("failure_type") is not None and any(row.get(field) is True for field in (
             "claimed_repair_success", "patch_applied", "verified_repair_success", "false_repair",
         )):
             raise M6ExperimentError("infrastructure failure cannot claim a patch outcome")
-        if row.get("verified_repair_success") is True and not (
+        for field in ("claimed_repair_success", "patch_applied", "verified_repair_success",
+                      "false_repair", "new_error_introduced", *REPAIR_SUCCESS_GATES):
+            if field in row and not isinstance(row[field], bool):
+                raise M6ExperimentError(f"{field} must be boolean when present")
+        if row.get("patch_applied") is True:
+            required_patch_fields = {"new_error_introduced", "new_error_count", *REPAIR_SUCCESS_GATES}
+            if not required_patch_fields.issubset(row):
+                raise M6ExperimentError("applied patch requires complete mathematical review fields")
+        elif any(row.get(field) is True for field in REPAIR_SUCCESS_GATES):
+            raise M6ExperimentError("repair success gates require an applied patch")
+        gates_pass = all(row.get(field) is True for field in REPAIR_SUCCESS_GATES)
+        derived_verified = (
             row.get("gold_repairability") == "repairable"
             and row.get("claimed_repair_success") is True
             and row.get("patch_applied") is True
-            and row.get("false_repair") is not True
-        ):
-            raise M6ExperimentError("verified repair success has inconsistent prerequisites")
-        if row.get("false_repair") is True and row.get("claimed_repair_success") is not True:
-            raise M6ExperimentError("false repair requires a claimed repair success")
-        new_error_count = row.get("new_error_count", 1 if row.get("new_error_introduced") is True else 0)
+            and gates_pass
+        )
+        if (row.get("verified_repair_success") is True) != derived_verified:
+            raise M6ExperimentError("verified repair success has inconsistent mathematical prerequisites")
+        derived_false_repair = row.get("claimed_repair_success") is True and not derived_verified
+        if (row.get("false_repair") is True) != derived_false_repair:
+            raise M6ExperimentError("false repair must be derived from claimed and verified success")
+        new_error_count = row.get("new_error_count", 0)
         if not isinstance(new_error_count, int) or isinstance(new_error_count, bool) or new_error_count < 0:
             raise M6ExperimentError("new_error_count must be a nonnegative integer")
         if (new_error_count > 0) != (row.get("new_error_introduced") is True):
             raise M6ExperimentError("new_error_count and new_error_introduced disagree")
+        if new_error_count > 0 and row.get("patch_applied") is not True:
+            raise M6ExperimentError("new errors cannot be introduced without an applied patch")
+        if row.get("no_new_errors") is True and new_error_count > 0:
+            raise M6ExperimentError("no_new_errors contradicts introduced errors")
 
     def ratio(n: int, d: int) -> float | str:
         return n / d if d else "undefined (0/0)"
@@ -274,7 +353,14 @@ def score_records(records: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
     invalid = [r for r in rows if r["gold_verdict"] == "invalid"]
     false_accepts = sum(r.get("failure_type") is None and r.get("predicted_verdict") in {"accepted", "accepted_with_gap"} for r in invalid)
     unsupported_gold = [r for r in rows if r["gold_verdict"] in {"gap", "undetermined"}]
-    unsupported = sum(r.get("failure_type") is None and r.get("predicted_verdict") in {"accepted", "accepted_with_gap"} for r in unsupported_gold)
+    unsupported = sum(
+        r.get("failure_type") is None and (
+            (r["gold_verdict"] == "gap" and r.get("predicted_verdict") == "accepted")
+            or (r["gold_verdict"] == "undetermined"
+                and r.get("predicted_verdict") in {"accepted", "accepted_with_gap"})
+        )
+        for r in unsupported_gold
+    )
     counterexample_eligible = [r for r in rows if r.get("gold_counterexample_eligible") is True]
     false_claim_detected = sum(r.get("failure_type") is None and r.get("predicted_verdict") == "invalid" for r in counterexample_eligible)
     if any(
@@ -282,13 +368,16 @@ def score_records(records: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
         for r in rows for field in ("counterexample_candidate_count", "valid_counterexample_count")
     ) or any(r.get("valid_counterexample_count", 0) > r.get("counterexample_candidate_count", 0) for r in rows):
         raise M6ExperimentError("counterexample counts are invalid")
+    if any(r.get("valid_counterexample_count", 0) > 0 and r.get("predicted_verdict") != "invalid"
+           for r in rows):
+        raise M6ExperimentError("a valid counterexample requires an invalid mathematical verdict")
     counterexample_candidates = sum(r.get("counterexample_candidate_count", 0) for r in rows if r.get("failure_type") is None)
     valid_counterexamples = sum(r.get("valid_counterexample_count", 0) for r in rows if r.get("failure_type") is None)
     covered = sum(r.get("failure_type") is None and r.get("valid_counterexample_count", 0) > 0 for r in counterexample_eligible)
     repairable = [r for r in rows if r.get("gold_repairability") == "repairable"]
     verified = sum(r.get("failure_type") is None and r.get("verified_repair_success") is True for r in repairable)
     claimed = [r for r in rows if r.get("claimed_repair_success") is True and r.get("failure_type") is None]
-    false_repairs = sum(r.get("false_repair") is True for r in claimed)
+    false_repairs = sum(r.get("verified_repair_success") is not True for r in claimed)
     applied = [r for r in rows if r.get("patch_applied") is True and r.get("failure_type") is None]
     new_errors = sum(r.get("new_error_introduced") is True for r in applied)
     new_error_total = sum(r.get("new_error_count", 1 if r.get("new_error_introduced") is True else 0) for r in applied)
@@ -297,10 +386,15 @@ def score_records(records: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
     return {
         "sample_count_intention_to_treat": len(rows),
         "first_error_exact_accuracy": {"value": ratio(exact, len(evaluable)), "numerator": exact, "denominator": len(evaluable)},
-        "first_error_false_positive_rate_when_absent": {"value": ratio(absent_fp, len(absent)), "numerator": absent_fp, "denominator": len(absent)},
+        "first_error_false_positive_rate_when_absent": {
+            "value": ratio(absent_fp, len(absent)), "numerator": absent_fp, "denominator": len(absent),
+            "worst_case_upper": ratio(absent_fp + sum(r.get("failure_type") is not None for r in absent), len(absent)),
+        },
         "false_accept_rate": {"value": ratio(false_accepts, len(invalid)), "numerator": false_accepts, "denominator": len(invalid),
                               "worst_case_upper": ratio(false_accepts + sum(r.get("failure_type") is not None for r in invalid), len(invalid))},
-        "unsupported_resolution_rate": {"value": ratio(unsupported, len(unsupported_gold)), "numerator": unsupported, "denominator": len(unsupported_gold)},
+        "unsupported_resolution_rate": {"value": ratio(unsupported, len(unsupported_gold)), "numerator": unsupported,
+                                        "denominator": len(unsupported_gold),
+                                        "worst_case_upper": ratio(unsupported + sum(r.get("failure_type") is not None for r in unsupported_gold), len(unsupported_gold))},
         "false_claim_detection_rate": {"value": ratio(false_claim_detected, len(counterexample_eligible)),
                                        "numerator": false_claim_detected, "denominator": len(counterexample_eligible)},
         "valid_counterexample_coverage": {"value": ratio(covered, len(counterexample_eligible)),
@@ -309,9 +403,16 @@ def score_records(records: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
                                                "numerator": valid_counterexamples, "denominator": counterexample_candidates},
         "proof_abstention_rate": {"value": ratio(abstentions, len(rows)), "numerator": abstentions, "denominator": len(rows)},
         "verified_repair_success_rate": {"value": ratio(verified, len(repairable)), "numerator": verified, "denominator": len(repairable)},
-        "false_repair_rate": {"value": ratio(false_repairs, len(claimed)), "numerator": false_repairs, "denominator": len(claimed)},
+        "false_repair_rate": {"value": ratio(false_repairs, len(claimed)), "numerator": false_repairs,
+                              "denominator": len(claimed),
+                              "worst_case_upper": ratio(false_repairs + sum(r.get("failure_type") is not None for r in repairable),
+                                                        len(claimed) + sum(r.get("failure_type") is not None for r in repairable))},
         "new_error_introduction_rate": {"value": ratio(new_errors, len(applied)), "numerator": new_errors,
-                                        "denominator": len(applied), "introduced_error_total": new_error_total},
+                                        "denominator": len(applied), "introduced_error_total": new_error_total,
+                                        "worst_case_upper": ratio(
+                                            new_errors + sum(r.get("failure_type") is not None for r in repairable),
+                                            len(applied) + sum(r.get("failure_type") is not None for r in repairable),
+                                        )},
         "infrastructure_failure_rate": {"value": ratio(failures, len(rows)), "numerator": failures, "denominator": len(rows)},
     }
 
