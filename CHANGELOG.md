@@ -2,6 +2,21 @@
 
 Notable project changes are grouped by release date and change type. Dates use Hong Kong time (`+08:00`).
 
+## 2026-08-14 +08:00 — Freeze M3 Evaluator v1
+
+### Completed
+
+- Froze `m3-evaluator-v1.0` after the 50-sample Codex-hosted engineering run,
+  modular metric report, and human review of every reported disagreement.
+- Recorded immutable SHA-256 identities for the input, Gold, configuration,
+  raw responses, details, report, evaluator, and report schema.
+- Classified `m2-028` as a known frozen-Gold defect: the theorem is true over
+  integers, although M2 Gold labels it invalid. Preserved the original score
+  and artifacts; correction requires a future benchmark version.
+- Added a machine-verifiable freeze manifest and regression checks for artifact
+  hashes, complete coverage, frozen status, and current report provenance.
+- Re-ran the complete repository suite: 165 tests passed.
+
 ## 2026-08-11 +08:00 — Start M3-alpha module evaluation infrastructure
 
 ### Added
