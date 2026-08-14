@@ -8,6 +8,60 @@ Dependency-guided diagnosis and minimal repair for natural-language mathematical
 
 当前 M0–M5 已完成研究契约、共享 Schema、50 题代数 Pilot Gold、分阶段 Evaluator、可执行反例核验，以及 Repair Generator—独立复核—后代重验的确定性工程闭环。M5 的自动化与 Gold 工程验收已经通过，但真实生产模型 Pilot、全量人工数学复核、真实成本审计和外部代码审查仍需独立人工证据，因此项目没有提前把 M5 标记为整体完成，也尚未开放 M6 主实验入口。
 
+## 推荐的 M0–M8 研究总顺序
+
+> Person A 负责数学语义与 Evaluator；Person B 负责 Repair Generator、执行语义与实验工程；Controller 是确定性程序，只负责契约、状态、版本、失效传播和运行审计，不作为第三个数学 Agent。
+
+```text
+M0 Person A：定义研究边界、数学术语和验收案例
+→ M0 Person B：独立审查执行语义和相同案例
+→ M0 双人裁决：解决分歧并冻结研究契约
+
+→ M1 Person A：起草 Proof、Node、Edge、Evaluation 和 ErrorCertificate 数学字段
+→ M1 Person B：起草 Patch、Version、LifecycleState 和 RunManifest 执行字段
+→ M1 Controller：实现 Schema、DAG、状态机、版本和无模型回放
+→ M1 双人交叉审查并冻结共享 Schema
+
+→ M2 Person A：设计 Pilot Benchmark、参考证明和标注指南
+→ M2 Person B：实现标注、差异、一致性、去重和数据审计工具
+→ M2 Controller：隔离 A/B 标注、校验数据并管理版本
+→ M2 A/B 独立精标、共同或第三方裁决并冻结 Gold
+
+→ M3 Person A：实现切分、分类、ambient、建图、局部义务、裁决和诊断
+→ M3 Person B：实现模型适配、Prompt 版本、session、缓存和运行器
+→ M3 Controller：编排分阶段 Evaluator 调用并校验每一步
+→ M3 A 做数学误差分析，B 做工程与回放审查
+
+→ M4 Person A：定义反例证书、前提核验和 local/global 范围
+→ M4 Person B：实现 Python、SymPy、有限穷举或 SAT/SMT 核验器
+→ M4 Controller：管理候选、工具轨迹和证书状态
+→ M4 Person A 与外部专家复核全局和高风险反例
+
+→ M5 Person B：实现 Repair Generator、Patch、预算、重试和回滚
+→ M5 Controller：实现版本更新、后代失效、缓存清除和拓扑重验
+→ M5 Person A：独立复核补丁正确性、原题保持、最小性和新错误
+→ M5 完成 ErrorCertificate → Patch → Review → Revalidation 端到端验收
+
+→ M6 Person A：在查看正式结果前冻结研究问题、指标和公平性规则
+→ M6 Person B：实现直接判断、自我反思、Generator–Critic 和关键消融
+→ M6 Controller：冻结配置，运行实验并保存成功、失败、成本和 Manifest
+→ M6 A/B 交叉审查后冻结主实验协议
+
+→ M7 A/B：冻结正式 Benchmark、Gold、代码、Prompt、模型和定理库版本
+→ M7 Person B：运行全部基线、消融、同模型和异模型主实验
+→ M7 Controller：检查运行完整性，生成指标、置信区间和复现证据
+→ M7 Person A 与第三方专家：盲态审查错误接受、反例和修复案例
+
+→ M8 Person A：撰写数学方法、Benchmark、错误分析和能力边界
+→ M8 Person B：撰写系统、实验、成本、统计和复现说明
+→ M8 Controller：从原始结果生成表格、Manifest、版本索引和发布清单
+→ M8 外部数学审查、外部代码审查、独立复现、共同定稿和发布
+```
+
+关键阶段依赖：M0 未冻结不得冻结 M1；M1 未通过不得批量建立 M2；M2 Gold 未冻结不得解释 M3 性能；M4 未核验的反例不得进入 M5 证书；M5 独立复核与后代重验未通过不得启动 M6；M6 协议未冻结不得运行 M7；M7 不可复现不得在 M8 作强量化主张。
+
+完整的逐步分工、跨阶段杂项、交接门和发布检查表见 **[M0–M8 研究执行顺序](docs/m0_m8_research_execution_sequence.md)**；每一步的验证标准见 **[项目验证与强制验收计划](docs/project_validation_and_acceptance_plan.md)**。
+
 ## ⚠️ M0–M5 必须人工审核的全部事项
 
 > [!IMPORTANT]
