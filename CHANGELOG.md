@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-08-14 +08:00 — Complete M3 Person A / Person B acceptance
+
+- Added Person A's post-freeze, non-blind review of every M3 disagreement and
+  recorded explicit approval from both Person A and Person B.
+- Added a machine-verifiable joint acceptance record binding the unchanged
+  `m3-evaluator-v1.0` freeze manifest, reviewer identities, audit coverage and
+  the retained `m2-028` Gold limitation.
+- Added regression checks for the two-reviewer sign-off and frozen-manifest
+  binding without modifying any frozen M3 artifact.
+- Added a strict joint-acceptance JSON Schema, evidence digests, and dynamic
+  disagreement reconstruction from the frozen Gold and predictions.
+
 Notable project changes are grouped by release date and change type. Dates use Hong Kong time (`+08:00`).
 
 ## 2026-08-14 +08:00 — Freeze M3 Evaluator v1

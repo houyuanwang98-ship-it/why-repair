@@ -1,6 +1,6 @@
 # M3 Evaluator v1 冻结记录
 
-状态：`m3-evaluator-v1.0` frozen
+状态：`m3-evaluator-v1.0` frozen；Person A / Person B 联合验收通过
 
 冻结日期：2026-08-14（Asia/Shanghai）
 
@@ -51,3 +51,6 @@ M3 已完成冻结 M2 Gold 到 checker 输入的适配、50 题模型支持运�
 ## 变更规则
 
 以上工件冻结后不得原地修改。解析、提示词、Gold、指标或预测的任何变化必须使用新版本和新实验目录；必须保留本记录中的原始工件和哈希，以便复现。
+
+冻结后的双人退出验收见 `M03_person_a_b_acceptance.md`。该记录不属于冻结工件，
+不改变本页列出的任何哈希；其机器可验证凭据通过冻结清单摘要绑定原版本。

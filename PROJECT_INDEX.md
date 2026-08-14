@@ -36,9 +36,11 @@
 | [M2 Person B 50 题自然语言批改](docs/milestones/M02_person_b_50_natural_language_review.md) | 原题、完整证明、逐题结论、错误定位、反例与最小修改 | 已完成 |
 | [M3 Evaluator v1](docs/milestones/M03_evaluator_v1.md) | M2→checker 适配、节点/依赖/定位/裁决指标与验收步骤 | `m3-evaluator-v1.0` 已冻结 |
 | [M3 冻结记录](docs/milestones/M03_freeze_record.md) | 50 题运行、指标、人工审计、哈希与变更规则 | 2026-08-14 已完成 |
+| [M3 A/B 联合验收](docs/milestones/M03_person_a_b_acceptance.md) | Person A 冻结后复核、Person B 审计证据与双人退出签核 | 双人通过（保留 `m2-028` 限制） |
 | [M3 分歧人工审计](data/benchmarks/m3/experiments/full50_codex_v1/HUMAN_AUDIT.md) | 全部分歧裁定及 `m2-028` 已知 Gold 缺陷 | Person B 审计完成 |
 | [M3 Evaluator Gold](data/benchmarks/m3/gold/evaluator_pilot_v1.jsonl) | 50 题证明级 Gold 与 39 题、98 节点的节点级 Gold | `m3-evaluator-gold-0.1` |
 | [M3 指标 Schema](schemas/m3_evaluator_report_v0_1.schema.json) | Evaluator v1 模块化报告契约 | `v0.1` |
+| [M3 联合验收 Schema](schemas/m3_joint_acceptance_v1.schema.json) | A/B 身份、证据摘要、分歧覆盖与已知限制契约 | `v1.0` |
 | [M2 可移植 Schema](schemas/m2_benchmark_v0_2.schema.json) | Source、annotation、反例、分歧、裁决与 Gold manifest 契约 | `m2.2` 已实现 |
 | [M3-alpha Person B 运行器与指标](docs/milestones/M03_alpha_person_b_runner_and_metrics.md) | 模型适配器接口、独立模块运行、审计清单与六类指标 | alpha 已实现并保留为并行基础设施 |
 | [开发指南](docs/development-guide.md) | 现有 checker 架构 | 已有 |
