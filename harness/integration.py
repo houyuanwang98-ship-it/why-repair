@@ -244,3 +244,80 @@ def ingest_person_a_result(
         return _ingest_person_a_result(
             controller, checker_result, evaluator_id=evaluator_id
         )
+
+
+def ingest_m3_run(
+    controller: DualAgentController,
+    checker_results: list[dict[str, Any]],
+    *,
+    run_id: str,
+    evaluator_id: str = "person_a_evaluator",
+) -> dict[str, Any]:
+    """Atomically bridge one complete M3 checker run into the Controller.
+
+    The function deliberately does not reinterpret M3 judgments.  It validates
+    run identity and proof uniqueness, delegates each proof to the frozen A/B
+    adapter, audits the resulting controller state, and returns a digest-bound
+    handoff summary suitable for Person B or a later repair runner.
+    """
+    if not isinstance(run_id, str) or not run_id.strip():
+        raise CheckerIntegrationError("run_id must be a nonempty string")
+    if not isinstance(checker_results, list) or not checker_results:
+        raise CheckerIntegrationError("M3 run requires a nonempty result array")
+    if any(not isinstance(row, dict) for row in checker_results):
+        raise CheckerIntegrationError("every M3 result must be an object")
+    proof_ids = [row.get("id") for row in checker_results]
+    if any(not isinstance(value, str) or not value.strip() for value in proof_ids):
+        raise CheckerIntegrationError("every M3 result requires a nonempty id")
+    seen: set[str] = set()
+    duplicates: set[str] = set()
+    for proof_id in proof_ids:
+        if proof_id in seen:
+            duplicates.add(proof_id)
+        seen.add(proof_id)
+    if duplicates:
+        raise CheckerIntegrationError(
+            f"duplicate proof ids in M3 run: {sorted(duplicates)}"
+        )
+
+    canonical = json.dumps(
+        checker_results, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    )
+    input_digest = "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+    event_offset = len(controller.events)
+    artifacts: list[dict[str, Any]] = []
+    with controller.transaction():
+        for result in checker_results:
+            artifacts.append(
+                _ingest_person_a_result(
+                    controller, result, evaluator_id=evaluator_id
+                )
+            )
+        for proof_id in proof_ids:
+            controller.assert_consistent(proof_id)
+
+    lifecycle_counts: dict[str, int] = {}
+    ready: list[dict[str, Any]] = []
+    for proof_id in proof_ids:
+        snapshot = controller.proof_snapshot(proof_id)
+        ready.extend(snapshot["ready_for_evaluation"])
+        for record in snapshot["nodes"]:
+            state = record["lifecycle_state"]
+            lifecycle_counts[state] = lifecycle_counts.get(state, 0) + 1
+    return {
+        "schema_version": SCHEMA_VERSION,
+        "handoff_version": "m3-controller-handoff-v1",
+        "run_id": run_id,
+        "input_digest": input_digest,
+        "proof_ids": proof_ids,
+        "proof_count": len(proof_ids),
+        "node_count": sum(len(item["node_versions"]) for item in artifacts),
+        "evaluation_count": sum(len(item["evaluations"]) for item in artifacts),
+        "error_certificate_count": sum(
+            len(item["error_certificates"]) for item in artifacts
+        ),
+        "lifecycle_counts": dict(sorted(lifecycle_counts.items())),
+        "ready_for_evaluation": ready,
+        "repair_queue": controller.repair_queue(proof_ids),
+        "event_count": len(controller.events) - event_offset,
+    }

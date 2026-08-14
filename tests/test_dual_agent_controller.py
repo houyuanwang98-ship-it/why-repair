@@ -258,6 +258,30 @@ class DualAgentControllerTest(unittest.TestCase):
         with self.assertRaises(InvalidTransitionError):
             controller.transition(ref(1), "active", reason="skip evaluator")
 
+    def test_evaluation_rejects_active_but_superseded_dependency(self):
+        controller = DualAgentController(evaluator_ids={"fixture-evaluator", "eval"})
+        controller.register_node(node_record(1, "old premise", state="active", verdict="accepted"))
+        controller.register_node(node_record(2, "dependent claim", [ref(1)]))
+        replacement = node_record(1, "new premise")
+        replacement["node"]["version"] = 2
+        replacement["supersedes"] = ref(1)
+        controller.register_node(replacement)
+        with self.assertRaisesRegex(InvalidTransitionError, "active and current"):
+            controller.transition(ref(2), "evaluating", reason="stale dependency")
+        ready = controller.proof_snapshot("p1")["ready_for_evaluation"]
+        self.assertNotIn(ref(2), ready)
+        self.assertIn(ref(1, 2), ready)
+
+    def test_repair_queue_fails_closed_until_certificate_is_bound(self):
+        controller = self.controller_with_three_nodes()
+        controller.transition(ref(2), "evaluating", reason="start")
+        controller.record_evaluation(evaluation(2, "unsupported", [1]))
+        queue = controller.repair_queue(["p1"])
+        self.assertEqual(1, len(queue))
+        self.assertEqual("awaiting_error_certificate", queue[0]["status"])
+        self.assertIsNone(queue[0]["error_certificate"])
+        controller.assert_consistent("p1")
+
     def test_evaluation_with_wrong_dependency_version_is_stale(self):
         controller = self.controller_with_three_nodes()
         controller.transition(ref(2), "evaluating", reason="start")

@@ -85,6 +85,113 @@ class DualAgentController:
     def events(self) -> list[dict[str, Any]]:
         return deepcopy(self._events)
 
+    def proof_snapshot(self, proof_id: str) -> dict[str, Any]:
+        """Return a deterministic, read-only view used by orchestration layers."""
+        if not isinstance(proof_id, str) or not proof_id.strip():
+            raise ContractError("proof_id must be a nonempty string")
+        keys = [
+            key for logical, key in self._current.items() if logical[0] == proof_id
+        ]
+        if not keys:
+            raise KeyError(f"unknown proof: {proof_id}")
+        keys.sort(key=lambda key: self._versions[key]["node"]["order_key"])
+        nodes = [deepcopy(self._versions[key]) for key in keys]
+        return {
+            "schema_version": SCHEMA_VERSION,
+            "proof_id": proof_id,
+            "nodes": nodes,
+            "ready_for_evaluation": [
+                key.ref()
+                for key in keys
+                if self._versions[key]["lifecycle_state"] == "pending_evaluation"
+                and all(
+                    self._current.get((ref["proof_id"], ref["node_id"]))
+                    == NodeKey.from_ref(ref)
+                    and self._versions.get(NodeKey.from_ref(ref), {}).get(
+                        "lifecycle_state"
+                    ) == "active"
+                    for ref in self._versions[key]["node"]["depends_on"]
+                )
+            ],
+        }
+
+    def repair_queue(self, proof_ids: list[str] | None = None) -> list[dict[str, Any]]:
+        """Return deterministic repair handoffs, explicitly marking incomplete bindings."""
+        if proof_ids is not None:
+            if not isinstance(proof_ids, list) or any(
+                not isinstance(value, str) or not value.strip()
+                for value in proof_ids
+            ):
+                raise ContractError("proof_ids must be an array of nonempty strings")
+            selected = set(proof_ids)
+            if len(selected) != len(proof_ids):
+                raise ContractError("proof_ids must be unique")
+        else:
+            selected = None
+        keys = [
+            key
+            for logical, key in self._current.items()
+            if (selected is None or logical[0] in selected)
+            and self._versions[key]["lifecycle_state"] == "pending_repair"
+        ]
+        keys.sort(
+            key=lambda key: (
+                key.proof_id,
+                self._versions[key]["node"]["order_key"],
+            )
+        )
+        queue: list[dict[str, Any]] = []
+        for key in keys:
+            evaluation_id = self._current_evaluation.get(key)
+            evaluation = self._evaluations.get(evaluation_id)
+            if evaluation is None:
+                queue.append({
+                    "target": key.ref(),
+                    "status": "awaiting_evaluation_binding",
+                    "evaluation": None,
+                    "error_certificate": None,
+                })
+                continue
+            certificate_id = evaluation.get("error_certificate_id")
+            certificate = self._error_certificates.get(certificate_id)
+            if certificate is None:
+                queue.append({
+                    "target": key.ref(),
+                    "status": "awaiting_error_certificate",
+                    "evaluation": deepcopy(evaluation),
+                    "error_certificate": None,
+                })
+                continue
+            queue.append({
+                "target": key.ref(),
+                "status": "ready",
+                "evaluation": deepcopy(evaluation),
+                "error_certificate": deepcopy(certificate),
+            })
+        return queue
+
+    def assert_consistent(self, proof_id: str) -> None:
+        """Audit controller-owned structural and lifecycle invariants."""
+        self.validate_graph(proof_id)
+        snapshot = self.proof_snapshot(proof_id)
+        for record in snapshot["nodes"]:
+            state = record["lifecycle_state"]
+            verdict = record["current_verdict"]
+            key = NodeKey.from_ref(record["node"])
+            if state in {"blocked_by_invalid_dependency", "stale", "pending_evaluation"} and verdict is not None:
+                raise ContractError(f"{state} node must not retain a verdict: {key}")
+            if state == "active" and verdict not in {"accepted", "accepted_with_gap"}:
+                raise ContractError(f"active node lacks an accepting verdict: {key}")
+            if state == "pending_repair" and verdict not in {
+                "unsupported", "counterexample_found", "ambiguous"
+            }:
+                raise ContractError(f"pending_repair node lacks a repairable verdict: {key}")
+            evaluation_id = self._current_evaluation.get(key)
+            if evaluation_id is not None:
+                evaluation = self._evaluations.get(evaluation_id)
+                if evaluation is None or NodeKey.from_ref(evaluation["target"]) != key:
+                    raise ContractError(f"current evaluation binding is inconsistent: {key}")
+
     @contextmanager
     def transaction(self):
         """Roll back all Controller state if a multi-step operation fails."""
@@ -173,9 +280,16 @@ class DualAgentController:
             for dependency_ref in record["node"]["depends_on"]:
                 dependency_key = NodeKey.from_ref(dependency_ref)
                 dependency = self._versions.get(dependency_key)
-                if dependency is None or dependency["lifecycle_state"] != "active":
+                dependency_current = self._current.get(
+                    (dependency_key.proof_id, dependency_key.node_id)
+                )
+                if (
+                    dependency is None
+                    or dependency_current != dependency_key
+                    or dependency["lifecycle_state"] != "active"
+                ):
                     raise InvalidTransitionError(
-                        f"cannot evaluate before dependency is active: {dependency_key}"
+                        f"cannot evaluate before dependency is active and current: {dependency_key}"
                     )
         record["lifecycle_state"] = new_state
         if new_state in {"stale", "blocked_by_invalid_dependency"}:

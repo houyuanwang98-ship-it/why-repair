@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-08-14 +08:00 — Connect frozen M3 results to the Controller
+
+- Added atomic run-level M3 ingestion with duplicate-proof rejection, canonical
+  input digesting, lifecycle summaries, and exact next-evaluation references.
+- Added Controller snapshots and deterministic consistency audits without adding
+  any mathematical judgment to the orchestration layer.
+- Replayed all 50 frozen M3 results through the v0.3 Controller: 122 nodes, 101
+  evaluations, and 25 error certificates now form a tested Person B handoff.
+
 ## 2026-08-14 +08:00 — Complete M3 Person A / Person B acceptance
 
 - Added Person A's post-freeze, non-blind review of every M3 disagreement and

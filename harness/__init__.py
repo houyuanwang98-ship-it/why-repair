@@ -6,7 +6,7 @@ from .controller import (
     InvalidTransitionError,
     StaleVersionError,
 )
-from .integration import CheckerIntegrationError, ingest_person_a_result
+from .integration import CheckerIntegrationError, ingest_m3_run, ingest_person_a_result
 from .m3_alpha import AdapterResponse, M3AlphaError, evaluate_dataset, evaluate_module, run_module
 
 __all__ = [
@@ -20,6 +20,7 @@ __all__ = [
     "evaluate_dataset",
     "evaluate_module",
     "ingest_person_a_result",
+    "ingest_m3_run",
     "run_module",
     "validate_contract",
 ]
