@@ -16,7 +16,7 @@ from .controller import StaleVersionError
 
 
 M4_PERSON_B_PROFILE = "m4-counterexample-person-b-v0.1"
-_FUNCTIONS = {"abs": abs, "sqrt": math.sqrt}
+_FUNCTIONS = {"abs", "sqrt", "is_integer", "is_real", "is_prime"}
 _MAX_AST_NODES = 128
 _MAX_EXPRESSION_LENGTH = 2000
 _MAX_INTEGER_BITS = 4096
@@ -96,6 +96,35 @@ def _number(value: Any) -> Fraction:
     return result
 
 
+def _bounded(value: Fraction) -> Fraction:
+    if (value.numerator.bit_length() > _MAX_INTEGER_BITS or
+            value.denominator.bit_length() > _MAX_INTEGER_BITS):
+        raise UndeterminedExpression("intermediate numeric value exceeds the exact-check resource bound")
+    return value
+
+
+def _numeric(value: Any) -> Fraction:
+    if not isinstance(value, Fraction):
+        raise UndeterminedExpression("arithmetic and comparisons require numeric operands")
+    return value
+
+
+def _is_prime(value: Fraction) -> bool:
+    if value.denominator != 1 or value < 2:
+        return False
+    number = value.numerator
+    if number.bit_length() > 32:
+        raise UndeterminedExpression("primality input exceeds the exact-check resource bound")
+    if number % 2 == 0:
+        return number == 2
+    divisor = 3
+    while divisor * divisor <= number:
+        if number % divisor == 0:
+            return False
+        divisor += 2
+    return True
+
+
 def _evaluate(node: ast.AST, env: dict[str, int | Fraction]) -> Any:
     if isinstance(node, ast.Expression):
         return _evaluate(node.body, env)
@@ -104,26 +133,33 @@ def _evaluate(node: ast.AST, env: dict[str, int | Fraction]) -> Any:
     if isinstance(node, ast.Name) and node.id in env:
         return env[node.id]
     if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub)):
-        value = _evaluate(node.operand, env)
-        return value if isinstance(node.op, ast.UAdd) else -value
+        value = _numeric(_evaluate(node.operand, env))
+        return _bounded(value if isinstance(node.op, ast.UAdd) else -value)
     if isinstance(node, ast.BinOp) and isinstance(node.op, (ast.Add, ast.Sub, ast.Mult, ast.Div, ast.Mod, ast.Pow)):
-        left, right = _evaluate(node.left, env), _evaluate(node.right, env)
+        left = _numeric(_evaluate(node.left, env))
+        right = _numeric(_evaluate(node.right, env))
         try:
-            if isinstance(node.op, ast.Add): return left + right
-            if isinstance(node.op, ast.Sub): return left - right
-            if isinstance(node.op, ast.Mult): return left * right
-            if isinstance(node.op, ast.Div): return left / right
+            if isinstance(node.op, ast.Add): return _bounded(left + right)
+            if isinstance(node.op, ast.Sub): return _bounded(left - right)
+            if isinstance(node.op, ast.Mult): return _bounded(left * right)
+            if isinstance(node.op, ast.Div): return _bounded(left / right)
             if isinstance(node.op, ast.Mod):
                 if left.denominator != 1 or right.denominator != 1:
                     raise UndeterminedExpression("modulo requires integer operands")
-                return left % right
+                return _bounded(left % right)
             if not isinstance(right, Fraction) or right.denominator != 1 or abs(right) > _MAX_ABS_EXPONENT:
                 raise UndeterminedExpression("powers require a bounded integer exponent")
-            return left ** right.numerator
+            return _bounded(left ** right.numerator)
         except (ArithmeticError, OverflowError) as exc:
             raise UndeterminedExpression(str(exc)) from exc
     if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in _FUNCTIONS and len(node.args) == 1:
-        value = _evaluate(node.args[0], env)
+        value = _numeric(_evaluate(node.args[0], env))
+        if node.func.id == "is_integer":
+            return value.denominator == 1
+        if node.func.id == "is_real":
+            return True
+        if node.func.id == "is_prime":
+            return _is_prime(value)
         if node.func.id == "sqrt":
             if value < 0:
                 raise UndeterminedExpression("real sqrt received a negative value")
@@ -131,10 +167,11 @@ def _evaluate(node: ast.AST, env: dict[str, int | Fraction]) -> Any:
             nroot, droot = math.isqrt(numerator), math.isqrt(denominator)
             if nroot * nroot != numerator or droot * droot != denominator:
                 raise UndeterminedExpression("sqrt is not rational and cannot be checked exactly")
-            return Fraction(nroot, droot)
-        return abs(value)
+            return _bounded(Fraction(nroot, droot))
+        return _bounded(abs(value))
     if isinstance(node, ast.Compare) and len(node.ops) == len(node.comparators) == 1:
-        left, right = _evaluate(node.left, env), _evaluate(node.comparators[0], env)
+        left = _numeric(_evaluate(node.left, env))
+        right = _numeric(_evaluate(node.comparators[0], env))
         op = node.ops[0]
         if isinstance(op, ast.Eq): return left == right
         if isinstance(op, ast.NotEq): return left != right

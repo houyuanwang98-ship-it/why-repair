@@ -26,6 +26,10 @@ class M4PersonBTest(unittest.TestCase):
         self.assertTrue(evaluate_exact("sqrt(a ** 2) != a", {"a": -1}))
         self.assertTrue(evaluate_exact("1 / 10 + 2 / 10 == 3 / 10", {}))
         self.assertTrue(evaluate_exact("(a + b) % 2 == 0", {"a": 1, "b": 1}))
+        self.assertTrue(evaluate_exact("is_integer(a) and is_real(a)", {"a": -1}))
+        self.assertFalse(evaluate_exact("is_integer(a)", {"a": 0.5}))
+        self.assertTrue(evaluate_exact("is_prime(p)", {"p": 2}))
+        self.assertFalse(evaluate_exact("is_prime(p)", {"p": 9}))
 
     def test_verifies_and_hash_chains_without_trusting_prose(self):
         log = CounterexampleAuditLog()
@@ -51,7 +55,7 @@ class M4PersonBTest(unittest.TestCase):
 
     def test_false_premise_fails_and_unsupported_syntax_is_undetermined(self):
         failed = verify_counterexample(certificate(), premise_expressions=["a > 0"], target_expression="a == 1")
-        unknown = verify_counterexample(certificate(), premise_expressions=["is_real(a)"], target_expression="a == 1")
+        unknown = verify_counterexample(certificate(), premise_expressions=["is_rational(a)"], target_expression="a == 1")
         self.assertEqual("failed", failed["status"])
         self.assertEqual("undetermined", unknown["status"])
         self.assertIsNone(unknown["premise_bindings"][0]["holds"])
@@ -73,6 +77,12 @@ class M4PersonBTest(unittest.TestCase):
         invalid["assignment"] = {"a": float("nan")}
         with self.assertRaisesRegex(ContractError, "portable JSON"):
             verify_counterexample(invalid, premise_expressions=["a == a"], target_expression="a == 1")
+        with self.assertRaises(UndeterminedExpression):
+            evaluate_exact("a ** 64", {"a": 2 ** 100})
+        with self.assertRaises(UndeterminedExpression):
+            evaluate_exact("(a == 1) + 1 == 2", {"a": 1})
+        with self.assertRaises(UndeterminedExpression):
+            evaluate_exact("is_prime(a)", {"a": 2 ** 40 + 15})
 
     def test_batch_runner_has_one_valid_chain(self):
         report = run_counterexample_cases([{"certificate": certificate(), "premise_expressions": ["a == -1"], "target_expression": "a == 1"}])

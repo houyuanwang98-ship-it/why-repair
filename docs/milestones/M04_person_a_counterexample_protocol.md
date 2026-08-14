@@ -1,6 +1,6 @@
 # M4 Person A 反例证书与范围协议
 
-状态：`m4-counterexample-person-a-v0.1` 已实现，等待 Person B 可执行核验与交叉审查。
+状态：`m4-counterexample-person-a-v0.1` 已实现并完成 Person B/Controller 交叉验收，纳入 `m4-integrated-v1.0`。
 
 ## 1. 边界
 
@@ -41,6 +41,6 @@ Person A 负责反例的数学含义、作用域分类和接受门；Person B �
 - Person B 输入：共享证书、claimed error type、完整直接前提引用、完整相关前提文本、全局假设摘要；
 - Person B 输出：`verified` / `failed` / `undetermined` 和可复现审计说明。
 
-## 5. 未完成项
+## 5. 联合完成状态
 
-M4 尚未整体退出。Person B 必须实现实际表达式核验与不可变审计日志，并由双方完成交叉验收。冻结 Controller v0.3 的 `record_counterexample_certificate` 当前以节点目标登记，因此不能直接登记 `target=null` 的全局证书；Person B 集成必须增加显式的 theorem-level 路径，不能伪造节点目标，也不能修改 M3 冻结清单。
+Person B 已实现实际表达式核验与不可变审计日志，M4 Controller 已增加独立 theorem-level 路径且未伪造节点目标。Person A 对全部 11 个冻结 Gold 有效反例完成联合复核；详见 `M04_person_a_cross_review_and_acceptance.md`。

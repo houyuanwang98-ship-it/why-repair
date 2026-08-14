@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-08-14 +08:00 — Complete M4 Person A cross-review
+
+- Closed a false-acceptance path by freezing Person A-approved natural-language
+  to executable-expression bindings before Person B verification.
+- Added exact bounded domain predicates, bounded every intermediate rational,
+  and rejected booleans used as numeric operands.
+- Replayed all 11 frozen M2 Gold valid counterexamples through the integrated
+  A/B/Controller path and retained the local-claim regression.
+- Recorded Person A acceptance of `m4-integrated-v1.0`; 206 tests pass while
+  unsupported or resource-bounded mathematics remains `undetermined`.
+
 ## 2026-08-14 +08:00 — Complete M4 Controller A/B handoff
 
 - Added one deterministic M4 Controller for context freeze, Person B exact

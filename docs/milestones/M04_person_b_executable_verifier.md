@@ -1,6 +1,6 @@
 # M4 Person B 可执行反例核验
 
-状态：`m4-counterexample-person-b-v0.1` 已实现，等待 Person A 交叉验收。
+状态：`m4-counterexample-person-b-v0.1` 已实现，Person A 交叉验收通过并纳入 `m4-integrated-v1.0`。
 
 ## 1. 交付边界
 
@@ -11,6 +11,7 @@ Person B 不重新裁定 Person A 的数学语义，而是对同一赋值重放�
 - 仅接受数值常量、变量、四则运算、整数模、有界整数幂、`abs`、可精确化为有理数的 `sqrt`、比较与布尔连接；表达式长度、AST 节点数、数值位数和指数均有硬上限；
 - 使用 `Fraction` 避免二进制浮点误差，不执行任意 Python、模型代码或证书中的自然语言；
 - 前提表达式必须与 `premise_checks` 一一完整覆盖；
+- 表达式转换不能以“在当前赋值下真值相同”冒充语义等价；Controller 只执行 Person A 已冻结批准的逐项绑定；`is_integer` / `is_real` 用于显式保留常见定义域条件；
 - 全部前提为真且目标为假时才输出 `verified`；前提为假或目标为真输出 `failed`；解析、定义域或精确值无法决定时输出 `undetermined`；
 - 每条记录绑定规范化证书摘要、原赋值、逐条“自然语言陈述—可执行表达式—结果”和目标三元组，同时包含前序摘要和自身摘要；对外只返回深拷贝，导出后可独立验证整条链。
 
@@ -24,5 +25,5 @@ Person B 不重新裁定 Person A 的数学语义，而是对同一赋值重放�
 - 表达式转换协议：`prompts/m4_counterexample_person_b.md`；
 - 冻结样例重放：`data/fixtures/m4/person_b_executable_cases.json`，覆盖 Person A 的 `m2-021` 全局反例和 `m2-034` 局部反例；
 - 回归：`tests/test_m4_counterexample_person_b.py`；
-- 全仓 198 项测试通过，其中 10 项为 Person B 聚焦测试；
-- M4 尚待 Person A 对核验器、审计证据和边界进行交叉验收，因此本文件不单方面宣布 M4 冻结。
+- 全仓 206 项测试通过；冻结 Gold 中 11/11 个有效反例完成联合重放；
+- Person A 已对核验器、审计证据、表达式绑定和边界完成交叉验收。

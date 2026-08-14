@@ -53,6 +53,8 @@ class M4CounterexampleController:
 
     def register_context(self, context_id: str, *, scope: str,
                          premise_refs: list[dict[str, Any]], premise_statements: list[str],
+                         approved_premise_expressions: list[str],
+                         approved_target_expression: str,
                          global_assumption_digest: str,
                          target: dict[str, Any] | None = None,
                          theorem_ref: dict[str, Any] | None = None) -> None:
@@ -71,6 +73,12 @@ class M4CounterexampleController:
             raise ContractError("premise_statements must be a nonempty string array")
         if len(set(premise_statements)) != len(premise_statements):
             raise ContractError("premise_statements must not contain duplicates")
+        if (not isinstance(approved_premise_expressions, list) or
+                len(approved_premise_expressions) != len(premise_statements) or
+                any(not isinstance(x, str) or not x.strip() for x in approved_premise_expressions)):
+            raise ContractError("Person A approved expressions must cover every premise statement")
+        if not isinstance(approved_target_expression, str) or not approved_target_expression.strip():
+            raise ContractError("Person A approved target expression must be nonempty")
         if not isinstance(global_assumption_digest, str) or not global_assumption_digest.strip():
             raise ContractError("global_assumption_digest must be nonempty")
         if scope == "local_claim":
@@ -93,6 +101,8 @@ class M4CounterexampleController:
         self._contexts[context_id] = deepcopy({
             "scope": scope, "target": target, "theorem_ref": theorem_ref,
             "premise_refs": premise_refs, "premise_statements": premise_statements,
+            "approved_premise_expressions": approved_premise_expressions,
+            "approved_target_expression": approved_target_expression,
             "global_assumption_digest": global_assumption_digest,
         })
         self._events.append({"event": "m4_context_registered", "context_id": context_id})
@@ -114,6 +124,9 @@ class M4CounterexampleController:
                 [x["statement"] for x in certificate["premise_checks"]] != context["premise_statements"] or
                 certificate["global_assumption_digest"] != context["global_assumption_digest"]):
             raise StaleVersionError("certificate premises or assumptions do not match the frozen M4 context")
+        if (premise_expressions != context["approved_premise_expressions"] or
+                target_expression != context["approved_target_expression"]):
+            raise ContractError("executable bindings do not match Person A's frozen approval")
         if context["scope"] == "local_claim" and self._node_controller is not None:
             target = context["target"]
             if self._node_controller.current_ref(target["proof_id"], target["node_id"]) != target:
