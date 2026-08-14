@@ -1,6 +1,6 @@
 # M5 Person A：补丁数学复核协议 v0.1
 
-状态：书面契约、对抗式 Prompt、fail-closed 门和正反测试已完成；等待 Person B Repair Generator 与 M5 Controller 接入后执行全部 pilot 补丁人工复核。
+状态：书面契约、对抗式 Prompt、fail-closed 门和正反测试已完成；Person B Repair Generator 与 M5 Controller 已提供 v0.1 接口，等待执行全部 pilot 补丁人工复核。
 
 Person A 独立判断补丁是否成立、是否解决原失败边、是否保持原定理/假设/定义域/目标/无关分支、是否引入新错误，以及操作意义上的最小性。Person A 不生成补丁，不实现重试或循环检测，也不把“改变问题建议”计作修复成功。
 
@@ -10,4 +10,4 @@ Person A 独立判断补丁是否成立、是否解决原失败边、是否保�
 
 `harness/m5_person_a_review.py` 将 review 绑定到证书和补丁的规范 SHA-256 摘要，并要求三方目标及证书 ID 一致；删除试验必须精确覆盖从补丁推导的全部原子编辑。它拒绝生成者自审、陈旧上下文、越权/重复证据、不完整删除检查和不能解释失败项的拒绝码。`accepted` 由八项检查、问题列表、删除试验、拒绝码和 `changes_problem` 推导，不能自由声明。上下文与 review 分别使用独立 v0.1 Schema，共享 M1 v0.3.1 Schema 保持冻结。
 
-对抗测试覆盖正确最小补丁、生成者自审、隐藏假设、目标/定义域漂移、无关分支变化、新错误、非最小编辑、陈旧摘要和越权证据；`data/fixtures/m5/person_a_review_gold.json` 提供偶数平方命题的真实 Gold 数学复核案例。本记录不宣称整个 M5 完成；该案例目前只通过 Person A 门，仍须 B/Controller 接入、全量 pilot 复核、后代拓扑重验和端到端 Gold 回放共同通过。
+对抗测试覆盖正确最小补丁、生成者自审、隐藏假设、目标/定义域漂移、无关分支变化、新错误、非最小编辑、陈旧摘要和越权证据；`data/fixtures/m5/person_a_review_gold.json` 提供偶数平方命题的真实 Gold 数学复核案例。本记录不宣称整个 M5 完成；Person B/Controller 的 Gold 回放与后代失效机制已接入，仍须全量 pilot 人工复核共同通过。

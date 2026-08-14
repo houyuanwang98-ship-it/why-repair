@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m5_person_b_patch_proposal_v0_1.schema.json",
+  "title": "M5 Person B patch proposal",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "patch_id", "generator_id", "error_certificate_id", "target", "operation", "replacement_nodes", "target_dependencies_after", "used_dependencies", "changes_problem", "rationale"],
+  "properties": {
+    "schema_version": {"const": "0.1"}, "patch_id": {"type": "string", "minLength": 1},
+    "generator_id": {"type": "string", "minLength": 1}, "error_certificate_id": {"type": "string", "minLength": 1},
+    "target": {"$ref": "#/$defs/nodeRef"},
+    "operation": {"enum": ["insert_before", "replace", "delete", "mark_irreparable"]},
+    "replacement_nodes": {"type": "array", "items": {"$ref": "#/$defs/nodeDraft"}},
+    "target_dependencies_after": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/nodeRef"}},
+    "used_dependencies": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/nodeRef"}},
+    "changes_problem": {"type": "boolean"}, "rationale": {"type": "string", "minLength": 1}
+  },
+  "allOf": [
+    {"if": {"properties": {"operation": {"const": "replace"}}}, "then": {"properties": {"replacement_nodes": {"minItems": 1, "maxItems": 1}}}},
+    {"if": {"properties": {"operation": {"const": "insert_before"}}}, "then": {"properties": {"replacement_nodes": {"minItems": 1}}}},
+    {"if": {"properties": {"operation": {"enum": ["delete", "mark_irreparable"]}}}, "then": {"properties": {"replacement_nodes": {"maxItems": 0}, "target_dependencies_after": {"maxItems": 0}, "used_dependencies": {"maxItems": 0}}}}
+  ],
+  "$defs": {
+    "nodeRef": {"type": "object", "additionalProperties": false, "required": ["proof_id", "node_id", "version"], "properties": {"proof_id": {"type": "string", "minLength": 1}, "node_id": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "string", "minLength": 1}]}, "version": {"type": "integer", "minimum": 1}}},
+    "nodeDraft": {"type": "object", "additionalProperties": false, "required": ["node_id", "order_key", "claim", "self_contained_claim", "node_type", "depends_on"], "properties": {"node_id": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "string", "minLength": 1}]}, "order_key": {"type": "integer", "minimum": 1}, "claim": {"type": "string", "minLength": 1}, "self_contained_claim": {"type": "string", "minLength": 1}, "node_type": {"enum": ["definition", "assumption", "introduction", "claim", "calculation", "conclusion", "citation"]}, "depends_on": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/nodeRef"}}}}
+  }
+}
