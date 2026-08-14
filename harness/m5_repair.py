@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from dataclasses import dataclass
+from time import perf_counter
 from typing import Any, Callable
 
 from .m5_person_a_review import canonical_digest, review_patch_math
@@ -81,6 +82,7 @@ class M5RepairController:
         self._pending_patch_id: str | None = None
         self._fingerprints: set[str] = set()
         self._events: list[dict[str, Any]] = []
+        self._model_invocations: list[dict[str, Any]] = []
         self._stale: list[dict[str, Any]] = []
         self._revalidation_queue: list[dict[str, Any]] = []
         self._revalidation_records: list[dict[str, Any]] = []
@@ -124,6 +126,7 @@ class M5RepairController:
                 "stale": deepcopy(self._stale),
                 "revalidation_queue": deepcopy(self._revalidation_queue),
                 "revalidation_records": deepcopy(self._revalidation_records),
+                "model_invocations": deepcopy(self._model_invocations),
                 "dependency_redirects": [
                     {"from": {"proof_id": key[0], "node_id": key[1], "version": key[2]},
                      "to": deepcopy(value)}
@@ -148,9 +151,46 @@ class M5RepairController:
                 "m4_accepted_certificates": deepcopy(self._m4),
                 "m4_input_digest": self._m4_digest}
 
-    def generate(self, adapter: Callable[[dict[str, Any]], dict[str, Any]]) -> dict[str, Any]:
-        proposal = adapter(self.generator_input())
-        self.submit(proposal)
+    def generate(self, adapter: Callable[[dict[str, Any]], dict[str, Any]], *,
+                 model: str, prompt_version: str) -> dict[str, Any]:
+        """Call an adapter and retain success or failure audit evidence.
+
+        The adapter returns ``{"proposal": PatchProposal, "token_usage":
+        {"input": int, "output": int}}``.  Failed calls are recorded before the
+        original exception is re-raised; they do not consume a repair round.
+        """
+        for name, value in (("model", model), ("prompt_version", prompt_version)):
+            _require(isinstance(value, str) and value.strip(), f"{name} must be nonempty")
+        invocation_id = f"m5-invocation-{len(self._model_invocations) + 1}"
+        started = perf_counter()
+        usage = {"input": 0, "output": 0}
+        try:
+            envelope = adapter(self.generator_input())
+            _require(isinstance(envelope, dict) and set(envelope) == {"proposal", "token_usage"},
+                     "adapter result must contain proposal and token_usage")
+            usage = envelope["token_usage"]
+            _require(isinstance(usage, dict) and set(usage) == {"input", "output"},
+                     "token_usage must contain input and output")
+            _require(all(isinstance(value, int) and not isinstance(value, bool) and value >= 0
+                         for value in usage.values()), "token usage must be nonnegative integers")
+            proposal = envelope["proposal"]
+            self.submit(proposal)
+        except Exception as exc:
+            self._model_invocations.append({"invocation_id": invocation_id, "model": model,
+                                            "prompt_version": prompt_version, "status": "failed",
+                                            "token_usage": deepcopy(usage),
+                                            "latency_ms": max(0, round((perf_counter() - started) * 1000)),
+                                            "error_type": type(exc).__name__})
+            self._events.append({"event": "model_invocation_failed", "invocation_id": invocation_id,
+                                 "error_type": type(exc).__name__})
+            raise
+        self._model_invocations.append({"invocation_id": invocation_id, "model": model,
+                                        "prompt_version": prompt_version, "status": "completed",
+                                        "token_usage": deepcopy(usage),
+                                        "latency_ms": max(0, round((perf_counter() - started) * 1000)),
+                                        "error_type": None})
+        self._events.append({"event": "model_invocation_completed", "invocation_id": invocation_id,
+                             "patch_id": proposal["patch_id"]})
         return deepcopy(proposal)
 
     def submit(self, patch: dict[str, Any]) -> None:
@@ -467,10 +507,18 @@ class M5RepairController:
     def audit_manifest(self, run_id: str) -> dict[str, Any]:
         _require(isinstance(run_id, str) and bool(run_id.strip()), "run_id must be nonempty")
         snapshot = self.snapshot()
+        usage = {"input": sum(item["token_usage"]["input"] for item in self._model_invocations),
+                 "output": sum(item["token_usage"]["output"] for item in self._model_invocations)}
         return {"schema_version": "0.1", "release": "m5-person-b-v0.1",
                 "run_id": run_id, "proof_id": self.proof_id,
                 "input_digest": self._input_digest,
                 "m4_input_digest": self._m4_digest,
                 "attempt_fingerprints": [patch_fingerprint(patch) for patch in self._attempts],
+                "model_invocations": deepcopy(self._model_invocations),
+                "metrics": {"model_calls": len(self._model_invocations),
+                            "failed_model_calls": sum(item["status"] == "failed"
+                                                      for item in self._model_invocations),
+                            "token_usage": usage,
+                            "total_latency_ms": sum(item["latency_ms"] for item in self._model_invocations)},
                 "events": deepcopy(self._events), "final_state_digest": canonical_digest(snapshot),
                 "stop_reason": self._stop_reason}

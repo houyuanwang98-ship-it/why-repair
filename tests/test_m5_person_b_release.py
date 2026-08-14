@@ -16,7 +16,7 @@ class M5PersonBReleaseTest(unittest.TestCase):
         self.assertEqual(release["status"],
                          "person_b_and_controller_complete_pending_joint_pilot_acceptance")
         self.assertIn("m4-integrated-v1.1", release["frozen_predecessors"])
-        self.assertGreaterEqual(release["tests"]["passed"], 276)
+        self.assertGreaterEqual(release["tests"]["passed"], 282)
         self.assertTrue(release["known_limitations"])
         for relative, expected in release["artifacts"].items():
             path = ROOT / relative

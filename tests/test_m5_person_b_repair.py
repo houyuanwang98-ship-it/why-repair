@@ -232,6 +232,29 @@ class M5PersonBRepairTest(unittest.TestCase):
                                         error_certificate=case["error_certificate"])
         self.assertEqual(controller.generator_input()["allowed_operations"], ["mark_irreparable", "replace"])
 
+    def test_model_adapter_success_and_failure_are_audited(self):
+        case = self.case(); controller = self.controller()
+        proposal = controller.generate(
+            lambda context: {"proposal": copy.deepcopy(case["patch"]),
+                             "token_usage": {"input": 120, "output": 45}},
+            model="fixture-model", prompt_version="m5-person-b-v0.1")
+        self.assertEqual(proposal["patch_id"], case["patch"]["patch_id"])
+        manifest = controller.audit_manifest("adapter-success")
+        self.assertEqual(manifest["metrics"]["model_calls"], 1)
+        self.assertEqual(manifest["metrics"]["failed_model_calls"], 0)
+        self.assertEqual(manifest["metrics"]["token_usage"], {"input": 120, "output": 45})
+
+        failed = self.controller()
+        def broken_adapter(context):
+            raise RuntimeError("offline")
+        with self.assertRaisesRegex(RuntimeError, "offline"):
+            failed.generate(broken_adapter, model="fixture-model",
+                            prompt_version="m5-person-b-v0.1")
+        failure_manifest = failed.audit_manifest("adapter-failure")
+        self.assertEqual(failure_manifest["metrics"]["failed_model_calls"], 1)
+        self.assertEqual(failure_manifest["model_invocations"][0]["error_type"], "RuntimeError")
+        self.assertEqual(failure_manifest["attempt_fingerprints"], [])
+
     def test_frozen_certificate_mutation_is_detected(self):
         controller = self.controller()
         controller._certificate["failed_inference"] = "tampered"
