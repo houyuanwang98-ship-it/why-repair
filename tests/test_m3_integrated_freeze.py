@@ -13,7 +13,12 @@ INTEGRATED_MANIFEST = EXPERIMENT / "integrated_freeze_manifest.json"
 class M3IntegratedFreezeTests(unittest.TestCase):
     def test_integrated_release_binds_ab_controller_and_original_freeze(self):
         manifest = json.loads(INTEGRATED_MANIFEST.read_text(encoding="utf-8"))
-        self.assertEqual(manifest["release"], "m3-integrated-v1.0")
+        self.assertEqual(manifest["release"], "m3-integrated-v1.1")
+        self.assertEqual(
+            manifest["previous_manifest_sha256"],
+            "8b07163d3a1d91f7891ac053e223eacaa8352969a1d78072527f9f8489a3cc2d",
+        )
+        self.assertEqual(manifest["compatibility_reason"], "m1-v0.3.1-compatible-contract-completion")
         self.assertEqual(manifest["base_release"], "m3-evaluator-v1.0")
         self.assertEqual(
             manifest["base_manifest_sha256"],

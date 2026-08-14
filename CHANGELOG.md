@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-08-14 +08:00 — Revalidate and complete M1 contracts
+
+- Completed the M1 portable and runtime contract set with ProofInstance,
+  LocalObligation, InvalidationRecord, ModelInvocation, RetryRecord, and
+  CacheFingerprint while retaining wire schema version 0.3.
+- Added structured Controller invalidation records with transactional rollback,
+  four independent failure fixtures, Schema/runtime parity fixes, and positive
+  and negative regression coverage.
+- Published the v0.3.1 compatibility migration record and a role-by-role M1
+  acceptance audit that explicitly separates automated evidence from new human
+  A/B signatures.
+- Hardened invalidation records to require exact next-version triggers,
+  topologically ordered true descendants, timezone-aware timestamps, and
+  defensive read-only snapshots; added multi-layer and unrelated-branch tests.
+- Added an M1-specific SHA-256 freeze manifest covering the complete code,
+  Schema, documentation, eight-fixture, and key-test release surface.
+
 ## 2026-08-14 +08:00 — Revalidate M0 role by role
 
 - Added a requirement-level M0 revalidation for Person A, Person B, Evaluator,

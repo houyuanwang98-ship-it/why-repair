@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 from harness.controller import DualAgentController, InvalidTransitionError, StaleVersionError
-from harness.contracts import ContractError
+from harness.contracts import ContractError, validate_contract
 
 
 def ref(node_id, version=1):
@@ -139,9 +139,31 @@ class DualAgentControllerTest(unittest.TestCase):
         self.assertEqual("pending_evaluation", controller.lifecycle(ref(2, 2)))
         self.assertEqual("stale", controller.lifecycle(ref(3)))
         self.assertIsNone(controller.node_version(ref(3))["current_verdict"])
+        self.assertEqual(1, len(controller.invalidation_records))
+        invalidation = controller.invalidation_records[0]
+        self.assertEqual(ref(2), invalidation["trigger_old"])
+        self.assertEqual(ref(2, 2), invalidation["trigger_new"])
+        self.assertEqual([ref(3)], invalidation["invalidated"])
         controller.transition(new_ref, "evaluating", reason="evaluate exact replacement version")
         controller.record_evaluation(evaluation(2, "accepted", [1], evaluation_id="eval-v2", target_version=2))
         self.assertEqual("active", controller.lifecycle(new_ref))
+
+    def test_invalidation_record_is_topological_complete_isolated_and_read_only(self):
+        controller = self.controller_with_three_nodes()
+        controller.register_node(node_record(4, "final", [ref(3)], state="active", verdict="accepted"))
+        controller.register_node(node_record(5, "independent", [ref(1)], state="active", verdict="accepted"))
+        controller.transition(ref(2), "evaluating", reason="start")
+        record_repair_evaluation(controller)
+        submit_registered_patch(controller, patch())
+        controller.begin_patch_review("patch-1")
+        controller.review_patch(review(True))
+        record = controller.invalidation_records[0]
+        self.assertEqual([ref(3), ref(4)], record["invalidated"])
+        self.assertEqual("stale", controller.lifecycle(ref(3)))
+        self.assertEqual("stale", controller.lifecycle(ref(4)))
+        self.assertEqual("active", controller.lifecycle(ref(5)))
+        record["invalidated"].append(ref(5))
+        self.assertEqual([ref(3), ref(4)], controller.invalidation_records[0]["invalidated"])
 
     def test_invalid_parent_blocks_descendants_without_math_verdict(self):
         controller = self.controller_with_three_nodes()
@@ -203,6 +225,7 @@ class DualAgentControllerTest(unittest.TestCase):
         self.assertEqual("pending_recheck", controller.lifecycle(ref(2)))
         with self.assertRaises(KeyError):
             controller.node_version(ref(2, 2))
+        self.assertEqual([], controller.invalidation_records)
 
     def test_rejected_patch_returns_to_pending_repair(self):
         controller = self.controller_with_three_nodes()
@@ -437,6 +460,54 @@ class M1FixtureReplayTest(unittest.TestCase):
 
     def load_fixture(self, name):
         return json.loads((self.fixture_dir / name).read_text(encoding="utf-8"))
+
+    def test_illegal_transition_fixture_fails_closed(self):
+        fixture = self.load_fixture("illegal_transition.json")
+        controller = DualAgentController(evaluator_ids={"fixture-evaluator", "eval"})
+        controller.register_node(node_record(1, "P"))
+        with self.assertRaises(InvalidTransitionError):
+            controller.transition(fixture["target"], fixture["attempted_to"], reason="fixture illegal jump")
+
+    def test_missing_patch_review_fixture_cannot_apply_patch(self):
+        fixture = self.load_fixture("missing_patch_review.json")
+        controller = DualAgentController(evaluator_ids={"fixture-evaluator", "eval"})
+        controller.register_node(node_record(1, "n=2k", state="active", verdict="accepted"))
+        controller.register_node(node_record(2, "bad", [ref(1)]))
+        controller.transition(ref(2), "evaluating", reason="fixture")
+        record_repair_evaluation(controller)
+        submit_registered_patch(controller, patch())
+        self.assertEqual(fixture["expected_current"], controller.current_ref("p1", 2))
+        self.assertEqual(fixture["expected_lifecycle"], controller.lifecycle(ref(2)))
+        with self.assertRaises(KeyError):
+            controller.node_version(ref(2, 2))
+
+    def test_rollback_failure_fixture_is_atomic(self):
+        fixture = self.load_fixture("rollback_failure.json")
+        controller = DualAgentController(evaluator_ids={"fixture-evaluator", "eval"})
+        controller.register_node(node_record(1, "n=2k", state="active", verdict="accepted"))
+        controller.register_node(node_record(2, "bad", [ref(1)]))
+        controller.register_node(node_record(3, "goal", [ref(2)], state="active", verdict="accepted"))
+        controller.transition(ref(2), "evaluating", reason="fixture")
+        record_repair_evaluation(controller)
+        proposal = patch()
+        proposal["target_dependencies_after"] = [fixture["illegal_dependency"]]
+        proposal["replacement_nodes"][0]["depends_on"] = [fixture["illegal_dependency"]]
+        proposal["used_dependencies"] = [fixture["illegal_dependency"]]
+        submit_registered_patch(controller, proposal)
+        controller.begin_patch_review(proposal["patch_id"])
+        event_count = len(controller.events)
+        with self.assertRaisesRegex(ValueError, fixture["expected_error_contains"]):
+            controller.review_patch(review(True))
+        self.assertEqual(fixture["expected_current"], controller.current_ref("p1", 2))
+        self.assertEqual(event_count, len(controller.events))
+        self.assertEqual([], controller.invalidation_records)
+
+    def test_missing_version_fixture_is_rejected(self):
+        fixture = self.load_fixture("missing_version.json")
+        record = node_record(1, "P")
+        record["node"]["depends_on"] = [fixture["invalid_ref"]]
+        with self.assertRaises(ContractError):
+            validate_contract(fixture["kind"], record["node"])
 
     def replay_accepted_repair(self):
         fixture = self.load_fixture("accepted_repair.json")

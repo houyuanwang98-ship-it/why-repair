@@ -1,8 +1,8 @@
 # M1 冻结记录
 
-状态：`frozen_v0.3`
+状态：`frozen_v0.3.1`
 
-版本：`v0.3`
+线缆协议版本：`v0.3`；当前兼容补全发布：`v0.3.1`
 
 初始冻结日期：`2026-08-10`
 
@@ -17,6 +17,20 @@
 - 插入节点、目标节点和受影响后代的确定性重新评估顺序。
 - 多解释分支检查及禁止挑选有利解释的确定性汇总规则。
 - 旧版本拒绝、后代失效和插入失败回滚。
+
+## v0.3.1 兼容补全
+
+`2026-08-14` 按 M1 执行顺序重新审计时发现，`ProofInstance`、`LocalObligation`、`InvalidationRecord`、`ModelInvocation`、`RetryRecord` 和 `CacheFingerprint` 虽被 M1 规范要求，却没有出现在 v0.3 JSON Schema 与运行时 validator 中。现已完成以下补全：
+
+- 六类对象均加入便携 JSON Schema、严格运行时 validator、正例和负例测试；
+- Controller 在节点替换或插入导致后代失效时生成 `InvalidationRecord`；
+- 失效记录纳入 Controller 事务快照，失败回滚不会留下孤立记录；
+- 新增非法跳转、缺少 PatchReview、缺失版本与回滚失败的独立 fixture；
+- 修正 Schema 与运行时之间的 `unverified_counterexample`、裁决枚举和去重约束差异。
+
+这是向后兼容的对象集合补全：既有 v0.3 对象、字段、枚举和状态转换均未改变，因此不提升线缆 `schema_version`。发布标识提升为 `v0.3.1`，迁移说明见 `M01_schema_migration_template.md`。
+
+当前冻结边界的机器可读哈希清单为 `data/benchmarks/m1_freeze_manifest_v0_3_1.json`。
 
 ## 验证依据
 

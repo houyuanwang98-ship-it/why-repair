@@ -1,4 +1,4 @@
-"""Strict standard-library validators for shared dual-agent contracts v0.3.
+"""Strict standard-library validators for shared dual-agent contracts v0.3.1.
 
 The JSON Schema in ``schemas/dual_agent_harness_v0_3.schema.json`` is the
 portable interchange definition. These validators enforce the same critical
@@ -8,6 +8,7 @@ invariants at runtime without adding a jsonschema dependency.
 from __future__ import annotations
 
 import re
+from datetime import datetime
 from typing import Any, Callable
 
 
@@ -46,6 +47,7 @@ AMBIGUITY_OUTCOMES = {
 }
 
 PATCH_OPERATIONS = {"insert_before", "replace", "delete", "add_assumption"}
+SHA256_PATTERN = re.compile(r"sha256:[0-9a-f]{64}")
 
 
 class ContractError(ValueError):
@@ -123,6 +125,28 @@ def _schema_header(value: dict[str, Any], path: str) -> None:
         _fail(f"{path}.schema_version", f"must equal {SCHEMA_VERSION!r}")
 
 
+def _digest(value: Any, path: str, *, nullable: bool = False) -> str | None:
+    if value is None and nullable:
+        return None
+    result = _string(value, path)
+    if SHA256_PATTERN.fullmatch(result) is None:
+        _fail(path, "must be a lowercase sha256:<64 hex> digest")
+    return result
+
+
+def _timestamp(value: Any, path: str, *, nullable: bool = False) -> str | None:
+    if value is None and nullable:
+        return None
+    result = _string(value, path)
+    try:
+        parsed = datetime.fromisoformat(result.replace("Z", "+00:00"))
+    except ValueError:
+        _fail(path, "must be an RFC 3339 date-time")
+    if parsed.tzinfo is None:
+        _fail(path, "must include a UTC offset")
+    return result
+
+
 def validate_node_ref(value: Any, path: str = "node_ref") -> dict[str, Any]:
     obj = _object(value, path)
     _exact_keys(obj, {"proof_id", "node_id", "version"}, set(), path)
@@ -138,6 +162,57 @@ def validate_theorem_ref(value: Any, path: str = "theorem_ref") -> dict[str, Any
     _string(obj["proof_id"], f"{path}.proof_id")
     _integer(obj["theorem_version"], f"{path}.theorem_version")
     _string(obj["theorem_digest"], f"{path}.theorem_digest")
+    return obj
+
+
+def validate_proof_instance(value: Any, path: str = "proof_instance") -> dict[str, Any]:
+    obj = _object(value, path)
+    required = {
+        "schema_version", "proof_id", "theorem", "global_assumptions",
+        "proof_text", "domain", "source",
+    }
+    _exact_keys(obj, required, set(), path)
+    _schema_header(obj, path)
+    _string(obj["proof_id"], f"{path}.proof_id")
+    _string(obj["theorem"], f"{path}.theorem")
+    _string_list(obj["global_assumptions"], f"{path}.global_assumptions")
+    _string(obj["proof_text"], f"{path}.proof_text")
+    _string(obj["domain"], f"{path}.domain")
+    if obj["source"] is not None:
+        _string(obj["source"], f"{path}.source")
+    return obj
+
+
+def validate_local_obligation(value: Any, path: str = "local_obligation") -> dict[str, Any]:
+    obj = _object(value, path)
+    required = {
+        "schema_version", "obligation_id", "target", "global_assumptions",
+        "ambient_facts", "premises", "dependency_fingerprint", "goal",
+    }
+    _exact_keys(obj, required, set(), path)
+    _schema_header(obj, path)
+    _string(obj["obligation_id"], f"{path}.obligation_id")
+    target = validate_node_ref(obj["target"], f"{path}.target")
+    _string_list(obj["global_assumptions"], f"{path}.global_assumptions")
+    if not isinstance(obj["ambient_facts"], list):
+        _fail(f"{path}.ambient_facts", "must be an array")
+    for index, fact_value in enumerate(obj["ambient_facts"]):
+        fact_path = f"{path}.ambient_facts[{index}]"
+        fact = _object(fact_value, fact_path)
+        _exact_keys(fact, {"statement", "source"}, set(), fact_path)
+        _string(fact["statement"], f"{fact_path}.statement")
+        _enum(fact["source"], {"problem", "definition", "verified_external"}, f"{fact_path}.source")
+    if not isinstance(obj["premises"], list):
+        _fail(f"{path}.premises", "must be an array")
+    seen: set[tuple[str, int | str, int]] = set()
+    for index, premise_value in enumerate(obj["premises"]):
+        premise = validate_node_ref(premise_value, f"{path}.premises[{index}]")
+        key = (premise["proof_id"], premise["node_id"], premise["version"])
+        if key in seen or premise["proof_id"] != target["proof_id"] or premise["node_id"] == target["node_id"]:
+            _fail(f"{path}.premises[{index}]", "must be a unique different node in the same proof")
+        seen.add(key)
+    _digest(obj["dependency_fingerprint"], f"{path}.dependency_fingerprint")
+    _string(obj["goal"], f"{path}.goal")
     return obj
 
 
@@ -321,10 +396,15 @@ def validate_error_certificate(value: Any, path: str = "error_certificate") -> d
     target = validate_node_ref(obj["target"], f"{path}.target")
     if not isinstance(obj["premises"], list):
         _fail(f"{path}.premises", "must be an array")
+    seen_premises: set[tuple[str, int | str, int]] = set()
     for index, premise in enumerate(obj["premises"]):
         ref = validate_node_ref(premise, f"{path}.premises[{index}]")
         if ref["proof_id"] != target["proof_id"] or ref["node_id"] == target["node_id"]:
             _fail(f"{path}.premises[{index}]", "must reference another node in the same proof")
+        key = (ref["proof_id"], ref["node_id"], ref["version"])
+        if key in seen_premises:
+            _fail(f"{path}.premises", "contains duplicate node references")
+        seen_premises.add(key)
     _enum(obj["error_type"], ERROR_TYPES, f"{path}.error_type")
     _string(obj["failed_inference"], f"{path}.failed_inference")
     _string_list(obj["evidence"], f"{path}.evidence", nonempty=True)
@@ -337,6 +417,8 @@ def validate_error_certificate(value: Any, path: str = "error_certificate") -> d
     operations = constraints["allowed_operations"]
     if not isinstance(operations, list) or not operations:
         _fail(f"{path}.repair_constraints.allowed_operations", "must be a nonempty array")
+    if len(operations) != len(set(operations)):
+        _fail(f"{path}.repair_constraints.allowed_operations", "must not contain duplicates")
     for index, operation in enumerate(operations):
         _enum(operation, PATCH_OPERATIONS, f"{path}.repair_constraints.allowed_operations[{index}]")
     _integer(constraints["max_new_nodes"], f"{path}.repair_constraints.max_new_nodes", minimum=0)
@@ -518,6 +600,96 @@ def validate_node_version(value: Any, path: str = "node_version") -> dict[str, A
     return obj
 
 
+def validate_invalidation_record(value: Any, path: str = "invalidation_record") -> dict[str, Any]:
+    obj = _object(value, path)
+    required = {
+        "schema_version", "invalidation_id", "trigger_old", "trigger_new",
+        "invalidated", "reason", "timestamp",
+    }
+    _exact_keys(obj, required, set(), path)
+    _schema_header(obj, path)
+    _string(obj["invalidation_id"], f"{path}.invalidation_id")
+    old = validate_node_ref(obj["trigger_old"], f"{path}.trigger_old")
+    new = validate_node_ref(obj["trigger_new"], f"{path}.trigger_new")
+    if old["proof_id"] != new["proof_id"] or old["node_id"] != new["node_id"] or new["version"] != old["version"] + 1:
+        _fail(path, "trigger_new must be the next version of trigger_old")
+    if not isinstance(obj["invalidated"], list) or not obj["invalidated"]:
+        _fail(f"{path}.invalidated", "must be a nonempty array")
+    seen: set[tuple[str, int | str, int]] = set()
+    for index, value in enumerate(obj["invalidated"]):
+        ref = validate_node_ref(value, f"{path}.invalidated[{index}]")
+        key = (ref["proof_id"], ref["node_id"], ref["version"])
+        if ref["proof_id"] != old["proof_id"] or ref["node_id"] == old["node_id"] or key in seen:
+            _fail(f"{path}.invalidated[{index}]", "must be a unique descendant in the trigger proof")
+        seen.add(key)
+    _string(obj["reason"], f"{path}.reason")
+    _timestamp(obj["timestamp"], f"{path}.timestamp")
+    return obj
+
+
+def validate_model_invocation(value: Any, path: str = "model_invocation") -> dict[str, Any]:
+    obj = _object(value, path)
+    required = {
+        "schema_version", "invocation_id", "agent_role", "model",
+        "prompt_version", "input_digest", "output_digest", "status",
+        "started_at", "finished_at", "token_usage", "latency_ms",
+    }
+    _exact_keys(obj, required, set(), path)
+    _schema_header(obj, path)
+    _string(obj["invocation_id"], f"{path}.invocation_id")
+    _enum(obj["agent_role"], {"evaluator", "repair_generator"}, f"{path}.agent_role")
+    _string(obj["model"], f"{path}.model")
+    _string(obj["prompt_version"], f"{path}.prompt_version")
+    _digest(obj["input_digest"], f"{path}.input_digest")
+    _digest(obj["output_digest"], f"{path}.output_digest", nullable=True)
+    status = _enum(obj["status"], {"completed", "failed", "timeout"}, f"{path}.status")
+    _timestamp(obj["started_at"], f"{path}.started_at")
+    if obj["finished_at"] is not None:
+        _timestamp(obj["finished_at"], f"{path}.finished_at")
+    if status == "completed" and (obj["finished_at"] is None or obj["output_digest"] is None):
+        _fail(path, "completed invocation requires finished_at and output_digest")
+    usage = _object(obj["token_usage"], f"{path}.token_usage")
+    _exact_keys(usage, {"input", "output"}, set(), f"{path}.token_usage")
+    _integer(usage["input"], f"{path}.token_usage.input", minimum=0)
+    _integer(usage["output"], f"{path}.token_usage.output", minimum=0)
+    _integer(obj["latency_ms"], f"{path}.latency_ms", minimum=0)
+    return obj
+
+
+def validate_retry_record(value: Any, path: str = "retry_record") -> dict[str, Any]:
+    obj = _object(value, path)
+    required = {"schema_version", "retry_id", "invocation_id", "attempt", "reason", "outcome", "timestamp"}
+    _exact_keys(obj, required, set(), path)
+    _schema_header(obj, path)
+    _string(obj["retry_id"], f"{path}.retry_id")
+    _string(obj["invocation_id"], f"{path}.invocation_id")
+    _integer(obj["attempt"], f"{path}.attempt")
+    _enum(obj["reason"], {"timeout", "transport_error", "schema_error", "rate_limit"}, f"{path}.reason")
+    _enum(obj["outcome"], {"scheduled", "succeeded", "failed", "exhausted"}, f"{path}.outcome")
+    _timestamp(obj["timestamp"], f"{path}.timestamp")
+    return obj
+
+
+def validate_cache_fingerprint(value: Any, path: str = "cache_fingerprint") -> dict[str, Any]:
+    obj = _object(value, path)
+    required = {
+        "schema_version", "cache_id", "node", "code_digest", "schema_digest",
+        "theorem_bank_digest", "proof_context_digest", "dependency_digest",
+        "prompt_digest", "model_digest", "tool_digest",
+    }
+    _exact_keys(obj, required, set(), path)
+    _schema_header(obj, path)
+    _string(obj["cache_id"], f"{path}.cache_id")
+    validate_node_ref(obj["node"], f"{path}.node")
+    for field in (
+        "code_digest", "schema_digest", "proof_context_digest",
+        "dependency_digest", "prompt_digest", "model_digest", "tool_digest",
+    ):
+        _digest(obj[field], f"{path}.{field}")
+    _digest(obj["theorem_bank_digest"], f"{path}.theorem_bank_digest", nullable=True)
+    return obj
+
+
 def validate_run_manifest(value: Any, path: str = "run_manifest") -> dict[str, Any]:
     obj = _object(value, path)
     required = {
@@ -548,8 +720,10 @@ def validate_run_manifest(value: Any, path: str = "run_manifest") -> dict[str, A
 
 
 VALIDATORS: dict[str, Callable[[Any, str], dict[str, Any]]] = {
+    "proof_instance": validate_proof_instance,
     "dependency_edge": validate_dependency_edge,
     "proof_node": validate_proof_node,
+    "local_obligation": validate_local_obligation,
     "evaluation_record": validate_evaluation_record,
     "ambiguity_analysis": validate_ambiguity_analysis,
     "error_certificate": validate_error_certificate,
@@ -557,6 +731,10 @@ VALIDATORS: dict[str, Callable[[Any, str], dict[str, Any]]] = {
     "patch_proposal": validate_patch_proposal,
     "patch_review": validate_patch_review,
     "node_version": validate_node_version,
+    "invalidation_record": validate_invalidation_record,
+    "model_invocation": validate_model_invocation,
+    "retry_record": validate_retry_record,
+    "cache_fingerprint": validate_cache_fingerprint,
     "run_manifest": validate_run_manifest,
 }
 

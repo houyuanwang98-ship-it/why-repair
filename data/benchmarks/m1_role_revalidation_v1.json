@@ -1,0 +1,49 @@
+{
+  "schema_version": "m1-role-revalidation-1.0",
+  "validation_date": "2026-08-14",
+  "wire_contract_version": "0.3",
+  "release": "v0.3.1",
+  "engineering_exit": "pass_with_declared_human_review_limitation",
+  "records": [
+    {
+      "validation_id": "M1-RV-PA-001", "target": "M1 Person A mathematical objects v0.3.1",
+      "owner": "repository_m1_revalidation_auditor", "reviewer": "automated_contract_regression",
+      "method": "Schema/runtime parity and positive-negative contract review",
+      "inputs": ["schemas/dual_agent_harness_v0_3.schema.json", "harness/contracts.py", "tests/test_dual_agent_contracts.py"],
+      "result": "pass", "evidence": ["All required mathematical objects have portable and runtime contracts"],
+      "limitations": ["No new independent Person A signature"], "timestamp": "2026-08-14T20:00:00+08:00"
+    },
+    {
+      "validation_id": "M1-RV-PB-001", "target": "M1 Person B execution objects v0.3.1",
+      "owner": "repository_m1_revalidation_auditor", "reviewer": "automated_contract_regression",
+      "method": "Execution-object, migration and failure-fixture review",
+      "inputs": ["harness/contracts.py", "docs/milestones/M01_schema_migration_template.md", "data/fixtures/m1/rollback_failure.json"],
+      "result": "pass", "evidence": ["Execution records and migration controls are mechanically represented"],
+      "limitations": ["No new independent Person B signature"], "timestamp": "2026-08-14T20:00:00+08:00"
+    },
+    {
+      "validation_id": "M1-RV-CTRL-001", "target": "M1 deterministic Controller v0.3.1",
+      "owner": "repository_m1_revalidation_auditor", "reviewer": "automated_controller_regression",
+      "method": "State, DAG, version, rollback, invalidation and replay tests",
+      "inputs": ["harness/controller.py", "tests/test_dual_agent_controller.py", "data/fixtures/m1/accepted_repair.json"],
+      "result": "pass", "evidence": ["Controller produces validated invalidation records and rolls them back atomically"],
+      "limitations": ["M1 does not execute real model calls"], "timestamp": "2026-08-14T20:00:00+08:00"
+    },
+    {
+      "validation_id": "M1-RV-AB-001", "target": "M1 A/B integration and authority separation v0.3.1",
+      "owner": "repository_m1_revalidation_auditor", "reviewer": "automated_integration_regression",
+      "method": "Documentary handoff review plus end-to-end integration tests",
+      "inputs": ["docs/milestones/M01_person_a_b_integration.md", "harness/integration.py", "tests/test_dual_agent_integration.py"],
+      "result": "pass_with_limitation", "evidence": ["Certificate binding and independent reviewer identity are enforced"],
+      "limitations": ["v0.3.1 has no new real-person A/B signatures"], "timestamp": "2026-08-14T20:00:00+08:00"
+    },
+    {
+      "validation_id": "M1-RV-GATE-001", "target": "M1 section 27 exit gate v0.3.1",
+      "owner": "repository_m1_revalidation_auditor", "reviewer": "full_repository_regression",
+      "method": "Requirement traceability, hash audit and full test discovery",
+      "inputs": ["docs/milestones/M01_role_by_role_revalidation.md", "docs/milestones/M01_freeze_record.md", "data/benchmarks/m0_m4_completion_audit_v1.json"],
+      "result": "pass_with_limitation", "evidence": ["All mechanical gates pass and human signature limitation is explicit"],
+      "limitations": ["Automated review is not a substitute for a new human sign-off"], "timestamp": "2026-08-14T20:00:00+08:00"
+    }
+  ]
+}

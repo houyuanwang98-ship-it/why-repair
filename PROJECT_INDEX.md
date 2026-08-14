@@ -26,9 +26,13 @@
 | [M0 v0.1 证据状态勘误](docs/milestones/M00_v0_1_evidence_erratum.md) | 明确 frozen 工程语义与严格盲审门失败之间的解释优先级 | 当前有效 |
 | [M0 逐角色复核](docs/milestones/M00_role_by_role_revalidation.md) | 依次验证 Person A、Person B、Evaluator、Repair Generator 与 Controller，并逐条映射 M0 验收门 | 工程通过但严格研究证据不通过 |
 | [M0 逐角色复核 Schema](schemas/m0_role_revalidation_v1.schema.json) | 强制每条记录包含标准十字段并拒绝额外字段 | `v1.1` |
-| [M1 共享契约与 Controller](docs/milestones/M01_shared_contracts_and_controller.md) | Schema、版本化状态机与无模型回放 | `v0.3` 已冻结 |
-| [M1 冻结记录](docs/milestones/M01_freeze_record.md) | 冻结范围、验证依据与变更规则 | 已完成 |
+| [M1 共享契约与 Controller](docs/milestones/M01_shared_contracts_and_controller.md) | Schema、版本化状态机与八个无模型回放 | `v0.3.1` 兼容补全已冻结 |
+| [M1 冻结记录](docs/milestones/M01_freeze_record.md) | 冻结范围、验证依据与变更规则 | `v0.3.1` 已完成 |
 | [M1 A/B 集成](docs/milestones/M01_person_a_b_integration.md) | Person A checker 到证书、Person B 补丁及独立复核的衔接 | `v0.3` 已完成 |
+| [M1 迁移模板](docs/milestones/M01_schema_migration_template.md) | Schema 兼容/破坏性变更模板及 v0.3.1 实例 | 当前有效 |
+| [M1 逐角色复核](docs/milestones/M01_role_by_role_revalidation.md) | Person A、Person B、Controller、交叉边界与第 27 节逐条验收 | 工程通过；新人工签名待补 |
+| [M1 逐角色复核 Schema](schemas/m1_role_revalidation_v1.schema.json) | 强制标准十字段与封闭结果枚举 | `v1.0` |
+| [M1 v0.3.1 冻结清单](data/benchmarks/m1_freeze_manifest_v0_3_1.json) | 绑定代码、Schema、文档、八个 fixture 与关键测试的 SHA-256 | 当前有效 |
 | [M2 Person A 协议](docs/milestones/M02_person_a_protocol.md) | Person A 独立审核、锁定与退出条件 | 50 题已审核并私有锁定 |
 | [M2 Person A 标注指南](docs/annotation/M02_person_a_annotation_guideline.md) | 节点、依赖、裁决、首错与反例的独立标注规则 | `v0.1` 已用于审核 |
 | [M2 50 题试点集](data/benchmarks/m2/source/pilot_50.jsonl) | 双方独立审核的同一份冻结题目 | `m2-pilot-v0.1` 已冻结 |
@@ -43,7 +47,7 @@
 | [M3 A/B 联合验收](docs/milestones/M03_person_a_b_acceptance.md) | Person A 冻结后复核、Person B 审计证据与双人退出签核 | 历史 v1.0 验收 |
 | [M3 `m2-028` 语义勘误](docs/milestones/M03_m2_028_semantic_erratum.md) | 纠正“真定理即有效证明”的后冻结审计误判 | 当前解释生效 |
 | [M3 Controller 衔接](docs/milestones/M03_controller_handoff.md) | 冻结 M3 checker 结果到 v0.3 Controller 的事务导入、状态审计与修复交接 | 50 题兼容回归通过 |
-| [M3 A/B/Controller 集成冻结](docs/milestones/M03_integrated_freeze_record.md) | 联合验收、Controller、适配层、测试与机器清单的统一发布边界 | `m3-integrated-v1.0` 已冻结 |
+| [M3 A/B/Controller 集成冻结](docs/milestones/M03_integrated_freeze_record.md) | 联合验收、Controller、适配层、测试与机器清单的统一发布边界 | `m3-integrated-v1.1` 已完成 M1 v0.3.1 兼容再验证 |
 | [M4 Person A 反例协议](docs/milestones/M04_person_a_counterexample_protocol.md) | 反例证书数学接受门、上下文摘要及范围映射 | `v0.2`，已纳入 `m4-integrated-v1.1` |
 | [M4 Person A 审查 Schema](schemas/m4_person_a_counterexample_review_v0_1.schema.json) | 独立核验身份、方法和接受结果的历史契约 | `v0.1` 保留 |
 | [M4 Person A 审查 Schema v0.2](schemas/m4_person_a_counterexample_review_v0_2.schema.json) | 增加确定性审核上下文摘要的当前契约 | `v0.2` |
@@ -73,7 +77,7 @@
 |---|---|---|---|
 | Evaluator, node model, dependency graph | Person A | Person B | Existing prototype |
 | Controller, Repair Generator, versioning | Person B | Person A | M1 controller/versioning and A/B contract integration complete; model generation remains for M5 |
-| Shared schemas and state transitions | Joint | Both approve | M1 v0.3 frozen |
+| Shared schemas and state transitions | Joint | Both approve | M1 v0.3.1 compatible completion frozen; new human signatures pending if required for release |
 | Benchmark annotation policy | Person A | Person B | M2 completed and frozen |
 | Evaluation runner and metrics | Person B | Person A | M2 infrastructure, agreement report and Gold generation complete |
 | Gold-label review | Joint | Disagreements logged | M2 pilot Gold frozen; continue for later benchmark expansions |

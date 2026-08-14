@@ -5,6 +5,7 @@ from __future__ import annotations
 from copy import deepcopy
 from contextlib import contextmanager
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from typing import Any
 
 from .contracts import (
@@ -82,10 +83,15 @@ class DualAgentController:
         self._current_evaluation: dict[NodeKey, str] = {}
         self._proof_contexts: dict[str, str] = {}
         self._events: list[dict[str, Any]] = []
+        self._invalidation_records: list[dict[str, Any]] = []
 
     @property
     def events(self) -> list[dict[str, Any]]:
         return deepcopy(self._events)
+
+    @property
+    def invalidation_records(self) -> list[dict[str, Any]]:
+        return deepcopy(self._invalidation_records)
 
     def proof_snapshot(self, proof_id: str) -> dict[str, Any]:
         """Return a deterministic, read-only view used by orchestration layers."""
@@ -222,6 +228,7 @@ class DualAgentController:
             "_versions", "_current", "_patches", "_error_certificates",
             "_counterexample_certificates", "_ambiguity_analyses", "_evaluations",
             "_current_evaluation", "_proof_contexts", "_events",
+            "_invalidation_records",
         )
         snapshot = {name: deepcopy(getattr(self, name)) for name in attributes}
         try:
@@ -799,3 +806,28 @@ class DualAgentController:
                         })
                     stale_keys.add(key)
                     changed = True
+        invalidated = [
+            key.ref() for key in sorted(
+                stale_keys - {old_key},
+                key=lambda item: (self._versions[item]["node"]["order_key"], str(item.node_id), item.version),
+            )
+        ]
+        if invalidated:
+            record = {
+                "schema_version": SCHEMA_VERSION,
+                "invalidation_id": f"inv-{len(self._invalidation_records) + 1}",
+                "trigger_old": old_key.ref(),
+                "trigger_new": new_key.ref(),
+                "invalidated": invalidated,
+                "reason": f"dependency {old_key.node_id}@v{old_key.version} was superseded",
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+            }
+            validate_contract("invalidation_record", record)
+            self._invalidation_records.append(record)
+            self._events.append({
+                "event": "descendants_invalidated",
+                "invalidation_id": record["invalidation_id"],
+                "trigger_old": old_key.ref(),
+                "trigger_new": new_key.ref(),
+                "invalidated": invalidated,
+            })

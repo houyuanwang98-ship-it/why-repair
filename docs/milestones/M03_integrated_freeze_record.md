@@ -1,5 +1,9 @@
 # M3 A/B/Controller 集成冻结记录
 
+## M1 v0.3.1 兼容再验证（2026-08-14）
+
+M1 补齐六类此前遗漏的共享对象，并为 Controller 增加结构化失效记录。既有线缆对象、Evaluator 结果、A/B 适配和数学裁决语义未改变。受影响的契约、Controller、集成和全仓库测试已重新执行；当前集成清单提升为 `m3-integrated-v1.1`，并保存前一清单 SHA-256。原始 M3 Evaluator 冻结数据和分数不变。
+
 状态：`m3-integrated-v1.0` frozen
 
 冻结日期：2026-08-14（Asia/Shanghai）
@@ -38,4 +42,3 @@
 旧标签 `m3-evaluator-v1.0` 必须保持原指向。集成冻结使用新标签
 `m3-integrated-v1.0`。任何 A/B/Controller 契约、映射、状态机或验收证据变化均须使用
 新版本、新清单和新标签。
-
