@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-08-14 +08:00 — Close M3 Controller repair dead ends
+
+- Changed the M3 repair handoff to distinguish executable repairs from problem
+  revisions; `m2-041` is now reported as `requires_problem_revision` instead of
+  incorrectly appearing ready for Controller v0.3.
+- Made ambiguity analysis atomically create a bound follow-up evaluation and
+  `interpretation_ambiguity` error certificate, allowing an explicit Person B
+  rewrite to proceed through Person A review and version invalidation.
+- Added full-path regression tests for both cases and executable-operation
+  assertions for every frozen M3 repair handoff.
+- Tightened descendant release so an active but superseded dependency version
+  cannot requeue a child that still points at stale evidence.
+
 ## 2026-08-14 +08:00 — Connect frozen M3 results to the Controller
 
 - Added atomic run-level M3 ingestion with duplicate-proof rejection, canonical

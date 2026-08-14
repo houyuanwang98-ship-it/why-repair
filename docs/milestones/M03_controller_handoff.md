@@ -31,7 +31,9 @@ Agent。它只把 Person A checker 已给出的结构化节点判断送入冻结
 - 75 个 `active`、25 个 `pending_repair`、21 个
   `blocked_by_invalid_dependency`、1 个 `undetermined`；
 - 0 个绕过依赖约束的 `ready_for_evaluation` 节点。
-- 25 个 `status=ready` 的修复交接项，无缺失证书或评估绑定。
+- 24 个 `status=ready` 的可执行修复交接项，无缺失证书或评估绑定；
+- `m2-041` 的 `add_assumption` 会改变原问题，明确标记为
+  `requires_problem_revision`，不伪装成 Controller v0.3 可执行修复。
 
 该结果由 `tests/test_m3_controller_handoff.py` 固定为回归边界。
 
@@ -41,3 +43,11 @@ Controller 交给 Person B 的可修复节点必须来自 `pending_repair`，且
 当前 EvaluationRecord 所引用的 ErrorCertificate。`blocked_by_invalid_dependency` 节点不能
 单独修复；上游新版本通过后，Controller 才会按依赖关系释放后继。反例仍须使用显式
 CounterexampleCertificate，旧 checker 的自由文本反例不会被提升为已核验反例。
+
+歧义分析若得出 `requires_clarification` 或 `unsupported_under_all_checked`，Controller
+会原子生成绑定该分析的当前 EvaluationRecord 和 `interpretation_ambiguity`
+ErrorCertificate，仅允许 Person B 通过 `replace` 明确原句；不再产生无法提交补丁的
+`pending_repair` 死路。
+
+阻塞释放同时要求每个依赖既是 `active`，又是该逻辑节点的当前精确版本；仍引用已
+被取代版本的后继不会被提前送回评估队列。

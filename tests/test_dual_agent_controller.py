@@ -3,6 +3,7 @@ import unittest
 from pathlib import Path
 
 from harness.controller import DualAgentController, InvalidTransitionError, StaleVersionError
+from harness.contracts import ContractError
 
 
 def ref(node_id, version=1):
@@ -272,6 +273,23 @@ class DualAgentControllerTest(unittest.TestCase):
         self.assertNotIn(ref(2), ready)
         self.assertIn(ref(1, 2), ready)
 
+    def test_blocked_descendant_is_not_released_by_active_superseded_dependency(self):
+        controller = DualAgentController(evaluator_ids={"fixture-evaluator", "eval"})
+        controller.register_node(node_record(1, "old premise", state="active", verdict="accepted"))
+        controller.register_node(node_record(
+            2, "dependent claim", [ref(1)],
+            state="blocked_by_invalid_dependency", verdict=None,
+        ))
+        replacement = node_record(1, "new premise")
+        replacement["node"]["version"] = 2
+        replacement["supersedes"] = ref(1)
+        controller.register_node(replacement)
+        controller.transition(ref(1, 2), "evaluating", reason="evaluate replacement")
+        controller.record_evaluation(evaluation(
+            1, "accepted", [], evaluation_id="replacement-eval", target_version=2
+        ))
+        self.assertEqual("blocked_by_invalid_dependency", controller.lifecycle(ref(2)))
+
     def test_repair_queue_fails_closed_until_certificate_is_bound(self):
         controller = self.controller_with_three_nodes()
         controller.transition(ref(2), "evaluating", reason="start")
@@ -351,6 +369,55 @@ class DualAgentControllerTest(unittest.TestCase):
         controller.record_ambiguity_analysis(ambiguity_analysis())
         self.assertEqual("pending_repair", controller.lifecycle(ref(2)))
         self.assertEqual("ambiguous", controller.node_version(ref(2))["current_verdict"])
+        queue = controller.repair_queue(["p1"])
+        self.assertEqual(1, len(queue))
+        self.assertEqual("ready", queue[0]["status"])
+        self.assertEqual(["replace"], queue[0]["executable_operations"])
+        self.assertEqual("interpretation_ambiguity", queue[0]["error_certificate"]["error_type"])
+        self.assertTrue(any(
+            event.get("event") == "evaluation_recorded"
+            and event.get("source") == "ambiguity_analysis"
+            for event in controller.events
+        ))
+
+        proposal = patch()
+        proposal["error_certificate_id"] = queue[0]["error_certificate"]["certificate_id"]
+        proposal["rationale"] = "Rewrite the ambiguous reference explicitly."
+        controller.submit_patch(proposal)
+        controller.begin_patch_review(proposal["patch_id"])
+        new_ref = controller.review_patch(review(True))
+        self.assertEqual(ref(2, 2), new_ref)
+
+    def test_non_executable_certificate_is_not_reported_ready(self):
+        controller = self.controller_with_three_nodes()
+        controller.transition(ref(2), "evaluating", reason="start")
+        certificate = {
+            "schema_version": "0.3", "certificate_id": "needs-assumption",
+            "target": ref(2), "premises": [ref(1)],
+            "error_type": "missing_assumption", "failed_inference": "c may be zero",
+            "evidence": ["division requires c != 0"],
+            "repair_constraints": {
+                "allowed_operations": ["add_assumption"], "max_new_nodes": 1,
+                "preserve_theorem": False, "preserve_assumptions": False,
+            },
+        }
+        controller.record_error_certificate(certificate)
+        value = evaluation(2, "unsupported", [1], error_type="missing_assumption")
+        value["error_certificate_id"] = certificate["certificate_id"]
+        controller.record_evaluation(value)
+        queue = controller.repair_queue(["p1"])
+        self.assertEqual("requires_problem_revision", queue[0]["status"])
+        self.assertEqual([], queue[0]["executable_operations"])
+
+        proposal = patch()
+        proposal.update({
+            "error_certificate_id": certificate["certificate_id"],
+            "operation": "add_assumption", "replacement_nodes": [],
+            "changes_problem": True,
+        })
+        with self.assertRaisesRegex(ContractError, "not executable"):
+            controller.submit_patch(proposal)
+        self.assertEqual("pending_repair", controller.lifecycle(ref(2)))
 
     def test_equivalent_exhaustive_interpretations_can_be_robustly_accepted(self):
         controller = self.controller_with_three_nodes()

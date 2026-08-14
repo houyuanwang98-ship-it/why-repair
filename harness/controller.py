@@ -38,6 +38,8 @@ ALLOWED_TRANSITIONS = {
     "terminated": set(),
 }
 
+EXECUTABLE_REPAIR_OPERATIONS = frozenset({"replace", "insert_before"})
+
 
 @dataclass(frozen=True)
 class NodeKey:
@@ -162,11 +164,32 @@ class DualAgentController:
                     "error_certificate": None,
                 })
                 continue
+            allowed_operations = set(
+                certificate["repair_constraints"]["allowed_operations"]
+            )
+            executable_operations = sorted(
+                allowed_operations & EXECUTABLE_REPAIR_OPERATIONS
+            )
+            if not executable_operations:
+                status = (
+                    "requires_problem_revision"
+                    if "add_assumption" in allowed_operations
+                    else "unsupported_operation"
+                )
+                queue.append({
+                    "target": key.ref(),
+                    "status": status,
+                    "evaluation": deepcopy(evaluation),
+                    "error_certificate": deepcopy(certificate),
+                    "executable_operations": [],
+                })
+                continue
             queue.append({
                 "target": key.ref(),
                 "status": "ready",
                 "evaluation": deepcopy(evaluation),
                 "error_certificate": deepcopy(certificate),
+                "executable_operations": executable_operations,
             })
         return queue
 
@@ -424,6 +447,10 @@ class DualAgentController:
 
     def record_ambiguity_analysis(self, analysis: dict[str, Any]) -> None:
         """Apply an Evaluator-authored branch analysis without choosing an interpretation."""
+        with self.transaction():
+            self._record_ambiguity_analysis(analysis)
+
+    def _record_ambiguity_analysis(self, analysis: dict[str, Any]) -> None:
         validate_contract("ambiguity_analysis", analysis)
         if analysis["evaluator_id"] not in self._evaluator_ids:
             raise ContractError("ambiguity analysis is not from a configured evaluator")
@@ -448,6 +475,58 @@ class DualAgentController:
             verdict, destination = "unsupported", "pending_repair"
         else:
             verdict, destination = "undetermined", "undetermined"
+        if destination == "pending_repair":
+            certificate_id = f"{analysis['analysis_id']}:error"
+            evaluation_id = f"{analysis['analysis_id']}:evaluation"
+            certificate = {
+                "schema_version": SCHEMA_VERSION,
+                "certificate_id": certificate_id,
+                "target": key.ref(),
+                "premises": deepcopy(record["node"]["depends_on"]),
+                "error_type": "interpretation_ambiguity",
+                "failed_inference": (
+                    "The claim has multiple reasonable interpretations and "
+                    f"the ambiguity analysis concluded {outcome}."
+                ),
+                "evidence": [
+                    f"{item['interpretation_id']}: {item['verdict']} — {item['reason']}"
+                    for item in analysis["interpretations"]
+                    if item["plausibility"] == "reasonable"
+                ],
+                "repair_constraints": {
+                    "allowed_operations": ["replace"],
+                    "max_new_nodes": 1,
+                    "preserve_theorem": True,
+                    "preserve_assumptions": True,
+                },
+            }
+            followup_evaluation = {
+                "schema_version": SCHEMA_VERSION,
+                "evaluation_id": evaluation_id,
+                "target": key.ref(),
+                "verdict": verdict,
+                "error_type": "interpretation_ambiguity",
+                "reason": certificate["failed_inference"],
+                "dependency_versions": expected_versions,
+                "evaluator_id": analysis["evaluator_id"],
+                "error_certificate_id": certificate_id,
+                "ambiguity_analysis_id": analysis["analysis_id"],
+            }
+            validate_contract("error_certificate", certificate)
+            validate_contract("evaluation_record", followup_evaluation)
+            if certificate_id in self._error_certificates:
+                raise ContractError(f"duplicate error certificate id: {certificate_id}")
+            if evaluation_id in self._evaluations:
+                raise ContractError(f"duplicate evaluation id: {evaluation_id}")
+            self.record_error_certificate(certificate)
+            self._evaluations[evaluation_id] = deepcopy(followup_evaluation)
+            self._current_evaluation[key] = evaluation_id
+            self._events.append({
+                "event": "evaluation_recorded",
+                "target": key.ref(),
+                "evaluation_id": evaluation_id,
+                "source": "ambiguity_analysis",
+            })
         record["current_verdict"] = verdict
         self.transition(key.ref(), destination, reason=f"ambiguity analysis {analysis['analysis_id']}")
         self._events.append({
@@ -476,6 +555,10 @@ class DualAgentController:
         constraints = certificate["repair_constraints"]
         if patch["operation"] not in constraints["allowed_operations"]:
             raise ContractError("patch operation is not allowed by the error certificate")
+        if patch["operation"] not in EXECUTABLE_REPAIR_OPERATIONS:
+            raise ContractError(
+                f"patch operation {patch['operation']!r} is not executable by Controller v0.3"
+            )
         if len(patch["replacement_nodes"]) > constraints["max_new_nodes"]:
             raise ContractError("patch exceeds the error certificate node budget")
         if (constraints["preserve_theorem"] or constraints["preserve_assumptions"]) and patch["changes_problem"]:
@@ -612,6 +695,9 @@ class DualAgentController:
                 dependencies = [NodeKey.from_ref(ref) for ref in record["node"]["depends_on"]]
                 if all(
                     dependency in self._versions
+                    and self._current.get(
+                        (dependency.proof_id, dependency.node_id)
+                    ) == dependency
                     and self._versions[dependency]["lifecycle_state"] == "active"
                     for dependency in dependencies
                 ):

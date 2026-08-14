@@ -1,5 +1,6 @@
 import json
 import unittest
+from collections import Counter
 from pathlib import Path
 
 from harness import DualAgentController, ingest_m3_run
@@ -37,7 +38,20 @@ class M3ControllerHandoffTest(unittest.TestCase):
         )
         self.assertEqual([], summary["ready_for_evaluation"])
         self.assertEqual(25, len(summary["repair_queue"]))
-        self.assertTrue(all(item["status"] == "ready" for item in summary["repair_queue"]))
+        self.assertEqual(
+            {"ready": 24, "requires_problem_revision": 1},
+            dict(Counter(item["status"] for item in summary["repair_queue"])),
+        )
+        problem_revision = next(
+            item for item in summary["repair_queue"]
+            if item["status"] == "requires_problem_revision"
+        )
+        self.assertEqual("m2-041", problem_revision["target"]["proof_id"])
+        self.assertEqual([], problem_revision["executable_operations"])
+        self.assertTrue(all(
+            item["executable_operations"]
+            for item in summary["repair_queue"] if item["status"] == "ready"
+        ))
 
 
 if __name__ == "__main__":
