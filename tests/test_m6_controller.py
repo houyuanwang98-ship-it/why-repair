@@ -32,6 +32,21 @@ def manifest():
     )
 
 
+def complete_ledger(item):
+    rows = []
+    for configuration in item["configs"]:
+        experiment_id = configuration["experiment_id"]
+        for sample_id in item["sample_ids"]:
+            failed = sample_id == "s2"
+            rows.append({
+                "run_id": f"{experiment_id}:{sample_id}", "experiment_id": experiment_id,
+                "sample_id": sample_id, "attempt": 0,
+                "status": "timeout" if failed else "success", "terminal": True,
+                "tokens": 1, "model_calls": 1, "cost": 0, "latency_seconds": 1,
+            })
+    return rows
+
+
 class M6ControllerTest(unittest.TestCase):
     def test_freeze_artifacts_hashes_explicit_files(self):
         frozen = freeze_artifacts(ROOT, ["docs/milestones/M06_person_a_preregistered_protocol.md"])
@@ -64,6 +79,12 @@ class M6ControllerTest(unittest.TestCase):
                                   "person_b_cross_review": "pending_cross_review",
                                   "controller": "candidate_unsigned"}, fixture_only="yes")
         with self.assertRaisesRegex(M6ExperimentError, "fixture_only must be boolean"):
+            build_controller_manifest(**kwargs)
+        kwargs.update(fixture_only=True, artifacts={"../outside": "a" * 64})
+        with self.assertRaisesRegex(M6ExperimentError, "repository-relative"):
+            build_controller_manifest(**kwargs)
+        kwargs["artifacts"] = {".": "a" * 64}
+        with self.assertRaisesRegex(M6ExperimentError, "repository-relative"):
             build_controller_manifest(**kwargs)
 
     def test_formal_manifest_cannot_bypass_closed_gates(self):
@@ -162,19 +183,60 @@ class M6ControllerTest(unittest.TestCase):
             holm_adjust_preregistered("H1", {next(iter(complete)): 0.05})
 
     def test_aggregate_keeps_infrastructure_failure_in_denominator(self):
-        rows = [
-            {"experiment_id": "e", "sample_id": "s1", "gold_verdict": "invalid", "predicted_verdict": "invalid",
-             "gold_first_error_evaluable": True, "gold_first_error": 1, "gold_first_error_reason": "evaluable",
-             "predicted_first_error": 1, "gold_repairability": "irreparable",
-             "gold_counterexample_eligible": False, "failure_type": None},
-            {"experiment_id": "e", "sample_id": "s2", "gold_verdict": "invalid", "predicted_verdict": None,
-             "gold_first_error_evaluable": True, "gold_first_error": 1, "gold_first_error_reason": "evaluable",
-             "predicted_first_error": None, "gold_repairability": "irreparable",
-             "gold_counterexample_eligible": False, "failure_type": "timeout"},
-        ]
-        metrics = aggregate_by_experiment(rows)["e"]
+        item = manifest()
+        ledger = complete_ledger(item)
+        rows = []
+        for configuration in item["configs"]:
+            experiment_id = configuration["experiment_id"]
+            rows.extend([
+                {"experiment_id": experiment_id, "sample_id": "s1", "gold_verdict": "invalid", "predicted_verdict": "invalid",
+                 "terminal_run_id": f"{experiment_id}:s1",
+                 "gold_first_error_evaluable": True, "gold_first_error": 1, "gold_first_error_reason": "evaluable",
+                 "predicted_first_error": 1, "gold_repairability": "irreparable",
+                 "gold_counterexample_eligible": False, "failure_type": None},
+                {"experiment_id": experiment_id, "sample_id": "s2", "gold_verdict": "invalid", "predicted_verdict": None,
+                 "terminal_run_id": f"{experiment_id}:s2",
+                 "gold_first_error_evaluable": True, "gold_first_error": 1, "gold_first_error_reason": "evaluable",
+                 "predicted_first_error": None, "gold_repairability": "irreparable",
+                 "gold_counterexample_eligible": False, "failure_type": "timeout"},
+            ])
+        target = item["configs"][-1]["experiment_id"]
+        metrics = aggregate_by_experiment(item, ledger, rows)[target]
         self.assertEqual(0.5, metrics["first_error_exact_accuracy"]["value"])
         self.assertEqual(0.5, metrics["infrastructure_failure_rate"]["value"])
+
+    def test_aggregate_rejects_unbound_or_incomplete_scoring_rows(self):
+        item = manifest()
+        ledger = complete_ledger(item)
+        row = {"experiment_id": "unbound", "sample_id": "s1"}
+        with self.assertRaisesRegex(M6ExperimentError, "not assigned"):
+            aggregate_by_experiment(item, ledger, [row])
+        with self.assertRaisesRegex(M6ExperimentError, "cover every"):
+            aggregate_by_experiment(item, ledger, [])
+
+    def test_aggregate_binds_terminal_run_and_failure_status(self):
+        item = manifest()
+        ledger = complete_ledger(item)
+        scoring = []
+        for configuration in item["configs"]:
+            experiment_id = configuration["experiment_id"]
+            scoring.extend([
+                {"experiment_id": experiment_id, "sample_id": "s1", "terminal_run_id": f"{experiment_id}:s1",
+                 "gold_verdict": "accepted", "predicted_verdict": "accepted", "gold_first_error_evaluable": False,
+                 "gold_first_error_reason": "absent", "gold_repairability": "irreparable",
+                 "gold_counterexample_eligible": False, "failure_type": None},
+                {"experiment_id": experiment_id, "sample_id": "s2", "terminal_run_id": f"{experiment_id}:s2",
+                 "gold_verdict": "accepted", "predicted_verdict": None, "gold_first_error_evaluable": False,
+                 "gold_first_error_reason": "absent", "gold_repairability": "irreparable",
+                 "gold_counterexample_eligible": False, "failure_type": "timeout"},
+            ])
+        scoring[0]["terminal_run_id"] = "forged"
+        with self.assertRaisesRegex(M6ExperimentError, "terminal ledger run_id"):
+            aggregate_by_experiment(item, ledger, scoring)
+        scoring[0]["terminal_run_id"] = ledger[0]["run_id"]
+        scoring[1]["failure_type"] = "api_error"
+        with self.assertRaisesRegex(M6ExperimentError, "ledger status"):
+            aggregate_by_experiment(item, ledger, scoring)
 
 
 if __name__ == "__main__":

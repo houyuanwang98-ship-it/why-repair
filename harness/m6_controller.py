@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 from harness.m6_experiments import (
-    FAILURE_TYPES, M6ExperimentError, canonical_digest, score_records,
+    FAILURE_TYPES, M6ExperimentError, apply_method_applicability, canonical_digest, score_records,
     validate_experiment_config, validate_experiment_suite,
 )
 
@@ -92,6 +92,12 @@ def build_controller_manifest(
     if not artifacts or any(not isinstance(path, str) or not path or not _is_sha256(digest)
                             for path, digest in artifacts.items()):
         raise M6ExperimentError("artifacts must map paths to SHA-256 digests")
+    for path in artifacts:
+        candidate = Path(path)
+        if (candidate.is_absolute() or candidate.drive or not candidate.parts
+                or candidate == Path(".") or ".." in candidate.parts
+                or candidate.as_posix() != path):
+            raise M6ExperimentError("artifact manifest keys must be normalized repository-relative paths")
     for name, seeds in (("bootstrap_seeds", bootstrap_seeds),
                         ("randomization_seeds", randomization_seeds)):
         if any(not isinstance(seed, int) or isinstance(seed, bool) for seed in seeds) or not seeds:
@@ -359,12 +365,46 @@ def holm_adjust_preregistered(hypothesis: str, p_values: Mapping[str, float]) ->
     return holm_adjust(p_values)
 
 
-def aggregate_by_experiment(records: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
-    """Score terminal mathematical records without dropping failed assignments."""
+def aggregate_by_experiment(
+    manifest: Mapping[str, Any], ledger_records: Iterable[Mapping[str, Any]],
+    records: Iterable[Mapping[str, Any]],
+) -> dict[str, Any]:
+    """Score exact terminal ledger assignments and apply method applicability."""
+    frozen = validate_controller_manifest(manifest)
+    ledger_rows = [dict(row) for row in ledger_records]
+    ledger_report = validate_run_ledger(frozen, ledger_rows)
+    if not ledger_report["complete"]:
+        raise M6ExperimentError("cannot aggregate an incomplete run ledger")
+    terminal_by_assignment = {
+        (row["experiment_id"], row["sample_id"]): row
+        for row in ledger_rows if row["terminal"] is True
+    }
+    configs = {row["experiment_id"]: row for row in frozen["configs"]}
+    expected = {(experiment_id, sample_id) for experiment_id in configs for sample_id in frozen["sample_ids"]}
     groups: dict[str, list[Mapping[str, Any]]] = {}
+    seen: set[tuple[str, str]] = set()
     for row in records:
         experiment_id = row.get("experiment_id")
         if not isinstance(experiment_id, str) or not experiment_id:
             raise M6ExperimentError("scoring record requires experiment_id")
+        key = (experiment_id, row.get("sample_id"))
+        if key not in expected:
+            raise M6ExperimentError("scoring record is not assigned by the Controller manifest")
+        if key in seen:
+            raise M6ExperimentError("scoring records must contain one terminal row per assignment")
+        terminal = terminal_by_assignment[key]
+        if row.get("terminal_run_id") != terminal["run_id"]:
+            raise M6ExperimentError("scoring record is not bound to the terminal ledger run_id")
+        expected_failure = None if terminal["status"] == "success" else terminal["status"]
+        if row.get("failure_type") != expected_failure:
+            raise M6ExperimentError("scoring failure_type disagrees with the terminal ledger status")
+        seen.add(key)
         groups.setdefault(experiment_id, []).append(row)
-    return {experiment_id: score_records(rows) for experiment_id, rows in sorted(groups.items())}
+    if seen != expected:
+        raise M6ExperimentError("scoring records must cover every manifest assignment")
+    return {
+        experiment_id: apply_method_applicability(
+            configs[experiment_id]["method"]["method_id"], score_records(rows)
+        )
+        for experiment_id, rows in sorted(groups.items())
+    }

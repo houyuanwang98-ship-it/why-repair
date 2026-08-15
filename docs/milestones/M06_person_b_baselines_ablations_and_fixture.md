@@ -37,7 +37,7 @@
 
 ## 5. 手算 fixture 验收
 
-`tests/test_m6_person_b_experiments.py` 手算验证首错 exact、Gold 无首错时的位置假阳性、false accept、unsupported resolution、false-claim detection、反例覆盖/候选精确率、abstention、verified repair success、false repair、新错误引入率及错误总数和基础设施失败率。基础设施失败对 accuracy/repair success 记未成功，对错误输出比例不虚构数学错误，并同时计算最坏情形上界。零分母必须为 `undefined (0/0)`。失败记录携带数学输出、verified success 缺少完整先决条件、false repair 未先宣称成功、反例计数或新错误计数矛盾时均拒绝计分。
+`tests/test_m6_person_b_experiments.py` 手算验证首错 exact、Gold 无首错时的位置假阳性、false accept、unsupported resolution、false-claim detection、反例覆盖/候选精确率、abstention、verified repair success、false repair、新错误引入率及错误总数和基础设施失败率。基础设施失败对 accuracy/repair success 记未成功，对错误输出比例不虚构数学错误，并同时计算最坏情形上界；主动 `undetermined` 的 abstention 分母只含成功产生数学输出的记录，并另报排除的基础设施失败数。零分母必须为 `undefined (0/0)`。失败记录携带数学输出、verified success 缺少完整先决条件、false repair 未先宣称成功、反例计数或新错误计数矛盾时均拒绝计分。方法无权生成补丁或反例协议时，对应机制指标标为 `not_applicable`。
 
 当前覆盖 Person A 候选协议中可机械化的主要口径；Controller 已实现 paired bootstrap CI、配对 sign-flip randomization p 值与 Holm 校正 fixture。macro-F1、图表生成、正式统计环境和 10,000 seed 清单仍须另行冻结验收。bootstrap sign-tail 不再冒充确认性 p 值。
 

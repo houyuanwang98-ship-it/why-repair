@@ -382,7 +382,8 @@ def score_records(records: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
     new_errors = sum(r.get("new_error_introduced") is True for r in applied)
     new_error_total = sum(r.get("new_error_count", 1 if r.get("new_error_introduced") is True else 0) for r in applied)
     failures = sum(r.get("failure_type") is not None for r in rows)
-    abstentions = sum(r.get("failure_type") is None and r.get("predicted_verdict") == "undetermined" for r in rows)
+    completed = [r for r in rows if r.get("failure_type") is None]
+    abstentions = sum(r.get("predicted_verdict") == "undetermined" for r in completed)
     return {
         "sample_count_intention_to_treat": len(rows),
         "first_error_exact_accuracy": {"value": ratio(exact, len(evaluable)), "numerator": exact, "denominator": len(evaluable)},
@@ -401,7 +402,8 @@ def score_records(records: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
                                           "numerator": covered, "denominator": len(counterexample_eligible)},
         "counterexample_candidate_precision": {"value": ratio(valid_counterexamples, counterexample_candidates),
                                                "numerator": valid_counterexamples, "denominator": counterexample_candidates},
-        "proof_abstention_rate": {"value": ratio(abstentions, len(rows)), "numerator": abstentions, "denominator": len(rows)},
+        "proof_abstention_rate": {"value": ratio(abstentions, len(completed)), "numerator": abstentions,
+                                  "denominator": len(completed), "infrastructure_failures_excluded": failures},
         "verified_repair_success_rate": {"value": ratio(verified, len(repairable)), "numerator": verified, "denominator": len(repairable)},
         "false_repair_rate": {"value": ratio(false_repairs, len(claimed)), "numerator": false_repairs,
                               "denominator": len(claimed),
@@ -415,6 +417,22 @@ def score_records(records: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
                                         )},
         "infrastructure_failure_rate": {"value": ratio(failures, len(rows)), "numerator": failures, "denominator": len(rows)},
     }
+
+
+def apply_method_applicability(method_id: str, metrics: Mapping[str, Any]) -> dict[str, Any]:
+    """Mark mechanism metrics unavailable when a method cannot emit that object."""
+    if method_id not in METHOD_SPECS:
+        raise M6ExperimentError(f"unknown method_id: {method_id!r}")
+    result = dict(metrics)
+    spec = METHOD_SPECS[method_id]
+    not_applicable = {"value": "not_applicable", "numerator": None, "denominator": None}
+    if not spec.counterexample_protocol:
+        for key in ("valid_counterexample_coverage", "counterexample_candidate_precision"):
+            result[key] = dict(not_applicable)
+    if not spec.produces_patch:
+        for key in ("verified_repair_success_rate", "false_repair_rate", "new_error_introduction_rate"):
+            result[key] = dict(not_applicable)
+    return result
 
 
 def load_m5_gate(root: Path) -> dict[str, Any]:

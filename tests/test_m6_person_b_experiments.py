@@ -3,7 +3,7 @@ from pathlib import Path
 
 from harness.m6_experiments import (
     COMPARISON_FAMILIES, FIXTURE_DIGEST, METHOD_IDS, M6ExperimentError, assert_execution_allowed,
-    build_experiment_config, cache_fingerprint, load_m5_gate, score_records,
+    apply_method_applicability, build_experiment_config, cache_fingerprint, load_m5_gate, score_records,
     validate_ablation_purity, validate_comparison, validate_experiment_config,
     validate_experiment_suite,
 )
@@ -149,6 +149,30 @@ class M6PersonBExperimentTest(unittest.TestCase):
                                   "predicted_first_error": None, "gold_repairability": "irreparable",
                                   "gold_counterexample_eligible": False, "failure_type": None}])
         self.assertEqual("undefined (0/0)", metrics["false_repair_rate"]["value"])
+
+    def test_method_mechanism_metrics_are_not_applicable(self):
+        base = score_records([{"sample_id": "a", "gold_verdict": "accepted", "predicted_verdict": "accepted",
+                              "gold_first_error_evaluable": False, "gold_first_error_reason": "absent",
+                              "predicted_first_error": None, "gold_repairability": "irreparable",
+                              "gold_counterexample_eligible": False, "failure_type": None}])
+        direct = apply_method_applicability("direct_judgment", base)
+        self.assertEqual("not_applicable", direct["verified_repair_success_rate"]["value"])
+        self.assertEqual("not_applicable", direct["valid_counterexample_coverage"]["value"])
+        full = apply_method_applicability("full_system", base)
+        self.assertEqual("undefined (0/0)", full["verified_repair_success_rate"]["value"])
+
+    def test_abstention_excludes_infrastructure_failures(self):
+        rows = [
+            {"sample_id": "a", "gold_verdict": "undetermined", "predicted_verdict": "undetermined",
+             "gold_first_error_evaluable": False, "gold_first_error_reason": "undetermined",
+             "gold_repairability": "undetermined", "gold_counterexample_eligible": False, "failure_type": None},
+            {"sample_id": "b", "gold_verdict": "undetermined", "predicted_verdict": None,
+             "gold_first_error_evaluable": False, "gold_first_error_reason": "undetermined",
+             "gold_repairability": "undetermined", "gold_counterexample_eligible": False, "failure_type": "timeout"},
+        ]
+        metric = score_records(rows)["proof_abstention_rate"]
+        self.assertEqual(1.0, metric["value"])
+        self.assertEqual(1, metric["infrastructure_failures_excluded"])
 
     def test_false_repair_is_derived_and_success_requires_all_math_gates(self):
         base = {"sample_id": "a", "gold_verdict": "invalid", "predicted_verdict": "invalid",

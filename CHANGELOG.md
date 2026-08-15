@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-08-15 — M6 Person B cross-review hardening
+
+- Bound mathematical aggregation to the exact Controller Manifest configuration/sample product and rejected missing, duplicate, or unassigned scoring rows.
+- Bound every mathematical scoring record to the exact terminal run ID and terminal success/failure status in a complete validated ledger.
+- Marked repair and counterexample mechanism metrics `not_applicable` for methods that cannot emit those objects, and separated active proof abstention from infrastructure failure.
+- Rejected non-normalized or repository-escaping artifact keys at Manifest construction and recorded the Person B execution/reproducibility cross-review.
+
 ## 2026-08-15 — M6 Person A cross-review hardening
 
 - Completed a Person A mathematical-comparability review of the M6 A/B/Controller fixture surface and recorded twelve corrected findings.
