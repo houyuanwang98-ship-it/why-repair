@@ -6,12 +6,13 @@
 
 `harness/m7_controller.py` 实现：
 
-1. `freeze_artifacts` 只冻结仓库内规范化相对路径及当前字节 SHA-256。
+1. `freeze_artifacts` 只冻结仓库内规范化相对路径及当前字节 SHA-256；`verify_frozen_artifacts` 在 Manifest 构建和每次验证时重读全部 artifact 及 A/B 上游 Manifest，拒绝不存在、陈旧或被替换的字节。
 2. `build_controller_manifest` 绑定多个互不复用 experiment ID 的完整九方法模型族，并强制同时存在至少一个 `same_model` 与一个 `different_models` 族；同时绑定稳定 case 顺序、Benchmark/Gold 摘要、A/B 上游清单、运行资产和回放 seed；非 fixture 或自报开放门无条件拒绝。
 3. `build_assignments` 生成完整 `模型族 × case × 九方法` 矩阵。
-4. `validate_run_integrity` 逐模型族复用终态账本门，强制每条终态中报告的累计 token、调用和墙钟不超过冻结的逐样本预算，并要求每个终态恰有一个结果记录绑定同一 `run_id`、状态、原始输出摘要和评分输入摘要；结果集合摘要按 case/config 规范排序，不受输入行顺序影响。
+4. `validate_run_integrity` 逐模型族复用终态账本门，并额外要求 `run_id` 在全部模型族全局唯一；强制每条终态中报告的累计 token、调用和墙钟不超过冻结的逐样本预算，并要求每个终态恰有一个结果记录绑定同一 `run_id`、状态、原始输出摘要和评分输入摘要；结果集合摘要按 case/config 规范排序，不受输入行顺序影响。
 5. `validate_aggregate_table` 先重复执行预算门，再从未删减终态账本重建逐配置样本数、成功/失败数、token、调用和墙钟，拒绝选择性聚合或数字漂移。
 6. `select_replay_sample` 先重验 ledger 与冻结分配精确相等、终态完整且 run ID 唯一，再使用 Manifest seed 从成功终态中确定性抽样，供未来独立目录回放；未知或夹带 run 不得进入抽样，抽样本身不冒充已经复现。
+7. `build_blind_review_plan` 全量纳入 false accept、错误全局反例和 false repair；按匿名配置对正确 verdict、verified repair success、`undetermined` 和基础设施失败各等概率抽最多 20，并保存 eligible/selected/not-selected frame。同一 case 的全部配置展开并排审核；公开计划不含真实 experiment ID，真实映射单独密封并只公开摘要。
 
 ## 2. 当前强制门
 

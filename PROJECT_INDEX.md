@@ -86,6 +86,7 @@
 | [M7 Controller 候选清单](data/benchmarks/m7/controller_engineering_candidate_v0_1.json) | 上游 A/B 摘要、工程能力和未执行边界 | `m7_execution_allowed=false` |
 | [M7 Controller 清单 Schema](schemas/m7_controller_candidate_manifest_v0_1.schema.json) | 拒绝把 fixture 治理机械误报为真实运行或复现 | `v0.1` |
 | [M7 Person A 三方全内容交叉审查](docs/milestones/M07_person_a_cross_review_of_a_b_controller.md) | 数学语义、同/异模型覆盖、预算、公平性、运行完整性与正式门逐项复核 | 两项 P1、一项 P2 已修复；fixture 工程通过，正式 M7 阻塞 |
+| [M7 Person B 三方全内容交叉审查](docs/milestones/M07_person_b_cross_review_of_a_b_controller.md) | 执行复现、全局运行身份、实际字节、盲审计划与正式门逐项复核 | 三项 P1 已修复；fixture 工程通过，正式 M7 阻塞 |
 | [M5 人工审核：真实 Repair Generator Pilot](docs/m5_manual_review/01_real_repair_generator_pilot.md) | 生产模型运行、输入隔离、失败保留、抽查和签署细则 | 待人工执行 |
 | [M5 人工审核：Person A 全量补丁复核](docs/m5_manual_review/02_person_a_full_patch_review.md) | 数学有效性、问题保持、新错误、最小性、false repair 和分歧处理 | 待独立 Person A 执行 |
 | [M5 人工校验：Pilot 成本与失败率](docs/m5_manual_review/03_pilot_cost_failure_audit.md) | token、延迟、计价、重试、失败分母和人工复算细则 | 待真实 Pilot 后执行 |

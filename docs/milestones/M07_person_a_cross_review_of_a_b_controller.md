@@ -56,4 +56,4 @@
 
 ## 6. 退出决定
 
-Person A 视角的 M7 **fixture 工程全内容交叉审查在两项 P1 与一项 P2 修复后通过**。M7 数据冻结、真人数学审核、主实验、统计、复现和整体退出均为 `blocked_not_executed`；不得进入 M8 强量化主张。
+Person A 视角的 M7 **fixture 工程全内容交叉审查在两项 P1 与一项 P2 修复后通过**。其后 Person B 独立复查又发现并修复跨模型族 `run_id` 碰撞、Manifest 未重读实际字节及盲审计划未机械化三项 P1；详见 [M7 Person B 三方交叉审查](M07_person_b_cross_review_of_a_b_controller.md)。这些后续修复不改变 Person A 的数学定义。M7 数据冻结、真人数学审核、主实验、统计、复现和整体退出均为 `blocked_not_executed`；不得进入 M8 强量化主张。

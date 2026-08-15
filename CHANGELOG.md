@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-08-15 — M7 Person B cross-review hardening
+
+- Enforced globally unique run IDs across model families and rechecked the invariant at integrity, aggregate, and replay boundaries.
+- Required Controller construction and validation to re-read actual artifacts and fixed Person A/B upstream Manifest bytes.
+- Added deterministic, digest-bound blind-review planning with exhaustive critical cases, capped controls, side-by-side anonymous configs, and a separately sealed identity mapping.
+- Added the Person B A/B/Controller cross-review record while preserving all formal M7 gates as blocked.
+
 ## 2026-08-15 — M7 Person A cross-review hardening
 
 - Completed Person A's full mathematical-comparability review of the M7 A/B/Controller protocol, fixture code, manifests, schemas, tests, and repository claims.

@@ -10,7 +10,7 @@ Dependency-guided diagnosis and minimal repair for natural-language mathematical
 
 M6 Person A 的结果前预注册协议候选和盲态错误分析模板内容已锁定，并已分别从 Person A 数学可比性与 Person B 执行复现视角完成 A/B/Controller fixture 工程交叉审查；九种基线/消融和 Controller 配置、账本、失败保留、指标适用性及统计 fixture 已修复审查发现的问题。当前版本无可信签名验证器，所有真实 Manifest/执行无条件 fail closed；三方仍等待真实签署和 M5 开门，不构成 M6 实验结果，也不授权真实运行。
 
-M7 Person A 的正式 Benchmark/Gold 审查与盲态错误分析协议、Person B 的来源/许可/去重/泄漏及运行矩阵、Controller 的多模型族 Manifest、终态结果绑定、聚合重建和确定性回放抽样均已形成 `v0.1` 工程候选。Person A 已完成三方 fixture 全内容交叉审查，并修复同/异模型族覆盖和逐样本硬预算两个 P1 问题。三方机器清单只绑定协议与 fixture：200–500 题正式数据、真人 A/B 标注、第三专家复核、Gold 冻结、provider 运行、配对统计、独立回放和 M7 结果均尚不存在；M5/M6 门未开时 `m7_execution_allowed=false`。
+M7 Person A 的正式 Benchmark/Gold 审查与盲态错误分析协议、Person B 的来源/许可/去重/泄漏及运行矩阵、Controller 的多模型族 Manifest、终态结果绑定、聚合重建、盲审计划和确定性回放抽样均已形成 `v0.1` 工程候选。Person A 与 Person B 已分别完成三方 fixture 全内容交叉审查；累计修复同/异模型族覆盖、硬预算、跨族运行身份、实际字节复核和盲审计划等问题。三方机器清单只绑定协议与 fixture：200–500 题正式数据、真人 A/B 标注、第三专家复核、Gold 冻结、provider 运行、配对统计、独立回放和 M7 结果均尚不存在；M5/M6 门未开时 `m7_execution_allowed=false`。
 
 ## 推荐的 M0–M8 研究总顺序
 
@@ -163,6 +163,7 @@ Fill `outputs/algebra_pilot_session/pending.json`, then run the same command aga
 - [M7 Person B benchmark integrity and experiment execution](docs/milestones/M07_person_b_benchmark_integrity_and_experiment_execution.md): provenance/license, deduplication/leakage, nine-method run-matrix, terminal-ledger, and fail-closed fixture machinery.
 - [M7 Controller run governance and replay](docs/milestones/M07_controller_run_governance_and_replay.md): multi-family Manifest, terminal-output binding, aggregate reconstruction, deterministic replay sampling, and fail-closed execution boundary.
 - [M7 Person A cross-review of A/B/Controller](docs/milestones/M07_person_a_cross_review_of_a_b_controller.md): full mathematical-comparability review, same/different-model coverage, hard-budget enforcement, findings, and remaining formal gates.
+- [M7 Person B cross-review of A/B/Controller](docs/milestones/M07_person_b_cross_review_of_a_b_controller.md): execution/reproducibility review, global run identity, live-byte verification, blind-review planning, and remaining formal gates.
 - [Skill usage](docs/skill_usage.md): practical Skill workflow.
 - [Annotation guideline](docs/annotation_guideline.md): dataset labeling conventions.
 - [Training objectives](docs/training_objectives.md): planned learning objectives.
