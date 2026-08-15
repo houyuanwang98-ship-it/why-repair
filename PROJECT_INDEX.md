@@ -87,14 +87,15 @@
 | [M7 Controller 清单 Schema](schemas/m7_controller_candidate_manifest_v0_1.schema.json) | 拒绝把 fixture 治理机械误报为真实运行或复现 | `v0.1` |
 | [M7 Person A 三方全内容交叉审查](docs/milestones/M07_person_a_cross_review_of_a_b_controller.md) | 数学语义、同/异模型覆盖、预算、公平性、运行完整性与正式门逐项复核 | 两项 P1、一项 P2 已修复；fixture 工程通过，正式 M7 阻塞 |
 | [M7 Person B 三方全内容交叉审查](docs/milestones/M07_person_b_cross_review_of_a_b_controller.md) | 执行复现、全局运行身份、实际字节、盲审计划与正式门逐项复核 | 三项 P1 已修复；fixture 工程通过，正式 M7 阻塞 |
-| [M8 Person A 方法第 2 部分](docs/milestones/M08_person_a_dependency_obligation_evaluator_error_certificate.md) | 依赖图、局部义务、Evaluator、首错策略、Error Certificate 及 Benchmark 可测接口 | `v0.2` 契约自检与 B 实现交叉核对通过；待第三方数学复核与发布绑定 |
-| [M8 Person B 系统、实验、成本与复现](docs/milestones/M08_person_b_system_experiments_reproducibility.md) | Controller/Repair、九方法配置、指标统计成本、实现核对与发布归档边界 | `v0.1` 当前实现核对通过；正式结果、外审、复现与 release 阻塞 |
+| [M8 Person A 方法第 2 部分](docs/milestones/M08_person_a_dependency_obligation_evaluator_error_certificate.md) | 依赖图、局部义务、Evaluator、首错策略、Error Certificate 及 Benchmark 可测接口 | `v0.2` 条件通过；B 逐项语义复核、第三专家与发布绑定待完成 |
+| [M8 Person B 系统、实验、成本与复现](docs/milestones/M08_person_b_system_experiments_reproducibility.md) | Controller/Repair、九方法配置、指标统计成本、实现核对与发布归档边界 | Person A 条件通过 1–4/6–7；第 5 项与正式门阻塞 |
 | [M8 Person B 写作候选机器清单](data/benchmarks/m8/person_b_writing_candidate_v0_1.json) | 绑定所审实现与上游门的 SHA-256，拒绝把候选写作冒充正式发布 | `m8_exit_allowed=false` |
 | [M8 Person B 写作候选 Schema](schemas/m8_person_b_writing_candidate_v0_1.schema.json) | 固定候选身份、完整 artifact 集与所有正式发布负向门 | `v0.1` |
-| [M8 Controller 发布与复现门](docs/milestones/M08_controller_publication_and_reproduction_gate.md) | 表格重建、字节绑定、密钥扫描、外审/干净复现/许可门和发布决定 | `m8-controller-0.1` 工程候选；正式发布阻塞 |
+| [M8 Controller 发布与复现门](docs/milestones/M08_controller_publication_and_reproduction_gate.md) | 基础汇总、字节绑定、密钥扫描及发布负向门 | Person A 判定 `needs_revision`；v0.1 可信证明门无条件关闭 |
 | [M8 Controller 工程模块](harness/m8_controller.py) | 文件冻结、上游复核、分母校验、保守扫描和候选重建 | `m8-controller-0.1` |
 | [M8 Controller 机器候选](data/benchmarks/m8/controller_publication_candidate_v0_1.json) | 绑定 A/B 写作与 Controller 自动化证据，全部正式门 fail closed | `release_allowed=false` |
 | [M8 Controller 候选 Schema](schemas/m8_controller_publication_candidate_v0_1.schema.json) | 固定候选字段、摘要、门和发布身份形状 | `v0.1` |
+| [M8 Person A 三方全内容交叉审查](docs/milestones/M08_person_a_cross_review_of_a_b_controller.md) | A/B/Controller 逐项数学与证据复核、P1/P2 修复和剩余正式门 | 工程审查完成；M8 整体 blocked |
 | [M5 人工审核：真实 Repair Generator Pilot](docs/m5_manual_review/01_real_repair_generator_pilot.md) | 生产模型运行、输入隔离、失败保留、抽查和签署细则 | 待人工执行 |
 | [M5 人工审核：Person A 全量补丁复核](docs/m5_manual_review/02_person_a_full_patch_review.md) | 数学有效性、问题保持、新错误、最小性、false repair 和分歧处理 | 待独立 Person A 执行 |
 | [M5 人工校验：Pilot 成本与失败率](docs/m5_manual_review/03_pilot_cost_failure_audit.md) | token、延迟、计价、重试、失败分母和人工复算细则 | 待真实 Pilot 后执行 |

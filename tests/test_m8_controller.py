@@ -10,9 +10,25 @@ from harness.m8_controller import (M8ControllerError, build_candidate, rebuild_p
 
 ROOT = Path(__file__).resolve().parents[1]
 UPSTREAM = "data/benchmarks/m8/person_b_writing_candidate_v0_1.json"
+GATES = (
+    "formal_m7_complete", "paper_outputs_rebuilt", "external_reviews_complete",
+    "clean_reproduction_complete", "license_privacy_complete",
+    "trusted_attestations_verified",
+)
 
 
 class M8ControllerTest(unittest.TestCase):
+    def test_v01_schema_is_structurally_fail_closed(self):
+        schema = json.loads((ROOT / "schemas/m8_controller_publication_candidate_v0_1.schema.json").read_text(encoding="utf-8"))
+        candidate = json.loads((ROOT / "data/benchmarks/m8/controller_publication_candidate_v0_1.json").read_text(encoding="utf-8"))
+        self.assertFalse(schema["additionalProperties"])
+        self.assertEqual(set(schema["required"]), set(candidate))
+        self.assertEqual(schema["properties"]["status"]["const"], "engineering_candidate_blocked")
+        self.assertFalse(schema["properties"]["release_allowed"]["const"])
+        gate_schema = schema["properties"]["gates"]
+        self.assertEqual(set(gate_schema["required"]), set(candidate["gates"]))
+        self.assertFalse(gate_schema["properties"]["trusted_attestations_verified"]["const"])
+
     def test_repository_candidate_is_exact_and_blocked(self):
         candidate = json.loads((ROOT / "data/benchmarks/m8/controller_publication_candidate_v0_1.json").read_text(encoding="utf-8"))
         self.assertEqual(validate_candidate(candidate, root=ROOT), candidate)
@@ -43,22 +59,17 @@ class M8ControllerTest(unittest.TestCase):
         with self.assertRaises(M8ControllerError):
             build_candidate(root=ROOT, artifacts=["README.md"],
                             upstream_sha256={UPSTREAM: "0" * 64},
-                            gate_evidence_sha256={gate: {} for gate in (
-                                "formal_m7_complete", "paper_outputs_rebuilt",
-                                "external_reviews_complete", "clean_reproduction_complete",
-                                "license_privacy_complete")})
+                            gate_evidence_sha256={gate: {} for gate in GATES})
 
     def test_true_gate_without_bound_evidence_is_rejected(self):
-        evidence = {gate: {} for gate in ("formal_m7_complete", "paper_outputs_rebuilt",
-                    "external_reviews_complete", "clean_reproduction_complete",
-                    "license_privacy_complete")}
+        evidence = {gate: {} for gate in GATES}
         digest = __import__("hashlib").sha256((ROOT / UPSTREAM).read_bytes()).hexdigest()
         with self.assertRaises(M8ControllerError):
             build_candidate(root=ROOT, artifacts=["README.md"],
                             upstream_sha256={UPSTREAM: digest}, gate_evidence_sha256=evidence,
                             formal_m7_complete=True)
 
-    def test_release_ready_candidate_is_self_contained_and_replayable(self):
+    def test_caller_booleans_and_arbitrary_evidence_cannot_open_release_gate(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "artifact.txt").write_text("safe release artifact", encoding="utf-8")
@@ -68,6 +79,7 @@ class M8ControllerTest(unittest.TestCase):
             evidence = {gate: {"evidence.txt": digest("evidence.txt")} for gate in (
                 "formal_m7_complete", "paper_outputs_rebuilt", "external_reviews_complete",
                 "clean_reproduction_complete", "license_privacy_complete")}
+            evidence["trusted_attestations_verified"] = {}
             candidate = build_candidate(
                 root=root, artifacts=["artifact.txt"],
                 upstream_sha256={"upstream.json": digest("upstream.json")},
@@ -78,7 +90,9 @@ class M8ControllerTest(unittest.TestCase):
                 expected_assignments=iter([{"case_id": "a", "experiment_id": "x"}]),
                 formal_m7_complete=True, external_reviews_complete=True,
                 clean_reproduction_complete=True, license_privacy_complete=True)
-            self.assertTrue(candidate["release_allowed"])
+            self.assertFalse(candidate["release_allowed"])
+            self.assertFalse(candidate["gates"]["trusted_attestations_verified"])
+            self.assertEqual(candidate["status"], "engineering_candidate_blocked")
             self.assertEqual(validate_candidate(candidate, root=root), candidate)
 
     def test_secret_scanner_reports_key_material(self):

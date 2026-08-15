@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-08-15 — M8 Person A three-party cross-review hardening
+
+- Reviewed every submitted M8 Person A, Person B, and Controller item against the two project-wide acceptance documents, and recorded item-level `conditionally_passed`, `needs_revision`, and `blocked` outcomes.
+- Corrected Person B descriptions of delete-history preservation and transactional rollback, and withdrew an unsupported claim that Person B had semantically cross-reviewed the Person A mathematics chapter.
+- Closed a publication P1: caller booleans plus arbitrary hashed files can no longer create `release_ready`; Controller v0.1 now has an immutable false trusted-attestation gate.
+- Downgraded the Controller from “all seven automations complete” to its implemented gate scaffold, repaired two false-positive negative tests, and bound the Person B Schema and tests into its candidate Manifest.
+- Kept M8 formally blocked on missing Person A chapters, formal M7 results, system card, external reviews, clean reproduction, and license/privacy evidence.
+
 ## 2026-08-15 — M8 Controller publication gate
 
 - Implemented the seven-part M8 Controller engineering candidate for exact-byte release binding, raw terminal-ledger aggregation, publication-table denominator checks, conservative secret scanning, and upstream Manifest revalidation.

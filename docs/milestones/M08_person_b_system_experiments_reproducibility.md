@@ -1,6 +1,6 @@
 # M8 Person B：系统、实验、成本与复现说明
 
-状态：`implementation_cross_check_passed_release_candidate_blocked`
+状态：`person_a_cross_review_conditionally_passed_release_blocked`
 
 写作版本：`m8-person-b-writing-v0.1`
 
@@ -16,7 +16,7 @@
 
 `harness/controller.py` 将节点标识为 `(proof_id, node_id, version)`，只允许显式 `ALLOWED_TRANSITIONS` 中的状态转换。评估、歧义分析、补丁提交和补丁复核均先校验角色、目标版本与依赖版本。补丁被接受只表示允许修改，不等于证明已修复。
 
-M5 Controller 在事务快照内应用补丁。`replace`、`insert_before` 或 `delete` 产生新版本或删除历史，计算所有依赖旧版本的后代闭包，将其标为 stale，清除对应缓存，并按拓扑顺序重建和重验。新目标及全部受影响后代均由受信且非 Generator 的 Evaluator 接受，最终路径无未决状态时，运行才以 `accepted` 结束；拒绝、`undetermined`、乱序、异常或路径不完整均失败闭合并回滚当前图、版本历史、队列、失效记录和事件。
+M5 Controller 在事务快照内应用补丁。`replace` 与 `insert_before` 产生新版本；`delete` 从当前节点集合移除目标，同时把旧节点以 `deleted` 生命周期保存在历史中，并不删除审计历史。三种操作都计算依赖旧版本的后代闭包，将其标为 stale，清除对应缓存，并按拓扑顺序重建和重验。新目标及全部受影响后代均由受信且非 Generator 的 Evaluator 接受，最终路径无未决状态时，运行才以 `accepted` 结束；拒绝、`undetermined`、乱序、异常或路径不完整均失败闭合。补丁应用或单次重验抛出异常时，Controller 恢复相应事务快照；数学复核明确拒绝则保留拒绝事件并允许在预算内继续，而不是抹去审计历史。
 
 缓存不是按文本近似复用。M6 `cache_fingerprint` 绑定方法、模型角色、Prompt、数据、定理库、工具、代码、评分器、Schema、采样、截断、预算、样本 ID 与精确序列化输入。节点版本或任何配置身份变化都会产生不同 key；M5 图修改还会为受影响的旧后代产生显式 `cache_cleared` 审计事件。
 
@@ -68,13 +68,13 @@ M7 终态账本要求每个 `case_id × experiment_id` 恰有一个结果，保�
 | 结果绑定、聚合重建与回放计划 | `harness/m7_controller.py` | 一致；独立复现未发生 |
 | 强量化论文结果 | 无可接受证据 | 禁止声称 |
 
-核对摘要记录在 `data/benchmarks/m8/person_b_writing_candidate_v0_1.json`，并由 `schemas/m8_person_b_writing_candidate_v0_1.schema.json` 和 `tests/test_m8_person_b_writing.py` 机械复核。清单绑定本文、所审代码和上游门的实际 SHA-256；任一绑定文件变化后测试都会失败，必须重新审查而不能沿用结论。
+核对摘要记录在 `data/benchmarks/m8/person_b_writing_candidate_v0_1.json`，并由 `schemas/m8_person_b_writing_candidate_v0_1.schema.json` 和 `tests/test_m8_person_b_writing.py` 机械复核。清单绑定本文、所审代码和上游门的实际 SHA-256；任一绑定文件变化后测试都会失败，必须重新审查而不能沿用结论。哈希只能证明被检查的字节未变化，不能自行证明实现描述在语义上正确；Person A 的独立结论见 `M08_person_a_cross_review_of_a_b_controller.md`。
 
 ## 7. 发布版本、归档标识与剩余门
 
 当前候选标识为 `m8-person-b-writing-v0.1`，建议归档 ID 为 `why-repair-m8-person-b-writing-v0.1`。二者只标识写作候选，不是 Git tag、DOI、论文提交号或正式 release。最终发布标识必须由 M8 Controller 在以下条件全部满足后另行生成：M5–M7 正式退出；论文数字由原始结果重建；Person A 数学审核、Person B 最终实现审核、第三专家和外部代码审查完成；干净环境复现通过或明确记录外部限制；许可、隐私和依赖许可证检查通过；最终论文、代码、数据、Prompt、模型、定理库与 Manifest 相互绑定。
 
-当前退出决定：**Person B M8 第 1–7 项写作与实现交叉核对候选完成；正式实验、成本表、系统卡定稿、外部复现、release candidate 和 M8 整体退出继续阻塞。**
+当前退出决定：**Person B M8 第 1–4、6–7 项写作候选经 Person A 修订后条件通过；第 5 项只有发布材料清单，系统卡成稿、正式数据包和精确环境仍未准备完成。正式实验、成本表、外部复现、release candidate 和 M8 整体退出继续阻塞。**
 
 ## 8. 指引映射
 
@@ -84,7 +84,7 @@ M7 终态账本要求每个 `case_id × experiment_id` 恰有一个结果，保�
 | §13.2.2：Repair、Patch、重试终止 | §2 | 写作与代码核对完成 |
 | §13.2.3：模型、Prompt、工具、基线、消融 | §3 | 配置候选写明；正式身份未冻结 |
 | §13.2.4：指标、统计、成本、复现 | §4 | 方法写明；真实结果/成本/复现不存在 |
-| §13.2.5：代码、数据、系统卡、运行说明 | §5 | 发布准备边界列明；系统卡成稿待补 |
+| §13.2.5：代码、数据、系统卡、运行说明 | §5 | `needs_revision`：仅列出准备面；系统卡、正式数据包与精确环境待补 |
 | §13.2.6：实现描述与代码一致 | §6 与机器清单 | 当前绑定字节核对通过 |
 | §13.2.7：发布版本和归档标识 | §7 | 候选 ID 已分配；正式 ID 阻塞 |
 | 验收计划 §34：数字、外审、隐私、干净复现 | §4–7 | 未发生项全部保持 pending/blocked |

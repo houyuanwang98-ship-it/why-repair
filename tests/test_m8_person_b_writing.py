@@ -38,7 +38,9 @@ class M8PersonBWritingTest(unittest.TestCase):
         claims = self.manifest["claims"]
         self.assertTrue(claims["person_b_writing_items_1_through_7_covered"])
         self.assertTrue(claims["implementation_bytes_cross_checked"])
+        self.assertTrue(claims["person_a_engineering_cross_review_complete"])
         for field in (
+            "person_b_item_5_release_materials_complete", "formal_person_a_acceptance_complete",
             "formal_m7_results_exist", "paper_numbers_rebuilt_from_raw_results",
             "real_cost_audit_complete", "clean_environment_reproduction_complete",
             "external_code_review_complete", "release_candidate_created", "m8_exit_allowed",
@@ -68,7 +70,8 @@ class M8PersonBWritingTest(unittest.TestCase):
             "实现描述逐项核对",
             "发布版本、归档标识与剩余门",
             "`mark_irreparable` 操作经独立复核接受后，以 `irreparable` 原因终止",
-            "正式实验、成本表、系统卡定稿、外部复现、release candidate 和 M8 整体退出继续阻塞",
+            "正式实验、成本表、外部复现、release candidate 和 M8 整体退出继续阻塞",
+            "旧节点以 `deleted` 生命周期保存在历史中，并不删除审计历史",
         ]
         for marker in markers:
             self.assertIn(marker, document, marker)

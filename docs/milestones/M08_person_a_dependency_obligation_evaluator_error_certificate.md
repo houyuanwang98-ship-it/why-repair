@@ -213,7 +213,7 @@ Person B 的 Patch 必须引用当前已登记证书、同一目标版本和同�
 - [x] 已明确 `accepted_with_gap` 与 Error Certificate 的当前协议边界。
 - [x] 旧 span、自由文本反例、缓存和检索结果的证据限制已披露。
 - [x] Benchmark 可测接口已列出，但未虚构 M7 数据或结果。
-- [x] Person B 已按当前代码字节交叉核对实现描述；见 `M08_person_b_system_experiments_reproducibility.md` §6。该核对不替代第三方数学复核。
+- [ ] Person B 尚未提交对本文件全部数学表述的逐项交叉意见；其 M8 §6 只核对 Person B 自己的实现描述，文件哈希绑定也不能替代语义复核。
 - [ ] 第三方数学专家复核公式、代表案例和核心数学主张。
 - [ ] M8 Controller 将最终章节绑定到论文提交版本和发布清单。
 

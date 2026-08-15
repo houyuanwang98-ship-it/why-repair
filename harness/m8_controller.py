@@ -119,6 +119,11 @@ def build_candidate(*, root: Path, artifacts: Iterable[str], upstream_sha256: Ma
         "external_reviews_complete": external_reviews_complete,
         "clean_reproduction_complete": clean_reproduction_complete,
         "license_privacy_complete": license_privacy_complete,
+        # v0.1 can bind bytes but cannot authenticate reviewers, reproduce an
+        # external environment, or establish license/privacy clearance.  Keep
+        # the release gate closed until a later protocol supplies and verifies
+        # trusted attestations instead of accepting caller-provided booleans.
+        "trusted_attestations_verified": False,
     }
     if any(not isinstance(value, bool) for value in gates.values()):
         raise M8ControllerError("M8 gates must be boolean")
@@ -155,9 +160,12 @@ def build_candidate(*, root: Path, artifacts: Iterable[str], upstream_sha256: Ma
     table = (rebuild_publication_table(ledger_rows, assignment_rows)
              if publication_ledger is not None and expected_assignments is not None else [])
     findings = scan_release_text(root, frozen)
-    release_allowed = all(gates.values()) and not findings
+    # v0.1 is an engineering-audit candidate, not a release authorizer.
+    # A later version may compute this from cryptographically or otherwise
+    # trusted attestations; this version remains closed by construction.
+    release_allowed = False
     body = {"schema_version": M8_CONTROLLER_VERSION,
-            "status": "release_ready" if release_allowed else "engineering_candidate_blocked",
+            "status": "engineering_candidate_blocked",
             "gates": gates, "gate_evidence_sha256": evidence, "release_allowed": release_allowed,
             "artifact_sha256": frozen, "upstream_sha256": dict(sorted(upstream_sha256.items())),
             "expected_assignments": assignment_rows,
