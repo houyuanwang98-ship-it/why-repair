@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-15 — M8 Controller publication gate
+
+- Implemented the seven-part M8 Controller engineering candidate for exact-byte release binding, raw terminal-ledger aggregation, publication-table denominator checks, conservative secret scanning, and upstream Manifest revalidation.
+- Required every passed release gate to bind nonempty live-byte evidence, and added adversarial tests for bare true gates, stale hashes, missing runs, duplicate identities, path escape, and key-material findings.
+- Preserved fail-closed status because formal M7 results, external reviews, clean-environment reproduction, and license/privacy evidence do not yet exist.
+
 ## 2026-08-15 — M8 Person B system and reproducibility writing
 
 - Completed Person B's seven-part M8 writing candidate for Controller/version/cache invalidation, repair and termination, nine-method configurations, metrics/statistics/cost, reproducibility, implementation review, and archive identification.

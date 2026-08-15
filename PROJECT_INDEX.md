@@ -91,6 +91,10 @@
 | [M8 Person B 系统、实验、成本与复现](docs/milestones/M08_person_b_system_experiments_reproducibility.md) | Controller/Repair、九方法配置、指标统计成本、实现核对与发布归档边界 | `v0.1` 当前实现核对通过；正式结果、外审、复现与 release 阻塞 |
 | [M8 Person B 写作候选机器清单](data/benchmarks/m8/person_b_writing_candidate_v0_1.json) | 绑定所审实现与上游门的 SHA-256，拒绝把候选写作冒充正式发布 | `m8_exit_allowed=false` |
 | [M8 Person B 写作候选 Schema](schemas/m8_person_b_writing_candidate_v0_1.schema.json) | 固定候选身份、完整 artifact 集与所有正式发布负向门 | `v0.1` |
+| [M8 Controller 发布与复现门](docs/milestones/M08_controller_publication_and_reproduction_gate.md) | 表格重建、字节绑定、密钥扫描、外审/干净复现/许可门和发布决定 | `m8-controller-0.1` 工程候选；正式发布阻塞 |
+| [M8 Controller 工程模块](harness/m8_controller.py) | 文件冻结、上游复核、分母校验、保守扫描和候选重建 | `m8-controller-0.1` |
+| [M8 Controller 机器候选](data/benchmarks/m8/controller_publication_candidate_v0_1.json) | 绑定 A/B 写作与 Controller 自动化证据，全部正式门 fail closed | `release_allowed=false` |
+| [M8 Controller 候选 Schema](schemas/m8_controller_publication_candidate_v0_1.schema.json) | 固定候选字段、摘要、门和发布身份形状 | `v0.1` |
 | [M5 人工审核：真实 Repair Generator Pilot](docs/m5_manual_review/01_real_repair_generator_pilot.md) | 生产模型运行、输入隔离、失败保留、抽查和签署细则 | 待人工执行 |
 | [M5 人工审核：Person A 全量补丁复核](docs/m5_manual_review/02_person_a_full_patch_review.md) | 数学有效性、问题保持、新错误、最小性、false repair 和分歧处理 | 待独立 Person A 执行 |
 | [M5 人工校验：Pilot 成本与失败率](docs/m5_manual_review/03_pilot_cost_failure_audit.md) | token、延迟、计价、重试、失败分母和人工复算细则 | 待真实 Pilot 后执行 |
