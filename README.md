@@ -12,6 +12,8 @@ M6 Person A 的结果前预注册协议候选和盲态错误分析模板内容�
 
 M7 Person A 的正式 Benchmark/Gold 审查与盲态错误分析协议、Person B 的来源/许可/去重/泄漏及运行矩阵、Controller 的多模型族 Manifest、终态结果绑定、聚合重建、盲审计划和确定性回放抽样均已形成 `v0.1` 工程候选。Person A 与 Person B 已分别完成三方 fixture 全内容交叉审查；累计修复同/异模型族覆盖、硬预算、跨族运行身份、实际字节复核和盲审计划等问题。三方机器清单只绑定协议与 fixture：200–500 题正式数据、真人 A/B 标注、第三专家复核、Gold 冻结、provider 运行、配对统计、独立回放和 M7 结果均尚不存在；M5/M6 门未开时 `m7_execution_allowed=false`。
 
+M8 Person A 写作顺序的第 2 项已形成经契约自检的 `v0.2` 论文方法候选，定义版本化直接依赖图、局部证明义务、Evaluator 保守裁决、第一 gap/invalid 分离和 Error Certificate，并列出对应 Benchmark 可测接口与主张—实现边界。该文档不把 M3 非盲工程结果冒充 held-out 性能，也不绕过仍关闭的 M5–M7 门；Person B 实现交叉核对、第三方数学复核和发布版本绑定仍待完成。
+
 ## 推荐的 M0–M8 研究总顺序
 
 > Person A 负责数学语义与 Evaluator；Person B 负责 Repair Generator、执行语义与实验工程；Controller 是确定性程序，只负责契约、状态、版本、失效传播和运行审计，不作为第三个数学 Agent。
@@ -164,6 +166,7 @@ Fill `outputs/algebra_pilot_session/pending.json`, then run the same command aga
 - [M7 Controller run governance and replay](docs/milestones/M07_controller_run_governance_and_replay.md): multi-family Manifest, terminal-output binding, aggregate reconstruction, deterministic replay sampling, and fail-closed execution boundary.
 - [M7 Person A cross-review of A/B/Controller](docs/milestones/M07_person_a_cross_review_of_a_b_controller.md): full mathematical-comparability review, same/different-model coverage, hard-budget enforcement, findings, and remaining formal gates.
 - [M7 Person B cross-review of A/B/Controller](docs/milestones/M07_person_b_cross_review_of_a_b_controller.md): execution/reproducibility review, global run identity, live-byte verification, blind-review planning, and remaining formal gates.
+- [M8 Person A method, part 2](docs/milestones/M08_person_a_dependency_obligation_evaluator_error_certificate.md): dependency graphs, local obligations, Evaluator adjudication, first-problem policy, Error Certificates, benchmark observables, and claim boundaries.
 - [Skill usage](docs/skill_usage.md): practical Skill workflow.
 - [Annotation guideline](docs/annotation_guideline.md): dataset labeling conventions.
 - [Training objectives](docs/training_objectives.md): planned learning objectives.
