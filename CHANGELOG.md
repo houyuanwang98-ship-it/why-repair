@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-08-15 — M7 Person A cross-review hardening
+
+- Completed Person A's full mathematical-comparability review of the M7 A/B/Controller protocol, fixture code, manifests, schemas, tests, and repository claims.
+- Required every Controller manifest to include at least one complete same-model family and one complete different-model family.
+- Enforced frozen per-sample limits against the terminal ledger's reported cumulative token, model-call, and wall-clock totals before run-integrity acceptance or aggregate reconstruction.
+- Made result-set digests independent of caller row order and documented that fixture budget checks validate reported cumulative totals, not absent provider attempt records.
+- Recorded that fixture engineering passes after these repairs while all real data, human review, experiment, statistics, replay, and M7 exit gates remain blocked.
+
 ## 2026-08-15 — M7 Controller fixture governance
 
 ### Added

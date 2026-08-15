@@ -76,6 +76,11 @@ def build_controller_manifest(*, config_families: Mapping[str, Sequence[Mapping[
             raise M7PersonBError("experiment_id cannot be reused across model families")
         experiment_ids |= ids
         families[name] = rows
+    role_modes = {rows[0]["role_mode"] for rows in families.values()}
+    if role_modes != {"same_model", "different_models"}:
+        raise M7PersonBError(
+            "M7 config families must include at least one same_model and one different_models family"
+        )
     if not case_ids or any(not isinstance(case, str) or not case for case in case_ids) or len(set(case_ids)) != len(case_ids):
         raise M7PersonBError("case_ids must be nonempty and unique")
     if any(not _sha(value) for value in (candidate_digest, gold_digest,
@@ -163,6 +168,14 @@ def validate_run_integrity(manifest: Mapping[str, Any], ledger: Iterable[Mapping
     if any(set(row) != terminal_fields for row in ledger_rows):
         raise M7PersonBError("Controller ledger contains extra or missing fields")
     terminal = {(row["case_id"], row["experiment_id"]): row for row in ledger_rows}
+    configs = {config["experiment_id"]: config
+               for family in manifest["config_families"].values() for config in family}
+    for row in ledger_rows:
+        budget = configs[row["experiment_id"]]["budget"]
+        if (row["tokens"] > budget["total_tokens"]
+                or row["model_calls"] > budget["model_calls"]
+                or row["wall_ms"] > budget["timeout_seconds"] * 1000):
+            raise M7PersonBError("terminal ledger exceeds the frozen per-sample budget")
     required = {"case_id", "experiment_id", "run_id", "status", "raw_output_sha256", "score_input_sha256"}
     seen = set()
     for row in result_rows:
@@ -178,8 +191,9 @@ def validate_run_integrity(manifest: Mapping[str, Any], ledger: Iterable[Mapping
         seen.add(key)
     if seen != set(terminal):
         raise M7PersonBError("every terminal run requires one result binding")
+    canonical_results = sorted(result_rows, key=lambda row: (row["case_id"], row["experiment_id"]))
     return {"complete": True, "family_reports": reports, "assignment_count": len(assignments),
-            "result_digest": _digest(result_rows)}
+            "result_digest": _digest(canonical_results)}
 
 
 def validate_aggregate_table(manifest: Mapping[str, Any], ledger: Iterable[Mapping[str, Any]],
@@ -197,6 +211,14 @@ def validate_aggregate_table(manifest: Mapping[str, Any], ledger: Iterable[Mappi
         family_ids = {row["experiment_id"] for row in family_assignments}
         validate_terminal_ledger(family_assignments,
                                  [row for row in rows if row.get("experiment_id") in family_ids])
+    configs_by_id = {config["experiment_id"]: config
+                     for family in frozen["config_families"].values() for config in family}
+    for row in rows:
+        budget = configs_by_id[row["experiment_id"]]["budget"]
+        if (row["tokens"] > budget["total_tokens"]
+                or row["model_calls"] > budget["model_calls"]
+                or row["wall_ms"] > budget["timeout_seconds"] * 1000):
+            raise M7PersonBError("aggregate ledger exceeds the frozen per-sample budget")
     expected = []
     for family, configs in frozen["config_families"].items():
         for config in configs:

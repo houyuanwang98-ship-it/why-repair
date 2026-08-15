@@ -13,17 +13,21 @@ from harness.m7_person_b import M7PersonBError
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def configs(model):
+def configs(model, *, role_mode="same_model"):
     return [build_experiment_config(
         method, model_id=model, prompt_digest=FIXTURE_DIGEST, dataset_digest=FIXTURE_DIGEST,
         theorem_bank_digest=FIXTURE_DIGEST, tool_digest=FIXTURE_DIGEST,
-        token_limit=4000, call_limit=4, timeout_seconds=60,
+        token_limit=4000, call_limit=4, timeout_seconds=60, role_mode=role_mode,
     ) for method in METHOD_IDS]
 
 
 def manifest():
     return build_controller_manifest(
-        config_families={"same-model-a": configs("a"), "same-model-b": configs("b")},
+        config_families={
+            "same-model": configs("a"),
+            "different-models": configs({"generator": "a", "critic": "b"},
+                                        role_mode="different_models"),
+        },
         case_ids=["c1", "c2"], candidate_digest=FIXTURE_DIGEST, gold_digest=FIXTURE_DIGEST,
         artifacts={"fixture": FIXTURE_DIGEST}, person_a_manifest_digest=FIXTURE_DIGEST,
         person_b_manifest_digest=FIXTURE_DIGEST, replay_seed=17)
@@ -71,13 +75,27 @@ class M7ControllerTest(unittest.TestCase):
             validate_controller_manifest(malformed)
         with self.assertRaisesRegex(M7PersonBError, "artifact keys"):
             build_controller_manifest(
-                config_families={"family": configs("a")}, case_ids=["c1"],
+                config_families={
+                    "same": configs("a"),
+                    "different": configs({"generator": "a", "critic": "b"},
+                                         role_mode="different_models"),
+                }, case_ids=["c1"],
                 candidate_digest=FIXTURE_DIGEST, gold_digest=FIXTURE_DIGEST,
                 artifacts={".": FIXTURE_DIGEST}, person_a_manifest_digest=FIXTURE_DIGEST,
                 person_b_manifest_digest=FIXTURE_DIGEST, replay_seed=1)
+        with self.assertRaisesRegex(M7PersonBError, "same_model and one different_models"):
+            build_controller_manifest(
+                config_families={"same-a": configs("a"), "same-b": configs("b")},
+                case_ids=["c1"], candidate_digest=FIXTURE_DIGEST, gold_digest=FIXTURE_DIGEST,
+                artifacts={"fixture": FIXTURE_DIGEST}, person_a_manifest_digest=FIXTURE_DIGEST,
+                person_b_manifest_digest=FIXTURE_DIGEST, replay_seed=1)
 
     def test_formal_manifest_and_self_reported_gate_fail_closed(self):
-        kwargs = dict(config_families={"family": configs("a")}, case_ids=["c1"],
+        kwargs = dict(config_families={
+                          "same": configs("a"),
+                          "different": configs({"generator": "a", "critic": "b"},
+                                               role_mode="different_models"),
+                      }, case_ids=["c1"],
                       candidate_digest=FIXTURE_DIGEST, gold_digest=FIXTURE_DIGEST,
                       artifacts={"fixture": FIXTURE_DIGEST}, person_a_manifest_digest=FIXTURE_DIGEST,
                       person_b_manifest_digest=FIXTURE_DIGEST, replay_seed=1)
@@ -92,14 +110,22 @@ class M7ControllerTest(unittest.TestCase):
         report = validate_run_integrity(item, ledger, results)
         self.assertEqual(36, report["assignment_count"])
         self.assertTrue(report["complete"])
+        self.assertEqual(report["result_digest"],
+                         validate_run_integrity(item, list(reversed(ledger)),
+                                                list(reversed(results)))["result_digest"])
         results[0]["status"] = "succeeded"
         with self.assertRaisesRegex(M7PersonBError, "disagrees"):
             validate_run_integrity(item, ledger, results)
+        results[0]["status"] = "timeout"
         with self.assertRaisesRegex(M7PersonBError, "one result"):
             validate_run_integrity(item, ledger, results[1:])
         extra = dict(ledger[0], experiment_id="unknown", run_id="extra")
         with self.assertRaisesRegex(M7PersonBError, "exact frozen assignment"):
             validate_run_integrity(item, ledger + [extra], results)
+        over_budget = [dict(row) for row in ledger]
+        over_budget[0]["tokens"] = 4001
+        with self.assertRaisesRegex(M7PersonBError, "frozen per-sample budget"):
+            validate_run_integrity(item, over_budget, results)
 
     def test_aggregate_must_reproduce_complete_ledger(self):
         item = manifest()
@@ -117,8 +143,13 @@ class M7ControllerTest(unittest.TestCase):
         table[0]["failure_count"] = 0
         with self.assertRaisesRegex(M7PersonBError, "does not reproduce"):
             validate_aggregate_table(item, ledger, table)
+        table[0]["failure_count"] = 1
         with self.assertRaisesRegex(M7PersonBError, "exact frozen assignment"):
             validate_aggregate_table(item, ledger[:-1], table)
+        over_budget = [dict(row) for row in ledger]
+        over_budget[0]["wall_ms"] = 60001
+        with self.assertRaisesRegex(M7PersonBError, "frozen per-sample budget"):
+            validate_aggregate_table(item, over_budget, table)
 
     def test_replay_selection_is_deterministic_and_success_only(self):
         item = manifest()
