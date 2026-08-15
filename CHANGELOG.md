@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-08-15 — M6 Controller adversarial self-audit hardening
+
+### Fixed
+
+- Reject non-string and non-normalized artifact paths (including in-repository `..` aliases) before hashing, so every `freeze_artifacts` result is directly admissible to the Controller Manifest.
+- Require `retry_exhausted` ledger rows to be terminal, preventing a run from continuing to a selected success after its frozen retry policy has already been exhausted.
+- Add negative regression fixtures for both bypasses and align the M6 Controller protocol text with the enforced behavior.
+
 ## 2026-08-15 — M7 Person B engineering candidate
 
 - Added fail-closed M7 Person B checks for 200–500-case provenance/license Schema, exact and near-duplicate leakage findings, complete nine-method run matrices, and failure-preserving terminal ledgers.

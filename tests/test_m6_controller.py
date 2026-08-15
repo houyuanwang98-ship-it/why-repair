@@ -51,8 +51,12 @@ class M6ControllerTest(unittest.TestCase):
     def test_freeze_artifacts_hashes_explicit_files(self):
         frozen = freeze_artifacts(ROOT, ["docs/milestones/M06_person_a_preregistered_protocol.md"])
         self.assertEqual(64, len(next(iter(frozen.values()))))
-        with self.assertRaisesRegex(M6ExperimentError, "escapes"):
+        with self.assertRaisesRegex(M6ExperimentError, "repository-relative"):
             freeze_artifacts(ROOT, ["../outside"])
+        with self.assertRaisesRegex(M6ExperimentError, "repository-relative"):
+            freeze_artifacts(ROOT, ["docs/../README.md"])
+        with self.assertRaisesRegex(M6ExperimentError, "repository-relative"):
+            freeze_artifacts(ROOT, [Path("README.md")])
 
     def test_manifest_binds_samples_configs_and_statistics(self):
         item = manifest()
@@ -130,6 +134,14 @@ class M6ControllerTest(unittest.TestCase):
         row = {"run_id": "x", "experiment_id": item["configs"][0]["experiment_id"], "sample_id": "s1",
                "attempt": 0, "status": "success", "terminal": False, "tokens": 1, "model_calls": 1, "cost": 0, "latency_seconds": 1}
         with self.assertRaisesRegex(M6ExperimentError, "successful"):
+            validate_run_ledger(item, [row])
+
+    def test_ledger_rejects_nonterminal_retry_exhaustion(self):
+        item = manifest()
+        row = {"run_id": "x", "experiment_id": item["configs"][0]["experiment_id"], "sample_id": "s1",
+               "attempt": 0, "status": "retry_exhausted", "terminal": False,
+               "tokens": 1, "model_calls": 1, "cost": 0, "latency_seconds": 1}
+        with self.assertRaisesRegex(M6ExperimentError, "retry_exhausted must be terminal"):
             validate_run_ledger(item, [row])
 
     def test_ledger_enforces_frozen_hard_budgets(self):

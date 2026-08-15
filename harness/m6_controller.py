@@ -60,10 +60,16 @@ def freeze_artifacts(root: Path, paths: Iterable[str]) -> dict[str, str]:
     """Hash an explicit, repository-relative artifact set, rejecting escapes."""
     base = root.resolve()
     frozen: dict[str, str] = {}
-    for relative in sorted(set(paths)):
-        if not isinstance(relative, str) or not relative or Path(relative).is_absolute():
+    requested = list(paths)
+    if any(not isinstance(relative, str) for relative in requested):
+        raise M6ExperimentError("artifact paths must be nonempty repository-relative strings")
+    for relative in sorted(set(requested)):
+        candidate = Path(relative)
+        if (not relative or candidate.is_absolute() or candidate.drive
+                or not candidate.parts or candidate == Path(".")
+                or ".." in candidate.parts or candidate.as_posix() != relative):
             raise M6ExperimentError("artifact paths must be nonempty repository-relative strings")
-        target = (base / relative).resolve()
+        target = (base / candidate).resolve()
         try:
             target.relative_to(base)
         except ValueError as exc:
@@ -175,6 +181,8 @@ def validate_run_ledger(
             raise M6ExperimentError("terminal must be boolean")
         if row["status"] == "success" and not row["terminal"]:
             raise M6ExperimentError("a successful attempt must be terminal")
+        if row["status"] == "retry_exhausted" and not row["terminal"]:
+            raise M6ExperimentError("retry_exhausted must be terminal")
         if not isinstance(row["attempt"], int) or isinstance(row["attempt"], bool) or row["attempt"] < 0:
             raise M6ExperimentError("attempt must be a nonnegative integer")
         for field in ("tokens", "model_calls", "cost", "latency_seconds"):
