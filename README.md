@@ -12,7 +12,7 @@ M6 Person A 的结果前预注册协议候选和盲态错误分析模板内容�
 
 M7 Person A 的正式 Benchmark/Gold 审查与盲态错误分析协议、Person B 的来源/许可/去重/泄漏及运行矩阵、Controller 的多模型族 Manifest、终态结果绑定、聚合重建、盲审计划和确定性回放抽样均已形成 `v0.1` 工程候选。Person A 与 Person B 已分别完成三方 fixture 全内容交叉审查；累计修复同/异模型族覆盖、硬预算、跨族运行身份、实际字节复核和盲审计划等问题。三方机器清单只绑定协议与 fixture：200–500 题正式数据、真人 A/B 标注、第三专家复核、Gold 冻结、provider 运行、配对统计、独立回放和 M7 结果均尚不存在；M5/M6 门未开时 `m7_execution_allowed=false`。
 
-M8 Person A 写作顺序的第 2 项已形成经契约自检的 `v0.2` 论文方法候选，定义版本化直接依赖图、局部证明义务、Evaluator 保守裁决、第一 gap/invalid 分离和 Error Certificate，并列出对应 Benchmark 可测接口与主张—实现边界。该文档不把 M3 非盲工程结果冒充 held-out 性能，也不绕过仍关闭的 M5–M7 门；Person B 实现交叉核对、第三方数学复核和发布版本绑定仍待完成。
+M8 Person A 写作顺序的第 2 项已有经契约自检的 `v0.2` 方法候选；Person B 第 1–7 项已有 `v0.1` 系统、实验、成本与复现写作候选，并以机器清单绑定当前实现字节完成交叉核对。两份文档均不把 M3 非盲工程结果或 fixture 冒充正式性能；M5–M7 门仍关闭，真实实验/成本、第三方与外部审查、干净复现、系统卡定稿和正式 release 仍待完成。
 
 ## 推荐的 M0–M8 研究总顺序
 
@@ -167,6 +167,8 @@ Fill `outputs/algebra_pilot_session/pending.json`, then run the same command aga
 - [M7 Person A cross-review of A/B/Controller](docs/milestones/M07_person_a_cross_review_of_a_b_controller.md): full mathematical-comparability review, same/different-model coverage, hard-budget enforcement, findings, and remaining formal gates.
 - [M7 Person B cross-review of A/B/Controller](docs/milestones/M07_person_b_cross_review_of_a_b_controller.md): execution/reproducibility review, global run identity, live-byte verification, blind-review planning, and remaining formal gates.
 - [M8 Person A method, part 2](docs/milestones/M08_person_a_dependency_obligation_evaluator_error_certificate.md): dependency graphs, local obligations, Evaluator adjudication, first-problem policy, Error Certificates, benchmark observables, and claim boundaries.
+- [M8 Person B system, experiments, cost, and reproducibility](docs/milestones/M08_person_b_system_experiments_reproducibility.md): implementation-checked Controller/repair descriptions, nine-method configuration, metric/statistical/cost boundaries, release preparation, and a fail-closed archive candidate.
+- [M8 Person B machine candidate](data/benchmarks/m8/person_b_writing_candidate_v0_1.json) and [Schema](schemas/m8_person_b_writing_candidate_v0_1.schema.json): exact-byte implementation binding and fail-closed publication claims.
 - [Skill usage](docs/skill_usage.md): practical Skill workflow.
 - [Annotation guideline](docs/annotation_guideline.md): dataset labeling conventions.
 - [Training objectives](docs/training_objectives.md): planned learning objectives.

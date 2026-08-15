@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m8_person_b_writing_candidate_v0_1.schema.json",
+  "title": "M8 Person B writing and implementation cross-check candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "candidate_id", "archive_candidate_id", "status", "created_at", "claims", "blocked_by", "artifact_sha256"],
+  "properties": {
+    "schema_version": {"const": "m8-person-b-writing-candidate-0.1"},
+    "candidate_id": {"const": "m8-person-b-writing-v0.1"},
+    "archive_candidate_id": {"const": "why-repair-m8-person-b-writing-v0.1"},
+    "status": {"const": "implementation_cross_check_passed_release_candidate_blocked"},
+    "created_at": {"const": "2026-08-15"},
+    "claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["person_b_writing_items_1_through_7_covered", "implementation_bytes_cross_checked", "formal_m7_results_exist", "paper_numbers_rebuilt_from_raw_results", "real_cost_audit_complete", "clean_environment_reproduction_complete", "external_code_review_complete", "release_candidate_created", "m8_exit_allowed"],
+      "properties": {
+        "person_b_writing_items_1_through_7_covered": {"const": true},
+        "implementation_bytes_cross_checked": {"const": true},
+        "formal_m7_results_exist": {"const": false},
+        "paper_numbers_rebuilt_from_raw_results": {"const": false},
+        "real_cost_audit_complete": {"const": false},
+        "clean_environment_reproduction_complete": {"const": false},
+        "external_code_review_complete": {"const": false},
+        "release_candidate_created": {"const": false},
+        "m8_exit_allowed": {"const": false}
+      }
+    },
+    "blocked_by": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "artifact_sha256": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "docs/milestones/M08_person_b_system_experiments_reproducibility.md",
+        "harness/contracts.py", "harness/controller.py", "harness/m5_repair.py",
+        "harness/m6_experiments.py", "harness/m6_controller.py",
+        "harness/m7_person_b.py", "harness/m7_controller.py",
+        "data/benchmarks/m5/joint_acceptance_v0_1.json",
+        "data/benchmarks/m6/person_a_protocol_candidate_v0_1.json",
+        "data/benchmarks/m7/person_b_engineering_candidate_v0_1.json",
+        "data/benchmarks/m7/controller_engineering_candidate_v0_1.json"
+      ],
+      "properties": {
+        "docs/milestones/M08_person_b_system_experiments_reproducibility.md": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "harness/contracts.py": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "harness/controller.py": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "harness/m5_repair.py": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "harness/m6_experiments.py": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "harness/m6_controller.py": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "harness/m7_person_b.py": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "harness/m7_controller.py": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "data/benchmarks/m5/joint_acceptance_v0_1.json": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "data/benchmarks/m6/person_a_protocol_candidate_v0_1.json": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "data/benchmarks/m7/person_b_engineering_candidate_v0_1.json": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "data/benchmarks/m7/controller_engineering_candidate_v0_1.json": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-15 — M8 Person B system and reproducibility writing
+
+- Completed Person B's seven-part M8 writing candidate for Controller/version/cache invalidation, repair and termination, nine-method configurations, metrics/statistics/cost, reproducibility, implementation review, and archive identification.
+- Cross-checked every implementation claim against current M5–M7 code and added a strict Schema, regression tests, and a SHA-256-bound machine candidate manifest that also binds the writing document itself.
+- Kept formal experiment results, real costs, external review, clean reproduction, system-card finalization, release creation, and M8 exit fail closed.
+
 ## 2026-08-15 — M7 Person B cross-review hardening
 
 - Enforced globally unique run IDs across model families and rechecked the invariant at integrity, aggregate, and replay boundaries.
