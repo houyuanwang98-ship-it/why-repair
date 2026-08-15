@@ -73,6 +73,10 @@
 | [M6 Controller 协议冻结与运行账本](docs/milestones/M06_controller_protocol_freeze_and_run_ledger.md) | artifact/配置/样本冻结、失败与重试账本、完整性审计、配对 bootstrap 和 Holm | `v0.1` fixture-only；真实运行阻塞 |
 | [M6 Person A A/B/Controller 交叉审查](docs/milestones/M06_person_a_cross_review_of_a_b_controller.md) | 数学口径、公平性、运行门、统计与十二项问题修复的独立工程审查 | fixture 工程通过；真人签署、M5 和真实运行仍阻塞 |
 | [M6 Person B A/B/Controller 交叉审查](docs/milestones/M06_person_b_cross_review_of_a_b_controller.md) | 配置与样本绑定、机制指标适用性、artifact 路径、弃权/失败分母及复现边界 | fixture 工程通过；真人签署、M5 和真实运行仍阻塞 |
+| [M7 Person A Benchmark 与盲态审计协议](docs/milestones/M07_person_a_benchmark_and_blind_audit_protocol.md) | 200–500 题数学审查、Gold 冻结、公平性、最终 Gold 审计、错误分析与公开勘误 | `v0.1` 协议就绪；M5/M6/真人门阻塞，未执行 |
+| [M7 Person A 盲态逐例模板](docs/milestones/M07_person_a_blind_case_review_template.md) | 匿名复核 false accept、错误全局反例、false repair、混淆和七类根因 | `v0.1` 内容锁定，尚无正式结果可填 |
+| [M7 Person A 协议候选清单](data/benchmarks/m7/person_a_protocol_candidate_v0_1.json) | 文档摘要、上游门、真人签名和五项未执行交付的机器边界 | fail-closed，`m7_execution_allowed=false` |
+| [M7 Person A 协议清单 Schema](schemas/m7_person_a_protocol_manifest_v0_1.schema.json) | 阻止把协议准备误报为 Gold 冻结、主实验或真人盲审完成 | `v0.1` |
 | [M5 人工审核：真实 Repair Generator Pilot](docs/m5_manual_review/01_real_repair_generator_pilot.md) | 生产模型运行、输入隔离、失败保留、抽查和签署细则 | 待人工执行 |
 | [M5 人工审核：Person A 全量补丁复核](docs/m5_manual_review/02_person_a_full_patch_review.md) | 数学有效性、问题保持、新错误、最小性、false repair 和分歧处理 | 待独立 Person A 执行 |
 | [M5 人工校验：Pilot 成本与失败率](docs/m5_manual_review/03_pilot_cost_failure_audit.md) | token、延迟、计价、重试、失败分母和人工复算细则 | 待真实 Pilot 后执行 |

@@ -10,6 +10,8 @@ Dependency-guided diagnosis and minimal repair for natural-language mathematical
 
 M6 Person A 的结果前预注册协议候选和盲态错误分析模板内容已锁定，并已分别从 Person A 数学可比性与 Person B 执行复现视角完成 A/B/Controller fixture 工程交叉审查；九种基线/消融和 Controller 配置、账本、失败保留、指标适用性及统计 fixture 已修复审查发现的问题。当前版本无可信签名验证器，所有真实 Manifest/执行无条件 fail closed；三方仍等待真实签署和 M5 开门，不构成 M6 实验结果，也不授权真实运行。
 
+M7 Person A 的正式 Benchmark/Gold 审查、主实验前数学公平性、最终 Gold 审计和主实验后盲态逐例错误分析协议现已形成 `v0.1` 候选，并由机器清单绑定内容摘要。它只完成协议与模板：200–500 题正式数据、真人 A/B 标注、第三专家复核、Gold 冻结和 M7 结果均尚不存在；M5/M6 门未开时 `m7_execution_allowed=false`。
+
 ## 推荐的 M0–M8 研究总顺序
 
 > Person A 负责数学语义与 Evaluator；Person B 负责 Repair Generator、执行语义与实验工程；Controller 是确定性程序，只负责契约、状态、版本、失效传播和运行审计，不作为第三个数学 Agent。
@@ -157,6 +159,7 @@ Fill `outputs/algebra_pilot_session/pending.json`, then run the same command aga
 - [Development guide](docs/development-guide.md): architecture, schemas, retrieval, diagnosis, and theorem-bank maintenance.
 - [Changelog](CHANGELOG.md): dated releases grouped by change type.
 - [M6 Controller protocol freeze and run ledger](docs/milestones/M06_controller_protocol_freeze_and_run_ledger.md): fixture-only manifest, coverage, failure preservation, bootstrap, and Holm machinery.
+- [M7 Person A benchmark and blind audit protocol](docs/milestones/M07_person_a_benchmark_and_blind_audit_protocol.md): fail-closed 200–500 sample review, Gold freeze, final audit, blind error analysis, and erratum rules.
 - [Skill usage](docs/skill_usage.md): practical Skill workflow.
 - [Annotation guideline](docs/annotation_guideline.md): dataset labeling conventions.
 - [Training objectives](docs/training_objectives.md): planned learning objectives.

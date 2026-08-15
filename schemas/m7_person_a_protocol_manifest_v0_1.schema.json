@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m7_person_a_protocol_manifest_v0_1.schema.json",
+  "title": "M7 Person A blocked protocol candidate manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "candidate_version", "status", "content_locked_at", "result_exposure", "artifacts", "upstream_gates", "signatures", "deliverables", "m7_execution_allowed"],
+  "properties": {
+    "schema_version": {"const": "m7-person-a-protocol-manifest-0.1"},
+    "candidate_version": {"const": "m7-person-a-protocol-v0.1"},
+    "status": {"const": "protocol_ready_execution_blocked_by_m5_m6_and_human_gates"},
+    "content_locked_at": {"type": "string", "format": "date-time"},
+    "result_exposure": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "evidence_strength"],
+      "properties": {
+        "status": {"const": "no_formal_m6_or_m7_results_exist"},
+        "evidence_strength": {"const": "repository_state_plus_self_attestation"}
+      }
+    },
+    "artifacts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["docs/milestones/M07_person_a_benchmark_and_blind_audit_protocol.md", "docs/milestones/M07_person_a_blind_case_review_template.md"],
+      "properties": {
+        "docs/milestones/M07_person_a_benchmark_and_blind_audit_protocol.md": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "docs/milestones/M07_person_a_blind_case_review_template.md": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "upstream_gates": {
+      "type": "object", "additionalProperties": false,
+      "required": ["m5_gate_path", "m5_gate_sha256", "m6_protocol_manifest_path", "m6_protocol_manifest_sha256", "m6_execution_allowed", "m6_exit_manifest", "m7_entry_allowed"],
+      "properties": {
+        "m5_gate_path": {"const": "data/benchmarks/m5/joint_acceptance_v0_1.json"},
+        "m5_gate_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "m6_protocol_manifest_path": {"const": "data/benchmarks/m6/person_a_protocol_candidate_v0_1.json"},
+        "m6_protocol_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "m6_execution_allowed": {"const": false},
+        "m6_exit_manifest": {"const": "absent"},
+        "m7_entry_allowed": {"const": false}
+      }
+    },
+    "signatures": {
+      "type": "object", "additionalProperties": false,
+      "required": ["person_a", "person_b", "controller", "third_expert"],
+      "properties": {
+        "person_a": {"const": "pending_human_signature"},
+        "person_b": {"const": "pending_cross_review"},
+        "controller": {"const": "pending_manifest"},
+        "third_expert": {"const": "pending_external_review"}
+      }
+    },
+    "deliverables": {
+      "type": "object", "additionalProperties": false,
+      "required": ["benchmark_200_500", "gold_freeze", "final_gold_audit", "blind_error_analysis", "third_expert_review"],
+      "properties": {
+        "benchmark_200_500": {"const": "not_created"},
+        "gold_freeze": {"const": "not_executed"},
+        "final_gold_audit": {"const": "not_executed"},
+        "blind_error_analysis": {"const": "not_executed"},
+        "third_expert_review": {"const": "not_executed"}
+      }
+    },
+    "m7_execution_allowed": {"const": false}
+  }
+}

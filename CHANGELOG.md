@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-15 — M7 Person A fail-closed protocol candidate
+
+- Added the Person A protocol for reviewing a 200–500 item benchmark, freezing mathematical Gold, auditing pre-run fairness, and conducting final blinded mathematical error analysis.
+- Added a per-case blind review template covering false accepts, invalid global counterexamples, false repairs, three required confusion pairs, seven root-cause classes, and post-lock unblinding.
+- Added a digest-bound manifest, strict Schema, and regressions that preserve the closed M5/M6 gates and refuse to claim missing data, Gold, experiments, signatures, or external review.
+
 ## 2026-08-15 — M6 Person B cross-review hardening
 
 - Bound mathematical aggregation to the exact Controller Manifest configuration/sample product and rejected missing, duplicate, or unassigned scoring rows.
