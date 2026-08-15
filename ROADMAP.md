@@ -11,7 +11,7 @@
 | M4 | 第 6–8 周 | 反例证书与核验工具 | **已完成：`m4-integrated-v1.1`；11/11 冻结 Gold 有效反例及 `m2-034` 局部回归通过 A/B/Controller 双向复核与联合验收，209 项测试通过** |
 | M5 | 第 7–10 周 | Repair Generator 与闭环 | **Controller 阶段完成：版本、撤销、重试、拓扑后代重验与最终路径门已实现；仍待真实 Repair Generator pilot、Person A 全量补丁复核及联合端到端验收** |
 | M6 | 第 10–12 周 | 基线与消融 | **Person A 与 Person B 已分别完成数学可比性、执行复现视角的 A/B/Controller fixture 工程交叉审查；待真人签署、可信签名验证器与 M5 开门，smoke、Pilot、正式运行仍禁止启动** |
-| M7 | 第 12–14 周 | 扩展 benchmark 与多模型实验 | **Person A 的 Benchmark/Gold 与盲态审计协议、Person B 的来源/许可/去重/泄漏及完整运行矩阵工程候选均已就绪；仅 fixture 通过，M5/M6 真人签署及运行门关闭，200–500 题、正式 Gold 和主实验均未执行** |
+| M7 | 第 12–14 周 | 扩展 benchmark 与多模型实验 | **A/B/Controller 工程候选已覆盖 Benchmark/Gold 协议、来源/泄漏、完整运行矩阵、终态输出绑定、聚合重建和回放抽样；仅 fixture 通过，M5/M6 门关闭，正式数据、Gold、运行、统计与独立复现均未执行** |
 | M8 | 第 14–16 周 | 错误分析、论文和发布材料 | 论文主张可追溯到表格，限制与失败案例完整 |
 
 ## 验收门规则

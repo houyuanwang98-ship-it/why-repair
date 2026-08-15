@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-08-15 — M7 Controller fixture governance
+
+### Added
+
+- Add a fail-closed M7 Controller Manifest spanning complete nine-method model families, stable cases, upstream A/B digests, frozen artifacts, Gold/candidate identities, and replay seed.
+- Bind every terminal ledger row to exactly one result record with the same run ID, status, raw-output bytes, and scoring-input digest.
+- Rebuild cost/failure aggregate tables from the complete ledger and deterministically select successful runs for later independent-directory replay.
+- Add Controller protocol, machine candidate Manifest/Schema, adversarial fixtures, and README/roadmap/index integration without claiming formal M7 execution.
+- Harden replay sampling against forged, unknown, incomplete, or duplicate terminal runs; reject dot-path artifact aliases and malformed upstream bindings with Controller-domain errors.
+
 ## 2026-08-15 — M6 Controller adversarial self-audit hardening
 
 ### Fixed

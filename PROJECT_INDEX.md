@@ -81,6 +81,10 @@
 | [M7 Person B 工程模块](harness/m7_person_b.py) | 200–500 数量与 Schema 门、近重复、critical finding、矩阵和终态账本校验 | `m7-person-b-0.1` |
 | [M7 Person B 候选清单](data/benchmarks/m7/person_b_engineering_candidate_v0_1.json) | Person A 上游摘要、工程能力与未满足门的机器边界 | fail-closed，`m7_execution_allowed=false` |
 | [M7 Person B 清单 Schema](schemas/m7_person_b_candidate_manifest_v0_1.schema.json) | 防止 fixture 候选冒充正式数据、模型运行或 M7 结果 | `v0.1` |
+| [M7 Controller 运行治理与回放](docs/milestones/M07_controller_run_governance_and_replay.md) | 多模型族 Manifest、完整分配、终态输出绑定、聚合重建和确定性回放抽样 | `v0.1` fixture-only；正式运行阻塞 |
+| [M7 Controller 工程模块](harness/m7_controller.py) | fail-closed Manifest、运行完整性、聚合一致性与回放样本校验 | `m7-controller-0.1` |
+| [M7 Controller 候选清单](data/benchmarks/m7/controller_engineering_candidate_v0_1.json) | 上游 A/B 摘要、工程能力和未执行边界 | `m7_execution_allowed=false` |
+| [M7 Controller 清单 Schema](schemas/m7_controller_candidate_manifest_v0_1.schema.json) | 拒绝把 fixture 治理机械误报为真实运行或复现 | `v0.1` |
 | [M5 人工审核：真实 Repair Generator Pilot](docs/m5_manual_review/01_real_repair_generator_pilot.md) | 生产模型运行、输入隔离、失败保留、抽查和签署细则 | 待人工执行 |
 | [M5 人工审核：Person A 全量补丁复核](docs/m5_manual_review/02_person_a_full_patch_review.md) | 数学有效性、问题保持、新错误、最小性、false repair 和分歧处理 | 待独立 Person A 执行 |
 | [M5 人工校验：Pilot 成本与失败率](docs/m5_manual_review/03_pilot_cost_failure_audit.md) | token、延迟、计价、重试、失败分母和人工复算细则 | 待真实 Pilot 后执行 |

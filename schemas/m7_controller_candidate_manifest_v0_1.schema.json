@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m7_controller_candidate_manifest_v0_1.schema.json",
+  "title": "M7 Controller fixture-only engineering candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "candidate_version", "status", "artifacts", "upstream", "capabilities", "pending", "m7_execution_allowed"],
+  "properties": {
+    "schema_version": {"const": "m7-controller-candidate-manifest-0.1"},
+    "candidate_version": {"const": "m7-controller-v0.1"},
+    "status": {"const": "engineering_candidate_ready_fixture_only_execution_blocked"},
+    "artifacts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["docs/milestones/M07_controller_run_governance_and_replay.md", "harness/m7_controller.py"],
+      "properties": {
+        "docs/milestones/M07_controller_run_governance_and_replay.md": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "harness/m7_controller.py": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "upstream": {
+      "type": "object", "additionalProperties": false,
+      "required": ["person_a_manifest_sha256", "person_b_manifest_sha256", "m7_entry_allowed"],
+      "properties": {
+        "person_a_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "person_b_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "m7_entry_allowed": {"const": false}
+      }
+    },
+    "capabilities": {
+      "type": "object", "additionalProperties": false,
+      "required": ["multi_family_manifest_fixture", "complete_assignment_fixture", "terminal_result_binding_fixture", "aggregate_rebuild_fixture", "deterministic_replay_sample_fixture"],
+      "properties": {
+        "multi_family_manifest_fixture": {"const": true}, "complete_assignment_fixture": {"const": true},
+        "terminal_result_binding_fixture": {"const": true}, "aggregate_rebuild_fixture": {"const": true},
+        "deterministic_replay_sample_fixture": {"const": true}
+      }
+    },
+    "pending": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "m7_execution_allowed": {"const": false}
+  }
+}
