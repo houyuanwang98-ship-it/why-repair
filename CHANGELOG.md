@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-15 — M7 Person B engineering candidate
+
+- Added fail-closed M7 Person B checks for 200–500-case provenance/license Schema, exact and near-duplicate leakage findings, complete nine-method run matrices, and failure-preserving terminal ledgers.
+- Added a digest-bound fixture-only candidate Manifest and documented the remaining M5/M6, human-signature, dataset, provider-run, Gold-audit, and Controller gates.
+- Updated README and ROADMAP without claiming that formal M7 data or experiment results exist.
+
 ## 2026-08-15 — M7 Person A fail-closed protocol candidate
 
 - Added the Person A protocol for reviewing a 200–500 item benchmark, freezing mathematical Gold, auditing pre-run fairness, and conducting final blinded mathematical error analysis.

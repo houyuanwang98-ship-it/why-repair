@@ -77,6 +77,10 @@
 | [M7 Person A 盲态逐例模板](docs/milestones/M07_person_a_blind_case_review_template.md) | 匿名复核 false accept、错误全局反例、false repair、混淆和七类根因 | `v0.1` 内容锁定，尚无正式结果可填 |
 | [M7 Person A 协议候选清单](data/benchmarks/m7/person_a_protocol_candidate_v0_1.json) | 文档摘要、上游门、真人签名和五项未执行交付的机器边界 | fail-closed，`m7_execution_allowed=false` |
 | [M7 Person A 协议清单 Schema](schemas/m7_person_a_protocol_manifest_v0_1.schema.json) | 阻止把协议准备误报为 Gold 冻结、主实验或真人盲审完成 | `v0.1` |
+| [M7 Person B Benchmark 完整性与实验执行](docs/milestones/M07_person_b_benchmark_integrity_and_experiment_execution.md) | 来源/许可、去重/泄漏、九方法运行矩阵、失败保留和全量重跑规则 | `v0.1` fixture-only；正式运行阻塞 |
+| [M7 Person B 工程模块](harness/m7_person_b.py) | 200–500 数量与 Schema 门、近重复、critical finding、矩阵和终态账本校验 | `m7-person-b-0.1` |
+| [M7 Person B 候选清单](data/benchmarks/m7/person_b_engineering_candidate_v0_1.json) | Person A 上游摘要、工程能力与未满足门的机器边界 | fail-closed，`m7_execution_allowed=false` |
+| [M7 Person B 清单 Schema](schemas/m7_person_b_candidate_manifest_v0_1.schema.json) | 防止 fixture 候选冒充正式数据、模型运行或 M7 结果 | `v0.1` |
 | [M5 人工审核：真实 Repair Generator Pilot](docs/m5_manual_review/01_real_repair_generator_pilot.md) | 生产模型运行、输入隔离、失败保留、抽查和签署细则 | 待人工执行 |
 | [M5 人工审核：Person A 全量补丁复核](docs/m5_manual_review/02_person_a_full_patch_review.md) | 数学有效性、问题保持、新错误、最小性、false repair 和分歧处理 | 待独立 Person A 执行 |
 | [M5 人工校验：Pilot 成本与失败率](docs/m5_manual_review/03_pilot_cost_failure_audit.md) | token、延迟、计价、重试、失败分母和人工复算细则 | 待真实 Pilot 后执行 |
