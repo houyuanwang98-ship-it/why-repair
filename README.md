@@ -607,3 +607,12 @@ Use `data/theorem_bank/all_clean_seed_rules.jsonl` for the merged cross-domain r
 8. **对比强且公平。** 除直接 prompting 外，应包含 self-reflection、Generator–Critic、主流数学推理模型/Agent、工具增强方案及合理 oracle；所有 baseline 必须获得与论文主张相符的公平资源。
 9. **顶会主张要落在新知识上。** 仅“我们做了一个系统”不够；论文应回答例如“依赖结构在何时降低错误接受”“异构 critic 是否减少相关失败”“证书哪些字段因果性改善修复”等可推广问题。
 10. **投稿前重新核对官方范围。** 当前可重点关注 [NeurIPS](https://neurips.cc/Conferences/2026/CallForPapers) 的主会或 Evaluations & Datasets、[ICLR](https://iclr.cc/Conferences/2026/CallForPapers) 的神经符号/数据集/图学习方向、[CADE/IJCAR](https://cadeinc.org/conferences) 的自动推理方向，以及覆盖 automated reasoning、multi-agent systems、machine learning 与 NLP 的 [AIJ](https://www.sciencedirect.com/journal/artificial-intelligence)。最终 venue 应由论文的单一核心贡献决定，而不是反过来拼题目。
+
+## AI for Math 文献与发文参考
+
+项目现提供两份面向后续研究和论文写作的参考资料：
+
+- **[AI for Math 相关文献综述](docs/AI_for_Math_相关文献综述.md)：** 整理自然语言证明评价、首错定位、过程监督、Lean 证明修复、多 Agent 推理、自动形式化及 AlphaProof、AlphaGeometry、FunSearch 等 19 篇代表性工作。每篇均概括研究主题、主体思路、创新点、局限及其与本项目的关系，并给出横向比较和实验设计建议。
+- **[AI for Math 发文写作参考](docs/AI_for_Math_发文写作参考.md)：** 精选 10 篇适合借鉴论文结构和内容组织的范文，说明 benchmark、方法和系统论文应如何定义中心问题、组织贡献、设计实验与消融、呈现图表、讨论可信边界和准备复现材料；同时给出适合本项目首篇主论文的章节框架。
+
+两份资料建议配合阅读：先通过文献综述确定相关工作、强基线和差异化主张，再用发文写作参考收敛单篇论文的叙事、实验和呈现方式。文献与模型进展较快，正式投稿前仍需重新检索并核对版本、发表状态和最新结果。
