@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m5_provisional_joint_acceptance_v0_2.schema.json",
+  "title": "M5 provisional joint acceptance appendix v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "scope", "case_accounting", "engineering_checks",
+    "formal_gate", "missing_formal_evidence", "m6_entry_allowed", "artifacts"
+  ],
+  "properties": {
+    "schema_version": {"const": "m5-provisional-joint-acceptance-0.2"},
+    "status": {"const": "provisional_engineering_and_conversation_review_complete_real_pilot_blocked"},
+    "scope": {"const": "api_free_interactive_engineering_and_conversation_review_evidence"},
+    "case_accounting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_cases", "unchanged_valid", "requiring_disposition", "human_decisions", "materialized", "accepted", "irreparable_original_theorem_false_or_undefined"],
+      "properties": {
+        "source_cases": {"const": 50},
+        "unchanged_valid": {"const": 14},
+        "requiring_disposition": {"const": 36},
+        "human_decisions": {"const": 36},
+        "materialized": {"const": 36},
+        "accepted": {"const": 24},
+        "irreparable_original_theorem_false_or_undefined": {"const": 12}
+      }
+    },
+    "engineering_checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sequential_first_error_repair", "deterministic_materialization", "specialized_tests", "full_regression"],
+      "properties": {
+        "sequential_first_error_repair": {"const": "passed"},
+        "deterministic_materialization": {"const": "passed"},
+        "specialized_tests": {
+          "type": "object", "additionalProperties": false,
+          "required": ["tests_run", "passed"],
+          "properties": {"tests_run": {"type": "integer", "minimum": 28}, "passed": {"const": true}}
+        },
+        "full_regression": {
+          "type": "object", "additionalProperties": false,
+          "required": ["tests_run", "passed", "failed", "m5_failures", "failure_scope"],
+          "properties": {
+            "tests_run": {"const": 363}, "passed": {"const": 356}, "failed": {"const": 7}, "m5_failures": {"const": 0},
+            "failure_scope": {"const": "pre_existing_external_freeze_digest_drift"}
+          }
+        }
+      }
+    },
+    "formal_gate": {"const": "blocked_missing_real_provider_and_independent_review_evidence"},
+    "missing_formal_evidence": {
+      "type": "array", "minItems": 3, "uniqueItems": true,
+      "items": {"enum": [
+        "provider_model_snapshot_response_ids_tokens_latency_retries_and_billing",
+        "independently_verified_human_identity_and_detached_signature",
+        "external_controller_code_review"
+      ]}
+    },
+    "m6_entry_allowed": {"const": false},
+    "artifacts": {
+      "type": "object", "minProperties": 8,
+      "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+    }
+  }
+}

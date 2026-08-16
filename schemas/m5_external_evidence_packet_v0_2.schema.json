@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m5_external_evidence_packet_v0_2.schema.json",
+  "title": "M5 external evidence handoff packet v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "locked_provisional_acceptance_sha256", "evidence_slots", "m6_entry_allowed"],
+  "properties": {
+    "schema_version": {"const": "m5-external-evidence-packet-0.2"},
+    "status": {"enum": ["awaiting_external_evidence", "complete"]},
+    "locked_provisional_acceptance_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "evidence_slots": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["real_provider_pilot", "independent_human_review", "external_controller_code_review"],
+      "properties": {
+        "real_provider_pilot": {"$ref": "#/$defs/slot"},
+        "independent_human_review": {"$ref": "#/$defs/slot"},
+        "external_controller_code_review": {"$ref": "#/$defs/slot"}
+      }
+    },
+    "m6_entry_allowed": {"type": "boolean"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "awaiting_external_evidence"}}},
+      "then": {"properties": {"m6_entry_allowed": {"const": false}}}
+    },
+    {
+      "if": {"properties": {"status": {"const": "complete"}}},
+      "then": {
+        "properties": {
+          "m6_entry_allowed": {"const": true},
+          "evidence_slots": {
+            "properties": {
+              "real_provider_pilot": {"properties": {"status": {"const": "verified"}}},
+              "independent_human_review": {"properties": {"status": {"const": "verified"}}},
+              "external_controller_code_review": {"properties": {"status": {"const": "verified"}}}
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "slot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "instructions", "evidence_file", "evidence_digest", "reviewer_id", "signature_method", "detached_signature_file", "allowed_signers_file"],
+      "properties": {
+        "status": {"enum": ["pending", "verified"]},
+        "instructions": {"type": "string", "pattern": "^docs/m5_manual_review/"},
+        "evidence_file": {"type": ["string", "null"], "minLength": 1},
+        "evidence_digest": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "reviewer_id": {"type": ["string", "null"], "minLength": 1},
+        "signature_method": {"enum": ["pending", "pgp", "minisign", "ssh"]},
+        "detached_signature_file": {"type": ["string", "null"], "minLength": 1},
+        "allowed_signers_file": {"type": ["string", "null"], "minLength": 1}
+      },
+      "allOf": [{
+        "if": {"properties": {"status": {"const": "verified"}}},
+        "then": {
+          "properties": {
+            "evidence_file": {"type": "string"},
+            "evidence_digest": {"type": "string"},
+            "reviewer_id": {"type": "string"},
+            "signature_method": {"enum": ["pgp", "minisign", "ssh"]},
+            "detached_signature_file": {"type": "string"},
+            "allowed_signers_file": {"type": "string"}
+          }
+        }
+      }]
+    }
+  }
+}

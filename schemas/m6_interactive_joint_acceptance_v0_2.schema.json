@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m6_interactive_joint_acceptance_v0_2.schema.json",
+  "title": "M6 interactive joint acceptance v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "scope", "execution", "results", "tests", "limitations", "interactive_m7_engineering_allowed", "formal_m7_experiment_allowed", "artifacts"],
+  "properties": {
+    "schema_version": {"const": "m6-interactive-joint-acceptance-0.2"},
+    "status": {"const": "chatgpt_interactive_engineering_complete"},
+    "scope": {"const": "nonblind_historical_chatgpt_replay_gold_exposed"},
+    "execution": {"type": "object"},
+    "results": {"type": "object"},
+    "tests": {"type": "object"},
+    "limitations": {"type": "array", "minItems": 3, "items": {"type": "string"}},
+    "interactive_m7_engineering_allowed": {"const": true},
+    "formal_m7_experiment_allowed": {"const": false},
+    "artifacts": {"type": "object", "minProperties": 10, "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+  }
+}
