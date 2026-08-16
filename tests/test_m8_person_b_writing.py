@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "data/benchmarks/m8/person_b_writing_candidate_v0_1.json"
 SCHEMA = ROOT / "schemas/m8_person_b_writing_candidate_v0_1.schema.json"
 DOCUMENT = ROOT / "docs/milestones/M08_person_b_system_experiments_reproducibility.md"
+CROSS_REVIEW = ROOT / "docs/milestones/M08_person_b_cross_review_of_a_b_controller.md"
 
 
 class M8PersonBWritingTest(unittest.TestCase):
@@ -75,6 +76,17 @@ class M8PersonBWritingTest(unittest.TestCase):
         ]
         for marker in markers:
             self.assertIn(marker, document, marker)
+
+    def test_cross_review_covers_all_roles_findings_and_authority_boundary(self):
+        review = CROSS_REVIEW.read_text(encoding="utf-8")
+        markers = [
+            "## 2. Person A 七项复核", "## 3. Person B 七项自查",
+            "## 4. Controller 七项复核", "B-C01", "B-C02", "B-C03", "B-C04",
+            "Person B 不签署公式、反例、修复或代表案例的数学正确性",
+            "两项 P1 与四项 P2 修复后通过", "M8 总退出",
+        ]
+        for marker in markers:
+            self.assertIn(marker, review, marker)
 
 
 if __name__ == "__main__":

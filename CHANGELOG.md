@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-15 — M8 Person B three-party cross-review hardening
+
+- Completed Person B's execution/reproducibility review of all current M8 Person A, Person B, and Controller content without claiming mathematical or external-review authority.
+- Rejected unknown or wrongly typed terminal statuses/digests and required globally unique run IDs plus raw-output, scoring-input, and integer-cost bindings before publication aggregation.
+- Closed the Controller Schema shapes for assignments, terminal ledgers, and publication rows while preserving every formal M8 and release gate as blocked.
+
 ## 2026-08-15 — M8 Person A three-party cross-review hardening
 
 - Reviewed every submitted M8 Person A, Person B, and Controller item against the two project-wide acceptance documents, and recorded item-level `conditionally_passed`, `needs_revision`, and `blocked` outcomes.

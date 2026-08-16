@@ -33,9 +33,35 @@
     "release_allowed": {"const": false},
     "artifact_sha256": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
     "upstream_sha256": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
-    "expected_assignments": {"type": "array", "items": {"type": "object"}},
-    "terminal_ledger": {"type": "array", "items": {"type": "object"}},
-    "publication_table": {"type": "array"},
+    "expected_assignments": {
+      "type": "array", "items": {"type": "object", "additionalProperties": false,
+        "required": ["case_id", "experiment_id"],
+        "properties": {"case_id": {"type": "string", "minLength": 1}, "experiment_id": {"type": "string", "minLength": 1}}}
+    },
+    "terminal_ledger": {
+      "type": "array", "items": {"type": "object", "additionalProperties": false,
+        "required": ["case_id", "experiment_id", "run_id", "status", "tokens", "model_calls", "wall_ms", "cost_microunits", "raw_output_sha256", "scoring_input_sha256"],
+        "properties": {
+          "case_id": {"type": "string", "minLength": 1}, "experiment_id": {"type": "string", "minLength": 1},
+          "run_id": {"type": "string", "minLength": 1},
+          "status": {"enum": ["succeeded", "api_failure", "timeout", "budget_exceeded", "schema_failure", "tool_failure", "retry_exhausted"]},
+          "tokens": {"type": "integer", "minimum": 0}, "model_calls": {"type": "integer", "minimum": 0},
+          "wall_ms": {"type": "integer", "minimum": 0}, "cost_microunits": {"type": "integer", "minimum": 0},
+          "raw_output_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "scoring_input_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }}
+    },
+    "publication_table": {
+      "type": "array", "items": {"type": "object", "additionalProperties": false,
+        "required": ["experiment_id", "sample_count", "success_count", "failure_count", "tokens", "model_calls", "wall_ms", "cost_microunits"],
+        "properties": {
+          "experiment_id": {"type": "string", "minLength": 1},
+          "sample_count": {"type": "integer", "minimum": 1}, "success_count": {"type": "integer", "minimum": 0},
+          "failure_count": {"type": "integer", "minimum": 0}, "tokens": {"type": "integer", "minimum": 0},
+          "model_calls": {"type": "integer", "minimum": 0}, "wall_ms": {"type": "integer", "minimum": 0},
+          "cost_microunits": {"type": "integer", "minimum": 0}
+        }}
+    },
     "publication_table_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "automated_secret_findings": {"type": "array"},
     "scan_limitation": {"const": "pattern scan does not prove privacy or license clearance"},

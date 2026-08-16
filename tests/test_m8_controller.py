@@ -15,6 +15,14 @@ GATES = (
     "clean_reproduction_complete", "license_privacy_complete",
     "trusted_attestations_verified",
 )
+DIGEST = "0" * 64
+
+
+def run(case_id, experiment_id, status="succeeded", run_id=None):
+    return {"case_id": case_id, "experiment_id": experiment_id,
+            "run_id": run_id or f"run-{case_id}-{experiment_id}", "status": status,
+            "tokens": 1, "model_calls": 1, "wall_ms": 1, "cost_microunits": 2,
+            "raw_output_sha256": DIGEST, "scoring_input_sha256": DIGEST}
 
 
 class M8ControllerTest(unittest.TestCase):
@@ -28,6 +36,19 @@ class M8ControllerTest(unittest.TestCase):
         gate_schema = schema["properties"]["gates"]
         self.assertEqual(set(gate_schema["required"]), set(candidate["gates"]))
         self.assertFalse(gate_schema["properties"]["trusted_attestations_verified"]["const"])
+        ledger_item = schema["properties"]["terminal_ledger"]["items"]
+        self.assertFalse(ledger_item["additionalProperties"])
+        self.assertEqual(
+            set(ledger_item["required"]),
+            {"case_id", "experiment_id", "run_id", "status", "tokens", "model_calls",
+             "wall_ms", "cost_microunits", "raw_output_sha256", "scoring_input_sha256"},
+        )
+        self.assertEqual(set(ledger_item["properties"]["status"]["enum"]), {
+            "succeeded", "api_failure", "timeout", "budget_exceeded",
+            "schema_failure", "tool_failure", "retry_exhausted",
+        })
+        self.assertFalse(schema["properties"]["expected_assignments"]["items"]["additionalProperties"])
+        self.assertFalse(schema["properties"]["publication_table"]["items"]["additionalProperties"])
 
     def test_repository_candidate_is_exact_and_blocked(self):
         candidate = json.loads((ROOT / "data/benchmarks/m8/controller_publication_candidate_v0_1.json").read_text(encoding="utf-8"))
@@ -39,21 +60,42 @@ class M8ControllerTest(unittest.TestCase):
     def test_denominator_and_duplicate_guards(self):
         assignments = [{"case_id": "a", "experiment_id": "x"},
                        {"case_id": "b", "experiment_id": "x"}]
-        bad = [{"case_id": "a", "experiment_id": "x", "status": "succeeded",
-                "tokens": 1, "model_calls": 1, "wall_ms": 1}]
+        bad = [run("a", "x")]
         with self.assertRaises(M8ControllerError):
             rebuild_publication_table(bad, assignments)
 
     def test_table_is_rebuilt_from_terminal_runs_and_preserves_failures(self):
         assignments = [{"case_id": "a", "experiment_id": "x"},
                        {"case_id": "b", "experiment_id": "x"}]
-        ledger = [{"case_id": "a", "experiment_id": "x", "status": "succeeded",
-                   "tokens": 2, "model_calls": 1, "wall_ms": 4},
-                  {"case_id": "b", "experiment_id": "x", "status": "timeout",
-                   "tokens": 3, "model_calls": 2, "wall_ms": 9}]
+        ledger = [run("a", "x"), run("b", "x", "timeout")]
+        ledger[0].update(tokens=2, model_calls=1, wall_ms=4, cost_microunits=5)
+        ledger[1].update(tokens=3, model_calls=2, wall_ms=9, cost_microunits=7)
         self.assertEqual(rebuild_publication_table(ledger, assignments),
                          [{"experiment_id": "x", "sample_count": 2, "success_count": 1,
-                           "failure_count": 1, "tokens": 5, "model_calls": 3, "wall_ms": 13}])
+                           "failure_count": 1, "tokens": 5, "model_calls": 3,
+                           "wall_ms": 13, "cost_microunits": 12}])
+
+    def test_unknown_status_duplicate_run_and_unbound_outputs_are_rejected(self):
+        assignments = [{"case_id": "a", "experiment_id": "x"},
+                       {"case_id": "b", "experiment_id": "x"}]
+        unknown = [run("a", "x", "success"), run("b", "x")]
+        with self.assertRaisesRegex(M8ControllerError, "status is unknown"):
+            rebuild_publication_table(unknown, assignments)
+        duplicate = [run("a", "x", run_id="same"), run("b", "x", run_id="same")]
+        with self.assertRaisesRegex(M8ControllerError, "globally unique"):
+            rebuild_publication_table(duplicate, assignments)
+        unbound = [run("a", "x"), run("b", "x")]
+        unbound[0]["raw_output_sha256"] = "not-a-digest"
+        with self.assertRaisesRegex(M8ControllerError, "raw-output"):
+            rebuild_publication_table(unbound, assignments)
+        wrong_digest_type = [run("a", "x"), run("b", "x")]
+        wrong_digest_type[0]["scoring_input_sha256"] = 0
+        with self.assertRaisesRegex(M8ControllerError, "raw-output"):
+            rebuild_publication_table(wrong_digest_type, assignments)
+        wrong_status_type = [run("a", "x"), run("b", "x")]
+        wrong_status_type[0]["status"] = []
+        with self.assertRaisesRegex(M8ControllerError, "status is unknown"):
+            rebuild_publication_table(wrong_status_type, assignments)
 
     def test_candidate_rejects_stale_upstream_digest(self):
         with self.assertRaises(M8ControllerError):
@@ -84,9 +126,7 @@ class M8ControllerTest(unittest.TestCase):
                 root=root, artifacts=["artifact.txt"],
                 upstream_sha256={"upstream.json": digest("upstream.json")},
                 gate_evidence_sha256=evidence,
-                publication_ledger=iter([{"case_id": "a", "experiment_id": "x",
-                                          "status": "succeeded", "tokens": 1,
-                                          "model_calls": 1, "wall_ms": 1}]),
+                publication_ledger=iter([run("a", "x")]),
                 expected_assignments=iter([{"case_id": "a", "experiment_id": "x"}]),
                 formal_m7_complete=True, external_reviews_complete=True,
                 clean_reproduction_complete=True, license_privacy_complete=True)

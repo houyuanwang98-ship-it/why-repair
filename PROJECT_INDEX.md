@@ -96,6 +96,7 @@
 | [M8 Controller 机器候选](data/benchmarks/m8/controller_publication_candidate_v0_1.json) | 绑定 A/B 写作与 Controller 自动化证据，全部正式门 fail closed | `release_allowed=false` |
 | [M8 Controller 候选 Schema](schemas/m8_controller_publication_candidate_v0_1.schema.json) | 固定候选字段、摘要、门和发布身份形状 | `v0.1` |
 | [M8 Person A 三方全内容交叉审查](docs/milestones/M08_person_a_cross_review_of_a_b_controller.md) | A/B/Controller 逐项数学与证据复核、P1/P2 修复和剩余正式门 | 工程审查完成；M8 整体 blocked |
+| [M8 Person B 三方全内容交叉审查](docs/milestones/M08_person_b_cross_review_of_a_b_controller.md) | A/B/Controller 执行复现、终态、运行来源、成本与发布证据逐项复核 | 两项 P1、四项 P2 已修复；M8 整体 blocked |
 | [M5 人工审核：真实 Repair Generator Pilot](docs/m5_manual_review/01_real_repair_generator_pilot.md) | 生产模型运行、输入隔离、失败保留、抽查和签署细则 | 待人工执行 |
 | [M5 人工审核：Person A 全量补丁复核](docs/m5_manual_review/02_person_a_full_patch_review.md) | 数学有效性、问题保持、新错误、最小性、false repair 和分歧处理 | 待独立 Person A 执行 |
 | [M5 人工校验：Pilot 成本与失败率](docs/m5_manual_review/03_pilot_cost_failure_audit.md) | token、延迟、计价、重试、失败分母和人工复算细则 | 待真实 Pilot 后执行 |

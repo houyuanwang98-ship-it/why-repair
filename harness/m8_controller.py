@@ -12,6 +12,10 @@ from typing import Any
 
 M8_CONTROLLER_VERSION = "m8-controller-0.1"
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+TERMINAL_STATUSES = {
+    "succeeded", "api_failure", "timeout", "budget_exceeded",
+    "schema_failure", "tool_failure", "retry_exhausted",
+}
 SECRET_PATTERNS = {
     "private_key": re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
     "openai_key": re.compile(r"\bsk-[A-Za-z0-9_-]{20,}\b"),
@@ -71,7 +75,10 @@ def rebuild_publication_table(ledger: Iterable[Mapping[str, Any]],
                               expected_assignments: Iterable[Mapping[str, str]]) -> list[dict[str, Any]]:
     """Aggregate a paper table from the exact frozen assignment/terminal-run set."""
     assignment_fields = {"case_id", "experiment_id"}
-    run_fields = assignment_fields | {"status", "tokens", "model_calls", "wall_ms"}
+    run_fields = assignment_fields | {
+        "run_id", "status", "tokens", "model_calls", "wall_ms", "cost_microunits",
+        "raw_output_sha256", "scoring_input_sha256",
+    }
     expected = [dict(row) for row in expected_assignments]
     runs = [dict(row) for row in ledger]
     if not expected or any(set(row) != assignment_fields for row in expected):
@@ -88,12 +95,21 @@ def rebuild_publication_table(ledger: Iterable[Mapping[str, Any]],
         raise M8ControllerError("terminal ledger must equal the exact assignment set")
     if len(run_keys) != len(set(run_keys)):
         raise M8ControllerError("terminal runs must be unique")
-    numeric = ("tokens", "model_calls", "wall_ms")
+    run_ids = [row["run_id"] for row in runs]
+    if any(not isinstance(run_id, str) or not run_id for run_id in run_ids):
+        raise M8ControllerError("run_id must be a nonempty string")
+    if len(run_ids) != len(set(run_ids)):
+        raise M8ControllerError("run_id must be globally unique")
+    if any(not isinstance(row[field], str) or not SHA256_RE.fullmatch(row[field]) for row in runs
+           for field in ("raw_output_sha256", "scoring_input_sha256")):
+        raise M8ControllerError("terminal runs require raw-output and scoring-input SHA-256")
+    numeric = ("tokens", "model_calls", "wall_ms", "cost_microunits")
     if any(not isinstance(row[key], int) or isinstance(row[key], bool) or row[key] < 0
            for row in runs for key in numeric):
         raise M8ControllerError("terminal usage values must be nonnegative integers")
-    if any(not isinstance(row["status"], str) or not row["status"] for row in runs):
-        raise M8ControllerError("terminal status must be nonempty")
+    if any(not isinstance(row["status"], str) or row["status"] not in TERMINAL_STATUSES
+           for row in runs):
+        raise M8ControllerError("terminal status is unknown")
     table = []
     for experiment_id in sorted({row["experiment_id"] for row in expected}):
         subset = [row for row in runs if row["experiment_id"] == experiment_id]
@@ -102,7 +118,8 @@ def rebuild_publication_table(ledger: Iterable[Mapping[str, Any]],
                       "success_count": successes, "failure_count": len(subset) - successes,
                       "tokens": sum(row["tokens"] for row in subset),
                       "model_calls": sum(row["model_calls"] for row in subset),
-                      "wall_ms": sum(row["wall_ms"] for row in subset)})
+                      "wall_ms": sum(row["wall_ms"] for row in subset),
+                      "cost_microunits": sum(row["cost_microunits"] for row in subset)})
     return table
 
 

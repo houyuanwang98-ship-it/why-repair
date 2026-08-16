@@ -14,7 +14,7 @@
 
 Person A 已对当前仓库中 M8 Person A、Person B 与 Controller 的全部已提交内容进行逐项工程审查。结论是：
 
-- Person A 七项写作任务中仅第 2 项存在独立成稿，且经本轮契约复核后为 `conditionally_passed`；第 1、3–7 项仍未形成完整 M8 章节或缺少正式结果/外部审核。
+- Person A 七项写作任务中仅第 2 项存在独立成稿，且经本轮契约复核及后续 Person B 执行/复现逐项意见后为 `conditionally_passed`；第 1、3–7 项仍未形成完整 M8 章节或缺少正式结果/外部审核。
 - Person B 第 1–4、6–7 项写作候选在修正两处实现误述后为 `conditionally_passed`；第 5 项仅列发布准备面，系统卡、正式数据包和精确环境没有完成。
 - Controller 具备文件哈希、上游字节复核、基础终态汇总、分母检查和保守密钥模式扫描，但不等于 §13.3 七项均完成。完整论文表图、置信区间核对、版本索引、复现命令执行、全量审计与可信外部证明验证仍缺失，结论为 `needs_revision`。
 - M8 整体退出决定为 **blocked**。不得生成正式论文数字、release、tag、DOI 或“外部复现通过”等主张。
@@ -33,7 +33,7 @@ Person A 已对当前仓库中 M8 Person A、Person B 与 Controller 的全部�
 | §13.1 项目 | 当前证据 | 结论 | 缺口 |
 |---|---|---|---|
 | 1. 问题定义、研究边界、相关任务区别 | M0 范围文档与 README 有素材 | `needs_revision` | 尚无独立 M8 论文章节；相关工作区别未系统写出 |
-| 2. 依赖图、局部义务、Evaluator、Error Certificate | `M08_person_a_dependency_obligation_evaluator_error_certificate.md` | `conditionally_passed` | 数学/契约表述与代码一致；仍待 Person B 逐项意见、第三专家复核和论文版本绑定 |
+| 2. 依赖图、局部义务、Evaluator、Error Certificate | `M08_person_a_dependency_obligation_evaluator_error_certificate.md` | `conditionally_passed` | 数学/契约表述与代码一致；Person B 执行/复现逐项意见已完成，仍待第三专家复核和论文版本绑定 |
 | 3. 反例协议、数学裁决、修复有效性 | M4/M5 milestone 有素材 | `needs_revision` | 尚未汇总为 M8 成稿；M5 真人全量补丁复核未发生 |
 | 4. Benchmark 标注方法与人工一致性 | M2/M7 协议有素材 | `blocked` | M7 正式 200–500 题、双人 Gold、第三专家裁决均不存在，不能写正式一致性结果 |
 | 5. 数学错误分析、成功/失败案例 | M6/M7 仅有盲审模板 | `blocked` | 没有正式匿名结果、代表案例或第三专家复核 |
@@ -54,7 +54,7 @@ Person A 已对当前仓库中 M8 Person A、Person B 与 Controller 的全部�
 | 6. 实现描述与代码一致 | `conditionally_passed` | 本轮 Person A 抽查后修正两处语义；机器清单仅维持字节绑定，不能代替语义审核 |
 | 7. 发布版本与归档标识 | `conditionally_passed` | 候选 ID 可用于内部追踪，但不是 tag、DOI、提交号或 release |
 
-Person B 不得代签 Person A 的数学结论。此前将“Person B 自己的 §6 实现核对”写成 Person A 文档已完成 B 交叉复核，没有逐项审查证据，本轮已恢复为 pending。
+Person B 不得代签 Person A 的数学结论。此前将“Person B 自己的 §6 实现核对”写成 Person A 文档已完成 B 交叉复核，没有逐项审查证据，本轮曾恢复为 pending；后续 `M08_person_b_cross_review_of_a_b_controller.md` 已补交执行/复现逐项意见，因此该工程交接现已关闭，但数学接受权仍属于 Person A 与第三专家。
 
 ## 5. Controller 七项审查
 
@@ -85,7 +85,7 @@ Person B 不得代签 Person A 的数学结论。此前将“Person B 自己的 
 | A-01 | P1 | Person A 实际仅完成第 2 项，仓库缺少第 1、3–7 项 M8 成稿或正式证据 | 明确逐项状态，M8 保持 blocked |
 | B-01 | P2 | Person B 把 `delete` 描述为“删除历史” | 改为保留 `deleted` 历史节点 |
 | B-02 | P2 | 把异常回滚与正常数学拒绝混写成一律回滚 | 区分异常事务恢复和拒绝事件保留 |
-| X-01 | P2 | Person B 自身实现核对被写成对 Person A 文档的跨角色复核完成 | 恢复 Person A checkbox 为 pending |
+| X-01 | P2 | Person B 自身实现核对被写成对 Person A 文档的跨角色复核完成 | 当时恢复为 pending；后续由独立的 Person B 三方逐项审查记录正式关闭工程复核 |
 | C-01 | P1 | 任意布尔值与任意文件哈希可产生 `release_ready` | 增加可信证明硬门并加负向回归 |
 | C-02 | P1 | Controller 七项自动化完成的主张超过实际代码能力 | 文档、README、ROADMAP、索引统一降级 |
 | T-01 | P2 | 新增可信门后，两个旧负向测试因字段缺失提前失败，未抵达各自声称的陈旧摘要/真门分支 | 统一完整 gate fixture，并增加 v0.1 Schema 固定 fail-closed 形状测试 |
@@ -96,7 +96,7 @@ Person B 不得代签 Person A 的数学结论。此前将“Person B 自己的 
 - 数学表述与案例：`blocked`，第三专家尚未复核，正式案例不存在。
 - 主张—证据：`conditionally_passed` 仅限工程候选；强量化主张全部禁止。
 - 数字与图表：`blocked`，正式原始结果不存在。
-- Person A / Person B 独立性：`needs_revision`，B 尚未逐项复核 A 的数学章节。
+- Person A / Person B 工程交叉复核：`conditionally_passed`；B 已逐项核对实现与复现边界，但不构成数学接受或真人独立性证明。
 - Controller 权限边界：`passed`，未发现 Controller 直接创造数学裁决；发布证明边界已加固。
 - 外部代码审查：`blocked`。
 - 干净环境复现：`blocked`。
@@ -109,7 +109,7 @@ Person B 不得代签 Person A 的数学结论。此前将“Person B 自己的 
 重新申请 Person A M8 验收至少需要：
 
 1. Person A 第 1、3、6 项成稿；第 4、5 项在正式 M7 后填写；第 7 项有最终论文与第三专家记录。
-2. Person B 完成系统卡、正式数据/环境/许可清单，并对 Person A 数学章节提交逐项意见。
+2. Person B 完成系统卡、正式数据/环境/许可清单；其对 Person A 数学章节的执行/复现逐项意见已提交，但不能替代第三专家数学复核。
 3. Controller 实现全部表图与区间重建、完整版本索引、唯一复现命令和可信证明验证器。
 4. 外部数学审查、外部代码审查、独立复现及许可/隐私审核均有绑定到最终字节的证据。
 
@@ -118,3 +118,5 @@ Person A 工程审查签署：`completed_by_active_person_a_role`。该字符串
 ## 9. 自检记录
 
 本审查完成后又执行一次逆向自检，专门检查测试是否因更早的无关错误而“假通过”、Manifest 是否漏绑自身验证材料，以及可信门能否被普通构造参数打开。T-01/T-02 已修复；M8 Controller v0.1 的可信门仍为代码常量 `false`，没有公开参数可将其置真。任何开放 release 的后续实现必须使用新协议版本，不能原地改写本候选的含义。
+
+后续交接：Person B 已在 `M08_person_b_cross_review_of_a_b_controller.md` 完成三方执行/复现逐项审查，并修复规范终态、运行来源、评分输入与成本绑定问题。本文件的数学结论和原始 finding 编号不因该后续工程审查而改写；更新仅用于消除“B 尚未复核”的过时状态。

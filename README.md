@@ -12,7 +12,7 @@ M6 Person A 的结果前预注册协议候选和盲态错误分析模板内容�
 
 M7 Person A 的正式 Benchmark/Gold 审查与盲态错误分析协议、Person B 的来源/许可/去重/泄漏及运行矩阵、Controller 的多模型族 Manifest、终态结果绑定、聚合重建、盲审计划和确定性回放抽样均已形成 `v0.1` 工程候选。Person A 与 Person B 已分别完成三方 fixture 全内容交叉审查；累计修复同/异模型族覆盖、硬预算、跨族运行身份、实际字节复核和盲审计划等问题。三方机器清单只绑定协议与 fixture：200–500 题正式数据、真人 A/B 标注、第三专家复核、Gold 冻结、provider 运行、配对统计、独立回放和 M7 结果均尚不存在；M5/M6 门未开时 `m7_execution_allowed=false`。
 
-M8 已完成一次 Person A 视角的 A/B/Controller 全内容工程交叉审查。Person A 七项中仅第 2 项有条件通过，第 1、3–7 项仍需写作、正式 M7 结果或第三专家审核；Person B 第 1–4、6–7 项写作候选经修订后有条件通过，第 5 项系统卡与发布材料未完成；Controller 目前只有文件冻结、基础汇总、分母门和保守密钥扫描等候选骨架，并非 §13.3 七项自动化全部完成。审查修复了任意布尔值加任意证据文件可打开 `release_ready` 的 P1 问题：缺少可信证明验证器的 v0.1 现在无条件 `release_allowed=false`。M5–M7、正式数字/成本、外审、干净复现、许可隐私和 release 继续阻塞。
+M8 已分别完成 Person A 数学/证据视角与 Person B 执行/复现视角的 A/B/Controller 全内容工程交叉审查。Person A 七项中仅第 2 项有条件通过，第 1、3–7 项仍需写作、正式 M7 结果或第三专家审核；Person B 第 1–4、6–7 项有条件通过，第 5 项系统卡与发布材料未完成。Controller 已修复可信证明、规范终态、全局 run ID、原始输出/评分输入和整数成本绑定问题，但仍只是基础汇总、分母门、字节绑定和保守密钥扫描的候选骨架，并非 §13.3 七项完成。M5–M7、正式数字/成本、外审、干净复现、许可隐私和 release 继续阻塞。
 
 ## 推荐的 M0–M8 研究总顺序
 
@@ -171,6 +171,7 @@ Fill `outputs/algebra_pilot_session/pending.json`, then run the same command aga
 - [M8 Person B machine candidate](data/benchmarks/m8/person_b_writing_candidate_v0_1.json) and [Schema](schemas/m8_person_b_writing_candidate_v0_1.schema.json): exact-byte implementation binding and fail-closed publication claims.
 - [M8 Controller publication and reproduction gate](docs/milestones/M08_controller_publication_and_reproduction_gate.md): fail-closed table rebuilding, byte binding, conservative secret scan, clean-reproduction and release gates; [machine candidate](data/benchmarks/m8/controller_publication_candidate_v0_1.json) and [Schema](schemas/m8_controller_publication_candidate_v0_1.schema.json).
 - [M8 Person A cross-review of A/B/Controller](docs/milestones/M08_person_a_cross_review_of_a_b_controller.md): item-by-item mathematical and evidence review, corrected implementation claims, trusted-attestation fail-closed repair, and remaining formal gates.
+- [M8 Person B cross-review of A/B/Controller](docs/milestones/M08_person_b_cross_review_of_a_b_controller.md): item-by-item execution/reproducibility review, canonical terminal statuses, run/output/scoring/cost binding, and remaining formal gates.
 - [Skill usage](docs/skill_usage.md): practical Skill workflow.
 - [Annotation guideline](docs/annotation_guideline.md): dataset labeling conventions.
 - [Training objectives](docs/training_objectives.md): planned learning objectives.
