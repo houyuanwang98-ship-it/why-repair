@@ -68,7 +68,7 @@ M0 Person A：定义研究边界、数学术语和验收案例
 
 完整的逐步分工、跨阶段杂项、交接门和发布检查表见 **[M0–M8 研究执行顺序](docs/m0_m8_research_execution_sequence.md)**；每一步的验证标准见 **[项目验证与强制验收计划](docs/project_validation_and_acceptance_plan.md)**。
 
-## ⚠️ M0–M5 必须人工审核的全部事项
+## ⚠️ M0–M8 必须人工审核的全部事项
 
 > [!IMPORTANT]
 > **下列事项尚不能仅凭代码、测试、哈希或同一 Agent 自检得到证明。** 必须由文档指定的真人独立执行、逐例记录并签署。未取得对应人工证据前，只能声称相关工程检查通过；严格研究验收门必须保持 `pending`，不得写成“已完成人工验收”。
@@ -124,7 +124,43 @@ M0 Person A：定义研究边界、数学术语和验收案例
 - **[Person B 按案例验证包](docs/m5_manual_review/13_person_b_verification_by_case.md)**：集中列出数据、模型、执行、成本和证据完整性职责；Person B 无权代签数学接受结论。
 - **[Controller 按案例验证包](docs/m5_manual_review/14_controller_verification_by_case.md)**：集中列出状态、版本、依赖、缓存、回滚、重验和审计链职责；Controller 不作数学裁决。
 
-阶段性工程验收边界和仍为 `pending` 的门见 [M5 A/B/Controller 联合验收记录](docs/milestones/M05_a_b_controller_joint_acceptance.md)。
+### M6：基线、消融与实验协议冻结
+
+1. **[预注册、方法公平性与冻结签署](docs/m5_manual_review/15_m6_preregistration_fairness_signoff.md) — 待真实三方签署**
+   Person A、Person B 与 Controller 负责人须在结果暴露前冻结研究问题、指标、失败计分、方法权限、预算和统计方案，并逐方法审查数学信息与执行资源是否公平。哈希和候选清单不能证明真实身份、未揭盲时序或科学可比性。
+
+2. **[基线与消融的盲态数学错误审查](docs/m5_manual_review/16_m6_blind_mathematical_error_and_repair_review.md) — 待真实运行后人工审核**
+   对全部错误接受、false repair、错误全局反例及预注册抽样案例执行匿名双人审查，锁定结论后才揭示方法身份，并由第三专家处理重大分歧。自动评分不能识别隐藏假设、量词漂移、目标偷换或补丁后的新数学错误。
+
+3. **[真实运行完整性与配置外混杂审计](docs/m5_manual_review/17_m6_real_run_integrity_and_confound_audit.md) — 待真实 provider 运行后审核**
+   将 Controller 账本与 provider 请求、原始响应、失败、重试、价格快照和账单逐项对照，检查服务时段、截断、缓存、工具故障和并发差异是否足以解释消融结果。Fixture 只能验证账本契约，不能证明真实调用、成本或失败完整性。
+
+### M7：正式 Benchmark 与主实验
+
+1. **[正式 Benchmark、盲态 Gold 与权利审查](docs/m5_manual_review/18_m7_formal_benchmark_gold_and_rights_review.md) — 待正式数据创建并审核**
+   对 200–500 题逐题核验来源、题面、许可、隐私、A/B 独立标注、第三专家裁决、同源近重复和 Gold 冻结时序。M2 Pilot、Schema、去重分数和文件哈希均不能替代 M7 正式数据的真人来源与盲态证据。
+
+2. **[异常结果、主要失败与论文案例的盲态独立审查](docs/m5_manual_review/19_m7_blind_anomaly_error_and_case_review.md) — 待主实验后外部审核**
+   在隐藏方法名和聚合成绩的条件下，复核错误接受、错误反例、false repair、重大争议、异常高低分及分层样本，揭盲后再检查泄漏和配置外因素。论文案例必须来自预先冻结的审查池，不能事后只挑支持预期结论的案例。
+
+3. **[主实验独立回放与复现](docs/m5_manual_review/20_m7_independent_replay_and_reproduction.md) — 待独立复现实验者执行**
+   未参与实现的复现者须在新目录或独立机器，仅依据候选材料重建聚合、回放完整推理链并执行小规模模型重复。内部测试、作者机器上的回放或读取现成表格不能证明安装说明完整、隐藏依赖不存在或主要趋势可复现。
+
+### M8：论文、发布与最终复现
+
+1. **[论文主张、数学内容与能力边界终审](docs/m5_manual_review/21_m8_final_claim_and_mathematical_review.md) — 待最终论文与第三方专家审核**
+   Person A、Person B 和第三方数学专家须对同一论文版本逐项核对数学公式、反例、修复、系统描述、统计解释、代表案例与能力边界。数字一致不能证明措辞不过度，也不能把自然语言审计、未找到反例或模型置信度写成形式证明。
+
+2. **[外部代码、状态机、指标与泄漏审查](docs/m5_manual_review/22_m8_external_code_and_leakage_review.md) — 待外部代码审核**
+   未参与实现的 reviewer 须攻击角色伪造、陈旧版本、跨题依赖、事务回滚、缓存碰撞、乱序重验、指标漏计及 Gold 泄漏，并对 findings 的修复重新验证。内部测试和同一 Agent 自审不能替代外部源码与对抗审查。
+
+3. **[发布候选的干净环境端到端复现](docs/m5_manual_review/23_m8_clean_environment_release_reproduction.md) — 待 release candidate 后独立执行**
+   独立复现者只使用最终发布包，在全新环境完成安装、测试、确定性回放、小规模模型实验及全部论文表图重建，并核对论文、代码、数据、Prompt 与 Manifest 的版本绑定。M7 抽样复现不能替代最终发布包本身的复现。
+
+4. **[发布许可、隐私、系统卡与材料完整性审查](docs/m5_manual_review/24_m8_release_rights_privacy_and_system_card_review.md) — 待发布前专业审核**
+   逐文件检查数据、题目、模型输出、代码和依赖的授权范围，人工复核个人信息与组合重识别风险，并确认数据卡、系统卡、NOTICE、限制和归档元数据完整一致。公开可访问或自动扫描无告警不等于允许再发布、没有隐私风险。
+
+M0–M5 的阶段性工程验收边界见 [M5 A/B/Controller 联合验收记录](docs/milestones/M05_a_b_controller_joint_acceptance.md)；M6–M8 当前仍受真实签署、正式数据与运行、外部审查、独立复现和发布权利检查阻塞。
 
 ## Quick start
 
