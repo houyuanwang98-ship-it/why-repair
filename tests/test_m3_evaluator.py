@@ -55,6 +55,13 @@ class M3EvaluatorTests(unittest.TestCase):
         report, _ = M3.evaluate(gold, pred)
         self.assertEqual(report["first_invalid_localization"]["false_positive_rate_when_absent"], 1.0)
 
+    def test_false_theorem_can_be_excluded_from_localization(self):
+        gold = self.gold()
+        gold[0]["gold_first_invalid_applicable"] = False
+        report, details = M3.evaluate(gold, self.prediction())
+        self.assertEqual(report["first_invalid_localization"]["applicable_count"], 0)
+        self.assertFalse(details[0]["first_invalid_applicable"])
+
     def test_m2_source_is_converted_to_checker_contract(self):
         converted = PREPARE.convert({
             "proof_id": "m2-001", "domain": "elementary_algebra", "theorem": "T",
