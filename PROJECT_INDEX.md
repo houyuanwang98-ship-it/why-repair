@@ -87,6 +87,7 @@
 | [M7 Controller 清单 Schema](schemas/m7_controller_candidate_manifest_v0_1.schema.json) | 拒绝把 fixture 治理机械误报为真实运行或复现 | `v0.1` |
 | [M7 Person A 三方全内容交叉审查](docs/milestones/M07_person_a_cross_review_of_a_b_controller.md) | 数学语义、同/异模型覆盖、预算、公平性、运行完整性与正式门逐项复核 | 两项 P1、一项 P2 已修复；fixture 工程通过，正式 M7 阻塞 |
 | [M7 Person B 三方全内容交叉审查](docs/milestones/M07_person_b_cross_review_of_a_b_controller.md) | 执行复现、全局运行身份、实际字节、盲审计划与正式门逐项复核 | 三项 P1 已修复；fixture 工程通过，正式 M7 阻塞 |
+| [M7 Person B 历史案例 026–050 人工复核](docs/milestones/M07_human_review/README.md) | 导入两份 Person B 材料，统一25题复验结果、原文与完整性证据 | 20题确认；028、032、038、042、044 待裁决；非盲历史子集 |
 | [M8 Person A 方法第 2 部分](docs/milestones/M08_person_a_dependency_obligation_evaluator_error_certificate.md) | 依赖图、局部义务、Evaluator、首错策略、Error Certificate 及 Benchmark 可测接口 | `v0.2` 条件通过；B 逐项语义复核、第三专家与发布绑定待完成 |
 | [M8 Person B 系统、实验、成本与复现](docs/milestones/M08_person_b_system_experiments_reproducibility.md) | Controller/Repair、九方法配置、指标统计成本、实现核对与发布归档边界 | Person A 条件通过 1–4/6–7；第 5 项与正式门阻塞 |
 | [M8 Person B 写作候选机器清单](data/benchmarks/m8/person_b_writing_candidate_v0_1.json) | 绑定所审实现与上游门的 SHA-256，拒绝把候选写作冒充正式发布 | `m8_exit_allowed=false` |

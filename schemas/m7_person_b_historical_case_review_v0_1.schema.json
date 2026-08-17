@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m7_person_b_historical_case_review_v0_1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "scope",
+    "provenance",
+    "accounting",
+    "status",
+    "records"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "m7-person-b-historical-case-review-0.1"
+    },
+    "scope": {
+      "type": "object"
+    },
+    "provenance": {
+      "type": "object"
+    },
+    "accounting": {
+      "type": "object"
+    },
+    "status": {
+      "const": "person_b_review_imported_five_corrections_pending_adjudication"
+    },
+    "records": {
+      "type": "array",
+      "minItems": 25,
+      "maxItems": 25,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sample_id",
+          "person_b_verification",
+          "verbatim_response"
+        ],
+        "properties": {
+          "sample_id": {
+            "pattern": "^m2-\\d{3}$"
+          },
+          "person_b_verification": {
+            "enum": [
+              "confirmed",
+              "correction_proposed"
+            ]
+          },
+          "verbatim_response": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}
+
