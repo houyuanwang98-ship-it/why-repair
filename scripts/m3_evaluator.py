@@ -180,14 +180,10 @@ def evaluate(gold_rows: list[dict[str, Any]], prediction_rows: list[dict[str, An
         proof_pred.append(prediction_validity(pred))
         error_gold.append(gold["gold_error_type"])
         error_pred.append(prediction_error_type(pred) if pred else MISSING)
-        gap_applicable = gold.get("gold_first_gap_applicable", True)
-        invalid_applicable = gold.get("gold_first_invalid_applicable", True)
-        if gap_applicable:
-            gap_gold.append(gold.get("gold_first_gap_step"))
-            gap_pred.append(normalize_node_id(pred.get("first_gap_step")))
-        if invalid_applicable:
-            invalid_gold.append(gold.get("gold_first_invalid_step"))
-            invalid_pred.append(normalize_node_id(pred.get("first_invalid_step")))
+        gap_gold.append(gold.get("gold_first_gap_step"))
+        gap_pred.append(normalize_node_id(pred.get("first_gap_step")))
+        invalid_gold.append(gold.get("gold_first_invalid_step"))
+        invalid_pred.append(normalize_node_id(pred.get("first_invalid_step")))
 
         pred_nodes = _prediction_nodes(pred)
         for node in _gold_nodes(gold):
@@ -214,12 +210,10 @@ def evaluate(gold_rows: list[dict[str, Any]], prediction_rows: list[dict[str, An
             "gold_validity_status": proof_gold[-1],
             "predicted_validity_status": proof_pred[-1],
             "validity_correct": proof_gold[-1] == proof_pred[-1],
-            "gold_first_gap_step": gold.get("gold_first_gap_step"),
-            "predicted_first_gap_step": normalize_node_id(pred.get("first_gap_step")),
-            "gold_first_invalid_step": gold.get("gold_first_invalid_step"),
-            "predicted_first_invalid_step": normalize_node_id(pred.get("first_invalid_step")),
-            "first_gap_applicable": gap_applicable,
-            "first_invalid_applicable": invalid_applicable,
+            "gold_first_gap_step": gap_gold[-1],
+            "predicted_first_gap_step": gap_pred[-1],
+            "gold_first_invalid_step": invalid_gold[-1],
+            "predicted_first_invalid_step": invalid_pred[-1],
         })
 
     true_edges = len(gold_edges & pred_edges)
