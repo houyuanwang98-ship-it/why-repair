@@ -1,4 +1,6 @@
 import importlib.util
+import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -75,6 +77,18 @@ class M3EvaluatorTests(unittest.TestCase):
         self.assertEqual(M3.prediction_error_type({"validity_status": "valid_with_gap"}), "proof_gap")
         self.assertEqual(M3.prediction_error_type({"validity_status": "undetermined"}), "undetermined")
         self.assertEqual(M3.prediction_validity({"validity_status": "false_theorem"}), "invalid")
+
+    def test_prediction_directory_digest_is_content_stable_and_ordered(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "b.json").write_text(json.dumps({"id": "b"}), encoding="utf-8")
+            (root / "a.json").write_text(json.dumps({"id": "a"}), encoding="utf-8")
+            first = M3.sha256_path(root)
+            self.assertEqual(first, M3.sha256_path(root))
+            (root / "ignored.txt").write_text("not a prediction", encoding="utf-8")
+            self.assertEqual(first, M3.sha256_path(root))
+            (root / "a.json").write_text(json.dumps({"id": "changed"}), encoding="utf-8")
+            self.assertNotEqual(first, M3.sha256_path(root))
 
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ from __future__ import annotations
 from copy import deepcopy
 from contextlib import contextmanager
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from typing import Any
 
 from .contracts import (
@@ -37,6 +38,8 @@ ALLOWED_TRANSITIONS = {
     "irreparable": {"terminated"},
     "terminated": set(),
 }
+
+EXECUTABLE_REPAIR_OPERATIONS = frozenset({"replace", "insert_before"})
 
 
 @dataclass(frozen=True)
@@ -80,10 +83,143 @@ class DualAgentController:
         self._current_evaluation: dict[NodeKey, str] = {}
         self._proof_contexts: dict[str, str] = {}
         self._events: list[dict[str, Any]] = []
+        self._invalidation_records: list[dict[str, Any]] = []
 
     @property
     def events(self) -> list[dict[str, Any]]:
         return deepcopy(self._events)
+
+    @property
+    def invalidation_records(self) -> list[dict[str, Any]]:
+        return deepcopy(self._invalidation_records)
+
+    def proof_snapshot(self, proof_id: str) -> dict[str, Any]:
+        """Return a deterministic, read-only view used by orchestration layers."""
+        if not isinstance(proof_id, str) or not proof_id.strip():
+            raise ContractError("proof_id must be a nonempty string")
+        keys = [
+            key for logical, key in self._current.items() if logical[0] == proof_id
+        ]
+        if not keys:
+            raise KeyError(f"unknown proof: {proof_id}")
+        keys.sort(key=lambda key: self._versions[key]["node"]["order_key"])
+        nodes = [deepcopy(self._versions[key]) for key in keys]
+        return {
+            "schema_version": SCHEMA_VERSION,
+            "proof_id": proof_id,
+            "nodes": nodes,
+            "ready_for_evaluation": [
+                key.ref()
+                for key in keys
+                if self._versions[key]["lifecycle_state"] == "pending_evaluation"
+                and all(
+                    self._current.get((ref["proof_id"], ref["node_id"]))
+                    == NodeKey.from_ref(ref)
+                    and self._versions.get(NodeKey.from_ref(ref), {}).get(
+                        "lifecycle_state"
+                    ) == "active"
+                    for ref in self._versions[key]["node"]["depends_on"]
+                )
+            ],
+        }
+
+    def repair_queue(self, proof_ids: list[str] | None = None) -> list[dict[str, Any]]:
+        """Return deterministic repair handoffs, explicitly marking incomplete bindings."""
+        if proof_ids is not None:
+            if not isinstance(proof_ids, list) or any(
+                not isinstance(value, str) or not value.strip()
+                for value in proof_ids
+            ):
+                raise ContractError("proof_ids must be an array of nonempty strings")
+            selected = set(proof_ids)
+            if len(selected) != len(proof_ids):
+                raise ContractError("proof_ids must be unique")
+        else:
+            selected = None
+        keys = [
+            key
+            for logical, key in self._current.items()
+            if (selected is None or logical[0] in selected)
+            and self._versions[key]["lifecycle_state"] == "pending_repair"
+        ]
+        keys.sort(
+            key=lambda key: (
+                key.proof_id,
+                self._versions[key]["node"]["order_key"],
+            )
+        )
+        queue: list[dict[str, Any]] = []
+        for key in keys:
+            evaluation_id = self._current_evaluation.get(key)
+            evaluation = self._evaluations.get(evaluation_id)
+            if evaluation is None:
+                queue.append({
+                    "target": key.ref(),
+                    "status": "awaiting_evaluation_binding",
+                    "evaluation": None,
+                    "error_certificate": None,
+                })
+                continue
+            certificate_id = evaluation.get("error_certificate_id")
+            certificate = self._error_certificates.get(certificate_id)
+            if certificate is None:
+                queue.append({
+                    "target": key.ref(),
+                    "status": "awaiting_error_certificate",
+                    "evaluation": deepcopy(evaluation),
+                    "error_certificate": None,
+                })
+                continue
+            allowed_operations = set(
+                certificate["repair_constraints"]["allowed_operations"]
+            )
+            executable_operations = sorted(
+                allowed_operations & EXECUTABLE_REPAIR_OPERATIONS
+            )
+            if not executable_operations:
+                status = (
+                    "requires_problem_revision"
+                    if "add_assumption" in allowed_operations
+                    else "unsupported_operation"
+                )
+                queue.append({
+                    "target": key.ref(),
+                    "status": status,
+                    "evaluation": deepcopy(evaluation),
+                    "error_certificate": deepcopy(certificate),
+                    "executable_operations": [],
+                })
+                continue
+            queue.append({
+                "target": key.ref(),
+                "status": "ready",
+                "evaluation": deepcopy(evaluation),
+                "error_certificate": deepcopy(certificate),
+                "executable_operations": executable_operations,
+            })
+        return queue
+
+    def assert_consistent(self, proof_id: str) -> None:
+        """Audit controller-owned structural and lifecycle invariants."""
+        self.validate_graph(proof_id)
+        snapshot = self.proof_snapshot(proof_id)
+        for record in snapshot["nodes"]:
+            state = record["lifecycle_state"]
+            verdict = record["current_verdict"]
+            key = NodeKey.from_ref(record["node"])
+            if state in {"blocked_by_invalid_dependency", "stale", "pending_evaluation"} and verdict is not None:
+                raise ContractError(f"{state} node must not retain a verdict: {key}")
+            if state == "active" and verdict not in {"accepted", "accepted_with_gap"}:
+                raise ContractError(f"active node lacks an accepting verdict: {key}")
+            if state == "pending_repair" and verdict not in {
+                "unsupported", "counterexample_found", "ambiguous"
+            }:
+                raise ContractError(f"pending_repair node lacks a repairable verdict: {key}")
+            evaluation_id = self._current_evaluation.get(key)
+            if evaluation_id is not None:
+                evaluation = self._evaluations.get(evaluation_id)
+                if evaluation is None or NodeKey.from_ref(evaluation["target"]) != key:
+                    raise ContractError(f"current evaluation binding is inconsistent: {key}")
 
     @contextmanager
     def transaction(self):
@@ -92,6 +228,7 @@ class DualAgentController:
             "_versions", "_current", "_patches", "_error_certificates",
             "_counterexample_certificates", "_ambiguity_analyses", "_evaluations",
             "_current_evaluation", "_proof_contexts", "_events",
+            "_invalidation_records",
         )
         snapshot = {name: deepcopy(getattr(self, name)) for name in attributes}
         try:
@@ -173,9 +310,16 @@ class DualAgentController:
             for dependency_ref in record["node"]["depends_on"]:
                 dependency_key = NodeKey.from_ref(dependency_ref)
                 dependency = self._versions.get(dependency_key)
-                if dependency is None or dependency["lifecycle_state"] != "active":
+                dependency_current = self._current.get(
+                    (dependency_key.proof_id, dependency_key.node_id)
+                )
+                if (
+                    dependency is None
+                    or dependency_current != dependency_key
+                    or dependency["lifecycle_state"] != "active"
+                ):
                     raise InvalidTransitionError(
-                        f"cannot evaluate before dependency is active: {dependency_key}"
+                        f"cannot evaluate before dependency is active and current: {dependency_key}"
                     )
         record["lifecycle_state"] = new_state
         if new_state in {"stale", "blocked_by_invalid_dependency"}:
@@ -310,6 +454,10 @@ class DualAgentController:
 
     def record_ambiguity_analysis(self, analysis: dict[str, Any]) -> None:
         """Apply an Evaluator-authored branch analysis without choosing an interpretation."""
+        with self.transaction():
+            self._record_ambiguity_analysis(analysis)
+
+    def _record_ambiguity_analysis(self, analysis: dict[str, Any]) -> None:
         validate_contract("ambiguity_analysis", analysis)
         if analysis["evaluator_id"] not in self._evaluator_ids:
             raise ContractError("ambiguity analysis is not from a configured evaluator")
@@ -334,6 +482,58 @@ class DualAgentController:
             verdict, destination = "unsupported", "pending_repair"
         else:
             verdict, destination = "undetermined", "undetermined"
+        if destination == "pending_repair":
+            certificate_id = f"{analysis['analysis_id']}:error"
+            evaluation_id = f"{analysis['analysis_id']}:evaluation"
+            certificate = {
+                "schema_version": SCHEMA_VERSION,
+                "certificate_id": certificate_id,
+                "target": key.ref(),
+                "premises": deepcopy(record["node"]["depends_on"]),
+                "error_type": "interpretation_ambiguity",
+                "failed_inference": (
+                    "The claim has multiple reasonable interpretations and "
+                    f"the ambiguity analysis concluded {outcome}."
+                ),
+                "evidence": [
+                    f"{item['interpretation_id']}: {item['verdict']} — {item['reason']}"
+                    for item in analysis["interpretations"]
+                    if item["plausibility"] == "reasonable"
+                ],
+                "repair_constraints": {
+                    "allowed_operations": ["replace"],
+                    "max_new_nodes": 1,
+                    "preserve_theorem": True,
+                    "preserve_assumptions": True,
+                },
+            }
+            followup_evaluation = {
+                "schema_version": SCHEMA_VERSION,
+                "evaluation_id": evaluation_id,
+                "target": key.ref(),
+                "verdict": verdict,
+                "error_type": "interpretation_ambiguity",
+                "reason": certificate["failed_inference"],
+                "dependency_versions": expected_versions,
+                "evaluator_id": analysis["evaluator_id"],
+                "error_certificate_id": certificate_id,
+                "ambiguity_analysis_id": analysis["analysis_id"],
+            }
+            validate_contract("error_certificate", certificate)
+            validate_contract("evaluation_record", followup_evaluation)
+            if certificate_id in self._error_certificates:
+                raise ContractError(f"duplicate error certificate id: {certificate_id}")
+            if evaluation_id in self._evaluations:
+                raise ContractError(f"duplicate evaluation id: {evaluation_id}")
+            self.record_error_certificate(certificate)
+            self._evaluations[evaluation_id] = deepcopy(followup_evaluation)
+            self._current_evaluation[key] = evaluation_id
+            self._events.append({
+                "event": "evaluation_recorded",
+                "target": key.ref(),
+                "evaluation_id": evaluation_id,
+                "source": "ambiguity_analysis",
+            })
         record["current_verdict"] = verdict
         self.transition(key.ref(), destination, reason=f"ambiguity analysis {analysis['analysis_id']}")
         self._events.append({
@@ -362,6 +562,10 @@ class DualAgentController:
         constraints = certificate["repair_constraints"]
         if patch["operation"] not in constraints["allowed_operations"]:
             raise ContractError("patch operation is not allowed by the error certificate")
+        if patch["operation"] not in EXECUTABLE_REPAIR_OPERATIONS:
+            raise ContractError(
+                f"patch operation {patch['operation']!r} is not executable by Controller v0.3"
+            )
         if len(patch["replacement_nodes"]) > constraints["max_new_nodes"]:
             raise ContractError("patch exceeds the error certificate node budget")
         if (constraints["preserve_theorem"] or constraints["preserve_assumptions"]) and patch["changes_problem"]:
@@ -498,6 +702,9 @@ class DualAgentController:
                 dependencies = [NodeKey.from_ref(ref) for ref in record["node"]["depends_on"]]
                 if all(
                     dependency in self._versions
+                    and self._current.get(
+                        (dependency.proof_id, dependency.node_id)
+                    ) == dependency
                     and self._versions[dependency]["lifecycle_state"] == "active"
                     for dependency in dependencies
                 ):
@@ -599,3 +806,28 @@ class DualAgentController:
                         })
                     stale_keys.add(key)
                     changed = True
+        invalidated = [
+            key.ref() for key in sorted(
+                stale_keys - {old_key},
+                key=lambda item: (self._versions[item]["node"]["order_key"], str(item.node_id), item.version),
+            )
+        ]
+        if invalidated:
+            record = {
+                "schema_version": SCHEMA_VERSION,
+                "invalidation_id": f"inv-{len(self._invalidation_records) + 1}",
+                "trigger_old": old_key.ref(),
+                "trigger_new": new_key.ref(),
+                "invalidated": invalidated,
+                "reason": f"dependency {old_key.node_id}@v{old_key.version} was superseded",
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+            }
+            validate_contract("invalidation_record", record)
+            self._invalidation_records.append(record)
+            self._events.append({
+                "event": "descendants_invalidated",
+                "invalidation_id": record["invalidation_id"],
+                "trigger_old": old_key.ref(),
+                "trigger_new": new_key.ref(),
+                "invalidated": invalidated,
+            })

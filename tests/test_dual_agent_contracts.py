@@ -8,6 +8,87 @@ REF2 = {"proof_id": "p1", "node_id": 2, "version": 1}
 
 
 class DualAgentContractTest(unittest.TestCase):
+    DIGEST = "sha256:" + "a" * 64
+
+    def test_m1_completion_objects_have_positive_contracts(self):
+        objects = {
+            "proof_instance": {
+                "schema_version": "0.3", "proof_id": "p1", "theorem": "If n is even, n^2 is even.",
+                "global_assumptions": ["n is an integer", "n is even"], "proof_text": "Let n=2k.",
+                "domain": "algebra", "source": None,
+            },
+            "local_obligation": {
+                "schema_version": "0.3", "obligation_id": "obl-1", "target": REF2,
+                "global_assumptions": ["n is even"],
+                "ambient_facts": [{"statement": "even means divisible by 2", "source": "definition"}],
+                "premises": [REF1], "dependency_fingerprint": self.DIGEST, "goal": "n^2 is even",
+            },
+            "invalidation_record": {
+                "schema_version": "0.3", "invalidation_id": "inv-1", "trigger_old": REF1,
+                "trigger_new": {**REF1, "version": 2}, "invalidated": [REF2],
+                "reason": "parent version changed", "timestamp": "2026-08-14T20:00:00+08:00",
+            },
+            "model_invocation": {
+                "schema_version": "0.3", "invocation_id": "call-1", "agent_role": "evaluator",
+                "model": "fixture-model", "prompt_version": "eval-v1", "input_digest": self.DIGEST,
+                "output_digest": self.DIGEST, "status": "completed", "started_at": "2026-08-14T20:00:00+08:00",
+                "finished_at": "2026-08-14T20:00:01+08:00", "token_usage": {"input": 10, "output": 4}, "latency_ms": 1000,
+            },
+            "retry_record": {
+                "schema_version": "0.3", "retry_id": "retry-1", "invocation_id": "call-1",
+                "attempt": 1, "reason": "timeout", "outcome": "scheduled", "timestamp": "2026-08-14T20:00:02+08:00",
+            },
+            "cache_fingerprint": {
+                "schema_version": "0.3", "cache_id": "cache-1", "node": REF2,
+                "code_digest": self.DIGEST, "schema_digest": self.DIGEST, "theorem_bank_digest": None,
+                "proof_context_digest": self.DIGEST, "dependency_digest": self.DIGEST,
+                "prompt_digest": self.DIGEST, "model_digest": self.DIGEST, "tool_digest": self.DIGEST,
+            },
+        }
+        for kind, value in objects.items():
+            with self.subTest(kind=kind):
+                self.assertIs(value, validate_contract(kind, value))
+
+    def test_m1_completion_objects_fail_closed(self):
+        invalid = [
+            ("proof_instance", {"schema_version": "0.3"}),
+            ("local_obligation", {
+                "schema_version": "0.3", "obligation_id": "obl", "target": REF2,
+                "global_assumptions": [], "ambient_facts": [], "premises": [REF2],
+                "dependency_fingerprint": self.DIGEST, "goal": "goal",
+            }),
+            ("invalidation_record", {
+                "schema_version": "0.3", "invalidation_id": "inv", "trigger_old": REF1,
+                "trigger_new": REF1, "invalidated": [REF2], "reason": "same version", "timestamp": "now",
+            }),
+            ("model_invocation", {
+                "schema_version": "0.3", "invocation_id": "call", "agent_role": "evaluator", "model": "m",
+                "prompt_version": "p", "input_digest": self.DIGEST, "output_digest": None, "status": "completed",
+                "started_at": "now", "finished_at": None, "token_usage": {"input": 0, "output": 0}, "latency_ms": 0,
+            }),
+            ("retry_record", {
+                "schema_version": "0.3", "retry_id": "r", "invocation_id": "i", "attempt": 0,
+                "reason": "timeout", "outcome": "scheduled", "timestamp": "now",
+            }),
+            ("cache_fingerprint", {
+                "schema_version": "0.3", "cache_id": "c", "node": REF2,
+                "code_digest": "not-a-digest", "schema_digest": self.DIGEST, "theorem_bank_digest": None,
+                "proof_context_digest": self.DIGEST, "dependency_digest": self.DIGEST,
+                "prompt_digest": self.DIGEST, "model_digest": self.DIGEST, "tool_digest": self.DIGEST,
+            }),
+        ]
+        for kind, value in invalid:
+            with self.subTest(kind=kind), self.assertRaises(ContractError):
+                validate_contract(kind, value)
+
+    def test_execution_record_timestamps_require_timezone(self):
+        retry = {
+            "schema_version": "0.3", "retry_id": "retry-1", "invocation_id": "call-1",
+            "attempt": 1, "reason": "timeout", "outcome": "scheduled", "timestamp": "2026-08-14T20:00:00",
+        }
+        with self.assertRaisesRegex(ContractError, "UTC offset"):
+            validate_contract("retry_record", retry)
+
     def test_valid_run_manifest(self):
         manifest = {
             "schema_version": "0.3", "run_id": "run-1",

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m5_person_a_patch_review_v0_1.schema.json",
+  "title": "M5 Person A mathematical patch review",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "review_id", "context_id", "reviewer_id", "checks", "hidden_assumptions", "introduced_errors", "deletion_trials", "evidence_used", "accepted", "rejection_codes", "reason"],
+  "properties": {
+    "schema_version": {"const": "0.1"}, "review_id": {"type": "string", "minLength": 1},
+    "context_id": {"type": "string", "minLength": 1}, "reviewer_id": {"type": "string", "minLength": 1},
+    "checks": {"type": "object", "additionalProperties": false,
+      "required": ["mathematically_valid", "resolves_failed_inference", "theorem_preserved", "assumptions_preserved", "domain_preserved", "unrelated_branches_preserved", "no_new_errors", "operationally_minimal"],
+      "properties": {"mathematically_valid": {"type": "boolean"}, "resolves_failed_inference": {"type": "boolean"}, "theorem_preserved": {"type": "boolean"}, "assumptions_preserved": {"type": "boolean"}, "domain_preserved": {"type": "boolean"}, "unrelated_branches_preserved": {"type": "boolean"}, "no_new_errors": {"type": "boolean"}, "operationally_minimal": {"type": "boolean"}}},
+    "hidden_assumptions": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "introduced_errors": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "deletion_trials": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["edit_id", "removal_breaks_repair", "reason"], "properties": {"edit_id": {"type": "string", "minLength": 1}, "removal_breaks_repair": {"type": "boolean"}, "reason": {"type": "string", "minLength": 1}}}},
+    "evidence_used": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "accepted": {"type": "boolean"},
+    "rejection_codes": {"type": "array", "uniqueItems": true, "items": {"enum": ["mathematical_error", "failed_inference_unresolved", "changes_problem", "hidden_assumption", "domain_changed", "target_changed", "unrelated_branch_changed", "new_error_introduced", "not_minimal", "insufficient_evidence", "stale_binding"]}},
+    "reason": {"type": "string", "minLength": 1}
+  }
+}

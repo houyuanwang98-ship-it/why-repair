@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "M3 Evaluator metric report v0.2",
+  "type": "object",
+  "required": [
+    "schema_version", "sample_count", "prediction_coverage", "segmentation",
+    "proof_validity", "error_type", "first_gap_localization",
+    "first_invalid_localization", "first_error_localization", "node_type",
+    "node_verdict_group", "dependency_edges", "safety_rates",
+    "node_gold_coverage", "inputs", "unexpected_prediction_ids"
+  ],
+  "properties": {
+    "schema_version": {"const": "m3-evaluator-report-0.2"},
+    "sample_count": {"type": "integer", "minimum": 0},
+    "prediction_coverage": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "segmentation": {
+      "type": "object",
+      "required": ["status", "reason", "boundary_f1"],
+      "properties": {
+        "status": {"enum": ["evaluated", "not_evaluable"]},
+        "reason": {"type": "string", "minLength": 1},
+        "boundary_f1": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      },
+      "additionalProperties": false
+    },
+    "proof_validity": {"$ref": "#/$defs/classificationMetric"},
+    "error_type": {"$ref": "#/$defs/classificationMetric"},
+    "node_type": {"$ref": "#/$defs/classificationMetric"},
+    "node_verdict_group": {"$ref": "#/$defs/classificationMetric"},
+    "first_gap_localization": {"$ref": "#/$defs/localizationMetric"},
+    "first_invalid_localization": {"$ref": "#/$defs/localizationMetric"},
+    "first_error_localization": {"$ref": "#/$defs/extendedLocalizationMetric"},
+    "dependency_edges": {
+      "type": "object",
+      "required": ["gold_count", "predicted_count", "true_positive", "precision", "recall", "f1", "critical_dependency_omission_rate"]
+    },
+    "safety_rates": {
+      "type": "object",
+      "required": ["node_false_acceptance_rate", "node_false_accepts", "gold_invalid_nodes", "proof_false_acceptance_rate", "proof_false_accepts", "gold_invalid_proofs", "proof_abstention_rate", "node_abstention_rate"]
+    },
+    "node_gold_coverage": {"type": "object", "required": ["samples", "nodes"]},
+    "inputs": {
+      "type": "object",
+      "required": ["gold_sha256", "predictions_sha256"],
+      "properties": {
+        "gold_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "predictions_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "unexpected_prediction_ids": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "classificationMetric": {"type": "object", "required": ["count", "accuracy", "macro_f1", "per_label"]},
+    "localizationMetric": {"type": "object", "required": ["applicable_count", "exact_accuracy", "false_positive_rate_when_absent"]},
+    "extendedLocalizationMetric": {"type": "object", "required": ["applicable_count", "exact_accuracy", "false_positive_rate_when_absent", "overall_count", "overall_correct", "overall_accuracy"]}
+  }
+}

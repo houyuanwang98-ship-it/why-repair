@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "M0-M4 Cross-Milestone Completion Audit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "milestones", "tests", "artifacts"],
+  "properties": {
+    "schema_version": {"const": "m0-m4-completion-audit-1.0"},
+    "status": {"const": "engineering_complete_with_declared_evidence_limitations"},
+    "milestones": {
+      "type": "object", "additionalProperties": false,
+      "required": ["M0", "M1", "M2", "M3", "M4"],
+      "properties": {
+        "M0": {"$ref": "#/$defs/milestone"},
+        "M1": {"$ref": "#/$defs/milestone"},
+        "M2": {"$ref": "#/$defs/milestone"},
+        "M3": {"$ref": "#/$defs/milestone"},
+        "M4": {"$ref": "#/$defs/milestone"}
+      }
+    },
+    "tests": {
+      "type": "object", "additionalProperties": false,
+      "required": ["command", "passed"],
+      "properties": {
+        "command": {"const": "python -m unittest discover -s tests"},
+        "passed": {"type": "integer", "minimum": 210}
+      }
+    },
+    "artifacts": {
+      "type": "object", "minProperties": 1,
+      "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+    }
+  },
+  "$defs": {
+    "milestone": {
+      "type": "object", "additionalProperties": false,
+      "required": ["release", "engineering_complete", "person_a", "person_b", "controller", "limitations"],
+      "properties": {
+        "release": {"type": "string", "minLength": 1},
+        "engineering_complete": {"type": "boolean"},
+        "person_a": {"type": "boolean"},
+        "person_b": {"type": "boolean"},
+        "controller": {"type": "boolean"},
+        "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    }
+  }
+}

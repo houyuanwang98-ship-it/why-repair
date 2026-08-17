@@ -1,6 +1,283 @@
 # Changelog
 
+## 2026-08-15 — M8 Person B three-party cross-review hardening
+
+- Completed Person B's execution/reproducibility review of all current M8 Person A, Person B, and Controller content without claiming mathematical or external-review authority.
+- Rejected unknown or wrongly typed terminal statuses/digests and required globally unique run IDs plus raw-output, scoring-input, and integer-cost bindings before publication aggregation.
+- Closed the Controller Schema shapes for assignments, terminal ledgers, and publication rows while preserving every formal M8 and release gate as blocked.
+
+## 2026-08-15 — M8 Person A three-party cross-review hardening
+
+- Reviewed every submitted M8 Person A, Person B, and Controller item against the two project-wide acceptance documents, and recorded item-level `conditionally_passed`, `needs_revision`, and `blocked` outcomes.
+- Corrected Person B descriptions of delete-history preservation and transactional rollback, and withdrew an unsupported claim that Person B had semantically cross-reviewed the Person A mathematics chapter.
+- Closed a publication P1: caller booleans plus arbitrary hashed files can no longer create `release_ready`; Controller v0.1 now has an immutable false trusted-attestation gate.
+- Downgraded the Controller from “all seven automations complete” to its implemented gate scaffold, repaired two false-positive negative tests, and bound the Person B Schema and tests into its candidate Manifest.
+- Kept M8 formally blocked on missing Person A chapters, formal M7 results, system card, external reviews, clean reproduction, and license/privacy evidence.
+
+## 2026-08-15 — M8 Controller publication gate
+
+- Implemented the seven-part M8 Controller engineering candidate for exact-byte release binding, raw terminal-ledger aggregation, publication-table denominator checks, conservative secret scanning, and upstream Manifest revalidation.
+- Required every passed release gate to bind nonempty live-byte evidence, and added adversarial tests for bare true gates, stale hashes, missing runs, duplicate identities, path escape, and key-material findings.
+- Preserved fail-closed status because formal M7 results, external reviews, clean-environment reproduction, and license/privacy evidence do not yet exist.
+
+## 2026-08-15 — M8 Person B system and reproducibility writing
+
+- Completed Person B's seven-part M8 writing candidate for Controller/version/cache invalidation, repair and termination, nine-method configurations, metrics/statistics/cost, reproducibility, implementation review, and archive identification.
+- Cross-checked every implementation claim against current M5–M7 code and added a strict Schema, regression tests, and a SHA-256-bound machine candidate manifest that also binds the writing document itself.
+- Kept formal experiment results, real costs, external review, clean reproduction, system-card finalization, release creation, and M8 exit fail closed.
+
+## 2026-08-15 — M7 Person B cross-review hardening
+
+- Enforced globally unique run IDs across model families and rechecked the invariant at integrity, aggregate, and replay boundaries.
+- Required Controller construction and validation to re-read actual artifacts and fixed Person A/B upstream Manifest bytes.
+- Added deterministic, digest-bound blind-review planning with exhaustive critical cases, capped controls, side-by-side anonymous configs, and a separately sealed identity mapping.
+- Added the Person B A/B/Controller cross-review record while preserving all formal M7 gates as blocked.
+
+## 2026-08-15 — M7 Person A cross-review hardening
+
+- Completed Person A's full mathematical-comparability review of the M7 A/B/Controller protocol, fixture code, manifests, schemas, tests, and repository claims.
+- Required every Controller manifest to include at least one complete same-model family and one complete different-model family.
+- Enforced frozen per-sample limits against the terminal ledger's reported cumulative token, model-call, and wall-clock totals before run-integrity acceptance or aggregate reconstruction.
+- Made result-set digests independent of caller row order and documented that fixture budget checks validate reported cumulative totals, not absent provider attempt records.
+- Recorded that fixture engineering passes after these repairs while all real data, human review, experiment, statistics, replay, and M7 exit gates remain blocked.
+
+## 2026-08-15 — M7 Controller fixture governance
+
+### Added
+
+- Add a fail-closed M7 Controller Manifest spanning complete nine-method model families, stable cases, upstream A/B digests, frozen artifacts, Gold/candidate identities, and replay seed.
+- Bind every terminal ledger row to exactly one result record with the same run ID, status, raw-output bytes, and scoring-input digest.
+- Rebuild cost/failure aggregate tables from the complete ledger and deterministically select successful runs for later independent-directory replay.
+- Add Controller protocol, machine candidate Manifest/Schema, adversarial fixtures, and README/roadmap/index integration without claiming formal M7 execution.
+- Harden replay sampling against forged, unknown, incomplete, or duplicate terminal runs; reject dot-path artifact aliases and malformed upstream bindings with Controller-domain errors.
+
+## 2026-08-15 — M6 Controller adversarial self-audit hardening
+
+### Fixed
+
+- Reject non-string and non-normalized artifact paths (including in-repository `..` aliases) before hashing, so every `freeze_artifacts` result is directly admissible to the Controller Manifest.
+- Require `retry_exhausted` ledger rows to be terminal, preventing a run from continuing to a selected success after its frozen retry policy has already been exhausted.
+- Add negative regression fixtures for both bypasses and align the M6 Controller protocol text with the enforced behavior.
+
+## 2026-08-15 — M7 Person B engineering candidate
+
+- Added fail-closed M7 Person B checks for 200–500-case provenance/license Schema, exact and near-duplicate leakage findings, complete nine-method run matrices, and failure-preserving terminal ledgers.
+- Added a digest-bound fixture-only candidate Manifest and documented the remaining M5/M6, human-signature, dataset, provider-run, Gold-audit, and Controller gates.
+- Updated README and ROADMAP without claiming that formal M7 data or experiment results exist.
+
+## 2026-08-15 — M7 Person A fail-closed protocol candidate
+
+- Added the Person A protocol for reviewing a 200–500 item benchmark, freezing mathematical Gold, auditing pre-run fairness, and conducting final blinded mathematical error analysis.
+- Added a per-case blind review template covering false accepts, invalid global counterexamples, false repairs, three required confusion pairs, seven root-cause classes, and post-lock unblinding.
+- Added a digest-bound manifest, strict Schema, and regressions that preserve the closed M5/M6 gates and refuse to claim missing data, Gold, experiments, signatures, or external review.
+
+## 2026-08-15 — M6 Person B cross-review hardening
+
+- Bound mathematical aggregation to the exact Controller Manifest configuration/sample product and rejected missing, duplicate, or unassigned scoring rows.
+- Bound every mathematical scoring record to the exact terminal run ID and terminal success/failure status in a complete validated ledger.
+- Marked repair and counterexample mechanism metrics `not_applicable` for methods that cannot emit those objects, and separated active proof abstention from infrastructure failure.
+- Rejected non-normalized or repository-escaping artifact keys at Manifest construction and recorded the Person B execution/reproducibility cross-review.
+
+## 2026-08-15 — M6 Person A cross-review hardening
+
+- Completed a Person A mathematical-comparability review of the M6 A/B/Controller fixture surface and recorded twelve corrected findings.
+- Closed caller-asserted formal execution, derived verified repair/false repair from complete mathematical gates, enforced preregistered comparison families and SHA-256 config bindings, and made wall-clock budgets cumulative across retries.
+- Corrected gap/undetermined scoring, separated bootstrap confidence intervals from paired randomization p-values, added worst-case safety bounds, and kept all human, M5, signature-verification, smoke, Pilot, and M7 gates fail-closed.
+
+## 2026-08-15 — M6 Controller fixture-only protocol freeze and run ledger
+
+- Added deterministic artifact/config/sample freezing and a content-bound Controller Manifest candidate.
+- Added complete experiment-by-sample run-ledger validation that preserves failed attempts, retries, timeouts, token use, cost, and latency.
+- Added intention-to-treat aggregation, seeded paired bootstrap intervals, and within-hypothesis Holm adjustment.
+- Added Controller milestone documentation and tests while keeping real M6 execution fail-closed behind the M5 and human-signature gates.
+
+## 2026-08-15 - M6 Person B fixture-only experiment surface
+
+- Registered the nine locked baseline, ablation, and full-system method surfaces with unique content-bound experiment IDs.
+- Added equal-budget comparison checks, method-isolated cache fingerprints, intention-to-treat metric fixtures, and an M5/signature fail-closed execution gate.
+- Documented pre-results budget and power-analysis inputs without claiming M6 entry, human sign-off, Pilot execution, or experimental results.
+
+## 2026-08-15 +08:00 — Lock M6 Person A pre-results protocol candidate
+
+- Locked the pre-results candidate for RQ1–RQ3, mathematical outcome definitions, primary/secondary metrics, stratification, fairness, model-budget comparability, failure scoring, and change control in `docs/milestones/M06_person_a_preregistered_protocol.md`; a real Person A digest signature is still required for formal freeze.
+- Added the blinded per-case mathematical error-analysis and leakage-audit template in `docs/milestones/M06_person_a_blind_error_analysis_template.md`.
+- Added a strict machine-readable candidate manifest and Schema binding both document digests, the evidence strength of the no-results-viewed statement, pending signatures, and the closed M5 entry gate.
+- Kept the M6 execution gate fail-closed: these are pre-registration artifacts, not evidence that pending M5 human gates or M6 experiments have completed.
+
+## 2026-08-15 +08:00 — Complete M5 Controller revalidation gate
+
+- Separated mathematical PatchReview acceptance from whole-repair success.
+- Added trusted, topologically ordered Evaluator revalidation, deterministic stale-descendant version rebuilding, final affected-path checks, and fail-closed rejection/undetermined termination.
+- Hardened revalidation rollback, unaffected multi-dependency handling, delete dependency splicing, and added a strict machine-readable revalidation contract.
+- Added adversarial Controller regressions and kept M5 open for real-model pilot and Person A full-pilot review.
+
+## 2026-08-14 +08:00 — Implement M5 Person A mathematical patch review
+
+- Added a separately versioned, fail-closed review contract bound to immutable certificate and patch digests without changing the frozen M1 Schema.
+- Defined allowed evidence, repair success, operational minimality and adversarial rejection of hidden assumptions, target/domain drift, unrelated rewrites and new errors.
+- Added positive and adversarial tests; overall M5 remains open for Person B and Controller integration.
+
+## 2026-08-14 +08:00 — Revalidate and complete M1 contracts
+
+- Completed the M1 portable and runtime contract set with ProofInstance,
+  LocalObligation, InvalidationRecord, ModelInvocation, RetryRecord, and
+  CacheFingerprint while retaining wire schema version 0.3.
+- Added structured Controller invalidation records with transactional rollback,
+  four independent failure fixtures, Schema/runtime parity fixes, and positive
+  and negative regression coverage.
+- Published the v0.3.1 compatibility migration record and a role-by-role M1
+  acceptance audit that explicitly separates automated evidence from new human
+  A/B signatures.
+- Hardened invalidation records to require exact next-version triggers,
+  topologically ordered true descendants, timezone-aware timestamps, and
+  defensive read-only snapshots; added multi-layer and unrelated-branch tests.
+- Added an M1-specific SHA-256 freeze manifest covering the complete code,
+  Schema, documentation, eight-fixture, and key-test release surface.
+
+## 2026-08-14 +08:00 — Revalidate M0 role by role
+
+- Added a requirement-level M0 revalidation for Person A, Person B, Evaluator,
+  Repair Generator, and Controller without rewriting either raw review.
+- Separated the usable adjudicated engineering contract from the failed strict
+  blind-review evidence gate and clarified that M0 tests Controller authority,
+  not a complete Controller implementation.
+- Added a machine-readable validation record and regression tests for the M0
+  role order, outcomes, and evidence limitation.
+- Upgraded the record to v1.1 with all ten mandatory validation fields, a
+  fail-closed JSON Schema, explicit missing-human-reviewer disclosure, and an
+  evidence erratum that resolves frozen-document status ambiguity.
+
+## 2026-08-14 +08:00 — Audit M0–M4 cross-milestone consistency
+
+- Recorded that M0's engineering contract is usable but its strict blind-review
+  evidence cannot be reconstructed from the existing Person B handoff.
+- Corrected the current interpretation of `m2-028`: the theorem is true, but the
+  supplied inference is invalid and requires replacement, so the M2 Gold is sound.
+- Preserved all frozen M3 v1.0 artifacts and added a semantic erratum instead of
+  rewriting historical audit evidence or scores.
+- Aligned M1 freeze dates, M2 mapping approval/status paths, and the active
+  two-person work plan with the actual M0–M4 repository state.
+
+## 2026-08-14 +08:00 — Complete M4 Person B reverse review
+
+- Closed target-binding gaps in the standalone Person A gate and integrated
+  Controller by freezing exact target refs, target text, mathematical structure,
+  and interpretation assumptions.
+- Made theorem-level registration recompute the digest from the full theorem
+  text while binding the refuted conclusion separately.
+- Versioned the hardened Person A gate and M4 Controller as v0.2 and added a
+  deterministic review-context digest without overwriting the v0.1 Schema.
+- Added adversarial regressions for target, structure, interpretation, and
+  theorem-context substitution; all 11 frozen valid counterexamples still pass.
+- Preserved the Person A-only `m4-integrated-v1.0` history, recorded Person B
+  acceptance after four fixes as joint `m4-integrated-v1.1`, and passed all 209 tests.
+
+## 2026-08-14 +08:00 — Complete M4 Person A cross-review
+
+- Closed a false-acceptance path by freezing Person A-approved natural-language
+  to executable-expression bindings before Person B verification.
+- Added exact bounded domain predicates, bounded every intermediate rational,
+  and rejected booleans used as numeric operands.
+- Replayed all 11 frozen M2 Gold valid counterexamples through the integrated
+  A/B/Controller path and retained the local-claim regression.
+- Recorded Person A acceptance of `m4-integrated-v1.0`; 206 tests pass while
+  unsupported or resource-bounded mathematics remains `undetermined`.
+
+## 2026-08-14 +08:00 — Complete M4 Controller A/B handoff
+
+- Added one deterministic M4 Controller for context freeze, Person B exact
+  verification, Person A independent acceptance, and terminal-state recording.
+- Moved local and theorem-level certificates behind the same orchestration API,
+  with optional current-node checks against the frozen v0.3 Controller.
+- Added atomic rollback of theorem registration, audit records and events;
+  stale, duplicate, identity-conflicting, failed and undetermined inputs fail closed.
+- Exported deep-copy snapshots with a revalidated hash chain and added focused
+  end-to-end regressions for the complete A→B→A seam.
+
+## 2026-08-14 +08:00 — Implement M4 Person B executable verification
+
+- Added a safe, fail-closed exact arithmetic verifier using rational arithmetic,
+  with explicit `failed` and `undetermined` outcomes.
+- Added a batch runner and immutable SHA-256 hash-chained audit records.
+- Added an explicit theorem-level registry for `target=null` certificates while
+  leaving the frozen Controller v0.3 semantic content unchanged; normalized its
+  M3 manifest digest to the repository's required LF representation.
+- Bound audit records to the canonical certificate digest, assignment, and all
+  statement/expression/result triples; exported chains can be independently replayed.
+- Added resource bounds, portable-JSON rejection, a conversion prompt, executable
+  frozen-scope fixtures, and ten focused tests; the complete 198-test suite passes.
+
+## 2026-08-14 +08:00 — Implement M4 Person A counterexample gate
+
+- Defined the exclusive `local_claim`/`false_local_claim` and
+  `global_theorem`/`false_theorem` scope mapping without changing frozen v0.3.
+- Added a fail-closed Person A review gate requiring the complete direct-premise
+  frontier, current assumption digest, and independent verification.
+- Added the M4 review prompt, handoff protocol, and positive/negative tests;
+  executable checking and audit logging remain assigned to Person B.
+- Added a portable review-result Schema, enforced reviewer/verifier separation,
+  and bound scope regressions to frozen M2 samples `m2-021` and `m2-034`.
+
+## 2026-08-14 +08:00 — Freeze integrated M3 A/B/Controller release
+
+- Added the immutable `m3-integrated-v1.0` release boundary above the unchanged
+  `m3-evaluator-v1.0` evaluator freeze.
+- Bound joint acceptance, Controller, checker adapter, contracts, handoff
+  documentation and focused tests in a machine-verifiable integrated manifest.
+- Made unknown Person A repair actions fail closed and roll back atomically;
+  retained legacy `counterexample` only through an explicit `replace` mapping.
+- Re-ran the complete repository suite: 177 tests passed.
+
+## 2026-08-14 +08:00 — Close M3 Controller repair dead ends
+
+- Changed the M3 repair handoff to distinguish executable repairs from problem
+  revisions; `m2-041` is now reported as `requires_problem_revision` instead of
+  incorrectly appearing ready for Controller v0.3.
+- Made ambiguity analysis atomically create a bound follow-up evaluation and
+  `interpretation_ambiguity` error certificate, allowing an explicit Person B
+  rewrite to proceed through Person A review and version invalidation.
+- Added full-path regression tests for both cases and executable-operation
+  assertions for every frozen M3 repair handoff.
+- Tightened descendant release so an active but superseded dependency version
+  cannot requeue a child that still points at stale evidence.
+
+## 2026-08-14 +08:00 — Connect frozen M3 results to the Controller
+
+- Added atomic run-level M3 ingestion with duplicate-proof rejection, canonical
+  input digesting, lifecycle summaries, and exact next-evaluation references.
+- Added Controller snapshots and deterministic consistency audits without adding
+  any mathematical judgment to the orchestration layer.
+- Replayed all 50 frozen M3 results through the v0.3 Controller: 122 nodes, 101
+  evaluations, and 25 error certificates now form a tested Person B handoff.
+
+## 2026-08-14 +08:00 — Complete M3 Person A / Person B acceptance
+
+- Added Person A's post-freeze, non-blind review of every M3 disagreement and
+  recorded explicit approval from both Person A and Person B.
+- Added a machine-verifiable joint acceptance record binding the unchanged
+  `m3-evaluator-v1.0` freeze manifest, reviewer identities, audit coverage and
+  the retained `m2-028` Gold limitation.
+- Added regression checks for the two-reviewer sign-off and frozen-manifest
+  binding without modifying any frozen M3 artifact.
+- Added a strict joint-acceptance JSON Schema, evidence digests, and dynamic
+  disagreement reconstruction from the frozen Gold and predictions.
+
 Notable project changes are grouped by release date and change type. Dates use Hong Kong time (`+08:00`).
+
+## 2026-08-14 +08:00 — Freeze M3 Evaluator v1
+
+### Completed
+
+- Froze `m3-evaluator-v1.0` after the 50-sample Codex-hosted engineering run,
+  modular metric report, and human review of every reported disagreement.
+- Recorded immutable SHA-256 identities for the input, Gold, configuration,
+  raw responses, details, report, evaluator, and report schema.
+- Classified `m2-028` as a known frozen-Gold defect: the theorem is true over
+  integers, although M2 Gold labels it invalid. Preserved the original score
+  and artifacts; correction requires a future benchmark version.
+- Added a machine-verifiable freeze manifest and regression checks for artifact
+  hashes, complete coverage, frozen status, and current report provenance.
+- At the Evaluator freeze point, the complete repository suite passed 165 tests.
 
 ## 2026-08-11 +08:00 — Start M3-alpha module evaluation infrastructure
 

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "M4 Integrated Person A / Person B Joint Acceptance",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "release", "supersedes", "status", "reviewer_id", "verifier_id",
+    "benchmark", "person_b_review", "tests", "known_limitations", "artifacts"
+  ],
+  "properties": {
+    "schema_version": {"const": "m4-integrated-acceptance-1.1"},
+    "release": {"const": "m4-integrated-v1.1"},
+    "supersedes": {"const": "m4-integrated-v1.0"},
+    "status": {"const": "accepted_by_person_a_and_person_b"},
+    "reviewer_id": {"const": "person_a"},
+    "verifier_id": {"const": "person_b"},
+    "person_b_review": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "review_document", "fixed_findings"],
+      "properties": {
+        "status": {"const": "accepted_after_fixes"},
+        "review_document": {"const": "docs/milestones/M04_person_b_cross_review_and_joint_acceptance.md"},
+        "fixed_findings": {"type": "integer", "minimum": 4}
+      }
+    },
+    "benchmark": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source", "valid_counterexample_count", "accepted_count", "sample_ids", "local_regression"],
+      "properties": {
+        "source": {"const": "data/benchmarks/m2/gold/algebra_pilot_v1.jsonl"},
+        "valid_counterexample_count": {"const": 11},
+        "accepted_count": {"const": 11},
+        "sample_ids": {
+          "type": "array", "minItems": 11, "maxItems": 11, "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^m2-[0-9]{3}$"}
+        },
+        "local_regression": {"const": "m2-034"}
+      }
+    },
+    "tests": {
+      "type": "object", "additionalProperties": false,
+      "required": ["command", "passed"],
+      "properties": {
+        "command": {"const": "python -m unittest discover -s tests"},
+        "passed": {"type": "integer", "minimum": 205}
+      }
+    },
+    "known_limitations": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "artifacts": {
+      "type": "object", "minProperties": 1,
+      "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+    }
+  }
+}

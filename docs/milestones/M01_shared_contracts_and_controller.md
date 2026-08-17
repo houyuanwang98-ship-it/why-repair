@@ -1,10 +1,10 @@
 # M1：共享契约与确定性 Controller
 
-状态：`frozen_v0.3`
+状态：`frozen_v0.3.1`
 
-目标版本：`0.3`
+线缆协议版本：`0.3`；兼容补全发布：`v0.3.1`
 
-冻结日期：`2026-08-10`
+初始冻结日期：`2026-08-10`；当前 `v0.3` 冻结日期：`2026-08-11`
 
 冻结说明：项目负责人确认采用分工开发、接口集成的协作方式，不要求两位成员重复审查同一实现。M1 的共享 Schema、Controller、解释分支、替换与插入修复协议以当前 `v0.3` 为后续开发基线。`v0.3` 增加可信身份、当前评估证书绑定、原子导入、来源标记与反例上下文绑定。冻结后的不兼容修改必须提升契约版本并记录迁移方案。
 
@@ -22,7 +22,9 @@ M1 只实现双 Agent 之间的共享数据对象、严格运行时校验、节�
 ## 3. M1 公共对象
 
 - `ProofNode`
+- `ProofInstance`
 - `DependencyEdge`
+- `LocalObligation`
 - `EvaluationRecord`
 - `AmbiguityAnalysis`
 - `ErrorCertificate`
@@ -30,26 +32,31 @@ M1 只实现双 Agent 之间的共享数据对象、严格运行时校验、节�
 - `PatchProposal`
 - `PatchReview`
 - `NodeVersion`
+- `InvalidationRecord`
 - `RunManifest`
+- `ModelInvocation`
+- `RetryRecord`
+- `CacheFingerprint`
 
-便携 JSON 定义位于 `schemas/dual_agent_harness_v0_3.schema.json`；不依赖第三方库的严格运行时校验位于 `harness/contracts.py`。
+便携 JSON 定义位于 `schemas/dual_agent_harness_v0_3.schema.json`；不依赖第三方库的严格运行时校验位于 `harness/contracts.py`。`v0.3.1` 补齐上述六个此前只在执行计划中出现、却没有进入共享契约的对象；已有字段和枚举未改变，因此线缆对象仍使用 `schema_version=0.3`。
 
 ## 4. 生命周期与数学裁决分离
 
 Controller 生命周期：
 
 ```text
-pending_evaluation -> evaluating
-evaluating -> active | resolving_ambiguity | pending_repair | undetermined | irreparable
+pending_evaluation -> evaluating | blocked_by_invalid_dependency | terminated
+evaluating -> active | resolving_ambiguity | pending_repair | undetermined | irreparable | blocked_by_invalid_dependency
 resolving_ambiguity -> active | pending_repair | undetermined | terminated
 pending_repair -> patch_submitted | irreparable | terminated
-patch_submitted -> pending_recheck
-pending_recheck -> active | pending_repair | undetermined | irreparable
-active -> stale
-active | pending_evaluation -> blocked_by_invalid_dependency
-blocked_by_invalid_dependency -> pending_evaluation | stale | terminated
+patch_submitted -> pending_recheck | pending_repair | terminated
+pending_recheck -> active | resolving_ambiguity | pending_repair | undetermined | irreparable | blocked_by_invalid_dependency
+active -> stale | blocked_by_invalid_dependency
 stale -> pending_evaluation | terminated
-blocked_by_invalid_dependency -> pending_evaluation | terminated
+blocked_by_invalid_dependency -> pending_evaluation | stale | terminated
+undetermined -> pending_evaluation | terminated
+irreparable -> terminated
+terminated -> (no outgoing transition)
 ```
 
 数学裁决单独保存在 `current_verdict`。`stale` 等生命周期状态不会被当作数学错误。
@@ -109,7 +116,7 @@ Schema 能表达 `insert_before`、`replace`、`delete` 和 `add_assumption`。M
 - [x] Schema 与运行时校验的对象和枚举一致。
 - [x] 正例和反例契约测试通过。
 - [x] DAG、未来依赖、重复引用和缺失版本测试通过。
-- [x] 四个无模型 fixture 可由测试完整回放。
+- [x] 八个无模型 fixture 可由测试完整回放，包括非法跳转、缺少复核、缺失版本和回滚失败。
 - [x] 现有 checker 全部回归测试通过。
 - [x] 项目负责人完成接口验收，并确认采用 A/B 分工开发与最终集成测试。
 

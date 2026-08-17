@@ -3,7 +3,13 @@ from copy import deepcopy
 import hashlib
 import json
 
-from harness import ContractError, DualAgentController, ingest_person_a_result
+from harness import (
+    CheckerIntegrationError,
+    ContractError,
+    DualAgentController,
+    ingest_m3_run,
+    ingest_person_a_result,
+)
 
 
 def person_a_result():
@@ -69,6 +75,54 @@ def person_a_review():
 
 
 class PersonAControllerIntegrationTest(unittest.TestCase):
+    def test_m3_run_is_digest_bound_and_exposes_controller_handoff(self):
+        controller = DualAgentController(
+            repair_generator_id="person_b_repair_generator",
+            evaluator_ids={"person_a_evaluator"},
+        )
+        second = person_a_result()
+        second["id"] = "integration-proof-2"
+        summary = ingest_m3_run(
+            controller, [person_a_result(), second], run_id="m3-controller-smoke"
+        )
+        self.assertEqual(2, summary["proof_count"])
+        self.assertEqual(6, summary["node_count"])
+        self.assertEqual(4, summary["evaluation_count"])
+        self.assertEqual(2, summary["error_certificate_count"])
+        self.assertTrue(summary["input_digest"].startswith("sha256:"))
+        self.assertEqual({"active": 2, "pending_repair": 2,
+                          "blocked_by_invalid_dependency": 2}, summary["lifecycle_counts"])
+        self.assertEqual([], summary["ready_for_evaluation"])
+        self.assertEqual(2, len(summary["repair_queue"]))
+        self.assertTrue(all(item["status"] == "ready" for item in summary["repair_queue"]))
+        controller.assert_consistent("integration-proof")
+
+    def test_m3_run_rolls_back_every_proof_when_late_result_fails(self):
+        controller = DualAgentController(
+            repair_generator_id="person_b_repair_generator",
+            evaluator_ids={"person_a_evaluator"},
+        )
+        invalid = person_a_result()
+        invalid["id"] = "integration-proof-2"
+        invalid["proof_graph"][1]["status"] = "unknown_status"
+        with self.assertRaisesRegex(CheckerIntegrationError, "unsupported Person A"):
+            ingest_m3_run(
+                controller, [person_a_result(), invalid], run_id="failed-run"
+            )
+        with self.assertRaises(KeyError):
+            controller.current_ref("integration-proof", 1)
+        self.assertEqual([], controller.events)
+
+    def test_m3_run_rejects_duplicate_proof_ids_before_mutation(self):
+        controller = DualAgentController(evaluator_ids={"person_a_evaluator"})
+        with self.assertRaisesRegex(CheckerIntegrationError, "duplicate proof ids"):
+            ingest_m3_run(
+                controller,
+                [person_a_result(), person_a_result()],
+                run_id="duplicate-run",
+            )
+        self.assertEqual([], controller.events)
+
     def test_person_a_result_enters_controller_with_separated_states(self):
         controller = DualAgentController(repair_generator_id="person_b_repair_generator", evaluator_ids={"person_a_evaluator"})
         artifacts = ingest_person_a_result(controller, person_a_result())
@@ -141,6 +195,19 @@ class PersonAControllerIntegrationTest(unittest.TestCase):
             controller.current_ref("integration-proof", 1)
         artifacts = ingest_person_a_result(controller, person_a_result())
         self.assertEqual(3, len(artifacts["node_versions"]))
+
+    def test_unknown_repair_action_fails_closed_and_rolls_back(self):
+        controller = DualAgentController(
+            repair_generator_id="person_b_repair_generator",
+            evaluator_ids={"person_a_evaluator"},
+        )
+        invalid = person_a_result()
+        invalid["proof_graph"][1]["repair_action"] = "silently_guess_a_repair"
+        with self.assertRaisesRegex(CheckerIntegrationError, "unsupported Person A repair action"):
+            ingest_person_a_result(controller, invalid)
+        self.assertEqual([], controller.events)
+        with self.assertRaises(KeyError):
+            controller.current_ref("integration-proof", 1)
 
     def test_legacy_false_label_is_not_preserved_as_verified_error_type(self):
         controller = DualAgentController(

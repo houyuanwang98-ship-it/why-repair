@@ -1,0 +1,35 @@
+{
+  "case_id": "m5-gold-even-square-repair-v1",
+  "theorem": "If n is an even integer, then n squared is even.",
+  "domain": "integers",
+  "global_assumptions": ["n is even", "n = 2k for some integer k"],
+  "target": {"proof_id": "m5-gold-even-square", "node_id": 2, "version": 1},
+  "error_certificate": {
+    "certificate_id": "m5-gold-error-1",
+    "target": {"proof_id": "m5-gold-even-square", "node_id": 2, "version": 1},
+    "failed_inference": "Squaring n = 2k was incorrectly written as n^2 = 2k^2."
+  },
+  "patch": {
+    "patch_id": "m5-gold-patch-1",
+    "error_certificate_id": "m5-gold-error-1",
+    "target": {"proof_id": "m5-gold-even-square", "node_id": 2, "version": 1},
+    "operation": "replace",
+    "replacement_nodes": [{"node_id": 2, "claim": "n^2 = (2k)^2 = 4k^2, hence n^2 is even."}],
+    "changes_problem": false
+  },
+  "allowed_evidence": ["assumption:n=2k", "integer-closure:multiplication", "certificate:m5-gold-error-1"],
+  "review": {
+    "schema_version": "0.1",
+    "review_id": "m5-gold-review-1",
+    "context_id": "m5-gold-context-1",
+    "reviewer_id": "person-a",
+    "checks": {"mathematically_valid": true, "resolves_failed_inference": true, "theorem_preserved": true, "assumptions_preserved": true, "domain_preserved": true, "unrelated_branches_preserved": true, "no_new_errors": true, "operationally_minimal": true},
+    "hidden_assumptions": [],
+    "introduced_errors": [],
+    "deletion_trials": [{"edit_id": "replace:2", "removal_breaks_repair": true, "reason": "Removing the replacement restores the incorrect squaring step."}],
+    "evidence_used": ["assumption:n=2k", "integer-closure:multiplication", "certificate:m5-gold-error-1"],
+    "accepted": true,
+    "rejection_codes": [],
+    "reason": "The corrected square is valid, preserves the problem, and is operationally minimal."
+  }
+}

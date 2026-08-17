@@ -1,0 +1,151 @@
+import json
+import hashlib
+import tempfile
+import unittest
+from pathlib import Path
+
+from harness.m8_controller import (M8ControllerError, build_candidate, rebuild_publication_table,
+                                   scan_release_text, validate_candidate)
+
+
+ROOT = Path(__file__).resolve().parents[1]
+UPSTREAM = "data/benchmarks/m8/person_b_writing_candidate_v0_1.json"
+GATES = (
+    "formal_m7_complete", "paper_outputs_rebuilt", "external_reviews_complete",
+    "clean_reproduction_complete", "license_privacy_complete",
+    "trusted_attestations_verified",
+)
+DIGEST = "0" * 64
+
+
+def run(case_id, experiment_id, status="succeeded", run_id=None):
+    return {"case_id": case_id, "experiment_id": experiment_id,
+            "run_id": run_id or f"run-{case_id}-{experiment_id}", "status": status,
+            "tokens": 1, "model_calls": 1, "wall_ms": 1, "cost_microunits": 2,
+            "raw_output_sha256": DIGEST, "scoring_input_sha256": DIGEST}
+
+
+class M8ControllerTest(unittest.TestCase):
+    def test_v01_schema_is_structurally_fail_closed(self):
+        schema = json.loads((ROOT / "schemas/m8_controller_publication_candidate_v0_1.schema.json").read_text(encoding="utf-8"))
+        candidate = json.loads((ROOT / "data/benchmarks/m8/controller_publication_candidate_v0_1.json").read_text(encoding="utf-8"))
+        self.assertFalse(schema["additionalProperties"])
+        self.assertEqual(set(schema["required"]), set(candidate))
+        self.assertEqual(schema["properties"]["status"]["const"], "engineering_candidate_blocked")
+        self.assertFalse(schema["properties"]["release_allowed"]["const"])
+        gate_schema = schema["properties"]["gates"]
+        self.assertEqual(set(gate_schema["required"]), set(candidate["gates"]))
+        self.assertFalse(gate_schema["properties"]["trusted_attestations_verified"]["const"])
+        ledger_item = schema["properties"]["terminal_ledger"]["items"]
+        self.assertFalse(ledger_item["additionalProperties"])
+        self.assertEqual(
+            set(ledger_item["required"]),
+            {"case_id", "experiment_id", "run_id", "status", "tokens", "model_calls",
+             "wall_ms", "cost_microunits", "raw_output_sha256", "scoring_input_sha256"},
+        )
+        self.assertEqual(set(ledger_item["properties"]["status"]["enum"]), {
+            "succeeded", "api_failure", "timeout", "budget_exceeded",
+            "schema_failure", "tool_failure", "retry_exhausted",
+        })
+        self.assertFalse(schema["properties"]["expected_assignments"]["items"]["additionalProperties"])
+        self.assertFalse(schema["properties"]["publication_table"]["items"]["additionalProperties"])
+
+    def test_repository_candidate_is_exact_and_blocked(self):
+        candidate = json.loads((ROOT / "data/benchmarks/m8/controller_publication_candidate_v0_1.json").read_text(encoding="utf-8"))
+        self.assertEqual(validate_candidate(candidate, root=ROOT), candidate)
+        self.assertFalse(candidate["release_allowed"])
+        self.assertFalse(candidate["gates"]["formal_m7_complete"])
+        self.assertEqual(candidate["publication_table"], [])
+
+    def test_denominator_and_duplicate_guards(self):
+        assignments = [{"case_id": "a", "experiment_id": "x"},
+                       {"case_id": "b", "experiment_id": "x"}]
+        bad = [run("a", "x")]
+        with self.assertRaises(M8ControllerError):
+            rebuild_publication_table(bad, assignments)
+
+    def test_table_is_rebuilt_from_terminal_runs_and_preserves_failures(self):
+        assignments = [{"case_id": "a", "experiment_id": "x"},
+                       {"case_id": "b", "experiment_id": "x"}]
+        ledger = [run("a", "x"), run("b", "x", "timeout")]
+        ledger[0].update(tokens=2, model_calls=1, wall_ms=4, cost_microunits=5)
+        ledger[1].update(tokens=3, model_calls=2, wall_ms=9, cost_microunits=7)
+        self.assertEqual(rebuild_publication_table(ledger, assignments),
+                         [{"experiment_id": "x", "sample_count": 2, "success_count": 1,
+                           "failure_count": 1, "tokens": 5, "model_calls": 3,
+                           "wall_ms": 13, "cost_microunits": 12}])
+
+    def test_unknown_status_duplicate_run_and_unbound_outputs_are_rejected(self):
+        assignments = [{"case_id": "a", "experiment_id": "x"},
+                       {"case_id": "b", "experiment_id": "x"}]
+        unknown = [run("a", "x", "success"), run("b", "x")]
+        with self.assertRaisesRegex(M8ControllerError, "status is unknown"):
+            rebuild_publication_table(unknown, assignments)
+        duplicate = [run("a", "x", run_id="same"), run("b", "x", run_id="same")]
+        with self.assertRaisesRegex(M8ControllerError, "globally unique"):
+            rebuild_publication_table(duplicate, assignments)
+        unbound = [run("a", "x"), run("b", "x")]
+        unbound[0]["raw_output_sha256"] = "not-a-digest"
+        with self.assertRaisesRegex(M8ControllerError, "raw-output"):
+            rebuild_publication_table(unbound, assignments)
+        wrong_digest_type = [run("a", "x"), run("b", "x")]
+        wrong_digest_type[0]["scoring_input_sha256"] = 0
+        with self.assertRaisesRegex(M8ControllerError, "raw-output"):
+            rebuild_publication_table(wrong_digest_type, assignments)
+        wrong_status_type = [run("a", "x"), run("b", "x")]
+        wrong_status_type[0]["status"] = []
+        with self.assertRaisesRegex(M8ControllerError, "status is unknown"):
+            rebuild_publication_table(wrong_status_type, assignments)
+
+    def test_candidate_rejects_stale_upstream_digest(self):
+        with self.assertRaises(M8ControllerError):
+            build_candidate(root=ROOT, artifacts=["README.md"],
+                            upstream_sha256={UPSTREAM: "0" * 64},
+                            gate_evidence_sha256={gate: {} for gate in GATES})
+
+    def test_true_gate_without_bound_evidence_is_rejected(self):
+        evidence = {gate: {} for gate in GATES}
+        digest = __import__("hashlib").sha256((ROOT / UPSTREAM).read_bytes()).hexdigest()
+        with self.assertRaises(M8ControllerError):
+            build_candidate(root=ROOT, artifacts=["README.md"],
+                            upstream_sha256={UPSTREAM: digest}, gate_evidence_sha256=evidence,
+                            formal_m7_complete=True)
+
+    def test_caller_booleans_and_arbitrary_evidence_cannot_open_release_gate(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "artifact.txt").write_text("safe release artifact", encoding="utf-8")
+            (root / "upstream.json").write_text("{}", encoding="utf-8")
+            (root / "evidence.txt").write_text("review evidence", encoding="utf-8")
+            digest = lambda name: hashlib.sha256((root / name).read_bytes()).hexdigest()
+            evidence = {gate: {"evidence.txt": digest("evidence.txt")} for gate in (
+                "formal_m7_complete", "paper_outputs_rebuilt", "external_reviews_complete",
+                "clean_reproduction_complete", "license_privacy_complete")}
+            evidence["trusted_attestations_verified"] = {}
+            candidate = build_candidate(
+                root=root, artifacts=["artifact.txt"],
+                upstream_sha256={"upstream.json": digest("upstream.json")},
+                gate_evidence_sha256=evidence,
+                publication_ledger=iter([run("a", "x")]),
+                expected_assignments=iter([{"case_id": "a", "experiment_id": "x"}]),
+                formal_m7_complete=True, external_reviews_complete=True,
+                clean_reproduction_complete=True, license_privacy_complete=True)
+            self.assertFalse(candidate["release_allowed"])
+            self.assertFalse(candidate["gates"]["trusted_attestations_verified"])
+            self.assertEqual(candidate["status"], "engineering_candidate_blocked")
+            self.assertEqual(validate_candidate(candidate, root=root), candidate)
+
+    def test_secret_scanner_reports_key_material(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "leak.txt").write_text("sk-" + "abcdefghijklmnopqrstuvwxyz123456", encoding="utf-8")
+            self.assertEqual(scan_release_text(root, ["leak.txt"]),
+                             [{"path": "leak.txt", "kind": "openai_key"}])
+
+    def test_secret_scanner_rejects_path_escape(self):
+        with self.assertRaises(M8ControllerError):
+            scan_release_text(ROOT, ["../outside.txt"])
+
+
+if __name__ == "__main__":
+    unittest.main()

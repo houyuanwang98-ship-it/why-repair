@@ -1,5 +1,11 @@
 # M2 Person B completion and handoff
 
+> Historical handoff notice (2026-08-14): the waiting state below describes an
+> earlier point in the workflow. A/B annotations, 74 adjudications, and frozen
+> engineering Gold now exist. The authoritative current status and its strict
+> evidence limitations are recorded in `M02_full_revalidation.md` and
+> `data/benchmarks/m2/manifest.json`.
+
 Status: `person_b_complete_waiting_for_person_a`
 
 ## Frozen inputs

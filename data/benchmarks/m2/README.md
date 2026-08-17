@@ -1,5 +1,11 @@
 # M2 pilot benchmark workspace
 
+> Revalidation notice (2026-08-14): this is a frozen engineering pilot, not a
+> publication-grade held-out test set. See `audit/revalidation_report_v1.json`
+> and `docs/milestones/M02_full_revalidation.md`. Strict acceptance is blocked
+> by missing historical provenance, qualification, blind-isolation, graph-gold,
+> and held-out split evidence.
+
 This directory separates source problems, independent annotations,
 adjudication, and released gold labels. Do not place one annotator's labels in
 the source file, and do not overwrite either independent annotation during

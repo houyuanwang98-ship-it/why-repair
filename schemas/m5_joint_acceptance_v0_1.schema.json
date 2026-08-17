@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m5_joint_acceptance_v0_1.schema.json",
+  "title": "M5 A/B/Controller current joint acceptance",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "release", "status", "scope", "roles", "mandatory_gates", "gold_replay", "tests", "m6_entry_allowed", "pending_work", "artifacts"],
+  "properties": {
+    "schema_version": {"const": "m5-joint-acceptance-0.1"},
+    "release": {"const": "m5-joint-engineering-v0.1"},
+    "status": {"const": "engineering_joint_acceptance_passed_pilot_pending"},
+    "scope": {"const": "deterministic fixtures, contracts, role isolation, Gold replay, and regression only"},
+    "roles": {"type": "object", "additionalProperties": false, "required": ["person_a", "person_b", "controller"], "properties": {
+      "person_a": {"$ref": "#/$defs/role"}, "person_b": {"$ref": "#/$defs/role"}, "controller": {"$ref": "#/$defs/role"}
+    }},
+    "mandatory_gates": {"type": "array", "minItems": 10, "items": {"type": "object", "additionalProperties": false, "required": ["gate", "status", "evidence"], "properties": {"gate": {"type": "string", "minLength": 1}, "status": {"enum": ["passed", "pending"]}, "evidence": {"type": "string", "minLength": 1}}}},
+    "gold_replay": {"type": "object", "additionalProperties": false, "required": ["case_id", "status", "final_stop_reason", "revalidated_versions"], "properties": {"case_id": {"const": "m5-gold-even-square"}, "status": {"const": "passed"}, "final_stop_reason": {"const": "accepted"}, "revalidated_versions": {"type": "array", "minItems": 2, "items": {"type": "string"}}}},
+    "tests": {"type": "object", "additionalProperties": false, "required": ["command", "passed"], "properties": {"command": {"const": "python -m unittest discover -s tests"}, "passed": {"type": "integer", "minimum": 282}}},
+    "m6_entry_allowed": {"const": false},
+    "pending_work": {"type": "array", "minItems": 3, "items": {"type": "string", "minLength": 1}},
+    "artifacts": {"type": "object", "minProperties": 8, "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+  },
+  "$defs": {"role": {"type": "object", "additionalProperties": false, "required": ["status", "evidence_status"], "properties": {"status": {"const": "passed_current_scope"}, "evidence_status": {"type": "string", "minLength": 1}}}}
+}

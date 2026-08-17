@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m8_controller_publication_candidate_v0_1.schema.json",
+  "title": "M8 Controller publication candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "gates", "gate_evidence_sha256", "release_allowed", "artifact_sha256", "upstream_sha256", "expected_assignments", "terminal_ledger", "publication_table", "publication_table_sha256", "automated_secret_findings", "scan_limitation", "candidate_id"],
+  "properties": {
+    "schema_version": {"const": "m8-controller-0.1"},
+    "status": {"const": "engineering_candidate_blocked"},
+    "gates": {
+      "type": "object", "additionalProperties": false,
+      "required": ["formal_m7_complete", "paper_outputs_rebuilt", "external_reviews_complete", "clean_reproduction_complete", "license_privacy_complete", "trusted_attestations_verified"],
+      "properties": {
+        "formal_m7_complete": {"type": "boolean"}, "paper_outputs_rebuilt": {"type": "boolean"},
+        "external_reviews_complete": {"type": "boolean"}, "clean_reproduction_complete": {"type": "boolean"},
+        "license_privacy_complete": {"type": "boolean"},
+        "trusted_attestations_verified": {"const": false}
+      }
+    },
+    "gate_evidence_sha256": {
+      "type": "object", "additionalProperties": false,
+      "required": ["formal_m7_complete", "paper_outputs_rebuilt", "external_reviews_complete", "clean_reproduction_complete", "license_privacy_complete", "trusted_attestations_verified"],
+      "properties": {
+        "formal_m7_complete": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+        "paper_outputs_rebuilt": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+        "external_reviews_complete": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+        "clean_reproduction_complete": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+        "license_privacy_complete": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+        "trusted_attestations_verified": {"type": "object", "maxProperties": 0}
+      }
+    },
+    "release_allowed": {"const": false},
+    "artifact_sha256": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+    "upstream_sha256": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+    "expected_assignments": {
+      "type": "array", "items": {"type": "object", "additionalProperties": false,
+        "required": ["case_id", "experiment_id"],
+        "properties": {"case_id": {"type": "string", "minLength": 1}, "experiment_id": {"type": "string", "minLength": 1}}}
+    },
+    "terminal_ledger": {
+      "type": "array", "items": {"type": "object", "additionalProperties": false,
+        "required": ["case_id", "experiment_id", "run_id", "status", "tokens", "model_calls", "wall_ms", "cost_microunits", "raw_output_sha256", "scoring_input_sha256"],
+        "properties": {
+          "case_id": {"type": "string", "minLength": 1}, "experiment_id": {"type": "string", "minLength": 1},
+          "run_id": {"type": "string", "minLength": 1},
+          "status": {"enum": ["succeeded", "api_failure", "timeout", "budget_exceeded", "schema_failure", "tool_failure", "retry_exhausted"]},
+          "tokens": {"type": "integer", "minimum": 0}, "model_calls": {"type": "integer", "minimum": 0},
+          "wall_ms": {"type": "integer", "minimum": 0}, "cost_microunits": {"type": "integer", "minimum": 0},
+          "raw_output_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "scoring_input_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }}
+    },
+    "publication_table": {
+      "type": "array", "items": {"type": "object", "additionalProperties": false,
+        "required": ["experiment_id", "sample_count", "success_count", "failure_count", "tokens", "model_calls", "wall_ms", "cost_microunits"],
+        "properties": {
+          "experiment_id": {"type": "string", "minLength": 1},
+          "sample_count": {"type": "integer", "minimum": 1}, "success_count": {"type": "integer", "minimum": 0},
+          "failure_count": {"type": "integer", "minimum": 0}, "tokens": {"type": "integer", "minimum": 0},
+          "model_calls": {"type": "integer", "minimum": 0}, "wall_ms": {"type": "integer", "minimum": 0},
+          "cost_microunits": {"type": "integer", "minimum": 0}
+        }}
+    },
+    "publication_table_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "automated_secret_findings": {"type": "array"},
+    "scan_limitation": {"const": "pattern scan does not prove privacy or license clearance"},
+    "candidate_id": {"type": "string", "pattern": "^m8-controller-[0-9a-f]{16}$"}
+  }
+}

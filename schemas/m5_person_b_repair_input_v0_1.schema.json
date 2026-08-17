@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m5_person_b_repair_input_v0_1.schema.json",
+  "title": "M5 Person B frozen repair input",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "proof_id", "target", "target_node", "error_certificate", "allowed_operations", "budget", "m4_accepted_certificates", "m4_input_digest"],
+  "properties": {
+    "schema_version": {"const": "0.1"}, "proof_id": {"type": "string", "minLength": 1},
+    "target": {"$ref": "#/$defs/nodeRef"}, "target_node": {"type": "object"},
+    "error_certificate": {"type": "object"},
+    "allowed_operations": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["insert_before", "replace", "delete", "mark_irreparable"]}},
+    "budget": {"type": "object", "additionalProperties": false, "required": ["max_rounds", "max_new_nodes", "max_total_edits"], "properties": {"max_rounds": {"type": "integer", "minimum": 1}, "max_new_nodes": {"type": "integer", "minimum": 0}, "max_total_edits": {"type": "integer", "minimum": 1}}},
+    "m4_accepted_certificates": {"type": "array", "items": {"type": "object"}},
+    "m4_input_digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "$defs": {"nodeRef": {"type": "object", "additionalProperties": false, "required": ["proof_id", "node_id", "version"], "properties": {"proof_id": {"type": "string", "minLength": 1}, "node_id": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "string", "minLength": 1}]}, "version": {"type": "integer", "minimum": 1}}}}
+}

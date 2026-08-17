@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m5_controller_revalidation_v0_1.schema.json",
+  "title": "M5 Controller independent node revalidation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "evaluation_id", "evaluator_id", "target", "verdict", "reason"],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "evaluation_id": {"type": "string", "minLength": 1},
+    "evaluator_id": {"type": "string", "minLength": 1},
+    "target": {"$ref": "#/$defs/nodeRef"},
+    "verdict": {"enum": ["accepted", "rejected", "undetermined"]},
+    "reason": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "nodeRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["proof_id", "node_id", "version"],
+      "properties": {
+        "proof_id": {"type": "string", "minLength": 1},
+        "node_id": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "string", "minLength": 1}]},
+        "version": {"type": "integer", "minimum": 1}
+      }
+    }
+  }
+}
