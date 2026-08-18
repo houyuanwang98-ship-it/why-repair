@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m7_interactive_joint_acceptance_v0_2.schema.json",
+  "title": "M7 interactive joint acceptance v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "scope", "execution", "human_review", "limitations", "interactive_m7_engineering_complete", "interactive_m7_50_case_review_complete", "formal_m7_experiment_allowed", "scientific_claim_allowed", "upstream", "artifacts"],
+  "properties": {
+    "schema_version": {"const": "m7-interactive-joint-acceptance-0.2"},
+    "status": {"const": "interactive_50_case_human_review_complete_formal_experiment_blocked"},
+    "scope": {"const": "nonblind_historical_m6_projection_gold_exposed"},
+    "execution": {
+      "type": "object", "additionalProperties": false,
+      "required": ["cases", "families", "methods_per_family", "terminal_assignments", "result_bindings", "aggregate_rows", "replay_samples", "blind_review_rows", "blind_review_payloads", "provider_model_calls", "provider_cost"],
+      "properties": {
+        "cases": {"const": 50}, "families": {"const": 2}, "methods_per_family": {"const": 9},
+        "terminal_assignments": {"const": 900}, "result_bindings": {"const": 900},
+        "aggregate_rows": {"const": 18}, "replay_samples": {"const": 20},
+        "blind_review_rows": {"const": 900}, "blind_review_payloads": {"const": 74},
+        "provider_model_calls": {"const": 0}, "provider_cost": {"const": 0}
+      }
+    },
+    "human_review": {
+      "type": "object", "additionalProperties": false,
+      "required": ["ai_first_pass", "case_level_final_result", "case_level_result_path", "case_level_result_sha256", "user_cases_001_025", "person_b_cases_026_050", "person_b_execution_verification", "anonymous_900_row_review", "unblinding_allowed", "next_action"],
+      "properties": {
+        "ai_first_pass": {"const": "complete_gold_assisted_not_independent_human"},
+        "case_level_final_result": {"const": "complete_50_cases_45_confirmed_5_corrected"},
+        "case_level_result_path": {"const": "data/benchmarks/m7/interactive_case_level_human_review_v0_2.json"},
+        "case_level_result_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "user_cases_001_025": {"const": "complete"},
+        "person_b_cases_026_050": {"const": "complete"},
+        "person_b_execution_verification": {"const": "not_required_by_user_scope"},
+        "anonymous_900_row_review": {"const": "not_required_by_user_scope"},
+        "unblinding_allowed": {"const": false},
+        "next_action": {"const": "interactive_m7_closed_at_50_case_scope"}
+      }
+    },
+    "limitations": {"type": "array", "minItems": 3, "items": {"type": "string", "minLength": 1}},
+    "interactive_m7_engineering_complete": {"const": true},
+    "interactive_m7_50_case_review_complete": {"const": true},
+    "formal_m7_experiment_allowed": {"const": false},
+    "scientific_claim_allowed": {"const": false},
+    "upstream": {
+      "type": "object", "additionalProperties": false,
+      "required": ["m6_interactive_acceptance_path", "m6_interactive_acceptance_sha256"],
+      "properties": {
+        "m6_interactive_acceptance_path": {"const": "data/benchmarks/m6/interactive_joint_acceptance_v0_2.json"},
+        "m6_interactive_acceptance_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "artifacts": {"type": "object", "minProperties": 10, "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+  }
+}

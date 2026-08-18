@@ -41,7 +41,7 @@ M3 已完成冻结 M2 Gold 到 checker 输入的适配、50 题模型支持运�
 - `evaluator_pilot_v1.jsonl`: `12f13e3133c25dc194e10e0a044b76bebd7035045a7df62e2730cf2d7b12f1c7`
 - `responses.jsonl`: `e3b8704f471dfb8a3da437469627e9206662d1e7cb7fb946a80052303844a672`
 - `details.jsonl`: `3c2afd07260b0286df30a73754f0071e4f38fdcc9f5c8f401a74cba6627a0479`
-- `report.json`: `83b1bf8729083acf1ba74b1b0673a751b9421d202d2fc48e0ac897ecbb4718e9`
+- `report.json`: `2f61f4b03a2c9565cc1a07b83a34e6a801b4c4f278420f17b603995f0d53522c`
 - `scripts/m3_evaluator.py`: `d17d176f9efd8cef46fec985b780d943623651293456d65366f2dacb771836df`
 - `schemas/m3_evaluator_report_v0_1.schema.json`: `522787b6531b4736b2cdbc85c09675279a1597896c5c245247dacb0331e99893`
 - `config.json`: `a4272bd6b9b6bb4d30121eed0f1c3c4d948e40d2cc887b7c65a5c14bfec348ca`

@@ -1,0 +1,1627 @@
+{
+  "schema_version": "m7-opc-v0.2-supplemental-review-0.1",
+  "status": "six_changed_proofs_pending_human_review",
+  "row_count": 6,
+  "rows": [
+    {
+      "old_case_id": "opc250-213",
+      "new_case_id": "opc250-214",
+      "opc_problem_id": "IMC_2001_11",
+      "old_model_id": "gemini/gemini-pro-2.5",
+      "new_model_id": "openai/o4-mini--high",
+      "proof_identity_verified": false,
+      "problem": "Let \\(\\mathbb{R}\\) be the set of real numbers. Prove that there is no function \\(f: \\mathbb{R} \\rightarrow \\mathbb{R}\\) with \\(f(0)>0\\), and such that\n\\[\nf(x+y) \\geq f(x)+y f(f(x)) \\quad \\text{for all } x, y \\in \\mathbb{R}.\n\\]",
+      "proof_nodes": [
+        {
+          "node_id": "n1",
+          "start_char": 0,
+          "end_char": 48,
+          "text": "Here is a self‐contained proof by contradiction."
+        },
+        {
+          "node_id": "n2",
+          "start_char": 50,
+          "end_char": 308,
+          "text": "We shall first show that any such \\(f\\) must be convex (in fact “discretely” convex at step 1), hence, by a standard boundedness‐plus‐midpoint‐convexity argument, continuous and affine; but no affine function with \\(f(0)>0\\) can satisfy the given inequality."
+        },
+        {
+          "node_id": "n3",
+          "start_char": 310,
+          "end_char": 313,
+          "text": "---"
+        },
+        {
+          "node_id": "n4",
+          "start_char": 315,
+          "end_char": 523,
+          "text": "**Proof.**  Suppose, to the contrary, that there exists a function  \n\\[\nf:\\Bbb R\\to\\Bbb R\n\\]  \nwith  \n\\[\nf(0)=A>0\n\\quad\\text{and}\\quad\nf(x+y)\\;\\ge\\;f(x)\\;+\\;y\\,f\\bigl(f(x)\\bigr)\n\\quad\\forall\\,x,y\\in\\Bbb R.\n\\]"
+        },
+        {
+          "node_id": "n5",
+          "start_char": 525,
+          "end_char": 602,
+          "text": "1.  **A linear lower bound.**  \n   Take \\(x=0\\) in the functional inequality."
+        },
+        {
+          "node_id": "n6",
+          "start_char": 604,
+          "end_char": 978,
+          "text": "Since \\(f(0)=A\\), we get\n   \\[\n     f(y)\\;\\ge\\;f(0)+y\\,f\\bigl(f(0)\\bigr)\n     \\;=\\;A\\;+\\;y\\,f(A).\n   \\]\n   Set \n   \\[\n     C\\;=\\;f(A).\n   \\]\n   Then\n   \\[\n     f(y)\\;\\ge\\;A\\,+\\,C\\,y,\n     \\qquad\\forall\\,y\\in\\Bbb R.\n     \\tag{1}\n   \\]\n   In particular, on the compact interval \\([0,1]\\) the right–hand side \\(A+C\\,y\\) is bounded below, so \\(f\\) is bounded below on \\([0,1]\\)."
+        },
+        {
+          "node_id": "n7",
+          "start_char": 980,
+          "end_char": 1085,
+          "text": "2.  **Discrete convexity at step 1.**  \n   Now plug in \\(y=1\\) and \\(y=-1\\) into the original inequality:"
+        },
+        {
+          "node_id": "n8",
+          "start_char": 1090,
+          "end_char": 1253,
+          "text": "-- For \\(y=1\\):\n   \\[\n     f(x+1)\\;\\ge\\;f(x)\\;+\\;1\\cdot f\\bigl(f(x)\\bigr),\n     \\quad\\text{i.e.}\\quad\n     f(x+1)-f(x)\\;\\ge\\;f\\bigl(f(x)\\bigr).\n     \\tag{2a}\n   \\]"
+        },
+        {
+          "node_id": "n9",
+          "start_char": 1258,
+          "end_char": 1422,
+          "text": "-- For \\(y=-1\\):\n   \\[\n     f(x-1)\\;\\ge\\;f(x)\\;-\\;1\\cdot f\\bigl(f(x)\\bigr),\n     \\quad\\text{i.e.}\\quad\n     f(x)-f(x-1)\\;\\le\\;f\\bigl(f(x)\\bigr).\n     \\tag{2b}\n   \\]"
+        },
+        {
+          "node_id": "n10",
+          "start_char": 1427,
+          "end_char": 2021,
+          "text": "Adding \\((2a)\\) and \\((2b)\\) side–by–side gives\n   \\[\n     \\bigl[f(x+1)-f(x)\\bigr]\\;+\\;\\bigl[f(x)-f(x-1)\\bigr]\n     \\;\\ge\\;f\\bigl(f(x)\\bigr)\\;-\\;f\\bigl(f(x)\\bigr)\n     \\;=\\;0,\n   \\]\n   i.e.\n   \\[\n     f(x+1)\\;-\\;2\\,f(x)\\;+\\;f(x-1)\\;\\ge\\;0,\n     \\qquad\\forall\\,x\\in\\Bbb R.\n     \\tag{3}\n   \\]\n   Inequality \\((3)\\) is exactly the “second–difference nonnegativity” at step 1:\n   \\[\n     \\Delta_1^2 f(x)\\;=\\;f(x+1)-2f(x)+f(x-1)\\;\\ge\\;0.\n   \\]\n   It is a **standard fact** in elementary convex analysis (see, e.g., the discussion of midpoint–convexity and the discrete criterion for convexity) that:"
+        },
+        {
+          "node_id": "n11",
+          "start_char": 2026,
+          "end_char": 2242,
+          "text": "“If a real function \\(f:\\Bbb R\\to\\Bbb R\\) satisfies  \n    \\(\\;f(x+1)+f(x-1)\\ge2f(x)\\;\\) for all \\(x\\), and if \\(f\\) is bounded below on **some** interval of length 1,  \n    then \\(f\\) is in fact convex on \\(\\Bbb R\\)."
+        },
+        {
+          "node_id": "n12",
+          "start_char": 2244,
+          "end_char": 2322,
+          "text": "In particular \\(f\\) is continuous and its graph lies below every secant line.”"
+        },
+        {
+          "node_id": "n13",
+          "start_char": 2327,
+          "end_char": 2429,
+          "text": "Since by (1) we saw \\(f(y)\\ge A+C\\,y\\) is bounded below on \\([0,1]\\), we conclude from this lemma that"
+        },
+        {
+          "node_id": "n14",
+          "start_char": 2434,
+          "end_char": 2472,
+          "text": "(i) \\(f\\) is **convex** on \\(\\Bbb R\\)."
+        },
+        {
+          "node_id": "n15",
+          "start_char": 2477,
+          "end_char": 2583,
+          "text": "(ii) As a convex function which is bounded below on \\([0,1]\\), it is in fact **continuous** on \\(\\Bbb R\\)."
+        },
+        {
+          "node_id": "n16",
+          "start_char": 2585,
+          "end_char": 2933,
+          "text": "3.  **Affineness of a continuous convex function satisfying the inequality.**  \n   A continuous convex function on \\(\\Bbb R\\) which also satisfies a *superlinear* lower bound of the form\n   \\[\n     f(x+y)\\;\\ge\\;f(x)\\;+\\;y\\,f\\bigl(f(x)\\bigr)\n     \\quad\\forall\\,x,y\n   \\]\n   can actually be shown to be **affine** (i.e.\\ of the form \\(f(x)=m\\,x+b\\))."
+        },
+        {
+          "node_id": "n17",
+          "start_char": 2935,
+          "end_char": 3209,
+          "text": "Indeed, one either argues that convexity plus the two–point secant lower–slope condition forces the slope to be constant, or simply notes that any differentiable convex function on \\(\\Bbb R\\) whose derivative \\(f'\\) satisfies a one–sided bound must have constant derivative."
+        },
+        {
+          "node_id": "n18",
+          "start_char": 3211,
+          "end_char": 3238,
+          "text": "In any case, one arrives at"
+        },
+        {
+          "node_id": "n19",
+          "start_char": 3243,
+          "end_char": 3296,
+          "text": "\\[\n     \\boxed{f(x)=m\\,x+b,\\quad m,b\\in\\Bbb R.}\n   \\]"
+        },
+        {
+          "node_id": "n20",
+          "start_char": 3298,
+          "end_char": 3435,
+          "text": "4.  **No affine solution can work.**  \n   Finally we check that no affine function with \\(f(0)=b>0\\) can satisfy the original inequality."
+        },
+        {
+          "node_id": "n21",
+          "start_char": 3437,
+          "end_char": 4039,
+          "text": "If\n   \\(\\;f(x)=m\\,x+b\\), then\n   \\[\n     f(f(x))\n     =m\\,(m\\,x+b)+b\n     =m^2\\,x\\;+\\;m\\,b\\;+\\;b,\n   \\]\n   and\n   \\[\n     f(x+y)\n     =m\\,(x+y)+b\n     =m\\,x+b \\;+\\;m\\,y.\n   \\]\n   The required\n   \\[\n     f(x+y)\\;\\ge\\;f(x)\\;+\\;y\\,f\\bigl(f(x)\\bigr)\n   \\]\n   becomes, after cancelling the common \\(m\\,x+b\\),\n   \\[\n     m\\,y\n     \\;\\ge\\;\n     y\\;\\bigl(m^2\\,x+m\\,b+b\\bigr),\n     \\qquad\\forall\\,x,y\\in\\Bbb R.\n   \\]\n   If \\(y\\neq0\\) this forces\n   \\[\n     m\n     \\;\\ge\\;\n     m^2\\,x \\;+\\;m\\,b\\;+\\;b\n     \\quad\\forall\\,x\\in\\Bbb R.\n   \\]\n   But the right–hand side depends nontrivially on \\(x\\) unless \\(m^2=0\\)."
+        },
+        {
+          "node_id": "n22",
+          "start_char": 4041,
+          "end_char": 4055,
+          "text": "Hence \\(m=0\\)."
+        },
+        {
+          "node_id": "n23",
+          "start_char": 4057,
+          "end_char": 4265,
+          "text": "Then \\(f(x)\\equiv b\\), and the inequality reads\n   \\[\n     b \\;\\ge\\; b \\;+\\;y\\,b\n     \\quad\\Longrightarrow\\quad\n     0\\;\\ge\\;y\\,b\n     \\quad\\forall\\,y,\n   \\]\n   which for \\(b>0\\) is impossible (take \\(y>0\\))."
+        },
+        {
+          "node_id": "n24",
+          "start_char": 4269,
+          "end_char": 4349,
+          "text": "Thus **no** affine function with \\(f(0)>0\\) can satisfy the original inequality."
+        },
+        {
+          "node_id": "n25",
+          "start_char": 4351,
+          "end_char": 4414,
+          "text": "This contradiction shows that our initial assumption was false."
+        },
+        {
+          "node_id": "n26",
+          "start_char": 4416,
+          "end_char": 4425,
+          "text": "Therefore"
+        },
+        {
+          "node_id": "n27",
+          "start_char": 4427,
+          "end_char": 4553,
+          "text": "\\[\n\\boxed{\\text{There is no function }f:\\Bbb R\\to\\Bbb R\\text{ with }f(0)>0\n\\text{ satisfying }f(x+y)\\ge f(x)+y\\,f(f(x)).}\n\\]\n∎"
+        },
+        {
+          "node_id": "n28",
+          "start_char": 4555,
+          "end_char": 4558,
+          "text": "---"
+        },
+        {
+          "node_id": "n29",
+          "start_char": 4560,
+          "end_char": 4632,
+          "text": "**Remark on the “standard fact”**  \nThe key convexity‐lemma one uses is:"
+        },
+        {
+          "node_id": "n30",
+          "start_char": 4634,
+          "end_char": 4640,
+          "text": "Lemma."
+        },
+        {
+          "node_id": "n31",
+          "start_char": 4642,
+          "end_char": 4886,
+          "text": "If \\(g:\\Bbb R\\to\\Bbb R\\) satisfies\n\\[\n g(x+h)+g(x-h)\\;\\ge\\;2\\,g(x)\n \\quad\\forall\\,x\\in\\Bbb R\n\\]\nfor some fixed \\(h\\neq0\\), and if \\(g\\) is bounded below on **some** interval of length \\(\\lvert h\\rvert\\), then \\(g\\) is convex (hence continuous)."
+        },
+        {
+          "node_id": "n32",
+          "start_char": 4888,
+          "end_char": 4981,
+          "text": "A proof may be found in any text on convexity or functional inequalities (for instance, in J."
+        },
+        {
+          "node_id": "n33",
+          "start_char": 4982,
+          "end_char": 5108,
+          "text": "Kuczma, *An Introduction to the Theory of Functional Equations and Inequalities*, or on Wikipedia under “midpoint convexity”)."
+        },
+        {
+          "node_id": "n34",
+          "start_char": 5110,
+          "end_char": 5158,
+          "text": "This lemma is exactly what we applied in Step 2."
+        }
+      ],
+      "proposed_proof_verdict": "incorrect",
+      "proposed_first_error_node": "n11",
+      "proposed_error_type": "unsupported_external_dependency",
+      "error_description": "Wrong: a simple counterexample is f(x) = 2^floor(x).",
+      "human_verification": null
+    },
+    {
+      "old_case_id": "opc250-154",
+      "new_case_id": "opc250-153",
+      "opc_problem_id": "bulgarian-ZMS_2016_9_4",
+      "old_model_id": "openai/o4-mini--high",
+      "new_model_id": "xai/grok-3-mini-high",
+      "proof_identity_verified": false,
+      "problem": "Prove that for every real number \\(d>1\\), there exist infinitely many natural numbers \\(n\\) with the following property: in the interval \\(\\left[n^{2}, n^{2}+n+d \\sqrt{n}\\right]\\) there exist three distinct integers \\(a, b\\), and \\(c\\), such that \\(c\\) divides \\(ab\\).",
+      "proof_nodes": [
+        {
+          "node_id": "n1",
+          "start_char": 0,
+          "end_char": 275,
+          "text": "To prove that for every real number \\(d > 1\\), there exist infinitely many natural numbers \\(n\\) such that in the interval \\(\\left[n^{2}, n^{2} + n + d \\sqrt{n}\\right]\\) there are three distinct integers \\(a\\), \\(b\\), and \\(c\\) with \\(c\\) dividing \\(ab\\), proceed as follows."
+        },
+        {
+          "node_id": "n2",
+          "start_char": 277,
+          "end_char": 291,
+          "text": "Fix \\(d > 1\\)."
+        },
+        {
+          "node_id": "n3",
+          "start_char": 292,
+          "end_char": 359,
+          "text": "The goal is to find infinitely many \\(n\\) satisfying the condition."
+        },
+        {
+          "node_id": "n4",
+          "start_char": 360,
+          "end_char": 442,
+          "text": "To do this, choose \\(n\\) of the form \\(n = k(k+1)\\) for some integer \\(k \\geq 2\\)."
+        },
+        {
+          "node_id": "n5",
+          "start_char": 443,
+          "end_char": 527,
+          "text": "For each such \\(n\\), the interval is \\(\\left[n^{2}, n^{2} + n + d \\sqrt{n}\\right]\\)."
+        },
+        {
+          "node_id": "n6",
+          "start_char": 529,
+          "end_char": 672,
+          "text": "First, ensure that \\(k\\) is chosen large enough so that the specific \\(a\\), \\(b\\), and \\(c\\) lie within the interval and satisfy the condition."
+        },
+        {
+          "node_id": "n7",
+          "start_char": 673,
+          "end_char": 745,
+          "text": "Set \\(c = n^{2}\\), \\(a = n^{2} + k^{2}\\), and \\(b = n^{2} + (k+1)^{2}\\)."
+        },
+        {
+          "node_id": "n8",
+          "start_char": 746,
+          "end_char": 851,
+          "text": "The condition \\(c \\mid ab\\) must hold, and \\(a\\), \\(b\\), \\(c\\) must be distinct integers in the interval."
+        },
+        {
+          "node_id": "n9",
+          "start_char": 853,
+          "end_char": 916,
+          "text": "Since \\(n = k(k+1)\\), it follows that \\(n^{2} = [k(k+1)]^{2}\\)."
+        },
+        {
+          "node_id": "n10",
+          "start_char": 917,
+          "end_char": 1559,
+          "text": "Compute the differences:\n\\[\n\\delta_a = a - c = (n^{2} + k^{2}) - n^{2} = k^{2}, \\quad \\delta_b = b - c = (n^{2} + (k+1)^{2}) - n^{2} = (k+1)^{2}.\n\\]\nThe product of the differences is:\n\\[\np = \\delta_a \\delta_b = k^{2} \\cdot (k+1)^{2}.\n\\]\nNow, \\(c = n^{2} = [k(k+1)]^{2} = k^{2} (k+1)^{2}\\), so:\n\\[\np = c.\n\\]\nThus, \\(c \\mid p\\), and since \\(ab / c = c + (\\delta_a + \\delta_b) + p / c\\), substitute the values:\n\\[\n\\delta_a + \\delta_b = k^{2} + (k+1)^{2} = k^{2} + k^{2} + 2k + 1 = 2k^{2} + 2k + 1, \\quad p / c = c / c = 1.\n\\]\nSo:\n\\[\nab / c = c + (2k^{2} + 2k + 1) + 1 = c + 2k^{2} + 2k + 2,\n\\]\nwhich is an integer, confirming that \\(c \\mid ab\\)."
+        },
+        {
+          "node_id": "n11",
+          "start_char": 1561,
+          "end_char": 1670,
+          "text": "Next, ensure that \\(a\\), \\(b\\), and \\(c\\) are in the interval \\(\\left[n^{2}, n^{2} + n + d \\sqrt{n}\\right]\\)."
+        },
+        {
+          "node_id": "n12",
+          "start_char": 1671,
+          "end_char": 1744,
+          "text": "The lower bound is \\(n^{2}\\), and \\(c = n^{2}\\) is at the lower endpoint."
+        },
+        {
+          "node_id": "n13",
+          "start_char": 1745,
+          "end_char": 2135,
+          "text": "For \\(a = n^{2} + k^{2}\\) and \\(b = n^{2} + (k+1)^{2}\\), check the upper bound \\(n^{2} + n + d \\sqrt{n}\\):\n- \\(a = n^{2} + k^{2} \\leq n^{2} + n + d \\sqrt{n}\\) since \\(k^{2} < n + d \\sqrt{n}\\) for large \\(k\\) (as \\(n = k(k+1) \\approx k^{2}\\) and \\(k^{2} < k^{2} + k + d k\\) for large \\(k\\)).\n- For \\(b = n^{2} + (k+1)^{2}\\), need \\((k+1)^{2} \\leq n + d \\sqrt{n} = k(k+1) + d \\sqrt{k(k+1)}\\)."
+        },
+        {
+          "node_id": "n14",
+          "start_char": 2136,
+          "end_char": 2252,
+          "text": "This simplifies to \\(k+1 \\leq d \\sqrt{k^{2} + k}\\), which holds for sufficiently large \\(k\\) depending on \\(d > 1\\)."
+        },
+        {
+          "node_id": "n15",
+          "start_char": 2254,
+          "end_char": 2383,
+          "text": "Specifically, \\(k+1 \\leq d \\sqrt{k^{2} + k} < d (k + 1/2)\\) for \\(k > 1\\), so \\(k+1 \\leq d k + d/2\\), or \\(k(1-d) \\leq d/2 - 1\\)."
+        },
+        {
+          "node_id": "n16",
+          "start_char": 2384,
+          "end_char": 2621,
+          "text": "For \\(d > 1\\), \\(1-d < 0\\), so dividing by \\(1-d\\) (and flipping the inequality):\n\\[\nk \\geq \\frac{d/2 - 1}{1 - d} = \\frac{1 - d/2}{d - 1}.\n\\]\nFor \\(d \\leq 2\\), the right side is non-positive, so the inequality holds for all \\(k \\geq 2\\)."
+        },
+        {
+          "node_id": "n17",
+          "start_char": 2622,
+          "end_char": 2768,
+          "text": "For \\(d > 2\\), choose \\(k \\geq \\left\\lceil \\frac{1 - d/2}{d - 1} \\right\\rceil + 1\\) to ensure strict inequality and account for the approximation."
+        },
+        {
+          "node_id": "n18",
+          "start_char": 2769,
+          "end_char": 2920,
+          "text": "Since \\(\\sqrt{k^{2} + k} \\to \\infty\\) as \\(k \\to \\infty\\) and \\(d > 0\\), there exists \\(K(d)\\) such that for all \\(k \\geq K(d)\\), the inequality holds."
+        },
+        {
+          "node_id": "n19",
+          "start_char": 2922,
+          "end_char": 3061,
+          "text": "For \\(k \\geq 2\\), \\(a\\) and \\(b\\) are distinct from each other and from \\(c\\) since \\(k^{2} \\neq (k+1)^{2}\\) and both offsets are positive."
+        },
+        {
+          "node_id": "n20",
+          "start_char": 3062,
+          "end_char": 3234,
+          "text": "The interval is closed and includes the endpoints, so all points are included as long as the offsets are within \\([0, n + d \\sqrt{n}]\\), which is satisfied for large \\(k\\)."
+        },
+        {
+          "node_id": "n21",
+          "start_char": 3236,
+          "end_char": 3426,
+          "text": "Since \\(k\\) can be chosen arbitrarily large, there are infinitely many such \\(n = k(k+1)\\), and for each such \\(n\\), the interval contains \\(a\\), \\(b\\), and \\(c\\) with the required property."
+        },
+        {
+          "node_id": "n22",
+          "start_char": 3427,
+          "end_char": 3527,
+          "text": "Thus, for every \\(d > 1\\), there are infinitely many natural numbers \\(n\\) satisfying the condition."
+        },
+        {
+          "node_id": "n23",
+          "start_char": 3529,
+          "end_char": 3788,
+          "text": "\\[\n\\boxed{\\text{For each real number } d > 1, \\text{ there exist infinitely many natural numbers } n \\text{ such that in the interval } \\left[n^{2}, n^{2} + n + d \\sqrt{n}\\right], \\text{ there are three distinct integers } a, b, c \\text{ with } c \\mid ab.}\n\\]"
+        }
+      ],
+      "proposed_proof_verdict": "correct",
+      "proposed_first_error_node": null,
+      "proposed_error_type": null,
+      "error_description": null,
+      "human_verification": null
+    },
+    {
+      "old_case_id": "opc250-168",
+      "new_case_id": "opc250-167",
+      "opc_problem_id": "IMC_2001_12",
+      "old_model_id": "openai/o4-mini--high",
+      "new_model_id": "qwen/qwen3_235b_a22b",
+      "proof_identity_verified": false,
+      "problem": "Problem $6$.\nFor each positive integer $n$, let $f_{n}(\\vartheta)=\\sin \\vartheta \\cdot \\sin (2 \\vartheta) \\cdot \\sin (4 \\vartheta) \\cdots \\sin \\left(2^{n} \\vartheta\\right)$. For all real $\\vartheta$ and all $n$, prove that\n\n$$\n\\left|f_{n}(\\vartheta)\\right| \\leq \\frac{2}{\\sqrt{3}}\\left|f_{n}(\\pi / 3)\\right|\n$$",
+      "proof_nodes": [
+        {
+          "node_id": "n1",
+          "start_char": 0,
+          "end_char": 23,
+          "text": "To prove the inequality"
+        },
+        {
+          "node_id": "n2",
+          "start_char": 25,
+          "end_char": 124,
+          "text": "$$\n\\left|f_n(\\vartheta)\\right| \\leq \\frac{2}{\\sqrt{3}}\\left|f_n\\left(\\frac{\\pi}{3}\\right)\\right|\n$$"
+        },
+        {
+          "node_id": "n3",
+          "start_char": 126,
+          "end_char": 234,
+          "text": "for all real $\\vartheta$ and all positive integers $n$, we begin by analyzing the structure of the function:"
+        },
+        {
+          "node_id": "n4",
+          "start_char": 236,
+          "end_char": 292,
+          "text": "$$\nf_n(\\vartheta) = \\prod_{k=0}^n \\sin(2^k \\vartheta)\n$$"
+        },
+        {
+          "node_id": "n5",
+          "start_char": 294,
+          "end_char": 378,
+          "text": "This is a product of $n+1$ sine terms, each with an angle that doubles at each step."
+        },
+        {
+          "node_id": "n6",
+          "start_char": 379,
+          "end_char": 531,
+          "text": "The goal is to show that the absolute value of this product is bounded by a constant multiple of its value at $\\vartheta = \\frac{\\pi}{3}$, specifically:"
+        },
+        {
+          "node_id": "n7",
+          "start_char": 533,
+          "end_char": 633,
+          "text": "$$\n\\left|f_n(\\vartheta)\\right| \\leq \\frac{2}{\\sqrt{3}} \\left|f_n\\left(\\frac{\\pi}{3}\\right)\\right|\n$$"
+        },
+        {
+          "node_id": "n8",
+          "start_char": 635,
+          "end_char": 638,
+          "text": "---"
+        },
+        {
+          "node_id": "n9",
+          "start_char": 640,
+          "end_char": 692,
+          "text": "### Step 1: Evaluate $f_n\\left(\\frac{\\pi}{3}\\right)$"
+        },
+        {
+          "node_id": "n10",
+          "start_char": 694,
+          "end_char": 761,
+          "text": "We compute the value of the product at $\\vartheta = \\frac{\\pi}{3}$:"
+        },
+        {
+          "node_id": "n11",
+          "start_char": 763,
+          "end_char": 855,
+          "text": "$$\nf_n\\left(\\frac{\\pi}{3}\\right) = \\prod_{k=0}^n \\sin\\left(2^k \\cdot \\frac{\\pi}{3}\\right)\n$$"
+        },
+        {
+          "node_id": "n12",
+          "start_char": 857,
+          "end_char": 961,
+          "text": "We observe that the angles $2^k \\cdot \\frac{\\pi}{3}$ modulo $2\\pi$ cycle through a finite set of values."
+        },
+        {
+          "node_id": "n13",
+          "start_char": 962,
+          "end_char": 1088,
+          "text": "Specifically, the sine values alternate between $\\frac{\\sqrt{3}}{2}$ and $-\\frac{\\sqrt{3}}{2}$, depending on the value of $k$."
+        },
+        {
+          "node_id": "n14",
+          "start_char": 1089,
+          "end_char": 1181,
+          "text": "Therefore, the absolute value of each term is $\\frac{\\sqrt{3}}{2}$, and the product becomes:"
+        },
+        {
+          "node_id": "n15",
+          "start_char": 1183,
+          "end_char": 1271,
+          "text": "$$\n\\left|f_n\\left(\\frac{\\pi}{3}\\right)\\right| = \\left(\\frac{\\sqrt{3}}{2}\\right)^{n+1}\n$$"
+        },
+        {
+          "node_id": "n16",
+          "start_char": 1273,
+          "end_char": 1276,
+          "text": "---"
+        },
+        {
+          "node_id": "n17",
+          "start_char": 1278,
+          "end_char": 1323,
+          "text": "### Step 2: Define the Ratio $R_n(\\vartheta)$"
+        },
+        {
+          "node_id": "n18",
+          "start_char": 1325,
+          "end_char": 1345,
+          "text": "We define the ratio:"
+        },
+        {
+          "node_id": "n19",
+          "start_char": 1347,
+          "end_char": 1516,
+          "text": "$$\nR_n(\\vartheta) = \\frac{\\left|f_n(\\vartheta)\\right|}{\\left|f_n\\left(\\frac{\\pi}{3}\\right)\\right|} = \\prod_{k=0}^n \\frac{2}{\\sqrt{3}} \\left|\\sin(2^k \\vartheta)\\right|\n$$"
+        },
+        {
+          "node_id": "n20",
+          "start_char": 1518,
+          "end_char": 1569,
+          "text": "This is a product of $n+1$ terms, each of the form:"
+        },
+        {
+          "node_id": "n21",
+          "start_char": 1571,
+          "end_char": 1634,
+          "text": "$$\na_k = \\frac{2}{\\sqrt{3}} \\left|\\sin(2^k \\vartheta)\\right|\n$$"
+        },
+        {
+          "node_id": "n22",
+          "start_char": 1636,
+          "end_char": 1656,
+          "text": "We aim to show that:"
+        },
+        {
+          "node_id": "n23",
+          "start_char": 1658,
+          "end_char": 1702,
+          "text": "$$\nR_n(\\vartheta) \\leq \\frac{2}{\\sqrt{3}}\n$$"
+        },
+        {
+          "node_id": "n24",
+          "start_char": 1704,
+          "end_char": 1707,
+          "text": "---"
+        },
+        {
+          "node_id": "n25",
+          "start_char": 1709,
+          "end_char": 1747,
+          "text": "### Step 3: Key Observations and Lemma"
+        },
+        {
+          "node_id": "n26",
+          "start_char": 1749,
+          "end_char": 1765,
+          "text": "We observe that:"
+        },
+        {
+          "node_id": "n27",
+          "start_char": 1767,
+          "end_char": 1868,
+          "text": "- Each $a_k \\leq \\frac{2}{\\sqrt{3}}$, since $|\\sin x| \\leq 1$.\n- If $a_k > 1$, then $a_{k+1} \\leq 1$."
+        },
+        {
+          "node_id": "n28",
+          "start_char": 1869,
+          "end_char": 2055,
+          "text": "This is because if $|\\sin(2^k \\vartheta)| > \\frac{\\sqrt{3}}{2}$, then $2^{k+1} \\vartheta$ lies in a region where $|\\sin(2^{k+1} \\vartheta)| \\leq \\frac{\\sqrt{3}}{2}$, so $a_{k+1} \\leq 1$."
+        },
+        {
+          "node_id": "n29",
+          "start_char": 2057,
+          "end_char": 2089,
+          "text": "This leads to the **key lemma**:"
+        },
+        {
+          "node_id": "n30",
+          "start_char": 2091,
+          "end_char": 2140,
+          "text": "> **Lemma**: If $a_k > 1$, then $a_{k+1} \\leq 1$."
+        },
+        {
+          "node_id": "n31",
+          "start_char": 2142,
+          "end_char": 2245,
+          "text": "This implies that in the product $R_n(\\vartheta)$, no two consecutive terms can both be greater than 1."
+        },
+        {
+          "node_id": "n32",
+          "start_char": 2246,
+          "end_char": 2287,
+          "text": "This is crucial for bounding the product."
+        },
+        {
+          "node_id": "n33",
+          "start_char": 2289,
+          "end_char": 2292,
+          "text": "---"
+        },
+        {
+          "node_id": "n34",
+          "start_char": 2294,
+          "end_char": 2321,
+          "text": "### Step 4: Inductive Proof"
+        },
+        {
+          "node_id": "n35",
+          "start_char": 2323,
+          "end_char": 2405,
+          "text": "We prove by **strong induction** that for all $n \\geq 0$ and all real $\\vartheta$:"
+        },
+        {
+          "node_id": "n36",
+          "start_char": 2407,
+          "end_char": 2451,
+          "text": "$$\nR_n(\\vartheta) \\leq \\frac{2}{\\sqrt{3}}\n$$"
+        },
+        {
+          "node_id": "n37",
+          "start_char": 2453,
+          "end_char": 2477,
+          "text": "**Base Case** ($n = 0$):"
+        },
+        {
+          "node_id": "n38",
+          "start_char": 2479,
+          "end_char": 2561,
+          "text": "$$\nR_0(\\vartheta) = \\frac{2}{\\sqrt{3}} |\\sin \\vartheta| \\leq \\frac{2}{\\sqrt{3}}\n$$"
+        },
+        {
+          "node_id": "n39",
+          "start_char": 2563,
+          "end_char": 2595,
+          "text": "since $|\\sin \\vartheta| \\leq 1$."
+        },
+        {
+          "node_id": "n40",
+          "start_char": 2596,
+          "end_char": 2681,
+          "text": "Equality holds when $|\\sin \\vartheta| = 1$, i.e., $\\vartheta = \\frac{\\pi}{2} + k\\pi$."
+        },
+        {
+          "node_id": "n41",
+          "start_char": 2683,
+          "end_char": 2702,
+          "text": "**Inductive Step**:"
+        },
+        {
+          "node_id": "n42",
+          "start_char": 2704,
+          "end_char": 2748,
+          "text": "Assume the inequality holds for all $m < n$."
+        },
+        {
+          "node_id": "n43",
+          "start_char": 2749,
+          "end_char": 2858,
+          "text": "Consider $R_n(\\vartheta) = a_0 \\cdot R_{n-1}(2\\vartheta)$, where $a_0 = \\frac{2}{\\sqrt{3}} |\\sin \\vartheta|$."
+        },
+        {
+          "node_id": "n44",
+          "start_char": 2860,
+          "end_char": 2884,
+          "text": "- If $a_0 \\leq 1$, then:"
+        },
+        {
+          "node_id": "n45",
+          "start_char": 2886,
+          "end_char": 3002,
+          "text": "$$\nR_n(\\vartheta) \\leq 1 \\cdot R_{n-1}(2\\vartheta) \\leq \\frac{2}{\\sqrt{3}} \\quad \\text{(by inductive hypothesis)}\n$$"
+        },
+        {
+          "node_id": "n46",
+          "start_char": 3004,
+          "end_char": 3057,
+          "text": "- If $a_0 > 1$, then by the lemma, $a_1 \\leq 1$, and:"
+        },
+        {
+          "node_id": "n47",
+          "start_char": 3059,
+          "end_char": 3217,
+          "text": "$$\nR_n(\\vartheta) = a_0 \\cdot a_1 \\cdot R_{n-2}(4\\vartheta) \\leq 1 \\cdot R_{n-2}(4\\vartheta) \\leq \\frac{2}{\\sqrt{3}} \\quad \\text{(by inductive hypothesis)}\n$$"
+        },
+        {
+          "node_id": "n48",
+          "start_char": 3219,
+          "end_char": 3261,
+          "text": "Thus, in both cases, the inequality holds."
+        },
+        {
+          "node_id": "n49",
+          "start_char": 3263,
+          "end_char": 3266,
+          "text": "---"
+        },
+        {
+          "node_id": "n50",
+          "start_char": 3268,
+          "end_char": 3290,
+          "text": "### Step 5: Conclusion"
+        },
+        {
+          "node_id": "n51",
+          "start_char": 3292,
+          "end_char": 3369,
+          "text": "By induction, we have shown that for all $n \\geq 0$ and all real $\\vartheta$:"
+        },
+        {
+          "node_id": "n52",
+          "start_char": 3371,
+          "end_char": 3496,
+          "text": "$$\nR_n(\\vartheta) = \\frac{\\left|f_n(\\vartheta)\\right|}{\\left|f_n\\left(\\frac{\\pi}{3}\\right)\\right|} \\leq \\frac{2}{\\sqrt{3}}\n$$"
+        },
+        {
+          "node_id": "n53",
+          "start_char": 3498,
+          "end_char": 3603,
+          "text": "Multiplying both sides by $\\left|f_n\\left(\\frac{\\pi}{3}\\right)\\right|$, we obtain the desired inequality:"
+        },
+        {
+          "node_id": "n54",
+          "start_char": 3605,
+          "end_char": 3705,
+          "text": "$$\n\\left|f_n(\\vartheta)\\right| \\leq \\frac{2}{\\sqrt{3}} \\left|f_n\\left(\\frac{\\pi}{3}\\right)\\right|\n$$"
+        },
+        {
+          "node_id": "n55",
+          "start_char": 3707,
+          "end_char": 3732,
+          "text": "This completes the proof."
+        },
+        {
+          "node_id": "n56",
+          "start_char": 3734,
+          "end_char": 3737,
+          "text": "---"
+        },
+        {
+          "node_id": "n57",
+          "start_char": 3739,
+          "end_char": 3755,
+          "text": "### Final Answer"
+        },
+        {
+          "node_id": "n58",
+          "start_char": 3757,
+          "end_char": 3868,
+          "text": "$$\n\\boxed{\\left|f_{n}(\\vartheta)\\right| \\leq \\frac{2}{\\sqrt{3}}\\left|f_{n}\\left(\\frac{\\pi}{3}\\right)\\right|}\n$$"
+        }
+      ],
+      "proposed_proof_verdict": "incorrect",
+      "proposed_first_error_node": "n1",
+      "proposed_error_type": "other",
+      "error_description": "First mistake: the model shows if $a_0\\geq1$, then $a_1<1$, but this not imply $a_0 a_1 \\leq 1$.",
+      "human_verification": null
+    },
+    {
+      "old_case_id": "opc250-038",
+      "new_case_id": "opc250-039",
+      "opc_problem_id": "BMOSL_2021_16",
+      "old_model_id": "qwen/qwen3_235b_a22b",
+      "new_model_id": "openai/o3",
+      "proof_identity_verified": false,
+      "problem": "There is a population \\( P \\) of \\( 10000 \\) bacteria, some of which are friends (friendship is mutual), so that each bacterium has at least one friend. If we wish to assign to each bacterium a colored membrane so that no two friends have the same color, then there is a way to do it with \\( 2021 \\) colors, but not with \\( 2020 \\) or fewer.\n\nTwo friends \\( A \\) and \\( B \\) can decide to merge, in which case they become a single bacterium whose friends are precisely the union of friends of \\( A \\) and \\( B \\). (Merging is not allowed if \\( A \\) and \\( B \\) are not friends.) It turns out that no matter how we perform one merge or two consecutive merges, in the resulting population it would be possible to assign \\( 2020 \\) colors or fewer so that no two friends have the same color. Is it true that in any such population \\( P \\) every bacterium has at least \\( 2021 \\) friends?",
+      "proof_nodes": [
+        {
+          "node_id": "n1",
+          "start_char": 0,
+          "end_char": 7,
+          "text": "Answer."
+        },
+        {
+          "node_id": "n2",
+          "start_char": 9,
+          "end_char": 66,
+          "text": "Yes, every bacterium must have at least \\(2021\\) friends."
+        },
+        {
+          "node_id": "n3",
+          "start_char": 70,
+          "end_char": 157,
+          "text": "In graph–theoretic language the population \\(P\\) is the simple graph  \n\\(G=(V,E)\\) with"
+        },
+        {
+          "node_id": "n4",
+          "start_char": 161,
+          "end_char": 456,
+          "text": "• \\(|V|=10000\\);  \n• every vertex has degree at least \\(1\\);  \n• the chromatic number is \\(\\chi(G)=2021\\);  \n• for every edge \\(e\\in E\\) the contracted graph \\(G/e\\) is \\(2020\\)-colourable\n  (consequently every graph obtained after two consecutive contractions\n  is \\(2020\\)-colourable as well)."
+        },
+        {
+          "node_id": "n5",
+          "start_char": 458,
+          "end_char": 473,
+          "text": "Put \\(k=2020\\)."
+        },
+        {
+          "node_id": "n6",
+          "start_char": 476,
+          "end_char": 642,
+          "text": "We shall prove that the minimum degree \\(\\delta(G)\\) of \\(G\\) is strictly larger\nthan \\(k\\); hence every vertex – every bacterium – has at least\n\\(k+1=2021\\) friends."
+        },
+        {
+          "node_id": "n7",
+          "start_char": 644,
+          "end_char": 715,
+          "text": "--------------------------------------------------------------------\n1."
+        },
+        {
+          "node_id": "n8",
+          "start_char": 717,
+          "end_char": 833,
+          "text": "A preliminary observation\n--------------------------------------------------------------------\nFix an edge \\(e=uv\\)."
+        },
+        {
+          "node_id": "n9",
+          "start_char": 834,
+          "end_char": 912,
+          "text": "Contract it and call the new vertex that arises from \\(u,v\\)\nthe vertex \\(w\\)."
+        },
+        {
+          "node_id": "n10",
+          "start_char": 913,
+          "end_char": 1104,
+          "text": "Because of the hypothesis, the contracted graph \\(G/e\\) admits a proper\n\\(k\\)-colouring\n\\[\n\\varphi : V(G/e)\\longrightarrow\\{1,2,\\dots ,k\\}.\n\\]\nDenote by \\(c:=\\varphi(w)\\) the colour of \\(w\\)."
+        },
+        {
+          "node_id": "n11",
+          "start_char": 1105,
+          "end_char": 1187,
+          "text": "Since \\(\\varphi\\) is proper,  \nno neighbour of \\(w\\) in \\(G/e\\) is coloured \\(c\\)."
+        },
+        {
+          "node_id": "n12",
+          "start_char": 1189,
+          "end_char": 1311,
+          "text": "Observe that every neighbour of \\(v\\) in the original graph \\(G\\)\n(except \\(u\\)) is a neighbour of \\(w\\) in \\(G/e\\); hence"
+        },
+        {
+          "node_id": "n13",
+          "start_char": 1313,
+          "end_char": 1361,
+          "text": "(1)  none of those neighbours is coloured \\(c\\)."
+        },
+        {
+          "node_id": "n14",
+          "start_char": 1363,
+          "end_char": 1434,
+          "text": "--------------------------------------------------------------------\n2."
+        },
+        {
+          "node_id": "n15",
+          "start_char": 1436,
+          "end_char": 1606,
+          "text": "Suppose a vertex of degree at most \\(k\\) exists\n--------------------------------------------------------------------\nAssume, for a contradiction, that \\(\\delta(G)\\le k\\)."
+        },
+        {
+          "node_id": "n16",
+          "start_char": 1607,
+          "end_char": 1690,
+          "text": "Choose a vertex \\(v\\) with \\(\\deg(v)\\le k\\) and choose\none of its neighbours \\(u\\)."
+        },
+        {
+          "node_id": "n17",
+          "start_char": 1691,
+          "end_char": 1793,
+          "text": "Apply the construction of section 1 to the edge \\(uv\\);\nkeep the colouring \\(\\varphi\\) obtained there."
+        },
+        {
+          "node_id": "n18",
+          "start_char": 1795,
+          "end_char": 1866,
+          "text": "--------------------------------------------------------------------\n3."
+        },
+        {
+          "node_id": "n19",
+          "start_char": 1868,
+          "end_char": 2073,
+          "text": "Splitting the contracted vertex again\n--------------------------------------------------------------------\nWe now “uncontract’’ \\(w\\) and try to colour the original graph \\(G\\)\nwith the same \\(k\\) colours."
+        },
+        {
+          "node_id": "n20",
+          "start_char": 2075,
+          "end_char": 2108,
+          "text": "(i)  Give \\(v\\) the colour \\(c\\)."
+        },
+        {
+          "node_id": "n21",
+          "start_char": 2116,
+          "end_char": 2241,
+          "text": "By (1) no neighbour of \\(v\\) (except possibly \\(u\\)) carries that\n     colour, so the colouring is still proper around \\(v\\)."
+        },
+        {
+          "node_id": "n22",
+          "start_char": 2243,
+          "end_char": 2396,
+          "text": "(ii) We must recolour \\(u\\) with a colour different from \\(c\\) and from\n     the colours of its neighbours (one of which is now \\(v\\) with colour \\(c\\))."
+        },
+        {
+          "node_id": "n23",
+          "start_char": 2398,
+          "end_char": 2532,
+          "text": "Because \\(v\\) has at most \\(k\\) neighbours, step (i) used a colour\n\\(c\\) that previously did **not** occur on any of those neighbours."
+        },
+        {
+          "node_id": "n24",
+          "start_char": 2533,
+          "end_char": 2691,
+          "text": "Consequently, within the set\n\\[\nN(u)\\setminus\\{v\\}\n\\]\nat most \\(k-1\\) distinct colours appear\n(the palette contains \\(k\\) colours and colour \\(c\\) is absent)."
+        },
+        {
+          "node_id": "n25",
+          "start_char": 2692,
+          "end_char": 2848,
+          "text": "By the pigeon-hole principle some colour\n\\(\\alpha\\in\\{1,2,\\dots ,k\\}\\setminus\\{c\\}\\) occurs **at least twice**\namong the vertices of \\(N(u)\\setminus\\{v\\}\\)."
+        },
+        {
+          "node_id": "n26",
+          "start_char": 2849,
+          "end_char": 2906,
+          "text": "Pick one neighbour \\(x\\) of \\(u\\) with colour \\(\\alpha\\)."
+        },
+        {
+          "node_id": "n27",
+          "start_char": 2908,
+          "end_char": 2979,
+          "text": "--------------------------------------------------------------------\n4."
+        },
+        {
+          "node_id": "n28",
+          "start_char": 2981,
+          "end_char": 3216,
+          "text": "A Kempe–chain interchange frees the colour \\(\\alpha\\)\n--------------------------------------------------------------------\nConsider the subgraph \\(H\\) of \\(G\\) induced by all vertices whose\ncurrent colour is either \\(c\\) or \\(\\alpha\\)."
+        },
+        {
+          "node_id": "n29",
+          "start_char": 3217,
+          "end_char": 3309,
+          "text": "Its connected components are the classical “Kempe chains’’ for the two\ncolours \\(c,\\alpha\\)."
+        },
+        {
+          "node_id": "n30",
+          "start_char": 3311,
+          "end_char": 3478,
+          "text": "Vertex \\(v\\) (colour \\(c\\)) lies in one component of \\(H\\);\nvertex \\(x\\) (colour \\(\\alpha\\)) lies in some (possibly the same,\npossibly a different) component of \\(H\\)."
+        },
+        {
+          "node_id": "n31",
+          "start_char": 3480,
+          "end_char": 3689,
+          "text": "If \\(v\\) and \\(x\\) are in **different** components, interchange the\ncolours \\(c\\) and \\(\\alpha\\) *inside the component that contains \\(x\\)*:\nevery vertex there coloured \\(c\\) becomes \\(\\alpha\\) and vice versa."
+        },
+        {
+          "node_id": "n32",
+          "start_char": 3690,
+          "end_char": 3956,
+          "text": "This operation keeps the colouring proper and, crucially,\nremoves colour \\(\\alpha\\) from the neighbourhood of \\(u\\)\n(because only vertices of its own component were affected,  \nand that component does not contain \\(v\\) or any other neighbour of \\(u\\)\nbesides \\(x\\))."
+        },
+        {
+          "node_id": "n33",
+          "start_char": 3958,
+          "end_char": 4029,
+          "text": "--------------------------------------------------------------------\n5."
+        },
+        {
+          "node_id": "n34",
+          "start_char": 4031,
+          "end_char": 4167,
+          "text": "Finishing the colouring\n--------------------------------------------------------------------\nAfter the interchange the colour \\(\\alpha\\)"
+        },
+        {
+          "node_id": "n35",
+          "start_char": 4169,
+          "end_char": 4263,
+          "text": "• is not used by \\(v\\) (it still has colour \\(c\\));  \n• is not used by any neighbour of \\(u\\)."
+        },
+        {
+          "node_id": "n36",
+          "start_char": 4265,
+          "end_char": 4319,
+          "text": "Therefore we may now give \\(u\\) the colour \\(\\alpha\\)."
+        },
+        {
+          "node_id": "n37",
+          "start_char": 4320,
+          "end_char": 4424,
+          "text": "All adjacency conditions are met, so we have obtained a proper\n\\(k\\)-colouring of the whole graph \\(G\\)."
+        },
+        {
+          "node_id": "n38",
+          "start_char": 4426,
+          "end_char": 4497,
+          "text": "--------------------------------------------------------------------\n6."
+        },
+        {
+          "node_id": "n39",
+          "start_char": 4499,
+          "end_char": 4606,
+          "text": "The contradiction\n--------------------------------------------------------------------\nBut \\(\\chi(G)=k+1\\)."
+        },
+        {
+          "node_id": "n40",
+          "start_char": 4607,
+          "end_char": 4669,
+          "text": "Hence a proper colouring with only \\(k\\) colours cannot exist."
+        },
+        {
+          "node_id": "n41",
+          "start_char": 4670,
+          "end_char": 4748,
+          "text": "The contradiction shows that our assumption \\(\\delta(G)\\le k\\)\nwas impossible."
+        },
+        {
+          "node_id": "n42",
+          "start_char": 4750,
+          "end_char": 4821,
+          "text": "--------------------------------------------------------------------\n7."
+        },
+        {
+          "node_id": "n43",
+          "start_char": 4823,
+          "end_char": 4981,
+          "text": "Conclusion\n--------------------------------------------------------------------\nThus \\(\\delta(G)\\ge k+1=2021\\):\nevery bacterium has at least \\(2021\\) friends."
+        }
+      ],
+      "proposed_proof_verdict": "incorrect",
+      "proposed_first_error_node": "n11",
+      "proposed_error_type": "proof_gap",
+      "error_description": "The observation that no neighbour of the contracted vertex carries colour \\(c\\) was proved only for neighbours of \\(v\\), but then applied to neighbours of \\(u\\) without justification.",
+      "human_verification": null
+    },
+    {
+      "old_case_id": "opc250-071",
+      "new_case_id": "opc250-072",
+      "opc_problem_id": "BMOSL_2020_6",
+      "old_model_id": "gemini/gemini-pro-2.5",
+      "new_model_id": "openai/o3",
+      "proof_identity_verified": false,
+      "problem": "Let \\( k \\) be a positive integer. Determine the least integer \\( n \\geq k+1 \\) for which the game below can be played indefinitely:\n\nConsider \\( n \\) boxes, labeled \\( b_{1}, b_{2}, \\ldots, b_{n} \\). For each index \\( i \\), box \\( b_{i} \\) contains initially exactly \\( i \\) coins. At each step, the following three substeps are performed in order:\n1. Choose \\( k+1 \\) boxes;\n2. Of these \\( k+1 \\) boxes, choose \\( k \\) and remove at least half of the coins from each, and add to the remaining box, if labeled \\( b_{i} \\), a number of \\( i \\) coins.\n3. If one of the boxes is left empty, the game ends; otherwise, go to the next step.",
+      "proof_nodes": [
+        {
+          "node_id": "n1",
+          "start_char": 0,
+          "end_char": 39,
+          "text": "Solution Sketch (final statement first)"
+        },
+        {
+          "node_id": "n2",
+          "start_char": 41,
+          "end_char": 48,
+          "text": "Answer."
+        },
+        {
+          "node_id": "n3",
+          "start_char": 50,
+          "end_char": 88,
+          "text": "The game can be continued for ever iff"
+        },
+        {
+          "node_id": "n4",
+          "start_char": 94,
+          "end_char": 103,
+          "text": "n ≥ 2k+1."
+        },
+        {
+          "node_id": "n5",
+          "start_char": 105,
+          "end_char": 163,
+          "text": "In other words, the smallest admissible number of boxes is"
+        },
+        {
+          "node_id": "n6",
+          "start_char": 169,
+          "end_char": 183,
+          "text": "nmin = 2k + 1."
+        },
+        {
+          "node_id": "n7",
+          "start_char": 187,
+          "end_char": 222,
+          "text": "────────────────────────────────\nI."
+        },
+        {
+          "node_id": "n8",
+          "start_char": 224,
+          "end_char": 309,
+          "text": "Impossibility when n ≤ 2k\n────────────────────────────────\nLabel the k “small’’ boxes"
+        },
+        {
+          "node_id": "n9",
+          "start_char": 315,
+          "end_char": 340,
+          "text": "S = { b1 , b2 , … , bk }."
+        },
+        {
+          "node_id": "n10",
+          "start_char": 342,
+          "end_char": 398,
+          "text": "(The remaining at most k boxes will be called “large’’.)"
+        },
+        {
+          "node_id": "n11",
+          "start_char": 400,
+          "end_char": 529,
+          "text": "Because k+1 boxes have to be selected and there are at most k large\nones, in every single move at least one box of S is selected."
+        },
+        {
+          "node_id": "n12",
+          "start_char": 530,
+          "end_char": 735,
+          "text": "Only one among the k+1 selected boxes can be the “receiver’’,\nhence in each move at least one of the small boxes is forced to\nbelong to the k boxes from which at least one half of the coins are\ntaken away."
+        },
+        {
+          "node_id": "n13",
+          "start_char": 737,
+          "end_char": 832,
+          "text": "Consequently every small box loses at least half of its content at\nleast once in every k moves."
+        },
+        {
+          "node_id": "n14",
+          "start_char": 833,
+          "end_char": 997,
+          "text": "Between two successive losses a small box can be the receiver at\nmost once, and each time it is the receiver it gains at most k\ncoins (its label does not exceed k)."
+        },
+        {
+          "node_id": "n15",
+          "start_char": 999,
+          "end_char": 1106,
+          "text": "Hence, starting with at most k\ncoins, after 2k acts of “being receiver’’ the box contains at most\n3k coins."
+        },
+        {
+          "node_id": "n16",
+          "start_char": 1108,
+          "end_char": 1199,
+          "text": "But in the same period it has been halved at least 2k times, so its\ncontent does not exceed"
+        },
+        {
+          "node_id": "n17",
+          "start_char": 1205,
+          "end_char": 1222,
+          "text": "(3k)/2^{2k}  < 1."
+        },
+        {
+          "node_id": "n18",
+          "start_char": 1224,
+          "end_char": 1301,
+          "text": "Thus after a finite number of moves the box becomes empty and the\ngame stops."
+        },
+        {
+          "node_id": "n19",
+          "start_char": 1303,
+          "end_char": 1358,
+          "text": "Therefore an infinite play is impossible when  \nn ≤ 2k."
+        },
+        {
+          "node_id": "n20",
+          "start_char": 1362,
+          "end_char": 1398,
+          "text": "────────────────────────────────\nII."
+        },
+        {
+          "node_id": "n21",
+          "start_char": 1400,
+          "end_char": 1499,
+          "text": "A strategy that works for n = 2k+1\n────────────────────────────────\nPartition the boxes as follows."
+        },
+        {
+          "node_id": "n22",
+          "start_char": 1501,
+          "end_char": 1561,
+          "text": "•  Passive boxes  \n P = { b1 , b2 , … , bk }       (k boxes)"
+        },
+        {
+          "node_id": "n23",
+          "start_char": 1566,
+          "end_char": 1650,
+          "text": "These boxes are never chosen; they keep their initial\n   positive contents for ever."
+        },
+        {
+          "node_id": "n24",
+          "start_char": 1652,
+          "end_char": 1713,
+          "text": "•  Active boxes  \n A = { b_{k+1} , … , b_{2k+1} } (k+1 boxes)"
+        },
+        {
+          "node_id": "n25",
+          "start_char": 1718,
+          "end_char": 1758,
+          "text": "They alone will be used during the play."
+        },
+        {
+          "node_id": "n26",
+          "start_char": 1760,
+          "end_char": 1796,
+          "text": "For the active boxes fix the numbers"
+        },
+        {
+          "node_id": "n27",
+          "start_char": 1802,
+          "end_char": 1842,
+          "text": "T0 = 2^{k} ,  T1 = 2^{k-1} , … , Tk = 2."
+        },
+        {
+          "node_id": "n28",
+          "start_char": 1844,
+          "end_char": 1881,
+          "text": "(Notice that k ≥ 1 implies T0 ≥ k+1.)"
+        },
+        {
+          "node_id": "n29",
+          "start_char": 1883,
+          "end_char": 1903,
+          "text": "Inductive invariant."
+        },
+        {
+          "node_id": "n30",
+          "start_char": 1904,
+          "end_char": 1979,
+          "text": "At every moment one can enumerate the active boxes\na0 , a1 , … , ak\nso that"
+        },
+        {
+          "node_id": "n31",
+          "start_char": 1983,
+          "end_char": 2013,
+          "text": "(1) a0 holds exactly T0 coins;"
+        },
+        {
+          "node_id": "n32",
+          "start_char": 2017,
+          "end_char": 2056,
+          "text": "(2) aj (j ≥ 1) holds at least Tj coins."
+        },
+        {
+          "node_id": "n33",
+          "start_char": 2058,
+          "end_char": 2067,
+          "text": "Start-up."
+        },
+        {
+          "node_id": "n34",
+          "start_char": 2070,
+          "end_char": 2303,
+          "text": "Initially every active box contains k+1 or more coins, hence\nproperty (2) holds, while (1) can be achieved by naming any active\nbox a0 and, if necessary, adding to it its own label once, which is\nallowed because the box is not empty."
+        },
+        {
+          "node_id": "n35",
+          "start_char": 2305,
+          "end_char": 2322,
+          "text": "Maintenance move."
+        },
+        {
+          "node_id": "n36",
+          "start_char": 2325,
+          "end_char": 2381,
+          "text": "Assume the invariant is true at the beginning of a step."
+        },
+        {
+          "node_id": "n37",
+          "start_char": 2383,
+          "end_char": 2422,
+          "text": "•  Choose exactly the k+1 active boxes."
+        },
+        {
+          "node_id": "n38",
+          "start_char": 2424,
+          "end_char": 2561,
+          "text": "•  Make a0 the receiver.\n   (Property (1) guarantees that it is not empty; after the move it\n   will contain at least T0+k+1 > T0 coins.)"
+        },
+        {
+          "node_id": "n39",
+          "start_char": 2563,
+          "end_char": 2638,
+          "text": "•  From every other active box remove precisely one half\n  (⌊ c/2 ⌋ coins)."
+        },
+        {
+          "node_id": "n40",
+          "start_char": 2641,
+          "end_char": 2762,
+          "text": "As Tj ≥ 2 for j ≥ 1, none of those boxes becomes empty, and each\n  of them still contains at least Tj /2 ≥ T_{j+1} coins."
+        },
+        {
+          "node_id": "n41",
+          "start_char": 2764,
+          "end_char": 2774,
+          "text": "Now rename"
+        },
+        {
+          "node_id": "n42",
+          "start_char": 2780,
+          "end_char": 2831,
+          "text": "a1 → new a0 ,  a2 → new a1 , … ,  ak → new a_{k-1},"
+        },
+        {
+          "node_id": "n43",
+          "start_char": 2833,
+          "end_char": 2867,
+          "text": "and call the former a0 the new ak."
+        },
+        {
+          "node_id": "n44",
+          "start_char": 2868,
+          "end_char": 2992,
+          "text": "Because a0 received at least k+1 ≥ Tk coins, the new ak contains at\nleast Tk coins; all other properties are also preserved."
+        },
+        {
+          "node_id": "n45",
+          "start_char": 2993,
+          "end_char": 3047,
+          "text": "Hence the invariant is restored and no box is emptied."
+        },
+        {
+          "node_id": "n46",
+          "start_char": 3049,
+          "end_char": 3133,
+          "text": "Since the procedure can clearly be repeated indefinitely, the play\nnever terminates."
+        },
+        {
+          "node_id": "n47",
+          "start_char": 3137,
+          "end_char": 3174,
+          "text": "────────────────────────────────\nIII."
+        },
+        {
+          "node_id": "n48",
+          "start_char": 3176,
+          "end_char": 3343,
+          "text": "Conclusion\n────────────────────────────────\nAn infinite play is impossible for n ≤ 2k and is possible for\nn = 2k+1, therefore the least n with the required property is"
+        },
+        {
+          "node_id": "n49",
+          "start_char": 3349,
+          "end_char": 3363,
+          "text": "nmin = 2k + 1."
+        }
+      ],
+      "proposed_proof_verdict": "incorrect",
+      "proposed_first_error_node": "n6",
+      "proposed_error_type": "wrong_conclusion",
+      "error_description": "The proof concludes that the least integer n is n\\ge2k+1, but the correct minimum is n=2^k + k - 1, so the final answer is wrong.",
+      "human_verification": null
+    },
+    {
+      "old_case_id": "opc250-158",
+      "new_case_id": "opc250-157",
+      "opc_problem_id": "EGMO_2021_1",
+      "old_model_id": "gemini/gemini-pro-2.5",
+      "new_model_id": "qwen/qwen3_235b_a22b",
+      "proof_identity_verified": false,
+      "problem": "The number \\(2021\\) is fantabulous. For any positive integer \\(m\\), if any element of the set \\(\\{m, 2m+1, 3m\\}\\) is fantabulous, then all the elements are fantabulous. Does it follow that the number \\(2021^{2021}\\) is fantabulous?",
+      "proof_nodes": [
+        {
+          "node_id": "n1",
+          "start_char": 0,
+          "end_char": 122,
+          "text": "To determine whether the number $ 2021^{2021} $ is **fantabulous**, we must understand the implications of the given rule:"
+        },
+        {
+          "node_id": "n2",
+          "start_char": 124,
+          "end_char": 274,
+          "text": "> For any positive integer $ m $, if **any** element of the set $ \\{m, 2m+1, 3m\\} $ is fantabulous, then **all** elements of that set are fantabulous."
+        },
+        {
+          "node_id": "n3",
+          "start_char": 276,
+          "end_char": 352,
+          "text": "This rule defines a **closure property** for the set of fantabulous numbers."
+        },
+        {
+          "node_id": "n4",
+          "start_char": 353,
+          "end_char": 494,
+          "text": "Starting from the known fact that $ 2021 $ is fantabulous, we can generate other fantabulous numbers by applying the rule in both directions:"
+        },
+        {
+          "node_id": "n5",
+          "start_char": 496,
+          "end_char": 688,
+          "text": "- **Forward direction**: If $ m $ is fantabulous, then $ 2m+1 $ and $ 3m $ are also fantabulous.\n- **Backward direction**: If $ 2m+1 $ or $ 3m $ is fantabulous, then $ m $ must be fantabulous."
+        },
+        {
+          "node_id": "n6",
+          "start_char": 690,
+          "end_char": 693,
+          "text": "---"
+        },
+        {
+          "node_id": "n7",
+          "start_char": 695,
+          "end_char": 757,
+          "text": "### Step 1: Understanding the Structure of Fantabulous Numbers"
+        },
+        {
+          "node_id": "n8",
+          "start_char": 759,
+          "end_char": 816,
+          "text": "Let’s denote the set of all fantabulous numbers as $ F $."
+        },
+        {
+          "node_id": "n9",
+          "start_char": 817,
+          "end_char": 931,
+          "text": "The rule implies that $ F $ is the **smallest** set containing $ 2021 $ and closed under the following operations:"
+        },
+        {
+          "node_id": "n10",
+          "start_char": 933,
+          "end_char": 1064,
+          "text": "- If $ m \\in F $, then $ 2m+1 \\in F $ and $ 3m \\in F $.\n- If $ 2m+1 \\in F $, then $ m \\in F $.\n- If $ 3m \\in F $, then $ m \\in F $."
+        },
+        {
+          "node_id": "n11",
+          "start_char": 1066,
+          "end_char": 1216,
+          "text": "This means that $ F $ is the **closure** of $ \\{2021\\} $ under the operations $ m \\mapsto 2m+1 $, $ m \\mapsto 3m $, and their inverses (when defined)."
+        },
+        {
+          "node_id": "n12",
+          "start_char": 1218,
+          "end_char": 1221,
+          "text": "---"
+        },
+        {
+          "node_id": "n13",
+          "start_char": 1223,
+          "end_char": 1270,
+          "text": "### Step 2: Attempting to Reach $ 2021^{2021} $"
+        },
+        {
+          "node_id": "n14",
+          "start_char": 1272,
+          "end_char": 1399,
+          "text": "We are asked whether $ 2021^{2021} $ is in $ F $, i.e., whether it can be generated from $ 2021 $ using the allowed operations."
+        },
+        {
+          "node_id": "n15",
+          "start_char": 1401,
+          "end_char": 1434,
+          "text": "Let’s denote $ N = 2021^{2021} $."
+        },
+        {
+          "node_id": "n16",
+          "start_char": 1435,
+          "end_char": 1531,
+          "text": "Since $ N $ is **odd**, we can attempt to reduce it using the inverse of the $ 2m+1 $ operation:"
+        },
+        {
+          "node_id": "n17",
+          "start_char": 1533,
+          "end_char": 1560,
+          "text": "$$\nN_1 = \\frac{N - 1}{2}\n$$"
+        },
+        {
+          "node_id": "n18",
+          "start_char": 1562,
+          "end_char": 1602,
+          "text": "This is an integer because $ N $ is odd."
+        },
+        {
+          "node_id": "n19",
+          "start_char": 1603,
+          "end_char": 1737,
+          "text": "However, $ N_1 $ is **even**, and since $ N $ is not divisible by 3 (as $ 2021 \\equiv 2 \\mod 3 $), $ N_1 $ is also not divisible by 3."
+        },
+        {
+          "node_id": "n20",
+          "start_char": 1739,
+          "end_char": 1831,
+          "text": "This means that $ N_1 $ cannot be reduced further using the inverse of the $ 3m $ operation."
+        },
+        {
+          "node_id": "n21",
+          "start_char": 1832,
+          "end_char": 1989,
+          "text": "The only way $ N_1 $ could be in $ F $ is if it is the **base** of a set $ \\{N_1, 2N_1 + 1, 3N_1\\} $, and at least one of the other two elements is in $ F $."
+        },
+        {
+          "node_id": "n22",
+          "start_char": 1991,
+          "end_char": 1995,
+          "text": "But:"
+        },
+        {
+          "node_id": "n23",
+          "start_char": 1997,
+          "end_char": 2120,
+          "text": "- $ 2N_1 + 1 = N $, which is what we are trying to prove.\n- $ 3N_1 = \\frac{3(N - 1)}{2} $, which is not obviously in $ F $."
+        },
+        {
+          "node_id": "n24",
+          "start_char": 2122,
+          "end_char": 2262,
+          "text": "So we are stuck in a **circular dependency**: to prove $ N \\in F $, we need $ N_1 \\in F $, which in turn requires $ 3N_1 \\in F $, and so on."
+        },
+        {
+          "node_id": "n25",
+          "start_char": 2264,
+          "end_char": 2267,
+          "text": "---"
+        },
+        {
+          "node_id": "n26",
+          "start_char": 2269,
+          "end_char": 2313,
+          "text": "### Step 3: Exploring the Structure of $ F $"
+        },
+        {
+          "node_id": "n27",
+          "start_char": 2315,
+          "end_char": 2357,
+          "text": "Let’s consider the **structure** of $ F $:"
+        },
+        {
+          "node_id": "n28",
+          "start_char": 2359,
+          "end_char": 2665,
+          "text": "- Starting from $ 2021 $, we can generate numbers like $ 2 \\cdot 2021 + 1 = 4043 $, $ 3 \\cdot 2021 = 6063 $, and so on.\n- From $ 4043 $, we can generate $ 2 \\cdot 4043 + 1 = 8087 $, $ 3 \\cdot 4043 = 12129 $, etc.\n- From $ 6063 $, we can generate $ 2 \\cdot 6063 + 1 = 12127 $, $ 3 \\cdot 6063 = 18189 $, etc."
+        },
+        {
+          "node_id": "n29",
+          "start_char": 2667,
+          "end_char": 2774,
+          "text": "We can also go **downward** from $ 2021 $, since $ 2021 = 2 \\cdot 1010 + 1 $, so $ 1010 $ must be in $ F $."
+        },
+        {
+          "node_id": "n30",
+          "start_char": 2776,
+          "end_char": 2871,
+          "text": "From $ 1010 $, we can generate $ 2 \\cdot 1010 + 1 = 2021 $, $ 3 \\cdot 1010 = 3030 $, and so on."
+        },
+        {
+          "node_id": "n31",
+          "start_char": 2873,
+          "end_char": 2891,
+          "text": "So $ F $ includes:"
+        },
+        {
+          "node_id": "n32",
+          "start_char": 2893,
+          "end_char": 2961,
+          "text": "- $ 2021, 1010, 3030, 4043, 6063, 8087, 12127, 12129, 18189, \\dots $"
+        },
+        {
+          "node_id": "n33",
+          "start_char": 2963,
+          "end_char": 3095,
+          "text": "But **none of these numbers** are equal to $ 2021^{2021} $, and none of the operations allow us to reach such a large power of 2021."
+        },
+        {
+          "node_id": "n34",
+          "start_char": 3097,
+          "end_char": 3100,
+          "text": "---"
+        },
+        {
+          "node_id": "n35",
+          "start_char": 3102,
+          "end_char": 3131,
+          "text": "### Step 4: Inductive Attempt"
+        },
+        {
+          "node_id": "n36",
+          "start_char": 3133,
+          "end_char": 3213,
+          "text": "Suppose we try to prove by induction that $ 2021^k \\in F $ for all $ k \\geq 1 $."
+        },
+        {
+          "node_id": "n37",
+          "start_char": 3215,
+          "end_char": 3319,
+          "text": "- **Base case**: $ 2021^1 = 2021 \\in F $, which is given.\n- **Inductive step**: Assume $ 2021^k \\in F $."
+        },
+        {
+          "node_id": "n38",
+          "start_char": 3320,
+          "end_char": 3424,
+          "text": "Then $ 2 \\cdot 2021^k + 1 $ and $ 3 \\cdot 2021^k $ are in $ F $, but neither is equal to $ 2021^{k+1} $."
+        },
+        {
+          "node_id": "n39",
+          "start_char": 3426,
+          "end_char": 3550,
+          "text": "So the inductive step **fails**, because $ 2021^{k+1} $ is not directly generated by the allowed operations from $ 2021^k $."
+        },
+        {
+          "node_id": "n40",
+          "start_char": 3552,
+          "end_char": 3555,
+          "text": "---"
+        },
+        {
+          "node_id": "n41",
+          "start_char": 3557,
+          "end_char": 3579,
+          "text": "### Step 5: Conclusion"
+        },
+        {
+          "node_id": "n42",
+          "start_char": 3581,
+          "end_char": 3600,
+          "text": "We have shown that:"
+        },
+        {
+          "node_id": "n43",
+          "start_char": 3602,
+          "end_char": 3998,
+          "text": "- $ 2021^{2021} $ is **odd**, so it can be reduced to $ N_1 = \\frac{2021^{2021} - 1}{2} $, which is **even** and **not divisible by 3**.\n- $ N_1 $ cannot be reduced further using the inverse of the $ 3m $ operation.\n- $ N_1 $ is not obviously in $ F $, and we cannot find a path from $ N_1 $ to any known fantabulous number.\n- Inductive attempts to build up to $ 2021^{2021} $ from $ 2021 $ fail."
+        },
+        {
+          "node_id": "n44",
+          "start_char": 4000,
+          "end_char": 4137,
+          "text": "Therefore, **we cannot conclude** that $ 2021^{2021} $ is in $ F $, and thus, it does **not** follow that $ 2021^{2021} $ is fantabulous."
+        },
+        {
+          "node_id": "n45",
+          "start_char": 4139,
+          "end_char": 4142,
+          "text": "---"
+        },
+        {
+          "node_id": "n46",
+          "start_char": 4144,
+          "end_char": 4160,
+          "text": "### Final Answer"
+        },
+        {
+          "node_id": "n47",
+          "start_char": 4162,
+          "end_char": 4178,
+          "text": "$$\n\\boxed{No}\n$$"
+        }
+      ],
+      "proposed_proof_verdict": "incorrect",
+      "proposed_first_error_node": "n20",
+      "proposed_error_type": "false_generalization",
+      "error_description": "The proof overgeneralizes from the failure of a single inverse step to conclude no reduction path exists, ignoring the possibility of multi-step or composite transformations.",
+      "human_verification": null
+    }
+  ]
+}

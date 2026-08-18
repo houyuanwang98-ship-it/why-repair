@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m7_interactive_analysis_v0_2.schema.json",
+  "title": "M7 interactive engineering analysis v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "scope", "case_count", "family_count", "method_count_per_family", "assignment_count", "ledger_complete", "provider_model_calls", "provider_cost", "result_digest", "replay_sample_count", "blind_review_row_count", "blind_review_payload_count", "blind_review_completed", "inferential_statistics", "scientific_claim_allowed", "formal_m7_experiment_allowed", "interactive_m7_engineering_complete", "limitations"],
+  "properties": {
+    "schema_version": {"const": "m7-interactive-analysis-0.2"},
+    "status": {"const": "interactive_engineering_complete_formal_experiment_blocked"},
+    "scope": {"const": "nonblind_historical_m6_projection_gold_exposed"},
+    "case_count": {"const": 50},
+    "family_count": {"const": 2},
+    "method_count_per_family": {"const": 9},
+    "assignment_count": {"const": 900},
+    "ledger_complete": {"const": true},
+    "provider_model_calls": {"const": 0},
+    "provider_cost": {"const": 0},
+    "result_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "replay_sample_count": {"const": 20},
+    "blind_review_row_count": {"type": "integer", "minimum": 1, "maximum": 900},
+    "blind_review_payload_count": {"type": "integer", "minimum": 1, "maximum": 900},
+    "blind_review_completed": {"const": false},
+    "inferential_statistics": {"const": "not_computed_invalid_shared_historical_predictions"},
+    "scientific_claim_allowed": {"const": false},
+    "formal_m7_experiment_allowed": {"const": false},
+    "interactive_m7_engineering_complete": {"const": true},
+    "limitations": {"type": "array", "minItems": 3, "items": {"type": "string", "minLength": 1}}
+  }
+}

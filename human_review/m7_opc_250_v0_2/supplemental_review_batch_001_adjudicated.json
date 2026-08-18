@@ -1,0 +1,83 @@
+{
+  "schema_version": "m7-opc-v0.2-supplemental-review-adjudicated-0.1",
+  "status": "six_changed_proofs_human_review_complete",
+  "source_review_sha256": "ee9fc855703d6ba94bd22dd10388d1a88430e2c1cd9ce9b328630b3337117043",
+  "row_count": 6,
+  "usable_node_gold_count": 6,
+  "exact_first_error_agreement": 0,
+  "proof_verdict_agreement": 5,
+  "rows": [
+    {
+      "case_id": "opc250-214",
+      "review_status": "corrected",
+      "reviewed_proof_verdict": "incorrect",
+      "proposed_proof_verdict": "incorrect",
+      "proposed_first_error_node": "n11",
+      "proposed_error_type": "unsupported_external_dependency",
+      "reviewed_first_error_node": "n10",
+      "reviewed_error_type": "algebraic_invalidity",
+      "raw_human_response": "- 复核结论：`纠正`\n- 证明状态：**错误**。\n- 首个无效计算：**n10**。由 (2a)、(2b) 应写成\n  \\[\n  f(x+1)-f(x)\\ge f(f(x))\\ge f(x)-f(x-1),\n  \\]\n  才能推出二阶差分非负。原文声称把两式相加，但其左端相加等于 (f(x+1)-f(x-1))，并不等于所写的二阶差分。\n- 首个错误引理：**n11**。固定步长 (1) 的二阶差分非负不能推出通常凸性；例如 (f(x)=2^{\\lfloor x\\rfloor}) 满足该固定步长不等式并在 ([0,1]) 上有界，却不是凸函数。\n- 后续问题：n13 把“有下界”误写成“有界”；n16–n19 关于凸函数必为仿射的论证也未建立。\n- 错误类型：n10 为 `algebraic_invalidity`（可局部替换），n11 为 `false_theorem`。整条“离散凸性—凸性—仿射性”路线需要重写。\n- 节点问题：**n6、n10、n21、n31 过长**；n10 应拆成原始不等式、差分比较、二阶差分结论三个节点。",
+      "usable_as_node_gold": true
+    },
+    {
+      "case_id": "opc250-153",
+      "review_status": "corrected",
+      "reviewed_proof_verdict": "incorrect",
+      "proposed_proof_verdict": "correct",
+      "proposed_first_error_node": null,
+      "proposed_error_type": null,
+      "reviewed_first_error_node": "n15",
+      "reviewed_error_type": "algebraic_invalidity",
+      "raw_human_response": "- 复核结论：`纠正`\n- 证明结论：**正确，但原证明含可修复错误，不能判为完全正确**。\n- 首个明确错误：**n15**。目标是证明 (k+1\\le d\\sqrt{k^2+k})，但原文用上界 (sqrt{k^2+k}<k+\\tfrac12) 去验证 (k+1\\le d(k+\\tfrac12))；把右端换成更大的量不能推出原不等式。\n- n16 还错误声称 (1<d\\le2) 时 ((1-d/2)/(d-1)) 非正；实际上 (1<d<2) 时它为正。n18 仅凭 (sqrt{k^2+k}\\to\\infty) 也不足以比较两边增长率。\n- 正确桥接为\n  \\[\n  \\frac{k+1}{\\sqrt{k^2+k}}=\\sqrt{1+\\frac1k}\\longrightarrow1<d,\n  \\]\n  故充分大的 (k) 满足所需上界。其余构造与整除验证成立。\n- 错误类型：**不等式估计方向错误（algebraic_invalidity）**。\n- 节点问题：**n10、n13、n23 过长**；n10 应拆成偏移量乘积、模 (c) 展开和整除结论。",
+      "usable_as_node_gold": true
+    },
+    {
+      "case_id": "opc250-167",
+      "review_status": "corrected",
+      "reviewed_proof_verdict": "incorrect",
+      "proposed_proof_verdict": "incorrect",
+      "proposed_first_error_node": "n1",
+      "proposed_error_type": "other",
+      "reviewed_first_error_node": "n47",
+      "reviewed_error_type": "algebraic_invalidity",
+      "raw_human_response": "- 复核结论：`纠正`\n- 证明状态：**错误**。\n- **n1 只是标题，不是错误节点。**\n- 首个实质错误：**n47**。由 (a_0>1) 和引理给出的 (a_1\\le1) 不能推出 (a_0a_1\\le1)。事实上取 (cos\\vartheta=1/\\sqrt3)，则\n  \\[\n  a_0a_1=\\frac43|\\sin\\vartheta\\sin2\\vartheta|\n  =\\frac{16}{9\\sqrt3}>1.\n  \\]\n- n47 在 (n=1) 时还调用未定义的 (R_{-1})，归纳基本情况不完整。\n- 错误类型：**无效乘积估计（algebraic_invalidity）**。需要改用更强的分块估计或另一种递推，而不能只使用“相邻两项不同时大于 1”。\n- 节点问题：无严重超长节点；但 n27 同时陈述单项上界和相邻项性质，宜拆成两个原子节点。",
+      "usable_as_node_gold": true
+    },
+    {
+      "case_id": "opc250-039",
+      "review_status": "corrected",
+      "reviewed_proof_verdict": "incorrect",
+      "proposed_proof_verdict": "incorrect",
+      "proposed_first_error_node": "n11",
+      "proposed_error_type": "proof_gap",
+      "reviewed_first_error_node": "n24",
+      "reviewed_error_type": "missing_bridge_lemma",
+      "raw_human_response": "- 复核结论：`纠正`\n- 证明状态：**错误**。\n- **n11 正确**：在 (G/uv) 的正常着色中，收缩顶点 (w) 的邻居都不能具有颜色 (c=\\varphi(w))。该观察对 (u,v) 的原邻居对称适用，因为它们在收缩后都是 (w) 的邻居。\n- 首个小缺口：**n24**。结论“(N(u)\\setminus\\{v\\}) 中没有颜色 (c)”是对的，但原文没有明确给出上述对称映射。\n- 首个明确错误：**n25**。即使 (N(u)\\setminus\\{v\\}) 中至多出现 (k-1) 种颜色，也不能在没有邻域大小下界的情况下推出某种颜色至少出现两次。\n- 后续错误：n32 没有证明 (x) 的 Kempe 分量不含 (u) 的其他邻居，也完全没有处理 (v) 与 (x) 位于同一 Kempe 分量的情况。题设中的“两次连续收缩”条件没有被实质使用。\n- 错误类型：n24 为 `missing_bridge_lemma`，n25 为 `unsupported_inference`。需要利用两次收缩条件重建 Kempe 链论证。\n- 节点问题：没有机械意义上的超长节点，但 **n32 混合了交换合法性、分量结构和邻域颜色消除三个义务**，应拆开。",
+      "usable_as_node_gold": true
+    },
+    {
+      "case_id": "opc250-072",
+      "review_status": "corrected",
+      "reviewed_proof_verdict": "incorrect",
+      "proposed_proof_verdict": "incorrect",
+      "proposed_first_error_node": "n6",
+      "proposed_error_type": "wrong_conclusion",
+      "reviewed_first_error_node": "n4",
+      "reviewed_error_type": "wrong_conclusion",
+      "raw_human_response": "- 复核结论：`纠正首错位置`\n- 证明状态：**错误**；正确最小值为 (2^k+k-1)。\n- 首个完整错误断言：**n4**，其中首次写出“当且仅当 (n\\ge2k+1)”；n6 只是重复该错误答案。\n- 下界部分另有错误：n13 从“每步至少有一个小盒子作为来源”错误推出“每个小盒子每 (k) 步至少损失一次”；n14 也未证明两次损失之间至多接收一次。因此 n15–n18 的衰减估计无效。\n- 上界构造也不成立：n34 不能在正式移动之外给 (a_0) 添加硬币；正式移动会同时改变另外 (k) 个盒子，不能用来无代价初始化。所设指数级不变量通常也不满足初始状态。\n- 错误类型：**错误结论（false_claim / wrong_conclusion）**。上下界均需围绕 (2^k+k-1) 重新证明，无法局部修复。\n- 节点问题：无单个超长节点，但 **n13–n17 被切成多个短句却缺少完整的量化/势函数关系**，应合并重写；n34 则应拆分“初始化目标”和“合法操作验证”。",
+      "usable_as_node_gold": true
+    },
+    {
+      "case_id": "opc250-157",
+      "review_status": "corrected",
+      "reviewed_proof_verdict": "incorrect",
+      "proposed_proof_verdict": "incorrect",
+      "proposed_first_error_node": "n20",
+      "proposed_error_type": "false_generalization",
+      "reviewed_first_error_node": "n9",
+      "reviewed_error_type": "missing_assumption",
+      "raw_human_response": "- 复核结论：`纠正`\n- 证明状态：**最终答案没有被这份证明建立**。\n- 首个结构性错误：**n9**。题设只说明实际幻想数集合满足闭包性质并包含 (2021)，没有说明它就是包含 (2021) 的最小闭集。若要使用最小闭包 (C(2021))，必须另行定义并证明所有允许集合都包含它，以及目标不在其中时可取 (F=C(2021)) 构造反例。\n- **n20 本身正确**：因为 (N_1) 不被 (3) 整除，所以当前不能直接应用除以 (3) 的逆操作。原审查把它过度解释成了对所有后续复合路径的排除。\n- 首个明确轨道错误：**n21**。(N_1) 属于闭包可能来自任意长度的复合路径，并不限于当前三元组的一步关系。\n- 后续错误：n33 的“没有任何操作能达到”未经证明；n39 把直接归纳失败当成不存在复合路径；n43 又无依据地声称 (N_1\\notin F)；n44 因而不能推出最终的 `No`。\n- 错误类型：n9 为 `missing_assumption / definition_error`，n21 为 `false_generalization / unsupported_inference`。需要用等价类和严格不变量证明目标不在 (C(2021))，再构造允许的幻想数集合。\n- 节点问题：**n28、n43 过长**；n21–n24、n36–n44 把探索失败与数学否定混合，应重组为等价类化归、不变量、不可达性和反例构造四部分。",
+      "usable_as_node_gold": true
+    }
+  ]
+}

@@ -1,5 +1,28 @@
 # Changelog
 
+- Imported and hash-bound the six completed OPC-250 v0.2 supplemental human
+  reviews. All six proposed first-error locations were corrected; the combined
+  transfer now covers 25 human-reviewed cases, including 23 usable node Gold
+  cases, while 134 incorrect proofs remain pending mapping review.
+- Replaced the hard-coded formal M7 candidate blocker with byte-, split-,
+  license-, and digest-level verification of OPC-250 v0.2. The readiness audit
+  now separates pre-run entry gates from post-run Provider evidence, removing a
+  circular execution condition without weakening the human evidence gates.
+- Recorded the repository owner's explicit project-scope waiver of detached
+  signatures and enabled user-authorized M6/M7 execution. Historical signature
+  fields remain untouched, and publication/scientific claims remain disabled
+  until independent Gold and real Provider evidence exist.
+- Wired the scoped release into the M6 and M7 runtime guards and added a
+  materialized execution preflight binding the release digest, OPC-250 bytes,
+  and closed scientific-claim boundary. Revoked, malformed, or claim-expanding
+  releases fail closed.
+
+## 2026-08-17 — M7 interactive 50-case human-review completion
+
+- Imported the completed 25/25 case-level human review with 45 confirmations and five corrections, bound to the exact review Markdown bytes.
+- Closed the user-authorized interactive 50-case M7 scope and recorded Person B execution verification and 900-row anonymous review as outside that final scope.
+- Preserved the formal 200–500-case experiment and scientific-claim gates as closed.
+
 ## 2026-08-15 — M8 Person B three-party cross-review hardening
 
 - Completed Person B's execution/reproducibility review of all current M8 Person A, Person B, and Controller content without claiming mathematical or external-review authority.

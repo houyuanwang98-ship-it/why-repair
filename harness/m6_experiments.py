@@ -13,6 +13,8 @@ import json
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
+from harness.execution_release import release_allows
+
 
 M6_PERSON_B_VERSION = "m6-person-b-0.1"
 METHOD_IDS = (
@@ -245,9 +247,13 @@ def cache_fingerprint(config: Mapping[str, Any], sample_id: str, serialized_inpu
                             {"sample_id": sample_id, "serialized_input": serialized_input})
 
 
-def assert_execution_allowed(m5_gate: Mapping[str, Any], signatures: Mapping[str, Any], *, fixture_only: bool) -> None:
+def assert_execution_allowed(m5_gate: Mapping[str, Any], signatures: Mapping[str, Any], *,
+                             fixture_only: bool,
+                             user_release: Mapping[str, Any] | None = None) -> None:
     """Fail closed for any non-fixture execution until every prerequisite is signed."""
     if fixture_only:
+        return
+    if release_allows(user_release, "m6"):
         return
     if m5_gate.get("m6_entry_allowed") is not True:
         raise M6ExperimentError("M6 execution blocked: M5 m6_entry_allowed is not true")

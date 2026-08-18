@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m7_interactive_blind_review_v0_2.schema.json",
+  "title": "M7 interactive blind review v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "reviewer_slot", "status", "reviewer_id", "independence_statement", "started_at", "finished_at", "rows"],
+  "properties": {
+    "schema_version": {"const": "m7-interactive-blind-review-0.2"},
+    "reviewer_slot": {"enum": ["person_a", "person_b"]},
+    "status": {"enum": ["pending", "complete"]},
+    "reviewer_id": {"type": ["string", "null"]},
+    "independence_statement": {"type": ["string", "null"]},
+    "started_at": {"type": ["string", "null"]},
+    "finished_at": {"type": ["string", "null"]},
+    "rows": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["case_id", "anonymized_config_id", "review_payload_sha256", "decision", "mathematically_valid", "problem_preserved", "no_new_error", "minimal", "finding"],
+        "properties": {
+          "case_id": {"type": "string", "minLength": 1},
+          "anonymized_config_id": {"type": "string", "minLength": 1},
+          "review_payload_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "decision": {"type": ["string", "null"], "enum": ["accepted", "rejected", "undetermined", null]},
+          "mathematically_valid": {"type": ["boolean", "null"]},
+          "problem_preserved": {"type": ["boolean", "null"]},
+          "no_new_error": {"type": ["boolean", "null"]},
+          "minimal": {"type": ["boolean", "null"]},
+          "finding": {"type": ["string", "null"]}
+        }
+      }
+    }
+  }
+}

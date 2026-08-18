@@ -1,3 +1,4 @@
+import json
 import unittest
 from pathlib import Path
 
@@ -89,6 +90,13 @@ class M6PersonBExperimentTest(unittest.TestCase):
                  "controller_manifest": "frozen"},
                 fixture_only=False,
             )
+
+    def test_repository_owner_release_allows_execution_but_not_tampering(self):
+        release = json.loads((ROOT / "data/governance/m6_m7_user_execution_release_v0_1.json").read_text())
+        assert_execution_allowed({}, {}, fixture_only=False, user_release=release)
+        tampered = dict(release, scientific_claim_allowed=True)
+        with self.assertRaisesRegex(M6ExperimentError, "M5"):
+            assert_execution_allowed({}, {}, fixture_only=False, user_release=tampered)
 
     def test_locked_metrics_and_intention_to_treat_failure(self):
         rows = [

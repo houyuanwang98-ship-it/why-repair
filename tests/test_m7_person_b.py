@@ -110,6 +110,13 @@ class M7PersonBTest(unittest.TestCase):
         with self.assertRaisesRegex(M7PersonBError, "detached-signature"):
             assert_execution_allowed({"m7_entry_allowed": True}, fixture_only=False)
 
+    def test_repository_owner_release_allows_execution_but_not_tampering(self):
+        release = json.loads((ROOT / "data/governance/m6_m7_user_execution_release_v0_1.json").read_text())
+        assert_execution_allowed({}, fixture_only=False, user_release=release)
+        tampered = dict(release, status="revoked")
+        with self.assertRaisesRegex(M7PersonBError, "M6 exit"):
+            assert_execution_allowed({}, fixture_only=False, user_release=tampered)
+
     def test_manifest_is_schema_shaped_digest_bound_and_blocked(self):
         manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
         schema = json.loads(SCHEMA.read_text(encoding="utf-8"))

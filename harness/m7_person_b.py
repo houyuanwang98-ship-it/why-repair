@@ -17,6 +17,7 @@ from typing import Any
 from harness.m6_experiments import (
     METHOD_IDS, M6ExperimentError, validate_experiment_config, validate_experiment_suite,
 )
+from harness.execution_release import release_allows
 
 
 M7_PERSON_B_VERSION = "m7-person-b-0.1"
@@ -195,8 +196,11 @@ def validate_terminal_ledger(assignments: Iterable[Mapping[str, Any]], ledger: I
             "status_counts": status_counts, "complete": True}
 
 
-def assert_execution_allowed(m7_gate: Mapping[str, Any], *, fixture_only: bool) -> None:
+def assert_execution_allowed(m7_gate: Mapping[str, Any], *, fixture_only: bool,
+                             user_release: Mapping[str, Any] | None = None) -> None:
     if fixture_only:
+        return
+    if release_allows(user_release, "m7"):
         return
     if m7_gate.get("m7_entry_allowed") is not True:
         raise M7PersonBError("M7 execution blocked: verified M6 exit does not allow entry")
