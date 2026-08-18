@@ -5,9 +5,15 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import sys
 
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from harness.m7_mapping import remap_node_id  # noqa: E402
+
 V1 = ROOT / "data/benchmarks/m7/opc_250_v0_1"
 V2 = ROOT / "data/benchmarks/m7/opc_250_v0_2"
 H1 = ROOT / "human_review/m7_opc_250_v0_1"
@@ -57,6 +63,13 @@ def build() -> tuple[dict, dict]:
                 "inherited_usable_node_gold_count": sum(row["usable_as_node_gold"] for row in inherited),
                 "changed_proof_review_required_count": len(changed), "rows": inherited}
     nodes = {row["case_id"]: row for row in json.loads((V2 / "node_annotations.json").read_text())["rows"]}
+    v1_nodes = {row["case_id"]: row for row in json.loads((V1 / "node_annotations.json").read_text())["rows"]}
+    for row in inherited:
+        old_nodes = v1_nodes.get(row["old_case_id"], {}).get("proof_nodes", [])
+        new_nodes = nodes.get(row["new_case_id"], {}).get("proof_nodes", [])
+        if old_nodes and new_nodes:
+            row["reviewed_first_error_node"] = remap_node_id(
+                row["reviewed_first_error_node"], old_nodes, new_nodes)
     supplemental_rows = []
     for item in changed:
         row = nodes[item["new_case_id"]]

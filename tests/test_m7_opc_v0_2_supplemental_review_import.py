@@ -12,7 +12,9 @@ class M7OPCV02SupplementalReviewImportTest(unittest.TestCase):
         self.assertEqual("six_changed_proofs_human_review_complete", adjudication["status"])
         self.assertEqual(6, adjudication["row_count"])
         self.assertEqual(6, adjudication["usable_node_gold_count"])
-        self.assertEqual(0, adjudication["exact_first_error_agreement"])
+        # Segmentation cleanup re-mapped one proposed node onto its reviewed
+        # node (opc250-214: n11 -> n10), so exact agreement rose from 0 to 1.
+        self.assertEqual(1, adjudication["exact_first_error_agreement"])
         self.assertEqual(5, adjudication["proof_verdict_agreement"])
 
     def test_primary_human_corrections_are_normalized(self):
