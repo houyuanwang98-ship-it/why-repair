@@ -59,6 +59,8 @@ def main() -> None:
     supplemental_path = H2 / "supplemental_review_batch_001_adjudicated.json"
     supplemental = load_json(supplemental_path)
     supplemental_by_id = {row["case_id"]: row for row in supplemental["rows"]}
+    provisional = load_json(V2 / "codex_provisional_manual_mappings.json")
+    provisional_by_id = {row["case_id"]: row for row in provisional["rows"]}
     nodes_by_case: dict[str, list[dict]] = {}
     for row in annotations["rows"]:
         nodes_by_case[row["case_id"]] = clean_nodes(candidates[row["case_id"]]["proof"])
@@ -75,6 +77,13 @@ def main() -> None:
             row["error_description"] = issue["error_description"]
             row["location_provenance"] = issue["location_provenance"]
             row["category_provenance"] = issue["category_provenance"]
+        provisional_review = provisional_by_id.get(row["case_id"])
+        if provisional_review is not None:
+            row["first_error_node"] = provisional_review["first_error_node"]
+            row["error_type"] = provisional_review["error_type"]
+            row["error_description"] = provisional_review["reason"]
+            row["location_provenance"] = "codex_builtin_provisional_mapping"
+            row["category_provenance"] = "codex_builtin_provisional_mapping"
         review = supplemental_by_id.get(row["case_id"])
         if review is not None:
             row["proof_verdict"] = review["reviewed_proof_verdict"]
@@ -94,6 +103,7 @@ def main() -> None:
     annotations["final_first_error_mapped"] = sum(
         row["proof_verdict"] == "incorrect" and row["first_error_node"] is not None
         for row in annotations["rows"])
+    annotations["codex_provisional_first_error_mapped"] = len(provisional_by_id)
     (V2 / "node_annotations.json").write_text(
         json.dumps(annotations, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8", newline="\n")

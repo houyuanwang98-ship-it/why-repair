@@ -40,12 +40,20 @@ class M7OPC250SourceV02Test(unittest.TestCase):
     def test_node_mapping_is_fail_closed(self):
         self.assertEqual(187, self.nodes["automatic_first_error_mapped"])
         self.assertEqual(191, self.nodes["final_incorrect_count"])
-        self.assertEqual(188, self.nodes["final_first_error_mapped"])
+        self.assertEqual(191, self.nodes["final_first_error_mapped"])
+        self.assertEqual(3, self.nodes["codex_provisional_first_error_mapped"])
         corrected = {row["case_id"]: row for row in self.nodes["rows"]}["opc250-153"]
         self.assertEqual(("incorrect", "n15", "algebraic_invalidity"),
                          (corrected["proof_verdict"], corrected["first_error_node"], corrected["error_type"]))
         self.assertEqual("human_supplemental_review", corrected["location_provenance"])
         self.assertEqual(3, len(self.nodes["manual_first_error_required"]))
+        provisional = {row["case_id"]: row for row in self.nodes["rows"]}
+        self.assertEqual(("n6", "n1", "n20"), tuple(
+            provisional[case_id]["first_error_node"]
+            for case_id in ("opc250-078", "opc250-085", "opc250-179")))
+        self.assertTrue(all(provisional[case_id]["location_provenance"] ==
+                            "codex_builtin_provisional_mapping"
+                            for case_id in ("opc250-078", "opc250-085", "opc250-179")))
 
     def test_human_review_coverage_is_explicit(self):
         coverage = json.loads((BASE / "human_review_coverage.json").read_text())
