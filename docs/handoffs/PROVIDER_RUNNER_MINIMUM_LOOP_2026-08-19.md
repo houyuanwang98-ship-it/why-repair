@@ -3,6 +3,8 @@
 当前实现位于 `harness/provider_runner.py`，命令行入口为
 `scripts/run_provider_smoke.py`。它默认关闭真实调用；必须同时提供
 `OPENAI_API_KEY` 和 `--execute` 才能访问 Provider。
+运行时 SDK 已冻结为 `openai==1.109.1`，且已核对该版本的 Responses API
+支持实现所使用的 `input`、`text`、`temperature`、`max_output_tokens` 与 `store` 参数。
 
 ## 冻结输入
 

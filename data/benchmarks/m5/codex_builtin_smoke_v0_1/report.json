@@ -1,0 +1,54 @@
+{
+  "schema_version": "m5-codex-builtin-smoke-0.1",
+  "run_date": "2026-08-19",
+  "execution_mode": "codex_builtin_active_agent_interactive_rederivation",
+  "provider_api_calls": 0,
+  "provider_response_ids_available": false,
+  "token_usage_available": false,
+  "billing_evidence_available": false,
+  "scientific_claim_allowed": false,
+  "formal_provider_gate": "blocked_no_independent_provider_provenance",
+  "method": "full_system",
+  "sample_ids": ["m2-011", "m2-018", "m2-034"],
+  "cases": [
+    {
+      "sample_id": "m2-011",
+      "classification": "missing_bridge_lemma",
+      "fresh_rederivation": "From x=2m+1 and y=2n+1, x+y=2(m+n+1), and m+n+1 is an integer.",
+      "repair_rounds": 1,
+      "outcome": "accepted",
+      "patch": {"path": "data/benchmarks/m5/provisional_codex_interactive_v1/m2-011.patch.json", "canonical_json_sha256": "4b22d67a2d2e6cad9dce041e4ed49493ea458b002df3b9425c8d085bd39d081e"},
+      "prior_human_review": {"path": "data/benchmarks/m5/provisional_codex_interactive_v1/m2-011.person_a_review.json", "canonical_json_sha256": "1397c0afb582bd465220a60a579cac1bcc748e9301ee2e7e91da8885d8350796"}
+    },
+    {
+      "sample_id": "m2-018",
+      "classification": "missing_bridge_lemma",
+      "fresh_rederivation": "From x=y, multiply by x to get x^2=xy and by y to get xy=y^2; transitivity gives x^2=y^2.",
+      "repair_rounds": 1,
+      "outcome": "accepted",
+      "patch": {"path": "data/benchmarks/m5/provisional_codex_interactive_v1/m2-018.patch.json", "canonical_json_sha256": "aaebcb0c2a630002dc45608f25cfa0af072467bdc485d9a2b1939310a469cd9e"},
+      "prior_human_review": {"path": "data/benchmarks/m5/provisional_codex_interactive_v1/m2-018.person_a_review.json", "canonical_json_sha256": "6ccdd60140fd5a0b5298fdf7fbfda5afff62834a1da4ebe473cc43263094de48"}
+    },
+    {
+      "sample_id": "m2-034",
+      "classification": "two_sequential_algebraic_invalidities",
+      "fresh_rederivation": "For real a, the principal square root satisfies sqrt(a^2)=|a| by cases a>=0 and a<0; the original claims sqrt(a^2)=a and every real a=|a| are both false.",
+      "repair_rounds": 2,
+      "outcome": "accepted_after_second_revalidation",
+      "patches": [
+        {"path": "data/benchmarks/m5/provisional_codex_interactive_v1/m2-034.patch.json", "canonical_json_sha256": "8156698da680a6bebf7f669dd79dc4770e9803a4883772cbe7cb86f02cd538fe"},
+        {"path": "data/benchmarks/m5/provisional_codex_interactive_v1/m2-034.patch.r2.json", "canonical_json_sha256": "dfa757b5393851a20c7f126ef3852159266c5a6132d08b24299f30640991c9a4"}
+      ],
+      "prior_human_reviews": [
+        {"path": "data/benchmarks/m5/provisional_codex_interactive_v1/m2-034.person_a_review.json", "canonical_json_sha256": "1a838df695b2cf6457b12799ccadbc073822a879d02609125060080b6ce9e00f"},
+        {"path": "data/benchmarks/m5/provisional_codex_interactive_v1/m2-034.person_a_review.r2.json", "canonical_json_sha256": "9279ec58617ddc377ff2569ce32d1c81cee7811f65a069ea7d123a95d0df9fa4"}
+      ]
+    }
+  ],
+  "summary": {"case_count": 3, "accepted_case_count": 3, "repair_round_count": 4, "fresh_rederivation_matches_frozen_patch_semantics": true},
+  "limitations": [
+    "The active Codex agent is not an independent Provider run.",
+    "Existing human reviews are reused as bound prior evidence, not newly collected blind reviews.",
+    "No token, latency, response ID, or billing claims may be inferred from this run."
+  ]
+}
