@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m7_ai_proxy_batch_review_v0_1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["batch_id", "reviewer_kind", "rows"],
+  "properties": {
+    "batch_id": {"type": "string", "minLength": 1},
+    "reviewer_kind": {"const": "codex_ai_proxy"},
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "case_id", "review_status", "first_error_node", "error_type",
+          "first_problematic_claim", "failed_obligation",
+          "minimal_repair_direction", "confidence", "reason"
+        ],
+        "properties": {
+          "case_id": {"type": "string", "minLength": 1},
+          "review_status": {
+            "enum": ["confirmed", "corrected", "undetermined"]
+          },
+          "first_error_node": {"type": "string", "minLength": 1},
+          "error_type": {"type": "string", "minLength": 1},
+          "first_problematic_claim": {"type": "string", "minLength": 1},
+          "failed_obligation": {"type": "string", "minLength": 1},
+          "minimal_repair_direction": {"type": "string", "minLength": 1},
+          "confidence": {"enum": ["high", "medium", "low"]},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}
