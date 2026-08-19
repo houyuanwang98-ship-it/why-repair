@@ -16,6 +16,7 @@ PROMPT = "repair this proof"
 def config(**changes):
     values = dict(provider="openai", model="fixture-model",
                   prompt_digest=hashlib.sha256(PROMPT.encode()).hexdigest(), sampling={"temperature": 0},
+                  output_schema={"type": "object", "additionalProperties": True},
                   max_output_tokens=100, max_total_tokens=200, max_calls=2,
                   max_cost_usd=1.0, timeout_seconds=30, retry_limit=1)
     values.update(changes)
@@ -34,6 +35,7 @@ class ProviderRunnerTest(unittest.TestCase):
 
     def test_success_preserves_manifest_raw_response_and_ledger(self):
         raw = {"id": "resp_fixture", "usage": {"total_tokens": 12}, "cost_usd": 0.02,
+               "output_text": "{\"patch\": \"fixture\"}",
                "output": {"patch": "fixture"}}
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"OPENAI_API_KEY": "test-only"}):
             root = Path(directory)
@@ -42,7 +44,9 @@ class ProviderRunnerTest(unittest.TestCase):
             row = runner.run(run_id="r1", sample_id="s1", method_id="full_system",
                              prompt=PROMPT, input_payload={"proof": "x=x"})
             self.assertEqual("success", row["status"])
-            self.assertEqual(raw, json.loads((root / "raw_responses/r1-s1-full_system-a0.json").read_text()))
+            stored = json.loads((root / "raw_responses/r1-s1-full_system-a0.json").read_text())
+            self.assertEqual(raw, {key: value for key, value in stored.items() if key != "parsed_output"})
+            self.assertEqual({"patch": "fixture"}, stored["parsed_output"])
             self.assertEqual(1, len((root / "attempt_ledger.jsonl").read_text().splitlines()))
             self.assertNotIn("test-only", (root / "run_manifest.json").read_text())
 
@@ -60,7 +64,8 @@ class ProviderRunnerTest(unittest.TestCase):
     def test_prompt_and_budget_are_bound(self):
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"OPENAI_API_KEY": "test-only"}):
             runner = ProviderRunner(config(max_total_tokens=5), AppendOnlyEvidenceStore(Path(directory)),
-                                    lambda **_: {"id": "x", "usage": {"total_tokens": 6}, "cost_usd": 0},
+                                    lambda **_: {"id": "x", "usage": {"total_tokens": 6}, "cost_usd": 0,
+                                                  "output_text": "{}"},
                                     execution_enabled=True)
             with self.assertRaisesRegex(ProviderRunnerError, "prompt bytes"):
                 runner.run(run_id="r", sample_id="s", method_id="m", prompt="changed", input_payload={})
@@ -69,6 +74,7 @@ class ProviderRunnerTest(unittest.TestCase):
 
     def test_openai_adapter_records_exact_usage_and_frozen_price(self):
         class Response:
+            output_text = "{}"
             def model_dump(self, **_):
                 return {"id": "resp", "usage": {"input_tokens": 100, "output_tokens": 50}}
         class Responses:
@@ -80,7 +86,7 @@ class ProviderRunnerTest(unittest.TestCase):
         adapter = build_openai_adapter(input_usd_per_million=2, output_usd_per_million=10,
                                        client=Client())
         raw = adapter(model="m", prompt="p", input_payload={"x": 1}, max_output_tokens=20,
-                      sampling={"temperature": 0})
+                      sampling={"temperature": 0}, output_schema={"type": "object"})
         self.assertEqual(150, raw["usage"]["total_tokens"])
         self.assertAlmostEqual(0.0007, raw["cost_usd"])
 

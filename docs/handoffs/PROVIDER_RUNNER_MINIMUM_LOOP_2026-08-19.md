@@ -12,6 +12,11 @@
 
 assignment JSONL 每行必须含 `sample_id`、`method_id` 和 `input_payload`。
 Prompt 的实际 UTF-8 字节必须与配置摘要一致。
+输出通过 Responses API strict JSON Schema 约束；解析后的对象与原始响应一起保存。
+
+首轮 M5 packet 可由 `scripts/prepare_m5_provider_smoke.py` 生成。固定样本为
+`m2-011`、`m2-018`、`m2-034`，分别覆盖常规缺步、等式替换缺口和平方根定义域问题。
+生成器只准备文件，不调用 Provider，并拒绝覆盖内容不同的已冻结 packet。
 
 ## 证据输出
 

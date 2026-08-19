@@ -30,6 +30,7 @@ class ProviderRunConfig:
     model: str
     prompt_digest: str
     sampling: Mapping[str, Any]
+    output_schema: Mapping[str, Any]
     max_output_tokens: int
     max_total_tokens: int
     max_calls: int
@@ -44,6 +45,8 @@ class ProviderRunConfig:
             raise ProviderRunnerError("model and lowercase SHA-256 prompt_digest are required")
         if any(c not in "0123456789abcdef" for c in self.prompt_digest):
             raise ProviderRunnerError("prompt_digest must be lowercase SHA-256")
+        if self.output_schema.get("type") != "object":
+            raise ProviderRunnerError("a top-level object output_schema is required")
         if any(isinstance(v, bool) or not isinstance(v, int) or v < 1 for v in
                (self.max_output_tokens, self.max_total_tokens, self.max_calls)):
             raise ProviderRunnerError("token and call budgets must be positive integers")
@@ -55,6 +58,7 @@ class ProviderRunConfig:
         return {
             "provider": self.provider, "model": self.model,
             "prompt_digest": self.prompt_digest, "sampling": dict(self.sampling),
+            "output_schema": dict(self.output_schema), "output_schema_digest": digest(self.output_schema),
             "max_output_tokens": self.max_output_tokens,
             "budgets": {"max_total_tokens": self.max_total_tokens,
                         "max_calls": self.max_calls, "max_cost_usd": self.max_cost_usd,
@@ -122,9 +126,27 @@ class ProviderRunner:
                 raw = dict(self.adapter(model=self.config.model, prompt=prompt,
                                         input_payload=dict(input_payload),
                                         max_output_tokens=self.config.max_output_tokens,
-                                        sampling=dict(self.config.sampling)))
+                                        sampling=dict(self.config.sampling),
+                                        output_schema=dict(self.config.output_schema)))
+            except Exception as exc:
+                terminal = attempt == self.config.retry_limit
+                row = {"attempt_id": attempt_id, "run_id": run_id, "sample_id": sample_id,
+                       "method_id": method_id, "attempt": attempt,
+                       "status": "retry_exhausted" if terminal else "api_error", "terminal": terminal,
+                       "provider_response_id": None, "tokens": 0, "cost_usd": 0,
+                       "latency_seconds": self.clock() - wall_before, "cache_fingerprint": fingerprint,
+                       "raw_sha256": None, "error_type": type(exc).__name__,
+                       "error_message": str(exc), "recorded_at": datetime.now(timezone.utc).isoformat()}
+                self.store.append_attempt(row, None)
+                if terminal:
+                    return row
+                continue
+            try:
                 tokens = int(raw["usage"]["total_tokens"])
                 cost = float(raw["cost_usd"])
+                parsed = json.loads(raw["output_text"])
+                if not isinstance(parsed, dict):
+                    raise ValueError("structured output is not a JSON object")
                 used_tokens += tokens
                 used_cost += cost
                 elapsed = self.clock() - started
@@ -136,20 +158,24 @@ class ProviderRunner:
                        "method_id": method_id, "attempt": attempt, "status": status,
                        "terminal": terminal, "provider_response_id": raw.get("id"),
                        "tokens": tokens, "cost_usd": cost, "latency_seconds": self.clock() - wall_before,
-                       "cache_fingerprint": fingerprint, "raw_sha256": digest(raw),
+                       "cache_fingerprint": fingerprint, "raw_sha256": None,
                        "recorded_at": datetime.now(timezone.utc).isoformat()}
+                raw["parsed_output"] = parsed
+                row["raw_sha256"] = digest(raw)
                 self.store.append_attempt(row, raw)
                 return row
-            except Exception as exc:
+            except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
                 terminal = attempt == self.config.retry_limit
                 row = {"attempt_id": attempt_id, "run_id": run_id, "sample_id": sample_id,
                        "method_id": method_id, "attempt": attempt,
-                       "status": "retry_exhausted" if terminal else "api_error", "terminal": terminal,
-                       "provider_response_id": None, "tokens": 0, "cost_usd": 0,
+                       "status": "retry_exhausted" if terminal else "schema_invalid", "terminal": terminal,
+                       "provider_response_id": raw.get("id"),
+                       "tokens": int((raw.get("usage") or {}).get("total_tokens") or 0),
+                       "cost_usd": float(raw.get("cost_usd") or 0),
                        "latency_seconds": self.clock() - wall_before, "cache_fingerprint": fingerprint,
-                       "raw_sha256": None, "error_type": type(exc).__name__,
+                       "raw_sha256": digest(raw), "error_type": type(exc).__name__,
                        "error_message": str(exc), "recorded_at": datetime.now(timezone.utc).isoformat()}
-                self.store.append_attempt(row, None)
+                self.store.append_attempt(row, raw)
                 if terminal:
                     return row
         raise AssertionError("unreachable")
@@ -168,11 +194,14 @@ def build_openai_adapter(*, input_usd_per_million: float, output_usd_per_million
         client = OpenAI()
 
     def call(*, model: str, prompt: str, input_payload: Mapping[str, Any],
-             max_output_tokens: int, sampling: Mapping[str, Any]) -> Mapping[str, Any]:
+             max_output_tokens: int, sampling: Mapping[str, Any],
+             output_schema: Mapping[str, Any]) -> Mapping[str, Any]:
         response = client.responses.create(
             model=model,
             input=[{"role": "system", "content": prompt},
                    {"role": "user", "content": json.dumps(input_payload, ensure_ascii=False)}],
+            text={"format": {"type": "json_schema", "name": "m5_patch_proposal",
+                             "strict": True, "schema": dict(output_schema)}},
             max_output_tokens=max_output_tokens, store=False, **dict(sampling),
         )
         raw = response.model_dump(mode="json")
@@ -183,6 +212,7 @@ def build_openai_adapter(*, input_usd_per_million: float, output_usd_per_million
                         "total_tokens": input_tokens + output_tokens}
         raw["cost_usd"] = (input_tokens * input_usd_per_million
                            + output_tokens * output_usd_per_million) / 1_000_000
+        raw["output_text"] = response.output_text
         return raw
 
     return call
