@@ -1,4 +1,4 @@
-"""Fail-closed, append-only Provider execution primitives for M5/M6 runs."""
+"""Fail-closed, append-only Codex CLI execution primitives for M5/M6 runs."""
 
 from __future__ import annotations
 
@@ -6,7 +6,6 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 import hashlib
 import json
-import os
 from pathlib import Path
 import platform
 import re
@@ -14,6 +13,8 @@ import time
 from typing import Any, Callable, Mapping, Sequence
 
 import jsonschema
+
+from harness.codex_cli import CodexCLIError, project_codex_output_schema
 
 
 class ProviderRunnerError(RuntimeError):
@@ -29,22 +30,16 @@ def digest(value: Any) -> str:
 
 
 def make_provider_output_schema(schema: Mapping[str, Any]) -> dict[str, Any]:
-    """Remove composition keywords unsupported by Responses Structured Outputs.
+    """Project the authoritative schema to Codex structured-output keywords.
 
-    The returned schema constrains generation only. Every parsed response is
-    still validated against the complete authoritative repository schema.
+    The projected schema constrains generation only. Every parsed response is
+    still validated locally against the complete authoritative schema.
     """
 
-    unsupported = {"allOf", "not", "dependentRequired", "dependentSchemas", "if", "then", "else"}
-
-    def convert(value: Any) -> Any:
-        if isinstance(value, Mapping):
-            return {key: convert(item) for key, item in value.items() if key not in unsupported}
-        if isinstance(value, list):
-            return [convert(item) for item in value]
-        return value
-
-    result = convert(dict(schema))
+    try:
+        result = project_codex_output_schema(schema)
+    except CodexCLIError as exc:
+        raise ProviderRunnerError(str(exc)) from exc
     if result.get("type") != "object":
         raise ProviderRunnerError("provider output schema must remain a top-level object")
     return result
@@ -82,8 +77,8 @@ class ProviderRunConfig:
     retry_limit: int = 1
 
     def validate(self) -> None:
-        if self.provider != "openai":
-            raise ProviderRunnerError("only the audited openai adapter is supported")
+        if self.provider != "codex_cli":
+            raise ProviderRunnerError("only the audited codex_cli adapter is supported")
         if not self.model or len(self.prompt_digest) != 64:
             raise ProviderRunnerError("model and lowercase SHA-256 prompt_digest are required")
         if any(c not in "0123456789abcdef" for c in self.prompt_digest):
@@ -100,13 +95,16 @@ class ProviderRunConfig:
         if any(isinstance(v, bool) or not isinstance(v, int) or v < 1 for v in
                (self.max_output_tokens, self.max_total_tokens, self.max_calls)):
             raise ProviderRunnerError("token and call budgets must be positive integers")
-        if self.max_cost_usd <= 0 or self.timeout_seconds <= 0 or self.retry_limit < 0:
+        _nonnegative_number(self.max_cost_usd, "max_cost_usd")
+        if self.timeout_seconds <= 0 or self.retry_limit < 0:
             raise ProviderRunnerError("cost, timeout, and retry budgets are invalid")
         expected_prices = {"input", "cached_input", "output"}
         if set(self.prices_usd_per_million) != expected_prices:
             raise ProviderRunnerError("price snapshot must contain input, cached_input, and output")
         for key, value in self.prices_usd_per_million.items():
             _nonnegative_number(value, f"price {key}")
+        if any(float(value) != 0 for value in self.prices_usd_per_million.values()):
+            raise ProviderRunnerError("codex_cli price fields must be zero because per-call USD cost is unavailable")
         if len(self.repository_commit) != 40 or any(c not in "0123456789abcdef" for c in self.repository_commit):
             raise ProviderRunnerError("repository_commit must be a full lowercase Git SHA")
         if not self.sdk_version or not self.run_kind:
@@ -128,6 +126,7 @@ class ProviderRunConfig:
                 "max_total_tokens": self.max_total_tokens,
                 "max_calls": self.max_calls,
                 "max_cost_usd": self.max_cost_usd,
+                "cost_budget_applicable": False,
                 "timeout_seconds": self.timeout_seconds,
                 "retry_limit_per_assignment": self.retry_limit,
             },
@@ -219,9 +218,7 @@ class ProviderRunner:
                  clock: Callable[[], float] = time.monotonic):
         config.validate()
         if not execution_enabled:
-            raise ProviderRunnerError("real Provider execution requires explicit execution_enabled=True")
-        if not os.environ.get("OPENAI_API_KEY"):
-            raise ProviderRunnerError("OPENAI_API_KEY is not configured")
+            raise ProviderRunnerError("real Codex execution requires explicit execution_enabled=True")
         self.config, self.store, self.adapter, self.clock = config, store, adapter, clock
         self.batch_started = self.clock()
         self.used_input_tokens = 0
@@ -229,6 +226,7 @@ class ProviderRunner:
         self.used_output_tokens = 0
         self.used_total_tokens = 0
         self.used_cost = 0.0
+        self.cost_tracking_available = True
         self.used_calls = 0
         self.active_run_id: str | None = None
 
@@ -270,7 +268,8 @@ class ProviderRunner:
     def _budget_exceeded_after_response(self) -> str | None:
         if self.used_total_tokens > self.config.max_total_tokens:
             return "max_total_tokens"
-        if self.used_cost > self.config.max_cost_usd:
+        if (self.cost_tracking_available and self.config.max_cost_usd > 0
+                and self.used_cost > self.config.max_cost_usd):
             return "max_cost_usd"
         if self.clock() - self.batch_started > self.config.timeout_seconds:
             return "timeout_seconds"
@@ -281,7 +280,8 @@ class ProviderRunner:
             return "max_calls"
         if self.used_total_tokens >= self.config.max_total_tokens:
             return "max_total_tokens"
-        if self.used_cost >= self.config.max_cost_usd:
+        if (self.cost_tracking_available and self.config.max_cost_usd > 0
+                and self.used_cost >= self.config.max_cost_usd):
             return "max_cost_usd"
         if self.clock() - self.batch_started >= self.config.timeout_seconds:
             return "timeout_seconds"
@@ -301,14 +301,18 @@ class ProviderRunner:
             raise ValueError("response token usage is invalid")
         return input_tokens, cached_tokens, output_tokens, total_tokens
 
-    def _consume(self, raw: Mapping[str, Any]) -> tuple[int, int, int, int, float]:
+    def _consume(self, raw: Mapping[str, Any]) -> tuple[int, int, int, int, float | None]:
         input_tokens, cached_tokens, output_tokens, total_tokens = self._usage(raw)
-        cost = _nonnegative_number(raw.get("cost_usd"), "response cost_usd")
+        raw_cost = raw.get("cost_usd")
+        cost = None if raw_cost is None else _nonnegative_number(raw_cost, "response cost_usd")
         self.used_input_tokens += input_tokens
         self.used_cached_input_tokens += cached_tokens
         self.used_output_tokens += output_tokens
         self.used_total_tokens += total_tokens
-        self.used_cost += cost
+        if cost is None:
+            self.cost_tracking_available = False
+        else:
+            self.used_cost += cost
         return input_tokens, cached_tokens, output_tokens, total_tokens, cost
 
     def _request(self, *, attempt_id: str, run_id: str, sample_id: str,
@@ -320,25 +324,26 @@ class ProviderRunner:
             "method_id": method_id,
             "provider": self.config.provider,
             "model": self.config.model,
-            "input": [
-                {"role": "system", "content": prompt},
-                {"role": "user", "content": json.dumps(input_payload, ensure_ascii=False)},
-            ],
-            "text": {"format": {"type": "json_schema", "name": "m5_patch_proposal",
-                                "strict": True, "schema": dict(self.config.provider_output_schema)}},
+            "runtime": "codex_cli",
+            "credential_mode": "saved_codex_cli_auth",
+            "prompt": prompt,
+            "input_payload": dict(input_payload),
+            "output_schema": dict(self.config.provider_output_schema),
             "max_output_tokens": self.config.max_output_tokens,
             "sampling": dict(self.config.sampling),
-            "store": False,
+            "ephemeral": True,
+            "sandbox": "read-only",
             "timeout_seconds": self.config.timeout_seconds,
         }
 
     def _row(self, *, attempt_id: str, run_id: str, sample_id: str, method_id: str,
              attempt: int, status: str, terminal: bool, retry_of: str | None,
              request_sha256: str, started_at: str, wall_before: float,
-             raw: Mapping[str, Any] | None = None, usage: tuple[int, int, int, int, float] | None = None,
+             raw: Mapping[str, Any] | None = None,
+             usage: tuple[int, int, int, int, float | None] | None = None,
              error: Exception | None = None, budget_reason: str | None = None,
              failure_stage: str | None = None) -> dict[str, Any]:
-        input_tokens, cached_tokens, output_tokens, total_tokens, cost = usage or (0, 0, 0, 0, 0.0)
+        input_tokens, cached_tokens, output_tokens, total_tokens, cost = usage or (0, 0, 0, 0, None)
         ended_at = datetime.now(timezone.utc).isoformat()
         fingerprint = digest({"config": self.config.frozen(), "sample_id": sample_id,
                               "method_id": method_id, "request_sha256": request_sha256})
@@ -355,6 +360,8 @@ class ProviderRunner:
             "requested_model": self.config.model,
             "returned_model": raw.get("model") if raw else None,
             "provider_response_id": raw.get("id") if raw else None,
+            "codex_thread_id": raw.get("codex_thread_id") if raw else None,
+            "codex_cli_version": raw.get("codex_cli_version") if raw else None,
             "input_tokens": input_tokens,
             "cached_input_tokens": cached_tokens,
             "output_tokens": output_tokens,
@@ -400,22 +407,41 @@ class ProviderRunner:
                                         output_schema=dict(self.config.provider_output_schema),
                                         timeout_seconds=self.config.timeout_seconds))
             except Exception as exc:
-                is_timeout = "timeout" in type(exc).__name__.lower()
-                terminal = attempt == self.config.retry_limit or self._budget_exhausted() is not None
+                raw_error = getattr(exc, "raw_response", None)
+                usage = None
+                if isinstance(raw_error, Mapping):
+                    try:
+                        usage = self._consume(raw_error)
+                    except (TypeError, ValueError, ProviderRunnerError):
+                        usage = None
+                is_timeout = getattr(exc, "status", None) == "timeout" or "timeout" in type(exc).__name__.lower()
+                retryable = getattr(exc, "retryable", True)
+                terminal = (not retryable or attempt == self.config.retry_limit
+                            or self._budget_exhausted() is not None)
+                requested_status = getattr(exc, "status", None)
+                status = (
+                    requested_status
+                    if terminal and not retryable and isinstance(requested_status, str)
+                    else "retry_exhausted" if terminal
+                    else "timeout" if is_timeout
+                    else "api_error"
+                )
                 row = self._row(attempt_id=attempt_id, run_id=run_id, sample_id=sample_id,
-                                method_id=method_id, attempt=attempt,
-                                status="retry_exhausted" if terminal else (
-                                    "timeout" if is_timeout else "api_error"), terminal=terminal,
+                                method_id=method_id, attempt=attempt, status=status, terminal=terminal,
                                 retry_of=previous_attempt, request_sha256=request_sha256,
-                                started_at=started_at, wall_before=wall_before, error=exc,
+                                started_at=started_at, wall_before=wall_before,
+                                raw=raw_error if isinstance(raw_error, Mapping) else None,
+                                usage=usage, error=exc,
                                 budget_reason=self._budget_exhausted(),
-                                failure_stage="timeout" if is_timeout else "api_error")
-                self.store.append_attempt(row, None)
+                                failure_stage=getattr(
+                                    exc, "failure_stage", "timeout" if is_timeout else "codex_cli"))
+                self.store.append_attempt(
+                    row, raw_error if isinstance(raw_error, Mapping) else None)
                 if terminal:
                     return row
                 previous_attempt = attempt_id
                 continue
-            usage: tuple[int, int, int, int, float] | None = None
+            usage: tuple[int, int, int, int, float | None] | None = None
             try:
                 usage = self._consume(raw)
                 parsed = json.loads(raw["output_text"])
@@ -437,7 +463,7 @@ class ProviderRunner:
                     try:
                         usage = self._consume(raw)
                     except (TypeError, ValueError, ProviderRunnerError):
-                        usage = (0, 0, 0, 0, 0.0)
+                        usage = (0, 0, 0, 0, None)
                 terminal = attempt == self.config.retry_limit or self._budget_exhausted() is not None
                 row = self._row(attempt_id=attempt_id, run_id=run_id, sample_id=sample_id,
                                 method_id=method_id, attempt=attempt,
@@ -479,7 +505,9 @@ class ProviderRunner:
             "cached_input_tokens": self.used_cached_input_tokens,
             "output_tokens": self.used_output_tokens,
             "total_tokens": self.used_total_tokens,
-            "cost_usd": self.used_cost,
+            "cost_usd": self.used_cost if self.cost_tracking_available else None,
+            "cost_tracking_available": self.cost_tracking_available,
+            "billing_mode": "saved_codex_cli_auth_per_call_cost_unavailable",
             "model_calls": self.used_calls,
             "elapsed_seconds": self.clock() - self.batch_started,
             "scientific_claim_allowed": False,
@@ -492,56 +520,3 @@ class ProviderRunner:
         return self.run_batch(run_id=run_id, prompt=prompt, assignments=[{
             "sample_id": sample_id, "method_id": method_id, "input_payload": dict(input_payload),
         }])[0]
-
-
-def build_openai_adapter(*, prices_usd_per_million: Mapping[str, float],
-                         client: Any | None = None) -> Callable[..., Mapping[str, Any]]:
-    """Create a Responses API adapter with explicit prices and no hidden retries."""
-
-    if set(prices_usd_per_million) != {"input", "cached_input", "output"}:
-        raise ProviderRunnerError("complete input/cached_input/output prices are required")
-    prices = {key: _nonnegative_number(value, f"price {key}")
-              for key, value in prices_usd_per_million.items()}
-    if client is None:
-        try:
-            from openai import OpenAI
-        except ImportError as exc:
-            raise ProviderRunnerError("openai dependency is not installed") from exc
-        client = OpenAI()
-    if not hasattr(client, "with_options"):
-        raise ProviderRunnerError("OpenAI client must support with_options for audited timeout/retry control")
-
-    def call(*, model: str, prompt: str, input_payload: Mapping[str, Any],
-             max_output_tokens: int, sampling: Mapping[str, Any],
-             output_schema: Mapping[str, Any], timeout_seconds: float) -> Mapping[str, Any]:
-        request_client = client.with_options(timeout=timeout_seconds, max_retries=0)
-        response = request_client.responses.create(
-            model=model,
-            input=[{"role": "system", "content": prompt},
-                   {"role": "user", "content": json.dumps(input_payload, ensure_ascii=False)}],
-            text={"format": {"type": "json_schema", "name": "m5_patch_proposal",
-                             "strict": True, "schema": dict(output_schema)}},
-            max_output_tokens=max_output_tokens, store=False, **dict(sampling),
-        )
-        raw = response.model_dump(mode="json")
-        usage = raw.get("usage") or {}
-        input_tokens = int(usage.get("input_tokens") or 0)
-        output_tokens = int(usage.get("output_tokens") or 0)
-        details = usage.get("input_tokens_details") or {}
-        cached_tokens = int(details.get("cached_tokens") or 0)
-        raw["usage"] = {
-            **usage,
-            "input_tokens": input_tokens,
-            "output_tokens": output_tokens,
-            "total_tokens": int(usage.get("total_tokens") or input_tokens + output_tokens),
-            "input_tokens_details": {**details, "cached_tokens": cached_tokens},
-        }
-        raw["cost_usd"] = (
-            (input_tokens - cached_tokens) * prices["input"]
-            + cached_tokens * prices["cached_input"]
-            + output_tokens * prices["output"]
-        ) / 1_000_000
-        raw["output_text"] = response.output_text
-        return raw
-
-    return call

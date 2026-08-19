@@ -223,10 +223,13 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
     started = datetime.now(timezone.utc)
     monotonic_start = time.monotonic()
     timed_out = False
+    child_env = dict(os.environ)
+    child_env.pop("OPENAI_API_KEY", None)
+    child_env.pop("CODEX_API_KEY", None)
     try:
         completed = subprocess.run(
             command, input=prompt, text=True, capture_output=True,
-            timeout=timeout_seconds, check=False,
+            timeout=timeout_seconds, check=False, env=child_env,
         )
         return_code = completed.returncode
         stdout, stderr = completed.stdout, completed.stderr
