@@ -21,6 +21,7 @@ math-proof-repair-agent/
       calculation.py
       diagnosis.py
       adjudication.py
+      codex_cli.py
       pipeline.py
       cli.py
   references/data_contract.md
@@ -47,8 +48,9 @@ Bash, Zsh, and Fish after substituting paths.
 
 The portable checker has no third-party dependencies. It emits unresolved
 obligations for the active host agent and validates responses supplied through
-`--adjudications`. The optional `--uncertain-policy model` adapter requires the
-`openai` package and `OPENAI_API_KEY`, but native skill activation does not.
+`--adjudications`. The optional `--uncertain-policy model` adapter requires an
+installed, authenticated Codex CLI. It uses saved CLI account authentication,
+not an API SDK or key, and stores per-call evidence in `codex-evidence/`.
 
 ## Native discovery profiles
 
