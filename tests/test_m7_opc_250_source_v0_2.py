@@ -39,6 +39,12 @@ class M7OPC250SourceV02Test(unittest.TestCase):
 
     def test_node_mapping_is_fail_closed(self):
         self.assertEqual(187, self.nodes["automatic_first_error_mapped"])
+        self.assertEqual(191, self.nodes["final_incorrect_count"])
+        self.assertEqual(188, self.nodes["final_first_error_mapped"])
+        corrected = {row["case_id"]: row for row in self.nodes["rows"]}["opc250-153"]
+        self.assertEqual(("incorrect", "n15", "algebraic_invalidity"),
+                         (corrected["proof_verdict"], corrected["first_error_node"], corrected["error_type"]))
+        self.assertEqual("human_supplemental_review", corrected["location_provenance"])
         self.assertEqual(3, len(self.nodes["manual_first_error_required"]))
 
     def test_human_review_coverage_is_explicit(self):
@@ -46,7 +52,7 @@ class M7OPC250SourceV02Test(unittest.TestCase):
         self.assertEqual(coverage["status"], "review_transfer_and_supplemental_review_complete")
         self.assertEqual(25, coverage["total_human_reviewed_cases"])
         self.assertEqual(23, coverage["usable_node_gold_count"])
-        self.assertEqual(134, coverage["remaining_incorrect_cases_pending_mapping_review"])
+        self.assertEqual(141, coverage["remaining_ai_localized_incorrect_cases_pending_mapping_review"])
         self.assertEqual(coverage["total_human_reviewed_cases"],
                          self.manifest["human_review_coverage"]["total_human_reviewed_cases"])
 

@@ -16,6 +16,7 @@ class M7OPCV02SupplementalReviewImportTest(unittest.TestCase):
         # node (opc250-214: n11 -> n10), so exact agreement rose from 0 to 1.
         self.assertEqual(1, adjudication["exact_first_error_agreement"])
         self.assertEqual(5, adjudication["proof_verdict_agreement"])
+        self.assertEqual("canonical_json_utf8_v1", summary["digest_mode"])
 
     def test_primary_human_corrections_are_normalized(self):
         adjudication, summary = build()
@@ -26,7 +27,9 @@ class M7OPCV02SupplementalReviewImportTest(unittest.TestCase):
         self.assertEqual("n24", rows["opc250-039"]["reviewed_first_error_node"])
         self.assertEqual(25, summary["total_human_reviewed_cases"])
         self.assertEqual(23, summary["usable_node_gold_count"])
-        self.assertEqual(134, summary["remaining_incorrect_cases_pending_mapping_review"])
+        self.assertEqual(155, summary["ai_localized_incorrect_total"])
+        self.assertEqual(14, summary["ai_localized_incorrect_human_reviewed"])
+        self.assertEqual(141, summary["remaining_ai_localized_incorrect_cases_pending_mapping_review"])
 
 
 if __name__ == "__main__":

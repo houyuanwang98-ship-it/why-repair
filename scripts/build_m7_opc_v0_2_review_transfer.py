@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from harness.m7_mapping import remap_node_id  # noqa: E402
+from harness.m7_mapping import clean_nodes, locate, remap_node_id  # noqa: E402
 
 V1 = ROOT / "data/benchmarks/m7/opc_250_v0_1"
 V2 = ROOT / "data/benchmarks/m7/opc_250_v0_2"
@@ -25,8 +25,10 @@ def sha(data: bytes) -> str:
 
 
 def load(version: Path) -> tuple[dict, dict]:
-    candidates = {row["case_id"]: row for row in map(json.loads, (version / "candidate.jsonl").read_text().splitlines())}
-    seeds = {row["opc_problem_id"]: row for row in json.loads((version / "seed_annotations.json").read_text())}
+    candidates = {row["case_id"]: row for row in map(
+        json.loads, (version / "candidate.jsonl").read_text(encoding="utf-8").splitlines())}
+    seeds = {row["opc_problem_id"]: row for row in json.loads(
+        (version / "seed_annotations.json").read_text(encoding="utf-8"))}
     return candidates, seeds
 
 
@@ -35,7 +37,7 @@ def build() -> tuple[dict, dict]:
     c2, s2 = load(V2)
     old_by_case = {row["case_id"]: row for row in s1.values()}
     adjudication_path = H1 / "mapping_review_batch_001_adjudicated.json"
-    adjudication = json.loads(adjudication_path.read_text())
+    adjudication = json.loads(adjudication_path.read_text(encoding="utf-8"))
     inherited, changed = [], []
     for review in adjudication["rows"]:
         old_seed = old_by_case[review["case_id"]]
@@ -62,8 +64,10 @@ def build() -> tuple[dict, dict]:
                 "exact_proof_review_count": len(inherited),
                 "inherited_usable_node_gold_count": sum(row["usable_as_node_gold"] for row in inherited),
                 "changed_proof_review_required_count": len(changed), "rows": inherited}
-    nodes = {row["case_id"]: row for row in json.loads((V2 / "node_annotations.json").read_text())["rows"]}
-    v1_nodes = {row["case_id"]: row for row in json.loads((V1 / "node_annotations.json").read_text())["rows"]}
+    nodes = {row["case_id"]: row for row in json.loads(
+        (V2 / "node_annotations.json").read_text(encoding="utf-8"))["rows"]}
+    v1_nodes = {row["case_id"]: row for row in json.loads(
+        (V1 / "node_annotations.json").read_text(encoding="utf-8"))["rows"]}
     for row in inherited:
         old_nodes = v1_nodes.get(row["old_case_id"], {}).get("proof_nodes", [])
         new_nodes = nodes.get(row["new_case_id"], {}).get("proof_nodes", [])
@@ -72,13 +76,17 @@ def build() -> tuple[dict, dict]:
                 row["reviewed_first_error_node"], old_nodes, new_nodes)
     supplemental_rows = []
     for item in changed:
-        row = nodes[item["new_case_id"]]
+        candidate = c2[item["new_case_id"]]
+        seed = s2[item["opc_problem_id"]]
+        issue = seed.get("prefilled_first_issue")
+        proof_nodes = clean_nodes(candidate["proof"])
         supplemental_rows.append({**item, "problem": c2[item["new_case_id"]]["problem"],
-                                  "proof_nodes": row["proof_nodes"],
-                                  "proposed_proof_verdict": row["proof_verdict"],
-                                  "proposed_first_error_node": row["first_error_node"],
-                                  "proposed_error_type": row["error_type"],
-                                  "error_description": row["error_description"],
+                                  "proof_nodes": proof_nodes,
+                                  "proposed_proof_verdict": seed["human_proof_verdict"],
+                                  "proposed_first_error_node": (locate(proof_nodes, issue["first_error_char"])
+                                                                if issue else None),
+                                  "proposed_error_type": issue["error_type"] if issue else None,
+                                  "error_description": issue["error_description"] if issue else None,
                                   "human_verification": None})
     supplemental = {"schema_version": "m7-opc-v0.2-supplemental-review-0.1",
                     "status": "six_changed_proofs_pending_human_review",
@@ -89,8 +97,10 @@ def build() -> tuple[dict, dict]:
 def main() -> None:
     H2.mkdir(parents=True, exist_ok=True)
     transfer, supplemental = build()
-    (V2 / "inherited_human_review.json").write_text(json.dumps(transfer, ensure_ascii=False, indent=2) + "\n")
-    (H2 / "supplemental_review_batch_001.json").write_text(json.dumps(supplemental, ensure_ascii=False, indent=2) + "\n")
+    (V2 / "inherited_human_review.json").write_text(
+        json.dumps(transfer, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
+    (H2 / "supplemental_review_batch_001.json").write_text(
+        json.dumps(supplemental, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":

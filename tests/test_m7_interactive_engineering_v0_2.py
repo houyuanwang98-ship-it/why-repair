@@ -7,6 +7,7 @@ import jsonschema
 from harness.m7_controller import validate_aggregate_table, validate_run_integrity
 from harness.m7_person_b import M7PersonBError
 from scripts.build_m7_interactive_engineering_v0_2 import build
+from scripts.finalize_m7_interactive_50_case_v0_2 import digest
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -72,12 +73,12 @@ class M7InteractiveEngineeringV02Test(unittest.TestCase):
         acceptance = json.loads(acceptance_path.read_text(encoding="utf-8"))
         schema = json.loads((ROOT / "schemas/m7_interactive_joint_acceptance_v0_2.schema.json").read_text())
         jsonschema.validate(acceptance, schema)
-        import hashlib
+        self.assertEqual("canonical_json_or_lf_normalized_utf8_v1", acceptance["digest_mode"])
         for relative, expected in acceptance["artifacts"].items():
-            self.assertEqual(expected, hashlib.sha256((ROOT / relative).read_bytes()).hexdigest())
+            self.assertEqual(expected, digest(ROOT / relative))
         upstream = ROOT / acceptance["upstream"]["m6_interactive_acceptance_path"]
         self.assertEqual(acceptance["upstream"]["m6_interactive_acceptance_sha256"],
-                         hashlib.sha256(upstream.read_bytes()).hexdigest())
+                         digest(upstream))
 
     def test_missing_or_tampered_terminal_fails(self):
         with self.assertRaisesRegex(M7PersonBError, "exact frozen assignment"):

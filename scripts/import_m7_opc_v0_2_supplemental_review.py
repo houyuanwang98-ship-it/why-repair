@@ -31,6 +31,11 @@ def digest(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def canonical_json_digest(value) -> str:
+    payload = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return digest(payload.encode("utf-8"))
+
+
 def responses(markdown: str) -> dict[str, str]:
     parts = re.split(r"^## 第 \d+ 题｜(opc250-\d+)\s*$", markdown, flags=re.MULTILINE)
     result = {}
@@ -91,13 +96,20 @@ def build() -> tuple[dict, dict]:
 
     inherited_path = BASE / "inherited_human_review.json"
     inherited = json.loads(inherited_path.read_text())
+    seeds = {row["case_id"]: row for row in json.loads(
+        (BASE / "seed_annotations.json").read_text(encoding="utf-8"))}
+    reviewed_ids = ({row["new_case_id"] for row in inherited["rows"]}
+                    | {row["case_id"] for row in adjudication["rows"]})
+    ai_localized_ids = {
+        case_id for case_id, row in seeds.items()
+        if row["label_group"] == "human_incorrect_ai_localized"
+    }
     summary = {
         "schema_version": "m7-opc-v0.2-human-review-coverage-0.1",
         "status": "review_transfer_and_supplemental_review_complete",
-        "inherited_review_sha256": digest(inherited_path.read_bytes()),
-        "supplemental_adjudication_sha256": digest(
-            (json.dumps(adjudication, ensure_ascii=False, indent=2) + "\n").encode()
-        ),
+        "digest_mode": "canonical_json_utf8_v1",
+        "inherited_review_sha256": canonical_json_digest(inherited),
+        "supplemental_adjudication_sha256": canonical_json_digest(adjudication),
         "exact_proof_reviews_transferred": inherited["exact_proof_review_count"],
         "changed_proofs_newly_reviewed": adjudication["row_count"],
         "total_human_reviewed_cases": inherited["exact_proof_review_count"] + adjudication["row_count"],
@@ -107,15 +119,19 @@ def build() -> tuple[dict, dict]:
         "unresolved_or_excluded_count": (
             inherited["exact_proof_review_count"] - inherited["inherited_usable_node_gold_count"]
         ),
-        "remaining_incorrect_cases_pending_mapping_review": 159 - inherited["exact_proof_review_count"] - adjudication["row_count"],
+        "ai_localized_incorrect_total": len(ai_localized_ids),
+        "ai_localized_incorrect_human_reviewed": len(ai_localized_ids & reviewed_ids),
+        "remaining_ai_localized_incorrect_cases_pending_mapping_review": len(ai_localized_ids - reviewed_ids),
     }
     return adjudication, summary
 
 
 def main() -> None:
     adjudication, summary = build()
-    OUT.write_text(json.dumps(adjudication, ensure_ascii=False, indent=2) + "\n")
-    SUMMARY.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n")
+    OUT.write_text(json.dumps(adjudication, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8", newline="\n")
+    SUMMARY.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n",
+                       encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":

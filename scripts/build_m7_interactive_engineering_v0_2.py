@@ -197,7 +197,8 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     for name, value in build().items():
         (OUT / f"{name}.json").write_text(
-            json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            json.dumps(value, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":

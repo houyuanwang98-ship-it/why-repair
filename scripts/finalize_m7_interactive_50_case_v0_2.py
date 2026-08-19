@@ -44,7 +44,12 @@ ARTIFACTS = (
 
 
 def digest(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    if path.suffix.lower() == ".json":
+        value = json.loads(path.read_text(encoding="utf-8"))
+        payload = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    else:
+        payload = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(payload).hexdigest()
 
 
 def build() -> dict:
@@ -56,6 +61,7 @@ def build() -> dict:
         "schema_version": "m7-interactive-joint-acceptance-0.2",
         "status": "interactive_50_case_human_review_complete_formal_experiment_blocked",
         "scope": "nonblind_historical_m6_projection_gold_exposed",
+        "digest_mode": "canonical_json_or_lf_normalized_utf8_v1",
         "execution": {"cases": 50, "families": 2, "methods_per_family": 9,
                       "terminal_assignments": 900, "result_bindings": 900,
                       "aggregate_rows": 18, "replay_samples": 20,
@@ -91,7 +97,8 @@ def build() -> dict:
 
 
 def main() -> None:
-    OUT.write_text(json.dumps(build(), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    OUT.write_text(json.dumps(build(), ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":
