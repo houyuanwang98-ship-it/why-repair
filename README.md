@@ -347,8 +347,9 @@ M0–M5 的阶段性工程验收边界见 [M5 A/B/Controller 联合验收记录]
 ## Quick start
 
 Python 3.10 or newer is recommended. The portable checker itself uses only the
-standard library; install `requirements.txt` only for the baseline runner or
-the optional standalone OpenAI adapter.
+standard library; install `requirements.txt` for local JSON Schema validation.
+Model-backed baseline and standalone adjudication runs use an authenticated
+Codex CLI session directly and do not read an OpenAI API key.
 
 ```bash
 python skills/math-proof-repair-agent/scripts/check_obligations.py \
