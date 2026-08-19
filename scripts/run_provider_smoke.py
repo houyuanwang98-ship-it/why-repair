@@ -4,6 +4,7 @@
 import argparse
 import importlib.metadata
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -41,6 +42,8 @@ def main() -> None:
         raise SystemExit("Provider execution requires a clean worktree")
     if importlib.metadata.version("openai") != config.sdk_version:
         raise SystemExit("installed openai SDK does not match frozen Provider config")
+    if not os.environ.get("OPENAI_API_KEY"):
+        raise SystemExit("OPENAI_API_KEY is not configured; no Provider call was attempted")
     prompt = Path(args.prompt).read_text(encoding="utf-8")
     assignments = [json.loads(line) for line in Path(args.assignments).read_text(encoding="utf-8").splitlines() if line.strip()]
     adapter = build_openai_adapter(prices_usd_per_million=config.prices_usd_per_million)
