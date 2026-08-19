@@ -36,6 +36,15 @@ remain evidence of the runtime used when they were produced.
 The historical `prepare_m5_provider_smoke.py` and `run_provider_smoke.py`
 filenames are retained as compatibility aliases to the same Codex CLI backend.
 
+## Real smoke evidence
+
+The first two schema-compatibility failures and the final three valid model
+outputs are preserved without deletion under
+`data/benchmarks/m5/codex_cli_runtime_smoke_v0_1/`. The artifact README binds
+each configuration and summary by SHA-256 and records the unchanged 24k-token
+budget boundary. These runs are engineering evidence only and do not modify
+Gold, acceptance status, formal budgets, metric definitions, or paper claims.
+
 ## Official behavior used
 
 The implementation follows the official Codex non-interactive-mode contract:
