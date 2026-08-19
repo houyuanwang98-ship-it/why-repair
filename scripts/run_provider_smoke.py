@@ -2,9 +2,15 @@
 """Run explicit M5/M6 Provider smoke assignments with append-only evidence."""
 
 import argparse
+import importlib.metadata
 import json
 from pathlib import Path
+import subprocess
+import sys
 
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 from harness.provider_runner import AppendOnlyEvidenceStore, ProviderRunConfig, ProviderRunner, build_openai_adapter
 
 
@@ -22,18 +28,25 @@ def main() -> None:
         raise SystemExit("Provider calls are disabled; review frozen inputs, then pass --execute explicitly")
 
     raw_config = json.loads(Path(args.config).read_text(encoding="utf-8"))
-    prices = raw_config.pop("prices_usd_per_million")
     config = ProviderRunConfig(**raw_config)
+    actual_commit = subprocess.check_output(
+        ["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True
+    ).strip()
+    if actual_commit != config.repository_commit:
+        raise SystemExit("current repository commit does not match frozen Provider config")
+    dirty = subprocess.check_output(
+        ["git", "-C", str(ROOT), "status", "--porcelain"], text=True
+    )
+    if dirty:
+        raise SystemExit("Provider execution requires a clean worktree")
+    if importlib.metadata.version("openai") != config.sdk_version:
+        raise SystemExit("installed openai SDK does not match frozen Provider config")
     prompt = Path(args.prompt).read_text(encoding="utf-8")
     assignments = [json.loads(line) for line in Path(args.assignments).read_text(encoding="utf-8").splitlines() if line.strip()]
-    adapter = build_openai_adapter(input_usd_per_million=prices["input"],
-                                   output_usd_per_million=prices["output"])
+    adapter = build_openai_adapter(prices_usd_per_million=config.prices_usd_per_million)
     runner = ProviderRunner(config, AppendOnlyEvidenceStore(Path(args.output_dir)), adapter,
                             execution_enabled=args.execute)
-    for item in assignments:
-        row = runner.run(run_id=args.run_id, sample_id=item["sample_id"],
-                         method_id=item["method_id"], prompt=prompt,
-                         input_payload=item["input_payload"])
+    for row in runner.run_batch(run_id=args.run_id, prompt=prompt, assignments=assignments):
         print(json.dumps(row, ensure_ascii=False))
 
 
