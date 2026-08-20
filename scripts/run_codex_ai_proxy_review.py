@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -151,6 +152,8 @@ def extract_event_metadata(stdout: str) -> dict[str, Any]:
     thread_ids: list[str] = []
     usages: list[dict[str, Any]] = []
     event_types: list[str] = []
+    transport_error_categories: Counter[str] = Counter()
+    fallback_error_item_categories: Counter[str] = Counter()
     malformed = 0
     for line in stdout.splitlines():
         if not line.strip():
@@ -163,6 +166,12 @@ def extract_event_metadata(stdout: str) -> dict[str, Any]:
         event_type = event.get("type")
         if isinstance(event_type, str):
             event_types.append(event_type)
+        if event_type == "error":
+            transport_error_categories[classify_transport_error(event.get("message"))] += 1
+        item = event.get("item")
+        if (event_type == "item.completed" and isinstance(item, dict)
+                and item.get("type") == "error"):
+            fallback_error_item_categories[classify_transport_error(item.get("message"))] += 1
         thread_id = event.get("thread_id")
         if isinstance(thread_id, str) and thread_id not in thread_ids:
             thread_ids.append(thread_id)
@@ -174,7 +183,20 @@ def extract_event_metadata(stdout: str) -> dict[str, Any]:
         "usage_events": usages,
         "event_types": event_types,
         "malformed_jsonl_lines": malformed,
+        "transport_error_event_count": sum(transport_error_categories.values()),
+        "transport_error_event_categories": dict(sorted(transport_error_categories.items())),
+        "fallback_error_item_count": sum(fallback_error_item_categories.values()),
+        "fallback_error_item_categories": dict(sorted(fallback_error_item_categories.items())),
     }
+
+
+def classify_transport_error(message: Any) -> str:
+    text = message.lower() if isinstance(message, str) else ""
+    if "403 forbidden" in text and ("websocket" in text or "wss://" in text):
+        return "websocket_403_reconnect"
+    if "request timed out" in text:
+        return "request_timeout_reconnect"
+    return "other"
 
 
 def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
@@ -262,7 +284,7 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
     status = "completed" if return_code == 0 and parse_error is None else (
         "timeout" if timed_out else "failed")
     result = {
-        "schema_version": "codex-ai-proxy-attempt-0.1",
+        "schema_version": "codex-ai-proxy-attempt-0.2",
         "task": task,
         "batch_id": batch_id,
         "attempt": attempt,
@@ -277,6 +299,10 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
         "token_usage_events": metadata["usage_events"],
         "event_types": metadata["event_types"],
         "malformed_jsonl_lines": metadata["malformed_jsonl_lines"],
+        "transport_error_event_count": metadata["transport_error_event_count"],
+        "transport_error_event_categories": metadata["transport_error_event_categories"],
+        "fallback_error_item_count": metadata["fallback_error_item_count"],
+        "fallback_error_item_categories": metadata["fallback_error_item_categories"],
         "response_id": None,
         "cost_usd": None,
         "stdout_sha256": sha256_bytes(stdout.encode("utf-8")),
@@ -354,12 +380,24 @@ def main() -> None:
         if result is None or result["status"] != "completed":
             print(f"batch {batch_id} exhausted retries; continuing with preserved failure", file=sys.stderr)
     summary = {
-        "schema_version": "codex-ai-proxy-run-summary-0.1",
+        "schema_version": "codex-ai-proxy-run-summary-0.2",
         "task": args.task,
         "attempt_count": len(results),
         "completed_batches": sum(row["status"] == "completed" for row in results),
         "failed_attempts": sum(row["status"] == "failed" for row in results),
         "timed_out_attempts": sum(row["status"] == "timeout" for row in results),
+        "completed_attempts_with_transport_errors": sum(
+            row["status"] == "completed" and row["transport_error_event_count"] > 0
+            for row in results
+        ),
+        "transport_error_event_count": sum(
+            row["transport_error_event_count"] for row in results
+        ),
+        "transport_error_event_categories": dict(sorted(sum(
+            (Counter(row["transport_error_event_categories"]) for row in results),
+            Counter(),
+        ).items())),
+        "fallback_error_item_count": sum(row["fallback_error_item_count"] for row in results),
         "response_ids": [],
         "cost_usd": None,
         "token_usage_events": [usage for row in results for usage in row["token_usage_events"]],

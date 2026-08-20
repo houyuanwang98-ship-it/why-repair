@@ -5,6 +5,7 @@ import unittest
 from jsonschema import Draft202012Validator
 
 from scripts import run_codex_ai_proxy_review as runner
+from scripts import audit_m7_codex_proxy_evidence as auditor
 
 
 class CodexAIProxyReviewTest(unittest.TestCase):
@@ -42,6 +43,54 @@ class CodexAIProxyReviewTest(unittest.TestCase):
         self.assertIn('"source_offset": args.offset', source)
         self.assertIn('parser.add_argument("--codex-command", default="codex")', source)
         self.assertIn('encoding="utf-8", errors="strict"', source)
+
+    def test_transport_errors_are_separate_from_terminal_status(self):
+        stdout = "\n".join([
+            json.dumps({"type": "error", "message": "Reconnecting... request timed out"}),
+            json.dumps({
+                "type": "error",
+                "message": "Reconnecting... unexpected status 403 Forbidden, "
+                           "url: wss://chatgpt.com/backend-api/codex/responses",
+            }),
+            json.dumps({
+                "type": "item.completed",
+                "item": {"type": "error", "message": "Falling back; request timed out"},
+            }),
+            json.dumps({"type": "turn.completed", "usage": {"input_tokens": 11}}),
+        ])
+        metadata = runner.extract_event_metadata(stdout)
+        self.assertEqual(2, metadata["transport_error_event_count"])
+        self.assertEqual({
+            "request_timeout_reconnect": 1,
+            "websocket_403_reconnect": 1,
+        }, metadata["transport_error_event_categories"])
+        self.assertEqual(1, metadata["fallback_error_item_count"])
+        self.assertEqual([{"input_tokens": 11}], metadata["usage_events"])
+
+    def test_archived_m7_proxy_evidence_has_complete_integrity_accounting(self):
+        audit = auditor.audit_evidence([
+            auditor.DEFAULT_PARTIAL,
+            auditor.DEFAULT_CHECKPOINTS,
+        ])
+        self.assertTrue(audit["integrity"]["all_checks_passed"], audit["integrity"]["failures"])
+        self.assertEqual(35, audit["request_accounting"]["request_count"])
+        self.assertEqual(34, audit["request_accounting"]["completed_attempt_count"])
+        self.assertEqual(1, audit["request_accounting"]["incomplete_request_count"])
+        self.assertEqual(144, audit["case_accounting"]["unique_completed_case_count"])
+        self.assertEqual({"confirmed": 20, "corrected": 122, "undetermined": 2},
+                         audit["case_accounting"]["review_status_counts"])
+        self.assertEqual(136, audit["transport_accounting"]["transport_error_event_count"])
+        self.assertEqual(34,
+                         audit["transport_accounting"]["completed_attempts_with_transport_errors"])
+        self.assertEqual({
+            "request_timeout_reconnect": 84,
+            "websocket_403_reconnect": 52,
+        }, audit["transport_accounting"]["transport_error_event_categories"])
+        artifact = json.loads((
+            runner.ROOT
+            / "data/benchmarks/m7/audits/codex_ai_proxy_evidence_integrity_audit_20260821.json"
+        ).read_text(encoding="utf-8"))
+        self.assertEqual(audit, artifact)
 
 
 if __name__ == "__main__":
