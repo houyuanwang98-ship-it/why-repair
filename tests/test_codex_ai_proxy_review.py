@@ -7,6 +7,7 @@ from jsonschema import Draft202012Validator
 from scripts import run_codex_ai_proxy_review as runner
 from scripts import audit_m7_codex_proxy_evidence as auditor
 from scripts import audit_m7_blind_second_pass as blind_auditor
+from scripts import audit_m7_third_pass_adjudication as adjudication_auditor
 
 
 class CodexAIProxyReviewTest(unittest.TestCase):
@@ -183,6 +184,27 @@ class CodexAIProxyReviewTest(unittest.TestCase):
                          audit["case_accounting"]["assessment_counts"])
         self.assertEqual(8, audit["case_accounting"]["unique_completed_case_count"])
         self.assertEqual(52467, audit["usage_accounting"]["token_usage"]["input_tokens"])
+
+    def test_third_pass_adjudication_passes_all_gates(self):
+        audit = adjudication_auditor.audit_run(adjudication_auditor.DEFAULT_RUN)
+        self.assertTrue(all(audit["checks"][key] for key in (
+            "evidence_integrity_passed", "execution_isolation_passed",
+            "tool_free_execution_passed", "output_semantics_passed", "run_complete",
+        )))
+        self.assertEqual(49, audit["case_accounting"]["unique_completed_case_count"])
+        self.assertEqual({"resolved": 47, "unresolved": 2},
+                         audit["case_accounting"]["adjudication_status_counts"])
+        self.assertEqual({"invalid_localized": 45, "undetermined": 2, "valid_no_error": 2},
+                         audit["case_accounting"]["assessment_counts"])
+        self.assertEqual(["opc250-032", "opc250-206"],
+                         audit["case_accounting"]["unresolved_case_ids"])
+        self.assertEqual(0, audit["tool_accounting"]["tool_item_count"])
+        self.assertEqual(369908, audit["usage_accounting"]["token_usage"]["input_tokens"])
+        artifact = json.loads((
+            runner.ROOT
+            / "data/benchmarks/m7/audits/m7_ai_third_pass_adjudication_audit_20260821.json"
+        ).read_text(encoding="utf-8"))
+        self.assertEqual(audit, artifact)
 
 
 if __name__ == "__main__":
