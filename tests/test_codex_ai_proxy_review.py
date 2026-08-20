@@ -22,8 +22,17 @@ class CodexAIProxyReviewTest(unittest.TestCase):
         self.assertEqual(3, sum(row["scope"] == "codex_provisional_confirmation" for row in rows))
         self.assertEqual(len(rows), len({row["case_id"] for row in rows}))
 
+    def test_m7_blind_second_pass_projection_excludes_prior_decisions(self):
+        rows = runner.m7_blind_rows()
+        self.assertEqual(124, len(rows))
+        self.assertEqual(len(rows), len({row["case_id"] for row in rows}))
+        self.assertEqual({"case_id", "problem", "proof_nodes"}, set(rows[0]))
+        self.assertTrue(all(set(row) == {"case_id", "problem", "proof_nodes"} for row in rows))
+        self.assertIn("opc250-037", {row["case_id"] for row in rows})
+        self.assertIn("opc250-080", {row["case_id"] for row in rows})
+
     def test_output_schemas_are_valid_draft_2020_12(self):
-        for task in ("m5", "m7"):
+        for task in ("m5", "m7", "m7_blind"):
             path = runner.ROOT / f"schemas/{task}_ai_proxy_batch_review_v0_1.schema.json"
             Draft202012Validator.check_schema(json.loads(path.read_text(encoding="utf-8")))
 

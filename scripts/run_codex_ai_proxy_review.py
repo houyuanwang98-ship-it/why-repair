@@ -23,6 +23,8 @@ ROOT = Path(__file__).resolve().parents[1]
 M5 = ROOT / "data/benchmarks/m5/provisional_codex_interactive_v1"
 M7 = ROOT / "data/benchmarks/m7/opc_250_v0_2"
 M7_HUMAN = ROOT / "human_review/m7_opc_250_v0_2"
+M7_PROXY_PARTIAL = ROOT / "data/benchmarks/m7/codex_ai_proxy_partial_20260820"
+M7_PROXY_CHECKPOINTS = ROOT / "data/benchmarks/m7/codex_ai_proxy_checkpoints_20260820"
 
 
 def canonical_bytes(value: Any) -> bytes:
@@ -123,6 +125,38 @@ def m7_rows() -> list[dict[str, Any]]:
     return rows
 
 
+def m7_blind_rows() -> list[dict[str, Any]]:
+    """Project corrected/undetermined first-pass cases without leaking their mappings."""
+    first_pass: dict[str, dict[str, Any]] = {}
+    for evidence_dir in (M7_PROXY_PARTIAL, M7_PROXY_CHECKPOINTS):
+        for path in sorted(evidence_dir.rglob("last_message.json")):
+            document = json.loads(path.read_text(encoding="utf-8"))
+            for row in document["rows"]:
+                case_id = row["case_id"]
+                if case_id in first_pass:
+                    raise RuntimeError(f"duplicate completed first-pass case: {case_id}")
+                first_pass[case_id] = row
+    selected = {
+        case_id for case_id, row in first_pass.items()
+        if row["review_status"] in {"corrected", "undetermined"}
+    }
+    rows = [
+        {
+            "case_id": row["case_id"],
+            "problem": row["problem"],
+            "proof_nodes": row["proof_nodes"],
+        }
+        for row in m7_rows()
+        if row["case_id"] in selected
+    ]
+    if len(first_pass) != 144 or len(selected) != 124 or len(rows) != 124:
+        raise RuntimeError(
+            f"unexpected M7 blind scope: first_pass={len(first_pass)}, "
+            f"selected={len(selected)}, projected={len(rows)}"
+        )
+    return rows
+
+
 M5_INSTRUCTIONS = """You are a Codex AI proxy reviewer, not a human reviewer and not a Gold authority.
 Independently audit each supplied natural-language algebra proof and its complete patch sequence.
 Use a dependency-guided obligation check: identify the exact failed edge; distinguish a locally
@@ -145,6 +179,29 @@ premises, claimed conclusion, and why the inference fails. Give a minimal repair
 rewritten theorem. If the first error cannot be responsibly located, use review_status=undetermined,
 first_error_node=proof_end, error_type=undetermined, and explain why. Return exactly one row per
 supplied case_id, in input order, conforming to the output schema. Chinese or English is fine.
+"""
+
+
+M7_BLIND_INSTRUCTIONS = """You are an isolated second-pass Codex AI proof auditor, not a human
+reviewer and not a Gold authority. You receive only the problem and ordered proof nodes. You do not
+receive any earlier verdict, candidate mapping, first-pass output, or frozen Gold. Do not inspect
+the repository, local files, tools, or the web; decide only from the supplied mathematical text and
+standard mathematical knowledge.
+
+For each case, build the direct dependency route to the target and check nodes in order. Locate the
+earliest genuinely failed inference edge, not the first terse sentence. Standard one-step algebra
+is directly justified when its premises suffice. Distinguish a repairable omitted bridge, a missing
+premise, theorem misuse, an invalid transformation, a false local claim, a false theorem, a target
+mismatch, and a proof that simply ends without the required argument. Failure to find a
+counterexample is not proof. Do not add assumptions or change the theorem.
+
+Use proof_assessment=invalid_localized only when the exact first failure is supported. Use
+valid_no_error with first_error_node=no_error and error_type=no_error when the proof is valid and
+complete. Use undetermined with both fields set to undetermined when the supplied text cannot
+responsibly decide the obligation. If resolving the case genuinely depends on verifying a named
+theorem, set theorem_dependency_required=true and identify its statement and conditions; do not use
+that flag for direct calculations or target comparisons. Return exactly one row per supplied
+case_id, in input order, conforming to the output schema. Chinese or English is fine.
 """
 
 
@@ -202,11 +259,16 @@ def classify_transport_error(message: Any) -> str:
 def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
                 output_dir: Path, model: str, reasoning_effort: str,
                 timeout_seconds: int, attempt: int,
-                codex_command: str = "codex") -> dict[str, Any]:
+                codex_command: str = "codex",
+                isolated_working_dir: Path | None = None) -> dict[str, Any]:
     schema_path = ROOT / f"schemas/{task}_ai_proxy_batch_review_v0_1.schema.json"
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
     Draft202012Validator.check_schema(schema)
-    instructions = M5_INSTRUCTIONS if task == "m5" else M7_INSTRUCTIONS
+    instructions = {
+        "m5": M5_INSTRUCTIONS,
+        "m7": M7_INSTRUCTIONS,
+        "m7_blind": M7_BLIND_INSTRUCTIONS,
+    }[task]
     payload = {"batch_id": batch_id, "rows": rows}
     prompt = instructions + "\nINPUT JSON:\n" + json.dumps(payload, ensure_ascii=False)
     attempt_dir = output_dir / "batches" / batch_id / f"attempt-{attempt:02d}"
@@ -221,6 +283,9 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
         "reasoning_effort": reasoning_effort,
         "sandbox": "read-only",
         "ephemeral_session": True,
+        "ignore_user_config": task == "m7_blind",
+        "ignore_rules": task == "m7_blind",
+        "working_directory": str(isolated_working_dir if task == "m7_blind" else ROOT),
         "repository_commit": git_value("rev-parse", "HEAD"),
         "repository_dirty_at_run_start": bool(git_value("status", "--porcelain")),
         "schema_path": str(schema_path.relative_to(ROOT)),
@@ -236,13 +301,18 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
     write_once(attempt_dir / "request.json", canonical_bytes(request))
     write_once(attempt_dir / "stdin_prompt.txt", prompt.encode("utf-8"))
     last_message_path = attempt_dir / "last_message.json"
-    command = [
-        codex_command, "exec", "--ephemeral", "--skip-git-repo-check",
-        "-C", str(ROOT), "-s", "read-only", "-m", model,
+    command = [codex_command, "exec", "--ephemeral", "--skip-git-repo-check"]
+    if task == "m7_blind":
+        if isolated_working_dir is None:
+            raise RuntimeError("m7_blind requires an isolated working directory")
+        command.extend(["--ignore-user-config", "--ignore-rules"])
+    command.extend([
+        "-C", str(isolated_working_dir if task == "m7_blind" else ROOT),
+        "-s", "read-only", "-m", model,
         "-c", f'model_reasoning_effort="{reasoning_effort}"',
         "--output-schema", str(schema_path), "--json",
         "-o", str(last_message_path), "-",
-    ]
+    ])
     started = datetime.now(timezone.utc)
     monotonic_start = time.monotonic()
     timed_out = False
@@ -315,7 +385,7 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--task", choices=("m5", "m7"), required=True)
+    parser.add_argument("--task", choices=("m5", "m7", "m7_blind"), required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--model", default="gpt-5.6-terra")
     parser.add_argument("--codex-command", default="codex")
@@ -323,6 +393,11 @@ def main() -> None:
     parser.add_argument("--batch-size", type=int, default=6)
     parser.add_argument("--offset", type=int, default=0)
     parser.add_argument("--limit", type=int)
+    parser.add_argument("--case-id", action="append", default=[])
+    parser.add_argument(
+        "--isolated-working-dir", type=Path,
+        default=Path("/tmp/why-repair-m7-blind-runtime-20260821"),
+    )
     parser.add_argument("--timeout-seconds", type=int, default=900)
     parser.add_argument("--retry-limit", type=int, default=1)
     parser.add_argument("--execute", action="store_true")
@@ -331,13 +406,33 @@ def main() -> None:
         raise SystemExit("Codex proxy calls are disabled; pass --execute explicitly")
     if args.batch_size < 1 or args.timeout_seconds < 1 or args.retry_limit < 0 or args.offset < 0:
         raise SystemExit("batch size/timeout must be positive; offset/retry limit must be nonnegative")
-    rows = m5_rows() if args.task == "m5" else m7_rows()
+    rows = {
+        "m5": m5_rows,
+        "m7": m7_rows,
+        "m7_blind": m7_blind_rows,
+    }[args.task]()
+    if args.case_id:
+        requested = set(args.case_id)
+        known = {row.get("case_id", row.get("proof_id")) for row in rows}
+        unknown = sorted(requested - known)
+        if unknown:
+            raise SystemExit(f"unknown case ids for {args.task}: {unknown}")
+        rows = [
+            row for row in rows
+            if row.get("case_id", row.get("proof_id")) in requested
+        ]
     rows = rows[args.offset:]
     if args.limit is not None:
         rows = rows[:args.limit]
     cli_version = subprocess.check_output(
         [args.codex_command, "--version"], text=True, encoding="utf-8"
     ).strip()
+    if args.task == "m7_blind":
+        args.isolated_working_dir.mkdir(parents=True, exist_ok=True)
+        if any(args.isolated_working_dir.iterdir()):
+            raise SystemExit(
+                f"isolated working directory must be empty: {args.isolated_working_dir}"
+            )
     run_manifest = {
         "schema_version": "codex-ai-proxy-run-0.1",
         "task": args.task,
@@ -353,12 +448,31 @@ def main() -> None:
         "case_count": len(rows),
         "case_ids": [row.get("case_id", row.get("proof_id")) for row in rows],
         "source_offset": args.offset,
+        "requested_case_ids": args.case_id,
         "batch_size": args.batch_size,
         "timeout_seconds": args.timeout_seconds,
         "retry_limit": args.retry_limit,
         "response_id_available": False,
         "per_call_cost_available": False,
     }
+    if args.task == "m7_blind":
+        run_manifest["blind_input_projection"] = {
+            "included_fields": ["case_id", "problem", "proof_nodes"],
+            "excluded_fields": [
+                "frozen_human_proof_verdict", "candidate_mapping", "scope",
+                "first_pass_output", "gold",
+            ],
+            "selection_rule": "first-pass corrected or undetermined; selection hidden from model",
+        }
+        run_manifest["execution_isolation"] = {
+            "ephemeral_session": True,
+            "sandbox": "read-only",
+            "ignore_user_config": True,
+            "ignore_rules": True,
+            "isolated_working_directory": str(args.isolated_working_dir),
+            "isolated_working_directory_empty_at_start": True,
+            "output_directory": str(args.output_dir),
+        }
     write_once(args.output_dir / "run_manifest.json", canonical_bytes(run_manifest))
     results = []
     for offset in range(0, len(rows), args.batch_size):
@@ -372,6 +486,7 @@ def main() -> None:
                 reasoning_effort=args.reasoning_effort,
                 timeout_seconds=args.timeout_seconds, attempt=attempt,
                 codex_command=args.codex_command,
+                isolated_working_dir=args.isolated_working_dir,
             )
             results.append(result)
             print(json.dumps(result, ensure_ascii=False), flush=True)
