@@ -262,7 +262,8 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
                 codex_command: str = "codex",
                 isolated_working_dir: Path | None = None,
                 repository_commit: str | None = None,
-                repository_dirty_at_run_start: bool | None = None) -> dict[str, Any]:
+                repository_dirty_at_run_start: bool | None = None,
+                disabled_skill_paths: list[Path] | None = None) -> dict[str, Any]:
     schema_path = ROOT / f"schemas/{task}_ai_proxy_batch_review_v0_1.schema.json"
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
     Draft202012Validator.check_schema(schema)
@@ -271,6 +272,7 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
         "m7": M7_INSTRUCTIONS,
         "m7_blind": M7_BLIND_INSTRUCTIONS,
     }[task]
+    disabled_skill_paths = disabled_skill_paths or []
     payload = {"batch_id": batch_id, "rows": rows}
     prompt = instructions + "\nINPUT JSON:\n" + json.dumps(payload, ensure_ascii=False)
     attempt_dir = output_dir / "batches" / batch_id / f"attempt-{attempt:02d}"
@@ -288,6 +290,8 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
         "ignore_user_config": task == "m7_blind",
         "ignore_rules": task == "m7_blind",
         "working_directory": str(isolated_working_dir if task == "m7_blind" else ROOT),
+        "disabled_features": ["shell_tool", "skill_search"] if task == "m7_blind" else [],
+        "disabled_skill_paths": [str(path) for path in disabled_skill_paths],
         "repository_commit": repository_commit or git_value("rev-parse", "HEAD"),
         "repository_dirty_at_run_start": (
             bool(git_value("status", "--porcelain"))
@@ -311,7 +315,16 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
     if task == "m7_blind":
         if isolated_working_dir is None:
             raise RuntimeError("m7_blind requires an isolated working directory")
-        command.extend(["--ignore-user-config", "--ignore-rules"])
+        command.extend([
+            "--ignore-user-config", "--ignore-rules",
+            "--disable", "shell_tool", "--disable", "skill_search",
+        ])
+        if disabled_skill_paths:
+            skills_config = "[" + ",".join(
+                "{path=" + json.dumps(str(path)) + ",enabled=false}"
+                for path in disabled_skill_paths
+            ) + "]"
+            command.extend(["-c", f"skills.config={skills_config}"])
     command.extend([
         "-C", str(isolated_working_dir if task == "m7_blind" else ROOT),
         "-s", "read-only", "-m", model,
@@ -404,6 +417,7 @@ def main() -> None:
         "--isolated-working-dir", type=Path,
         default=Path("/tmp/why-repair-m7-blind-runtime-20260821"),
     )
+    parser.add_argument("--disable-skill-path", action="append", type=Path, default=[])
     parser.add_argument("--timeout-seconds", type=int, default=900)
     parser.add_argument("--retry-limit", type=int, default=1)
     parser.add_argument("--execute", action="store_true")
@@ -481,6 +495,8 @@ def main() -> None:
             "isolated_working_directory": str(args.isolated_working_dir),
             "isolated_working_directory_empty_at_start": True,
             "output_directory": str(args.output_dir),
+            "disabled_features": ["shell_tool", "skill_search"],
+            "disabled_skill_paths": [str(path) for path in args.disable_skill_path],
         }
     write_once(args.output_dir / "run_manifest.json", canonical_bytes(run_manifest))
     results = []
@@ -498,6 +514,7 @@ def main() -> None:
                 isolated_working_dir=args.isolated_working_dir,
                 repository_commit=repository_commit,
                 repository_dirty_at_run_start=repository_dirty_at_run_start,
+                disabled_skill_paths=args.disable_skill_path,
             )
             results.append(result)
             print(json.dumps(result, ensure_ascii=False), flush=True)

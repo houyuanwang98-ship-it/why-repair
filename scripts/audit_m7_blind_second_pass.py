@@ -24,6 +24,7 @@ from scripts import run_codex_ai_proxy_review as runner  # noqa: E402
 SCHEMA = ROOT / "schemas/m7_blind_ai_proxy_batch_review_v0_1.schema.json"
 SMOKE = ROOT / "data/benchmarks/m7/codex_ai_proxy_blind_second_pass_smoke_20260821"
 SMOKE_V2 = ROOT / "data/benchmarks/m7/codex_ai_proxy_blind_second_pass_smoke_v2_20260821"
+FULL = ROOT / "data/benchmarks/m7/codex_ai_proxy_blind_second_pass_full_20260821"
 PROMPT_MARKER = "\nINPUT JSON:\n"
 INPUT_FIELDS = {"case_id", "problem", "proof_nodes"}
 EXCLUDED_FIELDS = {
@@ -74,7 +75,13 @@ def _semantic_failures(row: dict[str, Any], source: dict[str, Any]) -> list[str]
         if error_type in {"no_error", "undetermined"}:
             failures.append(f"invalid_localized has sentinel error_type: {error_type}")
     if not row.get("theorem_dependency_required"):
-        if row.get("theorem_dependency") or row.get("theorem_conditions"):
+        dependency = row.get("theorem_dependency")
+        empty_dependency = (
+            not dependency
+            or (isinstance(dependency, str)
+                and dependency.strip().lower() in {"none", "not required", "not applicable"})
+        )
+        if not empty_dependency or row.get("theorem_conditions"):
             failures.append("disabled theorem dependency contains theorem evidence")
     return failures
 
@@ -101,6 +108,7 @@ def audit_run(run_dir: Path) -> dict[str, Any]:
     completed_case_ids: list[str] = []
     theorem_dependency_case_ids: list[str] = []
     incomplete_requests: list[str] = []
+    tool_activity: dict[tuple[str, str], dict[str, Any]] = {}
 
     if manifest.get("task") != "m7_blind":
         integrity_failures.append("run manifest task is not m7_blind")
@@ -185,6 +193,29 @@ def audit_run(run_dir: Path) -> dict[str, Any]:
             integrity_failures.append(f"usage mismatch: {result_path.relative_to(ROOT)}")
         transport_categories.update(metadata["transport_error_event_categories"])
         fallback_categories.update(metadata["fallback_error_item_categories"])
+        for line in stdout.splitlines():
+            if not line.strip():
+                continue
+            event = json.loads(line)
+            item = event.get("item")
+            if not isinstance(item, dict) or item.get("type") not in {
+                "command_execution", "mcp_tool_call", "web_search",
+            }:
+                continue
+            item_id = str(item.get("id", "missing_id"))
+            key = (str(result_path.relative_to(ROOT)), item_id)
+            record = tool_activity.setdefault(key, {
+                "attempt_result_path": str(result_path.relative_to(ROOT)),
+                "batch_id": result.get("batch_id"),
+                "attempt": result.get("attempt"),
+                "item_id": item_id,
+                "item_type": item.get("type"),
+                "command": item.get("command"),
+                "statuses": [],
+            })
+            status = item.get("status")
+            if status not in record["statuses"]:
+                record["statuses"].append(status)
         for usage in metadata["usage_events"]:
             for key, value in usage.items():
                 if isinstance(value, int):
@@ -261,6 +292,10 @@ def audit_run(run_dir: Path) -> dict[str, Any]:
             "fallback_error_item_count": sum(fallback_categories.values()),
             "fallback_error_item_categories": dict(sorted(fallback_categories.items())),
         },
+        "tool_accounting": {
+            "tool_item_count": len(tool_activity),
+            "tool_activity": list(tool_activity.values()),
+        },
         "usage_accounting": {
             "token_usage": dict(sorted(token_usage.items())),
             "response_id_available": False,
@@ -269,6 +304,7 @@ def audit_run(run_dir: Path) -> dict[str, Any]:
         "checks": {
             "evidence_integrity_passed": not integrity_failures,
             "execution_isolation_passed": not isolation_failures,
+            "tool_free_execution_passed": not tool_activity,
             "output_semantics_passed": not semantic_failures,
             "run_complete": (
                 summary is not None
@@ -302,7 +338,7 @@ def main() -> None:
     checks = audit["checks"]
     if not all(checks[key] for key in (
         "evidence_integrity_passed", "execution_isolation_passed",
-        "output_semantics_passed", "run_complete",
+        "tool_free_execution_passed", "output_semantics_passed", "run_complete",
     )):
         raise SystemExit(1)
 
