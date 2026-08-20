@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m5_runtime_review_ai_proxy_batch_review_v0_1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["batch_id", "reviewer_kind", "rows"],
+  "properties": {
+    "batch_id": {"type": "string", "minLength": 1},
+    "reviewer_kind": {"type": "string", "const": "codex_ai_proxy_independent_patch_reviewer"},
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "proof_id", "decision", "checks", "first_remaining_error_node",
+          "failed_obligation", "deletion_trial", "controller_action",
+          "confidence", "reason"
+        ],
+        "properties": {
+          "proof_id": {"type": "string", "minLength": 1},
+          "decision": {
+            "type": "string",
+            "enum": ["accept_patch", "reject_patch", "undetermined"]
+          },
+          "checks": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mathematically_valid", "resolves_failed_inference", "theorem_preserved",
+              "assumptions_preserved", "domain_preserved", "no_new_errors",
+              "operationally_minimal", "descendants_checked"
+            ],
+            "properties": {
+              "mathematically_valid": {"type": "boolean"},
+              "resolves_failed_inference": {"type": "boolean"},
+              "theorem_preserved": {"type": "boolean"},
+              "assumptions_preserved": {"type": "boolean"},
+              "domain_preserved": {"type": "boolean"},
+              "no_new_errors": {"type": "boolean"},
+              "operationally_minimal": {"type": "boolean"},
+              "descendants_checked": {"type": "boolean"}
+            }
+          },
+          "first_remaining_error_node": {"type": "string", "minLength": 1},
+          "failed_obligation": {"type": "string", "minLength": 1},
+          "deletion_trial": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["removal_breaks_repair", "reason"],
+            "properties": {
+              "removal_breaks_repair": {"type": "boolean"},
+              "reason": {"type": "string", "minLength": 1}
+            }
+          },
+          "controller_action": {
+            "type": "string",
+            "enum": ["apply_and_revalidate", "reject_patch", "manual_review"]
+          },
+          "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

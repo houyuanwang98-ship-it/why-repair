@@ -17,6 +17,16 @@ class CodexAIProxyReviewTest(unittest.TestCase):
         self.assertEqual(len(rows), len({row["proof_id"] for row in rows}))
         self.assertTrue(all(row["patch_sequence"] for row in rows))
 
+    def test_m5_runtime_review_packet_binds_three_real_outputs_without_gold(self):
+        rows = runner.m5_runtime_review_rows()
+        self.assertEqual(["m2-011", "m2-018", "m2-034"],
+                         [row["proof_id"] for row in rows])
+        self.assertEqual({"success", "budget_exhausted"},
+                         {row["generator_evidence"]["terminal_status"] for row in rows})
+        self.assertTrue(all(row["generator_evidence"]["codex_thread_id"] for row in rows))
+        self.assertTrue(all("gold" not in row for row in rows))
+        self.assertTrue(all("person_a_review" not in row for row in rows))
+
     def test_m7_scope_keeps_pending_and_provisional_separate(self):
         rows = runner.m7_rows()
         self.assertEqual(144, len(rows))
@@ -45,7 +55,7 @@ class CodexAIProxyReviewTest(unittest.TestCase):
         self.assertEqual("n13", theorem["verified_theorem_evidence"]["first_problem_after_verification"][:3])
 
     def test_output_schemas_are_valid_draft_2020_12(self):
-        for task in ("m5", "m7", "m7_blind", "m7_adjudication"):
+        for task in ("m5", "m5_runtime_review", "m7", "m7_blind", "m7_adjudication"):
             path = runner.ROOT / f"schemas/{task}_ai_proxy_batch_review_v0_1.schema.json"
             Draft202012Validator.check_schema(json.loads(path.read_text(encoding="utf-8")))
 

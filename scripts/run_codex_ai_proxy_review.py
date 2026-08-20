@@ -30,7 +30,8 @@ M7_BLIND_TOOL_FREE_RERUN = (
     ROOT / "data/benchmarks/m7/codex_ai_proxy_blind_second_pass_tool_free_rerun_20260821"
 )
 M7_THEOREM_AUDIT = ROOT / "data/benchmarks/m7/audits/m7_theorem_verification_20260821.json"
-ISOLATED_TASKS = {"m7_blind", "m7_adjudication"}
+M5_RUNTIME = ROOT / "data/benchmarks/m5/codex_cli_runtime_smoke_v0_1/successful_and_budget_bound"
+ISOLATED_TASKS = {"m5_runtime_review", "m7_blind", "m7_adjudication"}
 
 
 def canonical_bytes(value: Any) -> bytes:
@@ -83,6 +84,49 @@ def m5_rows() -> list[dict[str, Any]]:
         })
     if len(rows) != 36:
         raise RuntimeError(f"expected 36 M5 cases, found {len(rows)}")
+    return rows
+
+
+def m5_runtime_review_rows() -> list[dict[str, Any]]:
+    """Build a no-Gold review packet for the three real Codex generator outputs."""
+    source = {}
+    for line in (ROOT / "data/benchmarks/m2/pilot_50.jsonl").read_text(encoding="utf-8").splitlines():
+        row = json.loads(line)
+        source[row["proof_id"]] = row
+    generated_paths = {
+        "m2-011": M5_RUNTIME / "evidence/raw_responses/m5-codex-smoke-20260820-v4-m2-011-full_system-a0.json",
+        "m2-018": M5_RUNTIME / "evidence/raw_responses/m5-codex-smoke-20260820-v4-m2-018-full_system-a0.json",
+        "m2-034": M5_RUNTIME / "evidence-m2-034-only/raw_responses/m5-codex-smoke-20260820-v4-m2-034-m2-034-full_system-a0.json",
+    }
+    ledger_rows: dict[str, dict[str, Any]] = {}
+    for ledger_path in (
+        M5_RUNTIME / "evidence/attempt_ledger.jsonl",
+        M5_RUNTIME / "evidence-m2-034-only/attempt_ledger.jsonl",
+    ):
+        for line in ledger_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            ledger_rows[row["sample_id"]] = row
+    rows = []
+    for proof_id in ("m2-011", "m2-018", "m2-034"):
+        raw_path = generated_paths[proof_id]
+        raw = json.loads(raw_path.read_text(encoding="utf-8"))
+        input_path = M5 / f"{proof_id}.input.json"
+        rows.append({
+            "proof_id": proof_id,
+            "original_problem": source[proof_id],
+            "frozen_generator_input": json.loads(input_path.read_text(encoding="utf-8")),
+            "generated_patch": raw["parsed_output"],
+            "generator_evidence": {
+                "raw_response_path": str(raw_path.relative_to(ROOT)),
+                "raw_response_sha256": sha256_bytes(raw_path.read_bytes()),
+                "codex_thread_id": raw["codex_thread_id"],
+                "usage": raw["usage"],
+                "terminal_status": ledger_rows[proof_id]["status"],
+                "budget_reason": ledger_rows[proof_id]["budget_reason"],
+            },
+        })
     return rows
 
 
@@ -297,6 +341,24 @@ input order, conforming to the output schema. Chinese or English is fine.
 """
 
 
+M5_RUNTIME_REVIEW_INSTRUCTIONS = """You are an isolated independent Codex AI patch reviewer, not
+a human reviewer, not the Repair Generator, and not a Gold authority. Each case contains the
+original problem and proof, the frozen local generator input, one actual generated PatchProposal,
+and non-mathematical execution metadata. Do not inspect the repository, files, tools, or web.
+
+Reconstruct the exact failed dependency edge. Decide whether the patch is mathematically valid,
+actually closes that edge, preserves the theorem, assumptions and domain, introduces no new error,
+and is operationally minimal. Then check the full original proof after applying the patch: later
+claims remain obligations even if the target itself was repaired. A replacement may not merely
+assert the theorem it is supposed to prove. Execution success, schema validity, model confidence,
+or a budget terminal status is not mathematical acceptance. For the deletion trial, state whether
+removing every proposed edit restores the certified failure. The generator has no self-acceptance
+authority. If accepted, choose apply_and_revalidate; if any check fails, choose reject_patch; use
+manual_review only when the supplied text is genuinely insufficient. Return exactly one row per
+proof_id in input order and conform to the output schema. Chinese or English is fine.
+"""
+
+
 def extract_event_metadata(stdout: str) -> dict[str, Any]:
     thread_ids: list[str] = []
     usages: list[dict[str, Any]] = []
@@ -361,6 +423,7 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
     Draft202012Validator.check_schema(schema)
     instructions = {
         "m5": M5_INSTRUCTIONS,
+        "m5_runtime_review": M5_RUNTIME_REVIEW_INSTRUCTIONS,
         "m7": M7_INSTRUCTIONS,
         "m7_blind": M7_BLIND_INSTRUCTIONS,
         "m7_adjudication": M7_ADJUDICATION_INSTRUCTIONS,
@@ -498,7 +561,8 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--task", choices=("m5", "m7", "m7_blind", "m7_adjudication"), required=True
+        "--task", choices=("m5", "m5_runtime_review", "m7", "m7_blind", "m7_adjudication"),
+        required=True,
     )
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--model", default="gpt-5.6-terra")
@@ -523,6 +587,7 @@ def main() -> None:
         raise SystemExit("batch size/timeout must be positive; offset/retry limit must be nonnegative")
     rows = {
         "m5": m5_rows,
+        "m5_runtime_review": m5_runtime_review_rows,
         "m7": m7_rows,
         "m7_blind": m7_blind_rows,
         "m7_adjudication": m7_adjudication_rows,
@@ -574,7 +639,29 @@ def main() -> None:
         "response_id_available": False,
         "per_call_cost_available": False,
     }
-    if args.task == "m7_blind":
+    if args.task == "m5_runtime_review":
+        run_manifest["review_input_projection"] = {
+            "included_fields": [
+                "proof_id", "original_problem", "frozen_generator_input",
+                "generated_patch", "generator_evidence",
+            ],
+            "excluded_fields": [
+                "gold", "historical_patch", "person_a_review", "human_attestation",
+            ],
+            "generator_output_authority": "untrusted_proposal",
+        }
+        run_manifest["execution_isolation"] = {
+            "ephemeral_session": True,
+            "sandbox": "read-only",
+            "ignore_user_config": True,
+            "ignore_rules": True,
+            "isolated_working_directory": str(args.isolated_working_dir),
+            "isolated_working_directory_empty_at_start": True,
+            "output_directory": str(args.output_dir),
+            "disabled_features": ["shell_tool", "skill_search"],
+            "disabled_skill_paths": [str(path) for path in args.disable_skill_path],
+        }
+    elif args.task == "m7_blind":
         run_manifest["blind_input_projection"] = {
             "included_fields": ["case_id", "problem", "proof_nodes"],
             "excluded_fields": [
