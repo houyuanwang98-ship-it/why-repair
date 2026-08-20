@@ -12,6 +12,7 @@ from scripts import audit_m7_blind_second_pass as blind_auditor
 from scripts import audit_m7_third_pass_adjudication as adjudication_auditor
 from scripts import audit_m5_runtime_review as m5_runtime_auditor
 from scripts import build_m5_runtime_controller_replay as m5_runtime_controller
+from scripts import audit_m6_nine_method_smoke as m6_smoke_auditor
 
 
 class CodexAIProxyReviewTest(unittest.TestCase):
@@ -277,6 +278,24 @@ class CodexAIProxyReviewTest(unittest.TestCase):
             / "data/benchmarks/m5/audits/m5_runtime_independent_review_audit_20260821.json"
         ).read_text(encoding="utf-8"))
         self.assertEqual(m5_runtime_auditor.audit_run(), audit_artifact)
+
+    def test_m6_nine_method_smoke_passes_all_gates(self):
+        audit = m6_smoke_auditor.audit_run()
+        self.assertTrue(all(audit["checks"][key] for key in (
+            "evidence_integrity_passed", "execution_isolation_passed",
+            "tool_free_execution_passed", "output_semantics_passed", "run_complete",
+        )))
+        self.assertEqual(9, audit["case_accounting"]["method_count"])
+        self.assertEqual(27, audit["case_accounting"]["assignment_count"])
+        self.assertEqual(9, audit["attempt_accounting"]["unique_thread_count"])
+        self.assertEqual({"not_applicable_diagnosis_only": 9, "unverified_patch_proposed": 18},
+                         audit["case_accounting"]["repair_outcome_counts"])
+        self.assertEqual(138580, audit["usage_accounting"]["token_usage"]["input_tokens"])
+        artifact = json.loads((
+            runner.ROOT
+            / "data/benchmarks/m6/audits/m6_nine_method_codex_smoke_audit_20260821.json"
+        ).read_text(encoding="utf-8"))
+        self.assertEqual(audit, artifact)
 
 
 if __name__ == "__main__":
