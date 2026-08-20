@@ -26,6 +26,7 @@ SMOKE = ROOT / "data/benchmarks/m7/codex_ai_proxy_blind_second_pass_smoke_202608
 SMOKE_V2 = ROOT / "data/benchmarks/m7/codex_ai_proxy_blind_second_pass_smoke_v2_20260821"
 FULL = ROOT / "data/benchmarks/m7/codex_ai_proxy_blind_second_pass_full_20260821"
 TOOL_FREE_SMOKE = ROOT / "data/benchmarks/m7/codex_ai_proxy_blind_second_pass_tool_free_smoke_20260821"
+TOOL_FREE_RERUN = ROOT / "data/benchmarks/m7/codex_ai_proxy_blind_second_pass_tool_free_rerun_20260821"
 PROMPT_MARKER = "\nINPUT JSON:\n"
 INPUT_FIELDS = {"case_id", "problem", "proof_nodes"}
 EXCLUDED_FIELDS = {
