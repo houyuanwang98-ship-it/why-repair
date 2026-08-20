@@ -32,8 +32,19 @@ class CodexAIProxyReviewTest(unittest.TestCase):
         self.assertIn("opc250-037", {row["case_id"] for row in rows})
         self.assertIn("opc250-080", {row["case_id"] for row in rows})
 
+    def test_m7_third_pass_packet_contains_only_ai_disagreements_and_no_gold(self):
+        rows = runner.m7_adjudication_rows()
+        self.assertEqual(49, len(rows))
+        self.assertEqual(len(rows), len({row["case_id"] for row in rows}))
+        self.assertTrue(all(row["adjudication_reasons"] for row in rows))
+        self.assertTrue(all("candidate_mapping" not in row for row in rows))
+        self.assertTrue(all("gold" not in row for row in rows))
+        self.assertIn("opc250-119", {row["case_id"] for row in rows})
+        theorem = next(row for row in rows if row["case_id"] == "opc250-119")
+        self.assertEqual("n13", theorem["verified_theorem_evidence"]["first_problem_after_verification"][:3])
+
     def test_output_schemas_are_valid_draft_2020_12(self):
-        for task in ("m5", "m7", "m7_blind"):
+        for task in ("m5", "m7", "m7_blind", "m7_adjudication"):
             path = runner.ROOT / f"schemas/{task}_ai_proxy_batch_review_v0_1.schema.json"
             Draft202012Validator.check_schema(json.loads(path.read_text(encoding="utf-8")))
 

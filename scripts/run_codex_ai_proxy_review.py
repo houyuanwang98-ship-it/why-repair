@@ -25,6 +25,12 @@ M7 = ROOT / "data/benchmarks/m7/opc_250_v0_2"
 M7_HUMAN = ROOT / "human_review/m7_opc_250_v0_2"
 M7_PROXY_PARTIAL = ROOT / "data/benchmarks/m7/codex_ai_proxy_partial_20260820"
 M7_PROXY_CHECKPOINTS = ROOT / "data/benchmarks/m7/codex_ai_proxy_checkpoints_20260820"
+M7_BLIND_FULL = ROOT / "data/benchmarks/m7/codex_ai_proxy_blind_second_pass_full_20260821"
+M7_BLIND_TOOL_FREE_RERUN = (
+    ROOT / "data/benchmarks/m7/codex_ai_proxy_blind_second_pass_tool_free_rerun_20260821"
+)
+M7_THEOREM_AUDIT = ROOT / "data/benchmarks/m7/audits/m7_theorem_verification_20260821.json"
+ISOLATED_TASKS = {"m7_blind", "m7_adjudication"}
 
 
 def canonical_bytes(value: Any) -> bytes:
@@ -157,6 +163,73 @@ def m7_blind_rows() -> list[dict[str, Any]]:
     return rows
 
 
+def _completed_output_rows(*evidence_dirs: Path) -> dict[str, dict[str, Any]]:
+    rows: dict[str, dict[str, Any]] = {}
+    for evidence_dir in evidence_dirs:
+        for path in sorted(evidence_dir.rglob("last_message.json")):
+            document = json.loads(path.read_text(encoding="utf-8"))
+            for row in document["rows"]:
+                case_id = row["case_id"]
+                if case_id in rows:
+                    raise RuntimeError(f"duplicate completed evidence case: {case_id}")
+                rows[case_id] = row
+    return rows
+
+
+def _first_pass_assessment(row: dict[str, Any]) -> str:
+    if row["review_status"] == "undetermined":
+        return "undetermined"
+    if row["first_error_node"] in {"none", "no_error"} or row["error_type"] == "no_error":
+        return "valid_no_error"
+    return "invalid_localized"
+
+
+def m7_adjudication_rows() -> list[dict[str, Any]]:
+    """Build a no-Gold packet for conflicts between the two AI mapping passes."""
+    first = _completed_output_rows(M7_PROXY_PARTIAL, M7_PROXY_CHECKPOINTS)
+    second = _completed_output_rows(M7_BLIND_FULL)
+    tool_free_rerun = _completed_output_rows(M7_BLIND_TOOL_FREE_RERUN)
+    second.update(tool_free_rerun)
+    theorem_rows = {
+        row["case_id"]: row
+        for row in json.loads(M7_THEOREM_AUDIT.read_text(encoding="utf-8"))["rows"]
+    }
+    rows = []
+    for source in m7_blind_rows():
+        case_id = source["case_id"]
+        first_row = first[case_id]
+        second_row = second[case_id]
+        first_assessment = _first_pass_assessment(first_row)
+        second_assessment = second_row["proof_assessment"]
+        reasons = []
+        if first_assessment != second_assessment:
+            reasons.append("assessment_disagreement")
+        if (first_assessment == second_assessment == "invalid_localized"
+                and first_row["first_error_node"] != second_row["first_error_node"]):
+            reasons.append("first_error_node_disagreement")
+        if "undetermined" in {first_assessment, second_assessment}:
+            reasons.append("undetermined_in_one_or_more_passes")
+        if not reasons:
+            continue
+        rows.append({
+            "case_id": case_id,
+            "problem": source["problem"],
+            "proof_nodes": source["proof_nodes"],
+            "adjudication_reasons": reasons,
+            "first_pass_proposal": first_row,
+            "second_pass_proposal": second_row,
+            "second_pass_source": (
+                "tool_free_eight_case_rerun"
+                if case_id in tool_free_rerun
+                else "full_blind_second_pass"
+            ),
+            "verified_theorem_evidence": theorem_rows.get(case_id),
+        })
+    if len(rows) != 49:
+        raise RuntimeError(f"expected 49 M7 adjudication cases, found {len(rows)}")
+    return rows
+
+
 M5_INSTRUCTIONS = """You are a Codex AI proxy reviewer, not a human reviewer and not a Gold authority.
 Independently audit each supplied natural-language algebra proof and its complete patch sequence.
 Use a dependency-guided obligation check: identify the exact failed edge; distinguish a locally
@@ -202,6 +275,25 @@ responsibly decide the obligation. If resolving the case genuinely depends on ve
 theorem, set theorem_dependency_required=true and identify its statement and conditions; do not use
 that flag for direct calculations or target comparisons. Return exactly one row per supplied
 case_id, in input order, conforming to the output schema. Chinese or English is fine.
+"""
+
+
+M7_ADJUDICATION_INSTRUCTIONS = """You are a third-pass Codex AI adjudicator, not a human reviewer
+and not a Gold authority. Each case contains the original problem, every ordered proof node, two
+untrusted AI proposals, and sometimes host-verified theorem evidence. The proposals are evidence,
+not constraints. Independently reconstruct the dependency route and decide the earliest genuinely
+failed edge. Keep the theorem and assumptions fixed. A terse standard inference is not a gap by
+length alone; a correct route with a missing atomic bridge is a gap, while an invalid operation or
+false claim is not. Failure to find a counterexample is not proof.
+
+Check every mathematical assertion in the submitted proof, including examples or postscripts after
+the main conclusion. If verified theorem evidence is supplied, use its exact premise and status
+effect, but still check all later nodes. Prefer an earlier node only if it is itself unsupported or
+false under its direct dependencies. Use proof_end only when the proof stops before the required
+argument. If neither proposal is correct, synthesize the supported result. If the evidence cannot
+decide, use adjudication_status=unresolved, proof_assessment=undetermined,
+first_error_node=undetermined, and error_type=undetermined. Return exactly one row per case_id in
+input order, conforming to the output schema. Chinese or English is fine.
 """
 
 
@@ -271,6 +363,7 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
         "m5": M5_INSTRUCTIONS,
         "m7": M7_INSTRUCTIONS,
         "m7_blind": M7_BLIND_INSTRUCTIONS,
+        "m7_adjudication": M7_ADJUDICATION_INSTRUCTIONS,
     }[task]
     disabled_skill_paths = disabled_skill_paths or []
     payload = {"batch_id": batch_id, "rows": rows}
@@ -287,10 +380,10 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
         "reasoning_effort": reasoning_effort,
         "sandbox": "read-only",
         "ephemeral_session": True,
-        "ignore_user_config": task == "m7_blind",
-        "ignore_rules": task == "m7_blind",
-        "working_directory": str(isolated_working_dir if task == "m7_blind" else ROOT),
-        "disabled_features": ["shell_tool", "skill_search"] if task == "m7_blind" else [],
+        "ignore_user_config": task in ISOLATED_TASKS,
+        "ignore_rules": task in ISOLATED_TASKS,
+        "working_directory": str(isolated_working_dir if task in ISOLATED_TASKS else ROOT),
+        "disabled_features": ["shell_tool", "skill_search"] if task in ISOLATED_TASKS else [],
         "disabled_skill_paths": [str(path) for path in disabled_skill_paths],
         "repository_commit": repository_commit or git_value("rev-parse", "HEAD"),
         "repository_dirty_at_run_start": (
@@ -312,9 +405,9 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
     write_once(attempt_dir / "stdin_prompt.txt", prompt.encode("utf-8"))
     last_message_path = attempt_dir / "last_message.json"
     command = [codex_command, "exec", "--ephemeral", "--skip-git-repo-check"]
-    if task == "m7_blind":
+    if task in ISOLATED_TASKS:
         if isolated_working_dir is None:
-            raise RuntimeError("m7_blind requires an isolated working directory")
+            raise RuntimeError(f"{task} requires an isolated working directory")
         command.extend([
             "--ignore-user-config", "--ignore-rules",
             "--disable", "shell_tool", "--disable", "skill_search",
@@ -326,7 +419,7 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
             ) + "]"
             command.extend(["-c", f"skills.config={skills_config}"])
     command.extend([
-        "-C", str(isolated_working_dir if task == "m7_blind" else ROOT),
+        "-C", str(isolated_working_dir if task in ISOLATED_TASKS else ROOT),
         "-s", "read-only", "-m", model,
         "-c", f'model_reasoning_effort="{reasoning_effort}"',
         "--output-schema", str(schema_path), "--json",
@@ -404,7 +497,9 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--task", choices=("m5", "m7", "m7_blind"), required=True)
+    parser.add_argument(
+        "--task", choices=("m5", "m7", "m7_blind", "m7_adjudication"), required=True
+    )
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--model", default="gpt-5.6-terra")
     parser.add_argument("--codex-command", default="codex")
@@ -430,6 +525,7 @@ def main() -> None:
         "m5": m5_rows,
         "m7": m7_rows,
         "m7_blind": m7_blind_rows,
+        "m7_adjudication": m7_adjudication_rows,
     }[args.task]()
     if args.case_id:
         requested = set(args.case_id)
@@ -447,7 +543,7 @@ def main() -> None:
     cli_version = subprocess.check_output(
         [args.codex_command, "--version"], text=True, encoding="utf-8"
     ).strip()
-    if args.task == "m7_blind":
+    if args.task in ISOLATED_TASKS:
         args.isolated_working_dir.mkdir(parents=True, exist_ok=True)
         if any(args.isolated_working_dir.iterdir()):
             raise SystemExit(
@@ -486,6 +582,27 @@ def main() -> None:
                 "first_pass_output", "gold",
             ],
             "selection_rule": "first-pass corrected or undetermined; selection hidden from model",
+        }
+        run_manifest["execution_isolation"] = {
+            "ephemeral_session": True,
+            "sandbox": "read-only",
+            "ignore_user_config": True,
+            "ignore_rules": True,
+            "isolated_working_directory": str(args.isolated_working_dir),
+            "isolated_working_directory_empty_at_start": True,
+            "output_directory": str(args.output_dir),
+            "disabled_features": ["shell_tool", "skill_search"],
+            "disabled_skill_paths": [str(path) for path in args.disable_skill_path],
+        }
+    elif args.task == "m7_adjudication":
+        run_manifest["adjudication_input_projection"] = {
+            "included_fields": [
+                "case_id", "problem", "proof_nodes", "adjudication_reasons",
+                "first_pass_proposal", "second_pass_proposal", "second_pass_source",
+                "verified_theorem_evidence",
+            ],
+            "excluded_fields": ["frozen_human_proof_verdict", "candidate_mapping", "gold"],
+            "proposal_authority": "untrusted_ai_evidence",
         }
         run_manifest["execution_isolation"] = {
             "ephemeral_session": True,
