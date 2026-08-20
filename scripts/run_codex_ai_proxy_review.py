@@ -18,10 +18,12 @@ from typing import Any
 
 from jsonschema import Draft202012Validator
 
-from harness.m6_experiments import METHOD_IDS, METHOD_SPECS
-
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from harness.m6_experiments import METHOD_IDS, METHOD_SPECS  # noqa: E402
 M5 = ROOT / "data/benchmarks/m5/provisional_codex_interactive_v1"
 M7 = ROOT / "data/benchmarks/m7/opc_250_v0_2"
 M7_HUMAN = ROOT / "human_review/m7_opc_250_v0_2"

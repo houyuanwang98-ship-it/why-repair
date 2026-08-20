@@ -1,5 +1,7 @@
 import json
 from pathlib import Path
+import subprocess
+import sys
 import unittest
 
 from jsonschema import Draft202012Validator
@@ -95,6 +97,14 @@ class CodexAIProxyReviewTest(unittest.TestCase):
         self.assertIn('parser.add_argument("--codex-command", default="codex")', source)
         self.assertIn('encoding="utf-8", errors="strict"', source)
         self.assertIn('"repository_dirty_at_run_start": repository_dirty_at_run_start', source)
+
+    def test_runner_direct_script_entrypoint_imports_harness(self):
+        completed = subprocess.run(
+            [sys.executable, str(runner.ROOT / "scripts/run_codex_ai_proxy_review.py"), "--help"],
+            cwd=runner.ROOT, text=True, capture_output=True, check=False,
+        )
+        self.assertEqual(0, completed.returncode, completed.stderr)
+        self.assertIn("m6_smoke", completed.stdout)
 
     def test_transport_errors_are_separate_from_terminal_status(self):
         stdout = "\n".join([
