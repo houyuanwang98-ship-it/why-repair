@@ -260,7 +260,9 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
                 output_dir: Path, model: str, reasoning_effort: str,
                 timeout_seconds: int, attempt: int,
                 codex_command: str = "codex",
-                isolated_working_dir: Path | None = None) -> dict[str, Any]:
+                isolated_working_dir: Path | None = None,
+                repository_commit: str | None = None,
+                repository_dirty_at_run_start: bool | None = None) -> dict[str, Any]:
     schema_path = ROOT / f"schemas/{task}_ai_proxy_batch_review_v0_1.schema.json"
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
     Draft202012Validator.check_schema(schema)
@@ -286,8 +288,12 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
         "ignore_user_config": task == "m7_blind",
         "ignore_rules": task == "m7_blind",
         "working_directory": str(isolated_working_dir if task == "m7_blind" else ROOT),
-        "repository_commit": git_value("rev-parse", "HEAD"),
-        "repository_dirty_at_run_start": bool(git_value("status", "--porcelain")),
+        "repository_commit": repository_commit or git_value("rev-parse", "HEAD"),
+        "repository_dirty_at_run_start": (
+            bool(git_value("status", "--porcelain"))
+            if repository_dirty_at_run_start is None
+            else repository_dirty_at_run_start
+        ),
         "schema_path": str(schema_path.relative_to(ROOT)),
         "schema_sha256": sha256_bytes(schema_path.read_bytes()),
         "prompt_sha256": sha256_bytes(prompt.encode("utf-8")),
@@ -433,6 +439,8 @@ def main() -> None:
             raise SystemExit(
                 f"isolated working directory must be empty: {args.isolated_working_dir}"
             )
+    repository_commit = git_value("rev-parse", "HEAD")
+    repository_dirty_at_run_start = bool(git_value("status", "--porcelain"))
     run_manifest = {
         "schema_version": "codex-ai-proxy-run-0.1",
         "task": args.task,
@@ -444,7 +452,8 @@ def main() -> None:
         "exact_model_snapshot": None,
         "codex_cli_version": cli_version,
         "python_version": platform.python_version(),
-        "repository_commit": git_value("rev-parse", "HEAD"),
+        "repository_commit": repository_commit,
+        "repository_dirty_at_run_start": repository_dirty_at_run_start,
         "case_count": len(rows),
         "case_ids": [row.get("case_id", row.get("proof_id")) for row in rows],
         "source_offset": args.offset,
@@ -487,6 +496,8 @@ def main() -> None:
                 timeout_seconds=args.timeout_seconds, attempt=attempt,
                 codex_command=args.codex_command,
                 isolated_working_dir=args.isolated_working_dir,
+                repository_commit=repository_commit,
+                repository_dirty_at_run_start=repository_dirty_at_run_start,
             )
             results.append(result)
             print(json.dumps(result, ensure_ascii=False), flush=True)

@@ -6,6 +6,7 @@ from jsonschema import Draft202012Validator
 
 from scripts import run_codex_ai_proxy_review as runner
 from scripts import audit_m7_codex_proxy_evidence as auditor
+from scripts import audit_m7_blind_second_pass as blind_auditor
 
 
 class CodexAIProxyReviewTest(unittest.TestCase):
@@ -52,6 +53,7 @@ class CodexAIProxyReviewTest(unittest.TestCase):
         self.assertIn('"source_offset": args.offset', source)
         self.assertIn('parser.add_argument("--codex-command", default="codex")', source)
         self.assertIn('encoding="utf-8", errors="strict"', source)
+        self.assertIn('"repository_dirty_at_run_start": repository_dirty_at_run_start', source)
 
     def test_transport_errors_are_separate_from_terminal_status(self):
         stdout = "\n".join([
@@ -100,6 +102,24 @@ class CodexAIProxyReviewTest(unittest.TestCase):
             / "data/benchmarks/m7/audits/codex_ai_proxy_evidence_integrity_audit_20260821.json"
         ).read_text(encoding="utf-8"))
         self.assertEqual(audit, artifact)
+
+    def test_blind_second_pass_smoke_is_complete_isolated_and_semantic(self):
+        audit = blind_auditor.audit_run(blind_auditor.SMOKE)
+        checks = audit["checks"]
+        self.assertTrue(checks["evidence_integrity_passed"], checks["integrity_failures"])
+        self.assertFalse(checks["execution_isolation_passed"])
+        self.assertEqual([
+            "run manifest does not prove a clean repository at run start",
+            "dirty repository at attempt start: "
+            "data/benchmarks/m7/codex_ai_proxy_blind_second_pass_smoke_20260821/"
+            "batches/m7_blind-proxy-001/attempt-01/request.json",
+        ], checks["isolation_failures"])
+        self.assertTrue(checks["output_semantics_passed"], checks["semantic_failures"])
+        self.assertTrue(checks["run_complete"])
+        self.assertEqual({"valid_no_error": 2}, audit["case_accounting"]["assessment_counts"])
+        self.assertEqual([], audit["case_accounting"]["theorem_dependency_case_ids"])
+        self.assertEqual(19098, audit["usage_accounting"]["token_usage"]["input_tokens"])
+        self.assertEqual(0, audit["transport_accounting"]["transport_error_event_count"])
 
 
 if __name__ == "__main__":
