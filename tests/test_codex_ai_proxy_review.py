@@ -40,6 +40,8 @@ class CodexAIProxyReviewTest(unittest.TestCase):
         self.assertIn('parser.add_argument("--offset", type=int, default=0)', source)
         self.assertIn("rows = rows[args.offset:]", source)
         self.assertIn('"source_offset": args.offset', source)
+        self.assertIn('parser.add_argument("--codex-command", default="codex")', source)
+        self.assertIn('encoding="utf-8", errors="strict"', source)
 
 
 if __name__ == "__main__":

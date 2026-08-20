@@ -179,7 +179,8 @@ def extract_event_metadata(stdout: str) -> dict[str, Any]:
 
 def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
                 output_dir: Path, model: str, reasoning_effort: str,
-                timeout_seconds: int, attempt: int) -> dict[str, Any]:
+                timeout_seconds: int, attempt: int,
+                codex_command: str = "codex") -> dict[str, Any]:
     schema_path = ROOT / f"schemas/{task}_ai_proxy_batch_review_v0_1.schema.json"
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
     Draft202012Validator.check_schema(schema)
@@ -214,7 +215,7 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
     write_once(attempt_dir / "stdin_prompt.txt", prompt.encode("utf-8"))
     last_message_path = attempt_dir / "last_message.json"
     command = [
-        "codex", "exec", "--ephemeral", "--skip-git-repo-check",
+        codex_command, "exec", "--ephemeral", "--skip-git-repo-check",
         "-C", str(ROOT), "-s", "read-only", "-m", model,
         "-c", f'model_reasoning_effort="{reasoning_effort}"',
         "--output-schema", str(schema_path), "--json",
@@ -229,6 +230,7 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
     try:
         completed = subprocess.run(
             command, input=prompt, text=True, capture_output=True,
+            encoding="utf-8", errors="strict",
             timeout=timeout_seconds, check=False, env=child_env,
         )
         return_code = completed.returncode
@@ -290,6 +292,7 @@ def main() -> None:
     parser.add_argument("--task", choices=("m5", "m7"), required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--model", default="gpt-5.6-terra")
+    parser.add_argument("--codex-command", default="codex")
     parser.add_argument("--reasoning-effort", default="high")
     parser.add_argument("--batch-size", type=int, default=6)
     parser.add_argument("--offset", type=int, default=0)
@@ -306,7 +309,9 @@ def main() -> None:
     rows = rows[args.offset:]
     if args.limit is not None:
         rows = rows[:args.limit]
-    cli_version = subprocess.check_output(["codex", "--version"], text=True).strip()
+    cli_version = subprocess.check_output(
+        [args.codex_command, "--version"], text=True, encoding="utf-8"
+    ).strip()
     run_manifest = {
         "schema_version": "codex-ai-proxy-run-0.1",
         "task": args.task,
@@ -340,6 +345,7 @@ def main() -> None:
                 output_dir=args.output_dir, model=args.model,
                 reasoning_effort=args.reasoning_effort,
                 timeout_seconds=args.timeout_seconds, attempt=attempt,
+                codex_command=args.codex_command,
             )
             results.append(result)
             print(json.dumps(result, ensure_ascii=False), flush=True)
