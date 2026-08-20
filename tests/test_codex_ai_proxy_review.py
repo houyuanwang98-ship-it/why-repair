@@ -150,6 +150,17 @@ class CodexAIProxyReviewTest(unittest.TestCase):
         self.assertEqual(848289, audit["usage_accounting"]["token_usage"]["input_tokens"])
         self.assertEqual(0, audit["transport_accounting"]["transport_error_event_count"])
 
+    def test_tool_free_smoke_passes_all_gates(self):
+        audit = blind_auditor.audit_run(blind_auditor.TOOL_FREE_SMOKE)
+        self.assertTrue(all(audit["checks"][key] for key in (
+            "evidence_integrity_passed", "execution_isolation_passed",
+            "tool_free_execution_passed", "output_semantics_passed", "run_complete",
+        )))
+        self.assertEqual(0, audit["tool_accounting"]["tool_item_count"])
+        self.assertEqual({"invalid_localized": 1, "valid_no_error": 1},
+                         audit["case_accounting"]["assessment_counts"])
+        self.assertEqual(23412, audit["usage_accounting"]["token_usage"]["input_tokens"])
+
 
 if __name__ == "__main__":
     unittest.main()
