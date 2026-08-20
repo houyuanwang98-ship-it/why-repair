@@ -26,6 +26,15 @@ class CodexAIProxyReviewTest(unittest.TestCase):
             path = runner.ROOT / f"schemas/{task}_ai_proxy_batch_review_v0_1.schema.json"
             Draft202012Validator.check_schema(json.loads(path.read_text(encoding="utf-8")))
 
+    def test_m7_structured_output_literals_have_explicit_types(self):
+        path = runner.ROOT / "schemas/m7_ai_proxy_batch_review_v0_1.schema.json"
+        schema = json.loads(path.read_text(encoding="utf-8"))
+        properties = schema["properties"]
+        self.assertEqual("string", properties["reviewer_kind"]["type"])
+        row_properties = properties["rows"]["items"]["properties"]
+        self.assertEqual("string", row_properties["review_status"]["type"])
+        self.assertEqual("string", row_properties["confidence"]["type"])
+
 
 if __name__ == "__main__":
     unittest.main()

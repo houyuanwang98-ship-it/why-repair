@@ -6,7 +6,7 @@
   "required": ["batch_id", "reviewer_kind", "rows"],
   "properties": {
     "batch_id": {"type": "string", "minLength": 1},
-    "reviewer_kind": {"const": "codex_ai_proxy"},
+    "reviewer_kind": {"type": "string", "const": "codex_ai_proxy"},
     "rows": {
       "type": "array",
       "items": {
@@ -20,6 +20,7 @@
         "properties": {
           "case_id": {"type": "string", "minLength": 1},
           "review_status": {
+            "type": "string",
             "enum": ["confirmed", "corrected", "undetermined"]
           },
           "first_error_node": {"type": "string", "minLength": 1},
@@ -27,7 +28,7 @@
           "first_problematic_claim": {"type": "string", "minLength": 1},
           "failed_obligation": {"type": "string", "minLength": 1},
           "minimal_repair_direction": {"type": "string", "minLength": 1},
-          "confidence": {"enum": ["high", "medium", "low"]},
+          "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
           "reason": {"type": "string", "minLength": 1}
         }
       }
