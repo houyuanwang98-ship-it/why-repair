@@ -18,6 +18,8 @@ from typing import Any
 
 from jsonschema import Draft202012Validator
 
+from harness.m6_experiments import METHOD_IDS, METHOD_SPECS
+
 
 ROOT = Path(__file__).resolve().parents[1]
 M5 = ROOT / "data/benchmarks/m5/provisional_codex_interactive_v1"
@@ -31,7 +33,7 @@ M7_BLIND_TOOL_FREE_RERUN = (
 )
 M7_THEOREM_AUDIT = ROOT / "data/benchmarks/m7/audits/m7_theorem_verification_20260821.json"
 M5_RUNTIME = ROOT / "data/benchmarks/m5/codex_cli_runtime_smoke_v0_1/successful_and_budget_bound"
-ISOLATED_TASKS = {"m5_runtime_review", "m7_blind", "m7_adjudication"}
+ISOLATED_TASKS = {"m5_runtime_review", "m6_smoke", "m7_blind", "m7_adjudication"}
 
 
 def canonical_bytes(value: Any) -> bytes:
@@ -41,6 +43,13 @@ def canonical_bytes(value: Any) -> bytes:
 
 def sha256_bytes(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest()
+
+
+def row_identifier(row: dict[str, Any]) -> Any:
+    for key in ("case_id", "proof_id", "assignment_id"):
+        if key in row:
+            return row[key]
+    return None
 
 
 def write_once(path: Path, data: bytes) -> None:
@@ -127,6 +136,63 @@ def m5_runtime_review_rows() -> list[dict[str, Any]]:
                 "budget_reason": ledger_rows[proof_id]["budget_reason"],
             },
         })
+    return rows
+
+
+def m6_smoke_rows() -> list[dict[str, Any]]:
+    """Project three common cases according to each locked M6 method's visibility."""
+    proof_ids = ("m2-011", "m2-018", "m2-034")
+    source = {}
+    for line in (ROOT / "data/benchmarks/m2/pilot_50.jsonl").read_text(encoding="utf-8").splitlines():
+        row = json.loads(line)
+        source[row["proof_id"]] = row
+    m3_source = ROOT / "data/benchmarks/m3/experiments/full50_codex_v1/session/results"
+    rows = []
+    for method_id in METHOD_IDS:
+        spec = METHOD_SPECS[method_id]
+        for proof_id in proof_ids:
+            original = source[proof_id]
+            evaluated = json.loads((m3_source / f"{proof_id}.json").read_text(encoding="utf-8"))
+            generator_input = json.loads((M5 / f"{proof_id}.input.json").read_text(encoding="utf-8"))
+            flat = {
+                "theorem": original["theorem"],
+                "assumptions": original["assumptions"],
+                "proof_text": [node["text"] for node in original["proof_steps"]],
+            }
+            visible: dict[str, Any] = {"flat_proof": flat}
+            if spec.sees_nodes:
+                visible["proof_nodes"] = [
+                    {
+                        "node_id": node["node_id"],
+                        "claim": node["claim"],
+                        **({"depends_on": node.get("depends_on", [])} if spec.sees_graph else {}),
+                    }
+                    for node in evaluated["proof_graph"]
+                ]
+            if spec.structured_certificate:
+                visible["error_certificate"] = generator_input["error_certificate"]
+            elif spec.produces_patch:
+                visible["unstructured_diagnosis"] = generator_input["error_certificate"]["failed_inference"]
+            if spec.counterexample_protocol:
+                visible["accepted_counterexample_certificates"] = generator_input["m4_accepted_certificates"]
+            rows.append({
+                "assignment_id": f"{method_id}:{proof_id}",
+                "method_id": method_id,
+                "sample_id": proof_id,
+                "method_config": {
+                    "sees_nodes": spec.sees_nodes,
+                    "sees_graph": spec.sees_graph,
+                    "structured_certificate": spec.structured_certificate,
+                    "counterexample_protocol": spec.counterexample_protocol,
+                    "descendant_invalidation": spec.descendant_invalidation,
+                    "produces_patch": spec.produces_patch,
+                    "max_patch_rounds": spec.max_patch_rounds,
+                    "role_calls": spec.role_calls,
+                },
+                "visible_input": visible,
+            })
+    if len(rows) != 27:
+        raise RuntimeError(f"expected 27 M6 smoke assignments, found {len(rows)}")
     return rows
 
 
@@ -359,6 +425,23 @@ proof_id in input order and conform to the output schema. Chinese or English is 
 """
 
 
+M6_SMOKE_INSTRUCTIONS = """You are running one method in an M6 engineering smoke, not producing
+human review, Gold, or scientific results. Each batch contains three assignments for exactly one
+method. Honor the supplied method_config literally and use only visible_input. Do not inspect the
+repository, local files, tools, web, other methods, hidden graph edges, certificates, counterexample
+protocols, or descendant state when the method does not expose them.
+
+For every assignment, decide whether the submitted proof is accepted, has a repairable gap, is
+invalid, or is genuinely undetermined, and identify the first error node when nodes are visible.
+Methods with produces_patch=false must set repair_action=not_applicable and
+claimed_repair_success=false. Methods with produces_patch=true may propose a minimal local repair
+within max_patch_rounds, but this smoke output is unverified and must use repair_outcome accordingly;
+never self-certify mathematical repair success. If descendant_invalidation=false, explicitly note
+that downstream state was not invalidated. Return exactly one row per assignment in input order,
+conforming to the output schema. Chinese or English is fine.
+"""
+
+
 def extract_event_metadata(stdout: str) -> dict[str, Any]:
     thread_ids: list[str] = []
     usages: list[dict[str, Any]] = []
@@ -424,6 +507,7 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
     instructions = {
         "m5": M5_INSTRUCTIONS,
         "m5_runtime_review": M5_RUNTIME_REVIEW_INSTRUCTIONS,
+        "m6_smoke": M6_SMOKE_INSTRUCTIONS,
         "m7": M7_INSTRUCTIONS,
         "m7_blind": M7_BLIND_INSTRUCTIONS,
         "m7_adjudication": M7_ADJUDICATION_INSTRUCTIONS,
@@ -457,7 +541,7 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
         "schema_path": str(schema_path.relative_to(ROOT)),
         "schema_sha256": sha256_bytes(schema_path.read_bytes()),
         "prompt_sha256": sha256_bytes(prompt.encode("utf-8")),
-        "case_ids": [row.get("case_id", row.get("proof_id")) for row in rows],
+        "case_ids": [row_identifier(row) for row in rows],
         "timeout_seconds": timeout_seconds,
         "response_id": None,
         "response_id_note": "Codex CLI is not the Responses API and exposes no Provider response ID here.",
@@ -519,7 +603,7 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
             parsed = json.loads(last_message_path.read_text(encoding="utf-8"))
             Draft202012Validator(schema).validate(parsed)
             expected = request["case_ids"]
-            actual = [row.get("case_id", row.get("proof_id")) for row in parsed["rows"]]
+            actual = [row_identifier(row) for row in parsed["rows"]]
             if actual != expected:
                 raise ValueError(f"output identifiers/order differ: expected {expected}, got {actual}")
         except Exception as exc:  # Evidence must preserve the exact parse failure.
@@ -561,7 +645,9 @@ def run_attempt(*, task: str, batch_id: str, rows: list[dict[str, Any]],
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--task", choices=("m5", "m5_runtime_review", "m7", "m7_blind", "m7_adjudication"),
+        "--task", choices=(
+            "m5", "m5_runtime_review", "m6_smoke", "m7", "m7_blind", "m7_adjudication",
+        ),
         required=True,
     )
     parser.add_argument("--output-dir", type=Path, required=True)
@@ -588,19 +674,20 @@ def main() -> None:
     rows = {
         "m5": m5_rows,
         "m5_runtime_review": m5_runtime_review_rows,
+        "m6_smoke": m6_smoke_rows,
         "m7": m7_rows,
         "m7_blind": m7_blind_rows,
         "m7_adjudication": m7_adjudication_rows,
     }[args.task]()
     if args.case_id:
         requested = set(args.case_id)
-        known = {row.get("case_id", row.get("proof_id")) for row in rows}
+        known = {row_identifier(row) for row in rows}
         unknown = sorted(requested - known)
         if unknown:
             raise SystemExit(f"unknown case ids for {args.task}: {unknown}")
         rows = [
             row for row in rows
-            if row.get("case_id", row.get("proof_id")) in requested
+            if row_identifier(row) in requested
         ]
     rows = rows[args.offset:]
     if args.limit is not None:
@@ -630,7 +717,7 @@ def main() -> None:
         "repository_commit": repository_commit,
         "repository_dirty_at_run_start": repository_dirty_at_run_start,
         "case_count": len(rows),
-        "case_ids": [row.get("case_id", row.get("proof_id")) for row in rows],
+        "case_ids": [row_identifier(row) for row in rows],
         "source_offset": args.offset,
         "requested_case_ids": args.case_id,
         "batch_size": args.batch_size,
@@ -660,6 +747,28 @@ def main() -> None:
             "output_directory": str(args.output_dir),
             "disabled_features": ["shell_tool", "skill_search"],
             "disabled_skill_paths": [str(path) for path in args.disable_skill_path],
+        }
+    elif args.task == "m6_smoke":
+        run_manifest["smoke_input_projection"] = {
+            "included_fields": [
+                "assignment_id", "method_id", "sample_id", "method_config", "visible_input",
+            ],
+            "excluded_fields": [
+                "gold", "historical_prediction", "historical_patch", "person_a_review",
+            ],
+            "method_isolation": "one_method_per_ephemeral_batch",
+        }
+        run_manifest["execution_isolation"] = {
+            "ephemeral_session": True,
+            "sandbox": "read-only",
+            "ignore_user_config": True,
+            "ignore_rules": True,
+            "isolated_working_directory": str(args.isolated_working_dir),
+            "isolated_working_directory_empty_at_start": True,
+            "output_directory": str(args.output_dir),
+            "disabled_features": ["shell_tool", "skill_search"],
+            "disabled_skill_paths": [str(path) for path in args.disable_skill_path],
+            "cross_method_response_cache_reuse": False,
         }
     elif args.task == "m7_blind":
         run_manifest["blind_input_projection"] = {

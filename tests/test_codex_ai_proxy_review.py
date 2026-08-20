@@ -29,6 +29,21 @@ class CodexAIProxyReviewTest(unittest.TestCase):
         self.assertTrue(all("gold" not in row for row in rows))
         self.assertTrue(all("person_a_review" not in row for row in rows))
 
+    def test_m6_smoke_packet_is_complete_and_method_projected(self):
+        rows = runner.m6_smoke_rows()
+        self.assertEqual(27, len(rows))
+        self.assertEqual(9, len({row["method_id"] for row in rows}))
+        self.assertEqual(3, len({row["sample_id"] for row in rows}))
+        by_method = {}
+        for row in rows:
+            by_method.setdefault(row["method_id"], []).append(row)
+        self.assertTrue(all(len(group) == 3 for group in by_method.values()))
+        self.assertNotIn("proof_nodes", by_method["direct_judgment"][0]["visible_input"])
+        self.assertNotIn("depends_on", by_method["no_graph"][0]["visible_input"]["proof_nodes"][0])
+        self.assertNotIn("error_certificate",
+                         by_method["no_structured_certificate"][0]["visible_input"])
+        self.assertIn("error_certificate", by_method["full_system"][0]["visible_input"])
+
     def test_m7_scope_keeps_pending_and_provisional_separate(self):
         rows = runner.m7_rows()
         self.assertEqual(144, len(rows))
@@ -57,7 +72,9 @@ class CodexAIProxyReviewTest(unittest.TestCase):
         self.assertEqual("n13", theorem["verified_theorem_evidence"]["first_problem_after_verification"][:3])
 
     def test_output_schemas_are_valid_draft_2020_12(self):
-        for task in ("m5", "m5_runtime_review", "m7", "m7_blind", "m7_adjudication"):
+        for task in (
+            "m5", "m5_runtime_review", "m6_smoke", "m7", "m7_blind", "m7_adjudication",
+        ):
             path = runner.ROOT / f"schemas/{task}_ai_proxy_batch_review_v0_1.schema.json"
             Draft202012Validator.check_schema(json.loads(path.read_text(encoding="utf-8")))
 

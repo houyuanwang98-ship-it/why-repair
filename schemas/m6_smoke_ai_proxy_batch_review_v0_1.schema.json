@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m6_smoke_ai_proxy_batch_review_v0_1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["batch_id", "reviewer_kind", "rows"],
+  "properties": {
+    "batch_id": {"type": "string", "minLength": 1},
+    "reviewer_kind": {"type": "string", "const": "codex_ai_proxy_m6_method_smoke"},
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assignment_id", "method_id", "sample_id", "predicted_verdict",
+          "first_error_node", "diagnosis", "repair_action", "repair_outcome",
+          "claimed_repair_success", "confidence", "method_limitations"
+        ],
+        "properties": {
+          "assignment_id": {"type": "string", "minLength": 1},
+          "method_id": {
+            "type": "string",
+            "enum": [
+              "direct_judgment", "self_reflection", "generator_critic", "no_graph",
+              "no_structured_certificate", "no_counterexample_protocol",
+              "no_descendant_invalidation", "single_round_repair", "full_system"
+            ]
+          },
+          "sample_id": {"type": "string", "minLength": 1},
+          "predicted_verdict": {
+            "type": "string",
+            "enum": ["accepted", "gap", "invalid", "undetermined"]
+          },
+          "first_error_node": {"type": "string", "minLength": 1},
+          "diagnosis": {"type": "string", "minLength": 1},
+          "repair_action": {"type": "string", "minLength": 1},
+          "repair_outcome": {
+            "type": "string",
+            "enum": [
+              "not_applicable_diagnosis_only", "unverified_patch_proposed",
+              "partial_round_budget_exhausted", "unverified_mark_irreparable",
+              "no_repair_proposed"
+            ]
+          },
+          "claimed_repair_success": {"type": "boolean"},
+          "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+          "method_limitations": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    }
+  }
+}
