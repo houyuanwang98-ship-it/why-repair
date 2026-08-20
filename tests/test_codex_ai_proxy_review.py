@@ -8,6 +8,8 @@ from scripts import run_codex_ai_proxy_review as runner
 from scripts import audit_m7_codex_proxy_evidence as auditor
 from scripts import audit_m7_blind_second_pass as blind_auditor
 from scripts import audit_m7_third_pass_adjudication as adjudication_auditor
+from scripts import audit_m5_runtime_review as m5_runtime_auditor
+from scripts import build_m5_runtime_controller_replay as m5_runtime_controller
 
 
 class CodexAIProxyReviewTest(unittest.TestCase):
@@ -215,6 +217,39 @@ class CodexAIProxyReviewTest(unittest.TestCase):
             / "data/benchmarks/m7/audits/m7_ai_third_pass_adjudication_audit_20260821.json"
         ).read_text(encoding="utf-8"))
         self.assertEqual(audit, artifact)
+
+    def test_m5_runtime_independent_review_passes_all_gates(self):
+        audit = m5_runtime_auditor.audit_run()
+        self.assertTrue(all(audit["checks"][key] for key in (
+            "evidence_integrity_passed", "execution_isolation_passed",
+            "tool_free_execution_passed", "output_semantics_passed", "run_complete",
+        )))
+        self.assertEqual({"accept_patch": 2, "reject_patch": 1},
+                         audit["case_accounting"]["decision_counts"])
+        self.assertEqual(17597, audit["usage_accounting"]["token_usage"]["input_tokens"])
+
+    def test_m5_runtime_controller_replay_applies_only_accepted_patches(self):
+        result = m5_runtime_controller.build()
+        rows = {row["proof_id"]: row for row in result["rows"]}
+        self.assertEqual("accepted", rows["m2-011"]["controller_stop_reason"])
+        self.assertEqual("accepted", rows["m2-018"]["controller_stop_reason"])
+        self.assertTrue(rows["m2-011"]["graph_edit_applied"])
+        self.assertTrue(rows["m2-018"]["graph_edit_applied"])
+        self.assertFalse(rows["m2-034"]["controller_review_accepted"])
+        self.assertFalse(rows["m2-034"]["graph_edit_applied"])
+        self.assertEqual("new_generator_attempt_required", rows["m2-034"]["next_action"])
+        self.assertEqual(["m2-018"], result["summary"]["generator_budget_terminal_case_ids"])
+        artifact = json.loads((
+            runner.ROOT
+            / "data/benchmarks/m5/codex_ai_proxy_independent_runtime_review_20260821/"
+              "controller_replay.json"
+        ).read_text(encoding="utf-8"))
+        self.assertEqual(result, artifact)
+        audit_artifact = json.loads((
+            runner.ROOT
+            / "data/benchmarks/m5/audits/m5_runtime_independent_review_audit_20260821.json"
+        ).read_text(encoding="utf-8"))
+        self.assertEqual(m5_runtime_auditor.audit_run(), audit_artifact)
 
 
 if __name__ == "__main__":
