@@ -35,6 +35,12 @@ class CodexAIProxyReviewTest(unittest.TestCase):
         self.assertEqual("string", row_properties["review_status"]["type"])
         self.assertEqual("string", row_properties["confidence"]["type"])
 
+    def test_runner_supports_offset_resume(self):
+        source = (runner.ROOT / "scripts/run_codex_ai_proxy_review.py").read_text(encoding="utf-8")
+        self.assertIn('parser.add_argument("--offset", type=int, default=0)', source)
+        self.assertIn("rows = rows[args.offset:]", source)
+        self.assertIn('"source_offset": args.offset', source)
+
 
 if __name__ == "__main__":
     unittest.main()

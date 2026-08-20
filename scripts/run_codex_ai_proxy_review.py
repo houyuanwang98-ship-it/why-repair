@@ -292,6 +292,7 @@ def main() -> None:
     parser.add_argument("--model", default="gpt-5.6-terra")
     parser.add_argument("--reasoning-effort", default="high")
     parser.add_argument("--batch-size", type=int, default=6)
+    parser.add_argument("--offset", type=int, default=0)
     parser.add_argument("--limit", type=int)
     parser.add_argument("--timeout-seconds", type=int, default=900)
     parser.add_argument("--retry-limit", type=int, default=1)
@@ -299,9 +300,10 @@ def main() -> None:
     args = parser.parse_args()
     if not args.execute:
         raise SystemExit("Codex proxy calls are disabled; pass --execute explicitly")
-    if args.batch_size < 1 or args.timeout_seconds < 1 or args.retry_limit < 0:
-        raise SystemExit("batch size/timeout must be positive and retry limit nonnegative")
+    if args.batch_size < 1 or args.timeout_seconds < 1 or args.retry_limit < 0 or args.offset < 0:
+        raise SystemExit("batch size/timeout must be positive; offset/retry limit must be nonnegative")
     rows = m5_rows() if args.task == "m5" else m7_rows()
+    rows = rows[args.offset:]
     if args.limit is not None:
         rows = rows[:args.limit]
     cli_version = subprocess.check_output(["codex", "--version"], text=True).strip()
@@ -319,6 +321,7 @@ def main() -> None:
         "repository_commit": git_value("rev-parse", "HEAD"),
         "case_count": len(rows),
         "case_ids": [row.get("case_id", row.get("proof_id")) for row in rows],
+        "source_offset": args.offset,
         "batch_size": args.batch_size,
         "timeout_seconds": args.timeout_seconds,
         "retry_limit": args.retry_limit,
@@ -329,7 +332,7 @@ def main() -> None:
     results = []
     for offset in range(0, len(rows), args.batch_size):
         batch_rows = rows[offset:offset + args.batch_size]
-        batch_id = f"{args.task}-proxy-{offset // args.batch_size + 1:03d}"
+        batch_id = f"{args.task}-proxy-{(args.offset + offset) // args.batch_size + 1:03d}"
         result = None
         for attempt in range(1, args.retry_limit + 2):
             result = run_attempt(
