@@ -14,6 +14,10 @@ from typing import Any
 from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def repo_path(path: Path) -> str:
+    return path.relative_to(ROOT).as_posix()
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -89,12 +93,12 @@ def audit_evidence(
         result_path = attempt_dir / "attempt_result.json"
         prompt_path = attempt_dir / "stdin_prompt.txt"
         if not prompt_path.exists() or sha256_file(prompt_path) != request.get("prompt_sha256"):
-            integrity_failures.append(f"prompt hash mismatch: {prompt_path.relative_to(ROOT)}")
+            integrity_failures.append(f"prompt hash mismatch: {repo_path(prompt_path)}")
         if request.get("schema_sha256") != sha256_file(schema_path):
-            integrity_failures.append(f"schema hash mismatch: {request_path.relative_to(ROOT)}")
+            integrity_failures.append(f"schema hash mismatch: {repo_path(request_path)}")
         if not result_path.exists():
             incomplete_requests.append({
-                "request_path": str(request_path.relative_to(ROOT)),
+                "request_path": repo_path(request_path),
                 "batch_id": request.get("batch_id"),
                 "attempt": request.get("attempt"),
                 "case_ids": request.get("case_ids", []),
@@ -178,10 +182,10 @@ def audit_evidence(
         "audit_date": "2026-08-21",
         "task": "m7",
         "source_evidence": {
-            "directories": [str(path.relative_to(ROOT)) for path in evidence_dirs],
+            "directories": [repo_path(path) for path in evidence_dirs],
             "file_count": file_count,
             "tree_sha256": tree_sha256,
-            "output_schema_path": str(schema_path.relative_to(ROOT)),
+            "output_schema_path": repo_path(schema_path),
             "output_schema_sha256": sha256_file(schema_path),
         },
         "request_accounting": {

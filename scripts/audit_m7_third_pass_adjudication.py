@@ -15,6 +15,10 @@ from jsonschema import Draft202012Validator
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def repo_path(path: Path) -> str:
+    return path.relative_to(ROOT).as_posix()
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -160,7 +164,7 @@ def audit_run(run_dir: Path) -> dict[str, Any]:
         request = _load(request_path)
         result_path = attempt_dir / "attempt_result.json"
         if not result_path.exists():
-            incomplete_requests.append(str(request_path.relative_to(ROOT)))
+            incomplete_requests.append(repo_path(request_path))
             continue
         result = _load(result_path)
         terminal_statuses[result.get("status", "missing_status")] += 1
@@ -196,7 +200,7 @@ def audit_run(run_dir: Path) -> dict[str, Any]:
             if request.get(key) != expected:
                 isolation_failures.append(f"request isolation field differs: {key}")
         if request.get("repository_dirty_at_run_start") is not False:
-            isolation_failures.append(f"dirty repository at attempt start: {request_path.relative_to(ROOT)}")
+            isolation_failures.append(f"dirty repository at attempt start: {repo_path(request_path)}")
         if set(request.get("disabled_features", [])) != {"shell_tool", "skill_search"}:
             isolation_failures.append(f"request tool features differ: {request_path.relative_to(ROOT)}")
 
@@ -227,7 +231,7 @@ def audit_run(run_dir: Path) -> dict[str, Any]:
             item = event.get("item")
             if isinstance(item, dict) and item.get("type") in TOOL_ITEM_TYPES:
                 tool_activity.append({
-                    "attempt_result_path": str(result_path.relative_to(ROOT)),
+                    "attempt_result_path": repo_path(result_path),
                     "batch_id": result.get("batch_id"),
                     "item_id": item.get("id"),
                     "item_type": item.get("type"),
@@ -276,11 +280,11 @@ def audit_run(run_dir: Path) -> dict[str, Any]:
     file_count, tree_sha256 = _tree_digest(run_dir)
     return {
         "schema_version": "m7-ai-third-pass-adjudication-audit-0.1",
-        "run_directory": str(run_dir.relative_to(ROOT)),
+        "run_directory": repo_path(run_dir),
         "source_evidence": {
             "file_count": file_count,
             "tree_sha256": tree_sha256,
-            "schema_path": str(SCHEMA.relative_to(ROOT)),
+            "schema_path": repo_path(SCHEMA),
             "schema_sha256": sha256_file(SCHEMA),
             "repository_commit": manifest.get("repository_commit"),
         },

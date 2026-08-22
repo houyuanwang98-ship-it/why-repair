@@ -14,6 +14,10 @@ from jsonschema import Draft202012Validator
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def repo_path(path: Path) -> str:
+    return path.relative_to(ROOT).as_posix()
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -177,7 +181,7 @@ def audit_run(run_dir: Path = RUN) -> dict[str, Any]:
     )
     return {
         "schema_version": "m5-runtime-independent-review-audit-0.1",
-        "run_directory": str(run_dir.relative_to(ROOT)),
+        "run_directory": repo_path(run_dir),
         "source_evidence": {
             "file_count": len(files),
             "tree_sha256": tree.hexdigest(),
