@@ -13,11 +13,11 @@ class M7FormalReadinessAuditTest(unittest.TestCase):
         self.assertFalse(audit["formal_m7_complete"])
         self.assertTrue(audit["interactive_50_case_m7_complete"])
         checks = {row["check_id"]: row for row in audit["checks"]}
-        self.assertTrue(checks["formal_candidate_200_to_500"]["passed"])
+        self.assertFalse(checks["formal_candidate_200_to_500"]["passed"])
         self.assertTrue(checks["m6_three_party_detached_signatures"]["passed"])
         self.assertEqual("entry", checks["formal_candidate_200_to_500"]["phase"])
         self.assertEqual("completion", checks["provider_run_evidence"]["phase"])
-        self.assertTrue(formal_candidate_ready())
+        self.assertFalse(formal_candidate_ready())
         self.assertTrue(audit["user_authorized_execution"]["signature_requirement_waived"])
         self.assertTrue(audit["user_authorized_execution"]["m6_execution_allowed"])
         self.assertTrue(audit["user_authorized_execution"]["m7_execution_allowed"])
