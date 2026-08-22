@@ -10,7 +10,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "docs" / "manual_validation"
-PEOPLE = (("reviewer_a", "成员甲"), ("reviewer_b", "成员乙"))
+PEOPLE = (("person_a", "Person A"), ("person_b", "Person B"))
 
 
 def jsonl(path: str) -> list[dict[str, Any]]:
@@ -269,11 +269,11 @@ def main() -> None:
     for original in official:
         a_item, b_item = dict(original), dict(original)
         if case_id(original) in ids_a:
-            a_item["_assignment_role"] = "首次独立主审（锁定前不得查看成员乙答案）"
-            b_item["_assignment_role"] = "第二份独立审核（锁定前不得查看成员甲答案）"
+            a_item["_assignment_role"] = "首次独立主审（锁定前不得查看 Person B 答案）"
+            b_item["_assignment_role"] = "第二份独立审核（锁定前不得查看 Person A 答案）"
         else:
-            a_item["_assignment_role"] = "第二份独立审核（锁定前不得查看成员乙答案）"
-            b_item["_assignment_role"] = "首次独立主审（锁定前不得查看成员甲答案）"
+            a_item["_assignment_role"] = "第二份独立审核（锁定前不得查看 Person B 答案）"
+            b_item["_assignment_role"] = "首次独立主审（锁定前不得查看 Person A 答案）"
         step3_a.append(a_item)
         step3_b.append(b_item)
     step3 = (step3_a, step3_b)

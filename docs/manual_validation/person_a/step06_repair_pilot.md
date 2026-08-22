@@ -1,10 +1,10 @@
-# 第6步：真实修复 Pilot 与逐补丁人工审核——成员乙工作包
+# 第6步：真实修复 Pilot 与逐补丁人工审核——Person A工作包
 
 ## 简介
 
 对仓库中每个补丁版本逐一判断是否真正修复原证明，并把补丁接受与整篇证明成功分开记录。
 
-本工作包分配给 **成员乙**，共 **21 个补丁版本**。只完成本文件不足以关闭该步骤；必须与另一人的工作包合并、比较分歧并完成必要裁决。
+本工作包分配给 **Person A**，共 **21 个补丁版本**。只完成本文件不足以关闭该步骤；必须与另一人的工作包合并、比较分歧并完成必要裁决。
 
 ## 本步要求
 
@@ -36,11 +36,11 @@
 ## 逐项人工检验
 
 <!-- 人工检验对象 -->
-### 1. m5-batch-m2-033-r1
+### 1. m5-batch-m2-031-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-033.patch.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-031.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `675d1bec98b101c667136b31199a7c1ee245452a1126891490ceb401fab78a23`
+- 机器线索：JSON 可解析；SHA-256 `5e9ef04c6b49c5384377e5865361fe7df2fb5bb82ac601911006445069926e02`
 
 #### 人工检验（填空）
 
@@ -60,11 +60,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 2. m5-batch-m2-034-r2
+### 2. m5-batch-m2-034-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-034.patch.r2.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-034.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `9ecadf9c357ee4eb140d1276a53c165149bf37f113b6ccb6c264ea1e469dae57`
+- 机器线索：JSON 可解析；SHA-256 `48c58c95d5054f940513911912c41e9a01ac267806496453939e1c35fda3b9c2`
 
 #### 人工检验（填空）
 
@@ -84,11 +84,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 3. m5-batch-m2-036-r1
+### 3. m5-batch-m2-035-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-036.patch.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-035.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `03780e66d8f72cfb170ddbaec7b6278dffc51db64d07d19f7321c02e67265a1f`
+- 机器线索：JSON 可解析；SHA-256 `0d486d9afb684d430a520a238fbb24d735c9bde2a7706c65583ece893b2739ae`
 
 #### 人工检验（填空）
 
@@ -108,11 +108,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 4. m5-batch-m2-039-r2
+### 4. m5-batch-m2-039-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-039.patch.r2.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-039.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `00eba6aaa07e191f7c7d138e7ed7b95d15c0907aed28b3742bc6c9f068107710`
+- 机器线索：JSON 可解析；SHA-256 `01132f3512240b001549b12a30456a8bba7d26587bf6cd200dfab7398f3acc85`
 
 #### 人工检验（填空）
 
@@ -132,11 +132,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 5. m5-batch-m2-040-r2
+### 5. m5-batch-m2-040-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-040.patch.r2.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-040.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `b8fcada5d985953444d7f0564bb260ab2d987fa2e49ac1f8c5514e030603f023`
+- 机器线索：JSON 可解析；SHA-256 `e30032bfe9e5b42ff164df4616705c57cbda59b1bbc67a590748e2ef1224f5a9`
 
 #### 人工检验（填空）
 
@@ -156,11 +156,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 6. m5-batch-m2-044-r1
+### 6. m5-batch-m2-041-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-044.patch.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-041.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `32cf98e1890b16e1d722eabc48949ee48efdefc8171bf343fdfa7385628a1fbf`
+- 机器线索：JSON 可解析；SHA-256 `fbe7bbadc6489e5320dad1358d1fdf335558f1bc251bf522ec9d5fb868a99dd5`
 
 #### 人工检验（填空）
 
@@ -180,11 +180,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 7. m5-batch-m2-045-r1
+### 7. m5-batch-m2-044-r2
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-045.patch.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-044.patch.r2.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `741b622b261f7ed0e9d8df198bcad0dc831beea76d3094b647d75aeff6ec46bd`
+- 机器线索：JSON 可解析；SHA-256 `576c94a58431e2594234cd2a63c62e8468bb379fd727419be859d1eab1f7cebf`
 
 #### 人工检验（填空）
 
@@ -204,11 +204,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 8. m5-batch-m2-046-r2
+### 8. m5-batch-m2-046-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-046.patch.r2.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-046.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `b0db9593c76940b6028b5971324477f1f4a6f6e8d350a240453a055b72e30770`
+- 机器线索：JSON 可解析；SHA-256 `a088a5078249a0cd45d345f232940eeae2fe144c8fbb4a0617c83566f5b210aa`
 
 #### 人工检验（填空）
 
@@ -228,11 +228,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 9. m5-batch-m2-048-r1
+### 9. m5-batch-m2-047-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-048.patch.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-047.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `e4b573b0919dd8b0c985906f36cbcd59520b7e85a007376409a6c608e48d3099`
+- 机器线索：JSON 可解析；SHA-256 `9749697d96b9db9889180e1877d67acc3862824798a83ce1d8f58aae6dfbb02c`
 
 #### 人工检验（填空）
 
@@ -252,11 +252,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 10. m5-batch-m2-049-r2
+### 10. m5-batch-m2-049-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-049.patch.r2.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-049.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `23c1cf6eb66dd7ec648702114c440f75017389e633450b578515cf479b61534f`
+- 机器线索：JSON 可解析；SHA-256 `00c63d373fe592c764e76255e53f89bc2d9d95089a338ad243a387d79d14936a`
 
 #### 人工检验（填空）
 
@@ -276,11 +276,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 11. m5-provisional-codex-m2-011-r1
+### 11. m5-batch-m2-050-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-011.patch.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-050.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `3e4cf8a02476b1ad7eb124d7f78fb1a7783292d531e7f9d1519c35adbffe0ed3`
+- 机器线索：JSON 可解析；SHA-256 `6dad58ad38afccb511330b1841bb50fa40f0ed83d0c8b9580c69c856d450a175`
 
 #### 人工检验（填空）
 
@@ -300,11 +300,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 12. m5-provisional-codex-m2-013-r1
+### 12. m5-provisional-codex-m2-012-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-013.patch.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-012.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `bb74366cac97c7fb24be416b112eea31248332f41622dc6bdad634d61237be87`
+- 机器线索：JSON 可解析；SHA-256 `2df39d402cde9d963eaa18007e1ae4730775ac6f273f1b7270a44a5a7198f808`
 
 #### 人工检验（填空）
 
@@ -324,11 +324,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 13. m5-provisional-codex-m2-016-r1
+### 13. m5-provisional-codex-m2-014-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-016.patch.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-014.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `8d1c6e02b072530d0e5cef9038e3507b9a840065014e016af8ee20d81ead35df`
+- 机器线索：JSON 可解析；SHA-256 `da1f3999389defac57aae03f7dd652fa10cda968dded894eae4c86b47a472f5b`
 
 #### 人工检验（填空）
 
@@ -348,11 +348,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 14. m5-provisional-codex-m2-019-r1
+### 14. m5-provisional-codex-m2-018-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-019.patch.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-018.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `9f17c8539c1c4e73ffe0953c487b3bbdf335e49019ac2c5b9aa871faca2173ab`
+- 机器线索：JSON 可解析；SHA-256 `846e19c540e377949294e4c7f10b974f2f9ff85ca37478eb950e9e0a666afafb`
 
 #### 人工检验（填空）
 
@@ -372,11 +372,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 15. m5-provisional-codex-m2-022-r1
+### 15. m5-provisional-codex-m2-021-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-022.patch.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-021.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `f62a728d42f8b41c00bc8b17fcdcdc22688ed5d08b920cd940e1f1515a1744eb`
+- 机器线索：JSON 可解析；SHA-256 `2a92575844294fb962298eb153a7fc1ae8622b8babd98c10050a4a9ad4bf5e54`
 
 #### 人工检验（填空）
 
@@ -396,11 +396,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 16. m5-provisional-codex-m2-024-r1
+### 16. m5-provisional-codex-m2-023-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-024.patch.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-023.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `29510b236ccfffa97c4a287afb2a080dce8459eb85e3fa1da7592063d611d7f3`
+- 机器线索：JSON 可解析；SHA-256 `4e1fe6120ab787b4becf4d6c086c46dca8384a99540e01559f33ab2c99e2731b`
 
 #### 人工检验（填空）
 
@@ -420,11 +420,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 17. m5-provisional-codex-m2-026-r1
+### 17. m5-provisional-codex-m2-025-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-026.patch.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-025.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `996f1c1d2252b6054adc2754c8c04d8ad66e9f0019f2b1a6dc636f64f6c9a4e3`
+- 机器线索：JSON 可解析；SHA-256 `fd99859c009811359970cd855c96f2b2254f7312fb9177bfac4e7d0e3a5ec9c8`
 
 #### 人工检验（填空）
 
@@ -444,11 +444,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 18. m5-provisional-codex-m2-028-r1
+### 18. m5-provisional-codex-m2-027-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-028.patch.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-027.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `468a526aac426256d215dca0c563fc06665166bfa62764e93d3355709f44541d`
+- 机器线索：JSON 可解析；SHA-256 `7fe27f2e76318c7730e43a453632be3f89cadd7d6bb0d8796f614c4687f3af41`
 
 #### 人工检验（填空）
 
@@ -468,11 +468,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 19. m5-provisional-codex-m2-030-r1
+### 19. m5-provisional-codex-m2-029-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-030.patch.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-029.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `928d93488995894d683f169b47e7d186d91cff500bc131d6818f3d2ecd3f66cb`
+- 机器线索：JSON 可解析；SHA-256 `4aaded7ed2597f3a1067b6341cec0f5a2e180bcde962495ac17c5c01272d114e`
 
 #### 人工检验（填空）
 
@@ -492,11 +492,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 20. m5-provisional-codex-m2-038-r1
+### 20. m5-provisional-codex-m2-032-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-038.patch.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-032.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `3497f76f07245338d0358c29f6f45d108a129f5c8b78d4f58f2687c1fce48128`
+- 机器线索：JSON 可解析；SHA-256 `e93febe53e4dbe39b7a49e7167a5dcab7afee7ee9ac1e752daff7c6f02ca8df1`
 
 #### 人工检验（填空）
 
@@ -516,11 +516,11 @@
 - 初次结果：________（通过／不通过／需修订／不确定／不适用）
 
 <!-- 人工检验对象 -->
-### 21. m5-provisional-codex-m2-043-r1
+### 21. m5-provisional-codex-m2-042-r1
 
-- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-043.patch.json`
+- 对象：`data/benchmarks/m5/provisional_codex_interactive_v1/m2-042.patch.json`
 - 任务：逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果
-- 机器线索：JSON 可解析；SHA-256 `9823abbc36dc308cad6ea1ba337d3d81eedfae6a28ff59b8258ebe08c8d17335`
+- 机器线索：JSON 可解析；SHA-256 `2134d4be1f157390137213725ab06074c053af71fe0a021d5b560c8aeac48abd`
 
 #### 人工检验（填空）
 

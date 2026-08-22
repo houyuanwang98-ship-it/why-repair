@@ -1,10 +1,10 @@
-# 第3步：独立人工 Gold 建立与裁决——成员乙工作包
+# 第3步：独立人工 Gold 建立与裁决——Person B工作包
 
 ## 简介
 
 为正式样本独立建立证明真假、节点、依赖、首错、错误类型、反例范围和可修复性 Gold。
 
-本工作包分配给 **成员乙**，共 **600 道正式样本**。只完成本文件不足以关闭该步骤；必须与另一人的工作包合并、比较分歧并完成必要裁决。
+本工作包分配给 **Person B**，共 **600 道正式样本**。只完成本文件不足以关闭该步骤；必须与另一人的工作包合并、比较分歧并完成必要裁决。
 
 ## 本步要求
 
@@ -41,7 +41,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -78,7 +78,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -115,7 +115,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -152,7 +152,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -189,7 +189,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -226,7 +226,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -263,7 +263,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -300,7 +300,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -337,7 +337,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -374,7 +374,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -411,7 +411,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -448,7 +448,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -485,7 +485,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -522,7 +522,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -559,7 +559,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -596,7 +596,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -633,7 +633,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -670,7 +670,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -707,7 +707,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -744,7 +744,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -781,7 +781,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -818,7 +818,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -855,7 +855,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -892,7 +892,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -929,7 +929,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -966,7 +966,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1003,7 +1003,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1040,7 +1040,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1077,7 +1077,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1114,7 +1114,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1151,7 +1151,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1188,7 +1188,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1225,7 +1225,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1262,7 +1262,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1299,7 +1299,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1336,7 +1336,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1373,7 +1373,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1410,7 +1410,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1447,7 +1447,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1484,7 +1484,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1521,7 +1521,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1558,7 +1558,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1595,7 +1595,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1632,7 +1632,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1669,7 +1669,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1706,7 +1706,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1743,7 +1743,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1780,7 +1780,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1817,7 +1817,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1854,7 +1854,7 @@
 - 数据组：M2 工程 Pilot
 - 对象路径：`data/benchmarks/m2/source/pilot_50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1891,7 +1891,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1928,7 +1928,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -1965,7 +1965,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2002,7 +2002,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2039,7 +2039,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2076,7 +2076,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2113,7 +2113,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2150,7 +2150,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2187,7 +2187,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2224,7 +2224,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2261,7 +2261,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2298,7 +2298,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2335,7 +2335,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2372,7 +2372,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2409,7 +2409,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2446,7 +2446,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2483,7 +2483,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2520,7 +2520,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2557,7 +2557,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2594,7 +2594,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2631,7 +2631,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2668,7 +2668,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2705,7 +2705,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2742,7 +2742,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2779,7 +2779,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2816,7 +2816,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2853,7 +2853,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2890,7 +2890,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2927,7 +2927,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -2964,7 +2964,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3001,7 +3001,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3038,7 +3038,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3075,7 +3075,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3112,7 +3112,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3149,7 +3149,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3186,7 +3186,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3223,7 +3223,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3260,7 +3260,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3297,7 +3297,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3334,7 +3334,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3371,7 +3371,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3408,7 +3408,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3445,7 +3445,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3482,7 +3482,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3519,7 +3519,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3556,7 +3556,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3593,7 +3593,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3630,7 +3630,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3667,7 +3667,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3704,7 +3704,7 @@
 - 数据组：M2 B50
 - 对象路径：`data/benchmarks/m2/source/pilot_B50.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3741,7 +3741,7 @@
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3784,7 +3784,7 @@ for all \(n>0\).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3826,7 +3826,7 @@ is a positive integer.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3863,7 +3863,7 @@ The numbers \( a_{1}, a_{2}, \ldots, a_{100} \) are a permutation of the numbers
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3900,7 +3900,7 @@ Matthew writes down a sequence \(a_{1}, a_{2}, a_{3}, \ldots\) of positive integ
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3937,7 +3937,7 @@ Let \( X \) be a subset of \(\{1, 2, 3, \ldots, 10000\}\) with the following pro
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -3976,7 +3976,7 @@ In how many ways could scores have been allocated to David, assuming he is telli
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4013,7 +4013,7 @@ A-2 Alice and Bob play a game in which they take turns removing stones from a he
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4052,7 +4052,7 @@ A-2 Alice and Bob play a game in which they take turns removing stones from a he
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4095,7 +4095,7 @@ When does equality hold?
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4132,7 +4132,7 @@ Let \( a_{1} < a_{2} < \cdots < a_{n} \) be pairwise coprime positive integers w
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4177,7 +4177,7 @@ $$
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4214,7 +4214,7 @@ Let \( f(n) \) be the number of ways to write \( n \) as a sum of powers of \( 2
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4251,7 +4251,7 @@ Prove that there are at least $100!$ ways to partition the number $100!$ into su
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：9
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4290,7 +4290,7 @@ Find all integer triples \((a, b, c)\) satisfying the equation
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4331,7 +4331,7 @@ Find all the integer solutions \((x, y, z)\) of the equation
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：8
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4372,7 +4372,7 @@ Find all integers \( n \geq 3 \) with the following property: for all real numbe
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4409,7 +4409,7 @@ Problem 1. Let $A$ be the $n \times n$ matrix, whose $(i, j)^{\text {th }}$ entr
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4450,7 +4450,7 @@ for all positive integers \( n \). For which values of \( a_{1} \) are all the t
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4499,7 +4499,7 @@ and determine whether any of them is achievable.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4544,7 +4544,7 @@ Find all \( n \) for which Edda and Magni have a winning strategy.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4581,7 +4581,7 @@ Bethan is playing a game on an \(n \times n\) grid consisting of \(n^{2}\) cells
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4618,7 +4618,7 @@ Bethan is playing a game on an \(n \times n\) grid consisting of \(n^{2}\) cells
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4655,7 +4655,7 @@ Let \( n > d \) be positive integers. Choose \( n \) independent, uniformly dist
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4704,7 +4704,7 @@ holds.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4746,7 +4746,7 @@ Answer: The sought functions are those of the form $f(n)=c \cdot \nu_{p}(n)$, wh
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4789,7 +4789,7 @@ Let \( p \) be a prime number. For each \( k, 1 \leq k \leq p-1 \), there exists
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4830,7 +4830,7 @@ Find all possible values of $k$.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4873,7 +4873,7 @@ whenever \( a, b, c, d \) are non-negative integers satisfying \( 2ab = c^2 + d^
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4913,7 +4913,7 @@ $$
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4954,7 +4954,7 @@ $$
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -4991,7 +4991,7 @@ Fix an integer \( n \geq 2 \). A fairy chess piece called a leopard may move one
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5028,7 +5028,7 @@ Is it possible to form an anti-Pascal pyramid with 2018 rows, using every intege
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5065,7 +5065,7 @@ Fix an integer \( n \geq 2 \), and let \(\mathcal{S}\) be the set of \(n\)-th ro
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5108,7 +5108,7 @@ where \(2015^{i}\) is the maximal power of \(2015\) that divides \(a_{k}+a_{k-1}
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5145,7 +5145,7 @@ Given a positive odd integer \( n \), show that the arithmetic mean of fractiona
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5186,7 +5186,7 @@ Prove that there is a constant \(c>0\) with the following property: If \(a, b, n
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5227,7 +5227,7 @@ A_{n} = 1 \cdot 2 + 3 \cdot 4 + 5 \cdot 8 + \cdots + (2n-1) \cdot 2^{n}
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5270,7 +5270,7 @@ What is the maximum possible value that $a_{16}$ can take?
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5309,7 +5309,7 @@ Two friends \( A \) and \( B \) can decide to merge, in which case they become a
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5346,7 +5346,7 @@ Find all pairs \((k, n)\) of positive integers for which \(7^{k}-3^{n}\) divides
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5389,7 +5389,7 @@ for any \( m, n \in \mathbb{N} \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5426,7 +5426,7 @@ The Fibonacci numbers \( F_{0}, F_{1}, F_{2}, \ldots \) are defined inductively 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5475,7 +5475,7 @@ f(a) < f(a+d) < \ldots < f(a+2003d) ?
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5516,7 +5516,7 @@ Suppose \(a, b\), and \(c\) are non-negative real numbers. Prove that
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5553,7 +5553,7 @@ Fix integers \( n \geq k \geq 2 \). We call a collection of integral valued coin
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：8
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5596,7 +5596,7 @@ holds for all rational numbers \( x \) and \( y \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5636,7 +5636,7 @@ Find the largest real $C$ such that for all pairwise distinct positive real numb
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5676,7 +5676,7 @@ Show that there is a problem that was solved by at least three girls and at leas
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5713,7 +5713,7 @@ For a positive integer \( k \), let \( d(k) \) denote the number of divisors of 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5750,7 +5750,7 @@ Consider an integer \( n \geq 2 \) and an odd prime \( p \). Let \( U \) be the 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5791,7 +5791,7 @@ Prove that \( S \) contains all rational numbers in the interval \( 0 < x < 1 \)
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5834,7 +5834,7 @@ and determine when equality holds.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5871,7 +5871,7 @@ Let \( S \) be the set of all positive integers \( n \) such that \( n^{4} \) ha
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5912,7 +5912,7 @@ Is it possible to obtain the polynomial \(x^{3}-3x^{2}+3x-3\) from the polynomia
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -5959,7 +5959,7 @@ That is, \(\mho(n)\) is the number of prime factors of \( n \) greater than \( 1
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6005,7 +6005,7 @@ Find all possible values of the product \( p_{1} p_{2} p_{3} p_{4} \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6042,7 +6042,7 @@ Find, with proof, all polynomials \( f \) such that \( f \) has nonnegative inte
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6083,7 +6083,7 @@ Find all generating polynomials.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6120,7 +6120,7 @@ Let \(x, y \in \mathbb{R}\) be such that \(x = y(3-y)^{2}\) and \(y = x(3-x)^{2}
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6163,7 +6163,7 @@ P(n) + \lfloor \sqrt{n} \rfloor = P(n+1) + \lfloor \sqrt{n+1} \rfloor.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6206,7 +6206,7 @@ has two roots that are natural numbers.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：8
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6243,7 +6243,7 @@ At a certain mathematical conference, every pair of mathematicians are either fr
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6284,7 +6284,7 @@ Prove that all terms of this sequence are integers.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6321,7 +6321,7 @@ Let \(a, b, c,\) and \(d\) be real numbers such that \(a+b+c+d=2\) and \(ab+bc+c
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6364,7 +6364,7 @@ Prove that \(\max \left(a_{1}, \ldots, a_{n}\right) \leq 4 \min \left(a_{1}, \ld
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6407,7 +6407,7 @@ for all \( x, y \in \mathbb{Z} \) such that \( x \neq 0 \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6448,7 +6448,7 @@ Let \(a, b, c, d\) be positive real numbers such that \(a b c d = 1\). Prove the
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6492,7 +6492,7 @@ a^{3}+b^{3}+c^{3}+d^{3}>0 \quad \text{ if and only if } \quad a^{5}+b^{5}+c^{5}+
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6529,7 +6529,7 @@ Let \( S \) be a set containing \( n^2 + n - 1 \) elements. Suppose that the \( 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6570,7 +6570,7 @@ considered modulo 2002, is periodic.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6613,7 +6613,7 @@ for all \( x, y \in \mathbb{R} \), prove that \( f \) is a quadratic function.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6655,7 +6655,7 @@ Consider \( n \) boxes, labeled \( b_{1}, b_{2}, \ldots, b_{n} \). For each inde
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6699,7 +6699,7 @@ Which of these claims follow from the stated axioms?
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6738,7 +6738,7 @@ For which values of $n$ is it possible to fill the grid according to the above r
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6775,7 +6775,7 @@ Find all pairs \((x, y)\) of integers such that \(y^{3}-1=x^{4}+x^{2}\).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6823,7 +6823,7 @@ Prove that
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：10
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6860,7 +6860,7 @@ Find all natural numbers \(x, y\), and \(z\) such that \(7^{x} + 13^{y} = 2^{z}\
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6900,7 +6900,7 @@ For positive integers \(m\) and \(n\), let \(d(m, n)\) be the number of distinct
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6939,7 +6939,7 @@ For what values of \( n \) is it possible to transform any row-valid arrangement
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -6976,7 +6976,7 @@ For what values of \( n \) is it possible to transform any row-valid arrangement
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7013,7 +7013,7 @@ The teacher has given $10$ distinct positive numbers to his students. Serge foun
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7053,7 +7053,7 @@ A sequence \(\left(a_{n}\right)\) is defined as follows: \(a_{1}=\sqrt{2}\), \(a
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7094,7 +7094,7 @@ Let \(a, b, c\) be positive real numbers such that \(abc = \frac{2}{3}\). Prove 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7133,7 +7133,7 @@ Prove that a balanced configuration exists for every \( n \geq 3 \) and find the
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7176,7 +7176,7 @@ holds for all \( x, y \in \mathbb{R}^{+} \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7218,7 +7218,7 @@ is an integer, then it is divisible by $11$.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7259,7 +7259,7 @@ Prove that \( S = \mathbb{Z} \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7299,7 +7299,7 @@ Let \( n \) be a positive integer, and let \( p(x) \) be a polynomial of degree 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7342,7 +7342,7 @@ Prove that \( u_{n}=v_{n} \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：8
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7383,7 +7383,7 @@ $$
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7420,7 +7420,7 @@ Determine, with proof, the smallest positive multiple of \(99\) all of whose dig
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7457,7 +7457,7 @@ Positive integers \(a\) and \(N\) are fixed, and \(N\) positive integers are wri
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7500,7 +7500,7 @@ holds for all \( x, y \in \mathbb{R}^{+} \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7546,7 +7546,7 @@ has a rational solution \((x, y)\).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7585,7 +7585,7 @@ Let \( n \) be a nonnegative integer. Determine the number of ways to choose set
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7626,7 +7626,7 @@ for all \( x, y \in \mathbb{R} \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7663,7 +7663,7 @@ Prove that for each positive integer $n$, there are pairwise relatively prime in
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7704,7 +7704,7 @@ for all positive integers \( n \). What are the possible values of \( a_{1} \)?
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7741,7 +7741,7 @@ Show that the set of positive integers that cannot be represented as a sum of di
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7784,7 +7784,7 @@ where \( 1 \leq i, j \leq n \) and \( x_{n+1}=x_{1} \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7821,7 +7821,7 @@ Let \( n \) be a positive integer. Determine, in terms of \( n \), the greatest 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7858,7 +7858,7 @@ Let \( n \geq 1 \) be an odd integer. Determine all functions \( f \) from the s
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7895,7 +7895,7 @@ Let \( S(m) \) be the sum of the digits of the positive integer \( m \). Find al
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7932,7 +7932,7 @@ Suppose that the numbers \(\{1,2, \ldots, 25\}\) are written in some order in a 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -7969,7 +7969,7 @@ There are \(2022\) users on a social network called Mathbook, and some of them a
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8020,7 +8020,7 @@ for all nonnegative integers \( n \). Suppose that \(\max \left\{\left|a_{n}\rig
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8057,7 +8057,7 @@ Let \( k > 0 \) be a fixed integer. Compute the minimum integer \( N \) (in term
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8098,7 +8098,7 @@ Show that for every positive integer \( n \) we have:
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：8
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8139,7 +8139,7 @@ In how many different ways can the table be coloured if both of these rules are 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8176,7 +8176,7 @@ The first \( k \) terms \( a_{1}, a_{2}, \ldots, a_{k} \) of the sequence \( (a_
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8213,7 +8213,7 @@ Mary and Pat play the following number game. Mary picks an initial integer great
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8256,7 +8256,7 @@ for all \(x, y \in \mathbb{R}\).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8297,7 +8297,7 @@ Find the smallest real constant \( C \) such that for any positive real numbers 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8334,7 +8334,7 @@ Find all prime numbers \( p \) for which there exists a unique \( a \in \{1,2, \
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8375,7 +8375,7 @@ S = \sum_{i=1}^{100} x_{i} x_{i+2}
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8416,7 +8416,7 @@ $$
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：10
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8460,7 +8460,7 @@ For every \( n \), prove that this process must terminate and determine the maxi
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8501,7 +8501,7 @@ Find all real numbers \(x, y, z \geq 1\) satisfying
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8538,7 +8538,7 @@ Prove that for some positive integer \( n \), the remainder of \( 3^{n} \) when 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8581,7 +8581,7 @@ holds for all \( x, y \in \mathbb{Z} \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8618,7 +8618,7 @@ Find all natural numbers \( n \) for which \( 1^{\phi(n)} + 2^{\phi(n)} + \ldots
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8655,7 +8655,7 @@ Let \( H=\left\{\lfloor i \sqrt{2}\rfloor: i \in \mathbb{Z}_{>0}\right\}=\{1,2,4
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8698,7 +8698,7 @@ for all \(n \in \mathbb{Z}_{\geqslant 0}\).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8741,7 +8741,7 @@ Suppose that \( f(x) \) vanishes at \( K \) consecutive positive integers \( x \
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：8
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8784,7 +8784,7 @@ prove that \( x=1 \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8825,7 +8825,7 @@ for all real numbers \( x \) and \( y \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8866,7 +8866,7 @@ for all real \( x, y \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8909,7 +8909,7 @@ is not divisible by \( N \). What is the largest possible value of \( n \)?
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8948,7 +8948,7 @@ After analyzing the \(N\) integers on the board, Bob realizes that, regardless o
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：8
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -8993,7 +8993,7 @@ f(n) &= 1 \text{ for all positive } n \equiv 22 \pmod{23}.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9036,7 +9036,7 @@ for all \( m, n \in \mathbb{N} \). Find all possible values of \( f(2007) \). ( 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9073,7 +9073,7 @@ Determine all polynomials \( f \) with integer coefficients such that \( f(p) \)
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9116,7 +9116,7 @@ then \(\sqrt{bc}(a+1) \geq 2\). When does the equality hold?
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9159,7 +9159,7 @@ Fedor Petrov, St. Petersburg State University
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9196,7 +9196,7 @@ Prove that there exist infinitely many pairs \((m, n)\) of positive integers suc
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9237,7 +9237,7 @@ Let \( p, q, r \) be positive real numbers and \( n \in \mathbb{N} \). Show that
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9274,7 +9274,7 @@ Find all primes \( p \) and \( q \) such that \( 3 p^{q-1} + 1 \) divides \( 11^
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9311,7 +9311,7 @@ Given a group \( G \), denote by \( G(m) \) the subgroup generated by the \( m^{
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9348,7 +9348,7 @@ Denote by \(\ell(n)\) the largest prime divisor of \(n\). Let \(a_{n+1}=a_{n}+\e
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：9
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9385,7 +9385,7 @@ There are \(a+b\) bowls arranged in a row, numbered \(1\) through \(a+b\), where
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9422,7 +9422,7 @@ There are \(a+b\) bowls arranged in a row, numbered \(1\) through \(a+b\), where
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9465,7 +9465,7 @@ for all \( m, n \in \mathbb{N} \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9502,7 +9502,7 @@ Find all positive integers \( n \) for which \( n^{n-1}-1 \) is divisible by \( 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9539,7 +9539,7 @@ A positive integer \( n \) does not divide \( 2^{a} 3^{b} + 1 \) for any positiv
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9576,7 +9576,7 @@ Determine all functions \( f: \mathbb{R} \rightarrow \mathbb{R} \) satisfying \(
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9617,7 +9617,7 @@ Let \( n, m \) be integers greater than 1, and let \( a_{1}, a_{2}, \ldots, a_{m
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9654,7 +9654,7 @@ Does there exist a positive integer \( n \) such that \( n \) has exactly 2000 p
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9695,7 +9695,7 @@ Suppose at any moment, if we partition all islands into two nonempty groups in a
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9732,7 +9732,7 @@ Suppose at any moment, if we partition all islands into two nonempty groups in a
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9775,7 +9775,7 @@ where \( C>0 \) is independent of \( x \) and \( f^{2}(x)=f(f(x)) \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9812,7 +9812,7 @@ Determine all positive integers \( M \) for which the sequence \( a_{0}, a_{1}, 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9849,7 +9849,7 @@ If we take a \(2 \times 100\) (or \(100 \times 2\)) grid of unit squares, and re
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9886,7 +9886,7 @@ Prove that for every real number \(d>1\), there exist infinitely many natural nu
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9923,7 +9923,7 @@ It is known that \( n \) is a positive integer, \( n \leq 144 \). Ten questions 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -9964,7 +9964,7 @@ f(f(x)+y)=f(x)+3x+yf(y) \quad \text{for every} \quad x, y \in(0,+\infty)
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10001,7 +10001,7 @@ Let \(\mathbb{Z}_{>0}\) denote the set of positive integers. For any positive in
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10038,7 +10038,7 @@ The number \(2021\) is fantabulous. For any positive integer \(m\), if any eleme
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10075,7 +10075,7 @@ The number \(2021\) is fantabulous. For any positive integer \(m\), if any eleme
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：8
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10118,7 +10118,7 @@ be the set of the arithmetic means of the elements of all non-empty subsets of \
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10155,7 +10155,7 @@ Every integer is colored with exactly one of the colors blue, green, red, yellow
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10196,7 +10196,7 @@ Let \( n \) be a positive integer.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10233,7 +10233,7 @@ A line through the origin \( O \) of the coordinate system intersects the graph 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10273,7 +10273,7 @@ Let \( n \geq 2 \) be an integer, and let \( a_{1}, a_{2}, \ldots, a_{n} \) be p
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10316,7 +10316,7 @@ for some positive integer \( n \). Find all possible values of \( q-p \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10357,7 +10357,7 @@ Let \(a_{2}, \ldots, a_{n}\) be \(n-1\) positive real numbers, where \(n \geq 3\
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10398,7 +10398,7 @@ a^{p} = b! + p
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10440,7 +10440,7 @@ $$
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10489,7 +10489,7 @@ with equality if and only if $x=y=z=1$.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10528,7 +10528,7 @@ Prove that \( v^2 + v \leq g \leq n^2 - n \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10565,7 +10565,7 @@ Find all pairs of primes \((p, q)\) for which \(p-q\) and \(pq-q\) are both perf
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10602,7 +10602,7 @@ Let \( n \) be a positive integer. Determine the smallest positive integer \( k 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10639,7 +10639,7 @@ Given an integer \( k \geq 2 \), determine all functions \( f \) from the positi
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10676,7 +10676,7 @@ For positive integers \( n \) and \( k \geq 2 \), define \( E_{k}(n) \) as the g
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：10
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10713,7 +10713,7 @@ Determine all integers \( n \geq 2 \) with the following property: every \( n \)
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10750,7 +10750,7 @@ A function \( f \) from the set of positive integers \(\mathbb{N}\) into itself 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：9
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10792,7 +10792,7 @@ holds for all \( m \in \mathbb{Z} \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10833,7 +10833,7 @@ Prove that \(\Omega\) has more than \(2^n\) distinct sum-free subsets.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10877,7 +10877,7 @@ b) \( f(a) = f(b) \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10914,7 +10914,7 @@ Let \( n \geq 2 \) be a given natural number. The set \( M \) consists of \( 2n^
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10955,7 +10955,7 @@ a_{1}^{2}+a_{2}^{2}+\cdots+a_{59}^{2} \leq 2006
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -10992,7 +10992,7 @@ In a club with 30 members, every member initially had a hat. One day each member
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11033,7 +11033,7 @@ with initial conditions \( a_{1} = a_{2} = 1 \) and \( a_{3} = 4 \) contains onl
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11073,7 +11073,7 @@ For \( R > 1 \), let \(\mathcal{D}_{R} = \left\{(a, b) \in \mathbb{Z}^{2} : 0 < 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11114,7 +11114,7 @@ have a solution in integers?
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11161,7 +11161,7 @@ $$
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11202,7 +11202,7 @@ $$
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11239,7 +11239,7 @@ Let \( k \) be a positive integer. The organizing committee of a tennis tourname
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11280,7 +11280,7 @@ a^{3}+b^{3}+c^{3}+3(1-a)(1-b)(1-c)=1
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：12
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11323,7 +11323,7 @@ Find the 2015th term $x_{2015}$.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11366,7 +11366,7 @@ Prove that if \(\frac{1}{p} - 2 S_{q} = \frac{m}{n}\) for integers \( m \) and \
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：8
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11403,7 +11403,7 @@ Let \( p > 3 \) be a prime and let \( a_{1}, a_{2}, \ldots, a_{\frac{p-1}{2}} \)
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11440,7 +11440,7 @@ The set of real numbers is split into two subsets which do not intersect. Prove 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11477,7 +11477,7 @@ Let \( p \) be a prime number and let \( k \) be a positive integer. Suppose tha
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11517,7 +11517,7 @@ Find all real numbers \( c > 0 \) such that there exists a labeling of the latti
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11554,7 +11554,7 @@ Find all real numbers \( c > 0 \) such that there exists a labeling of the latti
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11591,7 +11591,7 @@ Let \( t_{1}, t_{2}, \ldots, t_{k} \) be different straight lines in space, wher
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11628,7 +11628,7 @@ Three nonnegative real numbers \( r_{1}, r_{2}, r_{3} \) are written on a blackb
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11671,7 +11671,7 @@ then \( k-2 \) is divisible by 3.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11714,7 +11714,7 @@ are integers.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11761,7 +11761,7 @@ for some positive integer \(k\).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11807,7 +11807,7 @@ for all \(x, y \in \mathbb{Q}_{>0}\). Given that \(f(a)=a\) for some rational \(
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11848,7 +11848,7 @@ Let \( S \) be the set of all ordered pairs \((a, b)\) of integers with \(0 < 2a
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11889,7 +11889,7 @@ Find all positive integers \( n \) for which we can fill in the entries of an \(
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11930,7 +11930,7 @@ Let \(a, b, c\) be positive reals. Prove that
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -11967,7 +11967,7 @@ Initially, the natural numbers are written in the sequence \(1, 2, 3, \ldots\). 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12004,7 +12004,7 @@ First solution.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12041,7 +12041,7 @@ First solution.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12084,7 +12084,7 @@ for all integers \( a, b, c \) satisfying \( a+b+c=0 \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12124,7 +12124,7 @@ f_{1}(n)+f_{2}(n)+\cdots+f_{k}(n)=x_{n} \quad \text{for every } n=1,2, \ldots, 2
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12167,7 +12167,7 @@ When does equality hold?
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：10
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12204,7 +12204,7 @@ There are $100$ distinct positive integers. We call a pair of integers among the
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：9
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12241,7 +12241,7 @@ Does there exist a sequence \(a_{1}, a_{2}, a_{3}, \ldots\) of positive integers
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12284,7 +12284,7 @@ Prove that $p(n)-p(n-1)$ is the number of ways to express $n$ as a sum of intege
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12324,7 +12324,7 @@ f(x+y) \geq f(x)+y f(f(x)) \quad \text{for all } x, y \in \mathbb{R}.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12361,7 +12361,7 @@ f(x+y) \geq f(x)+y f(f(x)) \quad \text{for all } x, y \in \mathbb{R}.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12398,7 +12398,7 @@ Let \(\mathcal{S}\) be a set consisting of \(n \geq 3\) positive integers, none 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12435,7 +12435,7 @@ The numbers \(1, 2, \ldots, 49\) are placed in a \(7 \times 7\) array, and the s
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12476,7 +12476,7 @@ for all real \( x \) and \( y \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12521,7 +12521,7 @@ Remark: A necklace is open if its precious stones are on a line from left to rig
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：10
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12558,7 +12558,7 @@ We call a positive integer good if it can be written in the form \(a x^{2} + b x
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12601,7 +12601,7 @@ for all \( n \geqslant 1 \)?
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12644,7 +12644,7 @@ for all \( x, y>0 \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12686,7 +12686,7 @@ and show that the numbers $a_{3}, a_{4}, \ldots, a_{2008}$ are uniquely determin
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12725,7 +12725,7 @@ Let \( n \geq 1 \) be an integer and let \( t_{1}<t_{2}<\cdots<t_{n} \) be posit
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：8
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12768,7 +12768,7 @@ for all real numbers \( x \) and \( y \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12811,7 +12811,7 @@ Determine the largest positive integer that cannot be written as the sum of one 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：9
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12848,7 +12848,7 @@ Let \( N \) denote the set of all positive integers. An ordered pair \((a, b)\) 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12893,7 +12893,7 @@ for any \( x \notin \{0,1\} \). Determine all such functions \( f \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12930,7 +12930,7 @@ For each positive integer \( n \geq 3 \), we define an \( n \)-ring to be a circ
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -12967,7 +12967,7 @@ Find all functions \( f: \mathbb{Z} \rightarrow \mathbb{Z} \) for which \( f(g(n
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13010,7 +13010,7 @@ Find all natural numbers \(x, y\), and \(z\) for which the equality holds
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13051,7 +13051,7 @@ $$
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13092,7 +13092,7 @@ Find all \( n \) for which the equality \( d_2^3 + d_3^2 - 15 = n \) holds.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13129,7 +13129,7 @@ Let \( m, n \) be positive integers with \( m > 1 \). Anastasia partitions the i
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13166,7 +13166,7 @@ Let \( N \geq 3 \) be an odd integer. \( N \) tennis players take part in a leag
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13203,7 +13203,7 @@ Odin and Evelyn are playing a game, Odin going first. There are initially \(3k\)
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13246,7 +13246,7 @@ Prove that there is a positive integer which is not a value of \( f \).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13292,7 +13292,7 @@ Find the total number of balanced sequences as a function of \(n\).
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13329,7 +13329,7 @@ Prove that, for every positive integer \( n \), there exists an integer \( m \) 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13370,7 +13370,7 @@ Prove that if an odd prime \(p\) divides \(a_{n}\), then \(2^{n+3}\) divides \(p
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13410,7 +13410,7 @@ $$
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13452,7 +13452,7 @@ Player \( A \) takes the first turn. Determine the outcome of the game, assuming
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13493,7 +13493,7 @@ $$
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13534,7 +13534,7 @@ Let \(a, b, c\) be positive real numbers such that \(abc = 1\). Prove that
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：6
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13571,7 +13571,7 @@ In a country, there are \( n \) cities. Between some cities, one-way roads have 
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13613,7 +13613,7 @@ and determine the cases of equality.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：7
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13650,7 +13650,7 @@ Find all finite sets of positive integers with at least two elements such that f
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13691,7 +13691,7 @@ a_{1} \leqslant 2 a_{2} \leqslant 3 a_{3} \leqslant \ldots \leqslant n a_{n}
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13729,7 +13729,7 @@ Determine all possible values of pqr.
 - 数据组：OPC-250 v0.2
 - 对象路径：`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13766,7 +13766,7 @@ Let \( N \) be a positive integer. Two persons play the following game. The firs
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13803,7 +13803,7 @@ Prove that any two nonabelian groups of order 21 are isomorphic.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13840,7 +13840,7 @@ Consider a prime $p$ of the form $4 t+3$. Show that $a$ is a primitive root modu
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：5
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13877,7 +13877,7 @@ Let $\|\cdot\|$ be any norm on $\mathbb{R}^{m}$ and let $B=\left\{x \in \mathbb{
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13914,7 +13914,7 @@ Prove that if $T \in \mathcal{L}(V)$ is normal, then $\operatorname{range} T=\op
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13951,7 +13951,7 @@ Suppose $T \in \mathcal{L}(V)$ is such that every vector in $V$ is an eigenvecto
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -13988,7 +13988,7 @@ Show that if $X$ is an infinite set, it is connected in the finite complement to
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14025,7 +14025,7 @@ Let $E$ be a bounded set in $R^{1}$. Prove that there exists a real function $f$
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14062,7 +14062,7 @@ Prove that if $H$ is a nontrivial normal subgroup of the solvable group $G$ then
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14099,7 +14099,7 @@ Prove that if an integer is the sum of two rational squares, then it is the sum 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14136,7 +14136,7 @@ Let $G$ be a finite group of composite order $n$ with the property that $G$ has 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14173,7 +14173,7 @@ Show that there is an infinite number of integers a such that $f(x) = x^7 + 15x^
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14210,7 +14210,7 @@ Show that if $S$ is connected, it is not true in general that its interior is co
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14247,7 +14247,7 @@ Suppose $E\subset\mathbb{R}^k$ is uncountable, and let $P$ be the set of condens
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14284,7 +14284,7 @@ Let $(p_n)$ be a sequence and $f:\mathbb{N}\to\mathbb{N}$. The sequence $(q_k)_{
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14321,7 +14321,7 @@ Prove that $x^2+1$ is irreducible in $\mathbb{F}_7$
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14358,7 +14358,7 @@ Show that every locally compact Hausdorff space is regular.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14395,7 +14395,7 @@ A map $f: X \rightarrow Y$ is said to be an open map if for every open set $U$ o
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14432,7 +14432,7 @@ Show that $\int_0^1 \log(\sin \pi x) dx = - \log 2$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14469,7 +14469,7 @@ If $f$ is a continuous mapping of a metric space $X$ into a metric space $Y$, pr
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14506,7 +14506,7 @@ Prove that a group of order 312 has a normal Sylow $p$-subgroup for some prime $
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14543,7 +14543,7 @@ Let $f: S^{1} \rightarrow \mathbb{R}$ be a continuous map. Show there exists a p
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14580,7 +14580,7 @@ Prove that there is no rational number whose square is $12$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14617,7 +14617,7 @@ Prove that the intersection of any collection of subspaces of $V$ is a subspace 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14654,7 +14654,7 @@ Let $A$ be a nonempty set of real numbers which is bounded below. Let $-A$ be th
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14691,7 +14691,7 @@ Suppose $f$ is continuous in a region $\Omega$. Prove that any two primitives of
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14728,7 +14728,7 @@ Let $x$ be an element of $G$. Prove that $x^2=1$ if and only if $|x|$ is either 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14765,7 +14765,7 @@ Show that if $X$ is a Hausdorff space that is locally compact at the point $x$, 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14802,7 +14802,7 @@ If $G$ is a group and $a, x \in G$, prove that $C\left(x^{-1} a x\right)=x^{-1} 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14839,7 +14839,7 @@ Let $H \leq K \leq G$. Prove that $|G: H|=|G: K| \cdot|K: H|$ (do not assume $G$
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14876,7 +14876,7 @@ If $G$ is a finite group, prove that there is an integer $m > 0$ such that $a^m 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14913,7 +14913,7 @@ Prove that if a group contains exactly one element of order 2 , then that elemen
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14950,7 +14950,7 @@ Show that if $\prod X_\alpha$ is regular, then so is $X_\alpha$. Assume that eac
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -14987,7 +14987,7 @@ Show that a group of order 5 must be abelian.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15024,7 +15024,7 @@ If $r$ is rational $(r \neq 0)$ and $x$ is irrational, prove that $r+x$ is irrat
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15061,7 +15061,7 @@ Prove that the intersection of an arbitrary nonempty collection of normal subgro
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15098,7 +15098,7 @@ Prove that if $f(x)$ and $g(x)$ are polynomials with rational coefficients whose
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15135,7 +15135,7 @@ Show that a connected metric space having more than one point is uncountable.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15172,7 +15172,7 @@ Suppose that $|G| = pm$, where $p \nmid m$ and $p$ is a prime. If $H$ is a norma
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15209,7 +15209,7 @@ Show that the subgroup of all rotations in a dihedral group is a maximal subgrou
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15246,7 +15246,7 @@ Prove that if $|G|=1365$ then $G$ is not simple.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15283,7 +15283,7 @@ Let $\Omega$ be a bounded open subset of $\mathbb{C}$, and $\varphi: \Omega \rig
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15320,7 +15320,7 @@ Show that if $a$ is negative then $p \equiv q(4 a) together with p\not | a$ impl
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15357,7 +15357,7 @@ Let $G$ be a group in which $(a b)^{3}=a^{3} b^{3}$ and $(a b)^{5}=a^{5} b^{5}$ 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15394,7 +15394,7 @@ Let $p$ be an odd prime and let $1 + \frac{1}{2} + ... + \frac{1}{p - 1} = \frac
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15431,7 +15431,7 @@ Prove that if $|G|=132$ then $G$ is not simple.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15468,7 +15468,7 @@ Let $G$ be a transitive permutation group on the finite set $A$ with $|A|>1$. Sh
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15505,7 +15505,7 @@ Let $\mathcal{T}_\alpha$ be a family of topologies on $X$. Show that there is a 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15542,7 +15542,7 @@ Let $X$ be a metric space in which every infinite subset has a limit point. Prov
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15579,7 +15579,7 @@ Let $V$ be a vector space which is spanned by a countably infinite set. Prove th
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15616,7 +15616,7 @@ Let $X$ be locally path connected. Show that every connected open set in $X$ is 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15653,7 +15653,7 @@ Prove that the addition of residue classes $\mathbb{Z}/n\mathbb{Z}$ is associati
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15690,7 +15690,7 @@ Let $\left\{A_{n}\right\}$ be a sequence of connected subspaces of $X$, such tha
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15727,7 +15727,7 @@ Suppose $k \geq 3, x, y \in \mathbb{R}^k, |x - y| = d > 0$, and $r > 0$. Prove t
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15764,7 +15764,7 @@ Suppose $X$ is a nonempty complete metric space, and $\left\{G_{n}\right\}$ is a
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15801,7 +15801,7 @@ Prove that in the ring $\mathbb{Z}[x],(2) \cap(x)=(2 x)$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15838,7 +15838,7 @@ Show that if $\mathcal{A}$ is a basis for a topology on $X$, then the topology g
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15875,7 +15875,7 @@ Let $X$ be a compact Hausdorff space. Let $\mathcal{A}$ be a collection of close
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15912,7 +15912,7 @@ If $G_1$ and $G_2$ are cyclic groups of orders $m$ and $n$, respectively, prove 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15949,7 +15949,7 @@ Suppose that $f$ is holomorphic in an open set $\Omega$. Prove that if $|f|$ is 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -15986,7 +15986,7 @@ Show that the collection $\{(a,b) \mid a < b, a \text{ and } b \text{ rational}\
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16023,7 +16023,7 @@ Prove that $G$ cannot have a subgroup $H$ with $|H|=n-1$, where $n=|G|>2$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16060,7 +16060,7 @@ Show that if $U$ is open in $X$ and $A$ is closed in $X$, then $U-A$ is open in 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16097,7 +16097,7 @@ Show that the lower limit topology $\mathbb{R}_l$ and $K$-topology $\mathbb{R}_K
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16134,7 +16134,7 @@ Suppose $a \in R^{1}, f$ is a twice-differentiable real function on $(a, \infty)
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16171,7 +16171,7 @@ Prove that $x^2+y^2-1$ is irreducible in $\mathbb{Q}[x,y]$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16208,7 +16208,7 @@ Prove that subgroups of a solvable group are solvable.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16245,7 +16245,7 @@ Prove that $x^3 + 6x + 12$ is irreducible in $\mathbb{Q}$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16282,7 +16282,7 @@ Prove that a subgroup $H$ of $G$ is normal if and only if $[G, H] \leq H$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16319,7 +16319,7 @@ Prove that $\cos 1^{\circ}$  is algebraic over $\mathbb{Q}$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16356,7 +16356,7 @@ Show that 2 is divisible by $(1+i)^{2}$ in $\mathbb{Z}[i]$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16393,7 +16393,7 @@ If $s_{1}=\sqrt{2}$, and $s_{n+1}=\sqrt{2+\sqrt{s_{n}}} \quad(n=1,2,3, \ldots),$
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16430,7 +16430,7 @@ Prove that convergence of $\left\{s_{n}\right\}$ implies convergence of $\left\{
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16467,7 +16467,7 @@ Suppose that $f$ is holomorphic in an open set $\Omega$. Prove that if $\text{Re
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16504,7 +16504,7 @@ Prove that the quotient ring $\mathbb{Z}[i] /(1+i)$ is a field of order 2.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16541,7 +16541,7 @@ Give an example of a nonempty subset $U$ of $\mathbf{R}^2$ such that $U$ is clos
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16578,7 +16578,7 @@ Show that $ \int_{-\infty}^{\infty} \frac{\cos x}{x^2 + a^2} dx = \pi \frac{e^{-
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16615,7 +16615,7 @@ Prove that for each positive integer $n$, the number $10^{10^{10^n}}+10^{10^n}+1
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16652,7 +16652,7 @@ If $P$ is a $p$-Sylow subgroup of $G$ and $P \triangleleft G$, prove that $P$ is
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16689,7 +16689,7 @@ Suppose $V$ is a complex inner-product space and $T \in \mathcal{L}(V)$ is a nor
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16726,7 +16726,7 @@ Define $f_{n}:[0,1] \rightarrow \mathbb{R}$ by the equation $f_{n}(x)=x^{n}$. Sh
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16763,7 +16763,7 @@ Let $X$ be completely regular, let $A$ and $B$ be disjoint closed subsets of $X$
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16800,7 +16800,7 @@ Prove that a group of even order contains an element of order $2 .$
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16837,7 +16837,7 @@ Prove that $\sum 1/k(\log(k))^p$ diverges when $p \leq 1$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16874,7 +16874,7 @@ Let $p$ be a prime integer. Prove that the polynomial $x^n-p$ is irreducible in 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16911,7 +16911,7 @@ Let $p$ be an odd prime. Show that $a$ is a primitive root modulo $p$ iff $a^{(p
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16948,7 +16948,7 @@ Let $H$ be the subgroup generated by two elements $a, b$ of a group $G$. Prove t
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -16985,7 +16985,7 @@ Let $R$ be a ring in which $x^3 = x$ for every $x \in R$. Prove that $R$ is comm
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17022,7 +17022,7 @@ Prove that $\sqrt{n+1}-\sqrt{n} \rightarrow 0$ as $n \rightarrow \infty$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17059,7 +17059,7 @@ Let $F = \mathbb{Z}_p$ be the field of integers $\mod p$, where $p$ is a prime, 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17096,7 +17096,7 @@ Let $N$ be a positive integer. Let $M$ be an integer relatively prime to $N$ and
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17133,7 +17133,7 @@ Suppose that $E$ is an uncountable subset of $\mathbb{R}$. Prove that there exis
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17170,7 +17170,7 @@ Show that there is an infinite number of solutions to $x^2 = -1$ in the quaterni
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17207,7 +17207,7 @@ If $\Sigma a_{n}$ converges, and if $\left\{b_{n}\right\}$ is monotonic and boun
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17244,7 +17244,7 @@ If $x$ and $g$ are elements of the group $G$, prove that $|x|=\left|g^{-1} x g\r
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17281,7 +17281,7 @@ Suppose $p \in \mathcal{P}(\mathbf{C})$ has degree $m$. Prove that $p$ has $m$ d
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17318,7 +17318,7 @@ If $C_{0}+\frac{C_{1}}{2}+\cdots+\frac{C_{n-1}}{n}+\frac{C_{n}}{n+1}=0,$ where $
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17355,7 +17355,7 @@ Suppose that $f(x)=\sum_{i=0}^{\infty} c_{i} x^{i}$ is a power series for which 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17392,7 +17392,7 @@ Let $R$ be the ring of $2 \times 2$ matrices over the real numbers; suppose that
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17429,7 +17429,7 @@ Prove that $\frac{(x+2)^p-2^p}{x}$, where $p$ is an odd prime, is irreducible in
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17466,7 +17466,7 @@ For $j \in\{1,2,3,4\}$, let $z_{j}$ be a complex number with $\left|z_{j}\right|
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17503,7 +17503,7 @@ If $R$ is a commutative ring and $a \in R$, let $L(a) = \{x \in R \mid xa = 0\}$
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17540,7 +17540,7 @@ If $\mathcal{T}_\alpha$ is a family of topologies on $X$, show that $\bigcup \ma
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17577,7 +17577,7 @@ Let $p(x)=a_{n} x^{n}+a_{n-1} x^{n-1}+\cdots+a_{1} x+a_{0}$ be an element of the
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17614,7 +17614,7 @@ Show that there exist a set $E \subset \mathbb{R}$ and a real continuous functio
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17651,7 +17651,7 @@ A subgroup $M$ of a group $G$ is called a maximal subgroup if $M \neq G$ and the
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17688,7 +17688,7 @@ Suppose $\left(e_{1}, \ldots, e_{m}\right)$ is an or thonormal list of vectors i
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17725,7 +17725,7 @@ Show that $(p - 1)/2$ of the numbers $1, 2, \ldots, p - 1$ are quadratic residue
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17762,7 +17762,7 @@ Suppose $f$ is defined and differentiable for every $x>0$, and $f^{\prime}(x) \r
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17799,7 +17799,7 @@ Let $K$ be a finite field. Prove that the product of the nonzero elements of $K$
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17836,7 +17836,7 @@ For any two real sequences $\left\{a_{n}\right\},\left\{b_{n}\right\}$, prove th
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17873,7 +17873,7 @@ Prove that a group of order 56 has a normal Sylow $p$-subgroup for some prime $p
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17910,7 +17910,7 @@ Show that $\sin (\pi / 12)$ is an algebraic number.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17947,7 +17947,7 @@ An element $x$ of a ring $R$ is called nilpotent if some power of $x$ is zero. P
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -17984,7 +17984,7 @@ Prove that any subring of a field which contains the identity is an integral dom
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18021,7 +18021,7 @@ Assume that $f \colon \mathbb{R} \rightarrow \mathbb{R}$ satisfies $|f(t)-f(x)| 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18058,7 +18058,7 @@ Show that $\sum^{\prime} 1 / n$, the sum being over square free integers, diverg
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18095,7 +18095,7 @@ Let $X$ be a compact Hausdorff space that is the union of the closed subspaces $
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18132,7 +18132,7 @@ Prove that there are unique positive integers $a, n$ such that $a^{n+1}-(a+1)^n=
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18169,7 +18169,7 @@ Show that the collection $$\mathcal{T}_\infty = \{U | X - U \text{ is infinite o
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18206,7 +18206,7 @@ Prove that no group of order $p q$, where $p$ and $q$ are prime, is simple.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18243,7 +18243,7 @@ Deduce that $|a b|=|b a|$ for all $a, b \in G$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18280,7 +18280,7 @@ Let $I, J$ be ideals of a ring $R$ such that $I+J=R$. Prove that $I J=I \cap J$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18317,7 +18317,7 @@ Let $R$ be a commutative ring with $1 \neq 0$. Prove that if $a$ is a nilpotent 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18354,7 +18354,7 @@ Show that $ \int_{-\infty}^{\infty} \frac{x \sin x}{x^2 + a^2} dx = \pi e^{-a}$ 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18391,7 +18391,7 @@ Define $f_{n}:[0,1] \rightarrow \mathbb{R}$ by the equation $f_{n}(x)=x^{n}$. Sh
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18428,7 +18428,7 @@ Use Lagrange's Theorem in the multiplicative group $(\mathbb{Z} / p \mathbb{Z})^
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18465,7 +18465,7 @@ Let $G$ be a group in which $(a b)^{n}=a^{n} b^{n}$ for some fixed integer $n>1$
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18502,7 +18502,7 @@ Prove that there are infinitely many primes congruent to $-1$ (modulo $4$).
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18539,7 +18539,7 @@ Prove that $1^{k}+2^{k}+\cdots+(p-1)^{k} \equiv 0(p)$ if $p-1 \nmid k$ and $-1(p
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18576,7 +18576,7 @@ Prove that a normal operator on a complex inner-product space is self-adjoint if
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18613,7 +18613,7 @@ Let $G$ be a topological group; let $C$ be the component of $G$ containing the i
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18650,7 +18650,7 @@ Prove that $x^4+4x^3+6x^2+2x+1$ is irreducible in $\mathbb{Z}[x]$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18687,7 +18687,7 @@ Prove that the power series $\sum zn/n$ converges at every point of the unit cir
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18724,7 +18724,7 @@ A space $X$ is said to be countably compact if every countable open covering of 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18761,7 +18761,7 @@ If $G$ is a finite group, prove that, given $a \in G$, there is a positive integ
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18798,7 +18798,7 @@ Prove that $x^4-4x^3+6$ is irreducible in $\mathbb{Z}[x]$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18835,7 +18835,7 @@ If $a \in K$ is such that $a^2$ is algebraic over the subfield $F$ of $K$, show 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18872,7 +18872,7 @@ Prove that if $|G|=462$ then $G$ is not simple.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18909,7 +18909,7 @@ Suppose $f$ is a real function defined on $\mathbb{R}$ which satisfies $\lim_{h 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18946,7 +18946,7 @@ Suppose $V$ is a real vector space and $T \in \mathcal{L}(V)$ has no eigenvalues
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -18983,7 +18983,7 @@ Let $V$ be a vector space over an infinite field $F$. Prove that $V$ is not the 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19020,7 +19020,7 @@ Show that $x^{4} \equiv 2(p)$ has a solution for $p \equiv 1(4)$ iff $p$ is of t
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19057,7 +19057,7 @@ Let $G$ be a group such that all subgroups of $G$ are normal in $G$. If $a, b \i
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19094,7 +19094,7 @@ If $p=2^{n}+1$ is a Fermat prime, show that 3 is a primitive root modulo $p$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19131,7 +19131,7 @@ Show that if $\prod X_\alpha$ is normal, then so is $X_\alpha$. Assume that each
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19168,7 +19168,7 @@ Show that $\int_{0}^{\infty} \frac{\sin x}{x} d x=\frac{\pi}{2}$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19205,7 +19205,7 @@ Show that if $G=\langle x\rangle$ is a cyclic group of order $n \geq 1$ then a s
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19242,7 +19242,7 @@ If $z$ is a complex number such that $|z|=1$, that is, such that $z \bar{z}=1$, 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19279,7 +19279,7 @@ Let $f$ be a real function with a continuous third derivative such that $f(x), f
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19316,7 +19316,7 @@ Suppose $K$ and $F$ are disjoint sets in a metric space $X, K$ is compact, $F$ i
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19353,7 +19353,7 @@ Suppose $f$ is a real, three times differentiable function on $[-1,1]$, such tha
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19390,7 +19390,7 @@ Show that every subset of $\mathbb{N}$ is clopen.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19427,7 +19427,7 @@ If $k = 1$ and $\mathbf{x} \in R^{k}$, prove that there does not exist $\mathbf{
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19464,7 +19464,7 @@ Prove that if $p > q$ are two primes such that $q \mid p - 1$, then any two nona
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19501,7 +19501,7 @@ Let $G$ be a finite group which possesses an automorphism $\sigma$ such that $\s
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19538,7 +19538,7 @@ Show that if $X$ is a countable product of spaces having countable dense subsets
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19575,7 +19575,7 @@ Prove that if $H$ has finite index $n$ then there is a normal subgroup $K$ of $G
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19612,7 +19612,7 @@ Assume that $A, B$ are compact, disjoint, nonempty subsets of $M$. Prove that th
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19649,7 +19649,7 @@ If $G$ is a group in which $(a b)^{i}=a^{i} b^{i}$ for three consecutive integer
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19686,7 +19686,7 @@ Show that every locally compact Hausdorff space is completely regular.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19723,7 +19723,7 @@ Show that $\mathbb{R} \times \mathbb{R}$ in the dictionary order topology is met
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19760,7 +19760,7 @@ Let $\varphi: R \rightarrow S$ be a surjective homomorphism of rings. Prove that
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19797,7 +19797,7 @@ Suppose $f$ is a uniformly continuous mapping of a metric space $X$ into a metri
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19834,7 +19834,7 @@ Let $f$ be a real uniformly continuous function on the bounded set $E$ in $R^{1}
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19871,7 +19871,7 @@ Show that $\frac{-1 + \sqrt{3}i}{2}$ is a cube root of 1 (meaning that its cube 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19908,7 +19908,7 @@ Let $E$ be a nonempty subset of an ordered set; suppose $\alpha$ is a lower boun
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19945,7 +19945,7 @@ Show that if $X$ is regular, every pair of points of $X$ have neighborhoods whos
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -19982,7 +19982,7 @@ Prove that a set $U \subset M$ is open if and only if none of its points are lim
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20019,7 +20019,7 @@ Prove that $A \times B$ is an abelian group if and only if both $A$ and $B$ are 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20056,7 +20056,7 @@ Let $H$ be a subgroup of the additive group of rational numbers with the propert
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20093,7 +20093,7 @@ Show that if $\operatorname{dim} V \geq 2$, then the set of normal operators on 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20130,7 +20130,7 @@ Show that the equation $3 x^{2}+2=y^{2}$ has no solution in integers.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20167,7 +20167,7 @@ Prove that $|\mathbf{x}+\mathbf{y}|^{2}+|\mathbf{x}-\mathbf{y}|^{2}=2|\mathbf{x}
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20204,7 +20204,7 @@ Suppose $T \in \mathcal{L}(V)$ is such that every subspace of $V$ with dimension
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20241,7 +20241,7 @@ Consider a prime $p$ of the form $4 t+1$. Show that $a$ is a primitive root modu
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20278,7 +20278,7 @@ Let $R$ be an integral domain. Prove that if the following two conditions hold t
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20315,7 +20315,7 @@ Let $Y$ be an ordered set in the order topology. Let $f, g: X \rightarrow Y$ be 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20352,7 +20352,7 @@ Let $F = \mathbb{Z}_7$ and let $p(x) = x^3 - 2$ and $q(x) = x^3 + 2$ be in $F[x]
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20389,7 +20389,7 @@ Show that if $\prod X_\alpha$ is Hausdorff, then so is $X_\alpha$. Assume that e
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20426,7 +20426,7 @@ If $F$ is of characteristic $p \neq 0$, show that all the roots of $x^m - x$, wh
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20463,7 +20463,7 @@ Prove that $\left(\sum_{j=1}^{n} a_{j} b_{j}\right)^{2} \leq\left(\sum_{j=1}^{n}
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20500,7 +20500,7 @@ Prove that if $u$ is a unit in $R$ then so is $-u$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20537,7 +20537,7 @@ Prove that the Cauchy product of two absolutely convergent series converges abso
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20574,7 +20574,7 @@ Suppose $E\subset\mathbb{R}^k$ is uncountable, and let $P$ be the set of condens
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20611,7 +20611,7 @@ Let $A \subset X$; let $f: A \rightarrow Y$ be continuous; let $Y$ be Hausdorff.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20648,7 +20648,7 @@ Let $f: \mathbb{R} \rightarrow \mathbb{R}$ be an infinitely differentiable funct
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20685,7 +20685,7 @@ Prove that if $H$ is a normal subgroup of $G$ of prime index $p$ then for all $K
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20722,7 +20722,7 @@ Show that the collection $\{(a,b) \mid a < b, a \text{ and } b \text{ rational}\
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20759,7 +20759,7 @@ Prove that if $G$ is an abelian group of order $p q$, where $p$ and $q$ are dist
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20796,7 +20796,7 @@ If $A$ and $B$ are disjoint closed sets in some metric space $X$, prove that the
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20833,7 +20833,7 @@ Prove that if $p$ is a prime and $G$ is a group of order $p^{\alpha}$ for some $
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20870,7 +20870,7 @@ If $a \in C$ is such that $p(a) = 0$, where $p(x) = x^5 + \sqrt{2}x^3 + \sqrt{5}
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20907,7 +20907,7 @@ Show that every order topology is regular.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20944,7 +20944,7 @@ If $a^2 = 0$ in $R$, show that $ax + xa$ commutes with $a$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -20981,7 +20981,7 @@ Let $f \colon X \rightarrow X$ be continuous. Show that if $X = [0, 1]$, there i
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21018,7 +21018,7 @@ Prove that if $H$ and $K$ are normal subgroups of a group $G$ then their interse
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21055,7 +21055,7 @@ Prove that every nonzero ideal in the ring of Gauss integers contains a nonzero 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21092,7 +21092,7 @@ Prove that the center of the product of two groups is the product of their cente
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21129,7 +21129,7 @@ Prove that no order can be defined in the complex field that turns it into an or
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21166,7 +21166,7 @@ Let $G$ be a finite group and $\varphi$ an automorphism of $G$ such that $\varph
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21203,7 +21203,7 @@ If $F$ is a field of characteristic $p \neq 0$, show that $(a + b)^m = a^m + b^m
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21240,7 +21240,7 @@ Prove that if $\Omega=\{1,2,3, \ldots\}$ then $S_{\Omega}$ is an infinite group
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21277,7 +21277,7 @@ If $a, b$ are integers and if $a$ divides $b$ in the ring of Gauss integers, the
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21314,7 +21314,7 @@ Suppose that $V$ is finite dimensional and that $T \in \mathcal{L}(V, W)$. Prove
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21351,7 +21351,7 @@ Prove that the ring $\mathbb{Z}\left[x_{1}, x_{2}, x_{3}, \ldots\right] /\left(x
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21388,7 +21388,7 @@ Let $(X, d)$ be a metric space. If $f: X \rightarrow X$ satisfies the condition 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21425,7 +21425,7 @@ Given a real number $a$, we define a sequence by $x_{0}=1$, $x_{1}=x_{2}=a$, and
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21462,7 +21462,7 @@ Prove that all entire functions that are also injective take the form $f(z) = az
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21499,7 +21499,7 @@ Prove that the convergence of $\Sigma a_{n}$ implies the convergence of $\sum \f
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21536,7 +21536,7 @@ Prove that $x^3 - 9$ is irreducible in $\mathbb{F}_{31}$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21573,7 +21573,7 @@ Prove that the multiplication of residue class $\mathbb{Z}/n\mathbb{Z}$ is assoc
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21610,7 +21610,7 @@ Let $A$ be a normal subgroup of a group $G$, and suppose that $b \in G$ is an el
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21647,7 +21647,7 @@ For $x$ an element in $G$ show that $x$ and $x^{-1}$ have the same order.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21684,7 +21684,7 @@ Prove that a group of order 9 must be abelian.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21721,7 +21721,7 @@ Let $P$ be a normal Sylow $p$-subgroup of $G$ and let $H$ be any subgroup of $G$
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21758,7 +21758,7 @@ Prove that $(a_1a_2\dots a_n)^{-1} = a_n^{-1}a_{n-1}^{-1}\dots a_1^{-1}$ for all
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21795,7 +21795,7 @@ Let $p: X \rightarrow Y$ be a quotient map. Show that if each set $p^{-1}(\{y\})
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21832,7 +21832,7 @@ A continuous, strictly increasing function $\mu \colon (0, \infty) \rightarrow (
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21869,7 +21869,7 @@ If $n$ is not a prime, show that $(n-1) ! \equiv 0(n)$, except when $n=4$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21906,7 +21906,7 @@ Prove that if $|G|=2907$ then $G$ is not simple.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21943,7 +21943,7 @@ Prove that $f(x) = x^3 + 3x + 2$ is irreducible in $Q[x]$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -21980,7 +21980,7 @@ Prove that if $a \in \mathbf{F}$, $v \in V$, and $av = 0$, then $a = 0$ or $v = 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22017,7 +22017,7 @@ Show that the countable collection \[\{(a, b) \times (c, d) \mid a < b \text{ an
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22054,7 +22054,7 @@ Prove that every homomorphism of fields is injective.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22091,7 +22091,7 @@ If $P \triangleleft G$, $P$ a $p$-Sylow subgroup of $G$, prove that $\varphi(P) 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22128,7 +22128,7 @@ Let $f$ and $g$ be continuous mappings of a metric space $X$ into a metric space
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：4
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22165,7 +22165,7 @@ Let $T$ be the group of $2\times 2$ matrices $A$ with entries in the field $\mat
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22202,7 +22202,7 @@ If $a$ is a nonzero integer, then for $n>m$ show that $\left(a^{2^{n}}+1, a^{2^{
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22239,7 +22239,7 @@ Let $q \in \mathbb{Z}$ be a prime with $q \equiv 3 \bmod 4$. Prove that the quot
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22276,7 +22276,7 @@ Let $A$ and $B$ be groups. Prove that $A \times B \cong B \times A$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22313,7 +22313,7 @@ Prove that the polynomial $x^{2}-\sqrt{2}$ is irreducible over $\mathbb{Z}[\sqrt
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22350,7 +22350,7 @@ Suppose that $G$ is an abelian group of order $p^nm$ where $p \nmid m$ is a prim
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22387,7 +22387,7 @@ Let $p: X \rightarrow Y$ be a continuous map. Show that if there is a continuous
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22424,7 +22424,7 @@ Prove that $x^2+x+1$ is irreducible in the field $\mathbb{F}_2$.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22461,7 +22461,7 @@ Prove that there exists a normal subgroup that is not characteristic.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22498,7 +22498,7 @@ Show that $[0, 1]^\omega$ is not locally compact in the uniform topology.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22535,7 +22535,7 @@ Prove that if $H$ and $K$ are finite subgroups of $G$ whose orders are relativel
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22572,7 +22572,7 @@ Suppose $f^{\prime}(x), g^{\prime}(x)$ exist, $g^{\prime}(x) \neq 0$, and $f(x)=
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：3
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22609,7 +22609,7 @@ Prove that every open set in $\mathbb{R}$ is the union of an at most countable c
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22646,7 +22646,7 @@ Prove that $\frac{1}{2}+\frac{1}{3}+\cdots+\frac{1}{n}$ is not an integer.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22683,7 +22683,7 @@ Suppose $S, T \in \mathcal{L}(V)$. Prove that $S T$ and $T S$ have the same eige
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22720,7 +22720,7 @@ Suppose $f$ is an analytic function defined everywhere in $\mathbb{C}$ and such 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22757,7 +22757,7 @@ Prove that no group of order 224 is simple.
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22794,7 +22794,7 @@ Prove that if $f$ is holomorphic in the unit disc, bounded and not identically z
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22831,7 +22831,7 @@ Let $G$ be a group with subgroups $H$ and $K$ with $H \leq K$. Prove that if $H$
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22868,7 +22868,7 @@ Let $\mathcal{T}_\alpha$ be a family of topologies on $X$. Show that there is a 
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22905,7 +22905,7 @@ Let $x$ be an element of $G$. Prove that if $|x|=n$ for some positive integer $n
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：2
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22942,7 +22942,7 @@ Prove that the union of two subspaces of $V$ is a subspace of $V$ if and only if
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：第二份独立审核（锁定前不得查看成员甲答案）
+- 本人职责：第二份独立审核（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
@@ -22979,7 +22979,7 @@ If a group $G$ has no proper subgroups, prove that $G$ is cyclic of order $p$, w
 - 数据组：ProofNet-250 v0.1
 - 对象路径：`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`
 - 估算工作权重：1
-- 本人职责：首次独立主审（锁定前不得查看成员甲答案）
+- 本人职责：首次独立主审（锁定前不得查看 Person A 答案）
 
 #### 题干（仓库原文）
 
