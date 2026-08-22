@@ -53,7 +53,45 @@ def build() -> dict:
 
 def main() -> None:
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(build(), ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
+    manifest = build()
+    OUT.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
+    source_rows = {
+        row["case_id"]: row for row in (
+            json.loads(line) for line in (SOURCE / "candidate.jsonl").read_text(encoding="utf-8").splitlines()
+        )
+    }
+    cases = [{
+        "case_id": item["case_id"],
+        "domain": item["domain"],
+        "problem": source_rows[item["case_id"]]["problem"],
+        "proof": source_rows[item["case_id"]]["proof"],
+        "annotation": None,
+    } for item in manifest["records"]]
+    for slot in ("annotator_a", "annotator_b"):
+        packet = {
+            "schema_version": "m7-pilot-annotation-packet-0.1",
+            "reviewer_slot": slot,
+            "independence_rule": "complete_and_hash_lock_before_viewing_other_packet",
+            "required_fields": [
+                "proof_verdict", "first_error", "error_type", "counterexample_scope",
+                "repairability", "evidence", "notes",
+            ],
+            "cases": cases,
+        }
+        (OUT.parent / f"{slot}_packet.json").write_text(
+            json.dumps(packet, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
+        )
+    adjudication = {
+        "schema_version": "m7-pilot-adjudication-0.1",
+        "status": "blocked_until_two_locked_independent_packets",
+        "third_expert_identity": None,
+        "annotator_a_sha256": None,
+        "annotator_b_sha256": None,
+        "disagreements": [],
+    }
+    (OUT.parent / "adjudication_template.json").write_text(
+        json.dumps(adjudication, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
+    )
 
 
 if __name__ == "__main__":
