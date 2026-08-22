@@ -9,6 +9,7 @@ class M6M7ExecutionPreflightTest(unittest.TestCase):
         result = build()
         self.assertEqual(result, json.loads(OUT.read_text(encoding="utf-8")))
         self.assertEqual("execution_allowed_scientific_claims_blocked", result["status"])
+        self.assertTrue(result["checks"]["opc_250_candidate_bytes_valid"])
         self.assertTrue(result["m6_execution_allowed"])
         self.assertTrue(result["m7_execution_allowed"])
         self.assertFalse(result["scientific_claim_allowed"])

@@ -21,6 +21,12 @@ def canonical(value: object) -> str:
                                      separators=(",", ":")).encode()).hexdigest()
 
 
+def repository_text_sha256(path: Path) -> str:
+    """Hash repository-canonical LF bytes, independent of checkout platform."""
+    normalized = path.read_bytes().replace(b"\r\n", b"\n")
+    return hashlib.sha256(normalized).hexdigest()
+
+
 def formal_candidate_ready() -> bool:
     """Verify the frozen OPC candidate from repository bytes, not a status claim."""
     base = ROOT / "data/benchmarks/m7/opc_250_v0_2"
@@ -40,7 +46,8 @@ def formal_candidate_ready() -> bool:
         and split_counts == manifest.get("split_counts")
         and canonical(records) == manifest.get("candidate_digest")
         and canonical(seeds) == manifest.get("seed_annotation_digest")
-        and hashlib.sha256(required[3].read_bytes()).hexdigest() == manifest.get("license_sha256")
+        and manifest.get("license_hash_scope") == "repository_blob_lf"
+        and repository_text_sha256(required[3]) == manifest.get("license_sha256")
         and bool(manifest.get("repository"))
         and bool(manifest.get("commit"))
         and bool(manifest.get("license"))

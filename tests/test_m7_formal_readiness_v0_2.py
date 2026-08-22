@@ -1,7 +1,13 @@
 import json
 import unittest
 
-from scripts.audit_m7_formal_readiness_v0_2 import OUT, build, formal_candidate_ready
+from scripts.audit_m7_formal_readiness_v0_2 import (
+    OUT,
+    ROOT,
+    build,
+    formal_candidate_ready,
+    repository_text_sha256,
+)
 
 
 class M7FormalReadinessAuditTest(unittest.TestCase):
@@ -22,6 +28,11 @@ class M7FormalReadinessAuditTest(unittest.TestCase):
         self.assertTrue(audit["user_authorized_execution"]["m6_execution_allowed"])
         self.assertTrue(audit["user_authorized_execution"]["m7_execution_allowed"])
         self.assertFalse(audit["user_authorized_execution"]["scientific_claim_allowed"])
+
+    def test_repository_text_hash_is_checkout_independent(self):
+        expected = "2c4d0543f74b220aaa1d7e9cd2afe43c9a2177e97f0b1511cc4191c433fdb7b2"
+        license_path = ROOT / "data/benchmarks/m7/opc_250_v0_2/LICENSE.OpenProofCorpus"
+        self.assertEqual(expected, repository_text_sha256(license_path))
 
     def test_every_blocker_has_a_handoff(self):
         audit = build()
