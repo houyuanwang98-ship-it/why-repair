@@ -103,14 +103,30 @@ COMMON = """
 """
 
 
-def header(step: int, title: str, person: str, intro: str, requirements: list[str], count: int, unit: str) -> str:
+def header(step: int, title: str, person: str, intro: str, requirements: list[str], count: int, unit: str, *, batch_mode: bool = False) -> str:
     req = "\n".join(f"{i}. {x}" for i, x in enumerate(requirements, 1))
-    return f"# 第{step}步：{title}——{person}工作包\n\n## 简介\n\n{intro}\n\n本工作包分配给 **{person}**，共 **{count} {unit}**。只完成本文件不足以关闭该步骤；必须与另一人的工作包合并、比较分歧并完成必要裁决。\n\n## 本步要求\n\n{req}\n{COMMON}\n## 逐项人工检验\n"
+    discipline = COMMON if not batch_mode else COMMON.replace("5. 每个对象都必须填写结论、理由和证据路径，空白对象视为未审核。", "5. 每个抽样、异常或需要裁决的对象都必须填写结论、理由和证据路径；其余对象由批次决定覆盖。")
+    section = "报告内容" if batch_mode else "逐项人工检验"
+    return f"# 第{step}步：{title}——{person}工作包\n\n## 简介\n\n{intro}\n\n本工作包分配给 **{person}**，共 **{count} {unit}**。只完成本文件不足以关闭该步骤；必须与另一人的工作包合并、比较分歧并完成必要裁决。\n\n## 本步要求\n\n{req}\n{discipline}\n## {section}\n"
 
 
-def finish(count: int, unit: str) -> str:
+def finish(count: int, unit: str, requirements: list[str]) -> str:
+    checklist = "\n".join(f"- [ ] {item}" for item in requirements)
     return f"""
-## 工作包汇总
+## 批次级人工验证清单
+
+本步骤不要求逐个对象重复填写审核表。审核者应通读本文件列出的全部对象，结合机器检查定位异常，抽查正常对象，并在发现问题时把对象编号、理由与证据集中登记在下方。
+
+{checklist}
+
+### 抽样与异常记录
+
+- 抽样方法、覆盖范围与样本量：__________________________________________________
+- 机器异常及人工复核结果：______________________________________________________
+- 发现问题的对象编号、理由与证据路径：__________________________________________
+- 需要另一审核者或第三方裁决的分歧：____________________________________________
+
+### 工作包汇总与最终决定
 
 - 分配总数：{count} {unit}
 - 已完成：________
@@ -122,61 +138,131 @@ def finish(count: int, unit: str) -> str:
 - 分类数量与分配总数一致：________（是／否）
 - 阻塞问题：____________________________________________________________________
 - 下一步行动：__________________________________________________________________
+- 最终决定：________（通过／修订后通过／部分排除／不通过／不确定）
+- 决定理由与证据路径：__________________________________________________________
 - 本工作包状态：________（未开始／进行中／阻塞／完成）
 """
 
 
-def source_card(n: int, item: dict[str, Any]) -> str:
-    machine = ["JSON 记录已成功解析", f"源文件 SHA-256：`{item['_file_digest']}`"]
-    for k, label in (("raw_bytes_sha256", "原始字节摘要"), ("source_record_digest", "来源记录摘要"), ("license_status", "机器许可状态"), ("split", "数据划分")):
-        if item.get(k) is not None:
-            machine.append(f"{label}：`{item[k]}`")
-    if not item.get("source_uri"):
-        machine.append("逐题稳定外部来源地址：未提供")
+def source_boundary_finish(person: str, count: int) -> str:
     return f"""
-<!-- 人工检验对象 -->
-### {n}. {case_id(item)}
+## {person} 批次级人工审核
+
+本步骤不要求对 **{count} 道题**重复填写来源、题干、OCR、重复、权利等字段。机器检查负责全量发现；{person} 只对分布代表性、机器异常和最终纳入范围作人工判断。
+
+### 一、机器检查覆盖确认
+
+- 全量对象数与本工作包一致：________（是／否）
+- 已运行的机器检查及版本／提交：________________________________________________
+- 机器异常总数及分类统计（来源／解析／许可／重复泄漏／语义差异／其他）：____________
+- 无法由当前机器检查覆盖的已知限制：____________________________________________
+
+### 二、分层代表性审核
+
+| 分层维度 | 当前分布／证据 | 代表性判断（合适／不合适／不确定） | 缺口、偏差或处置 |
+|---|---|---|---|
+| 数据组与来源族 | ________ | ________ | ________ |
+| 数学领域／主题 | ________ | ________ | ________ |
+| 难度与证明长度／结构 | ________ | ________ | ________ |
+| 正确／错误证明及错误类型 | ________ | ________ | ________ |
+| 训练、开发、Pilot、测试的边界 | ________ | ________ | ________ |
+
+- 总体代表性结论：________（合适／不合适／不确定）
+- 代表性理由与证据路径：________________________________________________________
+
+### 三、抽样语义复核
+
+抽样用于校验机器检查没有系统性漏报；不是把全量检查重新人工执行。每个数据组至少抽样 ________ 题，并覆盖机器异常、边界项及不同领域／难度。
+
+| 样本／题号 | 抽样理由 | 人工观察（题意、来源、语义或权利） | 是否与机器结果一致 | 后续行动 |
+|---|---|---|---|---|
+| ________ | ________ | ________ | ________ | ________ |
+| ________ | ________ | ________ | ________ | ________ |
+| ________ | ________ | ________ | ________ | ________ |
+
+### 四、异常与边界项登记表
+
+仅登记机器标红、抽样不一致或需要裁决的对象；无异常时填写“无”。
+
+| 题号／对象 | 触发原因 | 人工裁决 | 证据路径 | 处置 |
+|---|---|---|---|---|
+| ________ | ________ | ________ | ________ | ________ |
+| ________ | ________ | ________ | ________ | ________ |
+| ________ | ________ | ________ | ________ | ________ |
+
+### 五、最终决定
+
+- 最终决定：________（纳入／修订后纳入／部分排除／全部排除／不确定）
+- 纳入范围／排除清单：__________________________________________________________
+- 决定理由（结合代表性、机器异常与抽样结果）：__________________________________
+- 需要升级至另一审核者／第三方／许可审查的事项：________________________________
+- 审核者：________
+- 审核时间：________
+- 证据路径：____________________________________________________________________
+- 本工作包状态：________（未开始／进行中／阻塞／完成）
+"""
+
+
+def source_boundary_overview(person: str, items: list[dict[str, Any]]) -> str:
+    groups: dict[tuple[str, str], int] = {}
+    for item in items:
+        key = (str(item["_group"]), str(item["_path"]))
+        groups[key] = groups.get(key, 0) + 1
+    rows = "\n".join(
+        f"| {group} | {count} | `{path}` | JSON 解析与文件摘要 |"
+        for (group, path), count in groups.items()
+    )
+    return f"""
+## 全量机器盘点（无需逐题人工填写）
+
+本工作包覆盖 **{len(items)} 道题**。题干、证明、来源、许可证、近重复和数据边界的原始记录均保留在下列数据文件中；{person} 不需要逐题填写。实际运行的机器检查结果、异常数量和局限统一填写在文末人工审核表中。
+
+| 数据组 | 对象数 | 原始记录路径 | 基础机器检查 |
+|---|---:|---|---|
+{rows}
+
+## 全部原题与证明（保留 Markdown/LaTeX）
+
+以下对象从 JSONL 源记录直接提取，并按 {person} 的原始分配顺序完整串联。题干、假设、证明和数学表达均不翻译、不改写；Markdown 与 LaTeX 保持原格式，以便在 VS Code 预览中渲染。各题不设置人工填空，审核者只在文件末尾填写汇总标准。
+"""
+
+
+def original_markdown(value: Any, *, proof: bool = False) -> str:
+    if value in (None, "", []):
+        return "（原始记录未提供）"
+    if not isinstance(value, list):
+        return str(value)
+    blocks: list[str] = []
+    for index, entry in enumerate(value, 1):
+        if isinstance(entry, dict):
+            label = entry.get("node_id") or entry.get("step_id") or entry.get("id") or index
+            content = entry.get("text") or entry.get("content") or json.dumps(entry, ensure_ascii=False)
+            blocks.append(f"{'#####' if proof else '-'} {'证明步骤 ' if proof else ''}{label}{'\n\n' if proof else '：'}{content}")
+        else:
+            blocks.append(f"{'##### 证明步骤 ' + str(index) + chr(10) + chr(10) if proof else '- '}{entry}")
+    return "\n\n".join(blocks) if proof else "\n".join(blocks)
+
+
+def source_card_original(n: int, item: dict[str, Any]) -> str:
+    return f"""
+### {n:03d}. {case_id(item)}
 
 - 数据组：{item['_group']}
-- 对象路径：`{item['_path']}`
-- 领域：`{item.get('domain', '未提供')}`
-- 来源地址：{item.get('source_uri', '未提供')}
+- 原始记录：`{item['_path']}`
 
-#### 题干（仓库原文）
+#### 原题（JSONL 原文）
 
-```text
-{text(theorem(item))}
-```
+{theorem(item)}
 
-#### 假设与证明（仓库原文）
+#### 显式假设（JSONL 原文）
 
-```text
-假设：{text(item.get('assumptions'))}
+{original_markdown(item.get('assumptions'))}
 
-证明：{text(item.get('proof') or item.get('proof_steps') or item.get('flawed_proof_steps'))}
-```
+#### 完整证明（JSONL 原文）
 
-#### 机器验证结果（不代表人工通过）
+{original_markdown(item.get('proof') or item.get('proof_steps') or item.get('flawed_proof_steps'), proof=True)}
 
-{chr(10).join(f'- {x}' for x in machine)}
-
-#### 人工检验（填空）
-
-- 已打开原始来源并逐项对照：________（是／否／不确定）
-- 来源可靠且定位准确：________（是／否／不确定）
-- 题干忠实性：________（通过／需修订／不通过）
-- 假设、量词、定义域和值域完整正确：________（是／否／不确定）
-- 参考证明对应原题：________（是／否／不确定／不适用）
-- OCR、翻译、公式、Unicode 或规范化改变数学意义：________（无／有／不确定）
-- 歧义、自相矛盾或缺失条件：________（无／有／不确定）
-- 重复、近重复或泄漏风险：________（无／有／不确定）
-- 代表性：________（合适／不合适／不确定）
-- 注入错误忠实性：________（通过／不通过／不适用／不确定）
-- 权利状态：________（可用／受限／不确定）
-- 差异、风险与理由：____________________________________________________________
-- 证据路径：____________________________________________________________________
-- 必要行动：________（无／修订／补来源／去重／重新划分／排除／升级复核）
-- 最终决定：________（纳入／修订后纳入／排除／不确定）
+---
 """
 
 
@@ -184,27 +270,25 @@ def math_case_card(n: int, item: dict[str, Any], kind: str) -> str:
     cid = case_id(item)
     path = item.get("_path", "未提供")
     prompt = theorem(item)
-    fields = {
-        "gold": ["原定理真假", "证明整体裁决", "节点切分", "直接依赖", "逐节点裁决", "第一处真实错误", "错误类型", "下游阻塞", "反例范围", "可修复性"],
-        "graph": ["节点最小且完整", "源文本对齐", "自包含改写等价", "节点类型", "直接依赖", "缺失依赖", "无关依赖", "作用域或上下文泄漏", "局部证明义务", "后代撤销与重验"],
-        "evaluator": ["人工数学裁决", "系统裁决", "定理适用性", "缺失条件", "计算有效性", "首错位置", "反例有效性与范围", "自然语言到程序表达式忠实性", "错误证书目标绑定", "证书上下文完整且无需隐藏信息"],
-        "blind": ["盲态数学质量", "方法身份是否泄漏", "题面与上下文公平", "等价改写稳定性", "符号替换稳定性", "首错稳定性", "证书稳定性", "补丁稳定性", "共享盲点", "异常原因（揭盲后填写）"],
-    }[kind]
-    blanks = "\n".join(f"- {x}：________" for x in fields)
     return f"""
-<!-- 人工检验对象 -->
-### {n}. {cid}
+### {n:03d}. {cid}
 
 - 数据组：{item.get('_group', '正式审核对象')}
 - 对象路径：`{path}`
 - 估算工作权重：{weight(item)}
 - 本人职责：{item.get('_assignment_role', '独立主审')}
 
-#### 题干（仓库原文）
+#### 原题（JSONL 原文）
 
-```text
-{text(prompt)}
-```
+{prompt}
+
+#### 显式假设（JSONL 原文）
+
+{original_markdown(item.get('assumptions'))}
+
+#### 完整证明（JSONL 原文）
+
+{original_markdown(item.get('proof') or item.get('proof_steps') or item.get('flawed_proof_steps'), proof=True)}
 
 #### 机器验证结果（如有，不代表人工通过）
 
@@ -212,43 +296,53 @@ def math_case_card(n: int, item: dict[str, Any], kind: str) -> str:
 - 现有标签／预测：{text(item.get('proof_verdict') or item.get('validity_status') or item.get('gold_error_type'))}
 - 现有首错：{text(item.get('first_error') or item.get('gold_first_invalid_step'))}
 
-#### 人工检验（填空）
-
-{blanks}
-- 详细理由：____________________________________________________________________
-- 证据路径：____________________________________________________________________
-- 初次结果：________（通过／不通过／需修订／不确定）
-- 必要修订：____________________________________________________________________
+---
 """
 
 
-def task_card(n: int, item: dict[str, Any], labels: list[str]) -> str:
+def task_card(n: int, item: dict[str, Any]) -> str:
     desc = item.get("description") or item.get("attack") or item.get("claim") or item.get("_path") or case_id(item)
+    raw = item.get("_content")
+    raw_section = "" if raw is None else f"""
+
+#### 原始记录
+
+```json
+{raw}
+```
+"""
     return f"""
-<!-- 人工检验对象 -->
-### {n}. {case_id(item)}
+### {n:03d}. {case_id(item)}
 
 - 对象：`{item.get('_path', item.get('target', '未提供'))}`
 - 任务：{desc}
 - 机器线索：{item.get('machine', '仅确认对象存在；不代表人工通过')}
+{raw_section}
 
-#### 人工检验（填空）
-
-{chr(10).join(f'- {x}：________' for x in labels)}
-- 实际观察／数学理由：____________________________________________________________
-- 复现或执行步骤：________________________________________________________________
-- 证据路径：______________________________________________________________________
-- 必要修订：______________________________________________________________________
-- 初次结果：________（通过／不通过／需修订／不确定／不适用）
+---
 """
 
 
 def write_step(step: int, slug: str, title: str, intro: str, req: list[str], buckets: tuple[list[dict[str, Any]], list[dict[str, Any]]], renderer, unit: str) -> None:
     for idx, (folder, person) in enumerate(PEOPLE):
         items = buckets[idx]
-        body = [header(step, title, person, intro, req, len(items), unit)]
-        body.extend(renderer(n, item) for n, item in enumerate(items, 1))
-        body.append(finish(len(items), unit))
+        effective_intro, effective_req = intro, req
+        if step == 2:
+            effective_intro = f"从 JSONL 数据源直接提取 {person} 的全部原题、假设和完整证明，按原始分配顺序串联并保留 Markdown/LaTeX；每题不设置重复填空，人工判断统一在报告末尾汇总。"
+            effective_req = ["确认 304 道题与 JSONL 源记录的题号、顺序、题面、假设和证明一致。", "使用 Markdown 预览阅读保留的原始数学格式。", "确认机器检查覆盖全量对象，并汇总其异常与限制。", "按数据组、领域、难度、证明结构和数据边界判断整体代表性。", "仅登记异常或需要人工裁决的对象，并作出一次批次级最终决定。"]
+        render_items = []
+        for item in items:
+            item = dict(item)
+            item["_person"] = person
+            render_items.append(item)
+        body = [header(step, title, person, effective_intro, effective_req, len(items), unit, batch_mode=True)]
+        if step == 2:
+            body.append(source_boundary_overview(person, render_items))
+            body.extend(source_card_original(n, item) for n, item in enumerate(render_items, 1))
+            body.append(source_boundary_finish(person, len(items)))
+        else:
+            body.extend(renderer(n, item) for n, item in enumerate(render_items, 1))
+            body.append(finish(len(items), unit, effective_req))
         out = BASE / folder / f"step{step:02d}_{slug}.md"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text("".join(body), encoding="utf-8", newline="\n")
@@ -292,15 +386,15 @@ def main() -> None:
             obj = json.loads(path.read_text(encoding="utf-8"))
         except json.JSONDecodeError:
             obj = {}
-        patches.append({"id": obj.get("patch_id") or path.stem, "_path": rel, "description": "逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果", "machine": f"JSON 可解析；SHA-256 `{digest(rel)}`"})
+        patches.append({"id": obj.get("patch_id") or path.stem, "_path": rel, "description": "逐补丁核对输入隔离、数学正确性、局部性、问题保持、后代重验和整篇证明结果", "machine": f"JSON 可解析；SHA-256 `{digest(rel)}`", "_content": json.dumps(obj, ensure_ascii=False, indent=2)})
     step6 = balance(patches)
-    write_step(6, "repair_pilot", "真实修复 Pilot 与逐补丁人工审核", "对仓库中每个补丁版本逐一判断是否真正修复原证明，并把补丁接受与整篇证明成功分开记录。", ["补丁生成者不得作最终数学接受判断。", "所有声称成功、false repair 和 new-error introduction 必须全量审核。", "新增假设、弱化结论、改变定义域或偷换目标必须拒绝。", "后代未完整重验不得计为成功。"], step6, lambda n, x: task_card(n, x, ["输入隔离", "保持原问题", "数学有效", "最小且局部", "引入新错误", "后代已重验", "补丁评审结果", "整篇证明结果", "失败原因"]), "个补丁版本")
+    write_step(6, "repair_pilot", "真实修复 Pilot 与逐补丁人工审核", "对仓库中每个补丁版本逐一判断是否真正修复原证明，并把补丁接受与整篇证明成功分开记录。", ["补丁生成者不得作最终数学接受判断。", "所有声称成功、false repair 和 new-error introduction 必须全量审核。", "新增假设、弱化结论、改变定义域或偷换目标必须拒绝。", "后代未完整重验不得计为成功。"], step6, task_card, "个补丁版本")
 
     controller_files = ["harness/controller.py", "harness/m4_controller.py", "harness/m5_repair.py", "harness/m5_sequential_repair.py", "harness/m6_controller.py", "harness/m6_experiments.py", "harness/m7_controller.py", "harness/m8_controller.py", "harness/provider_runner.py"]
     attacks = ["完整状态路径追踪", "Generator 自审与角色伪造", "陈旧补丁与未来边", "自环、循环 DAG 与跨题依赖", "事务中途失败与完整回滚", "节点变更后的后代撤销", "配置变更后的缓存失效", "跨方法／模型／Prompt 缓存污染", "失败、超时、拒绝、解析错误与重试账本", "Provider 调用、token、价格与成本核对", "session 中断恢复", "并发、重复、乱序与部分写入", "旧 Schema 迁移与失败闭合", "不可信题面／响应字段／截断 JSON", "压力负载与困难样本丢失"]
     controls = [{"id": f"C-{i:03d}", "_path": f, "attack": a, "description": a, "machine": "目标文件存在" if (ROOT / f).exists() else "目标文件缺失，须记录为 finding"} for i, (f, a) in enumerate(((f, a) for f in controller_files for a in attacks), 1)]
     step7 = (controls[::2], controls[1::2])
-    write_step(7, "controller_integrity", "Controller、缓存、状态与真实运行完整性审核", "通过人工代码审查和主动对抗测试验证权限、版本、回滚、缓存、账本、Provider 记录和压力情形。", ["每项攻击必须记录期望行为、实际行为和复现步骤。", "独立核对真实 Provider 控制台与账单。", "高严重度 finding 修复后必须重放原攻击。", "任何选择性漏记或失败开放均判为不通过。"], step7, lambda n, x: task_card(n, x, ["期望行为", "实际行为", "结果", "严重度", "复测结果", "中断恢复结果", "并发与顺序结果", "迁移结果", "不可信输入结果", "压力与部分响应结果"]), "项对抗检查")
+    write_step(7, "controller_integrity", "Controller、缓存、状态与真实运行完整性审核", "通过人工代码审查和主动对抗测试验证权限、版本、回滚、缓存、账本、Provider 记录和压力情形。", ["每项攻击必须记录期望行为、实际行为和复现步骤。", "独立核对真实 Provider 控制台与账单。", "高严重度 finding 修复后必须重放原攻击。", "任何选择性漏记或失败开放均判为不通过。"], step7, task_card, "项对抗检查")
 
     step8 = balance(official)
     write_step(8, "fairness_statistics_blind", "实验公平性、统计与盲态案例审核", "在方法身份和聚合分数不可见时审核数学质量、等价表达稳定性和共同盲点，并在揭盲后检查公平性、统计与异常原因。", ["锁定逐例盲态结论前不得查看方法身份或聚合分数。", "配置差异只能来自预注册目标机制。", "所有样本保留在 intention-to-treat 分母。", "从原始 ledger 独立重算主要端点和配对统计。", "功效不足时不得作强泛化或无差异结论。"], step8, lambda n, x: math_case_card(n, x, "blind"), "道盲态案例")
@@ -315,7 +409,7 @@ def main() -> None:
         rel = path.relative_to(ROOT).as_posix()
         release_tasks.append({"id": f"R-{i:03d}", "_path": rel, "description": "；".join(checks), "machine": f"文件存在；SHA-256 `{digest(rel)}`"})
     step9 = balance(release_tasks)
-    write_step(9, "release_reproduction", "独立复现、论文主张与发布审核", "在干净环境复现项目，并逐发布物检查数字、主张、数学案例、权利、隐私、物料一致性与勘误流程。", ["只使用发布材料，不依赖开发机缓存或隐藏知识。", "每项主张建立主张—数据—运行—统计—案例证据链。", "自然语言审计不得表述为形式化证明保证。", "逐文件检查权利、隐私和敏感信息。", "演练发布后严重错误处置流程。"], step9, lambda n, x: task_card(n, x, ["干净安装", "测试", "数据构建", "结果回放", "指标复现", "论文数字", "主张支持", "数学案例", "权利审核", "隐私审核", "文档完整", "勘误流程", "发布决定"]), "个发布对象")
+    write_step(9, "release_reproduction", "独立复现、论文主张与发布审核", "在干净环境复现项目，并逐发布物检查数字、主张、数学案例、权利、隐私、物料一致性与勘误流程。", ["只使用发布材料，不依赖开发机缓存或隐藏知识。", "每项主张建立主张—数据—运行—统计—案例证据链。", "自然语言审计不得表述为形式化证明保证。", "逐文件检查权利、隐私和敏感信息。", "演练发布后严重错误处置流程。"], step9, task_card, "个发布对象")
 
     # 两人的工作目录页。
     titles = {2: "题目原文、来源与数据边界", 3: "独立人工 Gold", 4: "节点、依赖图、上下文与证明义务", 5: "数学裁决、定理、首错与反例", 6: "真实修复 Pilot 与补丁", 7: "Controller 与运行完整性", 8: "实验公平性、统计与盲态案例", 9: "独立复现、论文与发布"}
@@ -324,7 +418,7 @@ def main() -> None:
         links = "\n".join(f"{i - 1}. [第{i}步：{titles[i]}](step{i:02d}_{slugs[i]}.md)" for i in range(2, 10))
         catalog = f"""# {person}人工检验工作目录
 
-本目录包含《项目人工审核与验证执行手册》第二至第九步中分配给 **{person}** 的全部填空式人工检验工作。每一步必须独立完成；在锁定要求明确的步骤中，不得提前查看另一人的答案。
+本目录包含《项目人工审核与验证执行手册》第二至第九步中分配给 **{person}** 的全部人工检验工作。每人每个大步各使用一个独立 Markdown 文件。文件按顺序列出全部分配对象及其可用原始内容，不要求逐项重复填表；审核者通读、抽样并复核异常后，只在每份文件末尾填写一次批次级验证清单与最终决定。在锁定要求明确的步骤中，不得提前查看另一人的答案。
 
 ## 执行顺序
 
