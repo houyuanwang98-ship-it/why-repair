@@ -11,6 +11,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "docs" / "manual_validation"
 PEOPLE = (("person_a", "Person A"), ("person_b", "Person B"))
+PERSON_B_STEP2_COMPLETION_DATE = "2026-08-28"
 
 
 def jsonl(path: str) -> list[dict[str, Any]]:
@@ -145,6 +146,62 @@ def finish(count: int, unit: str, requirements: list[str]) -> str:
 
 
 def source_boundary_finish(person: str, count: int) -> str:
+    if person == "Person B":
+        return f"""
+## Person B 批次级人工审核
+
+### 审核完成记录
+
+- 人工审核覆盖：**{count}／{count} 道题**
+- 完成状态：**已完成全部题目的人工审核**
+- 完成确认日期：{PERSON_B_STEP2_COMPLETION_DATE}
+- 确认来源：项目所有者在当前任务中确认
+- 说明：当前任务只确认了全量人工审核已经完成，未提供逐项审核结论、异常统计、代表性结论或最终纳入决定。下列未知项据实标为“未提供”，不以完成状态推定全部题目通过。
+
+### 一、机器检查覆盖确认
+
+- 全量对象数与本工作包一致：是（304／304）
+- 已运行的机器检查及版本／提交：未提供
+- 机器异常总数及分类统计（来源／解析／许可／重复泄漏／语义差异／其他）：未提供
+- 无法由当前机器检查覆盖的已知限制：未提供
+
+### 二、分层代表性审核
+
+| 分层维度 | 当前分布／证据 | 代表性判断 | 缺口、偏差或处置 |
+|---|---|---|---|
+| 数据组与来源族 | 本文件列出的 304 道分配题目 | 未提供 | 待补充审核结论 |
+| 数学领域／主题 | 本文件各题原始记录 | 未提供 | 待补充审核结论 |
+| 难度与证明长度／结构 | 本文件各题完整题面与证明 | 未提供 | 待补充审核结论 |
+| 正确／错误证明及错误类型 | 本文件及对应 JSONL 源记录 | 未提供 | 待补充审核结论 |
+| 训练、开发、Pilot、测试的边界 | 本文件列出的数据组与源路径 | 未提供 | 待补充审核结论 |
+
+- 总体代表性结论：不确定（未提供审核结论）
+- 代表性理由与证据路径：未提供
+
+### 三、人工复核覆盖
+
+- 人工复核范围：本工作包全部 304 道题
+- 覆盖方式：全量人工审核（由项目所有者确认）
+- 逐项观察与结论：当前任务未提供，未作推定
+
+### 四、异常与边界项登记
+
+- 异常或边界项清单：未提供
+- 需要裁决的对象：未提供
+- 说明：“未提供”不等同于“无异常”。
+
+### 五、最终决定
+
+- 最终决定：不确定（最终纳入结论未提供）
+- 纳入范围／排除清单：未提供
+- 决定理由：未提供
+- 需要升级至另一审核者／第三方／许可审查的事项：未提供
+- 审核者：Person B
+- 审核时间：{PERSON_B_STEP2_COMPLETION_DATE}（完成确认日期）
+- 证据路径：`docs/manual_validation/person_b/step02_source_and_boundary.md` 及文件内列出的 JSONL 原始记录
+- 人工审核执行状态：完成（304／304）
+- 结论汇总状态：待补充
+"""
     return f"""
 ## {person} 批次级人工审核
 
@@ -354,7 +411,7 @@ def main() -> None:
 
     # 第二步：严格各 304 道，交错后保持数据组均衡。
     step2 = (all_cases[::2], all_cases[1::2])
-    write_step(2, "source_and_boundary", "题目原文、来源与数据边界审核", "逐题确认题面、证明、来源、数据划分和使用权利，解决转录、解释、选择、注入错误与泄漏问题。", ["逐字核对仓库版本和原始来源。", "检查假设、量词、定义域、公式排版及参考证明对应关系。", "判断歧义、代表性、重复／泄漏、许可与发布用途。", "注入错误样本必须比较注入前后版本。", "语义影响修订由另一人复查。"], step2, source_card, "道题")
+    write_step(2, "source_and_boundary", "题目原文、来源与数据边界审核", "逐题确认题面、证明、来源、数据划分和使用权利，解决转录、解释、选择、注入错误与泄漏问题。", ["逐字核对仓库版本和原始来源。", "检查假设、量词、定义域、公式排版及参考证明对应关系。", "判断歧义、代表性、重复／泄漏、许可与发布用途。", "注入错误样本必须比较注入前后版本。", "语义影响修订由另一人复查。"], step2, source_card_original, "道题")
 
     primary_a, primary_b = balance(official)
     ids_a = {case_id(x) for x in primary_a}
@@ -416,6 +473,12 @@ def main() -> None:
     slugs = {2: "source_and_boundary", 3: "independent_gold", 4: "nodes_dependencies", 5: "mathematical_evaluation", 6: "repair_pilot", 7: "controller_integrity", 8: "fairness_statistics_blind", 9: "release_reproduction"}
     for folder, person in PEOPLE:
         links = "\n".join(f"{i - 1}. [第{i}步：{titles[i]}](step{i:02d}_{slugs[i]}.md)" for i in range(2, 10))
+        progress_rows = []
+        for i in range(2, 10):
+            if person == "Person B" and i == 2:
+                progress_rows.append("| 第2步 | 人工审核完成；结论汇总待补充 | 304／304 | 最终纳入决定及异常统计未提供 | `step02_source_and_boundary.md` |")
+            else:
+                progress_rows.append(f"| 第{i}步 | 未开始／进行中／阻塞／完成 | ________ | ________ | ________ |")
         catalog = f"""# {person}人工检验工作目录
 
 本目录包含《项目人工审核与验证执行手册》第二至第九步中分配给 **{person}** 的全部人工检验工作。每人每个大步各使用一个独立 Markdown 文件。文件按顺序列出全部分配对象及其可用原始内容，不要求逐项重复填表；审核者通读、抽样并复核异常后，只在每份文件末尾填写一次批次级验证清单与最终决定。在锁定要求明确的步骤中，不得提前查看另一人的答案。
@@ -428,7 +491,7 @@ def main() -> None:
 
 | 步骤 | 状态 | 完成数／分配数 | 阻塞问题 | 证据路径 |
 |---|---|---:|---|---|
-""" + "\n".join(f"| 第{i}步 | 未开始／进行中／阻塞／完成 | ________ | ________ | ________ |" for i in range(2, 10)) + """
+""" + "\n".join(progress_rows) + """
 
 ## 交付签名
 
