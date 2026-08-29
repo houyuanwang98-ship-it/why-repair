@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-08-29 — Person B Step 3 human-review execution recorded
+
+- Recorded the repository owner's confirmation that Person B completed human review of all 600 assigned Step 3 cases across M2 Pilot, M2 B50, OPC-250 v0.2, and ProofNet-250 v0.1.
+- Added a hash-bound structured completion record and synchronized the Person B work-directory progress table.
+- Preserved the distinction between review execution and Gold acceptance: case-level decisions, blinding evidence, Person A comparison, and any required third-party adjudication remain outstanding, so no existing Gold was overwritten and the final Step 3 gate remains open.
+
 - Imported and hash-bound the six completed OPC-250 v0.2 supplemental human
   reviews. All six proposed first-error locations were corrected; the combined
   transfer now covers 25 human-reviewed cases, including 23 usable node Gold

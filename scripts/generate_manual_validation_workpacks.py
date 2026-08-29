@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "docs" / "manual_validation"
 PEOPLE = (("person_a", "Person A"), ("person_b", "Person B"))
 PERSON_B_STEP2_COMPLETION_DATE = "2026-08-28"
+PERSON_B_STEP3_COMPLETION_DATE = "2026-08-29"
 
 
 def jsonl(path: str) -> list[dict[str, Any]]:
@@ -260,6 +261,67 @@ def source_boundary_finish(person: str, count: int) -> str:
 """
 
 
+def independent_gold_finish(person: str, count: int, requirements: list[str]) -> str:
+    if person != "Person B":
+        return finish(count, "道正式样本", requirements)
+    return f"""
+## Person B 批次级人工审核
+
+### 审核完成记录
+
+- 人工审核覆盖：**{count}／{count} 道正式样本**
+- 完成状态：**已完成 Person B 全部独立人工审核**
+- 完成确认日期：{PERSON_B_STEP3_COMPLETION_DATE}
+- 确认来源：项目所有者在当前任务中确认
+- 审核范围：M2 工程 Pilot 50 道、M2 B50 50 道、OPC-250 v0.2 250 道、ProofNet-250 v0.1 250 道
+- 结构化完成记录：`step03_completion_record.json`
+- 说明：当前确认覆盖人工审核执行是否完成；未随任务提供逐题判定、分类统计、异常清单或 A/B 分歧裁决表。因此不从“已审核”推定“全部通过”，也不据此覆盖现有 Gold。
+
+### 执行纪律确认
+
+- [x] 已覆盖本工作包列出的 600 道正式样本。
+- [x] 审核者身份按 Person B 登记。
+- [x] 完成事实由项目所有者明确确认。
+- [ ] 未查看系统预测或 Person A 答案：当前任务未提供可独立验证的锁定／隔离证据。
+- [ ] 数学能力覆盖、超范围升级记录：当前任务未提供。
+- [ ] 下游阻塞与新数学错误区分记录：当前任务未提供逐题结果，无法复核。
+- [ ] A/B 分歧与第三方裁决：须待 Person A 结果合并后完成。
+
+### 分组覆盖
+
+| 数据组 | 已审核／分配 | 执行状态 | 逐题结论同步状态 |
+|---|---:|---|---|
+| M2 工程 Pilot | 50／50 | 完成 | 未随任务提供 |
+| M2 B50 | 50／50 | 完成 | 未随任务提供 |
+| OPC-250 v0.2 | 250／250 | 完成 | 未随任务提供 |
+| ProofNet-250 v0.1 | 250／250 | 完成 | 未随任务提供 |
+| **合计** | **600／600** | **完成** | **仅同步完成元数据** |
+
+### 结果、异常与裁决登记
+
+- 通过／不通过／需修订／不确定／排除分类：未提供，不能可靠汇总。
+- 发现问题的对象编号、理由与证据路径：未提供。
+- Person A / Person B 分歧：尚未比较；不得登记为“无分歧”。
+- 第三方裁决：尚未提供。
+- 数据同步处置：保存 600／600 完成状态、四个源数据文件 SHA-256 和边界说明；不修改逐题 Gold 字段。
+
+### 工作包汇总与最终决定
+
+- 分配总数：{count} 道正式样本
+- 已完成：{count}
+- 未完成：0
+- 人工审核执行状态：**完成**
+- 结论汇总状态：**待逐题结果导入**
+- A/B 合并与裁决状态：**待 Person A 结果比较及必要的第三方裁决**
+- 最终 Gold 冻结状态：**未关闭**
+- 阻塞问题：缺少逐题 Person B 判定、分类统计、异常清单、独立性证据及 A/B 裁决结果。
+- 下一步行动：导入 Person B 逐题结果；与 Person A 结果逐字段比较；保留双方原始意见；对未解决分歧执行第三方裁决后再冻结最终 Gold。
+- 最终决定：**人工审核执行完成；Step 3 总体验收暂不关闭**
+- 决定理由与证据路径：项目所有者确认 600／600 已审核；详细结果和联合裁决证据尚未进入仓库。证据见本文件与 `step03_completion_record.json`。
+- 本工作包状态：**人工执行完成／结论合并待办**
+"""
+
+
 def source_boundary_overview(person: str, items: list[dict[str, Any]]) -> str:
     groups: dict[tuple[str, str], int] = {}
     for item in items:
@@ -399,7 +461,10 @@ def write_step(step: int, slug: str, title: str, intro: str, req: list[str], buc
             body.append(source_boundary_finish(person, len(items)))
         else:
             body.extend(renderer(n, item) for n, item in enumerate(render_items, 1))
-            body.append(finish(len(items), unit, effective_req))
+            if step == 3:
+                body.append(independent_gold_finish(person, len(items), effective_req))
+            else:
+                body.append(finish(len(items), unit, effective_req))
         out = BASE / folder / f"step{step:02d}_{slug}.md"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text("".join(body), encoding="utf-8", newline="\n")
@@ -429,6 +494,41 @@ def main() -> None:
         step3_b.append(b_item)
     step3 = (step3_a, step3_b)
     write_step(3, "independent_gold", "独立人工 Gold 建立与裁决", "为正式样本独立建立证明真假、节点、依赖、首错、错误类型、反例范围和可修复性 Gold。", ["不得查看系统预测或另一审核者答案。", "按数学能力覆盖领域；超出能力范围必须升级。", "下游阻塞不得重复标为新数学错误。", "分歧必须保留双方理由并交第三人裁决。"], step3, lambda n, x: math_case_card(n, x, "gold"), "道正式样本")
+
+    step3_sources = [
+        "data/benchmarks/m2/source/pilot_50.jsonl",
+        "data/benchmarks/m2/source/pilot_B50.jsonl",
+        "data/benchmarks/m7/opc_250_v0_2/candidate.jsonl",
+        "data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl",
+    ]
+    step3_record = {
+        "schema_version": "manual-validation-person-b-step3-completion-0.1",
+        "reviewer_role": "person_b",
+        "step": 3,
+        "scope": "independent_human_gold_review",
+        "completion_confirmed_on": PERSON_B_STEP3_COMPLETION_DATE,
+        "confirmation_source": "repository_owner_explicit_confirmation_in_current_codex_task",
+        "assigned_cases": 600,
+        "reviewed_cases": 600,
+        "execution_status": "complete",
+        "dataset_counts": {"m2_engineering_pilot": 50, "m2_b50": 50, "opc_250_v0_2": 250, "proofnet_250_v0_1": 250},
+        "source_artifacts": [{"path": path, "sha256": digest(path)} for path in step3_sources],
+        "result_capture_status": "summary_only_detailed_case_results_not_provided",
+        "case_result_counts": None,
+        "case_level_findings": None,
+        "independence_evidence_status": "not_provided",
+        "person_a_comparison_status": "pending",
+        "third_party_adjudication_status": "pending_if_disagreements_exist",
+        "gold_mutation_performed": False,
+        "final_gold_freeze_status": "open",
+        "limitations": [
+            "Completion does not imply that every case passed.",
+            "No case-level Person B decisions or finding list were supplied in this task.",
+            "No independent lock or blinding evidence was supplied in this task.",
+            "Person A comparison and any required third-party adjudication remain outstanding.",
+        ],
+    }
+    (BASE / "person_b" / "step03_completion_record.json").write_text(json.dumps(step3_record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
 
     step4 = balance(official)
     write_step(4, "nodes_dependencies", "节点、依赖图、上下文与证明义务审核", "检查每道证明的节点切分、直接依赖、变量作用域、局部上下文和后代失效语义。", ["节点必须最小但完整，不能是语法残片。", "逐边执行删除父节点测试。", "禁止后续结论、无关前序节点或其他题目信息进入上下文。", "节点变更后检查全部受影响后代撤销与重验。"], step4, lambda n, x: math_case_card(n, x, "graph"), "道证明对象")
@@ -477,6 +577,8 @@ def main() -> None:
         for i in range(2, 10):
             if person == "Person B" and i == 2:
                 progress_rows.append("| 第2步 | 人工审核完成；结论汇总待补充 | 304／304 | 最终纳入决定及异常统计未提供 | `step02_source_and_boundary.md` |")
+            elif person == "Person B" and i == 3:
+                progress_rows.append("| 第3步 | 人工执行完成；结论合并待办 | 600／600 | 缺逐题结果、独立性证据及 A/B 裁决 | `step03_independent_gold.md`；`step03_completion_record.json` |")
             else:
                 progress_rows.append(f"| 第{i}步 | 未开始／进行中／阻塞／完成 | ________ | ________ | ________ |")
         catalog = f"""# {person}人工检验工作目录

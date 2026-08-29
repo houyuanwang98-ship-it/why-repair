@@ -163,6 +163,8 @@ M0 Person A：定义研究边界、数学术语和验收案例
 > [!IMPORTANT]
 > **下列事项尚不能仅凭代码、测试、哈希或同一 Agent 自检得到证明。** 必须由文档指定的真人独立执行、逐例记录并签署。未取得对应人工证据前，只能声称相关工程检查通过；严格研究验收门必须保持 `pending`，不得写成“已完成人工验收”。
 
+Person B 统一人工工作包的第 3 步已由项目所有者确认完成 **600／600** 道人工审核，并已在 [Person B Step 3 工作包](docs/manual_validation/person_b/step03_independent_gold.md) 与 [结构化完成记录](docs/manual_validation/person_b/step03_completion_record.json) 中登记。该确认只关闭 Person B 的审核执行数量，不替代逐题结果导入、独立性证据、Person A 对照、分歧裁决或最终 Gold 冻结。
+
 ### M0：范围、术语与基础案例
 
 1. **[严格双盲独立重标](docs/m5_manual_review/05_m0_blind_independent_reannotation.md) — 待人工审核**
