@@ -10,8 +10,8 @@
 4. [第5步：数学裁决、定理、首错与反例完成报告](step05_human_review_checklist.md)（完整对象材料见 `step05_mathematical_evaluation.md`）
 5. [第6步：真实修复 Pilot 与补丁人工审核报告](step06_human_review_checklist.md)（完整补丁材料见 `step06_repair_pilot.md`）
 6. [第7步：Controller 与运行完整性人工验证清单](step07_human_review_checklist.md)（67 项原始定位目录见 `step07_controller_integrity.md`）
-7. [第8步：实验公平性、统计与盲态案例](step08_fairness_statistics_blind.md)
-8. [第9步：独立复现、论文与发布](step09_release_reproduction.md)
+7. [第8步：实验公平性、统计与盲态案例人工验证清单](step08_human_review_checklist.md)（300 道原始案例定位目录见 `step08_fairness_statistics_blind.md`）
+8. [第9步：独立复现、论文与发布人工验证清单](step09_human_review_checklist.md)（5 个发布对象定位目录见 `step09_release_reproduction.md`）
 
 ## 总体进度
 
@@ -23,7 +23,7 @@
 | 第5步 | Person B 人工结果同步完成 | 300／300（六项共 1,800／1,800） | 152 道分节点 Agent 输出未单独归档；A/B 对照仍待后续执行 | `step05_human_review_checklist.md`；`../../../data/manual_validation/person_b_step05_case_results.jsonl`；`../../../data/manual_validation/person_b_step05_completion_record.json` |
 | 第6步 | Person B 人工结果同步完成 | 21／21（五项共 105／105） | 正式真实 Provider Pilot 仍缺 API provenance 与调用记录 | `step06_human_review_checklist.md`；`../../../data/manual_validation/person_b_step06_patch_results.jsonl`；`../../../data/manual_validation/person_b_step06_completion_record.json` |
 | 第7步 | Person B 人工结果同步完成 | 67／67（五项标准 5／5） | 无 Step 7 异常；既有 M8 发布清单摘要漂移不属于本步 Controller 行为范围 | `step07_human_review_checklist.md`；`../../../data/manual_validation/person_b_step07_check_results.jsonl`；`../../../data/manual_validation/person_b_step07_completion_record.json` |
-| 第8步 | 未开始／进行中／阻塞／完成 | ________ | ________ | ________ |
+| 第8步 | Person B 人工结果同步完成 | 300／300（四项共 1,200／1,200） | 分节点 Agent 独立结果归档未提供；正式 M7/M8 发布门不在本清单关闭范围 | `step08_human_review_checklist.md`；`../../../data/manual_validation/person_b_step08_case_results.jsonl`；`../../../data/manual_validation/person_b_step08_completion_record.json` |
 | 第9步 | 未开始／进行中／阻塞／完成 | ________ | ________ | ________ |
 
 ## 交付签名
