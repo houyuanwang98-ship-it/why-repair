@@ -7,7 +7,7 @@
 1. [第2步：题目原文、来源与数据边界](step02_source_and_boundary.md)
 2. [第3步：独立人工 Gold](step03_independent_gold.md)
 3. [第4步：节点、依赖图、上下文与证明义务](step04_nodes_dependencies.md)
-4. [第5步：数学裁决、定理、首错与反例](step05_mathematical_evaluation.md)
+4. [第5步：数学裁决、定理、首错与反例完成报告](step05_human_review_checklist.md)（完整对象材料见 `step05_mathematical_evaluation.md`）
 5. [第6步：真实修复 Pilot 与补丁](step06_repair_pilot.md)
 6. [第7步：Controller 与运行完整性](step07_controller_integrity.md)
 7. [第8步：实验公平性、统计与盲态案例](step08_fairness_statistics_blind.md)
@@ -20,7 +20,7 @@
 | 第2步 | 人工审核完成；结论汇总待补充 | 304／304 | 最终纳入决定及异常统计未提供 | `step02_source_and_boundary.md` |
 | 第3步 | 人工执行完成；结论合并待办 | 600／600 | 缺逐题结果、独立性证据及 A/B 裁决 | `step03_independent_gold.md`；`step03_completion_record.json` |
 | 第4步 | 未开始／进行中／阻塞／完成 | ________ | ________ | ________ |
-| 第5步 | 未开始／进行中／阻塞／完成 | ________ | ________ | ________ |
+| 第5步 | Person B 人工结果同步完成 | 300／300（六项共 1,800／1,800） | 152 道分节点 Agent 输出未单独归档；A/B 对照仍待后续执行 | `step05_human_review_checklist.md`；`../../../data/manual_validation/person_b_step05_case_results.jsonl`；`../../../data/manual_validation/person_b_step05_completion_record.json` |
 | 第6步 | 未开始／进行中／阻塞／完成 | ________ | ________ | ________ |
 | 第7步 | 未开始／进行中／阻塞／完成 | ________ | ________ | ________ |
 | 第8步 | 未开始／进行中／阻塞／完成 | ________ | ________ | ________ |

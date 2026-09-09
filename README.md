@@ -165,6 +165,8 @@ M0 Person A：定义研究边界、数学术语和验收案例
 
 Person B 统一人工工作包的第 3 步已由项目所有者确认完成 **600／600** 道人工审核，并已在 [Person B Step 3 工作包](docs/manual_validation/person_b/step03_independent_gold.md) 与 [结构化完成记录](docs/manual_validation/person_b/step03_completion_record.json) 中登记。该确认只关闭 Person B 的审核执行数量，不替代逐题结果导入、独立性证据、Person A 对照、分歧裁决或最终 Gold 冻结。
 
+Person B 第 5 步已按项目所有者确认完成 **300／300** 道、六项共 **1,800／1,800** 项结果同步；每项人工记录均登记为与分节点 Agent 结果一致。详见 [完成报告](docs/manual_validation/person_b/step05_human_review_checklist.md)、[逐题记录](data/manual_validation/person_b_step05_case_results.jsonl) 与 [结构化完成记录](data/manual_validation/person_b_step05_completion_record.json)。其中 152 道题的分节点 Agent 输出未在仓库中单独归档，相关记录依据项目所有者本次明确确认；该完成状态不冒充独立双盲审核，也不替代 Person A 对照或必要裁决。
+
 ### M0：范围、术语与基础案例
 
 1. **[严格双盲独立重标](docs/m5_manual_review/05_m0_blind_independent_reannotation.md) — 待人工审核**

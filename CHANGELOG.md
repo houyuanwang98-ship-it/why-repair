@@ -941,3 +941,8 @@ Commit: `1ed7886 Improve node-level obligation retrieval`
 
 - Documented the retrieval workflow in English and added a standalone retrieval
   optimization roadmap.
+# 2026-09-09 — Person B Step 5 result synchronization recorded
+
+- Recorded repository-owner confirmation that Person B completed all 300 assigned Step 5 cases and that all six per-case review criteria match the node-agent results.
+- Added 300 case-level records (1,800 criterion confirmations), a structured completion record, a concise completion report, and updated the Person B work-directory status.
+- Preserved the evidence boundary: 148 cases reference repository-resident Agent artifacts, while 152 confirmations rely on the owner's statement because the corresponding Agent outputs were not separately archived.
