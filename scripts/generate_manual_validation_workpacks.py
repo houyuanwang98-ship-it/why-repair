@@ -419,6 +419,53 @@ def math_case_card(n: int, item: dict[str, Any], kind: str) -> str:
 """
 
 
+def step4_case_card(n: int, item: dict[str, Any]) -> str:
+    card = math_case_card(n, item, "graph")
+    machine = item.get("_step4_machine", {})
+    status = machine.get("structural_status", "not_run")
+    issues = "、".join(machine.get("issues", [])) or "无结构异常"
+    coverage = f"已有节点标注（{machine.get('annotation_nodes', 0)} 个节点）" if machine.get("annotation_available") else "尚无独立节点标注，仅完成源记录结构检查"
+    old = "- 记录解析：通过\n- 现有标签／预测："
+    new = f"- Step 4 机器结构检查：{status}\n- 覆盖：{coverage}\n- 机器异常：{issues}\n- 现有标签／预测："
+    return card.replace(old, new)
+
+
+def step4_finish(person: str, count: int, report: dict[str, Any]) -> str:
+    summary = report["summary"]
+    tests = report["regression_tests"]
+    return f"""
+## 机器验证汇总
+
+- 全项目机器报告：`data/manual_validation/step04_machine_report.json`
+- 本工作包分配数：{count} 道证明对象
+- 全项目结构检查：{summary['cases']} 道；通过 {summary['structural_status_counts'].get('pass', 0)} 道；标红 {summary['structural_status_counts'].get('flagged', 0)} 道
+- 已有可核对节点标注：{summary['cases_with_node_annotations']} 道
+- 尚无独立节点标注：{summary['cases_without_node_annotations']} 道
+- 图、Controller 后代失效与缓存回归测试：{tests['status']}（`{tests['command']}`）
+- 机器检查范围：解析、摘要、ID 唯一性、证明字段完整性，以及已有节点标注的 span 边界、顺序和原文回读一致性。
+- 明确不作机器结论：节点语义最小性、自包含改写等价性、真实必要依赖及数学正确性。
+
+## 极简人工语义复核
+
+人工只复核机器不能可靠决定的内容；不重复填写结构字段。优先覆盖全部机器标红项，并按数据组和证明结构抽样正常项。
+
+| 样本／异常编号 | 自然语言与原意是否一致 | 节点是否为完整数学语义 | 依赖是否符合实际推理 | 结论／理由 |
+|---|---|---|---|---|
+| ________ | ________ | ________ | ________ | ________ |
+| ________ | ________ | ________ | ________ | ________ |
+| ________ | ________ | ________ | ________ | ________ |
+
+- 人工复核样本数：________
+- 与机器结论一致数：________
+- 人工确认正确数：________
+- 人工语义准确率：________（人工确认正确数／有效复核样本数）
+- 发现的系统性语义问题：________________________________________________________
+- 最终决定：________（通过／修订后通过／不通过／不确定）
+- 审核者与时间：________________________________________________________________
+- 证据路径：____________________________________________________________________
+"""
+
+
 def task_card(n: int, item: dict[str, Any]) -> str:
     desc = item.get("description") or item.get("attack") or item.get("claim") or item.get("_path") or case_id(item)
     raw = item.get("_content")
@@ -463,6 +510,8 @@ def write_step(step: int, slug: str, title: str, intro: str, req: list[str], buc
             body.extend(renderer(n, item) for n, item in enumerate(render_items, 1))
             if step == 3:
                 body.append(independent_gold_finish(person, len(items), effective_req))
+            elif step == 4:
+                body.append(step4_finish(person, len(items), step4_report))
             else:
                 body.append(finish(len(items), unit, effective_req))
         out = BASE / folder / f"step{step:02d}_{slug}.md"
@@ -471,6 +520,9 @@ def write_step(step: int, slug: str, title: str, intro: str, req: list[str], buc
 
 
 def main() -> None:
+    global step4_report
+    step4_report = json.loads((ROOT / "data/manual_validation/step04_machine_report.json").read_text(encoding="utf-8"))
+    step4_by_id = {row["case_id"]: row for row in step4_report["cases"]}
     all_cases = source_cases(True)
     official = source_cases(False)
 
@@ -530,8 +582,13 @@ def main() -> None:
     }
     (BASE / "person_b" / "step03_completion_record.json").write_text(json.dumps(step3_record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
 
-    step4 = balance(official)
-    write_step(4, "nodes_dependencies", "节点、依赖图、上下文与证明义务审核", "检查每道证明的节点切分、直接依赖、变量作用域、局部上下文和后代失效语义。", ["节点必须最小但完整，不能是语法残片。", "逐边执行删除父节点测试。", "禁止后续结论、无关前序节点或其他题目信息进入上下文。", "节点变更后检查全部受影响后代撤销与重验。"], step4, lambda n, x: math_case_card(n, x, "graph"), "道证明对象")
+    step4_items = []
+    for item in official:
+        enriched = dict(item)
+        enriched["_step4_machine"] = step4_by_id.get(case_id(item), {})
+        step4_items.append(enriched)
+    step4 = balance(step4_items)
+    write_step(4, "nodes_dependencies", "节点、依赖图、上下文与证明义务审核", "机器先全量检查可结构化判定的内容；人工只复核自然语言语义、数学表达完整性、真实推理依赖和抽样准确率。", ["先阅读机器报告并覆盖全部标红项。", "人工只判断自然语言与原意是否一致、节点是否表达完整数学语义。", "抽样判断依赖是否符合真实推理，并报告人工语义准确率。", "不重复填写已由机器验证的解析、ID、span 和结构字段。"], step4, step4_case_card, "道证明对象")
 
     step5 = balance(official)
     write_step(5, "mathematical_evaluation", "数学裁决、定理使用、首错与反例审核", "独立重做局部推理，核对定理条件、计算、首错、反例和错误证书。尚无系统输出的对象也必须明确记为待运行，不得伪造机器结果。", ["从合法上下文独立重做推理。", "展开定理全部前提并逐项映射。", "反例必须满足全部前提并真正否定目标。", "未找到反例、工具超时或 unknown 不得作为正确证据。", "错误证书必须绑定精确版本且可在无隐藏信息时消费。"], step5, lambda n, x: math_case_card(n, x, "evaluator"), "道正式样本")
