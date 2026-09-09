@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import subprocess
 from pathlib import Path
 
 from generate_manual_validation_workpacks import balance, case_id, source_cases
@@ -27,10 +26,6 @@ CRITERIA = (
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
-
-
-def git_text(*args: str) -> str:
-    return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
 
 
 def machine_reference(group: str) -> dict[str, str]:
@@ -96,8 +91,6 @@ def main() -> None:
         "schema_version": "person-b-step05-completion-0.1",
         "step": 5,
         "reviewer_role": "person_b",
-        "branch": git_text("branch", "--show-current"),
-        "recorded_against_head": git_text("rev-parse", "HEAD"),
         "recorded_on": RECORDED_ON,
         "assigned_cases": 300,
         "reviewed_cases": 300,
