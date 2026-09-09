@@ -19,6 +19,7 @@
 | [研究方案](docs/dual_agent_natural_language_proof_harness_proposal.docx) | 完整中文设计总结 | 草案完成 |
 | [两人工作计划](docs/two_person_work_plan.md) | 分工、进度、验收门和协作协议 | 生效中 |
 | [研究路线图](ROADMAP.md) | 里程碑与验收条件 | 生效中 |
+| [人工审核与验证执行手册](docs/manual_validation_execution_guide.md) | 全分支范围、九步人工任务、抽样、证据模板、通过与停止条件 | `v0.1-draft` 可执行版 |
 | [同学 AI 接手提示词](prompts/collaborator_onboarding_prompt.md) | 另一台电脑的自包含上下文 | 可使用 |
 | [M0 范围与术语](docs/milestones/M00_scope_and_terminology.md) | 研究问题、定义与验收案例 | `v0.1` 已冻结 |
 | [M0 裁决记录](docs/milestones/M00_adjudication.md) | 双人评审分歧与最终裁决 | 已完成 |

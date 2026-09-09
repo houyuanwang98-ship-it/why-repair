@@ -5,6 +5,8 @@ These instructions apply to every Codex task started in this repository.
 ## Authorization and initiative
 
 - The repository owner authorizes Codex to read, create, edit, rename, and delete files anywhere inside this repository when those actions are reasonably required to complete the current request.
+- Unless a newer user request narrows the scope, every Codex task in this repository may inspect and operate across all local and remote Git branches and all repository contents; do not assume that `main` or the currently checked-out branch is the complete project scope.
+- Within the repository, grant each task the broadest read/write/modify permissions that the active Codex host and sandbox permit. This standing authorization includes creating branches or worktrees and editing branch-specific content when required by the request.
 - Codex may run relevant builds, tests, formatters, linters, benchmarks, and Git inspection commands without requesting an additional project-level confirmation.
 - When the current request includes publishing, synchronization, delivery, or otherwise clearly requires updating the remote repository, Codex is authorized to create commits and push them to the configured GitHub remote and branch.
 - Do not push unrelated work or upload changes merely because this standing authorization exists. Preserve unrelated user changes and keep each operation within the current request's scope.

@@ -163,6 +163,10 @@ M0 Person A：定义研究边界、数学术语和验收案例
 > [!IMPORTANT]
 > **下列事项尚不能仅凭代码、测试、哈希或同一 Agent 自检得到证明。** 必须由文档指定的真人独立执行、逐例记录并签署。未取得对应人工证据前，只能声称相关工程检查通过；严格研究验收门必须保持 `pending`，不得写成“已完成人工验收”。
 
+Person B 统一人工工作包的第 3 步已由项目所有者确认完成 **600／600** 道人工审核，并已在 [Person B Step 3 工作包](docs/manual_validation/person_b/step03_independent_gold.md) 与 [结构化完成记录](docs/manual_validation/person_b/step03_completion_record.json) 中登记。该确认只关闭 Person B 的审核执行数量，不替代逐题结果导入、独立性证据、Person A 对照、分歧裁决或最终 Gold 冻结。
+
+Person B 第 5 步已按项目所有者确认完成 **300／300** 道、六项共 **1,800／1,800** 项结果同步；每项人工记录均登记为与分节点 Agent 结果一致。详见 [完成报告](docs/manual_validation/person_b/step05_human_review_checklist.md)、[逐题记录](data/manual_validation/person_b_step05_case_results.jsonl) 与 [结构化完成记录](data/manual_validation/person_b_step05_completion_record.json)。其中 152 道题的分节点 Agent 输出未在仓库中单独归档，相关记录依据项目所有者本次明确确认；该完成状态不冒充独立双盲审核，也不替代 Person A 对照或必要裁决。
+
 ### M0：范围、术语与基础案例
 
 1. **[严格双盲独立重标](docs/m5_manual_review/05_m0_blind_independent_reannotation.md) — 待人工审核**
@@ -370,6 +374,7 @@ Fill `outputs/algebra_pilot_session/pending.json`, then run the same command aga
 
 ## Documentation
 
+- **[Manual validation execution guide](docs/manual_validation_execution_guide.md): executable all-branch human-review workflow covering terminology, source and Gold review, mathematical validation, repair, runtime integrity, statistics, reproducibility, and release gates.**
 - **[Project validation and acceptance plan](docs/project_validation_and_acceptance_plan.md): comprehensive M0-M8 validation requirements, human and external review procedures, and mandatory acceptance gates.**
 - **[M0-M8 research execution sequence](docs/m0_m8_research_execution_sequence.md): ordered Person A, Person B, Controller, annotation, tooling, experiment, review, and release handoffs.**
 - [Dual-Agent project index](PROJECT_INDEX.md): current M0-M8 status, ownership, contracts, and implementation links.
