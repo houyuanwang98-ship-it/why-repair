@@ -24,7 +24,7 @@
 | 第6步 | Person B 人工结果同步完成 | 21／21（五项共 105／105） | 正式真实 Provider Pilot 仍缺 API provenance 与调用记录 | `step06_human_review_checklist.md`；`../../../data/manual_validation/person_b_step06_patch_results.jsonl`；`../../../data/manual_validation/person_b_step06_completion_record.json` |
 | 第7步 | Person B 人工结果同步完成 | 67／67（五项标准 5／5） | 无 Step 7 异常；既有 M8 发布清单摘要漂移不属于本步 Controller 行为范围 | `step07_human_review_checklist.md`；`../../../data/manual_validation/person_b_step07_check_results.jsonl`；`../../../data/manual_validation/person_b_step07_completion_record.json` |
 | 第8步 | Person B 人工结果同步完成 | 300／300（四项共 1,200／1,200） | 分节点 Agent 独立结果归档未提供；正式 M7/M8 发布门不在本清单关闭范围 | `step08_human_review_checklist.md`；`../../../data/manual_validation/person_b_step08_case_results.jsonl`；`../../../data/manual_validation/person_b_step08_completion_record.json` |
-| 第9步 | 未开始／进行中／阻塞／完成 | ________ | ________ | ________ |
+| 第9步 | Person B 人工结果同步完成 | 5／5（六项共 30／30） | 分节点 Agent 独立结果归档未提供；项目级发布批准不由本清单替代 | `step09_human_review_checklist.md`；`../../../data/manual_validation/person_b_step09_object_results.jsonl`；`../../../data/manual_validation/person_b_step09_completion_record.json` |
 
 ## 交付签名
 
