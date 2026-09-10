@@ -1,0 +1,68 @@
+{
+  "certificate": {
+    "certificate_id": "m2-018-human-gap-node-2-v1",
+    "failed_inference": "The proof does not explicitly justify multiplying the two sides by apparently different factors x and y; equality substitution must connect x^2, xy, and y^2.",
+    "repair_constraints": {
+      "allowed_operations": [
+        "insert_before",
+        "replace"
+      ],
+      "max_new_nodes": 2,
+      "preserve_assumptions": true,
+      "preserve_theorem": true
+    },
+    "target": {
+      "node_id": 2,
+      "proof_id": "m2-018",
+      "version": 1
+    }
+  },
+  "human_review": false,
+  "kind": "fixed_historical_diagnosis_live_repair_pilot",
+  "max_calls": 12,
+  "max_tokens": 60000,
+  "model": "gpt-5.6-terra",
+  "nodes": [
+    {
+      "claim": "等式两边分别乘以 x 和 y。",
+      "depends_on": [],
+      "node_id": 1,
+      "node_type": "conclusion",
+      "order_key": 10,
+      "proof_id": "m2-018",
+      "self_contained_claim": "等式两边分别乘以 x 和 y。",
+      "version": 1
+    },
+    {
+      "claim": "因此 x^2=y^2。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-018",
+          "version": 1
+        }
+      ],
+      "node_id": 2,
+      "node_type": "conclusion",
+      "order_key": 20,
+      "proof_id": "m2-018",
+      "self_contained_claim": "因此 x^2=y^2。",
+      "version": 1
+    }
+  ],
+  "problem": {
+    "assumptions": [
+      "x,y 为实数且 x=y。"
+    ],
+    "domain": "elementary_algebra",
+    "theorem": "证明若 x,y 为实数且 x=y，则 x^2=y^2。"
+  },
+  "rounds": 3,
+  "source_sha256": {
+    "harness/codex_cli.py": "b466f5bf3ff010218ffa83cbe9086fcb18642714abe842cd0e7dffa90bf783f0",
+    "harness/m5_person_a_review.py": "bd35494357f588c6414538d10855fee5d467880c1368a068d0bdc2d5a9128020",
+    "harness/m5_repair.py": "81ad0085be9c96948a53c279f60046953c10f0b35a4cac1e8bed7b9c77a05936",
+    "harness/m5_sequential_repair.py": "af6ff486c35e0a56df3d562bd9647aa91b1e9ccf6db6738f4ca7df1ba38f8e3d",
+    "scripts/run_live_repair_pilot.py": "2df247914d6e7e07818ad489c7b3075563dc3067cc692cf35d37f0e341e3df17"
+  }
+}
