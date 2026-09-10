@@ -15,7 +15,7 @@
 | E6 | M3 的依赖边预测 | Precision 0.8871、Recall 0.9483、F1 0.9167；58 条 Gold 边 | 同 E2 | 仅限带节点 Gold 的子集 |
 | E7 | M3 的安全性错误 | 26 个 Gold-invalid 证明中误接受 1 个，false-acceptance rate 0.0385 | 同 E2 | 不得写成“零误判”或“安全保证” |
 | E8 | M4 有界可执行反例验证路径 | 11/11 个有效反例被接受 | `data/benchmarks/m4/integrated_acceptance_v1_1.json` | 仅限文档规定的有界算术子集 |
-| E9 | M5 实现了局部补丁、版本推进、后代失效、重验、预算终止和不可修复退出 | 已实现并有测试 | `harness/m5_repair.py`、`harness/m5_controller.py`、M5 测试 | 工程能力，不等于任意证明均可修复 |
+| E9 | M5 实现了局部补丁、版本推进、后代失效、重验、预算终止和不可修复退出 | 已实现并有测试 | `harness/m5_repair.py`、`harness/controller.py`、`harness/m5_sequential_repair.py`、M5 测试 | 工程能力，不等于任意证明均可修复 |
 | E10 | M5 修复 Pilot 的人工工作包规模 | 21 个补丁版本；Person B 结果同步记录为 21/21 | `docs/manual_validation/person_b/step06_human_review_checklist.md`、`data/manual_validation/person_b_step06_completion_record.json` | 单人、AI 辅助复核；不得称独立双盲 |
 | E11 | M6 九种方法的 Codex AI 代理 smoke 完成 | 9/9 批次完成，无传输失败 | `data/benchmarks/m6/codex_ai_proxy_nine_method_smoke_20260821/run_summary.json` | 只能说明执行链路可跑，不作为方法优劣结论 |
 | E12 | M7 的 50 题交互式案例复核 | 50 题：45 确认、5 修正 | `data/benchmarks/m7/interactive_case_level_human_review_v0_2.json` | AI 预填后的人工纠错，不是独立双盲 |
@@ -39,4 +39,3 @@
 ## 4. 统一披露文本
 
 > 本研究当前采用单一人工复核角色，并使用 AI 生成预填结果以降低人工成本；人工负责检查、纠错和最终确认。因此，本文报告的是 AI 辅助的单人复核与工程验证，而非独立双盲标注。除非另有明确说明，fixture、projection 和 Codex proxy 运行只用于验证系统管线、数据契约和失败处理，不作为跨模型性能或因果消融证据。
-

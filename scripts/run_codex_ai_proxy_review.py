@@ -130,7 +130,7 @@ def m5_runtime_review_rows() -> list[dict[str, Any]]:
             "frozen_generator_input": json.loads(input_path.read_text(encoding="utf-8")),
             "generated_patch": raw["parsed_output"],
             "generator_evidence": {
-                "raw_response_path": str(raw_path.relative_to(ROOT)),
+                "raw_response_path": raw_path.relative_to(ROOT).as_posix(),
                 "raw_response_sha256": sha256_bytes(raw_path.read_bytes()),
                 "codex_thread_id": raw["codex_thread_id"],
                 "usage": raw["usage"],

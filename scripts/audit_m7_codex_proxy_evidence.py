@@ -42,7 +42,10 @@ def evidence_tree_digest(evidence_dirs: list[Path]) -> tuple[int, str]:
     digest = hashlib.sha256()
     count = 0
     for evidence_dir in evidence_dirs:
-        for path in sorted(item for item in evidence_dir.rglob("*") if item.is_file()):
+        # Path ordering is case-insensitive on Windows; evidence order must be
+        # identical to the case-sensitive POSIX order used by the frozen run.
+        for path in sorted((item for item in evidence_dir.rglob("*") if item.is_file()),
+                           key=lambda item: item.relative_to(evidence_dir).as_posix()):
             relative = f"{evidence_dir.name}/{path.relative_to(evidence_dir).as_posix()}"
             digest.update(relative.encode("utf-8"))
             digest.update(b"\0")
