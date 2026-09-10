@@ -46,7 +46,7 @@ def build():
               '- 该历史复核明确为 AI 预填后纠错，不提供独立双盲或标注者一致性指标。',
               '- 没有正式基线差异、显著性、真实账单或新实验成功率。', '']
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / 'results.md').write_text('\n'.join(lines), encoding='utf-8')
+    (OUT / 'results.md').write_text('\n'.join(lines), encoding='utf-8', newline='\n')
     source_path = 'data/benchmarks/m2/pilot_50.jsonl'
     raw = (ROOT / source_path).read_bytes()
     sources[source_path] = hashlib.sha256(raw).hexdigest()
@@ -65,11 +65,11 @@ def build():
             relative = patch.relative_to(ROOT).as_posix()
             obj = read(relative)
             cards += ['补丁来源：`' + relative + '`', '', '```json', json.dumps(obj, ensure_ascii=False, indent=2), '```', '']
-    (OUT / 'case_cards.md').write_text('\n'.join(cards), encoding='utf-8')
+    (OUT / 'case_cards.md').write_text('\n'.join(cards), encoding='utf-8', newline='\n')
     sources['scripts/build_paper_evidence.py'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     outputs = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in (OUT / 'results.md', OUT / 'case_cards.md')}
     (OUT / 'manifest.json').write_text(json.dumps({'source_sha256': sources, 'output_sha256': outputs,
-        'new_model_runs': 0, 'scientific_comparison': False}, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        'new_model_runs': 0, 'scientific_comparison': False}, ensure_ascii=False, indent=2) + '\n', encoding='utf-8', newline='\n')
     print(f'Rebuilt {len(metrics)} metrics and {len(selected)} historical case cards at {OUT}')
 
 
