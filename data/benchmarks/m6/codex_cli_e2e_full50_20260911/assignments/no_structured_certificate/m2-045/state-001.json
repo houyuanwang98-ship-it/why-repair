@@ -1,0 +1,115 @@
+{
+  "certificate_history": [
+    {
+      "certificate_id": "m2-045-m6-live-diagnosis",
+      "failed_inference": "由 b=ak 平方应得 b^2=a^2k^2，而非 b^2=a^2k。",
+      "repair_constraints": {
+        "allowed_operations": [
+          "insert_before",
+          "replace",
+          "delete"
+        ],
+        "max_new_nodes": 2,
+        "preserve_assumptions": true,
+        "preserve_theorem": true
+      },
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-045",
+        "version": 1
+      }
+    }
+  ],
+  "dependency_redirects": [],
+  "m4_input_digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "model_invocations": [],
+  "nodes": [
+    {
+      "claim": "存在整数 k 使 b=ak。",
+      "depends_on": [],
+      "node_id": 1,
+      "node_type": "introduction",
+      "order_key": 10,
+      "proof_id": "m2-045",
+      "self_contained_claim": "存在整数 k 使 b=ak。",
+      "version": 1
+    },
+    {
+      "claim": "由 b=ak 平方，得 b^2=a^2k^2。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-045",
+          "version": 1
+        }
+      ],
+      "node_id": 2,
+      "node_type": "calculation",
+      "order_key": 20,
+      "proof_id": "m2-045",
+      "self_contained_claim": "由整数 k 满足 b=ak，可得 b^2=a^2k^2。",
+      "version": 2
+    }
+  ],
+  "proof_id": "m2-045",
+  "revalidation_queue": [
+    {
+      "status": "pending_evaluation",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-045",
+        "version": 2
+      }
+    },
+    {
+      "status": "blocked_by_stale_dependency",
+      "target": {
+        "node_id": 3,
+        "proof_id": "m2-045",
+        "version": 1
+      }
+    }
+  ],
+  "revalidation_records": [],
+  "rounds": 1,
+  "schema_version": "0.2",
+  "stale": [
+    {
+      "claim": "所以 a^2|b^2。",
+      "depends_on": [
+        {
+          "node_id": 2,
+          "proof_id": "m2-045",
+          "version": 1
+        }
+      ],
+      "node_id": 3,
+      "node_type": "conclusion",
+      "order_key": 30,
+      "proof_id": "m2-045",
+      "self_contained_claim": "所以 a^2|b^2。",
+      "stale_reason": "depends on 2@v1",
+      "version": 1
+    }
+  ],
+  "stop_reason": null,
+  "version_history": [
+    {
+      "claim": "平方得 b^2=a^2k。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-045",
+          "version": 1
+        }
+      ],
+      "lifecycle_state": "superseded",
+      "node_id": 2,
+      "node_type": "calculation_step",
+      "order_key": 20,
+      "proof_id": "m2-045",
+      "self_contained_claim": "平方得 b^2=a^2k。",
+      "version": 1
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "certificate": {
+    "certificate_id": "m2-025-m6-live-diagnosis",
+    "failed_inference": "由 x^2=y^2 两边开平方只能得到 |x|=|y|，即 x=y 或 x=-y；不能直接保留为 x=y。",
+    "repair_constraints": {
+      "allowed_operations": [
+        "insert_before",
+        "replace",
+        "delete"
+      ],
+      "max_new_nodes": 2,
+      "preserve_assumptions": true,
+      "preserve_theorem": true
+    },
+    "target": {
+      "node_id": 1,
+      "proof_id": "m2-025",
+      "version": 1
+    }
+  },
+  "diagnosis_record": {
+    "counterexample": "取 x=1，y=-1；二者均为实数且 x^2=y^2=1，但 x≠y。",
+    "evaluator_id": "live-diagnoser",
+    "failed_inference": "由 x^2=y^2 两边开平方只能得到 |x|=|y|，即 x=y 或 x=-y；不能直接保留为 x=y。",
+    "first_error_target": {
+      "node_id": 1,
+      "proof_id": "m2-025",
+      "version": 1
+    },
+    "reason": "原命题在给定实数域与假设下为假，节点1的开平方步骤遗漏绝对值与符号分支，是最早的实质性不成立推断。",
+    "repairable": false,
+    "schema_version": "m6-live-diagnosis-0.1",
+    "verdict": "invalid"
+  },
+  "human_review": false,
+  "kind": "m6_end_to_end_controller_ablation",
+  "max_calls": 12,
+  "max_tokens": 80000,
+  "method_id": "no_structured_certificate",
+  "model": "gpt-5.6-terra",
+  "nodes": [
+    {
+      "claim": "两边开平方。",
+      "depends_on": [],
+      "node_id": 1,
+      "node_type": "calculation_step",
+      "order_key": 10,
+      "proof_id": "m2-025",
+      "self_contained_claim": "两边开平方。",
+      "version": 1
+    },
+    {
+      "claim": "得到 x=y。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-025",
+          "version": 1
+        }
+      ],
+      "node_id": 2,
+      "node_type": "conclusion",
+      "order_key": 20,
+      "proof_id": "m2-025",
+      "self_contained_claim": "得到 x=y。",
+      "version": 1
+    }
+  ],
+  "problem": {
+    "assumptions": [
+      "x,y 为实数且 x^2=y^2。"
+    ],
+    "domain": "elementary_algebra",
+    "theorem": "证明若实数 x^2=y^2，则 x=y。"
+  },
+  "rounds": 3,
+  "source_sha256": {
+    "harness/codex_cli.py": "7225a461c6925eb8e64409da648a2023ebe36a67e1a152d299791714f8a173b7",
+    "harness/m5_person_a_review.py": "bd35494357f588c6414538d10855fee5d467880c1368a068d0bdc2d5a9128020",
+    "harness/m5_repair.py": "81ad0085be9c96948a53c279f60046953c10f0b35a4cac1e8bed7b9c77a05936",
+    "harness/m5_sequential_repair.py": "af6ff486c35e0a56df3d562bd9647aa91b1e9ccf6db6738f4ca7df1ba38f8e3d",
+    "scripts/run_live_repair_pilot.py": "7ee9a542be0a3288c7df9684586b9918cefc53a1859f2e55f897996d98c9d87e"
+  }
+}

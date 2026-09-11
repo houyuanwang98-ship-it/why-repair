@@ -1,0 +1,236 @@
+{
+  "input": {
+    "context": {
+      "allowed_evidence": [
+        "sha256:98955264041e70e2a7213f7adfce1d56bd0736179396fa8e290abd20113c3bac",
+        "sha256:1659a5a5e97de0fc054c2c0717440713bb7dc3dae172fbd80540ef83442cb11c"
+      ],
+      "context_id": "m2-023-r1",
+      "domain": "elementary_algebra",
+      "error_certificate_digest": "sha256:993703a0b07537c6e98a198670acebb9d385ee0f76e9f8d60512fc1cd71c89cc",
+      "failed_inference": "节点2从“2|n”直接推出“4|n”无效；偶数不必能被4整除。",
+      "global_assumptions": [
+        "n 为整数且 4|n^2。"
+      ],
+      "patch_digest": "sha256:1659a5a5e97de0fc054c2c0717440713bb7dc3dae172fbd80540ef83442cb11c",
+      "proof_id": "m2-023",
+      "schema_version": "0.1",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-023",
+        "version": 1
+      },
+      "theorem": "证明若整数 n^2 能被 4 整除，则 n 能被 4 整除。",
+      "unrelated_branch_digests": {}
+    },
+    "current_nodes": [
+      {
+        "claim": "因为 4|n^2，所以 2|n。",
+        "depends_on": [],
+        "node_id": 1,
+        "node_type": "conclusion",
+        "order_key": 10,
+        "proof_id": "m2-023",
+        "self_contained_claim": "因为 4|n^2，所以 2|n。",
+        "version": 1
+      },
+      {
+        "claim": "因此 4|n。",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "m2-023",
+            "version": 1
+          }
+        ],
+        "node_id": 2,
+        "node_type": "conclusion",
+        "order_key": 20,
+        "proof_id": "m2-023",
+        "self_contained_claim": "因此 4|n。",
+        "version": 1
+      }
+    ],
+    "edit_ids": [
+      "mark_irreparable:2"
+    ],
+    "patch": {
+      "changes_problem": false,
+      "error_certificate_id": "m2-023-m6-live-diagnosis",
+      "generator_id": "live-generator",
+      "operation": "mark_irreparable",
+      "patch_id": "m2-023-irrepairable-n2",
+      "rationale": "定理为假：取整数 n=2，则 4|n^2（因为 n^2=4），但 4∤n。因此无法在不改变定理、假设或定义域的条件下修复该证明。",
+      "replacement_nodes": [],
+      "schema_version": "0.1",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-023",
+        "version": 1
+      },
+      "target_dependencies_after": [],
+      "used_dependencies": []
+    }
+  },
+  "max_output_tokens": 3500,
+  "model": "gpt-5.6-terra",
+  "phase": "review",
+  "prompt": "Use only INPUT JSON and mathematical knowledge. Do not use tools, files or web. You are an AI, not a human reviewer. Preserve the exact theorem, assumptions and domain. Independently review the proposed patch against context and current proof. Use reviewer_id=live-reviewer and exact context_id. Cover every edit_id in deletion_trials. Check local repair and problem preservation; downstream nodes will be revalidated separately. accepted must equal all checks true, no hidden assumptions, no introduced errors, all deletion trials removal_breaks_repair true, no rejection codes. When rejecting include the appropriate codes for every false check. Use evidence_used from context.allowed_evidence. Explain actual mathematics, never merely trust the generator.",
+  "reasoning_effort": "high",
+  "schema": {
+    "$id": "m5_person_a_patch_review_v0_1.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "accepted": {
+        "type": "boolean"
+      },
+      "checks": {
+        "additionalProperties": false,
+        "properties": {
+          "assumptions_preserved": {
+            "type": "boolean"
+          },
+          "domain_preserved": {
+            "type": "boolean"
+          },
+          "mathematically_valid": {
+            "type": "boolean"
+          },
+          "no_new_errors": {
+            "type": "boolean"
+          },
+          "operationally_minimal": {
+            "type": "boolean"
+          },
+          "resolves_failed_inference": {
+            "type": "boolean"
+          },
+          "theorem_preserved": {
+            "type": "boolean"
+          },
+          "unrelated_branches_preserved": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "mathematically_valid",
+          "resolves_failed_inference",
+          "theorem_preserved",
+          "assumptions_preserved",
+          "domain_preserved",
+          "unrelated_branches_preserved",
+          "no_new_errors",
+          "operationally_minimal"
+        ],
+        "type": "object"
+      },
+      "context_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "deletion_trials": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "edit_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "reason": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "removal_breaks_repair": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "edit_id",
+            "removal_breaks_repair",
+            "reason"
+          ],
+          "type": "object"
+        },
+        "minItems": 1,
+        "type": "array"
+      },
+      "evidence_used": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "minItems": 1,
+        "type": "array",
+        "uniqueItems": true
+      },
+      "hidden_assumptions": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array",
+        "uniqueItems": true
+      },
+      "introduced_errors": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array",
+        "uniqueItems": true
+      },
+      "reason": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "rejection_codes": {
+        "items": {
+          "enum": [
+            "mathematical_error",
+            "failed_inference_unresolved",
+            "changes_problem",
+            "hidden_assumption",
+            "domain_changed",
+            "target_changed",
+            "unrelated_branch_changed",
+            "new_error_introduced",
+            "not_minimal",
+            "insufficient_evidence",
+            "stale_binding"
+          ]
+        },
+        "type": "array",
+        "uniqueItems": true
+      },
+      "review_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "reviewer_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "schema_version": {
+        "const": "0.1"
+      }
+    },
+    "required": [
+      "schema_version",
+      "review_id",
+      "context_id",
+      "reviewer_id",
+      "checks",
+      "hidden_assumptions",
+      "introduced_errors",
+      "deletion_trials",
+      "evidence_used",
+      "accepted",
+      "rejection_codes",
+      "reason"
+    ],
+    "title": "M5 Person A mathematical patch review",
+    "type": "object"
+  },
+  "timeout_seconds": 180
+}

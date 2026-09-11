@@ -1,0 +1,97 @@
+{
+  "calls": 3,
+  "events": [
+    {
+      "event": "patch_submitted",
+      "fingerprint": "sha256:c23fb7622b6520ef56c33ac32a9ec3492e3e8129662fa261901518a0c6cecfba",
+      "patch_id": "m2-042-patch-1",
+      "round": 1
+    },
+    {
+      "accepted": true,
+      "event": "patch_reviewed",
+      "patch_id": "m2-042-patch-1",
+      "review_digest": "sha256:34c88d38d54d46c84eddb361111e766c5bfbd189b6964f93e9a6ad147fc47ab4",
+      "review_id": "m2-042-r1-live-review"
+    },
+    {
+      "event": "marked_irreparable",
+      "target": {
+        "node_id": 1,
+        "proof_id": "m2-042",
+        "version": 1
+      }
+    },
+    {
+      "event": "repair_terminated",
+      "reason": "irreparable"
+    }
+  ],
+  "final_state": {
+    "certificate_history": [
+      {
+        "certificate_id": "m2-042-m6-live-diagnosis",
+        "failed_inference": "Node 1 falsely asserts that the squaring function is strictly increasing on all real numbers. It is decreasing on the negative reals, so it cannot justify the stated conclusion under the given assumptions.",
+        "repair_constraints": {
+          "allowed_operations": [
+            "insert_before",
+            "replace",
+            "delete"
+          ],
+          "max_new_nodes": 2,
+          "preserve_assumptions": true,
+          "preserve_theorem": true
+        },
+        "target": {
+          "node_id": 1,
+          "proof_id": "m2-042",
+          "version": 1
+        }
+      }
+    ],
+    "dependency_redirects": [],
+    "m4_input_digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "model_invocations": [],
+    "nodes": [
+      {
+        "claim": "平方函数严格递增。",
+        "depends_on": [],
+        "node_id": 1,
+        "node_type": "calculation_step",
+        "order_key": 10,
+        "proof_id": "m2-042",
+        "self_contained_claim": "平方函数严格递增。",
+        "version": 1
+      },
+      {
+        "claim": "因此 x^2<y^2。",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "m2-042",
+            "version": 1
+          }
+        ],
+        "node_id": 2,
+        "node_type": "conclusion",
+        "order_key": 20,
+        "proof_id": "m2-042",
+        "self_contained_claim": "因此 x^2<y^2。",
+        "version": 1
+      }
+    ],
+    "proof_id": "m2-042",
+    "revalidation_queue": [],
+    "revalidation_records": [],
+    "rounds": 1,
+    "schema_version": "0.2",
+    "stale": [],
+    "stop_reason": "irreparable",
+    "version_history": []
+  },
+  "human_verified": false,
+  "method_id": "no_structured_certificate",
+  "reported_tokens": 45135,
+  "scientific_claim_allowed": false,
+  "status": "irreparable"
+}

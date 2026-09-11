@@ -1,0 +1,119 @@
+{
+  "certificate_history": [
+    {
+      "certificate_id": "m2-033-m6-live-diagnosis",
+      "failed_inference": "从 (x-1)(x+1)=0 直接约去因子 x-1 不成立，因为 x-1 可能为 0。",
+      "repair_constraints": {
+        "allowed_operations": [
+          "insert_before",
+          "replace",
+          "delete"
+        ],
+        "max_new_nodes": 2,
+        "preserve_assumptions": true,
+        "preserve_theorem": true
+      },
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-033",
+        "version": 1
+      }
+    }
+  ],
+  "dependency_redirects": [],
+  "m4_input_digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "model_invocations": [],
+  "nodes": [
+    {
+      "claim": "由 x^2-1=0 得 (x-1)(x+1)=0。",
+      "depends_on": [],
+      "node_id": 1,
+      "node_type": "calculation_step",
+      "order_key": 10,
+      "proof_id": "m2-033",
+      "self_contained_claim": "由 x^2-1=0 得 (x-1)(x+1)=0。",
+      "version": 1
+    },
+    {
+      "claim": "因此 x=1 或 x=-1。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-033",
+          "version": 1
+        }
+      ],
+      "node_id": 3,
+      "node_type": "conclusion",
+      "order_key": 30,
+      "proof_id": "m2-033",
+      "self_contained_claim": "因此 x=1 或 x=-1。",
+      "version": 1
+    },
+    {
+      "claim": "由 (x-1)(x+1)=0，依据零乘积性质，x-1=0 或 x+1=0，因此 x=1 或 x=-1。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-033",
+          "version": 1
+        }
+      ],
+      "lifecycle_state": "active",
+      "node_id": 2,
+      "node_type": "calculation",
+      "order_key": 20,
+      "proof_id": "m2-033",
+      "self_contained_claim": "由 (x-1)(x+1)=0，依据零乘积性质，x-1=0 或 x+1=0，因此 x=1 或 x=-1。",
+      "version": 2
+    }
+  ],
+  "proof_id": "m2-033",
+  "revalidation_queue": [
+    {
+      "status": "active",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-033",
+        "version": 2
+      }
+    }
+  ],
+  "revalidation_records": [
+    {
+      "evaluation_id": "m2-033-evaluation-4",
+      "evaluator_id": "live-reviewer",
+      "reason": "依赖祖先已得 (x-1)(x+1)=0。实数域满足零乘积性质，故 x-1=0 或 x+1=0，分别推出 x=1 或 x=-1；该节点推理正确且保持原定理、假设与定义域。",
+      "schema_version": "0.1",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-033",
+        "version": 2
+      },
+      "verdict": "accepted"
+    }
+  ],
+  "rounds": 1,
+  "schema_version": "0.2",
+  "stale": [],
+  "stop_reason": "accepted",
+  "version_history": [
+    {
+      "claim": "等式两边约去因子 x-1，得到 x+1=0。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-033",
+          "version": 1
+        }
+      ],
+      "lifecycle_state": "superseded",
+      "node_id": 2,
+      "node_type": "calculation_step",
+      "order_key": 20,
+      "proof_id": "m2-033",
+      "self_contained_claim": "等式两边约去因子 x-1，得到 x+1=0。",
+      "version": 1
+    }
+  ]
+}

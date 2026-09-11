@@ -1,0 +1,178 @@
+{
+  "certificate_history": [
+    {
+      "certificate_id": "m2-035-m6-live-diagnosis",
+      "failed_inference": "节点1错误：不等式两边乘以负数 c 时必须改变不等号方向，应得 ac>bc，而非 ac<bc。",
+      "repair_constraints": {
+        "allowed_operations": [
+          "insert_before",
+          "replace",
+          "delete"
+        ],
+        "max_new_nodes": 2,
+        "preserve_assumptions": true,
+        "preserve_theorem": true
+      },
+      "target": {
+        "node_id": 1,
+        "proof_id": "m2-035",
+        "version": 1
+      }
+    }
+  ],
+  "dependency_redirects": [],
+  "m4_input_digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "model_invocations": [],
+  "nodes": [
+    {
+      "claim": "将不等式 a<b 两边同时乘以 c<0，得到 ac>bc。",
+      "depends_on": [],
+      "lifecycle_state": "active",
+      "node_id": 1,
+      "node_type": "calculation",
+      "order_key": 10,
+      "proof_id": "m2-035",
+      "self_contained_claim": "将不等式 a<b 两边同时乘以 c<0，得到 ac>bc。",
+      "version": 2
+    },
+    {
+      "claim": "因为 c 是负数，所以把不等号改为相反方向，得到 ac>bc。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-035",
+          "version": 2
+        }
+      ],
+      "lifecycle_state": "active",
+      "node_id": 2,
+      "node_type": "conclusion",
+      "order_key": 20,
+      "proof_id": "m2-035",
+      "self_contained_claim": "因为 c 是负数，所以把不等号改为相反方向，得到 ac>bc。",
+      "version": 2
+    },
+    {
+      "claim": "因此 ac>bc。",
+      "depends_on": [
+        {
+          "node_id": 2,
+          "proof_id": "m2-035",
+          "version": 2
+        }
+      ],
+      "lifecycle_state": "pending_evaluation",
+      "node_id": 3,
+      "node_type": "conclusion",
+      "order_key": 30,
+      "proof_id": "m2-035",
+      "self_contained_claim": "因此 ac>bc。",
+      "version": 2
+    }
+  ],
+  "proof_id": "m2-035",
+  "revalidation_queue": [
+    {
+      "status": "active",
+      "target": {
+        "node_id": 1,
+        "proof_id": "m2-035",
+        "version": 2
+      }
+    },
+    {
+      "status": "active",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-035",
+        "version": 2
+      }
+    },
+    {
+      "status": "pending_evaluation",
+      "target": {
+        "node_id": 3,
+        "proof_id": "m2-035",
+        "version": 2
+      }
+    }
+  ],
+  "revalidation_records": [
+    {
+      "evaluation_id": "m2-035-evaluation-4",
+      "evaluator_id": "live-reviewer",
+      "reason": "在实数域中，不等式两边同乘负数 c<0 时，不等号方向反转；由 a<b 得 ac>bc。该步骤直接适用题设，结论正确。",
+      "schema_version": "0.1",
+      "target": {
+        "node_id": 1,
+        "proof_id": "m2-035",
+        "version": 2
+      },
+      "verdict": "accepted"
+    },
+    {
+      "evaluation_id": "m2-035-evaluation-5",
+      "evaluator_id": "live-reviewer",
+      "reason": "由祖先节点的 a<b 及 c<0 可知，两边同乘负数时不等号方向反转，故 ac>bc；目标结论正确。",
+      "schema_version": "0.1",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-035",
+        "version": 2
+      },
+      "verdict": "accepted"
+    }
+  ],
+  "rounds": 1,
+  "schema_version": "0.2",
+  "stale": [
+    {
+      "claim": "因为 c 是负数，所以把不等号改为相反方向，得到 ac>bc。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-035",
+          "version": 1
+        }
+      ],
+      "node_id": 2,
+      "node_type": "conclusion",
+      "order_key": 20,
+      "proof_id": "m2-035",
+      "self_contained_claim": "因为 c 是负数，所以把不等号改为相反方向，得到 ac>bc。",
+      "stale_reason": "depends on 1@v1",
+      "version": 1
+    },
+    {
+      "claim": "因此 ac>bc。",
+      "depends_on": [
+        {
+          "node_id": 2,
+          "proof_id": "m2-035",
+          "version": 1
+        }
+      ],
+      "node_id": 3,
+      "node_type": "conclusion",
+      "order_key": 30,
+      "proof_id": "m2-035",
+      "self_contained_claim": "因此 ac>bc。",
+      "stale_reason": "depends on 1@v1",
+      "version": 1
+    }
+  ],
+  "stop_reason": null,
+  "version_history": [
+    {
+      "claim": "将不等式 a<b 两边同时乘以 c，得到 ac<bc。",
+      "depends_on": [],
+      "lifecycle_state": "superseded",
+      "node_id": 1,
+      "node_type": "calculation_step",
+      "order_key": 10,
+      "proof_id": "m2-035",
+      "self_contained_claim": "将不等式 a<b 两边同时乘以 c，得到 ac<bc。",
+      "version": 1
+    }
+  ]
+}

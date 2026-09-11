@@ -1,0 +1,109 @@
+{
+  "input": {
+    "dependency_ancestors": [],
+    "evaluation_id": "m2-039-evaluation-4",
+    "problem": {
+      "assumptions": [
+        "a,b,c 为整数，a|b 且 b|c。"
+      ],
+      "domain": "elementary_algebra",
+      "theorem": "证明若整数 a|b 且 b|c，则 a|c。"
+    },
+    "target": {
+      "node_id": 1,
+      "proof_id": "m2-039",
+      "version": 2
+    },
+    "target_node": {
+      "claim": "由 a|b，存在整数 m 使 b=am；由 b|c，存在整数 n 使 c=bn。因此 c=(am)n=a(mn)，且 mn 为整数，故 a|c。",
+      "depends_on": [],
+      "node_id": 1,
+      "node_type": "calculation",
+      "order_key": 10,
+      "proof_id": "m2-039",
+      "self_contained_claim": "由 a|b，存在整数 m 使 b=am；由 b|c，存在整数 n 使 c=bn。因此 c=(am)n=a(mn)，且 mn 为整数，故 a|c。",
+      "version": 2
+    }
+  },
+  "max_output_tokens": 3500,
+  "model": "gpt-5.6-terra",
+  "phase": "revalidate",
+  "prompt": "Use only INPUT JSON and mathematical knowledge. Do not use tools, files or web. You are an AI, not a human reviewer. Preserve the exact theorem, assumptions and domain. Independently judge only target_node using its supplied dependency ancestors and the original problem. The caller has applied a patch but supplies no earlier verdict. Use evaluator_id=live-reviewer, the exact target reference and evaluation_id. Return accepted, rejected or undetermined with a mathematical reason. Do not assume a node is correct because a previous patch was accepted.",
+  "reasoning_effort": "high",
+  "schema": {
+    "$defs": {
+      "nodeRef": {
+        "additionalProperties": false,
+        "properties": {
+          "node_id": {
+            "oneOf": [
+              {
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "minLength": 1,
+                "type": "string"
+              }
+            ]
+          },
+          "proof_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "version": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "proof_id",
+          "node_id",
+          "version"
+        ],
+        "type": "object"
+      }
+    },
+    "$id": "m5_controller_revalidation_v0_1.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "evaluation_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "evaluator_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "reason": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "schema_version": {
+        "const": "0.1"
+      },
+      "target": {
+        "$ref": "#/$defs/nodeRef"
+      },
+      "verdict": {
+        "enum": [
+          "accepted",
+          "rejected",
+          "undetermined"
+        ]
+      }
+    },
+    "required": [
+      "schema_version",
+      "evaluation_id",
+      "evaluator_id",
+      "target",
+      "verdict",
+      "reason"
+    ],
+    "title": "M5 Controller independent node revalidation",
+    "type": "object"
+  },
+  "timeout_seconds": 180
+}

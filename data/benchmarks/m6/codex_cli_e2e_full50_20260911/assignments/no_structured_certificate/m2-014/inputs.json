@@ -1,0 +1,84 @@
+{
+  "certificate": {
+    "certificate_id": "m2-014-m6-live-diagnosis",
+    "failed_inference": "节点2从“存在整数k使n=2k”直接推出n^2为4的倍数，但未给出n^2=(2k)^2=4k^2且k^2为整数这一必要推导。",
+    "repair_constraints": {
+      "allowed_operations": [
+        "insert_before",
+        "replace",
+        "delete"
+      ],
+      "max_new_nodes": 2,
+      "preserve_assumptions": true,
+      "preserve_theorem": true
+    },
+    "target": {
+      "node_id": 2,
+      "proof_id": "m2-014",
+      "version": 1
+    }
+  },
+  "diagnosis_record": {
+    "counterexample": null,
+    "evaluator_id": "live-diagnoser",
+    "failed_inference": "节点2从“存在整数k使n=2k”直接推出n^2为4的倍数，但未给出n^2=(2k)^2=4k^2且k^2为整数这一必要推导。",
+    "first_error_target": {
+      "node_id": 2,
+      "proof_id": "m2-014",
+      "version": 1
+    },
+    "reason": "节点1由n为偶整数的定义成立。节点2的结论虽为真，但该节点缺少将n=2k平方并验证倍数定义的关键论证；按要求，修复性遗漏也判为无效。",
+    "repairable": true,
+    "schema_version": "m6-live-diagnosis-0.1",
+    "verdict": "invalid"
+  },
+  "human_review": false,
+  "kind": "m6_end_to_end_controller_ablation",
+  "max_calls": 12,
+  "max_tokens": 80000,
+  "method_id": "no_structured_certificate",
+  "model": "gpt-5.6-terra",
+  "nodes": [
+    {
+      "claim": "存在整数 k 使 n=2k。",
+      "depends_on": [],
+      "node_id": 1,
+      "node_type": "introduction",
+      "order_key": 10,
+      "proof_id": "m2-014",
+      "self_contained_claim": "存在整数 k 使 n=2k。",
+      "version": 1
+    },
+    {
+      "claim": "因此 n^2 是 4 的倍数。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-014",
+          "version": 1
+        }
+      ],
+      "node_id": 2,
+      "node_type": "conclusion",
+      "order_key": 20,
+      "proof_id": "m2-014",
+      "self_contained_claim": "因此 n^2 是 4 的倍数。",
+      "version": 1
+    }
+  ],
+  "problem": {
+    "assumptions": [
+      "n 为偶整数。"
+    ],
+    "domain": "elementary_algebra",
+    "theorem": "证明若整数 n 为偶数，则 n^2 为 4 的倍数。"
+  },
+  "rounds": 3,
+  "source_sha256": {
+    "harness/codex_cli.py": "7225a461c6925eb8e64409da648a2023ebe36a67e1a152d299791714f8a173b7",
+    "harness/m5_person_a_review.py": "bd35494357f588c6414538d10855fee5d467880c1368a068d0bdc2d5a9128020",
+    "harness/m5_repair.py": "81ad0085be9c96948a53c279f60046953c10f0b35a4cac1e8bed7b9c77a05936",
+    "harness/m5_sequential_repair.py": "af6ff486c35e0a56df3d562bd9647aa91b1e9ccf6db6738f4ca7df1ba38f8e3d",
+    "scripts/run_live_repair_pilot.py": "7ee9a542be0a3288c7df9684586b9918cefc53a1859f2e55f897996d98c9d87e"
+  }
+}

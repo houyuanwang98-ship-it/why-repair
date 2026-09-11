@@ -1,0 +1,127 @@
+{
+  "input": {
+    "dependency_ancestors": [
+      {
+        "claim": "对任意正整数 n，n^2+n=n(n+1)。相邻整数 n 与 n+1 中必有一个是偶数，因此 n(n+1) 是偶数，从而 n^2+n 是偶数。",
+        "depends_on": [],
+        "lifecycle_state": "active",
+        "node_id": 4,
+        "node_type": "claim",
+        "order_key": 25,
+        "proof_id": "m2-036",
+        "self_contained_claim": "对任意正整数 n，n^2+n=n(n+1)。相邻整数 n 与 n+1 中必有一个是偶数，因此 n(n+1) 是偶数，从而 n^2+n 是偶数。",
+        "version": 1
+      }
+    ],
+    "evaluation_id": "m2-036-evaluation-5",
+    "problem": {
+      "assumptions": [
+        "n 为正整数。"
+      ],
+      "domain": "elementary_algebra",
+      "theorem": "证明对任意正整数 n，n^2+n 是偶数。"
+    },
+    "target": {
+      "node_id": 3,
+      "proof_id": "m2-036",
+      "version": 2
+    },
+    "target_node": {
+      "claim": "因此对任意正整数 n，n^2+n 都是偶数。",
+      "depends_on": [
+        {
+          "node_id": 4,
+          "proof_id": "m2-036",
+          "version": 1
+        }
+      ],
+      "node_id": 3,
+      "node_type": "conclusion",
+      "order_key": 30,
+      "proof_id": "m2-036",
+      "self_contained_claim": "因此对任意正整数 n，n^2+n 都是偶数。",
+      "version": 2
+    }
+  },
+  "max_output_tokens": 3500,
+  "model": "gpt-5.6-terra",
+  "phase": "revalidate",
+  "prompt": "Use only INPUT JSON and mathematical knowledge. Do not use tools, files or web. You are an AI, not a human reviewer. Preserve the exact theorem, assumptions and domain. Independently judge only target_node using its supplied dependency ancestors and the original problem. The caller has applied a patch but supplies no earlier verdict. Use evaluator_id=live-reviewer, the exact target reference and evaluation_id. Return accepted, rejected or undetermined with a mathematical reason. Do not assume a node is correct because a previous patch was accepted.",
+  "reasoning_effort": "high",
+  "schema": {
+    "$defs": {
+      "nodeRef": {
+        "additionalProperties": false,
+        "properties": {
+          "node_id": {
+            "oneOf": [
+              {
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "minLength": 1,
+                "type": "string"
+              }
+            ]
+          },
+          "proof_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "version": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "proof_id",
+          "node_id",
+          "version"
+        ],
+        "type": "object"
+      }
+    },
+    "$id": "m5_controller_revalidation_v0_1.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "evaluation_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "evaluator_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "reason": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "schema_version": {
+        "const": "0.1"
+      },
+      "target": {
+        "$ref": "#/$defs/nodeRef"
+      },
+      "verdict": {
+        "enum": [
+          "accepted",
+          "rejected",
+          "undetermined"
+        ]
+      }
+    },
+    "required": [
+      "schema_version",
+      "evaluation_id",
+      "evaluator_id",
+      "target",
+      "verdict",
+      "reason"
+    ],
+    "title": "M5 Controller independent node revalidation",
+    "type": "object"
+  },
+  "timeout_seconds": 180
+}

@@ -1,0 +1,140 @@
+{
+  "certificate_history": [
+    {
+      "certificate_id": "m2-014-m6-live-diagnosis",
+      "failed_inference": "节点2从“存在整数k使n=2k”直接推出n^2为4的倍数，但未给出n^2=(2k)^2=4k^2且k^2为整数这一必要推导。",
+      "repair_constraints": {
+        "allowed_operations": [
+          "insert_before",
+          "replace",
+          "delete"
+        ],
+        "max_new_nodes": 2,
+        "preserve_assumptions": true,
+        "preserve_theorem": true
+      },
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-014",
+        "version": 1
+      }
+    }
+  ],
+  "dependency_redirects": [],
+  "m4_input_digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "model_invocations": [],
+  "nodes": [
+    {
+      "claim": "存在整数 k 使 n=2k。",
+      "depends_on": [],
+      "node_id": 1,
+      "node_type": "introduction",
+      "order_key": 10,
+      "proof_id": "m2-014",
+      "self_contained_claim": "存在整数 k 使 n=2k。",
+      "version": 1
+    },
+    {
+      "claim": "由 n=2k 可得 n^2=(2k)^2=4k^2；又因 k 为整数，k^2 也为整数，故 n^2 为 4 的倍数。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-014",
+          "version": 1
+        }
+      ],
+      "lifecycle_state": "active",
+      "node_id": 3,
+      "node_type": "calculation",
+      "order_key": 15,
+      "proof_id": "m2-014",
+      "self_contained_claim": "由存在整数 k 使 n=2k，可得 n^2=4k^2，且 k^2 为整数，因此 n^2 为 4 的倍数。",
+      "version": 1
+    },
+    {
+      "claim": "因此 n^2 是 4 的倍数。",
+      "depends_on": [
+        {
+          "node_id": 3,
+          "proof_id": "m2-014",
+          "version": 1
+        }
+      ],
+      "lifecycle_state": "active",
+      "node_id": 2,
+      "node_type": "conclusion",
+      "order_key": 20,
+      "proof_id": "m2-014",
+      "self_contained_claim": "因此 n^2 是 4 的倍数。",
+      "version": 2
+    }
+  ],
+  "proof_id": "m2-014",
+  "revalidation_queue": [
+    {
+      "status": "active",
+      "target": {
+        "node_id": 3,
+        "proof_id": "m2-014",
+        "version": 1
+      }
+    },
+    {
+      "status": "active",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-014",
+        "version": 2
+      }
+    }
+  ],
+  "revalidation_records": [
+    {
+      "evaluation_id": "m2-014-evaluation-4",
+      "evaluator_id": "live-reviewer",
+      "reason": "由祖先节点知存在整数 k 使 n=2k。平方得 n^2=4k^2，且 k^2 为整数，因此 n^2 是 4 与整数 k^2 的乘积，故为 4 的倍数。",
+      "schema_version": "0.1",
+      "target": {
+        "node_id": 3,
+        "proof_id": "m2-014",
+        "version": 1
+      },
+      "verdict": "accepted"
+    },
+    {
+      "evaluation_id": "m2-014-evaluation-5",
+      "evaluator_id": "live-reviewer",
+      "reason": "祖先节点由 n 为偶整数推出存在整数 k 使 n=2k，并计算得 n^2=4k^2；由于 k^2 为整数，n^2 确为 4 的倍数。因此该结论成立。",
+      "schema_version": "0.1",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-014",
+        "version": 2
+      },
+      "verdict": "accepted"
+    }
+  ],
+  "rounds": 1,
+  "schema_version": "0.2",
+  "stale": [],
+  "stop_reason": "accepted",
+  "version_history": [
+    {
+      "claim": "因此 n^2 是 4 的倍数。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-014",
+          "version": 1
+        }
+      ],
+      "lifecycle_state": "superseded",
+      "node_id": 2,
+      "node_type": "conclusion",
+      "order_key": 20,
+      "proof_id": "m2-014",
+      "self_contained_claim": "因此 n^2 是 4 的倍数。",
+      "version": 1
+    }
+  ]
+}

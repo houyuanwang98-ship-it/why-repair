@@ -1,0 +1,245 @@
+{
+  "input": {
+    "context": {
+      "allowed_evidence": [
+        "sha256:7fc6a165b7d871a2bfd81a54562fefacf6119ffabc3bed9b32fc3d14e45bd135",
+        "sha256:7f0d715a3fe0926b514f10cf6d21a9ccfd45caf6f659711aa54e0ed1aea00cd6"
+      ],
+      "context_id": "m2-038-r1",
+      "domain": "elementary_algebra",
+      "error_certificate_digest": "sha256:06a21c5f04fa2438bb3c010a1988010acb5ae43f9fd407acad9c95f282e14f5b",
+      "failed_inference": "节点1的 x^2≥0 不能推出 |x|≥x；缺少将平方非负与绝对值不等式联系起来的论证。",
+      "global_assumptions": [
+        "x 为实数。"
+      ],
+      "patch_digest": "sha256:7f0d715a3fe0926b514f10cf6d21a9ccfd45caf6f659711aa54e0ed1aea00cd6",
+      "proof_id": "m2-038",
+      "schema_version": "0.1",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-038",
+        "version": 1
+      },
+      "theorem": "证明对任意实数 x，都有 |x|≥x。",
+      "unrelated_branch_digests": {}
+    },
+    "current_nodes": [
+      {
+        "claim": "实数的平方总是非负，所以 x^2≥0。",
+        "depends_on": [],
+        "node_id": 1,
+        "node_type": "calculation_step",
+        "order_key": 10,
+        "proof_id": "m2-038",
+        "self_contained_claim": "实数的平方总是非负，所以 x^2≥0。",
+        "version": 1
+      },
+      {
+        "claim": "因此 |x|≥x。",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "m2-038",
+            "version": 1
+          }
+        ],
+        "node_id": 2,
+        "node_type": "conclusion",
+        "order_key": 20,
+        "proof_id": "m2-038",
+        "self_contained_claim": "因此 |x|≥x。",
+        "version": 1
+      }
+    ],
+    "edit_ids": [
+      "replace:2"
+    ],
+    "patch": {
+      "changes_problem": false,
+      "error_certificate_id": "m2-038-m6-live-diagnosis",
+      "generator_id": "live-generator",
+      "operation": "replace",
+      "patch_id": "m2-038-m6-live-diagnosis-patch-1",
+      "rationale": "原节点所依赖的 x^2≥0 与结论之间没有有效推导。以绝对值的分段定义直接证明结论，且不再保留无关依赖。",
+      "replacement_nodes": [
+        {
+          "claim": "由绝对值的定义：若 x≥0，则 |x|=x；若 x<0，则 |x|=-x>x。因此在两种情形下均有 |x|≥x。",
+          "depends_on": [],
+          "node_id": 2,
+          "node_type": "conclusion",
+          "order_key": 20,
+          "self_contained_claim": "由绝对值的定义：若 x≥0，则 |x|=x；若 x<0，则 |x|=-x>x。因此在两种情形下均有 |x|≥x。"
+        }
+      ],
+      "schema_version": "0.1",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-038",
+        "version": 1
+      },
+      "target_dependencies_after": [],
+      "used_dependencies": []
+    }
+  },
+  "max_output_tokens": 3500,
+  "model": "gpt-5.6-terra",
+  "phase": "review",
+  "prompt": "Use only INPUT JSON and mathematical knowledge. Do not use tools, files or web. You are an AI, not a human reviewer. Preserve the exact theorem, assumptions and domain. Independently review the proposed patch against context and current proof. Use reviewer_id=live-reviewer and exact context_id. Cover every edit_id in deletion_trials. Check local repair and problem preservation; downstream nodes will be revalidated separately. accepted must equal all checks true, no hidden assumptions, no introduced errors, all deletion trials removal_breaks_repair true, no rejection codes. When rejecting include the appropriate codes for every false check. Use evidence_used from context.allowed_evidence. Explain actual mathematics, never merely trust the generator.",
+  "reasoning_effort": "high",
+  "schema": {
+    "$id": "m5_person_a_patch_review_v0_1.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "accepted": {
+        "type": "boolean"
+      },
+      "checks": {
+        "additionalProperties": false,
+        "properties": {
+          "assumptions_preserved": {
+            "type": "boolean"
+          },
+          "domain_preserved": {
+            "type": "boolean"
+          },
+          "mathematically_valid": {
+            "type": "boolean"
+          },
+          "no_new_errors": {
+            "type": "boolean"
+          },
+          "operationally_minimal": {
+            "type": "boolean"
+          },
+          "resolves_failed_inference": {
+            "type": "boolean"
+          },
+          "theorem_preserved": {
+            "type": "boolean"
+          },
+          "unrelated_branches_preserved": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "mathematically_valid",
+          "resolves_failed_inference",
+          "theorem_preserved",
+          "assumptions_preserved",
+          "domain_preserved",
+          "unrelated_branches_preserved",
+          "no_new_errors",
+          "operationally_minimal"
+        ],
+        "type": "object"
+      },
+      "context_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "deletion_trials": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "edit_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "reason": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "removal_breaks_repair": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "edit_id",
+            "removal_breaks_repair",
+            "reason"
+          ],
+          "type": "object"
+        },
+        "minItems": 1,
+        "type": "array"
+      },
+      "evidence_used": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "minItems": 1,
+        "type": "array",
+        "uniqueItems": true
+      },
+      "hidden_assumptions": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array",
+        "uniqueItems": true
+      },
+      "introduced_errors": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array",
+        "uniqueItems": true
+      },
+      "reason": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "rejection_codes": {
+        "items": {
+          "enum": [
+            "mathematical_error",
+            "failed_inference_unresolved",
+            "changes_problem",
+            "hidden_assumption",
+            "domain_changed",
+            "target_changed",
+            "unrelated_branch_changed",
+            "new_error_introduced",
+            "not_minimal",
+            "insufficient_evidence",
+            "stale_binding"
+          ]
+        },
+        "type": "array",
+        "uniqueItems": true
+      },
+      "review_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "reviewer_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "schema_version": {
+        "const": "0.1"
+      }
+    },
+    "required": [
+      "schema_version",
+      "review_id",
+      "context_id",
+      "reviewer_id",
+      "checks",
+      "hidden_assumptions",
+      "introduced_errors",
+      "deletion_trials",
+      "evidence_used",
+      "accepted",
+      "rejection_codes",
+      "reason"
+    ],
+    "title": "M5 Person A mathematical patch review",
+    "type": "object"
+  },
+  "timeout_seconds": 180
+}

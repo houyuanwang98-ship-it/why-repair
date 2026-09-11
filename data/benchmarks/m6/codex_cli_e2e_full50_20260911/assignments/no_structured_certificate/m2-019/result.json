@@ -1,0 +1,146 @@
+{
+  "calls": 4,
+  "events": [
+    {
+      "event": "patch_submitted",
+      "fingerprint": "sha256:a8131be55e44295973719566e88e4e94668c44d151b56bda67756e6ffefd6e4b",
+      "patch_id": "m2-019-patch-1",
+      "round": 1
+    },
+    {
+      "accepted": true,
+      "event": "patch_reviewed",
+      "patch_id": "m2-019-patch-1",
+      "review_digest": "sha256:a889efe0c11f63d47edaaaa0fc412a1dc5887f81f8408079106942c438a81b71",
+      "review_id": "m2-019-r1-review"
+    },
+    {
+      "event": "patch_applied",
+      "invalidated_descendants": 0,
+      "operation": "replace",
+      "patch_id": "m2-019-patch-1"
+    },
+    {
+      "evaluation_id": "m2-019-evaluation-4",
+      "event": "node_revalidated",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-019",
+        "version": 2
+      },
+      "verdict": "accepted"
+    },
+    {
+      "event": "repair_terminated",
+      "reason": "accepted"
+    }
+  ],
+  "final_state": {
+    "certificate_history": [
+      {
+        "certificate_id": "m2-019-m6-live-diagnosis",
+        "failed_inference": "节点 2 未由节点 1 给出必要推导：应先说明 m,n 为整数，并计算 a-b=5m-5n=5(m-n)，从而因 m-n 为整数而得 5|(a-b)。仅从“写 a=5m，b=5n”直接断言结论是材料不足的跳步。",
+        "repair_constraints": {
+          "allowed_operations": [
+            "insert_before",
+            "replace",
+            "delete"
+          ],
+          "max_new_nodes": 2,
+          "preserve_assumptions": true,
+          "preserve_theorem": true
+        },
+        "target": {
+          "node_id": 2,
+          "proof_id": "m2-019",
+          "version": 1
+        }
+      }
+    ],
+    "dependency_redirects": [],
+    "m4_input_digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "model_invocations": [],
+    "nodes": [
+      {
+        "claim": "写 a=5m，b=5n。",
+        "depends_on": [],
+        "node_id": 1,
+        "node_type": "introduction",
+        "order_key": 10,
+        "proof_id": "m2-019",
+        "self_contained_claim": "写 a=5m，b=5n。",
+        "version": 1
+      },
+      {
+        "claim": "由 5|a、5|b，可取整数 m,n 使 a=5m，b=5n。于是 a-b=5m-5n=5(m-n)，且 m-n 为整数，故 5|(a-b)。",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "m2-019",
+            "version": 1
+          }
+        ],
+        "lifecycle_state": "active",
+        "node_id": 2,
+        "node_type": "conclusion",
+        "order_key": 20,
+        "proof_id": "m2-019",
+        "self_contained_claim": "由 5|a、5|b，可取整数 m,n 使 a=5m，b=5n。于是 a-b=5m-5n=5(m-n)，且 m-n 为整数，故 5|(a-b)。",
+        "version": 2
+      }
+    ],
+    "proof_id": "m2-019",
+    "revalidation_queue": [
+      {
+        "status": "active",
+        "target": {
+          "node_id": 2,
+          "proof_id": "m2-019",
+          "version": 2
+        }
+      }
+    ],
+    "revalidation_records": [
+      {
+        "evaluation_id": "m2-019-evaluation-4",
+        "evaluator_id": "live-reviewer",
+        "reason": "由整除定义，5|a、5|b 分别保证存在整数m,n使a=5m、b=5n。故a-b=5(m-n)，且整数对减法封闭，所以m-n为整数；按整除定义，5|(a-b)。结论与原定理的假设和整数域一致。",
+        "schema_version": "0.1",
+        "target": {
+          "node_id": 2,
+          "proof_id": "m2-019",
+          "version": 2
+        },
+        "verdict": "accepted"
+      }
+    ],
+    "rounds": 1,
+    "schema_version": "0.2",
+    "stale": [],
+    "stop_reason": "accepted",
+    "version_history": [
+      {
+        "claim": "所以 a-b 是 5 的倍数。",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "m2-019",
+            "version": 1
+          }
+        ],
+        "lifecycle_state": "superseded",
+        "node_id": 2,
+        "node_type": "conclusion",
+        "order_key": 20,
+        "proof_id": "m2-019",
+        "self_contained_claim": "所以 a-b 是 5 的倍数。",
+        "version": 1
+      }
+    ]
+  },
+  "human_verified": false,
+  "method_id": "no_structured_certificate",
+  "reported_tokens": 60820,
+  "scientific_claim_allowed": false,
+  "status": "accepted"
+}

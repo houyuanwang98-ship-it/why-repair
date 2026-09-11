@@ -1,0 +1,154 @@
+{
+  "certificate_history": [
+    {
+      "certificate_id": "m2-044-m6-live-diagnosis",
+      "failed_inference": "Node 1 incorrectly expands (b+c)^2 as b^2+bc+c^2; the correct expansion is b^2+2bc+c^2.",
+      "repair_constraints": {
+        "allowed_operations": [
+          "insert_before",
+          "replace",
+          "delete"
+        ],
+        "max_new_nodes": 2,
+        "preserve_assumptions": true,
+        "preserve_theorem": true
+      },
+      "target": {
+        "node_id": 1,
+        "proof_id": "m2-044",
+        "version": 1
+      }
+    }
+  ],
+  "dependency_redirects": [],
+  "m4_input_digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "model_invocations": [],
+  "nodes": [
+    {
+      "claim": "展开两边，得到 (a+c)^2=a^2+2ac+c^2，且 (b+c)^2=b^2+2bc+c^2。",
+      "depends_on": [],
+      "lifecycle_state": "active",
+      "node_id": 1,
+      "node_type": "calculation",
+      "order_key": 10,
+      "proof_id": "m2-044",
+      "self_contained_claim": "展开两边，得到 (a+c)^2=a^2+2ac+c^2，且 (b+c)^2=b^2+2bc+c^2。",
+      "version": 2
+    },
+    {
+      "claim": "因为 a=b，所以 a^2+2ac+c^2=b^2+bc+c^2。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-044",
+          "version": 2
+        }
+      ],
+      "lifecycle_state": "pending_evaluation",
+      "node_id": 2,
+      "node_type": "conclusion",
+      "order_key": 20,
+      "proof_id": "m2-044",
+      "self_contained_claim": "因为 a=b，所以 a^2+2ac+c^2=b^2+bc+c^2。",
+      "version": 2
+    }
+  ],
+  "proof_id": "m2-044",
+  "revalidation_queue": [
+    {
+      "status": "active",
+      "target": {
+        "node_id": 1,
+        "proof_id": "m2-044",
+        "version": 2
+      }
+    },
+    {
+      "status": "pending_evaluation",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-044",
+        "version": 2
+      }
+    },
+    {
+      "status": "blocked_by_stale_dependency",
+      "target": {
+        "node_id": 3,
+        "proof_id": "m2-044",
+        "version": 1
+      }
+    }
+  ],
+  "revalidation_records": [
+    {
+      "evaluation_id": "m2-044-evaluation-4",
+      "evaluator_id": "live-reviewer",
+      "reason": "二项式平方公式对实数成立；该节点正确展开了两边，且不改变原定理的假设或定义域。",
+      "schema_version": "0.1",
+      "target": {
+        "node_id": 1,
+        "proof_id": "m2-044",
+        "version": 2
+      },
+      "verdict": "accepted"
+    }
+  ],
+  "rounds": 1,
+  "schema_version": "0.2",
+  "stale": [
+    {
+      "claim": "因为 a=b，所以 a^2+2ac+c^2=b^2+bc+c^2。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-044",
+          "version": 1
+        }
+      ],
+      "node_id": 2,
+      "node_type": "conclusion",
+      "order_key": 20,
+      "proof_id": "m2-044",
+      "self_contained_claim": "因为 a=b，所以 a^2+2ac+c^2=b^2+bc+c^2。",
+      "stale_reason": "depends on 1@v1",
+      "version": 1
+    },
+    {
+      "claim": "因此 (a+c)^2=(b+c)^2。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-044",
+          "version": 1
+        },
+        {
+          "node_id": 2,
+          "proof_id": "m2-044",
+          "version": 1
+        }
+      ],
+      "node_id": 3,
+      "node_type": "conclusion",
+      "order_key": 30,
+      "proof_id": "m2-044",
+      "self_contained_claim": "因此 (a+c)^2=(b+c)^2。",
+      "stale_reason": "depends on 1@v1",
+      "version": 1
+    }
+  ],
+  "stop_reason": null,
+  "version_history": [
+    {
+      "claim": "展开两边，得到 (a+c)^2=a^2+2ac+c^2，且 (b+c)^2=b^2+bc+c^2。",
+      "depends_on": [],
+      "lifecycle_state": "superseded",
+      "node_id": 1,
+      "node_type": "calculation_step",
+      "order_key": 10,
+      "proof_id": "m2-044",
+      "self_contained_claim": "展开两边，得到 (a+c)^2=a^2+2ac+c^2，且 (b+c)^2=b^2+bc+c^2。",
+      "version": 1
+    }
+  ]
+}

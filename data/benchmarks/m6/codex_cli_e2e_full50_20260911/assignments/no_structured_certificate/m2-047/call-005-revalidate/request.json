@@ -1,0 +1,144 @@
+{
+  "input": {
+    "dependency_ancestors": [
+      {
+        "claim": "写 n=2k+1。",
+        "depends_on": [],
+        "node_id": 1,
+        "node_type": "introduction",
+        "order_key": 10,
+        "proof_id": "m2-047",
+        "self_contained_claim": "写 n=2k+1。",
+        "version": 1
+      },
+      {
+        "claim": "则 n^2=(2k+1)^2=4k^2+4k+1。",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "m2-047",
+            "version": 1
+          }
+        ],
+        "lifecycle_state": "active",
+        "node_id": 2,
+        "node_type": "calculation",
+        "order_key": 20,
+        "proof_id": "m2-047",
+        "self_contained_claim": "则 n^2=(2k+1)^2=4k^2+4k+1。",
+        "version": 2
+      }
+    ],
+    "evaluation_id": "m2-047-evaluation-5",
+    "problem": {
+      "assumptions": [
+        "n 为奇整数。"
+      ],
+      "domain": "elementary_algebra",
+      "theorem": "证明若整数 n 为奇数，则 n^2 为奇数。"
+    },
+    "target": {
+      "node_id": 3,
+      "proof_id": "m2-047",
+      "version": 2
+    },
+    "target_node": {
+      "claim": "所以 n^2 为奇数。",
+      "depends_on": [
+        {
+          "node_id": 2,
+          "proof_id": "m2-047",
+          "version": 2
+        }
+      ],
+      "lifecycle_state": "pending_evaluation",
+      "node_id": 3,
+      "node_type": "conclusion",
+      "order_key": 30,
+      "proof_id": "m2-047",
+      "self_contained_claim": "所以 n^2 为奇数。",
+      "version": 2
+    }
+  },
+  "max_output_tokens": 3500,
+  "model": "gpt-5.6-terra",
+  "phase": "revalidate",
+  "prompt": "Use only INPUT JSON and mathematical knowledge. Do not use tools, files or web. You are an AI, not a human reviewer. Preserve the exact theorem, assumptions and domain. Independently judge only target_node using its supplied dependency ancestors and the original problem. The caller has applied a patch but supplies no earlier verdict. Use evaluator_id=live-reviewer, the exact target reference and evaluation_id. Return accepted, rejected or undetermined with a mathematical reason. Do not assume a node is correct because a previous patch was accepted.",
+  "reasoning_effort": "high",
+  "schema": {
+    "$defs": {
+      "nodeRef": {
+        "additionalProperties": false,
+        "properties": {
+          "node_id": {
+            "oneOf": [
+              {
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "minLength": 1,
+                "type": "string"
+              }
+            ]
+          },
+          "proof_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "version": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "proof_id",
+          "node_id",
+          "version"
+        ],
+        "type": "object"
+      }
+    },
+    "$id": "m5_controller_revalidation_v0_1.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "evaluation_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "evaluator_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "reason": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "schema_version": {
+        "const": "0.1"
+      },
+      "target": {
+        "$ref": "#/$defs/nodeRef"
+      },
+      "verdict": {
+        "enum": [
+          "accepted",
+          "rejected",
+          "undetermined"
+        ]
+      }
+    },
+    "required": [
+      "schema_version",
+      "evaluation_id",
+      "evaluator_id",
+      "target",
+      "verdict",
+      "reason"
+    ],
+    "title": "M5 Controller independent node revalidation",
+    "type": "object"
+  },
+  "timeout_seconds": 180
+}

@@ -1,0 +1,84 @@
+{
+  "certificate": {
+    "certificate_id": "m2-019-m6-live-diagnosis",
+    "failed_inference": "节点 2 未由节点 1 给出必要推导：应先说明 m,n 为整数，并计算 a-b=5m-5n=5(m-n)，从而因 m-n 为整数而得 5|(a-b)。仅从“写 a=5m，b=5n”直接断言结论是材料不足的跳步。",
+    "repair_constraints": {
+      "allowed_operations": [
+        "insert_before",
+        "replace",
+        "delete"
+      ],
+      "max_new_nodes": 2,
+      "preserve_assumptions": true,
+      "preserve_theorem": true
+    },
+    "target": {
+      "node_id": 2,
+      "proof_id": "m2-019",
+      "version": 1
+    }
+  },
+  "diagnosis_record": {
+    "counterexample": null,
+    "evaluator_id": "live-diagnoser",
+    "failed_inference": "节点 2 未由节点 1 给出必要推导：应先说明 m,n 为整数，并计算 a-b=5m-5n=5(m-n)，从而因 m-n 为整数而得 5|(a-b)。仅从“写 a=5m，b=5n”直接断言结论是材料不足的跳步。",
+    "first_error_target": {
+      "node_id": 2,
+      "proof_id": "m2-019",
+      "version": 1
+    },
+    "reason": "原命题为真，且不存在满足原假设的反例；但按逐节点审计标准，节点 2 缺少将表示式相减并验证整数倍数的关键推理，因此首次不成立的节点为 2。",
+    "repairable": true,
+    "schema_version": "m6-live-diagnosis-0.1",
+    "verdict": "invalid"
+  },
+  "human_review": false,
+  "kind": "m6_end_to_end_controller_ablation",
+  "max_calls": 12,
+  "max_tokens": 80000,
+  "method_id": "no_structured_certificate",
+  "model": "gpt-5.6-terra",
+  "nodes": [
+    {
+      "claim": "写 a=5m，b=5n。",
+      "depends_on": [],
+      "node_id": 1,
+      "node_type": "introduction",
+      "order_key": 10,
+      "proof_id": "m2-019",
+      "self_contained_claim": "写 a=5m，b=5n。",
+      "version": 1
+    },
+    {
+      "claim": "所以 a-b 是 5 的倍数。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-019",
+          "version": 1
+        }
+      ],
+      "node_id": 2,
+      "node_type": "conclusion",
+      "order_key": 20,
+      "proof_id": "m2-019",
+      "self_contained_claim": "所以 a-b 是 5 的倍数。",
+      "version": 1
+    }
+  ],
+  "problem": {
+    "assumptions": [
+      "a,b 为整数且 5|a、5|b。"
+    ],
+    "domain": "elementary_algebra",
+    "theorem": "证明若整数 a,b 都是 5 的倍数，则 a-b 是 5 的倍数。"
+  },
+  "rounds": 3,
+  "source_sha256": {
+    "harness/codex_cli.py": "7225a461c6925eb8e64409da648a2023ebe36a67e1a152d299791714f8a173b7",
+    "harness/m5_person_a_review.py": "bd35494357f588c6414538d10855fee5d467880c1368a068d0bdc2d5a9128020",
+    "harness/m5_repair.py": "81ad0085be9c96948a53c279f60046953c10f0b35a4cac1e8bed7b9c77a05936",
+    "harness/m5_sequential_repair.py": "af6ff486c35e0a56df3d562bd9647aa91b1e9ccf6db6738f4ca7df1ba38f8e3d",
+    "scripts/run_live_repair_pilot.py": "7ee9a542be0a3288c7df9684586b9918cefc53a1859f2e55f897996d98c9d87e"
+  }
+}

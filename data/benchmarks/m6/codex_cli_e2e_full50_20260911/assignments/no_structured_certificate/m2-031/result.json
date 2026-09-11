@@ -1,0 +1,234 @@
+{
+  "calls": 5,
+  "events": [
+    {
+      "event": "patch_submitted",
+      "fingerprint": "sha256:05076c4404c7d03c9808fe377cc5aed9ed3759f95cee785c175833e096082ed0",
+      "patch_id": "m2-031-patch-1",
+      "round": 1
+    },
+    {
+      "accepted": true,
+      "event": "patch_reviewed",
+      "patch_id": "m2-031-patch-1",
+      "review_digest": "sha256:6cd0b41100a2ca1dbd483bd34f80c6990a7213a0a98b4b53664344f3a5dc7126",
+      "review_id": "m2-031-r1-live-review"
+    },
+    {
+      "event": "patch_applied",
+      "invalidated_descendants": 1,
+      "operation": "replace",
+      "patch_id": "m2-031-patch-1"
+    },
+    {
+      "event": "cache_cleared",
+      "targets": [
+        {
+          "node_id": 3,
+          "proof_id": "m2-031",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "evaluation_id": "m2-031-evaluation-4",
+      "event": "node_revalidated",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-031",
+        "version": 2
+      },
+      "verdict": "accepted"
+    },
+    {
+      "event": "descendant_rebased",
+      "from": {
+        "node_id": 3,
+        "proof_id": "m2-031",
+        "version": 1
+      },
+      "to": {
+        "node_id": 3,
+        "proof_id": "m2-031",
+        "version": 2
+      }
+    },
+    {
+      "evaluation_id": "m2-031-evaluation-5",
+      "event": "node_revalidated",
+      "target": {
+        "node_id": 3,
+        "proof_id": "m2-031",
+        "version": 2
+      },
+      "verdict": "accepted"
+    },
+    {
+      "event": "repair_terminated",
+      "reason": "accepted"
+    }
+  ],
+  "final_state": {
+    "certificate_history": [
+      {
+        "certificate_id": "m2-031-m6-live-diagnosis",
+        "failed_inference": "由 n=2k 推出 n+1=2k+2 是错误的；两边加1应得 n+1=2k+1。",
+        "repair_constraints": {
+          "allowed_operations": [
+            "insert_before",
+            "replace",
+            "delete"
+          ],
+          "max_new_nodes": 2,
+          "preserve_assumptions": true,
+          "preserve_theorem": true
+        },
+        "target": {
+          "node_id": 2,
+          "proof_id": "m2-031",
+          "version": 1
+        }
+      }
+    ],
+    "dependency_redirects": [],
+    "m4_input_digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "model_invocations": [],
+    "nodes": [
+      {
+        "claim": "存在整数 k，使 n=2k。",
+        "depends_on": [],
+        "node_id": 1,
+        "node_type": "introduction",
+        "order_key": 10,
+        "proof_id": "m2-031",
+        "self_contained_claim": "存在整数 k，使 n=2k。",
+        "version": 1
+      },
+      {
+        "claim": "于是 n+1=2k+1。",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "m2-031",
+            "version": 1
+          }
+        ],
+        "lifecycle_state": "active",
+        "node_id": 2,
+        "node_type": "calculation",
+        "order_key": 20,
+        "proof_id": "m2-031",
+        "self_contained_claim": "由 n=2k 可得 n+1=2k+1。",
+        "version": 2
+      },
+      {
+        "claim": "所以 n+1 可以写成 2k+1 的形式，是奇数。",
+        "depends_on": [
+          {
+            "node_id": 2,
+            "proof_id": "m2-031",
+            "version": 2
+          }
+        ],
+        "lifecycle_state": "active",
+        "node_id": 3,
+        "node_type": "conclusion",
+        "order_key": 30,
+        "proof_id": "m2-031",
+        "self_contained_claim": "所以 n+1 可以写成 2k+1 的形式，是奇数。",
+        "version": 2
+      }
+    ],
+    "proof_id": "m2-031",
+    "revalidation_queue": [
+      {
+        "status": "active",
+        "target": {
+          "node_id": 2,
+          "proof_id": "m2-031",
+          "version": 2
+        }
+      },
+      {
+        "status": "active",
+        "target": {
+          "node_id": 3,
+          "proof_id": "m2-031",
+          "version": 2
+        }
+      }
+    ],
+    "revalidation_records": [
+      {
+        "evaluation_id": "m2-031-evaluation-4",
+        "evaluator_id": "live-reviewer",
+        "reason": "由依赖祖先可知存在整数 k 使 n=2k；两边加 1 即得 n+1=2k+1，计算正确。",
+        "schema_version": "0.1",
+        "target": {
+          "node_id": 2,
+          "proof_id": "m2-031",
+          "version": 2
+        },
+        "verdict": "accepted"
+      },
+      {
+        "evaluation_id": "m2-031-evaluation-5",
+        "evaluator_id": "live-reviewer",
+        "reason": "由祖先节点知存在整数 k 使 n=2k，进而 n+1=2k+1；因 k 为整数，n+1 符合奇数的定义。",
+        "schema_version": "0.1",
+        "target": {
+          "node_id": 3,
+          "proof_id": "m2-031",
+          "version": 2
+        },
+        "verdict": "accepted"
+      }
+    ],
+    "rounds": 1,
+    "schema_version": "0.2",
+    "stale": [
+      {
+        "claim": "所以 n+1 可以写成 2k+1 的形式，是奇数。",
+        "depends_on": [
+          {
+            "node_id": 2,
+            "proof_id": "m2-031",
+            "version": 1
+          }
+        ],
+        "node_id": 3,
+        "node_type": "conclusion",
+        "order_key": 30,
+        "proof_id": "m2-031",
+        "self_contained_claim": "所以 n+1 可以写成 2k+1 的形式，是奇数。",
+        "stale_reason": "depends on 2@v1",
+        "version": 1
+      }
+    ],
+    "stop_reason": "accepted",
+    "version_history": [
+      {
+        "claim": "于是 n+1=2k+2。",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "m2-031",
+            "version": 1
+          }
+        ],
+        "lifecycle_state": "superseded",
+        "node_id": 2,
+        "node_type": "calculation_step",
+        "order_key": 20,
+        "proof_id": "m2-031",
+        "self_contained_claim": "于是 n+1=2k+2。",
+        "version": 1
+      }
+    ]
+  },
+  "human_verified": false,
+  "method_id": "no_structured_certificate",
+  "reported_tokens": 75816,
+  "scientific_claim_allowed": false,
+  "status": "accepted"
+}
