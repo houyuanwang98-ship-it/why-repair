@@ -62,3 +62,9 @@ class LivePilotTest(unittest.TestCase):
             write_once(path, {'verdict': 'rejected'})
             with self.assertRaises(RuntimeError):
                 write_once(path, {'verdict': 'accepted'})
+
+    def test_calls_refuse_nonpositive_budget_at_construction_boundary(self):
+        from scripts.run_live_repair_pilot import Calls
+        calls = Calls(Path('.'), 'test', 'codex', False, max_calls=0, max_tokens=1)
+        with self.assertRaises(RuntimeError):
+            calls.call('generate', {})

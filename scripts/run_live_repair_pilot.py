@@ -207,9 +207,14 @@ def main():
     parser.add_argument('--model', default='gpt-5.6-terra')
     parser.add_argument('--codex-command', default='codex')
     parser.add_argument('--rounds', type=int, choices=[1, 3], default=3)
+    parser.add_argument('--max-calls', type=int, default=12)
+    parser.add_argument('--max-tokens', type=int, default=60000)
     parser.add_argument('--execute', action='store_true')
     args = parser.parse_args()
-    calls = Calls(args.output_dir, args.model, args.codex_command, args.execute)
+    if args.max_calls < 1 or args.max_tokens < 1:
+        parser.error('--max-calls and --max-tokens must be positive')
+    calls = Calls(args.output_dir, args.model, args.codex_command, args.execute,
+                  max_calls=args.max_calls, max_tokens=args.max_tokens)
     run_case(args.case, args.output_dir, calls, args.rounds)
 
 
