@@ -1,0 +1,128 @@
+{
+  "input": {
+    "gold_visible": false,
+    "method_id": "no_structured_certificate",
+    "ordered_nodes": [
+      {
+        "claim": "存在整数 m,n，使 x=2m+1，y=2n+1。",
+        "depends_on": [],
+        "node_id": 1,
+        "node_type": "introduction",
+        "order_key": 10,
+        "proof_id": "m2-011",
+        "self_contained_claim": "存在整数 m,n，使 x=2m+1，y=2n+1。",
+        "version": 1
+      },
+      {
+        "claim": "所以 x+y 是偶数。",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "m2-011",
+            "version": 1
+          }
+        ],
+        "node_id": 2,
+        "node_type": "conclusion",
+        "order_key": 20,
+        "proof_id": "m2-011",
+        "self_contained_claim": "所以 x+y 是偶数。",
+        "version": 1
+      }
+    ],
+    "problem": {
+      "assumptions": [
+        "x、y 为奇整数。"
+      ],
+      "domain": "elementary_algebra",
+      "theorem": "证明两个奇整数之和为偶数。"
+    },
+    "proof_id": "m2-011"
+  },
+  "max_output_tokens": 3500,
+  "model": "gpt-5.6-terra",
+  "phase": "diagnose",
+  "prompt": "Use only INPUT JSON and mathematical knowledge. Do not use tools, files or web. You are an AI, not a human reviewer. Preserve the exact theorem, assumptions and domain. Audit the proof from the theorem and assumptions through the ordered nodes. Return the earliest invalid or materially unsupported inference. A repairable omission is invalid for this task. Do not read or infer hidden Gold. If invalid, bind first_error_target to the exact supplied current node reference. A counterexample must satisfy every original assumption; otherwise return null. Use evaluator_id=live-diagnoser. Actively search for a concrete counterexample when the claim may be false.",
+  "reasoning_effort": "high",
+  "schema": {
+    "$id": "m6_end_to_end_diagnosis_v0_1.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "counterexample": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "evaluator_id": {
+        "const": "live-diagnoser"
+      },
+      "failed_inference": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "first_error_target": {
+        "oneOf": [
+          {
+            "type": "null"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "node_id": {
+                "type": [
+                  "integer",
+                  "string"
+                ]
+              },
+              "proof_id": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "version": {
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "proof_id",
+              "node_id",
+              "version"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "reason": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "repairable": {
+        "type": "boolean"
+      },
+      "schema_version": {
+        "const": "m6-live-diagnosis-0.1"
+      },
+      "verdict": {
+        "enum": [
+          "invalid",
+          "accepted",
+          "undetermined"
+        ]
+      }
+    },
+    "required": [
+      "schema_version",
+      "evaluator_id",
+      "verdict",
+      "first_error_target",
+      "failed_inference",
+      "repairable",
+      "counterexample",
+      "reason"
+    ],
+    "type": "object"
+  },
+  "timeout_seconds": 180
+}

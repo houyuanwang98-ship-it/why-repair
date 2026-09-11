@@ -24,3 +24,10 @@
 6. 先完成三题端到端验收，再扩大至五方法乘五十题；全部结果仍按 AI 辅助单人复核边界报告。
 
 本轮不将已有 27 个输出重复标为新增实验。该文件是缺口记录，不代表上述新运行器已经实现。
+
+## 2026-09-11 后续实现状态
+
+五方法乘三题的 Controller-connected engineering acceptance 已由
+`scripts/run_m6_end_to_end_ablation.py` 实现并执行。逐调用证据、两个批次及限制见
+`M6_E2E_ENGINEERING_ACCEPTANCE_2026-09-11.md`。三题验收不能自动放行五方法乘
+五十题；正式预算、独立人工证据和正式 gate 仍保持阻塞。

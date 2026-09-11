@@ -1,0 +1,84 @@
+{
+  "certificate": {
+    "certificate_id": "m2-011-m6-live-diagnosis",
+    "failed_inference": "由“存在整数 m,n，使 x=2m+1，y=2n+1”直接推出“x+y 是偶数”缺少必要的代数推导与偶数定义的连接：应先得到 x+y=2(m+n+1)，并说明 m+n+1 为整数。",
+    "repair_constraints": {
+      "allowed_operations": [
+        "insert_before",
+        "replace",
+        "delete"
+      ],
+      "max_new_nodes": 2,
+      "preserve_assumptions": true,
+      "preserve_theorem": true
+    },
+    "target": {
+      "node_id": 2,
+      "proof_id": "m2-011",
+      "version": 1
+    }
+  },
+  "diagnosis_record": {
+    "counterexample": null,
+    "evaluator_id": "live-diagnoser",
+    "failed_inference": "由“存在整数 m,n，使 x=2m+1，y=2n+1”直接推出“x+y 是偶数”缺少必要的代数推导与偶数定义的连接：应先得到 x+y=2(m+n+1)，并说明 m+n+1 为整数。",
+    "first_error_target": {
+      "node_id": 2,
+      "proof_id": "m2-011",
+      "version": 1
+    },
+    "reason": "节点 1 由奇整数假设成立；节点 2 虽然结论为真，但其依赖节点未充分支持该结论。按要求，修复性省略也视为无效。",
+    "repairable": true,
+    "schema_version": "m6-live-diagnosis-0.1",
+    "verdict": "invalid"
+  },
+  "human_review": false,
+  "kind": "m6_end_to_end_controller_ablation",
+  "max_calls": 12,
+  "max_tokens": 65000,
+  "method_id": "no_descendant_invalidation",
+  "model": "gpt-5.6-terra",
+  "nodes": [
+    {
+      "claim": "存在整数 m,n，使 x=2m+1，y=2n+1。",
+      "depends_on": [],
+      "node_id": 1,
+      "node_type": "introduction",
+      "order_key": 10,
+      "proof_id": "m2-011",
+      "self_contained_claim": "存在整数 m,n，使 x=2m+1，y=2n+1。",
+      "version": 1
+    },
+    {
+      "claim": "所以 x+y 是偶数。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-011",
+          "version": 1
+        }
+      ],
+      "node_id": 2,
+      "node_type": "conclusion",
+      "order_key": 20,
+      "proof_id": "m2-011",
+      "self_contained_claim": "所以 x+y 是偶数。",
+      "version": 1
+    }
+  ],
+  "problem": {
+    "assumptions": [
+      "x、y 为奇整数。"
+    ],
+    "domain": "elementary_algebra",
+    "theorem": "证明两个奇整数之和为偶数。"
+  },
+  "rounds": 3,
+  "source_sha256": {
+    "harness/codex_cli.py": "b466f5bf3ff010218ffa83cbe9086fcb18642714abe842cd0e7dffa90bf783f0",
+    "harness/m5_person_a_review.py": "bd35494357f588c6414538d10855fee5d467880c1368a068d0bdc2d5a9128020",
+    "harness/m5_repair.py": "81ad0085be9c96948a53c279f60046953c10f0b35a4cac1e8bed7b9c77a05936",
+    "harness/m5_sequential_repair.py": "af6ff486c35e0a56df3d562bd9647aa91b1e9ccf6db6738f4ca7df1ba38f8e3d",
+    "scripts/run_live_repair_pilot.py": "7ee9a542be0a3288c7df9684586b9918cefc53a1859f2e55f897996d98c9d87e"
+  }
+}

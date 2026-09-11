@@ -107,6 +107,8 @@ def _certificate(case_id: str, nodes: list[dict], diagnosis: dict) -> dict:
     target = diagnosis["first_error_target"]
     if target is None or target not in [_ref(node) for node in nodes]:
         raise ValueError("diagnosis target is not an exact current node reference")
+    if not diagnosis["failed_inference"].strip():
+        raise ValueError("invalid diagnosis requires a concrete failed inference")
     allowed = ["insert_before", "replace", "delete"]
     return {
         "certificate_id": f"{case_id}-m6-live-diagnosis",

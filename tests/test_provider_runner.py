@@ -135,6 +135,7 @@ class ProviderRunnerTest(unittest.TestCase):
         self.assertEqual(20, raw["usage"]["input_tokens_details"]["cached_tokens"])
         self.assertIsNone(raw["cost_usd"])
         self.assertEqual("thread-1", raw["codex_thread_id"])
+        self.assertGreaterEqual(raw["latency_seconds"], 0)
         self.assertNotIn("OPENAI_API_KEY", observed["env"])
         self.assertNotIn("CODEX_API_KEY", observed["env"])
         self.assertEqual(17, observed["timeout"])

@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import subprocess
 import tempfile
+import time
 from typing import Any, Callable, Mapping
 
 
@@ -143,7 +144,8 @@ def _parse_events(stdout: str) -> tuple[list[dict[str, Any]], list[str], dict[st
 
 def _raw_process_record(*, model: str, cli_version: str, command: list[str],
                         return_code: int | None, stdout: str, stderr: str,
-                        timed_out: bool, output_text: str | None) -> dict[str, Any]:
+                        timed_out: bool, output_text: str | None,
+                        latency_seconds: float) -> dict[str, Any]:
     events, malformed, usage = _parse_events(stdout)
     thread_ids = []
     for event in events:
@@ -164,6 +166,7 @@ def _raw_process_record(*, model: str, cli_version: str, command: list[str],
         "provider_response_id": None,
         "return_code": return_code,
         "timed_out": timed_out,
+        "latency_seconds": latency_seconds,
         "command": command,
         "events": events,
         "malformed_jsonl_lines": malformed,
@@ -245,6 +248,7 @@ def build_codex_adapter(*, codex_command: str = "codex",
             child_env.pop("OPENAI_API_KEY", None)
             child_env.pop("CODEX_API_KEY", None)
             try:
+                started = time.monotonic()
                 completed = process_runner(
                     command, input=combined_prompt, text=True, capture_output=True,
                     timeout=timeout_seconds, check=False, env=child_env,
@@ -256,6 +260,7 @@ def build_codex_adapter(*, codex_command: str = "codex",
                     model=model, cli_version=cli_version, command=command,
                     return_code=completed.returncode, stdout=stdout, stderr=stderr,
                     timed_out=False, output_text=output_text,
+                    latency_seconds=time.monotonic() - started,
                 )
             except subprocess.TimeoutExpired as exc:
                 stdout = _decode_timeout_stream(exc.stdout)
@@ -264,6 +269,7 @@ def build_codex_adapter(*, codex_command: str = "codex",
                     model=model, cli_version=cli_version, command=command,
                     return_code=None, stdout=stdout, stderr=stderr,
                     timed_out=True, output_text=None,
+                    latency_seconds=time.monotonic() - started,
                 )
                 raise CodexCLITimeoutError(
                     f"codex exec exceeded {timeout_seconds} seconds",

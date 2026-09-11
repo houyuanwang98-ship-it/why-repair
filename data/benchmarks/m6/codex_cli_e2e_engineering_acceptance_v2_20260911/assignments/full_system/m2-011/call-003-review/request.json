@@ -1,0 +1,263 @@
+{
+  "input": {
+    "context": {
+      "allowed_evidence": [
+        "sha256:a0c2bd7a5ee13f21450a74e87cb98a60fbbb67b438297ae1d31d4144e53c0cdd",
+        "sha256:81165e58da040359fbff331e29d07a27924c6671fedb4510edbd11284ceab7d4"
+      ],
+      "context_id": "m2-011-r1",
+      "domain": "elementary_algebra",
+      "error_certificate_digest": "sha256:f999f9d00bb0e843a7431741ce1ff95d4f019aa7cb7978fa6619aada54af0d86",
+      "failed_inference": "节点 2 仅由奇数表示式直接断言 x+y 为偶数，未给出 x+y=(2m+1)+(2n+1)=2(m+n+1)，以及 m+n+1 为整数的必要推导。",
+      "global_assumptions": [
+        "x、y 为奇整数。"
+      ],
+      "patch_digest": "sha256:81165e58da040359fbff331e29d07a27924c6671fedb4510edbd11284ceab7d4",
+      "proof_id": "m2-011",
+      "schema_version": "0.1",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-011",
+        "version": 1
+      },
+      "theorem": "证明两个奇整数之和为偶数。",
+      "unrelated_branch_digests": {}
+    },
+    "current_nodes": [
+      {
+        "claim": "存在整数 m,n，使 x=2m+1，y=2n+1。",
+        "depends_on": [],
+        "node_id": 1,
+        "node_type": "introduction",
+        "order_key": 10,
+        "proof_id": "m2-011",
+        "self_contained_claim": "存在整数 m,n，使 x=2m+1，y=2n+1。",
+        "version": 1
+      },
+      {
+        "claim": "所以 x+y 是偶数。",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "m2-011",
+            "version": 1
+          }
+        ],
+        "node_id": 2,
+        "node_type": "conclusion",
+        "order_key": 20,
+        "proof_id": "m2-011",
+        "self_contained_claim": "所以 x+y 是偶数。",
+        "version": 1
+      }
+    ],
+    "edit_ids": [
+      "replace:2"
+    ],
+    "patch": {
+      "changes_problem": false,
+      "error_certificate_id": "m2-011-m6-live-diagnosis",
+      "generator_id": "live-generator",
+      "operation": "replace",
+      "patch_id": "m2-011-m6-live-patch-1",
+      "rationale": "将奇数表示式代入并说明所得系数为整数，从而满足偶数定义。",
+      "replacement_nodes": [
+        {
+          "claim": "由 x=2m+1、y=2n+1（m,n 为整数），得 x+y=(2m+1)+(2n+1)=2(m+n+1)。又因 m+n+1 为整数，所以 x+y 是偶数。",
+          "depends_on": [
+            {
+              "node_id": 1,
+              "proof_id": "m2-011",
+              "version": 1
+            }
+          ],
+          "node_id": 2,
+          "node_type": "conclusion",
+          "order_key": 20,
+          "self_contained_claim": "由 x=2m+1、y=2n+1（m,n 为整数），得 x+y=2(m+n+1)，且 m+n+1 为整数，所以 x+y 是偶数。"
+        }
+      ],
+      "schema_version": "0.1",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-011",
+        "version": 1
+      },
+      "target_dependencies_after": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-011",
+          "version": 1
+        }
+      ],
+      "used_dependencies": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-011",
+          "version": 1
+        }
+      ]
+    }
+  },
+  "max_output_tokens": 3500,
+  "model": "gpt-5.6-terra",
+  "phase": "review",
+  "prompt": "Use only INPUT JSON and mathematical knowledge. Do not use tools, files or web. You are an AI, not a human reviewer. Preserve the exact theorem, assumptions and domain. Independently review the proposed patch against context and current proof. Use reviewer_id=live-reviewer and exact context_id. Cover every edit_id in deletion_trials. Check local repair and problem preservation; downstream nodes will be revalidated separately. accepted must equal all checks true, no hidden assumptions, no introduced errors, all deletion trials removal_breaks_repair true, no rejection codes. When rejecting include the appropriate codes for every false check. Use evidence_used from context.allowed_evidence. Explain actual mathematics, never merely trust the generator.",
+  "reasoning_effort": "high",
+  "schema": {
+    "$id": "m5_person_a_patch_review_v0_1.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "accepted": {
+        "type": "boolean"
+      },
+      "checks": {
+        "additionalProperties": false,
+        "properties": {
+          "assumptions_preserved": {
+            "type": "boolean"
+          },
+          "domain_preserved": {
+            "type": "boolean"
+          },
+          "mathematically_valid": {
+            "type": "boolean"
+          },
+          "no_new_errors": {
+            "type": "boolean"
+          },
+          "operationally_minimal": {
+            "type": "boolean"
+          },
+          "resolves_failed_inference": {
+            "type": "boolean"
+          },
+          "theorem_preserved": {
+            "type": "boolean"
+          },
+          "unrelated_branches_preserved": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "mathematically_valid",
+          "resolves_failed_inference",
+          "theorem_preserved",
+          "assumptions_preserved",
+          "domain_preserved",
+          "unrelated_branches_preserved",
+          "no_new_errors",
+          "operationally_minimal"
+        ],
+        "type": "object"
+      },
+      "context_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "deletion_trials": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "edit_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "reason": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "removal_breaks_repair": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "edit_id",
+            "removal_breaks_repair",
+            "reason"
+          ],
+          "type": "object"
+        },
+        "minItems": 1,
+        "type": "array"
+      },
+      "evidence_used": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "minItems": 1,
+        "type": "array",
+        "uniqueItems": true
+      },
+      "hidden_assumptions": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array",
+        "uniqueItems": true
+      },
+      "introduced_errors": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array",
+        "uniqueItems": true
+      },
+      "reason": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "rejection_codes": {
+        "items": {
+          "enum": [
+            "mathematical_error",
+            "failed_inference_unresolved",
+            "changes_problem",
+            "hidden_assumption",
+            "domain_changed",
+            "target_changed",
+            "unrelated_branch_changed",
+            "new_error_introduced",
+            "not_minimal",
+            "insufficient_evidence",
+            "stale_binding"
+          ]
+        },
+        "type": "array",
+        "uniqueItems": true
+      },
+      "review_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "reviewer_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "schema_version": {
+        "const": "0.1"
+      }
+    },
+    "required": [
+      "schema_version",
+      "review_id",
+      "context_id",
+      "reviewer_id",
+      "checks",
+      "hidden_assumptions",
+      "introduced_errors",
+      "deletion_trials",
+      "evidence_used",
+      "accepted",
+      "rejection_codes",
+      "reason"
+    ],
+    "title": "M5 Person A mathematical patch review",
+    "type": "object"
+  },
+  "timeout_seconds": 180
+}

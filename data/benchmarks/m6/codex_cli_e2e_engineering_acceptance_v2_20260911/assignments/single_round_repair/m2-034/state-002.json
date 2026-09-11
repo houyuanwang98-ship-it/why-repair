@@ -1,0 +1,124 @@
+{
+  "certificate_history": [
+    {
+      "certificate_id": "m2-034-m6-live-diagnosis",
+      "failed_inference": "将平方和算术平方根无条件地视为互相抵消，错误推出 sqrt(a^2)=a；对实数应为 sqrt(a^2)=|a|。",
+      "repair_constraints": {
+        "allowed_operations": [
+          "insert_before",
+          "replace",
+          "delete"
+        ],
+        "max_new_nodes": 2,
+        "preserve_assumptions": true,
+        "preserve_theorem": true
+      },
+      "target": {
+        "node_id": 1,
+        "proof_id": "m2-034",
+        "version": 1
+      }
+    }
+  ],
+  "dependency_redirects": [],
+  "m4_input_digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "model_invocations": [],
+  "nodes": [
+    {
+      "claim": "因为 a 为实数，|a|≥0 且 (|a|)^2=a^2，所以 sqrt(a^2)=sqrt((|a|)^2)=|a|。",
+      "depends_on": [],
+      "lifecycle_state": "active",
+      "node_id": 1,
+      "node_type": "calculation",
+      "order_key": 10,
+      "proof_id": "m2-034",
+      "self_contained_claim": "因为 a 为实数，|a|≥0 且 (|a|)^2=a^2，所以 sqrt(a^2)=sqrt((|a|)^2)=|a|。",
+      "version": 2
+    },
+    {
+      "claim": "又因为每个实数 a 都等于 |a|，所以 sqrt(a^2)=|a|。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-034",
+          "version": 2
+        }
+      ],
+      "lifecycle_state": "pending_evaluation",
+      "node_id": 2,
+      "node_type": "calculation_step",
+      "order_key": 20,
+      "proof_id": "m2-034",
+      "self_contained_claim": "又因为每个实数 a 都等于 |a|，所以 sqrt(a^2)=|a|。",
+      "version": 2
+    }
+  ],
+  "proof_id": "m2-034",
+  "revalidation_queue": [
+    {
+      "status": "active",
+      "target": {
+        "node_id": 1,
+        "proof_id": "m2-034",
+        "version": 2
+      }
+    },
+    {
+      "status": "pending_evaluation",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-034",
+        "version": 2
+      }
+    }
+  ],
+  "revalidation_records": [
+    {
+      "evaluation_id": "m2-034-evaluation-4",
+      "evaluator_id": "live-reviewer",
+      "reason": "对任意实数 a，|a|非负且(|a|)^2=a^2。按平方根的主值定义，任意非负实数 x 均满足 sqrt(x^2)=x，故sqrt(a^2)=sqrt((|a|)^2)=|a|。",
+      "schema_version": "0.1",
+      "target": {
+        "node_id": 1,
+        "proof_id": "m2-034",
+        "version": 2
+      },
+      "verdict": "accepted"
+    }
+  ],
+  "rounds": 1,
+  "schema_version": "0.2",
+  "stale": [
+    {
+      "claim": "又因为每个实数 a 都等于 |a|，所以 sqrt(a^2)=|a|。",
+      "depends_on": [
+        {
+          "node_id": 1,
+          "proof_id": "m2-034",
+          "version": 1
+        }
+      ],
+      "node_id": 2,
+      "node_type": "calculation_step",
+      "order_key": 20,
+      "proof_id": "m2-034",
+      "self_contained_claim": "又因为每个实数 a 都等于 |a|，所以 sqrt(a^2)=|a|。",
+      "stale_reason": "depends on 1@v1",
+      "version": 1
+    }
+  ],
+  "stop_reason": null,
+  "version_history": [
+    {
+      "claim": "平方与开平方互相抵消，所以 sqrt(a^2)=a。",
+      "depends_on": [],
+      "lifecycle_state": "superseded",
+      "node_id": 1,
+      "node_type": "calculation_step",
+      "order_key": 10,
+      "proof_id": "m2-034",
+      "self_contained_claim": "平方与开平方互相抵消，所以 sqrt(a^2)=a。",
+      "version": 1
+    }
+  ]
+}
