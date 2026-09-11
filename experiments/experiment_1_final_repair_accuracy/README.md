@@ -1,5 +1,20 @@
 # 实验1：最终修复正确率对比
 
+## 全量题库修订（当前版本）
+
+实验范围已扩展为全部600题：M2 Pilot 50、M2 B50 50、OPC 250、ProofNet 250。300题为人工审核分片。
+
+本轮已重新生成完整数据和结果账本，详见 [全量结果](FULL_RESULTS.md)。下文21题内容仅保留为历史附表，不再代表实验1整体结果。
+
+- `dataset.jsonl`：600题完整输入，不含Gold。
+- `gold_index.jsonl`：600题逐题金标与人工记录引用。
+- `comparison_results.jsonl`：四方法共2400项，待运行项标为not_run。
+- `full_results.json`：全量覆盖统计，准确率尚为空。
+- `full_source_manifest.json`：所有全量数据来源摘要。
+- `build_full_dataset.py`：在仓库根目录执行即可复算数据整理；会重建初始账本，后续真实模型结果须另存run目录。
+
+全量状态：`full_dataset_rebuilt_execution_pending`。本轮无新模型调用，全量对比尚未完成。
+
 ## 实验摘要
 
 本实验使用仓库中已有的代数证明 Gold、双 Agent 修复结果和 Person A 人工审核记录，比较同一批证明在修复前后的严格可接受状态。

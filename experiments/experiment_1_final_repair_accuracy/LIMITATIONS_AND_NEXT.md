@@ -20,7 +20,7 @@
 
 ## 下一轮最短步骤
 
-1. 固定这21道题作为对照子集。
+1. 使用dataset.jsonl中全部600题运行对照，按原Gold状态分层评分。
 2. 配置一个冻结的模型与统一总预算。
 3. 分别运行单 Agent 直接重写、Self-Refine、Generator–Critic 和完整双 Agent。
 4. 输出修复后的完整证明，而不只输出局部 Patch。
