@@ -1,5 +1,13 @@
 # 数据引用
 
+## 当前全量范围
+
+四个来源全部纳入：`data/benchmarks/m2/source/pilot_50.jsonl`（50）、`data/benchmarks/m2/source/pilot_B50.jsonl`（50）、`data/benchmarks/m7/opc_250_v0_2/candidate.jsonl`（250）、`data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl`（250）。合计600个唯一题目ID。
+
+原数学判定来自M2 Gold与OPC seed_annotations的human_proof_verdict。Person A/B Step 5逐题人工记录覆盖600题，分别关联到gold_index.jsonl；无法读取的判定保留null。全文输入见dataset.jsonl，来源哈希见full_source_manifest.json。
+
+以下为历史21题附表来源。
+
 ## 1. 数学 Gold
 
 文件：`data/benchmarks/m2/gold/algebra_pilot_v1.jsonl`
