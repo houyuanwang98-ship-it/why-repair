@@ -7,19 +7,23 @@ This guide covers installation, command-line workflows, resumable adjudication s
 The default portable checker and host-agent workflow use only the Python
 standard library, so they require no package installation or API key.
 
-Install the optional repository dependency when running
-`scripts/run_baseline.py` or the checker's standalone
-`--uncertain-policy model` adapter:
+Install the repository's local validation dependency:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Those optional OpenAI-backed workflows also require an API key:
+Model-backed workflows use the locally installed Codex CLI and its saved
+account login. They intentionally remove `OPENAI_API_KEY` and `CODEX_API_KEY`
+from every child process. Authenticate once through the interactive CLI:
 
 ```bash
-export OPENAI_API_KEY="your_api_key"
+codex login
+codex --version
 ```
+
+No API key is required or read by this project. `CODEX_MODEL` optionally sets
+the default model; command-line `--model` always takes precedence.
 
 ## Run a baseline
 
@@ -73,8 +77,36 @@ complete dependency DAG under the skill standards. Rerun with
 unresolved node obligations. Independent frontier nodes are batched, and proof
 or calculation review is bundled with its conditional diagnosis.
 This requires no
-provider SDK or additional API key. `--uncertain-policy model` remains an
-explicit optional OpenAI adapter for standalone automation.
+provider SDK or additional API key. `--uncertain-policy model` is an explicit
+Codex CLI adapter for standalone automation. Its raw requests, JSONL events,
+outputs, token usage, latency, failures and timeouts are retained under the
+session/output directory's `codex-evidence/` tree.
+
+## Run the frozen M5 Codex smoke
+
+Prepare a three-case packet after committing the code to be tested:
+
+```bash
+python scripts/prepare_m5_codex_smoke.py \
+  --model gpt-5.5 \
+  --output-dir /tmp/m5-codex-smoke
+```
+
+Review the frozen packet, then execute it from a clean worktree:
+
+```bash
+python scripts/run_codex_smoke.py \
+  --config /tmp/m5-codex-smoke/config.json \
+  --assignments /tmp/m5-codex-smoke/assignments.jsonl \
+  --prompt prompts/m5_repair_generator_person_b.md \
+  --output-dir /tmp/m5-codex-smoke/evidence \
+  --run-id m5-codex-smoke-001 \
+  --execute
+```
+
+The older `prepare_m5_provider_smoke.py` and `run_provider_smoke.py` filenames
+remain compatibility aliases, but they now use exactly the same Codex CLI
+backend and never use the OpenAI SDK.
 
 For repeated resume rounds, keep one output directory and enable incremental
 node reuse:

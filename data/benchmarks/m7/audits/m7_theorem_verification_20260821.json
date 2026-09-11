@@ -1,0 +1,101 @@
+{
+  "schema_version": "m7-ai-theorem-verification-0.1",
+  "audit_date": "2026-08-21",
+  "reviewer_kind": "codex_dependency_guided_host_audit",
+  "eligible_as_human_evidence": false,
+  "eligible_for_scientific_gold": false,
+  "rows": [
+    {
+      "case_id": "opc250-070",
+      "theorem": "Lucas theorem for binomial coefficients modulo a prime, together with the Chinese Remainder Theorem",
+      "verification_status": "web_verified",
+      "sources": [
+        "https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Choose/Lucas.html"
+      ],
+      "premises_satisfied": true,
+      "missing_premises": [],
+      "direct_use_acceptable": true,
+      "omission_is_gap": false,
+      "local_check": "The four moduli are distinct primes; the base-p expansions of 2002 are correct; adding p^d preserves all digits used by Lucas when d is the digit count; the product of the four periods is a common period modulo 2002.",
+      "status_effect": "theorem_dependency_closed",
+      "first_problem_after_verification": "no_error"
+    },
+    {
+      "case_id": "opc250-119",
+      "theorem": "For irrational alpha, the fractional parts of n alpha are dense (indeed equidistributed) in [0,1]",
+      "verification_status": "web_verified",
+      "sources": [
+        "https://pi.math.cornell.edu/~mec/Summer2009/lam/equidistribution.html"
+      ],
+      "premises_satisfied": true,
+      "missing_premises": [],
+      "direct_use_acceptable": true,
+      "omission_is_gap": false,
+      "local_check": "alpha=log_2(3/2) is irrational by unique factorization, and every tail of an irrational rotation is dense, so arbitrarily large n can be chosen in the required interval.",
+      "status_effect": "theorem_dependency_closed_but_later_calculation_invalid",
+      "first_problem_after_verification": "n13: floor(2^k 2^theta) need not equal 2^k; the omitted factor 2^k invalidates the claimed fractional-part formula."
+    },
+    {
+      "case_id": "opc250-139",
+      "theorem": "Bertrand postulate: for every integer p greater than 1 there is a prime q with p<q<2p",
+      "verification_status": "web_verified",
+      "sources": [
+        "https://math.stanford.edu/~ksound/Math152A10/Bertrand.pdf"
+      ],
+      "premises_satisfied": true,
+      "missing_premises": [],
+      "direct_use_acceptable": false,
+      "omission_is_gap": true,
+      "local_check": "For consecutive primes p<q, Bertrand gives q<2p. Hence p<m<q implies p<m<2p, so p cannot divide m. The claim at n35 is correct only after this bridge is supplied.",
+      "status_effect": "missing_bridge_lemma",
+      "first_problem_after_verification": "n35"
+    },
+    {
+      "case_id": "opc250-173",
+      "theorem": "Senge-Straus/Stewart digit-sum theorem: if a and b are multiplicatively independent integers at least 2, then the base-b digit sum of a^k tends to infinity",
+      "verification_status": "web_verified",
+      "sources": [
+        "https://eudml.org/doc/152278",
+        "https://www.dpmms.cam.ac.uk/~pv270/diophantine.pdf"
+      ],
+      "premises_satisfied": true,
+      "missing_premises": [],
+      "direct_use_acceptable": true,
+      "omission_is_gap": false,
+      "local_check": "3 and 5 are multiplicatively independent, so both s_3(5^k) and s_5(3^k) tend to infinity. The named theorem is specialized but explicitly invoked.",
+      "status_effect": "theorem_dependency_closed_but_later_calculation_invalid",
+      "first_problem_after_verification": "n21: replacing a floor by its argument asserts a false equality; the conclusion can be repaired because the floor error is bounded by 1."
+    },
+    {
+      "case_id": "opc250-211",
+      "theorem": "Edge-isoperimetric upper bound for finite induced subgraphs of the square grid",
+      "verification_status": "local_and_web_verified",
+      "sources": [
+        "https://digitalcommons.memphis.edu/facpubs/4558/"
+      ],
+      "premises_satisfied": true,
+      "missing_premises": [],
+      "direct_use_acceptable": false,
+      "omission_is_gap": true,
+      "local_check": "For 100 selected grid points, horizontal edges are at most 100-r and vertical edges at most 100-c, where r,c are the nonempty row and column counts. Since rc>=100, r+c>=20, so the total is at most 180; the 10 by 10 construction attains it.",
+      "status_effect": "missing_bridge_lemma",
+      "first_problem_after_verification": "n51"
+    },
+    {
+      "case_id": "opc250-220",
+      "theorem": "Gauss-Dirichlet composition of primitive integral binary quadratic forms of a fixed discriminant",
+      "verification_status": "web_verified",
+      "sources": [
+        "https://londmathsoc.onlinelibrary.wiley.com/doi/full/10.1112/jlms.12336",
+        "https://www2.math.ou.edu/~kmartin/ntii/ntii.pdf"
+      ],
+      "premises_satisfied": true,
+      "missing_premises": [],
+      "direct_use_acceptable": true,
+      "omission_is_gap": false,
+      "local_check": "The proof establishes primitiveness and equal discriminant -20 before invoking composition. The main product-closure argument through n55 is supported, but the later claim 5=1^2+5(1)^2 at n65 is arithmetically false (the right side is 6).",
+      "status_effect": "theorem_dependency_closed_but_later_false_local_claim",
+      "first_problem_after_verification": "n65"
+    }
+  ]
+}

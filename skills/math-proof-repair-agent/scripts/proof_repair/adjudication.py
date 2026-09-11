@@ -9,6 +9,7 @@ from .contracts import (
     GRAPH_BUILDER_SCHEMA,
     MODEL_ADJUDICATION_SCHEMA,
 )
+from .codex_cli import call_codex_json
 from .graph import build_graph_adjudication_entry
 from .io_session import stable_digest
 from .text import normalized_key
@@ -23,12 +24,12 @@ __all__ = [
     "externalize_retrieved_rules",
     "build_host_adjudication_template",
     "build_model_adjudication_prompt",
-    "make_openai_adjudicator",
+    "make_codex_adjudicator",
     "build_diagnosis_adjudication_prompt",
-    "make_openai_diagnosis_adjudicator",
-    "make_openai_graph_builder",
+    "make_codex_diagnosis_adjudicator",
+    "make_codex_graph_builder",
     "build_calculation_adjudication_prompt",
-    "make_openai_calculation_adjudicator",
+    "make_codex_calculation_adjudicator",
 ]
 
 
@@ -343,36 +344,18 @@ Retrieved rule hints:
     )
 
 
-def make_openai_adjudicator(model, max_output_tokens):
-    client_holder = {}
-
+def make_codex_adjudicator(model, max_output_tokens, evidence_dir):
     def adjudicate(item, claim, local_context, retrieved_rules):
-        if "client" not in client_holder:
-            try:
-                from openai import OpenAI
-            except ImportError as exc:
-                raise RuntimeError(
-                    "Model adjudication requires the openai package. Install requirements.txt."
-                ) from exc
-            client_holder["client"] = OpenAI()
-        response = client_holder["client"].responses.create(
+        return call_codex_json(
             model=model,
-            input=build_model_adjudication_prompt(
+            prompt=build_model_adjudication_prompt(
                 item, claim, local_context, retrieved_rules
             ),
-            text={
-                "format": {
-                    "type": "json_schema",
-                    "name": "obligation_adjudication",
-                    "strict": True,
-                    "schema": MODEL_ADJUDICATION_SCHEMA,
-                }
-            },
-            temperature=0,
+            schema=MODEL_ADJUDICATION_SCHEMA,
             max_output_tokens=max_output_tokens,
-            store=False,
+            evidence_dir=evidence_dir,
+            call_kind="obligation_adjudication",
         )
-        return json.loads(response.output_text)
 
     return adjudicate
 
@@ -412,65 +395,31 @@ Input:
 """ + json.dumps(payload, ensure_ascii=False, indent=2)
 
 
-def make_openai_diagnosis_adjudicator(model, max_output_tokens):
-    client_holder = {}
-
+def make_codex_diagnosis_adjudicator(model, max_output_tokens, evidence_dir):
     def adjudicate(payload):
-        if "client" not in client_holder:
-            try:
-                from openai import OpenAI
-            except ImportError as exc:
-                raise RuntimeError(
-                    "Diagnosis adjudication requires the openai package. Install requirements.txt."
-                ) from exc
-            client_holder["client"] = OpenAI()
-        response = client_holder["client"].responses.create(
+        return call_codex_json(
             model=model,
-            input=build_diagnosis_adjudication_prompt(payload),
-            text={
-                "format": {
-                    "type": "json_schema",
-                    "name": "proof_error_diagnosis",
-                    "strict": True,
-                    "schema": DIAGNOSIS_ADJUDICATION_SCHEMA,
-                }
-            },
-            temperature=0,
+            prompt=build_diagnosis_adjudication_prompt(payload),
+            schema=DIAGNOSIS_ADJUDICATION_SCHEMA,
             max_output_tokens=max_output_tokens,
-            store=False,
+            evidence_dir=evidence_dir,
+            call_kind="proof_error_diagnosis",
         )
-        return json.loads(response.output_text)
 
     return adjudicate
 
 
-def make_openai_graph_builder(model, max_output_tokens):
-    client_holder = {"client": None}
-
+def make_codex_graph_builder(model, max_output_tokens, evidence_dir):
     def build_graph(item, proof_steps):
-        if client_holder["client"] is None:
-            try:
-                from openai import OpenAI
-            except ImportError as exc:
-                raise RuntimeError(
-                    "Graph building requires the openai package. Install requirements.txt."
-                ) from exc
-            client_holder["client"] = OpenAI()
         payload = build_graph_adjudication_entry(item, proof_steps)["input"]
-        response = client_holder["client"].responses.create(
+        return call_codex_json(
             model=model,
-            input=json.dumps(payload, ensure_ascii=False),
-            text={
-                "format": {
-                    "type": "json_schema",
-                    "name": "proof_dependency_graph",
-                    "strict": True,
-                    "schema": GRAPH_BUILDER_SCHEMA,
-                }
-            },
+            prompt=json.dumps(payload, ensure_ascii=False),
+            schema=GRAPH_BUILDER_SCHEMA,
             max_output_tokens=max_output_tokens,
+            evidence_dir=evidence_dir,
+            call_kind="proof_dependency_graph",
         )
-        return json.loads(response.output_text)
 
     return build_graph
 
@@ -512,35 +461,17 @@ calculation_context:
     )
 
 
-def make_openai_calculation_adjudicator(model, max_output_tokens):
-    client_holder = {}
-
+def make_codex_calculation_adjudicator(model, max_output_tokens, evidence_dir):
     def adjudicate(source_expression, target_expression, context):
-        if "client" not in client_holder:
-            try:
-                from openai import OpenAI
-            except ImportError as exc:
-                raise RuntimeError(
-                    "Calculation adjudication requires the openai package. Install requirements.txt."
-                ) from exc
-            client_holder["client"] = OpenAI()
-        response = client_holder["client"].responses.create(
+        return call_codex_json(
             model=model,
-            input=build_calculation_adjudication_prompt(
+            prompt=build_calculation_adjudication_prompt(
                 source_expression, target_expression, context
             ),
-            text={
-                "format": {
-                    "type": "json_schema",
-                    "name": "calculation_adjudication",
-                    "strict": True,
-                    "schema": CALCULATION_ADJUDICATION_SCHEMA,
-                }
-            },
-            temperature=0,
+            schema=CALCULATION_ADJUDICATION_SCHEMA,
             max_output_tokens=max_output_tokens,
-            store=False,
+            evidence_dir=evidence_dir,
+            call_kind="calculation_adjudication",
         )
-        return json.loads(response.output_text)
 
     return adjudicate

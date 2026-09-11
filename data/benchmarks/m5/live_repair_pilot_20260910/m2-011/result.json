@@ -1,0 +1,191 @@
+{
+  "calls": 4,
+  "events": [
+    {
+      "event": "patch_submitted",
+      "fingerprint": "sha256:2a01b571d422a4a36b78eccdc6f005fbd0daf03215d6efa60fc15a23626c1402",
+      "patch_id": "m2-011-patch-node-2-v1",
+      "round": 1
+    },
+    {
+      "accepted": true,
+      "event": "patch_reviewed",
+      "patch_id": "m2-011-patch-node-2-v1",
+      "review_digest": "sha256:2c550e9dbc0b2debe381e719bb9d998e96489a1434ff27f541c83a88de2da5b2",
+      "review_id": "m2-011-r1-live-review"
+    },
+    {
+      "event": "patch_applied",
+      "invalidated_descendants": 0,
+      "operation": "insert_before",
+      "patch_id": "m2-011-patch-node-2-v1"
+    },
+    {
+      "evaluation_id": "m2-011-evaluation-3",
+      "event": "node_revalidated",
+      "target": {
+        "node_id": 3,
+        "proof_id": "m2-011",
+        "version": 1
+      },
+      "verdict": "accepted"
+    },
+    {
+      "evaluation_id": "m2-011-evaluation-4",
+      "event": "node_revalidated",
+      "target": {
+        "node_id": 2,
+        "proof_id": "m2-011",
+        "version": 2
+      },
+      "verdict": "accepted"
+    },
+    {
+      "event": "repair_terminated",
+      "reason": "accepted"
+    }
+  ],
+  "final_state": {
+    "certificate_history": [
+      {
+        "certificate_id": "m2-011-m3-gap-node-2-v1",
+        "failed_inference": "The proof omits the algebraic substitution showing that x+y has the form 2 times an integer.",
+        "repair_constraints": {
+          "allowed_operations": [
+            "insert_before",
+            "replace"
+          ],
+          "max_new_nodes": 2,
+          "preserve_assumptions": true,
+          "preserve_theorem": true
+        },
+        "target": {
+          "node_id": 2,
+          "proof_id": "m2-011",
+          "version": 1
+        }
+      }
+    ],
+    "dependency_redirects": [],
+    "m4_input_digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "model_invocations": [],
+    "nodes": [
+      {
+        "claim": "存在整数 m,n，使 x=2m+1，y=2n+1。",
+        "depends_on": [],
+        "node_id": 1,
+        "node_type": "introduction",
+        "order_key": 10,
+        "proof_id": "m2-011",
+        "self_contained_claim": "存在整数 m,n，使 x=2m+1，y=2n+1。",
+        "version": 1
+      },
+      {
+        "claim": "由 x=2m+1，y=2n+1，得 x+y=2m+1+2n+1=2(m+n+1)，且 m+n+1 为整数。",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "m2-011",
+            "version": 1
+          }
+        ],
+        "lifecycle_state": "active",
+        "node_id": 3,
+        "node_type": "calculation",
+        "order_key": 15,
+        "proof_id": "m2-011",
+        "self_contained_claim": "存在整数 m,n，使 x=2m+1，y=2n+1，则 x+y=2(m+n+1)，且 m+n+1 为整数。",
+        "version": 1
+      },
+      {
+        "claim": "所以 x+y 是偶数。",
+        "depends_on": [
+          {
+            "node_id": 3,
+            "proof_id": "m2-011",
+            "version": 1
+          }
+        ],
+        "lifecycle_state": "active",
+        "node_id": 2,
+        "node_type": "conclusion",
+        "order_key": 20,
+        "proof_id": "m2-011",
+        "self_contained_claim": "所以 x+y 是偶数。",
+        "version": 2
+      }
+    ],
+    "proof_id": "m2-011",
+    "revalidation_queue": [
+      {
+        "status": "active",
+        "target": {
+          "node_id": 3,
+          "proof_id": "m2-011",
+          "version": 1
+        }
+      },
+      {
+        "status": "active",
+        "target": {
+          "node_id": 2,
+          "proof_id": "m2-011",
+          "version": 2
+        }
+      }
+    ],
+    "revalidation_records": [
+      {
+        "evaluation_id": "m2-011-evaluation-3",
+        "evaluator_id": "live-reviewer",
+        "reason": "由祖先节点可取整数 m,n 使 x=2m+1、y=2n+1。代入并合并得 x+y=2m+2n+2=2(m+n+1)；整数对加法及加一封闭，故 m+n+1 为整数。",
+        "schema_version": "0.1",
+        "target": {
+          "node_id": 3,
+          "proof_id": "m2-011",
+          "version": 1
+        },
+        "verdict": "accepted"
+      },
+      {
+        "evaluation_id": "m2-011-evaluation-4",
+        "evaluator_id": "live-reviewer",
+        "reason": "由祖先节点可知 x+y=2(m+n+1)，且 m+n+1 为整数，故 x+y 为某个整数的 2 倍，按偶数定义 x+y 是偶数。",
+        "schema_version": "0.1",
+        "target": {
+          "node_id": 2,
+          "proof_id": "m2-011",
+          "version": 2
+        },
+        "verdict": "accepted"
+      }
+    ],
+    "rounds": 1,
+    "schema_version": "0.2",
+    "stale": [],
+    "stop_reason": "accepted",
+    "version_history": [
+      {
+        "claim": "所以 x+y 是偶数。",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "m2-011",
+            "version": 1
+          }
+        ],
+        "lifecycle_state": "superseded",
+        "node_id": 2,
+        "node_type": "conclusion",
+        "order_key": 20,
+        "proof_id": "m2-011",
+        "self_contained_claim": "所以 x+y 是偶数。",
+        "version": 1
+      }
+    ]
+  },
+  "human_verified": false,
+  "reported_tokens": 57410,
+  "scientific_claim_allowed": false,
+  "status": "accepted"
+}
