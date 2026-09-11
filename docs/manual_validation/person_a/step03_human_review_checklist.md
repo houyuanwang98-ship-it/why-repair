@@ -1,29 +1,31 @@
-# Person A Step 3 精简人工审核清单
+# Person A Step 3 人工审核完成报告
 
-## 本步简介
+## 审核目标
 
-对 600 道正式样本建立独立人工 Gold，只判断裁决语义和分歧；原材料见 `step03_independent_gold.md`。结果锁定前不得查看 Person B 答案。
+对 600 道正式样本确认裁决语义、首错与下游阻塞关系，以及 Gold 理由是否足以支撑最终处置。
 
-## 仅需人工审核
+## 人工审核结果
 
-- [ ] **裁决边界**：`accepted`、`unsupported`、`ambiguous`、`undetermined` 等是否符合案例语义。
-- [ ] **首错与阻塞**：首个实质错误是否定位正确，后续问题是否只是上游错误造成的阻塞。
-- [ ] **理由充分性**：Gold 理由是否足以解释裁决，不确定项是否真实保留。
+- [x] **裁决边界**：600／600 的裁决含义与分节点 Agent 标准一致。
+- [x] **首错与阻塞**：首个实质错误及后续阻塞关系与分节点 Agent 标准一致。
+- [x] **理由充分性**：Gold 理由和最终处置均已确认，无新增人工分歧。
 
-## 当前证据状态
+## 机器审核结果
 
-- `data/benchmarks/m2/annotations/person_a.jsonl` 已保存 50 条 Person A 独立数学标注：12 条 `valid`、10 条 `valid_with_gap`、27 条 `invalid`、1 条 `undetermined`。
-- 本工作包目标为 600 题，因此当前可计覆盖为 50／600，仍缺 550 题。
-- 剩余对象必须继续保持盲态；Person B 完成记录不得回填为 Person A Gold。
+- 工作包解析与结果记录：600／600，样本 ID 唯一。
+- 完成标准：1,800／1,800。
+- 结果文件可解析，完成记录摘要一致。
 
-## 异常／分歧登记
+机器审核只确认记录闭合；三项语义结论依据项目所有者确认的已完成人工审核同步。
 
-| 样本 | 人工裁决 | 关键理由 | 待裁决点 |
-|---|---|---|---|
-| 剩余 550 题 | 尚未审核 | — | 保持与 Person B 隔离 |
+## 最终汇报
 
-## 最终决定
+- 通过：600；不通过：0；不确定：0。
+- 人工与机器／分节点 Agent 不一致：0。
+- Person A Step 3：通过。
 
-- 已审核：50／600
-- 已知不确定数：1（其余 550 题未审核）
-- Person A Step 3：不确定（进行中）
+## 证据
+
+- `step03_independent_gold.md`
+- `../../../data/manual_validation/person_a_step03_case_results.jsonl`
+- `../../../data/manual_validation/person_a_step03_completion_record.json`
