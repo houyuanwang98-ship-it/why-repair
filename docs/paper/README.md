@@ -7,6 +7,7 @@
 - [数据与输出哈希](generated/manifest.json)
 - [真实消融运行器的缺口](ABLATION_READINESS.md)
 - [系统卡](../SYSTEM_CARD.md)
+- [最小人工终审包](../human_review/MINIMUM_FINAL_REVIEW_2026-09-11.md)
 
 运行 `python scripts/build_paper_evidence.py` 重建总表、案例和清单。此命令不调用模型，不增加人工审核记录。环境安装使用 `python -m pip install -r requirements.txt`，工程测试使用 `python -m unittest discover -s tests`。
 
