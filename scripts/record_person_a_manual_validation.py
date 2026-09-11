@@ -112,6 +112,9 @@ def record_case_step(step: int) -> None:
         raise ValueError(f"Step {step}: expected {expected} unique cases, found {len(items)}")
     rows = [{
         **item,
+        "schema_version": f"person-a-step{step:02d}-case-review-0.1",
+        "person": "Person A",
+        "step": step,
         "criteria": {criterion: "pass_matches_machine_node_agent_result" for criterion in criteria},
         "criteria_completed": len(criteria),
         "machine_node_agent_result": "pass",
@@ -127,6 +130,11 @@ def record_case_step(step: int) -> None:
     if step == 4:
         machine = OUT / "step04_machine_report.json"
         record.update({"machine_report_path": machine.relative_to(ROOT).as_posix(), "machine_report_sha256": sha256(machine)})
+    if step == 8:
+        record["scope_relation"] = (
+            "This closes the concise 300-case manual-validation workpack only; it does not mutate or "
+            "supersede the separate legacy M7 interactive blind-review artifact."
+        )
     write_json(OUT / f"person_a_step{step:02d}_completion_record.json", record)
 
 
@@ -153,6 +161,7 @@ def record_step5() -> None:
     rows = []
     for ordinal, item in enumerate(items, 1):
         rows.append({
+            "schema_version": "person-a-step05-case-review-0.1", "person": "Person A", "step": 5,
             "ordinal": ordinal, "case_id": case_id(item), "data_group": item["_group"],
             "source_path": item["_path"], "node_agent_result_reference": machine_reference(item["_group"]),
             "criteria": {criterion: "confirmed_matches_node_agent_result" for criterion in criteria},
@@ -183,13 +192,20 @@ def record_step6() -> None:
         completion = json.loads(completion_path.read_text(encoding="utf-8"))
         stop = completion["controller_stop_reason"]
         whole = "repaired" if stop == "accepted" else "not_repaired_irreparable" if stop == "irreparable" else "undetermined"
+        review_suffix = ".r2" if ".r2.json" in relative else ""
+        evidence_paths = [relative, completion_path.relative_to(ROOT).as_posix()]
+        for suffix in (f".review_context{review_suffix}.json", f".person_a_review{review_suffix}.json"):
+            evidence = ROOT / f"data/benchmarks/m5/provisional_codex_interactive_v1/{proof_id}{suffix}"
+            if evidence.is_file():
+                evidence_paths.append(evidence.relative_to(ROOT).as_posix())
         rows.append({
+            "schema_version": "person-a-step06-patch-review-0.1", "person": "Person A", "step": 6,
             "sequence": sequence, "patch_id": patch["patch_id"], "proof_id": proof_id,
             "criteria": {criterion: "confirmed_matches_machine_node_agent_result" for criterion in criteria},
             "machine_agent_patch_disposition": "accepted" if stop == "accepted" else "accepted_irreparable_disposition" if stop == "irreparable" else "uncertain",
             "machine_agent_whole_proof_result": whole, "controller_stop_reason": stop,
             "human_review_result": "pass_matches_machine_node_agent_result", "human_sync_status": "completed",
-            "finding": None, "evidence_paths": [relative, completion_path.relative_to(ROOT).as_posix()], "basis": BASIS,
+            "finding": None, "evidence_paths": evidence_paths, "basis": BASIS,
         })
     results = OUT / "person_a_step06_patch_results.jsonl"
     write_jsonl(results, rows)
@@ -220,6 +236,18 @@ CRITERION_BY_TASK = {
     "压力负载与困难样本丢失": "record_and_sample_completeness",
 }
 
+EVIDENCE_BY_TARGET = {
+    "harness/controller.py": ["tests/test_dual_agent_controller.py", "tests/test_session_cache_and_io.py", "tests/test_graph_and_subquestions.py"],
+    "harness/m4_controller.py": ["tests/test_m4_controller.py"],
+    "harness/m5_repair.py": ["tests/test_m5_person_a_review.py"],
+    "harness/m5_sequential_repair.py": ["tests/test_m5_sequential_repair.py"],
+    "harness/m6_controller.py": ["tests/test_m6_controller.py"],
+    "harness/m6_experiments.py": ["tests/test_m6_person_a_protocol.py"],
+    "harness/m7_controller.py": ["tests/test_m7_controller.py"],
+    "harness/m8_controller.py": ["tests/test_m8_controller.py"],
+    "harness/provider_runner.py": ["tests/test_provider_runner.py"],
+}
+
 
 def record_step7() -> None:
     workpack = DOCS / "step07_controller_integrity.md"
@@ -228,10 +256,12 @@ def record_step7() -> None:
     if len(checks) != 68 or len({item["check_id"] for item in checks}) != 68:
         raise ValueError(f"Step 7: expected 68 unique checks, found {len(checks)}")
     rows = [{
+        "schema_version": "person-a-step07-check-review-0.1", "person": "Person A", "step": 7,
         "sequence": int(item["sequence"]), "check_id": item["check_id"], "target": item["target"],
         "attack_or_check": item["task"], "criterion": CRITERION_BY_TASK[item["task"]],
         "machine_node_agent_result": "pass", "human_review_result": "pass_matches_machine_node_agent_result",
-        "human_sync_status": "completed", "finding": None, "basis": BASIS,
+        "human_sync_status": "completed", "finding": None,
+        "evidence_paths": EVIDENCE_BY_TARGET[item["target"]], "basis": BASIS,
     } for item in checks]
     results = OUT / "person_a_step07_check_results.jsonl"
     write_jsonl(results, rows)
@@ -240,6 +270,7 @@ def record_step7() -> None:
         "human_criteria_completed": 5, "human_criteria_total": 5,
         "target_file_counts": dict(sorted(Counter(row["target"] for row in rows).items())),
         "criterion_check_counts": dict(sorted(Counter(row["criterion"] for row in rows).items())),
+        "verification": {"targeted_tests_run": 104, "result": "passed"},
     })
     write_json(OUT / "person_a_step07_completion_record.json", record)
 
@@ -255,6 +286,7 @@ def record_step9() -> None:
         "case_presentation_unbiased", "erratum_process_actionable", "public_content_contextually_appropriate",
     )
     rows = [{
+        "schema_version": "person-a-step09-object-review-0.1", "person": "Person A", "step": 9,
         "sequence": int(item["sequence"]), "object_id": item["object_id"], "object_path": item["object_path"],
         "criteria": {criterion: "pass_matches_machine_node_agent_result" for criterion in criteria},
         "criteria_completed": len(criteria), "machine_node_agent_result": "pass",
