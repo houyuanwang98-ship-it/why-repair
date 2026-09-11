@@ -33,7 +33,17 @@ METHODS = (
     "single_round_repair",
     "full_system",
 )
-CASES = ("m2-011", "m2-018", "m2-034")
+ACCEPTANCE_CASES = ("m2-011", "m2-018", "m2-034")
+
+
+def case_ids(case_set: str) -> tuple[str, ...]:
+    if case_set == "acceptance3":
+        return ACCEPTANCE_CASES
+    source = ROOT / "data/benchmarks/m3/experiments/full50_codex_v1/session/results"
+    rows = tuple(sorted(path.stem for path in source.glob("m2-*.json")))
+    if len(rows) != 50 or rows != tuple(f"m2-{index:03d}" for index in range(1, 51)):
+        raise RuntimeError("full50 source must contain the exact frozen m2-001..m2-050 set")
+    return rows
 
 
 def _ref(node):
@@ -181,19 +191,25 @@ def main() -> int:
     parser.add_argument("--codex-command", default="codex")
     parser.add_argument("--max-calls", type=int, default=12)
     parser.add_argument("--max-tokens", type=int, default=60000)
+    parser.add_argument("--case-set", choices=("acceptance3", "full50"),
+                        default="acceptance3")
     parser.add_argument("--execute", action="store_true")
     args = parser.parse_args()
     if args.max_calls < 1 or args.max_tokens < 1:
         parser.error("budgets must be positive")
 
+    cases = case_ids(args.case_set)
     assignments = [{"method_id": method, "case_id": case}
-                   for method in METHODS for case in CASES]
+                   for method in METHODS for case in cases]
     manifest = {
         "schema_version": "m6-end-to-end-engineering-0.1",
         "created_at": datetime.now(timezone.utc).isoformat(),
-        "scope": "three_case_five_method_controller_connected_engineering_acceptance",
+        "scope": ("three_case_five_method_controller_connected_engineering_acceptance"
+                  if args.case_set == "acceptance3"
+                  else "full50_five_method_controller_connected_engineering_batch"),
         "methods": list(METHODS),
-        "cases": list(CASES),
+        "case_set": args.case_set,
+        "cases": list(cases),
         "assignments": assignments,
         "model": args.model,
         "credential_mode": "saved_codex_cli_auth",
