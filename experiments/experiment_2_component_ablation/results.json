@@ -1,0 +1,463 @@
+{
+  "schema_version": "experiment-2-component-ablation-1.0",
+  "experiment_name": "retrospective_component_capability_ladder",
+  "evidence_level": "retrospective_trace_ablation_not_independent_equal_budget_rerun",
+  "new_provider_model_calls": 0,
+  "cohort": {
+    "n": 21,
+    "source": "experiment_1_final_repair_accuracy",
+    "selection": "all 21 cases with synchronized Person A Step 6 terminal outcomes"
+  },
+  "primary_ablation": [
+    {
+      "condition_id": "no_agent",
+      "label": "无Agent（原证明）",
+      "successes": 0,
+      "total": 21,
+      "verified_final_acceptance_rate": 0.0,
+      "percentage": 0.0,
+      "wilson95": [
+        0.0,
+        0.154639018924847
+      ],
+      "evidence_basis": "observed original Gold state"
+    },
+    {
+      "condition_id": "single_diagnostic_agent",
+      "label": "仅单个诊断Agent",
+      "successes": 0,
+      "total": 21,
+      "verified_final_acceptance_rate": 0.0,
+      "percentage": 0.0,
+      "wilson95": [
+        0.0,
+        0.154639018924847
+      ],
+      "evidence_basis": "deterministic no-edit capability condition"
+    },
+    {
+      "condition_id": "dual_agents_one_pass",
+      "label": "双Agent（单轮截断）",
+      "successes": 8,
+      "total": 21,
+      "verified_final_acceptance_rate": 0.38095238095238093,
+      "percentage": 38.095238095238095,
+      "wilson95": [
+        0.20751011368564493,
+        0.5912134622488425
+      ],
+      "evidence_basis": "retrospective trace truncation"
+    },
+    {
+      "condition_id": "dual_agents_controller",
+      "label": "双Agent + Controller",
+      "successes": 14,
+      "total": 21,
+      "verified_final_acceptance_rate": 0.6666666666666666,
+      "percentage": 66.66666666666667,
+      "wilson95": [
+        0.4537345197425524,
+        0.8280524739491653
+      ],
+      "evidence_basis": "observed reviewed terminal state"
+    }
+  ],
+  "contrasts": {
+    "dual_agents_vs_no_agent_pp": 38.095238095238095,
+    "controller_increment_pp": 28.571428571428573,
+    "full_vs_no_agent_pp": 66.66666666666667,
+    "controller_rescued_cases": 6
+  },
+  "single_agent_diagnostic_benchmark": {
+    "sample_count": 50,
+    "proof_validity_accuracy": 0.94,
+    "proof_validity_correct": 47,
+    "error_type_accuracy": 0.92,
+    "first_error_overall_accuracy": 0.8,
+    "dependency_edge_f1": 0.9166666666666667,
+    "warning": "Different 50-case diagnostic benchmark; not a repair-rate row."
+  },
+  "safety_and_design_signals": {
+    "cohort_size": 21,
+    "full_successes": 14,
+    "controller_rescued_cases": 6,
+    "controller_rescue_share_of_successes": 0.42857142857142855,
+    "irreparable_safe_exits": 7,
+    "problem_preserved": 14,
+    "no_new_errors": 14,
+    "operationally_minimal": 14,
+    "local_patch_operations": 14,
+    "operation_counts": {
+      "delete": 2,
+      "insert_before": 4,
+      "replace": 8
+    },
+    "review_basis": "owner-confirmed synchronized review; not independent blind review"
+  },
+  "cases": [
+    {
+      "proof_id": "m2-012",
+      "gold_status": "valid_with_gap",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": true,
+      "full_system_success": true,
+      "controller_rescued": false,
+      "repair_rounds": 1,
+      "final_operation": "insert_before",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-012.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-012.patch.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-012.person_a_review.json"
+      ]
+    },
+    {
+      "proof_id": "m2-014",
+      "gold_status": "valid_with_gap",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": true,
+      "full_system_success": true,
+      "controller_rescued": false,
+      "repair_rounds": 1,
+      "final_operation": "insert_before",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-014.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-014.patch.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-014.person_a_review.json"
+      ]
+    },
+    {
+      "proof_id": "m2-018",
+      "gold_status": "undetermined",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": true,
+      "full_system_success": true,
+      "controller_rescued": false,
+      "repair_rounds": 1,
+      "final_operation": "insert_before",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-018.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-018.patch.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-018.person_a_review.json"
+      ]
+    },
+    {
+      "proof_id": "m2-021",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": false,
+      "full_system_success": false,
+      "controller_rescued": false,
+      "repair_rounds": 1,
+      "final_operation": "mark_irreparable",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-021.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-021.patch.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-021.person_a_review.json"
+      ]
+    },
+    {
+      "proof_id": "m2-023",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": false,
+      "full_system_success": false,
+      "controller_rescued": false,
+      "repair_rounds": 1,
+      "final_operation": "mark_irreparable",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-023.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-023.patch.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-023.person_a_review.json"
+      ]
+    },
+    {
+      "proof_id": "m2-025",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": false,
+      "full_system_success": false,
+      "controller_rescued": false,
+      "repair_rounds": 1,
+      "final_operation": "mark_irreparable",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-025.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-025.patch.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-025.person_a_review.json"
+      ]
+    },
+    {
+      "proof_id": "m2-027",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": false,
+      "full_system_success": false,
+      "controller_rescued": false,
+      "repair_rounds": 1,
+      "final_operation": "mark_irreparable",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-027.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-027.patch.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-027.person_a_review.json"
+      ]
+    },
+    {
+      "proof_id": "m2-029",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": false,
+      "full_system_success": false,
+      "controller_rescued": false,
+      "repair_rounds": 1,
+      "final_operation": "mark_irreparable",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-029.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-029.patch.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-029.person_a_review.json"
+      ]
+    },
+    {
+      "proof_id": "m2-031",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": true,
+      "full_system_success": true,
+      "controller_rescued": false,
+      "repair_rounds": 1,
+      "final_operation": "replace",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-031.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-031.patch.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-031.person_a_review.json"
+      ]
+    },
+    {
+      "proof_id": "m2-032",
+      "gold_status": "valid_with_gap",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": true,
+      "full_system_success": true,
+      "controller_rescued": false,
+      "repair_rounds": 1,
+      "final_operation": "insert_before",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-032.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-032.patch.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-032.person_a_review.json"
+      ]
+    },
+    {
+      "proof_id": "m2-034",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": false,
+      "full_system_success": true,
+      "controller_rescued": true,
+      "repair_rounds": 2,
+      "final_operation": "replace",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-034.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-034.patch.r2.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-034.person_a_review.r2.json"
+      ]
+    },
+    {
+      "proof_id": "m2-035",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": true,
+      "full_system_success": true,
+      "controller_rescued": false,
+      "repair_rounds": 1,
+      "final_operation": "delete",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-035.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-035.patch.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-035.person_a_review.json"
+      ]
+    },
+    {
+      "proof_id": "m2-039",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": false,
+      "full_system_success": true,
+      "controller_rescued": true,
+      "repair_rounds": 2,
+      "final_operation": "delete",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-039.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-039.patch.r2.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-039.person_a_review.r2.json"
+      ]
+    },
+    {
+      "proof_id": "m2-040",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": false,
+      "full_system_success": true,
+      "controller_rescued": true,
+      "repair_rounds": 2,
+      "final_operation": "replace",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-040.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-040.patch.r2.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-040.person_a_review.r2.json"
+      ]
+    },
+    {
+      "proof_id": "m2-041",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": false,
+      "full_system_success": false,
+      "controller_rescued": false,
+      "repair_rounds": 1,
+      "final_operation": "mark_irreparable",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-041.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-041.patch.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-041.person_a_review.json"
+      ]
+    },
+    {
+      "proof_id": "m2-042",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": false,
+      "full_system_success": false,
+      "controller_rescued": false,
+      "repair_rounds": 1,
+      "final_operation": "mark_irreparable",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-042.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-042.patch.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-042.person_a_review.json"
+      ]
+    },
+    {
+      "proof_id": "m2-044",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": false,
+      "full_system_success": true,
+      "controller_rescued": true,
+      "repair_rounds": 2,
+      "final_operation": "replace",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-044.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-044.patch.r2.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-044.person_a_review.r2.json"
+      ]
+    },
+    {
+      "proof_id": "m2-046",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": false,
+      "full_system_success": true,
+      "controller_rescued": true,
+      "repair_rounds": 2,
+      "final_operation": "replace",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-046.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-046.patch.r2.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-046.person_a_review.r2.json"
+      ]
+    },
+    {
+      "proof_id": "m2-047",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": true,
+      "full_system_success": true,
+      "controller_rescued": false,
+      "repair_rounds": 1,
+      "final_operation": "replace",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-047.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-047.patch.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-047.person_a_review.json"
+      ]
+    },
+    {
+      "proof_id": "m2-049",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": false,
+      "full_system_success": true,
+      "controller_rescued": true,
+      "repair_rounds": 2,
+      "final_operation": "replace",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-049.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-049.patch.r2.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-049.person_a_review.r2.json"
+      ]
+    },
+    {
+      "proof_id": "m2-050",
+      "gold_status": "invalid",
+      "no_agent_success": false,
+      "single_diagnostic_agent_success": false,
+      "dual_agents_one_pass_success": true,
+      "full_system_success": true,
+      "controller_rescued": false,
+      "repair_rounds": 1,
+      "final_operation": "replace",
+      "review_status": "accepted",
+      "evidence_paths": [
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-050.completion.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-050.patch.json",
+        "data/benchmarks/m5/provisional_codex_interactive_v1/m2-050.person_a_review.json"
+      ]
+    }
+  ],
+  "limitations": [
+    "The four primary rows are not independent equal-budget model reruns.",
+    "The one-pass row is reconstructed by truncating saved successful traces after round one.",
+    "The single-agent repair baseline is unavailable; the single-agent row is diagnosis-only and cannot modify proofs.",
+    "Human review is owner-confirmed synchronized review rather than independent blinded adjudication.",
+    "The cohort is retrospective and selected from cases entering the repair workflow."
+  ]
+}
