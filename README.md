@@ -2,6 +2,22 @@
 
 Dependency-guided diagnosis and minimal repair for natural-language mathematical proofs. The project converts proof steps into local obligations, retrieves relevant theorem-bank rules, distinguishes repairable gaps from invalid reasoning, and emits structured results.
 
+## 本地演示界面
+
+无需 API Key 或 Node.js，直接使用 Python 启动：
+
+```powershell
+python demo/app.py
+```
+
+浏览器会打开 `http://127.0.0.1:8765`。界面内置三个已经完成 Codex
+裁决的验证案例，可展示证明节点、首个问题步骤、错误类别、诊断和最小修复。
+输入自定义证明时，界面会运行真实的确定性检查器第一轮，并明确显示仍需
+Codex 处理的待裁决项，不会把未裁决结果伪装为最终数学结论。
+
+演示范围和已验证结果见
+[`docs/handoffs/DEMO_ALGEBRA_PILOT_2026-08-23.md`](docs/handoffs/DEMO_ALGEBRA_PILOT_2026-08-23.md)。
+
 ## 项目简介
 
 本项目研究一个受约束的双 Agent 数学证明审计与修复系统。Person A / Evaluator 负责切分证明、建立依赖图、定位首个错误、生成 ErrorCertificate，并独立判断补丁的数学有效性；Person B / Repair Generator 只能依据冻结的局部上下文提出最小 PatchProposal；确定性 Controller 负责版本、权限、预算、后代失效、缓存清除、回滚、拓扑重验和运行审计。
@@ -351,8 +367,9 @@ M0–M5 的阶段性工程验收边界见 [M5 A/B/Controller 联合验收记录]
 ## Quick start
 
 Python 3.10 or newer is recommended. The portable checker itself uses only the
-standard library; install `requirements.txt` only for the baseline runner or
-the optional standalone OpenAI adapter.
+standard library; install `requirements.txt` for local JSON Schema validation.
+Model-backed baseline and standalone adjudication runs use an authenticated
+Codex CLI session directly and do not read an OpenAI API key.
 
 ```bash
 python skills/math-proof-repair-agent/scripts/check_obligations.py \

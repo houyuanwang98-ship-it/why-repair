@@ -1,0 +1,245 @@
+{
+  "input": {
+    "context": {
+      "allowed_evidence": [
+        "sha256:fa95e179d7f193c0bb1eec573192c749f92875445ffa24bcd6a0088800584b8b",
+        "sha256:d268f9899b0d284548b2bea3fdfc7103fed01c1f6aa7e4a3cbdbc739f1c03c6b"
+      ],
+      "context_id": "m2-034-r1",
+      "domain": "elementary_algebra",
+      "error_certificate_digest": "sha256:e52850f27025362bb1d6f8b4c22440168a634eb3ff3ac78f75b029cabf8f158a",
+      "failed_inference": "将平方与算术平方根无条件地互相抵消；对负实数，sqrt(a^2)=|a|而非 a。",
+      "global_assumptions": [
+        "a 为实数。"
+      ],
+      "patch_digest": "sha256:d268f9899b0d284548b2bea3fdfc7103fed01c1f6aa7e4a3cbdbc739f1c03c6b",
+      "proof_id": "m2-034",
+      "schema_version": "0.1",
+      "target": {
+        "node_id": 1,
+        "proof_id": "m2-034",
+        "version": 1
+      },
+      "theorem": "证明对任意实数 a，都有 sqrt(a^2)=|a|。",
+      "unrelated_branch_digests": {}
+    },
+    "current_nodes": [
+      {
+        "claim": "平方与开平方互相抵消，所以 sqrt(a^2)=a。",
+        "depends_on": [],
+        "node_id": 1,
+        "node_type": "calculation_step",
+        "order_key": 10,
+        "proof_id": "m2-034",
+        "self_contained_claim": "平方与开平方互相抵消，所以 sqrt(a^2)=a。",
+        "version": 1
+      },
+      {
+        "claim": "又因为每个实数 a 都等于 |a|，所以 sqrt(a^2)=|a|。",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "m2-034",
+            "version": 1
+          }
+        ],
+        "node_id": 2,
+        "node_type": "calculation_step",
+        "order_key": 20,
+        "proof_id": "m2-034",
+        "self_contained_claim": "又因为每个实数 a 都等于 |a|，所以 sqrt(a^2)=|a|。",
+        "version": 1
+      }
+    ],
+    "edit_ids": [
+      "replace:1"
+    ],
+    "patch": {
+      "changes_problem": false,
+      "error_certificate_id": "m2-034-m6-live-diagnosis",
+      "generator_id": "live-generator",
+      "operation": "replace",
+      "patch_id": "m2-034-m6-live-patch-1",
+      "rationale": "原步骤错误地将算术平方根与平方无条件抵消。改为利用|a|非负及a²=|a|²。",
+      "replacement_nodes": [
+        {
+          "claim": "由于a^2=|a|^2且|a|≥0，根据算术平方根的定义，sqrt(a^2)=sqrt(|a|^2)=|a|。",
+          "depends_on": [],
+          "node_id": 1,
+          "node_type": "calculation",
+          "order_key": 10,
+          "self_contained_claim": "由于a^2=|a|^2且|a|≥0，根据算术平方根的定义，sqrt(a^2)=sqrt(|a|^2)=|a|。"
+        }
+      ],
+      "schema_version": "0.1",
+      "target": {
+        "node_id": 1,
+        "proof_id": "m2-034",
+        "version": 1
+      },
+      "target_dependencies_after": [],
+      "used_dependencies": []
+    }
+  },
+  "max_output_tokens": 3500,
+  "model": "gpt-5.6-terra",
+  "phase": "review",
+  "prompt": "Use only INPUT JSON and mathematical knowledge. Do not use tools, files or web. You are an AI, not a human reviewer. Preserve the exact theorem, assumptions and domain. Independently review the proposed patch against context and current proof. Use reviewer_id=live-reviewer and exact context_id. Cover every edit_id in deletion_trials. Check local repair and problem preservation; downstream nodes will be revalidated separately. accepted must equal all checks true, no hidden assumptions, no introduced errors, all deletion trials removal_breaks_repair true, no rejection codes. When rejecting include the appropriate codes for every false check. Use evidence_used from context.allowed_evidence. Explain actual mathematics, never merely trust the generator.",
+  "reasoning_effort": "high",
+  "schema": {
+    "$id": "m5_person_a_patch_review_v0_1.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "accepted": {
+        "type": "boolean"
+      },
+      "checks": {
+        "additionalProperties": false,
+        "properties": {
+          "assumptions_preserved": {
+            "type": "boolean"
+          },
+          "domain_preserved": {
+            "type": "boolean"
+          },
+          "mathematically_valid": {
+            "type": "boolean"
+          },
+          "no_new_errors": {
+            "type": "boolean"
+          },
+          "operationally_minimal": {
+            "type": "boolean"
+          },
+          "resolves_failed_inference": {
+            "type": "boolean"
+          },
+          "theorem_preserved": {
+            "type": "boolean"
+          },
+          "unrelated_branches_preserved": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "mathematically_valid",
+          "resolves_failed_inference",
+          "theorem_preserved",
+          "assumptions_preserved",
+          "domain_preserved",
+          "unrelated_branches_preserved",
+          "no_new_errors",
+          "operationally_minimal"
+        ],
+        "type": "object"
+      },
+      "context_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "deletion_trials": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "edit_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "reason": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "removal_breaks_repair": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "edit_id",
+            "removal_breaks_repair",
+            "reason"
+          ],
+          "type": "object"
+        },
+        "minItems": 1,
+        "type": "array"
+      },
+      "evidence_used": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "minItems": 1,
+        "type": "array",
+        "uniqueItems": true
+      },
+      "hidden_assumptions": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array",
+        "uniqueItems": true
+      },
+      "introduced_errors": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array",
+        "uniqueItems": true
+      },
+      "reason": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "rejection_codes": {
+        "items": {
+          "enum": [
+            "mathematical_error",
+            "failed_inference_unresolved",
+            "changes_problem",
+            "hidden_assumption",
+            "domain_changed",
+            "target_changed",
+            "unrelated_branch_changed",
+            "new_error_introduced",
+            "not_minimal",
+            "insufficient_evidence",
+            "stale_binding"
+          ]
+        },
+        "type": "array",
+        "uniqueItems": true
+      },
+      "review_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "reviewer_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "schema_version": {
+        "const": "0.1"
+      }
+    },
+    "required": [
+      "schema_version",
+      "review_id",
+      "context_id",
+      "reviewer_id",
+      "checks",
+      "hidden_assumptions",
+      "introduced_errors",
+      "deletion_trials",
+      "evidence_used",
+      "accepted",
+      "rejection_codes",
+      "reason"
+    ],
+    "title": "M5 Person A mathematical patch review",
+    "type": "object"
+  },
+  "timeout_seconds": 180
+}

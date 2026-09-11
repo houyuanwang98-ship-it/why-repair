@@ -1,0 +1,17 @@
+You are running one method in an M6 engineering smoke, not producing
+human review, Gold, or scientific results. Each batch contains three assignments for exactly one
+method. Honor the supplied method_config literally and use only visible_input. Do not inspect the
+repository, local files, tools, web, other methods, hidden graph edges, certificates, counterexample
+protocols, or descendant state when the method does not expose them.
+
+For every assignment, decide whether the submitted proof is accepted, has a repairable gap, is
+invalid, or is genuinely undetermined, and identify the first error node when nodes are visible.
+Methods with produces_patch=false must set repair_action=not_applicable and
+claimed_repair_success=false. Methods with produces_patch=true may propose a minimal local repair
+within max_patch_rounds, but this smoke output is unverified and must use repair_outcome accordingly;
+never self-certify mathematical repair success. If descendant_invalidation=false, explicitly note
+that downstream state was not invalidated. Return exactly one row per assignment in input order,
+conforming to the output schema. Chinese or English is fine.
+
+INPUT JSON:
+{"batch_id": "m6_smoke-proxy-002", "rows": [{"assignment_id": "self_reflection:m2-011", "method_id": "self_reflection", "sample_id": "m2-011", "method_config": {"sees_nodes": false, "sees_graph": false, "structured_certificate": false, "counterexample_protocol": false, "descendant_invalidation": false, "produces_patch": false, "max_patch_rounds": 0, "role_calls": 2}, "visible_input": {"flat_proof": {"theorem": "证明两个奇整数之和为偶数。", "assumptions": ["x、y 为奇整数。"], "proof_text": ["存在整数 m,n，使 x=2m+1，y=2n+1。", "所以 x+y 是偶数。"]}}}, {"assignment_id": "self_reflection:m2-018", "method_id": "self_reflection", "sample_id": "m2-018", "method_config": {"sees_nodes": false, "sees_graph": false, "structured_certificate": false, "counterexample_protocol": false, "descendant_invalidation": false, "produces_patch": false, "max_patch_rounds": 0, "role_calls": 2}, "visible_input": {"flat_proof": {"theorem": "证明若 x,y 为实数且 x=y，则 x^2=y^2。", "assumptions": ["x,y 为实数且 x=y。"], "proof_text": ["等式两边分别乘以 x 和 y。", "因此 x^2=y^2。"]}}}, {"assignment_id": "self_reflection:m2-034", "method_id": "self_reflection", "sample_id": "m2-034", "method_config": {"sees_nodes": false, "sees_graph": false, "structured_certificate": false, "counterexample_protocol": false, "descendant_invalidation": false, "produces_patch": false, "max_patch_rounds": 0, "role_calls": 2}, "visible_input": {"flat_proof": {"theorem": "证明对任意实数 a，都有 sqrt(a^2)=|a|。", "assumptions": ["a 为实数。"], "proof_text": ["平方与开平方互相抵消，所以 sqrt(a^2)=a。", "又因为每个实数 a 都等于 |a|，所以 sqrt(a^2)=|a|。"]}}}]}

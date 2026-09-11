@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m5_ai_proxy_batch_review_v0_1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["batch_id", "reviewer_kind", "rows"],
+  "properties": {
+    "batch_id": {"type": "string", "minLength": 1},
+    "reviewer_kind": {"const": "codex_ai_proxy"},
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "proof_id", "decision", "disposition", "failed_edge",
+          "patch_resolution", "theorem_preservation", "minimality",
+          "confidence", "reason"
+        ],
+        "properties": {
+          "proof_id": {"type": "string", "minLength": 1},
+          "decision": {
+            "enum": ["accept_patch", "reject_patch", "undetermined"]
+          },
+          "disposition": {
+            "enum": ["repairable", "irreparable", "undetermined"]
+          },
+          "failed_edge": {"type": "string", "minLength": 1},
+          "patch_resolution": {"type": "string", "minLength": 1},
+          "theorem_preservation": {"type": "string", "minLength": 1},
+          "minimality": {"type": "string", "minLength": 1},
+          "confidence": {"enum": ["high", "medium", "low"]},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

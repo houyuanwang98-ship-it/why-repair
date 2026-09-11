@@ -8,10 +8,10 @@ from pathlib import Path
 
 from .adjudication import (
     build_host_adjudication_template,
-    make_openai_adjudicator,
-    make_openai_calculation_adjudicator,
-    make_openai_diagnosis_adjudicator,
-    make_openai_graph_builder,
+    make_codex_adjudicator,
+    make_codex_calculation_adjudicator,
+    make_codex_diagnosis_adjudicator,
+    make_codex_graph_builder,
 )
 from .contracts import AMBIENT_BATCH_RESULT_ID, SESSION_SCHEMA_VERSION
 from .graph import (
@@ -118,7 +118,7 @@ def resolve_runtime_configuration(args, parser, project_root):
     model = choose_scalar(
         args.model,
         "model",
-        os.environ.get("OPENAI_MODEL", "gpt-5.5"),
+        os.environ.get("CODEX_MODEL", "gpt-5.5"),
     )
     model_max_output_tokens = choose_scalar(
         args.model_max_output_tokens, "model_max_output_tokens", 1200
@@ -182,7 +182,7 @@ def main():
     parser.add_argument(
         "--uncertain-policy",
         choices=["model", "undetermined"],
-        help="Optional provider adapter. Portable host-agent workflow uses undetermined.",
+        help="Optional Codex CLI adapter. Portable host-agent workflow uses undetermined.",
     )
     parser.add_argument("--model")
     parser.add_argument("--model-max-output-tokens", type=int)
@@ -285,27 +285,36 @@ def main():
             ),
         },
     }
+    codex_evidence_dir = (
+        runtime["session_dir"] / "codex-evidence"
+        if runtime["session_dir"] is not None
+        else output_dir / "codex-evidence"
+    )
     model_adjudicator = (
-        make_openai_adjudicator(runtime["model"], runtime["model_max_output_tokens"])
+        make_codex_adjudicator(
+            runtime["model"], runtime["model_max_output_tokens"], codex_evidence_dir
+        )
         if runtime["uncertain_policy"] == "model"
         else None
     )
     calculation_adjudicator = (
-        make_openai_calculation_adjudicator(
-            runtime["model"], runtime["model_max_output_tokens"]
+        make_codex_calculation_adjudicator(
+            runtime["model"], runtime["model_max_output_tokens"], codex_evidence_dir
         )
         if runtime["uncertain_policy"] == "model"
         else None
     )
     diagnosis_adjudicator = (
-        make_openai_diagnosis_adjudicator(
-            runtime["model"], runtime["model_max_output_tokens"]
+        make_codex_diagnosis_adjudicator(
+            runtime["model"], runtime["model_max_output_tokens"], codex_evidence_dir
         )
         if runtime["uncertain_policy"] == "model"
         else None
     )
     graph_builder = (
-        make_openai_graph_builder(runtime["model"], runtime["model_max_output_tokens"])
+        make_codex_graph_builder(
+            runtime["model"], runtime["model_max_output_tokens"], codex_evidence_dir
+        )
         if runtime["uncertain_policy"] == "model"
         else None
     )

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "m6_end_to_end_diagnosis_v0_1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "evaluator_id", "verdict", "first_error_target", "failed_inference", "repairable", "counterexample", "reason"],
+  "properties": {
+    "schema_version": {"const": "m6-live-diagnosis-0.1"},
+    "evaluator_id": {"const": "live-diagnoser"},
+    "verdict": {"enum": ["invalid", "accepted", "undetermined"]},
+    "first_error_target": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["proof_id", "node_id", "version"],
+          "properties": {
+            "proof_id": {"type": "string", "minLength": 1},
+            "node_id": {"type": ["integer", "string"]},
+            "version": {"type": "integer", "minimum": 1}
+          }
+        }
+      ]
+    },
+    "failed_inference": {"type": "string"},
+    "repairable": {"type": "boolean"},
+    "counterexample": {"type": ["string", "null"]},
+    "reason": {"type": "string", "minLength": 1}
+  }
+}
