@@ -20,6 +20,7 @@
 | E11 | M6 九种方法的 Codex AI 代理 smoke 完成 | 9/9 批次完成，无传输失败 | `data/benchmarks/m6/codex_ai_proxy_nine_method_smoke_20260821/run_summary.json` | 只能说明执行链路可跑，不作为方法优劣结论 |
 | E12 | M7 的 50 题交互式案例复核 | 50 题：45 确认、5 修正 | `data/benchmarks/m7/interactive_case_level_human_review_v0_2.json` | AI 预填后的人工纠错，不是独立双盲 |
 | E13 | Person B 步骤 1–9 均已形成完成记录 | 记录层面完成 | `docs/manual_validation/person_b/README.md`、`scripts/validate_person_b_steps01_09.py` | 结果同步和工程验收，不等同外部专家验证 |
+| E14 | 实时修复 Pilot 中两道成功案例获得人工确认 | m2-011、m2-018 均完成独立 AI 调用复核、控制器节点重验和项目所有者人工确认 | `data/benchmarks/m5/live_repair_pilot_20260910/`、`data/manual_validation/minimum_final_review_status_v0_1.json` | 仅报告 2 道固定历史诊断案例；m2-034 中断，不进入成功数 |
 
 ## 2. 目前禁止写成既成事实的主张
 

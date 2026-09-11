@@ -19,6 +19,9 @@ def build():
     counter = read('data/benchmarks/m4/integrated_acceptance_v1_1.json')
     review = read('data/benchmarks/m7/interactive_case_level_human_review_v0_2.json')
     smoke = read('data/benchmarks/m6/codex_ai_proxy_nine_method_smoke_20260821/run_summary.json')
+    final_review = read('data/manual_validation/minimum_final_review_status_v0_1.json')
+    live_results = [read(f'data/benchmarks/m5/live_repair_pilot_20260910/{case_id}/result.json')
+                    for case_id in ('m2-011', 'm2-018')]
     assert report['sample_count'] == report['proof_validity']['count'] == 50
     assert len(review['rows']) == len({r['case_id'] for r in review['rows']}) == review['summary']['cases']
     for label in ('confirmed', 'corrected'):
@@ -42,6 +45,8 @@ def build():
               f"- M4：{counter['benchmark']['accepted_count']}/{counter['benchmark']['valid_counterexample_count']} 个已确认有效反例通过有界执行验证。",
               f"- M6：{smoke['completed_batches']} 个方法批次完成；每批 3 道相同题，共 27 个 assignment。不是 27 道不同题。",
               f"- M7：{review['summary']['cases']} 道历史案例复核，确认 {review['summary']['confirmed']}、修正 {review['summary']['corrected']}。",
+              f"- 实时修复 Pilot：{sum(r['status'] == 'accepted' for r in live_results)}/2 道完成 AI 独立调用复核与控制器重验；两道均于 {final_review['human_tasks'][0]['confirmed_on']} 获项目所有者人工确认。",
+              '- m2-034 在后代重验中被拒绝且后续生成超过题目预算，维持中断状态，不进入成功数。',
               '- M7 历史文件保留 user_person_a 与 person_b 两个分片角色；当前只要求 Person B 的安排不能改写过去的参与者记录。',
               '- 该历史复核明确为 AI 预填后纠错，不提供独立双盲或标注者一致性指标。',
               '- 没有正式基线差异、显著性、真实账单或新实验成功率。', '']
