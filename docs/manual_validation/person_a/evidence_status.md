@@ -5,7 +5,7 @@
 
 ## 结论
 
-Person A 的历史数学标注和补丁审核是真实可追溯的，但尚不足以关闭 Step 2–9 全部工作包。当前最完整的部分是 Step 6 的补丁级审核：21 个指定补丁均有 Person A 接受记录；最明显的缺口是 Step 8，盲审文件仍为 `pending` 且没有逐例结论。
+Person A Step 2–8 的同步记录已在最新分支补齐，数量分别为 304、600、300、300、21、68 和 300，机器校验均通过。Step 9 仍缺署名、机构／邮箱、公开使用与最终发布决定，因此 Step 2–9 尚不能整体关闭。上述 Step 2–8 记录明确属于项目所有者确认后的结果同步，不自动构成新的独立双盲 Gold、第三专家裁决或正式实验放行证据。
 
 ## 全分支范围快照
 
@@ -21,7 +21,7 @@ Person A 的历史数学标注和补丁审核是真实可追溯的，但尚不�
 | `origin/codex/m3-evaluator-v1` | `fdce828b8c69f9615299035ae176f01377d9c1be` |
 | `origin/codex/m6-controller` | `b8ac9cff2e8c4315cf7d4195ebd45a71037bfd24` |
 | `origin/codex/m7-proxy-audit-and-upstream-closure-20260821` | `b78cdf8b155b89fc6990ef63c33246e29ba90b45` |
-| `origin/codex/manual-validation-guide-hardening-20260822` | `55b289ed3cebfd45735252af6e2076fb15f57d19` |
+| `origin/codex/manual-validation-guide-hardening-20260822` | `ba6a371a458bf8b9e6285b6ba7dece8022785a8b` |
 | `origin/codex/repro-m3-m6-20260819` | `df0f47279219aeb1da826ccc738849ca26e7c2b3` |
 | `origin/docs/m0-scope-contract` | `7537d2c73a9075a6f1d7310190e4c50e2d3e6c17` |
 | `origin/feature/m1-shared-contracts` | `0329eb375d4c3554de176a947d3f058133d51c5b` |
@@ -40,11 +40,8 @@ Person A 的历史数学标注和补丁审核是真实可追溯的，但尚不�
 
 ## 关闭顺序
 
-1. 先完成 Step 3 剩余 Gold，继续保持与 Person B 隔离。
-2. 再完成 Step 2、4、5 的异常优先审核与抽样正常对象。
-3. 为 Step 6 的 21 题补充输入隔离、后代重验和整篇证明结论。
-4. 独立执行 Step 7 的 68 项代码／对抗检查。
-5. 在盲态下完成 Step 8，再揭盲归因。
-6. 最后填写发布身份与决定，并把 Step 9 的 5 个对象逐一绑定到证据。
+1. 填写 Step 9 的发布身份、联系信息、公开使用范围和最终发布决定。
+2. 若要进入正式科学实验，另行提供可验证的独立 A/B 锁定过程与必要的第三专家裁决；现有同步记录不得改名为该证据。
+3. 冻结新的外部未见测试集、功效分析和正式运行 Manifest，再由新版 gate 重新判定。
 
 任何步骤只有在对象数量、结果分类和证据路径能够闭合时才能标记为“通过”。

@@ -23,6 +23,7 @@ from harness.m5_sequential_repair import M5SequentialRepairController
 from scripts.build_m5_runtime_controller_replay import _nodes
 
 SCHEMAS = {
+    'diagnose': 'm6_end_to_end_diagnosis_v0_1.schema.json',
     'generate': 'm5_person_b_patch_proposal_v0_1.schema.json',
     'review': 'm5_person_a_patch_review_v0_1.schema.json',
     'revalidate': 'm5_controller_revalidation_v0_1.schema.json',
@@ -30,6 +31,10 @@ SCHEMAS = {
 COMMON = ('Use only INPUT JSON and mathematical knowledge. Do not use tools, files or web. '
           'You are an AI, not a human reviewer. Preserve the exact theorem, assumptions and domain. ')
 PROMPTS = {
+    'diagnose': COMMON + 'Audit the proof from the theorem and assumptions through the ordered nodes. '
+        'Return the earliest invalid or materially unsupported inference. A repairable omission is invalid for this task. '
+        'Do not read or infer hidden Gold. If invalid, bind first_error_target to the exact supplied current node reference. '
+        'A counterexample must satisfy every original assumption; otherwise return null. Use evaluator_id=live-diagnoser.',
     'generate': COMMON + 'Propose one minimal patch for the current error certificate. '
         'Use generator_id=live-generator. All references must use supplied current versions. '
         'An insert_before node uses a fresh ID and an order_key before the target. '
@@ -85,14 +90,15 @@ class Calls:
         self.count, self.tokens = 0, 0
         self.adapter = None
 
-    def call(self, phase, payload):
+    def call(self, phase, payload, *, prompt_override=None):
         if self.count >= self.max_calls or self.tokens >= self.max_tokens:
             raise RuntimeError('Pilot call/token budget exhausted; checkpoint retained')
         self.count += 1
         folder = self.output / f'call-{self.count:03d}-{phase}'
         schema = read(ROOT / 'schemas' / SCHEMAS[phase])
+        effective_prompt = prompt_override or PROMPTS[phase]
         request = {'phase': phase, 'model': self.model, 'input': payload,
-                   'prompt': PROMPTS[phase], 'schema': schema, 'timeout_seconds': 180,
+                   'prompt': effective_prompt, 'schema': schema, 'timeout_seconds': 180,
                    'max_output_tokens': 3500, 'reasoning_effort': 'high'}
         write_once(folder / 'request.json', request)
         if (folder / 'failure.json').exists():
@@ -109,7 +115,7 @@ class Calls:
                     return subprocess.run(command, **kwargs)
                 self.adapter = build_codex_adapter(codex_command=self.command, process_runner=isolated_process)
             try:
-                raw = self.adapter(model=self.model, prompt=PROMPTS[phase], input_payload=payload,
+                raw = self.adapter(model=self.model, prompt=effective_prompt, input_payload=payload,
                     max_output_tokens=3500, sampling={'reasoning_effort': 'high'},
                     output_schema=schema, timeout_seconds=180)
             except CodexCLIError as exc:
@@ -130,11 +136,13 @@ class Calls:
         return value
 
 
-def run_case(case_id, output, calls, rounds):
+def run_case(case_id, output, calls, rounds, *, certificate_override=None,
+             method_id='full_system', controller_class=M5SequentialRepairController,
+             diagnosis_record=None):
     source, nodes = _nodes(case_id)
     initial = read(ROOT / f'data/benchmarks/m5/provisional_codex_interactive_v1/{case_id}.input.json')
-    certificate = deepcopy(initial['error_certificate'])
-    controller = M5SequentialRepairController(proof_id=case_id, nodes=nodes,
+    certificate = deepcopy(certificate_override or initial['error_certificate'])
+    controller = controller_class(proof_id=case_id, nodes=nodes,
         error_certificate=certificate, repair_generator_id='live-generator',
         evaluator_ids={'live-reviewer'}, budget=RepairBudget(max_rounds=rounds, max_new_nodes=2, max_total_edits=6))
     problem = {key: source[key] for key in ('theorem', 'assumptions', 'domain')}
@@ -144,7 +152,9 @@ def run_case(case_id, output, calls, rounds):
     write_once(output / 'inputs.json', {'problem': problem, 'nodes': nodes, 'certificate': certificate,
         'source_sha256': source_hashes,
         'rounds': rounds, 'model': calls.model, 'max_calls': calls.max_calls, 'max_tokens': calls.max_tokens,
-        'kind': 'fixed_historical_diagnosis_live_repair_pilot', 'human_review': False})
+        'kind': ('fixed_historical_diagnosis_live_repair_pilot'
+                 if certificate_override is None else 'm6_end_to_end_controller_ablation'),
+        'method_id': method_id, 'diagnosis_record': diagnosis_record, 'human_review': False})
     step = 0
     try:
         while controller.snapshot()['stop_reason'] is None:
@@ -152,7 +162,13 @@ def run_case(case_id, output, calls, rounds):
             if state['rounds'] >= rounds:
                 break
             target_node = next(n for n in state['nodes'] if n['node_id'] == certificate['target']['node_id'])
-            payload = {'problem': problem, 'repair_input': controller.generator_input(),
+            repair_input = controller.generator_input()
+            if method_id == 'no_structured_certificate':
+                hidden = repair_input.pop('error_certificate')
+                repair_input['unstructured_diagnosis'] = hidden['failed_inference']
+                repair_input['routing'] = {'certificate_id': hidden['certificate_id'],
+                                           'target': hidden['target']}
+            payload = {'problem': problem, 'repair_input': repair_input,
                        'dependency_ancestors': ancestors(state['nodes'], target_node)}
             patch = calls.call('generate', payload)
             controller.submit(patch)
@@ -193,7 +209,8 @@ def run_case(case_id, output, calls, rounds):
         final = controller.snapshot()
         write_once(output / 'result.json', {'status': final['stop_reason'] or 'round_budget_exhausted',
             'calls': calls.count, 'reported_tokens': calls.tokens, 'human_verified': False,
-            'scientific_claim_allowed': False, 'final_state': final, 'events': controller.events})
+            'scientific_claim_allowed': False, 'method_id': method_id,
+            'final_state': final, 'events': controller.events})
     except Exception as exc:
         write_once(output / 'interruption.json', {'error_type': type(exc).__name__, 'error': str(exc),
             'calls': calls.count, 'reported_tokens': calls.tokens, 'state': controller.snapshot()})
