@@ -26,6 +26,12 @@
 - 人工与机器／分节点 Agent 不一致：0。
 - Person A Step 6：通过；7 个不可局部修复案例不计为修复成功。
 
+## 自检与修复记录
+
+- 已确认人工段落只判断输入隔离、问题保持、修复质量、后代影响和整篇证明语义。
+- 已复核 21 个补丁 ID 唯一，14 个 `repaired` 与 7 个 `not_repaired_irreparable` 的合计闭合。
+- 本轮修复：每条同步结果新增对应 review context 和 Person A review 证据路径；避免仅凭 Controller completion 推断人工接受。
+
 ## 证据
 
 - `step06_repair_pilot.md`
