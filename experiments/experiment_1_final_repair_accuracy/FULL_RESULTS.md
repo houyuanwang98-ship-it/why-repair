@@ -4,11 +4,11 @@ Strict success means the blind judge marked the output valid, rigorous, and prob
 
 | Method | Strict success | Rate | Valid | Rigorous | Preserved |
 |---|---:|---:|---:|---:|---:|
-| original | 166/596 | 27.9% | 169 | 167 | 576 |
-| direct_rewrite | 365/596 | 61.2% | 365 | 400 | 584 |
-| self_refine | 366/596 | 61.4% | 366 | 404 | 584 |
-| generator_critic | 370/596 | 62.1% | 370 | 409 | 584 |
-| full_system | 377/596 | 63.3% | 377 | 418 | 584 |
+| original | 167/600 | 27.8% | 170 | 168 | 580 |
+| direct_rewrite | 367/600 | 61.2% | 367 | 402 | 588 |
+| self_refine | 368/600 | 61.3% | 368 | 406 | 588 |
+| generator_critic | 372/600 | 62.0% | 372 | 411 | 588 |
+| full_system | 379/600 | 63.2% | 379 | 420 | 588 |
 
 ## Structured-gold invalid subset
 
@@ -16,11 +16,11 @@ This subset contains the 216 inputs whose original project gold label is `invali
 
 | Method | Strictly valid output | Rate |
 |---|---:|---:|
-| original | 7/213 | 3.3% |
-| direct_rewrite | 55/213 | 25.8% |
-| self_refine | 55/213 | 25.8% |
-| generator_critic | 56/213 | 26.3% |
-| full_system | 56/213 | 26.3% |
+| original | 7/216 | 3.2% |
+| direct_rewrite | 56/216 | 25.9% |
+| self_refine | 56/216 | 25.9% |
+| generator_critic | 57/216 | 26.4% |
+| full_system | 57/216 | 26.4% |
 
 ## Interpretation boundary
 
