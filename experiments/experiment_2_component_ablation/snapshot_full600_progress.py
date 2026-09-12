@@ -53,14 +53,16 @@ def main():
     (HERE / "PROGRESS.json").write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (HERE / "results.json").write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     groups = Counter(x["case_id"].split("-")[0] if "-" in x["case_id"] else "M2" for x in inputs if x["case_id"] in set(judged))
+    state_note = "实验已完成，正式结果见 RESULTS.md。" if len(judged) == 600 else "实验仍在进行，以下不是最终正确率。"
     lines = [
-        "# 实验2运行进度", "", f"> 快照时间：{now}（UTC+08:00）。实验仍在进行，以下不是最终正确率。", "",
+        "# 实验2运行进度", "", f"> 快照时间：{now}（UTC+08:00）。{state_note}", "",
         "| 阶段 | 已完成 | 剩余 |", "|---|---:|---:|",
         f"| 600题四候选生成 | {len(generated)}/600 | {600-len(generated)} |",
         f"| 统一独立盲审（按题） | {len(judged)}/600 | {600-len(judged)} |",
         f"| 配置×题判断 | {len(judged)*5}/3000 | {(600-len(judged))*5} |", "",
         "剩余待盲审题号：" + ("、".join(missing_judgment) if missing_judgment else "无"), "",
-        "当前仅发布完成度，不提前发布596题阶段性通过率，以免被误读为600题最终结果。所有已完成判断均有匿名方法映射检查点；待600/600后生成逐题证据、正式结果与报告。", "",
+        ("全部判断已完成，逐题证据与正式汇总已经生成。" if len(judged) == 600 else
+         "当前仅发布完成度，不提前发布阶段性通过率，以免被误读为600题最终结果。所有已完成判断均有匿名方法映射检查点。"), "",
         "进度口径：每题一次生成得到4种修复候选；一次独立盲审同时判断原证明（无Agent）与4种候选，因此每道完成题对应5个配置判断。", "",
     ]
     (HERE / "PROGRESS.md").write_text("\n".join(lines), encoding="utf-8")

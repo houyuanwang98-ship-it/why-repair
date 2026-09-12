@@ -48,7 +48,16 @@ def main():
         "- 每道题包含原证明以及4个匿名候选的独立判断；候选顺序按题号与方法名哈希打乱，评分时不暴露方法身份。",
         "- 600题由 M2 Pilot 50、M2 B50 50、Open Proof Corpus 250、ProofNet 250 组成。",
         "",
+        "## 配对变化",
+        "",
+        "| 对比 | 失败→通过 | 通过→失败 | 净增通过题 | 配对差值 | exact McNemar p |",
+        "|---|---:|---:|---:|---:|---:|",
+        "",
     ]
+    for key, comparison in data["paired_comparisons"].items():
+        lines.insert(-1, f'| `{key}` | {comparison["fail_to_pass"]} | {comparison["pass_to_fail"]} | '
+                         f'{comparison["net_accepted_cases"]:+d} | {comparison["paired_rate_difference_pp"]:+.2f} pp | '
+                         f'{comparison["exact_mcnemar_two_sided_p"]:.4f} |')
     (HERE / "RESULTS.md").write_text("\n".join(lines), encoding="utf-8")
     report = [
         "# 实验2报告：双Agent与Controller组件消融（600题）",
@@ -63,7 +72,7 @@ def main():
         "",
         "## 结果",
         "",
-        "完整数表见 `RESULTS.md`。逐题证据和哈希均随实验提交，可从原始判断重新计算全部数字。",
+        "完整数表见 `RESULTS.md`。严格接受率由27.83%（无Agent）升至61.17%（单Agent）、62.00%（双Agent）和63.17%（双Agent+Controller）。完整系统相对双Agent净增7道通过题；exact McNemar双侧p=0.1435，因此该小幅增益应视为趋势而非已证实的显著差异。逐题证据和哈希均随实验提交。",
         "",
         "## 项目独特改进点",
         "",

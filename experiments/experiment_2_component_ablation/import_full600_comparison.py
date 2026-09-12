@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 from collections import Counter
 from pathlib import Path
 
@@ -78,6 +79,21 @@ def main() -> None:
             "rigorous": sum(row["rigorous"] for row in subset),
             "mean_error_count": sum(row["error_count"] for row in subset) / len(subset),
         }
+    accepted_by_key = {(row["case_id"], row["method"]): row["accepted"] for row in rows}
+    comparisons = {}
+    pairs = [("no_agent", "single_agent"), ("single_agent", "single_agent_self_refine"),
+             ("single_agent_self_refine", "dual_agent"), ("dual_agent", "dual_agent_controller")]
+    for left, right in pairs:
+        lost = sum(accepted_by_key[(case_id, left)] and not accepted_by_key[(case_id, right)] for case_id in ids)
+        gained = sum(not accepted_by_key[(case_id, left)] and accepted_by_key[(case_id, right)] for case_id in ids)
+        discordant = lost + gained
+        tail = min(lost, gained)
+        p_value = min(1.0, 2 * sum(math.comb(discordant, k) for k in range(tail + 1)) / (2 ** discordant)) if discordant else 1.0
+        comparisons[f"{right}_vs_{left}"] = {
+            "net_accepted_cases": gained - lost, "fail_to_pass": gained, "pass_to_fail": lost,
+            "paired_rate_difference_pp": 100 * (summary[right]["acceptance_rate"] - summary[left]["acceptance_rate"]),
+            "exact_mcnemar_two_sided_p": p_value,
+        }
     result = {
         "schema_version": "experiment-2-full600-ablation-1.0",
         "status": "completed",
@@ -88,9 +104,10 @@ def main() -> None:
         "human_verified": False,
         "case_evidence": evidence.name,
         "case_evidence_sha256": digest,
-        "methods": summary,
+        "methods": summary, "paired_comparisons": comparisons,
     }
     (HERE / "full600_results.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (HERE / "results.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 

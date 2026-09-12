@@ -27,6 +27,14 @@ def main():
     assert len(assignments) == 3000
     assert {(x["case_id"], x["method"]) for x in assignments} == {(case_id, method) for case_id in ids for method in METHODS}
     assert progress["total_cases"] == 600 and progress["total_judgments_planned"] == 3000
+    if progress["status"] == "completed":
+        final = json.loads((HERE / "full600_results.json").read_text(encoding="utf-8"))
+        evidence_path = HERE / final["case_evidence"]
+        evidence = [json.loads(x) for x in evidence_path.read_text(encoding="utf-8").splitlines()]
+        assert len(evidence) == 3000
+        assert {(x["case_id"], x["method"]) for x in evidence} == {(case_id, method) for case_id in ids for method in METHODS}
+        assert hashlib.sha256(evidence_path.read_bytes()).hexdigest() == final["case_evidence_sha256"]
+        assert all(final["methods"][method]["n"] == 600 for method in METHODS)
     for relative, expected_digest in manifest.items():
         actual = hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
         assert actual == expected_digest, f"Source digest mismatch: {relative}"

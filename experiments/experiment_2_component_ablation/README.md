@@ -10,6 +10,7 @@
 - `full600_results.json`：可机读聚合结果。
 - `RESULTS.md`、`REPORT.md`：结果表与实验报告。
 - `PROGRESS.md`、`PROGRESS.json`：当前完成度、剩余题号与快照时间。
+- `EXPERIMENT_LOG.md`：运行、断点恢复与最终完成日志。
 - `import_full600_comparison.py`：从共同运行证据导入并验证匿名映射。
 - `build_full600_report.py`：仅从逐题结果重建报告数字。
 

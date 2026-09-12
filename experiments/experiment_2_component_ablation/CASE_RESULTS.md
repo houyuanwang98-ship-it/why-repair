@@ -1,6 +1,6 @@
 # 实验2逐题运行状态（600题）
 
-> 状态快照：2026-09-12T12:36:08+08:00。逐题数学判定将在600/600后随正式结果发布。
+> 状态快照：2026-09-12T12:40:59+08:00。逐题数学判定将在600/600后随正式结果发布。
 
 | ID | 数据集 | 输入SHA-256 | 生成 | 独立盲审 |
 |---|---|---|---|---|
@@ -167,7 +167,7 @@
 | opc250-224 | OPC-250 v0.2 | `e8d11dffb6a0e8ececb131158d5986d320a21e041f50a0eda941e1d4ccdd4d56` | 完成 | 完成 |
 | opc250-225 | OPC-250 v0.2 | `cf696f2e0609c513e35f34608c161e454b4cbba7fd0706407b04f26fd16a2b68` | 完成 | 完成 |
 | opc250-227 | OPC-250 v0.2 | `e0f6dcdba6c7301b81c77db3aea09624c39b3818fa77778b89678a60ffde0c3f` | 完成 | 完成 |
-| opc250-228 | OPC-250 v0.2 | `4c9844bb606eb0f9ff6c27aeb106056204e776e5a36ddb178db94e3975a2f3bc` | 完成 | 待运行 |
+| opc250-228 | OPC-250 v0.2 | `4c9844bb606eb0f9ff6c27aeb106056204e776e5a36ddb178db94e3975a2f3bc` | 完成 | 完成 |
 | opc250-233 | OPC-250 v0.2 | `1ef58091ddba2c96a10b1bd1d73e7ce4765e3f8024175893e8dacb6f6c2c8ae4` | 完成 | 完成 |
 | opc250-235 | OPC-250 v0.2 | `98a3dbd2762ba1bf43f3c88dde2f0d5e3f6b0503bf145194935bd69fe717a0e9` | 完成 | 完成 |
 | opc250-237 | OPC-250 v0.2 | `55b7714faebca35df06453ec3cfbc9c3f9a42cef2daebb78424b16194fc64e3e` | 完成 | 完成 |
@@ -466,10 +466,10 @@
 | opc250-220 | OPC-250 v0.2 | `f306ed3c93f7f356bcbf4811ea0369c040a9881d6fd847e29b9e6e2025dec708` | 完成 | 完成 |
 | opc250-221 | OPC-250 v0.2 | `93a6d57ed1e7c927bc4957d9ff7cf4996d14d9b0eadf9416bcd62300bb70d921` | 完成 | 完成 |
 | opc250-222 | OPC-250 v0.2 | `e20aa8411a3061e299dd65c726ac7772629c2ab0bd734ed1d1a0d8bf5a7b6c7c` | 完成 | 完成 |
-| opc250-223 | OPC-250 v0.2 | `ea56aa4a750bd898485399c7fc2df033ad5912aba74a77726d9748ba5452a05c` | 完成 | 待运行 |
-| opc250-226 | OPC-250 v0.2 | `82abbf8beec075578074cd1f8529c78b82dc8d3413b56df6a043bc0da4957127` | 完成 | 待运行 |
+| opc250-223 | OPC-250 v0.2 | `ea56aa4a750bd898485399c7fc2df033ad5912aba74a77726d9748ba5452a05c` | 完成 | 完成 |
+| opc250-226 | OPC-250 v0.2 | `82abbf8beec075578074cd1f8529c78b82dc8d3413b56df6a043bc0da4957127` | 完成 | 完成 |
 | opc250-229 | OPC-250 v0.2 | `f3b8a1b965e1cb5f32af8205b315e2eb1c20f944134cac7ecfd193b714705584` | 完成 | 完成 |
-| opc250-230 | OPC-250 v0.2 | `cd2d4cfee35a7f69c2b0f2bae8c7df8dc08c1f057d2c1a7d4c0b03945d4c1daa` | 完成 | 待运行 |
+| opc250-230 | OPC-250 v0.2 | `cd2d4cfee35a7f69c2b0f2bae8c7df8dc08c1f057d2c1a7d4c0b03945d4c1daa` | 完成 | 完成 |
 | opc250-231 | OPC-250 v0.2 | `3bd5dd8693770bb3b728be96c6c7963be404ff9b946d18592c636251f814b840` | 完成 | 完成 |
 | opc250-232 | OPC-250 v0.2 | `1de53f3388c66a1b65d374c93a754d2ba1ce8239003c444080b05c0d357b5205` | 完成 | 完成 |
 | opc250-234 | OPC-250 v0.2 | `38b83e77a6b983ef832414791a882b7d42812f3f07d1af2fa0825e56c1e9d1be` | 完成 | 完成 |
