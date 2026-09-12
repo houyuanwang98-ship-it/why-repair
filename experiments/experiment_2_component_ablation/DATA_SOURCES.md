@@ -1,30 +1,16 @@
 # 实验2数据引用
 
-## 队列定义
+纳入 Person A 与 Person B Step 5 清单并集的600个唯一 `case_id`，逐题连接项目内冻结源文件：
 
-采用 `data/manual_validation/person_b_step05_case_results.jsonl` 的全部300个case_id，保留原始审核清单的纳入范围。参考同目录 `person_b_step05_completion_record.json` 验证分组计数。
-
-| 组别 | 纳入 | 原始文件 |
+| 数据组 | 数量 | 原始文件 |
 |---|---:|---|
-| M2 B50 | 25 | data/benchmarks/m2/source/pilot_B50.jsonl |
-| M2 工程Pilot | 25 | data/benchmarks/m2/source/pilot_50.jsonl |
-| OPC-250 v0.2 | 123 | data/benchmarks/m7/opc_250_v0_2/candidate.jsonl |
-| ProofNet-250 v0.1 | 127 | data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl |
+| M2 B50 | 50 | `data/benchmarks/m2/source/pilot_B50.jsonl` |
+| M2 Pilot | 50 | `data/benchmarks/m2/source/pilot_50.jsonl` |
+| OPC-250 v0.2 | 250 | `data/benchmarks/m7/opc_250_v0_2/candidate.jsonl` |
+| ProofNet-250 v0.1 | 250 | `data/benchmarks/m7/proofnet_250_v0_1/candidate.jsonl` |
 
-300是这一审核清单的规模，不等于全部源文件的总记录数，也不是250道OPC加50道M2。以清单ID逐题join源文件，缺失、重复ID、空问题或空证明都报错；同内容重复仅报告，不擅自删除原清单题目。
+队列依据为 `data/manual_validation/person_a_step05_case_results.jsonl` 和 `data/manual_validation/person_b_step05_case_results.jsonl`。`source_manifest.json` 固定源文件SHA-256，`case_audit.json` 保存每题来源、输入摘要与分组。
 
-## 转换规则
+M2使用原 `theorem`、`assumptions`，并按顺序连接 `proof_steps.text`；OPC与ProofNet使用冻结的 `problem` 与 `proof` 原文。Gold、旧Agent结论、错误派生计划和人工审核字段不进入生成输入。ProofNet 的 `derivation_plan` 不被误当作原证明真实错误标签。
 
-M2的theorem作为problem，assumptions原样保留，proof_steps按原顺序以换行连接text。OPC和ProofNet的problem/proof原文不改。四个数据集都不将领域、来源split、Gold、错误计划、旧Agent判断及私有形式化字段传入模型。
-
-## 来源与许可
-
-OPC冻结上游：insait-institute/open-proof-corpus，commit `e92a6ca848e50f5d3f9c2a1393da72720760d931`，Apache-2.0。ProofNet冻结上游：zhangir-azerbayev/ProofNet，commit `509ad79710ed4f46ff5c282ed5640c1aa9ac3f30`，MIT。许可文件位于相应数据目录，并纳入source_manifest。未重新下载网络数据。
-
-## 评分证据限制
-
-300条“与节点Agent一致”是审核确认，不是300个修复成功标签。148题具有可访问的历史Agent引用文件；152题未单独归档。可访问文件也不能当作新方法的输出。
-
-ProofNet manifest声明其为原始证明来源、错误派生和数学Gold待标注；不能将derivation_plan中的计划错误类别当成原证明已经包含的真实错误。OPC节点定位中含AI预填与待核对条目。因此完整300题的统一、独立最终证明评分尚未具备。
-
-source_manifest冻结本次读取的源文件字节，case_audit保存每题输入摘要与来源。新生成的输入和运行计划不计为模型结果。
+OPC许可为 Apache-2.0，冻结上游提交 `e92a6ca848e50f5d3f9c2a1393da72720760d931`；ProofNet许可为MIT，冻结上游提交 `509ad79710ed4f46ff5c282ed5640c1aa9ac3f30`。许可文件及候选文件均列入来源清单。
