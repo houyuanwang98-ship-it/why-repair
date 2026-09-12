@@ -16,6 +16,12 @@
 
 | 文档 | 用途 | 状态 |
 |---|---|---|
+| [v2 工作流程](docs/workflow_v2/README.md) | 当前 v2 入口：运行闭环、独立验收、实验定义与实施顺序 | 第二轮 108 项、机制 18 项、回归 18 项完成；人工校准与正式测试待完成 |
+| [当前创新性评估](docs/paper/INNOVATION_ASSESSMENT.md) | 已有研究对照、实现贡献、机制观察与未验证主张 | 开发证据；未确认首创或性能优势 |
+| [仓库导航](docs/repository-guide.md) | 命令、目录结构及完整文档入口 | 从原 README 迁移 |
+| [历史角色与进展](docs/history/project_organization.md) | M0–M8 分工和阶段记录 | 历史说明，当前状态以 v2 为准 |
+| [历史审核框架](docs/history/project_acceptance.md) | 人工审核清单与全量验收标准 | 从原 README 迁移 |
+| [论文方向备选](docs/paper/RESEARCH_DIRECTIONS.md) | 六条研究与投稿路线 | 历史方案，非已完成成果 |
 | [研究方案](docs/dual_agent_natural_language_proof_harness_proposal.docx) | 完整中文设计总结 | 草案完成 |
 | [两人工作计划](docs/two_person_work_plan.md) | 分工、进度、验收门和协作协议 | 生效中 |
 | [研究路线图](ROADMAP.md) | 里程碑与验收条件 | 生效中 |

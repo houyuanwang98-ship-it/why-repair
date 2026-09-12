@@ -1,0 +1,56 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 6694,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 26.40015848799976,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "22ebcc90a22731f754811cb2b49aef2d7e04a17a10d347929a4e6cfcc71b05e2"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "af15df6e65a201652ffba4b22418bc1407a292b3c9feb07ca7cd69bd136180e8",
+    "call-001-judge/request.json": "cca7840c668c9c74fae7e6f5504d5290d44ec8051eb60cc460ec639eff09dda9",
+    "call-001-judge/response.json": "c9c7ce1c5cb54ed93f2d47ff68a9eac98143c3bdd7317572667e740babfcc3a7",
+    "call-001-judge/validated.json": "b64873943d5f1451a80f9eabb9eb3a47fb7a02ce9e6ec67c70b20caf74708895"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "E)  A horizontal block in row \\(r=5\\), columns \\(c=2,3,4\\).",
+        "reason": "Blocks C and E overlap at (5,2). They cannot both be torn out as intact three-stamp blocks."
+      },
+      {
+        "quote": "there is no triple left anywhere in the \\(n\\times n\\) square.",
+        "reason": "Already for n=5, row 1, columns 1–3 are all untouched. Thus the proposed configuration is not blocked, even ignoring the overlap."
+      },
+      {
+        "quote": "T \\;=\\;H+V \\;=\\;2\\,n\\,(n-2)",
+        "reason": "This asserted count is false for n=1: there are zero potential triples, not −2. The counting argument otherwise establishes the lower bound for n≥2."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "5bc2bdb128a5e9ad96b33691ed553bbac4f223201e30c1d50b9b1196e95a2c1a",
+    "problem_preservation": "pass",
+    "reason": "The upper-bound construction has overlapping blocks and leaves an untouched triple. Consequently the submitted proof does not establish the required two-sided bound.",
+    "rigor": "fail",
+    "sample_id": "blind-ccf2c55e85514c9db061c0aae05487c1",
+    "unresolved_obligations": [
+      "Establish the upper bound using a legal disjoint-block construction that leaves no potential triple, with a justified linear boundary allowance.",
+      "Address n=1 without using the incorrect potential-triple count."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

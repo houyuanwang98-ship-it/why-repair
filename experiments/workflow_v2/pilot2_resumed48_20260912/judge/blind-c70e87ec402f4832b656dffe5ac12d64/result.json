@@ -1,0 +1,55 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 6636,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 30.101371122000046,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "04b9b031f2822138dc7430948a14200802b9a1bd81b3070fb7675307eff03212"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "52d16b29c7db5526cba8311eecfb128f808dae1ae8bcd1be760bb1c46f1f928a",
+    "call-001-judge/request.json": "25568cd25b26118344e1c034d5ffbf996d39196debb4b54fa4ab654ba85bba5c",
+    "call-001-judge/response.json": "6060ed7d5ebe590518a637cc8e50a9a36efb11a9d9b29c42f4f3dd385f074a79",
+    "call-001-judge/validated.json": "dadff9b1ce6e03ea2606d61580098708403ce46b6faf2db28aa5a25a6b6335a9"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "we can always find a subset of the first $ i $ elements that sums to a value in $[190, 210]$.",
+        "reason": "False: four 23s and five 24s total 212. Every proper subset sums to at most 189, while the full list sums to 212. This admissible list disproves sufficiency of N=10."
+      },
+      {
+        "quote": "there must be a **partial sum** that crosses from below 190 to above 210.",
+        "reason": "A jump across the entire interval is not necessary. For eleven 21s, consecutive partial sums include 189, 210, 231; no step goes from below 190 to above 210."
+      },
+      {
+        "quote": "Let $ s_i $ be the first partial sum that exceeds 190. Then $ s_{i-1} < 190 $",
+        "reason": "Only s_{i-1} ≤ 190 follows. Equality can occur, for example with twenty-two 10s."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "25de74971d6b0a4c08c3b8fe61af508c34685e3fc1af54e5ab682b5a3748145d",
+    "problem_preservation": "pass",
+    "reason": "The ten-21s example correctly excludes N≤9, but the claimed sufficiency of N=10 is false.",
+    "rigor": "fail",
+    "sample_id": "blind-c70e87ec402f4832b656dffe5ac12d64",
+    "unresolved_obligations": [
+      "Determine the actual smallest N and establish both its universal sufficiency and its minimality."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

@@ -1,0 +1,95 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "checked_obligation": {
+      "minLength": 1,
+      "pattern": "\\S",
+      "type": "string"
+    },
+    "counterexample": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "scope": {
+              "enum": [
+                "local",
+                "theorem"
+              ],
+              "type": "string"
+            },
+            "target": {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            "witness": {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            }
+          },
+          "required": [
+            "scope",
+            "target",
+            "witness"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "reason": {
+      "minLength": 1,
+      "pattern": "\\S",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "closed",
+        "gap",
+        "invalid",
+        "undetermined"
+      ],
+      "type": "string"
+    },
+    "target": {
+      "additionalProperties": false,
+      "properties": {
+        "node_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "type": "string"
+        },
+        "version": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "node_id",
+        "version"
+      ],
+      "type": "object"
+    },
+    "unresolved_conditions": {
+      "items": {
+        "minLength": 1,
+        "pattern": "\\S",
+        "type": "string"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "target",
+    "status",
+    "checked_obligation",
+    "reason",
+    "unresolved_conditions",
+    "counterexample"
+  ],
+  "type": "object"
+}

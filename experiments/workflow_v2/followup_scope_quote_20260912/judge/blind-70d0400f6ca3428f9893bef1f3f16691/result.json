@@ -1,0 +1,49 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 6876,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 23.492126748999908,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "fb7381e6fd4b88da8d06bda9379be99b9ac5784220ff233e6e24d1b6f19f3c0f"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "c6900d446e11299adb03617ffb4ca544cbe8758b9a01b8a644c70dc11d841bc1",
+    "call-001-judge/request.json": "c19fb7f49e18164b3464d4457af21d9c9944ab0891868236fa4b6518ad421455",
+    "call-001-judge/response.json": "31ebfc689451e9688078e6489c0486d52bacb6f024709ddc44d4a0b49cb1ccc6",
+    "call-001-judge/validated.json": "fda6ea03634cab23efbfd3b459564997dda5581c494d6f9fb357a7f8010f681b"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "(the smaller root gives the\nsymmetric solution \\((n_{k},m_{k})\\))",
+        "reason": "Changing the quadratic root does not swap coordinates. At k=0, the smaller root gives (1,1), whereas the symmetric pair of (2,1) is (1,2)."
+      },
+      {
+        "quote": "m_{k}        & 2 & 6 & 21 & 77 & 282",
+        "reason": "Formula (7) gives m_4=(4·77−1+265)/2=286, not 282. The listed pair (282,77) does not yield 4."
+      }
+    ],
+    "goal_coverage": "pass",
+    "input_digest": "568d77bf236051391d31a7750c572241e16cbfeb681aab5a61fadf343c887399",
+    "problem_preservation": "pass",
+    "reason": "The recurrence and larger-root construction establish infinitely many distinct positive integer pairs with value 4. The incorrect symmetry claim and numerical example are redundant but violate strict submitted-text rigor.",
+    "rigor": "fail",
+    "sample_id": "blind-70d0400f6ca3428f9893bef1f3f16691",
+    "unresolved_obligations": [],
+    "validity": "valid"
+  },
+  "status": "scored"
+}

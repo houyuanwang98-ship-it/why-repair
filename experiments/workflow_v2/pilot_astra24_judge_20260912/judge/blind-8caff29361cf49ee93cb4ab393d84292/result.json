@@ -1,0 +1,50 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 7870,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "reported_latency_seconds": 16.49623525600009,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "8477724b8aed794ee14a13cf516f65c6d24f8079e7b8b5a4379ba1b077e64f3b"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "036701c53dc04abd0e361bb1de096129ae4d7dde4e657f2221ba0a199f2c8cf9",
+    "call-001-judge/request.json": "f156950229070330e68fcd2ee925f0b5bbaf78b224be4234acbf38769cc1d073",
+    "call-001-judge/response.json": "3b9c873d0067c73f6a937feb6c422d20c348e8f30bcb266fe9f2a24c39fb30b2",
+    "call-001-judge/validated.json": "5e268ebed8a773306f1ab4709403214ac487e40abd48b2ef201835173497ca00"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "The condition is that \\(16Y+1 \\mid P(Y)\\) for all \\(Y \\in \\{1^2, 2^2, 3^2, \\dots\\}\\)",
+        "reason": "The hypothesis quantifies over n, not y. For a fixed pair (x,y), this divisibility is established only at Y=y². The integer C is defined from that same pair; no uniform divisibility for varying Y with fixed C follows."
+      },
+      {
+        "quote": "If \\(K \\ne 0\\), we can choose \\(y\\) large enough such that \\(16y^2+1 > |K|\\).",
+        "reason": "The given y is fixed and cannot be increased. Consequently the argument forcing K=0, and hence the final contradiction, is unsupported."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "44b308992ef40b5f287db0c50197f4a8d7c658422b40668949babdbcc92b7d6a",
+    "problem_preservation": "fail",
+    "reason": "The initial divisibility calculations are correct, but the proof replaces universal quantification over n with an unjustified universal quantification over y. Its decisive remainder argument therefore does not establish x=1.",
+    "rigor": "fail",
+    "sample_id": "blind-8caff29361cf49ee93cb4ab393d84292",
+    "unresolved_obligations": [
+      "Derive a contradiction for each fixed positive-integer pair (x,y) with x>1 using the hypothesis for all n."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

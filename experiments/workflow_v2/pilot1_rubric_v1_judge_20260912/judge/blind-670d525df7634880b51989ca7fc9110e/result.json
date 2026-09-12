@@ -1,0 +1,55 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 6592,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 37.459546217000025,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "195a81b9aeb3e5f4f9543ff55dcaf10c132eaedf06deb6dcdd84b1c4537cd334"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "b300481907d478e4e01382da2f36e03b8ebb66f431ae41fa0c166c330716e028",
+    "call-001-judge/request.json": "f38bcf47bc09de9efa0daff1d0ffcae0bd90ed212b9a2dd889a3b774675511a0",
+    "call-001-judge/response.json": "bc03c8af831cadf46102b0e234a389ebe5ac551deb945f1f516ee3d08cfdd0b3",
+    "call-001-judge/validated.json": "ef39362edd8d4c3d0213142f9e910fc0c822c21004f0927e29177a0c48433c93"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "we can always find a subset of the first $ i $ elements that sums to a value in $[190, 210]$.",
+        "reason": "False: four 24s and five 23s total 211. Every proper subset sums to at most 188, so no subset lies in [190,210]. This also disproves the proposed answer N=10."
+      },
+      {
+        "quote": "there must be a **partial sum** that crosses from below 190 to above 210.",
+        "reason": "A partial sum can instead land inside the interval. For nine 25s, the partial sums include 200, and no consecutive partial sums jump from below 190 to above 210."
+      },
+      {
+        "quote": "Let $ s_i $ be the first partial sum that exceeds 190. Then $ s_{i-1} < 190 $",
+        "reason": "Only s_{i-1} ≤ 190 follows; a previous partial sum can equal 190."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "230f1cae21acaabac31bb0b7575953c6d785465f411dc4bf6d6e8a2e21b690b6",
+    "problem_preservation": "pass",
+    "reason": "The ten-21s example correctly excludes N≤9, but the sufficiency argument is false, and an admissible list also excludes N=10.",
+    "rigor": "fail",
+    "sample_id": "blind-670d525df7634880b51989ca7fc9110e",
+    "unresolved_obligations": [
+      "Determine the actual smallest N and prove that every admissible list admits a subset in its required interval."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

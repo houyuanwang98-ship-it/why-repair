@@ -1,0 +1,47 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 8031,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 19.081416926000202,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "db0f6c182640a52e1f2fa7d5ccc0fa664b498c25b1ac2493d0915b790dcbef90"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "bebc9ecd003be257a36df4cdd3eabf8d58ee9567708e680fd4da068c343cfcb6",
+    "call-001-judge/request.json": "3399c9394d32f7b3d0067b1d571161d86b78aad9953cc38dacc3c52c095554ea",
+    "call-001-judge/response.json": "279d3d8e29dfdb57bf374da639ac0ba8a48005b90396364aa29e723ed5576911",
+    "call-001-judge/validated.json": "cf6e2a16b00974878106f1f2d6381d1fdba3d82537dd0b06a48de44430b111dc"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "The condition is that \\(16Y+1 \\mid P(Y)\\) for all \\(Y \\in \\{1^2, 2^2, 3^2, \\dots\\}\\) (i.e., for all \\(Y=y^2\\) where \\(y \\in \\mathbb{Z}^+\\)).",
+        "reason": "The hypothesis quantifies over n, not over y for a fixed x or C. Here y is fixed, and C=(x-1)/((y²+1)(4y²+1)) belongs to that fixed pair. The n=4 condition gives divisibility only at that particular Y=y². Consequently, varying y while holding the polynomial fixed is unjustified, and the conclusion R₀=0 does not follow."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "ff8731c3aed777cabc2307afd41e105bc1aa4edbeef384ff25a4de1f4a1df89a",
+    "problem_preservation": "fail",
+    "reason": "The contradiction relies on replacing the universal quantifier over n with an unsupported universal quantifier over y.",
+    "rigor": "fail",
+    "sample_id": "blind-3cfba3e9d859448fb47545f6760a9234",
+    "unresolved_obligations": [
+      "Derive a contradiction for a fixed positive-integer pair x>1, y satisfying the condition for every positive integer n."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

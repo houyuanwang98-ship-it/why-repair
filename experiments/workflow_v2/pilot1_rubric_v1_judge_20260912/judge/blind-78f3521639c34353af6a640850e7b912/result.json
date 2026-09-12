@@ -1,0 +1,61 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 5984,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 27.488399611000204,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "b212ca7e0a01216b386a7e6e313974c87b01dc9164dcd72eb200c4d8aec56f33"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "7386c5ef3d3d5fdd5898ac73a438b171563bf3c4e7f26083e8630db8a0ca0c85",
+    "call-001-judge/request.json": "93841f4e163553a353ebba70e992e3a87cccc540ead11c1d6b330686b3d8a78b",
+    "call-001-judge/response.json": "3c0a02f6169bdb88b08222a16c70ca1f423fb5a01dd0078b97f5d0d6470440c6",
+    "call-001-judge/validated.json": "7376206d64075047d42f141e0954b6abe66bf37a61bfc4193809964d2fe7b5ef"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "since $a$ and $c^{-1}$ have the same order and $b$ and $d$ have the same order this is a well defined function.",
+        "reason": "Matching generator orders does not establish a well-defined map on the groups. A normal-form construction or a justified presentation is missing."
+      },
+      {
+        "quote": "c^{-1} d c \\\\\n\n& =\\left(c d^{-1} c^{-1}\\right)^{-1}",
+        "reason": "The right side equals cdc^{-1}=d^4, whereas c^{-1}dc=d^2. These are distinct because d has order 7."
+      },
+      {
+        "quote": "& =\\left(d^2\\right)^2 \\\\\n\n& =\\phi(b)^2",
+        "reason": "Since φ(b)=d, this asserts d^4=d^2, which is false for an element of order 7. Thus the displayed homomorphism verification contains another invalid equality."
+      },
+      {
+        "quote": "Therefore $G$ and $G^{\\prime}$ are isomorphic and so up to isomorphism there is only one nonabelian group of order 21 .",
+        "reason": "Only groups with opposite chosen action exponents are compared; no argument establishes uniqueness among groups with the same exponent or reduces arbitrary pairs to the compared case."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "622d3c6f9cad7d4edbb7329a165b3ea74e603398f149daf267ba4d5ee852d3ae",
+    "problem_preservation": "pass",
+    "reason": "The action-exponent restriction is correct, but the proposed isomorphism proof relies on unjustified extension and explicitly false equalities, and the final universal conclusion is not established.",
+    "rigor": "fail",
+    "sample_id": "blind-78f3521639c34353af6a640850e7b912",
+    "unresolved_obligations": [
+      "Justify that the generator assignment extends to a well-defined homomorphism.",
+      "Supply a valid verification of the conjugation relation.",
+      "Establish the isomorphism conclusion for every pair of nonabelian groups of order 21."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

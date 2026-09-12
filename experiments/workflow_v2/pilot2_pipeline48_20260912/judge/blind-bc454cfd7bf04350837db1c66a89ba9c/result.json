@@ -1,0 +1,51 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 8070,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 21.77263855900037,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "5ae94b2fd0eb66731eacba972182d1d726d0c41cd98353f2f5798866382c5542"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "f537ed469ecd14a7c6ea2ad72a461e57f5faa5b4981234d3f344c26c070e3636",
+    "call-001-judge/request.json": "dd3c57a3392811e4e5b7f09295d6c31f455ea7cebb1e671fd54c132e925bee81",
+    "call-001-judge/response.json": "e9f6540551cd366d4608f363d888f308c4a24990c64ef97411476da49b48c18e",
+    "call-001-judge/validated.json": "5a141eef62ed2d74d600cb4dc06dc2f0ab2cbddc2653035bcf88389079d771b5"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "The condition is that \\(16Y+1 \\mid P(Y)\\) for all \\(Y \\in \\{1^2, 2^2, 3^2, \\dots\\}\\) (i.e., for all \\(Y=y^2\\) where \\(y \\in \\mathbb{Z}^+\\)).",
+        "reason": "The hypothesis quantifies over n, not y. For a fixed pair (x,y), n=4 supplies this divisibility only at that single Y=y². It does not supply divisibility at every square with the same C."
+      },
+      {
+        "quote": "If \\(K \\ne 0\\), we can choose \\(y\\) large enough such that \\(16y^2+1 > |K|\\).",
+        "reason": "The given y cannot be increased while retaining the established divisibility and fixed C. Thus the limiting argument does not establish K=0 or R₀=0, and the contradiction is unsupported."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "fc2df39969e189c7c752d168ee3ab3cce5465b99d5c4ac1bb2ee844c7fdfdb0e",
+    "problem_preservation": "fail",
+    "reason": "The proof incorrectly replaces universal quantification over n by universal quantification over y. Its central remainder-vanishing argument therefore does not apply.",
+    "rigor": "fail",
+    "sample_id": "blind-bc454cfd7bf04350837db1c66a89ba9c",
+    "unresolved_obligations": [
+      "Exclude x>1 for a fixed positive integer y using the hypothesis for all positive integers n."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

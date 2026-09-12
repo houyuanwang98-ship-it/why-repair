@@ -1,0 +1,50 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 6377,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "reported_latency_seconds": 20.396712755999943,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "2db074d1e1e2b6ab0d434cfe4d9af3d79e046c9051da2c615d5f50d291e8a489"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "c06c92c9edb0f68d208e171b44793cc3c31c47fb02ec9a6d26a3eb516182e5fa",
+    "call-001-judge/request.json": "d9b524aaf6d2c56a1782ea273a973696de89f7657c6ad8d6bdd323ba8a77af5f",
+    "call-001-judge/response.json": "5c8a3a28d6d153e5691878b99703982f7a3cce95a15cd4468eb1389a8bdc2f72",
+    "call-001-judge/validated.json": "93bb59ac0601e9617cb2d7281d5fa57e60263d8283fb6d391f16d47425c6b64c"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "E)  A horizontal block in row \\(r=5\\), columns \\(c=2,3,4\\).",
+        "reason": "Blocks C and E overlap at (5,2), so these five blocks cannot all be torn out as disjoint intact blocks."
+      },
+      {
+        "quote": "Thus after tearing out these \\(5\\) blocks in each \\(5\\times5\\) cell there is no triple left anywhere in the \\(n\\times n\\) square.",
+        "reason": "Even deleting the union of the listed cells leaves the horizontal triple (1,1),(1,2),(1,3) untouched in every macrosquare. Thus the asserted blocking property is false."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "f4c03d6f129934d38145dd01e93167b9ade2667e71311647b9f3e4b7cb1a8a2a",
+    "problem_preservation": "pass",
+    "reason": "The lower-bound counting argument works for n≥2, with n=1 trivial. The upper-bound construction has overlapping blocks and leaves available triples, so it does not prove the theorem.",
+    "rigor": "fail",
+    "sample_id": "blind-4a3a5f562c6a4d4985c2ed0f0e806ab9",
+    "unresolved_obligations": [
+      "Establish the upper bound using a legal maximal collection of at most n²/5 + O(n) disjoint blocks."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

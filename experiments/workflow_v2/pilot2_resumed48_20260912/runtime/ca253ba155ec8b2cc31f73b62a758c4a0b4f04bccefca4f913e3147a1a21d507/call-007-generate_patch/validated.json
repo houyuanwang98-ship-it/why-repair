@@ -1,0 +1,26 @@
+{
+  "base_state_digest": "cd6a2fa2f5d8febcc24ea6b45bcaba310f09668eafe004f176beeb3ea14a37df",
+  "certificate_id": "66ebc1ac862cc0917a852d6bd8942aec3a86146a85465eb3d969ae2ec7f3c4d8",
+  "counterexample": null,
+  "nodes": [
+    {
+      "claim": "Assuming x>1, an order argument using CRT and Dirichlet's theorem shows that infinitely many primes divide x^2-1, forcing x=1 and giving a contradiction.",
+      "depends_on": [
+        "n1"
+      ],
+      "goal_refs": [],
+      "node_id": "n3",
+      "scope": [],
+      "text": "Assume \\(x>1\\). We derive a contradiction.\n\nLet \\(q\\equiv1\\pmod4\\) be any prime with \\(q\\nmid xy\\), and let \\(d=\\operatorname{ord}_q(x)\\). Since \\(-1\\) is a quadratic residue modulo \\(q\\) and \\(q\\nmid y\\), there is an integer \\(a\\) such that\n\\[(ay)^2\\equiv-1\\pmod q.\\]\nWe claim that \\(d\\le2\\). Otherwise \\(d>2\\). Since \\(d\\mid q-1\\), we have \\(\\gcd(d,q)=1\\). By the Chinese remainder theorem there is a reduced residue class \\(r\\pmod{qd}\\) satisfying\n\\[r\\equiv a\\pmod q,\\qquad r\\equiv-1\\pmod d.\\]\nBy Dirichlet's theorem on primes in arithmetic progressions, choose a prime \\(p\\equiv r\\pmod{qd}\\). Then \\((py)^2+1\\equiv(ay)^2+1\\equiv0\\pmod q\\). Applying the hypothesis with \\(n=p\\), for which \\(\\varphi(p)=p-1\\), gives\n\\[q\\mid x^{p-1}-1.\\]\nHence \\(d\\mid p-1\\). But \\(p\\equiv-1\\pmod d\\), so also \\(p-1\\equiv-2\\pmod d\\), forcing \\(d\\mid2\\), a contradiction. Thus \\(d\\le2\\), and consequently\n\\[x^2\\equiv1\\pmod q.\\]\n\nThere are infinitely many primes congruent to \\(1\\pmod4\\), hence infinitely many such primes not dividing the fixed integer \\(xy\\). For completeness, infinitude follows by applying the usual Euclidean argument to \\((2q_1\\cdots q_k)^2+1\\): each odd prime divisor is \\(1\\pmod4\\) and is not among \\(q_1,\\ldots,q_k\\). Therefore infinitely many distinct primes divide the fixed integer \\(x^2-1\\). This is possible only if \\(x^2-1=0\\). Since \\(x\\) is positive, \\(x=1\\), contradicting \\(x>1\\)."
+    }
+  ],
+  "operation": "replace",
+  "reason": "The replacement avoids varying the fixed integer y. For each auxiliary prime q it instead chooses the universally quantified variable n to be a suitable prime p, forcing the order of x modulo q to divide 2; infinitely many such q then force x^2=1.",
+  "target": {
+    "node_id": "n3",
+    "version": 1
+  },
+  "target_dependencies_after": [
+    "n1"
+  ]
+}

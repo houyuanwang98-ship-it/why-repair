@@ -1,0 +1,161 @@
+{
+  "assignment": {
+    "case_id": "m2-011",
+    "method": "full_system",
+    "model_config_digest": "084affcf1ea29e7f04c30b297a71dcb15c94668841e62cade885be1191ec1765",
+    "problem_digest": "6c330bfbe0ed21526e04e6de0e348c6e62934ab3f5c932df74ed96c0482dd393",
+    "replicate": 0,
+    "source_group": "a4416c2b5afd829f25ca52462bedac84965cc16e551097e2beb4bc6d658259cd",
+    "task_id": "5ba16671141665cbb9c5664a90f72bf861d7539ef4a6cb082bcc58b022c39798"
+  },
+  "evidence_files": {
+    "call-001-graph/accounting.json": "c467ee2963a898ac203d1c985c70adfbc5766b11a185629752d1deda83039aa1",
+    "call-001-graph/request.json": "f62958bd2ae16bbf16cec4a95efa8234fa5eeae408f98b1736bc910cbcb8b3c0",
+    "call-001-graph/response.json": "e880358632f48a222518979e0c1e0aaa11b64561d41a7f925c59b49f8317653a",
+    "call-001-graph/validated.json": "078788890a999285755dac1dd956e1ed11f739dd3486b5cc77dc05babe272039",
+    "call-002-evaluate/accounting.json": "16e7576e46873489267e01add69f9a7eed3fd9ed5aa6b7963067afceb52e54f2",
+    "call-002-evaluate/request.json": "6a1af5ba587c06bc412bced578972696f45e3732c9e9d9f0f2e1b93ecf25e26e",
+    "call-002-evaluate/response.json": "29a28f2dda04fd223aee51d0b7dd27462b7579ea9c18e04b8491c3cce16b763e",
+    "call-002-evaluate/validated.json": "bb20769cc45b6bd3f0193e3f8cca21c9f5242729f0ac3be2925f9ee6a196c926",
+    "call-003-evaluate/accounting.json": "6976f5f1f65e44fa7cfb8d44c4a0a1d35548c00b49f6fd288339cb011fbfe346",
+    "call-003-evaluate/request.json": "ddb9144358fcceb7a7dbf5fd3c66c257d0110f5f4842934b448e8483048cf687",
+    "call-003-evaluate/response.json": "2c9ae9d62c6df4b3a43101452e4d364bd999212fec132b051842ca3f9bf38b66",
+    "call-003-evaluate/validated.json": "3d84cc64d291a446f9ed32d35cf0bcea2de128cf69a37ebd442bda024ee7ea0f",
+    "call-004-audit/accounting.json": "dc07466bd40b3286ef6d217c25bbb3538066a2adeef384cb9f3da0e1821961ec",
+    "call-004-audit/request.json": "90c9e7878958c612f634cd2ba79386908b71f336260e6d508335a6d9c004faa0",
+    "call-004-audit/response.json": "501ff07ed3087d8280f1a5609573d5991cec9bf501dcc8ae87648563990bee10",
+    "call-004-audit/validated.json": "c2cdb769f7f049eb5dd64b83b9f05663e754c9e50f36ae3631100802b0b5bd79",
+    "identity.json": "bbf88c461a41ebfd19436801e1498dbfaa57adc1d77799445e5b1ea0bfa19ed1"
+  },
+  "outcome": {
+    "accounting_complete": true,
+    "candidate_text": "存在整数 m,n，使 x=2m+1，y=2n+1。\n所以 x+y 是偶数。",
+    "cost_usd": null,
+    "events": [
+      {
+        "event": "node_evaluated",
+        "status": "closed",
+        "target": {
+          "node_id": "node-1",
+          "version": 1
+        }
+      },
+      {
+        "event": "node_evaluated",
+        "status": "closed",
+        "target": {
+          "node_id": "node-2",
+          "version": 1
+        }
+      }
+    ],
+    "evidence_kind": "live_model",
+    "human_verified": false,
+    "internal_checks": [
+      "source_graph_validation",
+      "internal_final_audit"
+    ],
+    "known_total_tokens": 15618,
+    "model_attempts": 4,
+    "model_snapshot_verified": false,
+    "reported_latency_seconds": 49.77463027199997,
+    "snapshot": {
+      "edits": 0,
+      "graph_uncertain": false,
+      "nodes": [
+        {
+          "claim": "由 x、y 为奇整数，按奇数定义可取整数 m、n，使 x=2m+1 且 y=2n+1。",
+          "depends_on": [],
+          "evaluation": {
+            "call_id": 2,
+            "context_fingerprint": "47e1bd0cbd0158d7dc3025ba9582585137fb3545a896c26dd1dd8159a0333380",
+            "result": {
+              "checked_obligation": "由假设 x、y 为奇整数推出存在整数 m,n，使 x=2m+1 且 y=2n+1。",
+              "counterexample": null,
+              "reason": "按奇整数的定义，分别存在整数 m、n，使 x=2m+1、y=2n+1；合并两个存在量词即得目标。",
+              "status": "closed",
+              "target": {
+                "node_id": "node-1",
+                "version": 1
+              },
+              "unresolved_conditions": []
+            }
+          },
+          "goal_refs": [
+            "main"
+          ],
+          "node_id": "node-1",
+          "scope": [],
+          "source_span": [
+            0,
+            25
+          ],
+          "status": "closed",
+          "synthetic": false,
+          "text": "存在整数 m,n，使 x=2m+1，y=2n+1。",
+          "version": 1
+        },
+        {
+          "claim": "由 node-1，x+y=(2m+1)+(2n+1)=2(m+n+1)；因 m+n+1 为整数，故 x+y 为偶数。原文省略了这一代数计算。",
+          "depends_on": [
+            "node-1"
+          ],
+          "evaluation": {
+            "call_id": 3,
+            "context_fingerprint": "cd8af90b571779e0f84620ad3865089c21fc5948544d5de442fd5c04c45c9129",
+            "result": {
+              "checked_obligation": "在假设 x、y 为奇整数且 node-1 已闭合的条件下，证明 x+y 为偶数。",
+              "counterexample": null,
+              "reason": "由 node-1，存在整数 m,n 使 x=2m+1、y=2n+1。因此 x+y=2m+2n+2=2(m+n+1)。由于 m+n+1 为整数，按偶数定义，x+y 是偶数。",
+              "status": "closed",
+              "target": {
+                "node_id": "node-2",
+                "version": 1
+              },
+              "unresolved_conditions": []
+            }
+          },
+          "goal_refs": [
+            "main"
+          ],
+          "node_id": "node-2",
+          "scope": [],
+          "source_span": [
+            26,
+            37
+          ],
+          "status": "closed",
+          "synthetic": false,
+          "text": "所以 x+y 是偶数。",
+          "version": 1
+        }
+      ],
+      "problem_digest": "6c330bfbe0ed21526e04e6de0e348c6e62934ab3f5c932df74ed96c0482dd393"
+    },
+    "stop_reason": "由奇整数的定义，存在整数 m,n 使 x=2m+1、y=2n+1。于是 x+y=2(m+n+1)，且 m+n+1 为整数，因此 x+y 为偶数。候选证明虽省略了这一行代数展开，但推论直接且成立。",
+    "system_claim": "proof_valid",
+    "terminal_status": "proof_ready",
+    "trace": [
+      {
+        "call": 1,
+        "phase": "graph",
+        "request_digest": "eaed3454e0b29dd5e9453638d8b19431827572ef214e32e867984311efad2892"
+      },
+      {
+        "call": 2,
+        "phase": "evaluate",
+        "request_digest": "0c2fd24a382d0b26efb51b60de56864974f07a754031c60f6ad453daa2ead511"
+      },
+      {
+        "call": 3,
+        "phase": "evaluate",
+        "request_digest": "edfec9c15737f72e0613452ea1bc8c608928cdf2ccb1c42f1f63ac3ffe3915b6"
+      },
+      {
+        "call": 4,
+        "phase": "audit",
+        "request_digest": "01be5b4d16a1ddb159c28c852daba5d4eb7946e00fcb0ddbd5f3142b9253557d"
+      }
+    ]
+  }
+}

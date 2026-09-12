@@ -1,0 +1,192 @@
+{
+  "assignment": {
+    "case_id": "proofnet250-002",
+    "method": "full_system",
+    "model_config_digest": "eaf8ecb497f044e0a140710a9fe313d979ed04963e5663dd78286a628a003b42",
+    "problem_digest": "f95e5aee856cf1d4d5eed5785c17ec52dffef11aa65d586ac95832b171115f74",
+    "replicate": 0,
+    "source_group": "739128aa79a6daadef38e4c24138f3f086f4220f7d217daa70355d5a5e9e652b",
+    "task_id": "597cc0867939f2237d3d293b9e4d0de0272938a1a30eb44a481cc705aab7ad18"
+  },
+  "evidence_files": {
+    "call-001-graph/accounting.json": "d4602b4fe3c6abf2935c6bf6170d91d2463d4b0f15494cab2c232d7512631027",
+    "call-001-graph/request.json": "44bde49d23c14b4fc72361639864c212bbc77703ef8abf46d9bec69388493f37",
+    "call-001-graph/response.json": "0283e069f216e3db1df4bbc4a6164db04d15d2a8bc6002d50af0fd9cd0db1533",
+    "call-001-graph/validated.json": "557ac419b336cc771f36d53cbf0d6f04474fece977995ffe4d0c0133793afa0f",
+    "call-002-evaluate/accounting.json": "a6a4ce842542c59c741b8afc5549ddc91177500c218040c66533dd094981191c",
+    "call-002-evaluate/request.json": "a347582aec262b4a5bcf38e870424e2d968ffdff8c16915073eeaac0efe8ae70",
+    "call-002-evaluate/response.json": "2ddfead919ac579da0e764414f88d2aa22ddf303be29bd7f731287148e7f4af7",
+    "call-002-evaluate/validated.json": "31922b590b54da073da7bbebc6e44a7b53c483b359a52a45ac0b824af928c079",
+    "call-003-evaluate/accounting.json": "be20a7e554ba14162cd8e266072a4a7e63510e78df02ac5a1319f07156108cfb",
+    "call-003-evaluate/request.json": "61d40b2bb8f2d10164d29560ee8d4b9207f490fd18e29924dda225db35627c70",
+    "call-003-evaluate/response.json": "e61e48e16497effe3c832f23cc93c2c695bb99227809e8853cc0e63af9f9d932",
+    "call-003-evaluate/validated.json": "85237f91f8f4f67852875307c12aa3503f26e3396016f26e4055aa40da7c2257",
+    "call-004-counterexample_review/accounting.json": "66d4de4923ead4683ae1a08ef2d739261b76c43099136a8261b42b1de389f184",
+    "call-004-counterexample_review/request.json": "21c291d7b2d1c838d9bd523fe7afd310f5dda9d1f40389fef77b8fc2420ed8bf",
+    "call-004-counterexample_review/response.json": "673f74df7452e6b0825b2473881d2b5b876cb7fc87b05d2070d546b3d03c6771",
+    "call-004-counterexample_review/validated.json": "239e29d5a69b3e3f9babc8fdecbef899fdccbc012edce45deed54b485b3f1e24",
+    "call-005-diagnose/accounting.json": "23dbb871f42eabf635e47ec0e916d015583bfcdac190ebf480047374b06ec5bc",
+    "call-005-diagnose/request.json": "4dce42035486f47e32accebd54433f3011de790f977a74b63a8f4d24707ffad4",
+    "call-005-diagnose/response.json": "16712dcd9058fcb8f3cb66ca793e7e8c60c0e3f49d2badc8f5930477b270c902",
+    "call-005-diagnose/validated.json": "94911ed0314227a59748a723f686e608c6183c96fd6f6faaa48eb8e9034064b8",
+    "identity.json": "ea9edc4fe11d85472679c847da3d29d3038640252753051db3b9695c02c31a22"
+  },
+  "outcome": {
+    "accounting_complete": true,
+    "candidate_text": "\\begin{proof}\n\n    Let $a$ a primitive root modulo $p$.\n\nAs $a^{p-1} \\equiv 1(\\bmod p), p \\mid\\left(a^{(p-1) / 2}-1\\right)\\left(a^{(p-1) / 2}+1\\right)$, so $p \\mid a^{(p-1) / 2}-1$ or $p \\mid$ $a^{(p-1) / 2}+1$. As $a$ is a primitive root modulo $p, a^{(p-1) / 2} \\not \\equiv 1(\\bmod p)$, so\n\n$$\n\na^{(p-1) / 2} \\equiv-1 \\quad(\\bmod p) .\n\n$$\n\nHence $(-a)^{(p-1) / 2}=(-1)^{2 t+1} a^{(p-1) / 2} \\equiv(-1) \\times(-1)=1(\\bmod p)$.\n\nSuppose that $(-a)^n \\equiv 1(\\bmod p)$, with $n \\in \\mathbb{N}$.\n\nThen $a^{2 n}=(-a)^{2 n} \\equiv 1(\\bmod p)$, so $p-1\\left|2 n, \\frac{p-1}{2}\\right| n$.\n\nSo $-a$ has order $(p-1) / 2$ modulo $p$.\n\nConversely, suppose that $-a$ has order $(p-1) / 2=2 t+1$ modulo $p$. Let $2, p_1, \\ldots p_k$ the prime factors of $p-1$, where $p_i$ are odd.\n\n$a^{(p-1) / 2}=a^{2 t+1}=-(-a)^{2 t+1}=-(-a)^{(p-1) / 2} \\equiv-1$, so $a^{(p-1) / 2} \\not \\equiv 1(\\bmod 2)$.\n\nAs $p-1$ is even, $(p-1) / p_i$ is even, so $a^{(p-1) / p_i}=(-a)^{(p-1) / p_i} \\not \\equiv 1(\\bmod p)($ since $-a$ has order $p-1)$.\n\nSo the order of $a$ is $p-1$ (see Ex. 4.8) : $a$ is a primitive root modulo $p$.\n\n\\end{proof}",
+    "cost_usd": null,
+    "events": [
+      {
+        "event": "node_evaluated",
+        "status": "closed",
+        "target": {
+          "node_id": "n1",
+          "version": 1
+        }
+      },
+      {
+        "event": "node_evaluated",
+        "status": "invalid",
+        "target": {
+          "node_id": "n2",
+          "version": 1
+        }
+      }
+    ],
+    "evidence_kind": "live_model",
+    "human_verified": false,
+    "internal_checks": [
+      "source_graph_validation"
+    ],
+    "known_total_tokens": 32932,
+    "model_attempts": 5,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 360.01178203400013,
+    "snapshot": {
+      "edits": 0,
+      "graph_uncertain": true,
+      "nodes": [
+        {
+          "claim": "Under the temporary assumption that $a$ is primitive modulo $p$, the argument concludes that $-a$ has order $(p-1)/2$.",
+          "depends_on": [],
+          "evaluation": {
+            "call_id": 2,
+            "context_fingerprint": "e2c74b4ebadf10a68cc0a0ff5e7d3b5140593038e83f31bf4b23ac523f3a7c48",
+            "result": {
+              "checked_obligation": "Under the temporary assumption that a is a primitive root modulo the prime p=4t+3, prove that -a has order (p-1)/2 modulo p.",
+              "counterexample": null,
+              "reason": "Let q=(p-1)/2=2t+1. Since a has order p-1, a^q is not congruent to 1; Fermat's theorem and a^{2q}-1=(a^q-1)(a^q+1) therefore give a^q congruent to -1 modulo p. As q is odd, (-a)^q congruent to 1. Conversely, if (-a)^n congruent to 1, then a^{2n} congruent to 1, so p-1 divides 2n and hence q divides n. Thus q is the least positive exponent giving 1, so ord_p(-a)=q. The supplied quotient-group and isomorphism rules are unnecessary.",
+              "status": "closed",
+              "target": {
+                "node_id": "n1",
+                "version": 1
+              },
+              "unresolved_conditions": []
+            }
+          },
+          "goal_refs": [],
+          "node_id": "n1",
+          "scope": [],
+          "source_span": [
+            0,
+            626
+          ],
+          "status": "closed",
+          "synthetic": false,
+          "text": "\\begin{proof}\n\n    Let $a$ a primitive root modulo $p$.\n\nAs $a^{p-1} \\equiv 1(\\bmod p), p \\mid\\left(a^{(p-1) / 2}-1\\right)\\left(a^{(p-1) / 2}+1\\right)$, so $p \\mid a^{(p-1) / 2}-1$ or $p \\mid$ $a^{(p-1) / 2}+1$. As $a$ is a primitive root modulo $p, a^{(p-1) / 2} \\not \\equiv 1(\\bmod p)$, so\n\n$$\n\na^{(p-1) / 2} \\equiv-1 \\quad(\\bmod p) .\n\n$$\n\nHence $(-a)^{(p-1) / 2}=(-1)^{2 t+1} a^{(p-1) / 2} \\equiv(-1) \\times(-1)=1(\\bmod p)$.\n\nSuppose that $(-a)^n \\equiv 1(\\bmod p)$, with $n \\in \\mathbb{N}$.\n\nThen $a^{2 n}=(-a)^{2 n} \\equiv 1(\\bmod p)$, so $p-1\\left|2 n, \\frac{p-1}{2}\\right| n$.\n\nSo $-a$ has order $(p-1) / 2$ modulo $p$.",
+          "version": 1
+        },
+        {
+          "claim": "Under the converse assumption that $-a$ has order $(p-1)/2$, the argument concludes that $a$ has order $p-1$ and is primitive modulo $p$.",
+          "depends_on": [],
+          "evaluation": {
+            "call_id": 3,
+            "context_fingerprint": "691ab50325d8f5035b569211c7179d5fa35c72f2eab671d6987553bc9774079b",
+            "result": {
+              "checked_obligation": "Verify that the assumption ord_p(-a)=(p-1)/2 implies ord_p(a)=p-1.",
+              "counterexample": {
+                "scope": "local",
+                "target": "The assertion a^{(p-1)/2}\\not\\equiv1\\pmod2.",
+                "witness": "Take p=7 and a=5. Then -a\\equiv2\\pmod7 has order 3=(p-1)/2, but a^3=125\\equiv1\\pmod2."
+              },
+              "reason": "The conclusion is true, but the written argument contains false assertions: it claims a^{(p-1)/2}\\not\\equiv1\\pmod 2, although -1\\equiv1\\pmod2, and later invokes ord_p(-a)=p-1, contradicting the converse assumption. The prime-divisor criterion is therefore not justified as written.",
+              "status": "invalid",
+              "target": {
+                "node_id": "n2",
+                "version": 1
+              },
+              "unresolved_conditions": [
+                "Replace the modulus 2 by p when proving a^{(p-1)/2}\\not\\equiv1.",
+                "For each odd prime p_i dividing p-1, justify the noncongruence using ord_p(-a)=(p-1)/2 and (p-1)/2\\nmid(p-1)/p_i, rather than the false claim that ord_p(-a)=p-1."
+              ]
+            }
+          },
+          "goal_refs": [],
+          "node_id": "n2",
+          "scope": [],
+          "source_span": [
+            628,
+            1100
+          ],
+          "status": "invalid",
+          "synthetic": false,
+          "text": "Conversely, suppose that $-a$ has order $(p-1) / 2=2 t+1$ modulo $p$. Let $2, p_1, \\ldots p_k$ the prime factors of $p-1$, where $p_i$ are odd.\n\n$a^{(p-1) / 2}=a^{2 t+1}=-(-a)^{2 t+1}=-(-a)^{(p-1) / 2} \\equiv-1$, so $a^{(p-1) / 2} \\not \\equiv 1(\\bmod 2)$.\n\nAs $p-1$ is even, $(p-1) / p_i$ is even, so $a^{(p-1) / p_i}=(-a)^{(p-1) / p_i} \\not \\equiv 1(\\bmod p)($ since $-a$ has order $p-1)$.\n\nSo the order of $a$ is $p-1$ (see Ex. 4.8) : $a$ is a primitive root modulo $p$.",
+          "version": 1
+        },
+        {
+          "claim": "This marker closes the two-direction proof of the stated equivalence.",
+          "depends_on": [
+            "n1",
+            "n2"
+          ],
+          "evaluation": null,
+          "goal_refs": [
+            "main"
+          ],
+          "node_id": "n3",
+          "scope": [],
+          "source_span": [
+            1102,
+            1113
+          ],
+          "status": "pending",
+          "synthetic": false,
+          "text": "\\end{proof}",
+          "version": 1
+        }
+      ],
+      "problem_digest": "f95e5aee856cf1d4d5eed5785c17ec52dffef11aa65d586ac95832b171115f74"
+    },
+    "stop_reason": "ContractError: diagnosis lacks source evidence",
+    "system_claim": "none",
+    "terminal_status": "runtime_failed",
+    "trace": [
+      {
+        "call": 1,
+        "phase": "graph",
+        "request_digest": "eaf66b1b25c1ac3b3bfbeee04f44c2de1477bd63c698e11a6106c46ba9422389"
+      },
+      {
+        "call": 2,
+        "phase": "evaluate",
+        "request_digest": "76161d849d76ea161a124362fc0c6cc73a2eeaa8bfd7fc8f92431b4e285fbc38"
+      },
+      {
+        "call": 3,
+        "phase": "evaluate",
+        "request_digest": "a7dc7cb054cfea479ae7e20696a7b27ed595e10694949aa5988d49608ac41e59"
+      },
+      {
+        "call": 4,
+        "phase": "counterexample_review",
+        "request_digest": "39ae718d33f0c33a1412f999f1c6c646a868fb1dd5da68fb154f70cfb33f3538"
+      },
+      {
+        "call": 5,
+        "phase": "diagnose",
+        "request_digest": "cfb55c0825fd47f1d8730a2d4559e15567e60bc047a2534d39c5cf12b8f7555e"
+      }
+    ]
+  }
+}

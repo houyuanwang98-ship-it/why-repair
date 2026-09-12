@@ -1,5 +1,9 @@
 # 论文材料入口
 
+- [当前创新点与相关工作对照](INNOVATION_ASSESSMENT.md)
+- [论文选题与研究路线备选](RESEARCH_DIRECTIONS.md)
+
+- [v2 流程与实验重设计](../workflow_v2/README.md)：已完成第二轮 108 项开发先导、18 项机制实验及 18 项补充回归，均有有效外部模型评分。完整系统端到端表现仍落后于直接重写；依赖重验的中间接受和成本差异仅在小型构造控制上得到观察。详见[最新证据](../workflow_v2/LATEST_RUN.md)；真实人工校准、正式测试和确认性结论待完成，历史结果不得升级为 v2 证据。
 - [中文初稿](why_repair_engineering_paper_draft_zh.md)
 - [证据台账](ARTICLE_EVIDENCE_LEDGER_2026-09-10.md)
 - [从源报告重建的结果总表](generated/results.md)

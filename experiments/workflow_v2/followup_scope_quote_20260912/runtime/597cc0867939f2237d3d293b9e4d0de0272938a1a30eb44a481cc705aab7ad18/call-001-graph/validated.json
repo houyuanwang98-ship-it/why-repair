@@ -1,0 +1,126 @@
+{
+  "ambiguities": [
+    "In n8, the modulus $2$ is not supported by the preceding computation and does not establish the prime-factor test for the factor $2$ of $p-1$; modulus $p$ is likely intended.",
+    "In n9, the parenthetical claim that $-a$ has order $p-1$ contradicts the converse assumption that its order is $(p-1)/2$. If the latter order is intended, the argument also uses that $(p-1)/2$ does not divide $(p-1)/p_i$ for odd $p_i$.",
+    "The final inference relies on Exercise 4.8, whose statement is not supplied; it appears intended to be the prime-divisor criterion for primitive roots."
+  ],
+  "nodes": [
+    {
+      "claim": "For the forward implication, assume that $a$ is a primitive root modulo $p$.",
+      "depends_on": [],
+      "goal_refs": [],
+      "node_id": "n1",
+      "scope": [],
+      "text": "\\begin{proof}\n\n    Let $a$ a primitive root modulo $p$."
+    },
+    {
+      "claim": "Factoring $a^{p-1}-1$ and using the order of $a$, the proof obtains $a^{(p-1)/2}\\equiv-1\\pmod p$.",
+      "depends_on": [
+        "n1"
+      ],
+      "goal_refs": [],
+      "node_id": "n2",
+      "scope": [
+        "n1"
+      ],
+      "text": "As $a^{p-1} \\equiv 1(\\bmod p), p \\mid\\left(a^{(p-1) / 2}-1\\right)\\left(a^{(p-1) / 2}+1\\right)$, so $p \\mid a^{(p-1) / 2}-1$ or $p \\mid$ $a^{(p-1) / 2}+1$. As $a$ is a primitive root modulo $p, a^{(p-1) / 2} \\not \\equiv 1(\\bmod p)$, so\n\n$$\n\na^{(p-1) / 2} \\equiv-1 \\quad(\\bmod p) .\n\n$$"
+    },
+    {
+      "claim": "Because $(p-1)/2=2t+1$ is odd, the proof obtains $(-a)^{(p-1)/2}\\equiv1\\pmod p$.",
+      "depends_on": [
+        "n2"
+      ],
+      "goal_refs": [],
+      "node_id": "n3",
+      "scope": [
+        "n1"
+      ],
+      "text": "Hence $(-a)^{(p-1) / 2}=(-1)^{2 t+1} a^{(p-1) / 2} \\equiv(-1) \\times(-1)=1(\\bmod p)$."
+    },
+    {
+      "claim": "For any positive $n$ with $(-a)^n\\equiv1\\pmod p$, the primitive-root order of $a$ implies $(p-1)/2$ divides $n$.",
+      "depends_on": [
+        "n1"
+      ],
+      "goal_refs": [],
+      "node_id": "n4",
+      "scope": [
+        "n1"
+      ],
+      "text": "Suppose that $(-a)^n \\equiv 1(\\bmod p)$, with $n \\in \\mathbb{N}$.\n\nThen $a^{2 n}=(-a)^{2 n} \\equiv 1(\\bmod p)$, so $p-1\\left|2 n, \\frac{p-1}{2}\\right| n$."
+    },
+    {
+      "claim": "The exhibited exponent and the divisibility condition yield that $-a$ has order $(p-1)/2$ modulo $p$.",
+      "depends_on": [
+        "n3",
+        "n4"
+      ],
+      "goal_refs": [
+        "main"
+      ],
+      "node_id": "n5",
+      "scope": [
+        "n1"
+      ],
+      "text": "So $-a$ has order $(p-1) / 2$ modulo $p$."
+    },
+    {
+      "claim": "For the converse implication, assume that $-a$ has order $(p-1)/2=2t+1$ modulo $p$.",
+      "depends_on": [],
+      "goal_refs": [],
+      "node_id": "n6",
+      "scope": [],
+      "text": "Conversely, suppose that $-a$ has order $(p-1) / 2=2 t+1$ modulo $p$."
+    },
+    {
+      "claim": "The proof lists $2$ and the odd primes $p_1,\\ldots,p_k$ as the prime factors of $p-1$.",
+      "depends_on": [],
+      "goal_refs": [],
+      "node_id": "n7",
+      "scope": [
+        "n6"
+      ],
+      "text": "Let $2, p_1, \\ldots p_k$ the prime factors of $p-1$, where $p_i$ are odd."
+    },
+    {
+      "claim": "The proof computes $a^{(p-1)/2}\\equiv-1$ and then states that this power is not congruent to $1$ modulo $2$.",
+      "depends_on": [
+        "n6"
+      ],
+      "goal_refs": [],
+      "node_id": "n8",
+      "scope": [
+        "n6"
+      ],
+      "text": "$a^{(p-1) / 2}=a^{2 t+1}=-(-a)^{2 t+1}=-(-a)^{(p-1) / 2} \\equiv-1$, so $a^{(p-1) / 2} \\not \\equiv 1(\\bmod 2)$."
+    },
+    {
+      "claim": "For each odd prime factor $p_i$, the proof uses the even exponent $(p-1)/p_i$ and asserts that $a^{(p-1)/p_i}\\not\\equiv1\\pmod p$, while citing an order of $p-1$ for $-a$.",
+      "depends_on": [
+        "n6",
+        "n7"
+      ],
+      "goal_refs": [],
+      "node_id": "n9",
+      "scope": [
+        "n6"
+      ],
+      "text": "As $p-1$ is even, $(p-1) / p_i$ is even, so $a^{(p-1) / p_i}=(-a)^{(p-1) / p_i} \\not \\equiv 1(\\bmod p)($ since $-a$ has order $p-1)$."
+    },
+    {
+      "claim": "Invoking Exercise 4.8, the proof concludes that $a$ has order $p-1$ and is a primitive root modulo $p$.",
+      "depends_on": [
+        "n8",
+        "n9"
+      ],
+      "goal_refs": [
+        "main"
+      ],
+      "node_id": "n10",
+      "scope": [
+        "n6"
+      ],
+      "text": "So the order of $a$ is $p-1$ (see Ex. 4.8) : $a$ is a primitive root modulo $p$.\n\n\\end{proof}"
+    }
+  ]
+}

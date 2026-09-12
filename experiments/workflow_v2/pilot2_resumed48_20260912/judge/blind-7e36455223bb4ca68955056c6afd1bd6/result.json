@@ -1,0 +1,51 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 4952,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 19.131072952000068,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "39fadbaae529da634239ddc7f017a935c8b3290b797cad3a9773aa6b1337a693"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "8bb4eae641803e41399c4c82ac13795b5f96b5aee20b1d638d28c798427fdf6c",
+    "call-001-judge/request.json": "408af42a355b772ee3c0a1dfbf878ca2781c0d5abf3ab5a6188bb49ae13094c2",
+    "call-001-judge/response.json": "0b10b3f93669c2b50e0b4e891aad2eb3902a78283ac36d1eaa4de8b133b9ecc7",
+    "call-001-judge/validated.json": "b92b78e0c7b93d6a463e974351e36716958144000185901edf7f261ed5eeb603"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "由 a<b 可知 a^2<b^2。",
+        "reason": "平方不保持任意实数间的不等号。例如 a=-2、b=-1 满足 a<b，却有 a²=4>1=b²。"
+      },
+      {
+        "quote": "再分别乘以 a 和 b，得到 a^3<b^3。",
+        "reason": "不能将不等式两端分别乘以不同且符号未定的数来保持不等号；此步骤没有合法的不等式运算依据。"
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "f000d06b982cf14a6f31c7fcf82aef762b5bc9315c0fb8ef158ad3269a44d4fa",
+    "problem_preservation": "pass",
+    "reason": "候选保留了原题，但两个关键推理均不成立，未能证明目标。",
+    "rigor": "fail",
+    "sample_id": "blind-7e36455223bb4ca68955056c6afd1bd6",
+    "unresolved_obligations": [
+      "仍须在任意实数 a<b 的假设下，有效证明 a³<b³。"
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

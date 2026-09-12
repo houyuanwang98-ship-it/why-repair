@@ -1,0 +1,330 @@
+{
+  "selection": "three previously observed development failures; not an unbiased test",
+  "human_verified": false,
+  "pairs": [
+    {
+      "case_id": "m2-034",
+      "method": "original",
+      "before": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": false,
+        "calls": 0,
+        "total_tokens": 0,
+        "stop_reason": "Unmodified reference; no internal validity judgment"
+      },
+      "after": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": false,
+        "calls": 0,
+        "total_tokens": 0,
+        "stop_reason": "Unmodified reference; no internal validity judgment"
+      }
+    },
+    {
+      "case_id": "m2-034",
+      "method": "direct_rewrite",
+      "before": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 1,
+        "total_tokens": 3765,
+        "stop_reason": "原证明错误地把主平方根恒等于原数，并错误地断言每个实数都等于其绝对值；按 a 的符号分类并使用平方根的非负性即可修复。"
+      },
+      "after": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 1,
+        "total_tokens": 3711,
+        "stop_reason": "原证明中的“平方与开平方互相抵消”忽略了平方根取非负值，且“每个实数 a 都等于 |a|”在 a<0 时错误；按 a 的符号分类即可修复证明。"
+      }
+    },
+    {
+      "case_id": "m2-034",
+      "method": "self_refine",
+      "before": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 3,
+        "total_tokens": 11328,
+        "stop_reason": "证明按 a≥0 和 a<0 进行了穷尽分类，并在每种情形中依据算术平方根的非负性与绝对值的分段定义得到结论。"
+      },
+      "after": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 3,
+        "total_tokens": 11363,
+        "stop_reason": "证明按 a≥0 和 a<0 分类，并在每种情形中依据算术平方根的非负性及绝对值的分段定义得到结论。"
+      }
+    },
+    {
+      "case_id": "m2-034",
+      "method": "generator_critic",
+      "before": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 3,
+        "total_tokens": 11310,
+        "stop_reason": "证明按 a≥0 与 a<0 分类，覆盖所有实数；两种情况下均依据算术平方根的非负性及绝对值的分段定义得到结论。"
+      },
+      "after": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 3,
+        "total_tokens": 11370,
+        "stop_reason": "原证明误用了“平方与开平方总能直接抵消”并错误声称每个实数都等于其绝对值；修正后的证明按 a 的符号分类，并在每种情况下依据算术平方根和绝对值的定义得到结论。"
+      }
+    },
+    {
+      "case_id": "m2-034",
+      "method": "best_of_n",
+      "before": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 4,
+        "total_tokens": 15178,
+        "stop_reason": "原证明错误地认为平方与算术平方根对所有实数都直接抵消；当 a<0 时，sqrt(a²)=-a≠a。此外，并非每个实数 a 都等于 |a|。修正后的证明利用了算术平方根的非负性与唯一性。"
+      },
+      "after": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 4,
+        "total_tokens": 15263,
+        "stop_reason": "原证明错误地认为平方与开平方对所有实数直接抵消，并声称 a=|a|；当 a<0 时这两个说法均不成立。修正后的证明使用了算术平方根的非负性与唯一性。"
+      }
+    },
+    {
+      "case_id": "m2-034",
+      "method": "full_system",
+      "before": {
+        "terminal_status": "budget_exhausted",
+        "ready_and_accepted": false,
+        "calls": 14,
+        "total_tokens": 65156,
+        "stop_reason": "Patch attempt budget exhausted"
+      },
+      "after": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 14,
+        "total_tokens": 59416,
+        "stop_reason": "对任意实数 a，|a|≥0 且 |a|²=a²；依据算术平方根的唯一性，√(a²)=|a|。论证保持了原定义域和全称量词，并完整得到目标结论。"
+      }
+    },
+    {
+      "case_id": "opc250-002",
+      "method": "original",
+      "before": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": false,
+        "calls": 0,
+        "total_tokens": 0,
+        "stop_reason": "Unmodified reference; no internal validity judgment"
+      },
+      "after": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": false,
+        "calls": 0,
+        "total_tokens": 0,
+        "stop_reason": "Unmodified reference; no internal validity judgment"
+      }
+    },
+    {
+      "case_id": "opc250-002",
+      "method": "direct_rewrite",
+      "before": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 1,
+        "total_tokens": 7183,
+        "stop_reason": "The construction is valid and complete; it repairs the supplied proof by omitting the incorrect claim that the smaller quadratic root necessarily gives the symmetric pair."
+      },
+      "after": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 1,
+        "total_tokens": 7208,
+        "stop_reason": "The Pell-type construction is valid. This repair explicitly checks parity, positivity, preservation of the Pell equation, and distinctness, while omitting the supplied proof’s incorrect parenthetical claim that the smaller quadratic root always gives the symmetric pair."
+      }
+    },
+    {
+      "case_id": "opc250-002",
+      "method": "self_refine",
+      "before": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 3,
+        "total_tokens": 18991,
+        "stop_reason": "The recurrence produces strictly increasing positive integers, while the quadratic-root argument preserves the required Diophantine identity for every consecutive pair; dividing that identity by the positive product gives the constant integral value \\(4\\)."
+      },
+      "after": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 3,
+        "total_tokens": 18520,
+        "stop_reason": "The invariant is established by induction using Vieta's formula, while the recurrence is proved to generate strictly increasing positive integers, yielding infinitely many distinct valid pairs."
+      }
+    },
+    {
+      "case_id": "opc250-002",
+      "method": "generator_critic",
+      "before": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 3,
+        "total_tokens": 18342,
+        "stop_reason": "The recurrence supplies infinitely many positive odd solutions of the Pell-type equation, and each solution yields a distinct positive integer pair for which the given expression equals 4."
+      },
+      "after": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 3,
+        "total_tokens": 18975,
+        "stop_reason": "The Pell-type recurrence supplies infinitely many positive odd solutions, and the discriminant construction converts each into a distinct positive-integer pair for which the stated expression equals 4."
+      }
+    },
+    {
+      "case_id": "opc250-002",
+      "method": "best_of_n",
+      "before": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 4,
+        "total_tokens": 27348,
+        "stop_reason": "The Pell-type recurrence supplies infinitely many distinct solutions. The repair explicitly verifies parity so that the quadratic root is integral and omits the original false parenthetical assertion that the smaller root is necessarily the symmetric partner."
+      },
+      "after": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 4,
+        "total_tokens": 27415,
+        "stop_reason": "The recurrence gives a direct Vieta-jumping construction, while the strict-growth argument proves positivity and distinctness of all constructed pairs."
+      }
+    },
+    {
+      "case_id": "opc250-002",
+      "method": "full_system",
+      "before": {
+        "terminal_status": "runtime_failed",
+        "ready_and_accepted": false,
+        "calls": 12,
+        "total_tokens": 72900,
+        "stop_reason": "ContractError: diagnosis lacks source evidence"
+      },
+      "after": {
+        "terminal_status": "budget_exhausted",
+        "ready_and_accepted": false,
+        "calls": 14,
+        "total_tokens": 86135,
+        "stop_reason": "soft budget overrun; response retained, not applied"
+      }
+    },
+    {
+      "case_id": "proofnet250-002",
+      "method": "original",
+      "before": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": false,
+        "calls": 0,
+        "total_tokens": 0,
+        "stop_reason": "Unmodified reference; no internal validity judgment"
+      },
+      "after": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": false,
+        "calls": 0,
+        "total_tokens": 0,
+        "stop_reason": "Unmodified reference; no internal validity judgment"
+      }
+    },
+    {
+      "case_id": "proofnet250-002",
+      "method": "direct_rewrite",
+      "before": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 1,
+        "total_tokens": 5999,
+        "stop_reason": "The repaired converse uses the actual hypothesis \\(\\operatorname{ord}_p(-a)=(p-1)/2\\); the supplied proof incorrectly invoked order \\(p-1\\) and also wrote a congruence modulo \\(2\\) where modulo \\(p\\) was required."
+      },
+      "after": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 1,
+        "total_tokens": 5698,
+        "stop_reason": "The argument uses that \\((p-1)/2\\) is odd and proves both required order equalities directly. It repairs the supplied converse, which incorrectly says that \\(-a\\) has order \\(p-1\\) and also contains an erroneous reduction modulo \\(2\\)."
+      }
+    },
+    {
+      "case_id": "proofnet250-002",
+      "method": "self_refine",
+      "before": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 3,
+        "total_tokens": 16533,
+        "stop_reason": "The repaired proof establishes both exact orders by proving an annihilating exponent and then showing that every annihilating exponent is divisible by it; the crucial fact is that \\((p-1)/2=2t+1\\) is odd."
+      },
+      "after": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 3,
+        "total_tokens": 15238,
+        "stop_reason": "The repaired proof correctly uses the oddness of \\((p-1)/2\\), the two square roots of unity modulo an odd prime, and divisibility properties of multiplicative orders to prove both implications."
+      }
+    },
+    {
+      "case_id": "proofnet250-002",
+      "method": "generator_critic",
+      "before": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 3,
+        "total_tokens": 15894,
+        "stop_reason": "Both implications are established using only the definition of multiplicative order, the oddness of \\((p-1)/2\\), and the fact that \\(y^2\\equiv1\\pmod p\\) has only the solutions \\(y\\equiv\\pm1\\pmod p\\)."
+      },
+      "after": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 3,
+        "total_tokens": 16657,
+        "stop_reason": "The repaired proof establishes both implications by determining the exact multiplicative orders; the crucial fact is that \\((p-1)/2=2t+1\\) is odd."
+      }
+    },
+    {
+      "case_id": "proofnet250-002",
+      "method": "best_of_n",
+      "before": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 4,
+        "total_tokens": 23796,
+        "stop_reason": "The argument proves both implications directly from multiplicative orders. It repairs the supplied proof’s incorrect modulus \\(2\\) statement and its false use of the claim that \\(-a\\) has order \\(p-1\\) in the converse."
+      },
+      "after": {
+        "terminal_status": "proof_ready",
+        "ready_and_accepted": true,
+        "calls": 4,
+        "total_tokens": 22930,
+        "stop_reason": "The original converse incorrectly invoked order \\(p-1\\) for \\(-a\\), although only order \\((p-1)/2\\) was assumed. The repaired argument directly proves that every exponent annihilating \\(a\\) is divisible by \\(p-1\\)."
+      }
+    },
+    {
+      "case_id": "proofnet250-002",
+      "method": "full_system",
+      "before": {
+        "terminal_status": "runtime_failed",
+        "ready_and_accepted": false,
+        "calls": 5,
+        "total_tokens": 32932,
+        "stop_reason": "ContractError: diagnosis lacks source evidence"
+      },
+      "after": {
+        "terminal_status": "budget_exhausted",
+        "ready_and_accepted": false,
+        "calls": 16,
+        "total_tokens": 81437,
+        "stop_reason": "soft budget overrun; response retained, not applied"
+      }
+    }
+  ]
+}

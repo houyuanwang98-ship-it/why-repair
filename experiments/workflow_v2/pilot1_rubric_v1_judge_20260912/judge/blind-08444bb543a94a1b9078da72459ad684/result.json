@@ -1,0 +1,51 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 8030,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 19.400994374999755,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "830bfa4bacb9c7597a280b0c7bf2c5dd00b4df3e2506d707f4da6b14b46af8c1"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "1ccf626345495f6ca133d60a0961e0c879acadef06c69b7cb3fbd0117385fe6e",
+    "call-001-judge/request.json": "a1450a970a859017caf05ac16f9f4b97a32b121f6f8d9a3ea5703822b3f2f4c1",
+    "call-001-judge/response.json": "7f71104e19ef60100d841571410e1425cb12e282eb4504e84c20e8c4084994d5",
+    "call-001-judge/validated.json": "78e66c9a15c18a261e82fcb51887c6edec65fd01f0e2fcc2f042b7d88c009bee"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "The condition is that \\(16Y+1 \\mid P(Y)\\) for all \\(Y \\in \\{1^2, 2^2, 3^2, \\dots\\}\\) (i.e., for all \\(Y=y^2\\) where \\(y \\in \\mathbb{Z}^+\\)).",
+        "reason": "The hypothesis quantifies over n, not over y for a fixed x or C. Here y is fixed, and C=(x-1)/((y^2+1)(4y^2+1)). The n=4 condition establishes divisibility only at that single Y=y^2, not at all positive squares."
+      },
+      {
+        "quote": "If \\(K \\ne 0\\), we can choose \\(y\\) large enough such that \\(16y^2+1 > |K|\\).",
+        "reason": "The fixed y cannot be enlarged while retaining the established divisibility and the same C, hence the same K. Consequently the deduction R_0=0 and the resulting contradiction are unsupported."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "55cc2003256360d06a77a67066a5ab6801fb30c6f44d0332a68976c67c9ea047",
+    "problem_preservation": "fail",
+    "reason": "The initial calculations are correct, but the central argument replaces variation in n with unauthorized variation in y. It therefore does not prove x=1.",
+    "rigor": "fail",
+    "sample_id": "blind-08444bb543a94a1b9078da72459ad684",
+    "unresolved_obligations": [
+      "Derive a contradiction for each fixed pair of positive integers x>1 and y using the hypothesis for all positive integers n."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

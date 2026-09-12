@@ -1,0 +1,391 @@
+{
+  "schema_version": "why-repair-workflow-design-2.0",
+  "created_on": "2026-09-12",
+  "status": "pilot_iteration2_prepared_calibration_pending",
+  "v2_runtime_implemented": true,
+  "persistent_scheduler": {
+    "execution_modes": [
+      "pipeline",
+      "experiment_only",
+      "judge_only"
+    ],
+    "judge_only": {
+      "experiment_servers": 0,
+      "experiment_calls": 0,
+      "input": "hash_bound_completed_generation_bundle"
+    },
+    "experiment_only": {
+      "validation_servers": 0,
+      "validation_calls": 0,
+      "outputs": "frozen_pending_judge"
+    },
+    "authorized_on": "2026-09-12",
+    "experiment_servers": 24,
+    "validation_servers": 24,
+    "pairing": "same_lane_independent_consumers",
+    "server_start": "scheduler_startup_only",
+    "server_restart": "never",
+    "thread_unload_delay_secs": 0,
+    "startup_gate": "all_servers_catalog_model_effort_and_no_generation_context_unload_probe",
+    "context_policy": "fresh_ephemeral_thread_per_call_then_unsubscribe_and_verify_unload",
+    "freeze_policy": "each_candidate_before_its_judge",
+    "external_feedback_to_runtime": false,
+    "live_status_source": "bundle/scheduler/status.json"
+  },
+  "baseline_commits": {
+    "local": "ba3e860e4977db6de047c0cb9f1a3f26581ed4cb",
+    "main": "8221202191aebb06ffe0bb887d69173051dc364c",
+    "experiment_1": "5ff3ded1567b153d91d9795860a4b1eeadbbba70",
+    "experiment_2": "7181b56cdbaceb55d111b850d7a46fc58e15c775"
+  },
+  "problem_input_fields": [
+    "theorem",
+    "assumptions",
+    "domain",
+    "proof_text",
+    "explicit_subgoals"
+  ],
+  "external_judge_input_fields": [
+    "sample_id",
+    "theorem",
+    "assumptions",
+    "domain",
+    "explicit_subgoals",
+    "candidate_text"
+  ],
+  "external_judge_forbidden_fields": [
+    "case_id",
+    "source_group",
+    "method",
+    "model",
+    "claimed_outcome",
+    "gold",
+    "reference_proof",
+    "other_candidates",
+    "trajectory",
+    "previous_judgments"
+  ],
+  "isolation": {
+    "method_session": "one_per_case_method_model_replicate",
+    "role_invocation": "separate_with_role_payload_allowlist",
+    "external_judgment": "one_candidate_per_session",
+    "external_feedback_to_runtime": false,
+    "cross_method_model_cache": false,
+    "resume": "exact_request_configuration_and_usage_ledger_match",
+    "model_tool_access": "runner_enforced_allowlist"
+  },
+  "models": {
+    "selection_status": "user_locked",
+    "applies_to": [
+      "engineering_pilot",
+      "formal_experiment",
+      "mechanism_ablation"
+    ],
+    "experiment": {
+      "requested_model": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh",
+      "roles": [
+        "graph_builder",
+        "evaluator",
+        "diagnoser",
+        "generator",
+        "self_feedback",
+        "critic",
+        "patch_reviewer",
+        "counterexample_reviewer",
+        "node_revalidator",
+        "internal_final_auditor",
+        "internal_selector"
+      ]
+    },
+    "validation": {
+      "requested_model": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "roles": [
+        "external_judge"
+      ]
+    },
+    "allow_cli_or_environment_override": false,
+    "allow_automatic_fallback": false,
+    "unavailable_model_policy": "record_failure_without_substitution",
+    "requested_only_not_backend_verified": true,
+    "separate_models_do_not_establish_error_independence": true
+  },
+  "engineering_budget_proposal": {
+    "frozen_for_formal_experiment": false,
+    "max_model_attempts_per_task": 24,
+    "max_total_tokens_per_task": 80000,
+    "max_wall_seconds_per_task": 1800,
+    "max_patch_attempts": 3,
+    "max_new_nodes_per_patch": 2,
+    "max_total_node_edits": 6,
+    "max_uncertainty_followups": 1,
+    "best_of_n": 3,
+    "retry_cost_counted": true,
+    "internal_preprocessing_and_validation_cost_counted": true,
+    "external_judging_cost_reported_separately": true,
+    "unknown_usage_policy": "stop_with_accounting_incomplete_never_zero_fill",
+    "unsupported_hard_token_cap_policy": "declare_soft_cap_record_overrun_stop_before_apply",
+    "tool_limits_status": "pilot_zero_model_tools_frozen_local_rule_retrieval_and_exact_arithmetic_only",
+    "max_output_contract_retries": 1
+  },
+  "node_statuses": [
+    "closed",
+    "gap",
+    "invalid",
+    "undetermined",
+    "blocked"
+  ],
+  "trusted_premise_statuses": [
+    "closed"
+  ],
+  "repair_diagnosis_kinds": [
+    "gap",
+    "invalid"
+  ],
+  "repair_diagnosis_confirmation": "confirmed",
+  "terminal_statuses": [
+    "proof_ready",
+    "counterexample_ready",
+    "undetermined",
+    "repair_not_found",
+    "budget_exhausted",
+    "input_invalid",
+    "runtime_failed"
+  ],
+  "system_claims": [
+    "proof_valid",
+    "theorem_false",
+    "abstain",
+    "none"
+  ],
+  "full_system_phases": [
+    "snapshot",
+    "graph_build",
+    "graph_validate",
+    "obligation_evaluate",
+    "diagnosis_confirm",
+    "certificate_bind",
+    "patch_generate",
+    "patch_review",
+    "atomic_apply",
+    "invalidate",
+    "node_revalidate",
+    "internal_final_audit",
+    "freeze_output"
+  ],
+  "phase_loop": {
+    "rejected_patch": "patch_generate_if_budget_remains",
+    "revalidation_defect": "diagnosis_confirm",
+    "internal_audit_defect": "diagnosis_confirm",
+    "uncertain": "bounded_evidence_followup_then_undetermined",
+    "counterexample": "independent_scope_and_witness_review",
+    "no_progress": "repair_not_found",
+    "budget_limit": "budget_exhausted"
+  },
+  "end_to_end_methods": [
+    {
+      "id": "original",
+      "kind": "reference",
+      "workflow": [
+        "freeze_original"
+      ]
+    },
+    {
+      "id": "direct_rewrite",
+      "kind": "repair",
+      "workflow": [
+        "rewrite",
+        "freeze_output"
+      ]
+    },
+    {
+      "id": "self_refine",
+      "kind": "repair",
+      "workflow": [
+        "draft",
+        "self_feedback",
+        "revision",
+        "freeze_output"
+      ]
+    },
+    {
+      "id": "generator_critic",
+      "kind": "repair",
+      "workflow": [
+        "draft",
+        "independent_critique",
+        "revision",
+        "freeze_output"
+      ]
+    },
+    {
+      "id": "best_of_n",
+      "kind": "repair",
+      "workflow": [
+        "independent_candidates",
+        "internal_anonymous_selection",
+        "freeze_output"
+      ]
+    },
+    {
+      "id": "full_system",
+      "kind": "repair",
+      "workflow": [
+        "full_system_phases"
+      ]
+    }
+  ],
+  "mechanism_base": {
+    "input_mode": "verified_graph_mechanism",
+    "certificate_format": "structured",
+    "counterexample_search": true,
+    "revalidation_strategy": "dependency_closure",
+    "max_patch_attempts": 3,
+    "internal_final_audit": true
+  },
+  "mechanism_ablations": [
+    {
+      "id": "plain_certificate",
+      "override": {
+        "certificate_format": "plain_same_information"
+      }
+    },
+    {
+      "id": "no_counterexample_search",
+      "override": {
+        "counterexample_search": false
+      }
+    },
+    {
+      "id": "no_descendant_revalidation",
+      "override": {
+        "revalidation_strategy": "retain_stale_for_experiment"
+      }
+    },
+    {
+      "id": "full_revalidation",
+      "override": {
+        "revalidation_strategy": "all_nodes"
+      }
+    },
+    {
+      "id": "single_round",
+      "override": {
+        "max_patch_attempts": 1
+      }
+    },
+    {
+      "id": "no_internal_final_audit",
+      "override": {
+        "internal_final_audit": false
+      }
+    }
+  ],
+  "graph_stress_experiment": {
+    "separate_from_end_to_end": true,
+    "factors": [
+      "missing_edge",
+      "spurious_edge",
+      "scope_error",
+      "branch_depth_and_fanin"
+    ],
+    "perturbation_levels": null,
+    "status": "freeze_after_pilot"
+  },
+  "final_scoring": {
+    "strict_proof_acceptance": {
+      "candidate_kind": "proof",
+      "validity": "valid",
+      "rigor": "pass",
+      "problem_preservation": "pass",
+      "goal_coverage": "pass",
+      "unresolved_obligations": []
+    },
+    "main_system_success_requires_terminal": "proof_ready",
+    "counterexample_counts_as_proof_success": false,
+    "unknown_counts_as_acceptance": false,
+    "missing_judgment": "retain_assignment_and_report_unresolved",
+    "human_labels_separate_from_model_judgments": true,
+    "rubric_version": "strict-submitted-text-v1",
+    "redundant_invalid_inference": "rigor_fail_even_if_an_independent_valid_argument_remains",
+    "calibration_status": "prospective_development_rule_pending_independent_human_calibration"
+  },
+  "data_and_statistics": {
+    "historical_600_role": "development_or_disclosed_retrospective",
+    "split_unit": "source_theorem_family",
+    "formal_test_dataset": null,
+    "primary_endpoint": "false_success_rate_with_coverage_and_unresolved_bounds",
+    "secondary_endpoints": [
+      "repair_success_rate",
+      "strict_acceptance_rate",
+      "valid_proof_regression",
+      "verified_counterexample_rate",
+      "stale_evidence_reuse",
+      "cost_per_assigned_and_successful_case",
+      "edit_footprint"
+    ],
+    "paired_resampling_unit": "source_theorem_family",
+    "multiple_comparison_correction": "holm_for_preregistered_family",
+    "formal_sample_size": null,
+    "formal_model_repetitions": null,
+    "human_sampling": "preregistered_stratified_with_inclusion_probabilities"
+  },
+  "implementation_stages": [
+    {
+      "id": "S0",
+      "status": "design_delivered",
+      "requires": []
+    },
+    {
+      "id": "S1",
+      "status": "offline_verified",
+      "requires": [
+        "S0"
+      ]
+    },
+    {
+      "id": "S2",
+      "status": "offline_verified",
+      "requires": [
+        "S1"
+      ]
+    },
+    {
+      "id": "S3",
+      "status": "offline_verified",
+      "requires": [
+        "S2"
+      ]
+    },
+    {
+      "id": "S4",
+      "status": "pilot1_complete_iteration2_prepared_human_calibration_pending",
+      "requires": [
+        "S3"
+      ]
+    },
+    {
+      "id": "S5",
+      "status": "planned",
+      "requires": [
+        "S4"
+      ]
+    },
+    {
+      "id": "S6",
+      "status": "planned",
+      "requires": [
+        "S5"
+      ]
+    }
+  ],
+  "output_recovery": {
+    "eligible": "JSON/schema and explicitly supplied structural validator errors only",
+    "max_corrections_per_logical_call": 1,
+    "all_attempts_charged": true,
+    "raw_failures_immutable": true,
+    "provider_isolation_budget_errors_retryable": false,
+    "external_judge_corrections": 0
+  }
+}

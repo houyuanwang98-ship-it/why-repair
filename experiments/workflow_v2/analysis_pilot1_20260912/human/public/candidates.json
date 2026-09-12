@@ -1,0 +1,650 @@
+[
+  {
+    "assumptions": [],
+    "candidate_text": "To solve the problem, we analyze the game between two players:\n\n- **Player 1** writes a list of positive integers (each ≤ 25) such that their **sum is at least 200**.\n- **Player 2** wins if they can select a **subset** of these numbers whose **sum $ S $** satisfies:\n  $$\n  200 - N \\leq S \\leq 200 + N\n  $$\n- The goal is to find the **smallest** such $ N $ for which **Player 2 always has a winning strategy**, regardless of how Player 1 chooses the list.\n\n---\n\n### Key Observations\n\n1. **Subset Sum Problem**: The core of the problem is a variant of the **subset sum problem**, where we are not looking for a specific target sum, but rather a **range** around 200.\n\n2. **Worst-Case Strategy for Player 1**: To make it as hard as possible for Player 2, Player 1 will try to construct a list of numbers such that **no subset sum** falls within the interval $[200 - N, 200 + N]$. The **minimal such $ N $** for which this is **impossible** is the answer.\n\n3. **Bounding the Numbers**: Since all numbers are ≤ 25, and the total sum is at least 200, the number of elements in the list is at least $ \\lceil 200 / 25 \\rceil = 8 $.\n\n4. **Worst-Case Construction**: A natural candidate for a \"bad\" list is one where all numbers are the same, say $ k $, and the total sum is just enough to exceed 200. This maximizes the spacing between subset sums, making it harder for Player 2 to find a subset sum in the desired range.\n\n---\n\n### Constructing a Worst-Case Example\n\nLet’s consider the case where Player 1 chooses **ten 21s**, giving a total sum of:\n$$\n10 \\times 21 = 210\n$$\nThe possible subset sums are:\n$$\n21, 42, 63, \\dots, 210\n$$\nThese are all **multiples of 21**. The closest subset sums to 200 are:\n- $ 189 = 9 \\times 21 $, which is **11 less** than 200\n- $ 210 = 10 \\times 21 $, which is **10 more** than 200\n\nThus, the **closest subset sum** to 200 is **210**, which is **10 units away** from 200. Therefore, **Player 2 cannot win with $ N = 9 $** in this case.\n\nThis shows that **$ N = 10 $** is **necessary**.\n\n---\n\n### Proving Sufficiency of $ N = 10 $\n\nWe now show that **$ N = 10 $** is **sufficient** for Player 2 to always win, regardless of how Player 1 constructs the list.\n\n#### Case 1: Total Sum $ S \\leq 210 $\n\nIf the total sum of the list is **less than or equal to 210**, then Player 2 can simply choose the **entire list**, and the sum will be in the range $[200, 210]$, which is within $[200 - 10, 200 + 10]$. So Player 2 wins.\n\n#### Case 2: Total Sum $ S > 210 $\n\nThis is the more challenging case. We need to show that **some subset** of the list has a sum in the range $[190, 210]$.\n\nWe use a **partial sum argument**:\n\n- Consider the **partial sums** of the list, i.e., the sums of the first $ i $ elements for $ i = 1, 2, \\dots, n $.\n- Since the total sum is $ > 210 $, and the elements are all $ \\leq 25 $, there must be a **partial sum** that crosses from below 190 to above 210.\n- Let $ s_i $ be the first partial sum that exceeds 190. Then $ s_{i-1} < 190 $, and $ s_i = s_{i-1} + a_i > 190 $.\n- Since $ a_i \\leq 25 $, we have:\n  $$\n  s_i \\leq s_{i-1} + 25 < 190 + 25 = 215\n  $$\n  So $ s_i \\in (190, 215] $\n\n- Now, we can **remove some elements** from the subset that sums to $ s_i $ to bring the sum down into the range $[190, 210]$. Since the elements are all $ \\leq 25 $, and the total sum is large, we can always find a subset of the first $ i $ elements that sums to a value in $[190, 210]$.\n\nThis argument shows that **no matter how Player 1 constructs the list**, Player 2 can always find a subset sum in the range $[190, 210]$, i.e., within $ N = 10 $ of 200.\n\n---\n\n### Conclusion\n\n- The **worst-case** list (e.g., ten 21s) shows that **$ N = 10 $** is **necessary**.\n- The **partial sum argument** shows that **$ N = 10 $** is **sufficient** for Player 2 to always win.\n\nThus, the **smallest** such $ N $ is:\n\n$$\n\\boxed{10}\n$$",
+    "domain": "baltic_mo",
+    "explicit_subgoals": [],
+    "sample_id": "review-0366d088e8e0457391a55d9ec1d2bf10",
+    "theorem": "Let \\( N \\) be a positive integer. Two persons play the following game. The first player writes a list of positive integers not greater than \\( 25 \\), not necessarily different, such that their sum is at least \\( 200 \\). The second player wins if he can select some of these numbers so that their sum \\( S \\) satisfies the condition \\( 200-N \\leq S \\leq 200+N \\). What is the smallest value of \\( N \\) for which the second player has a winning strategy?"
+  },
+  {
+    "assumptions": [
+      "a,b 为实数，且 a<b。"
+    ],
+    "candidate_text": "因为\n\\[\nb^3-a^3=(b-a)(a^2+ab+b^2).\n\\]\n由 \\(a<b\\) 得 \\(b-a>0\\)。又\n\\[\na^2+ab+b^2=\\left(a+\\frac b2\\right)^2+\\frac34b^2\\ge 0.\n\\]\n若 \\(a^2+ab+b^2=0\\)，则上述两个平方项均为零，从而 \\(b=0\\) 且 \\(a=0\\)，这与 \\(a<b\\) 矛盾。因此\n\\[\na^2+ab+b^2>0.\n\\]\n故 \\(b^3-a^3>0\\)，即 \\(a^3<b^3\\)。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-08de5d56453c4588905a83c38a7621b3",
+    "theorem": "证明若实数 a<b，则 a^3<b^3。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Let \\(p\\equiv 1\\pmod 4\\) be any prime such that \\(p\\nmid y\\). Since \\(-1\\) is a quadratic residue modulo \\(p\\), there exists \\(a\\not\\equiv0\\pmod p\\) satisfying\n\\[\n(ay)^2\\equiv-1\\pmod p.\n\\]\nWrite \\(p-1=2^e s\\), where \\(e\\ge2\\) and \\(s\\) is odd. By the Chinese remainder theorem, choose \\(b\\) such that\n\\[\nb\\equiv3\\pmod{2^e},\\qquad b\\equiv2\\pmod{q^v}\n\\]\nfor every maximal odd prime power \\(q^v\\mid p-1\\). Then\n\\[\n\\gcd(b,p-1)=1,\\qquad \\gcd(b-1,p-1)=2.\n\\]\nIndeed, \\(b\\) is coprime to every prime divisor of \\(p-1\\); moreover, \\(b-1\\equiv2\\pmod{2^e}\\) and \\(b-1\\equiv1\\pmod q\\) for every odd \\(q\\mid p-1\\).\n\nBecause \\(\\gcd(p,p-1)=1\\), choose by the Chinese remainder theorem an integer \\(r\\) satisfying\n\\[\nr\\equiv a\\pmod p,\n\\qquad r\\equiv b\\pmod{p-1}.\n\\]\nThe preceding properties give \\(\\gcd(r,p(p-1))=1\\). Hence Dirichlet's theorem supplies a prime \\(\\ell\\) with\n\\[\n\\ell\\equiv r\\pmod{p(p-1)}.\n\\]\nSince \\(\\ell\\equiv a\\pmod p\\), we have\n\\[\np\\mid(\\ell y)^2+1.\n\\]\nApplying the hypothesis with \\(n=\\ell\\), and using \\(\\varphi(\\ell)=\\ell-1\\), yields\n\\[\np\\mid x^{\\ell-1}-1.\n\\]\nThus \\(p\\nmid x\\). Let \\(d=\\operatorname{ord}_p(x)\\). Then\n\\[\nd\\\\mid\\ell-1\\quad\\text{and}\\quad d\\mid p-1.\n\\]\nAlso, because \\(\\ell\\equiv b\\pmod{p-1}\\),\n\\[\n\\gcd(\\ell-1,p-1)=\\gcd(b-1,p-1)=2.\n\\]\nConsequently \\(d\\mid2\\), so \\(x^2\\equiv1\\pmod p\\). Therefore every prime \\(p\\equiv1\\pmod4\\) not dividing \\(y\\) divides \\(x^2-1\\).\n\nThere are infinitely many primes congruent to \\(1\\pmod4\\), while only finitely many primes divide \\(y\\). Hence infinitely many primes divide the fixed integer \\(x^2-1\\), which is possible only if \\(x^2-1=0\\). Since \\(x\\) is positive, \\(x=1\\).",
+    "domain": "bmo",
+    "explicit_subgoals": [],
+    "sample_id": "review-0a850195a4144983809a535f79ee925d",
+    "theorem": "Let \\( x \\) and \\( y \\) be positive integers. If for each positive integer \\( n \\) we have that\n\n\\[\n(n y)^{2}+1 \\mid x^{\\varphi(n)}-1\n\\]\n\nprove that \\( x=1 \\)."
+  },
+  {
+    "assumptions": [
+      "a 为实数。"
+    ],
+    "candidate_text": "证明：任取实数 a。由于 a²≥0，√(a²) 表示平方等于 a² 的非负实数。\n若 a≥0，则 a 本身非负且 a²=a²，所以 √(a²)=a=|a|。\n若 a<0，则 −a>0 且 (−a)²=a²，所以 √(a²)=−a=|a|。\n因此，对任意实数 a，都有 √(a²)=|a|。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-0bac75dc2ee64436b7294c370cc48ff8",
+    "theorem": "证明对任意实数 a，都有 sqrt(a^2)=|a|。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Let the given condition be that for positive integers \\(x\\) and \\(y\\),\n\\[ (ny)^2+1 \\mid x^{\\varphi(n)}-1 \\quad (*). \\]\nThis must hold for all positive integers \\(n\\).\n\nIf \\(x=1\\), then \\(x^{\\varphi(n)}-1 = 1^{\\varphi(n)}-1 = 0\\). The condition becomes \\((ny)^2+1 \\mid 0\\), which is true for all positive integers \\(n\\) and \\(y\\). Thus, \\(x=1\\) is a solution. We want to prove it is the only solution.\n\nAssume \\(x > 1\\). Since \\(x\\) is an integer, this means \\(x \\ge 2\\).\n\nStep 1: Use \\(n=1\\) and \\(n=2\\).\nFor \\(n=1\\), \\(\\varphi(1)=1\\). The condition \\((*)\\) becomes \\( (1y)^2+1 \\mid x^{\\varphi(1)}-1 \\), so\n\\[ y^2+1 \\mid x-1. \\]\nSince \\(x \\ge 2\\) and \\(y \\ge 1\\), \\(x-1 \\ge 1\\) and \\(y^2+1 \\ge 2\\). So \\(x-1 > 0\\).\n\nFor \\(n=2\\), \\(\\varphi(2)=1\\). The condition \\((*)\\) becomes \\( (2y)^2+1 \\mid x^{\\varphi(2)}-1 \\), so\n\\[ (2y)^2+1 \\mid x-1. \\]\nThis is \\(4y^2+1 \\mid x-1\\).\n\nSince \\(x-1\\) is divisible by both \\(y^2+1\\) and \\(4y^2+1\\), it must be divisible by their least common multiple, \\(\\text{lcm}(y^2+1, 4y^2+1)\\).\nLet \\(A = y^2+1\\) and \\(B = 4y^2+1\\).\nWe calculate their greatest common divisor:\n\\(\\gcd(A,B) = \\gcd(y^2+1, 4y^2+1)\\).\nUsing the property \\(\\gcd(a,b) = \\gcd(a, b-ka)\\), we have\n\\(\\gcd(y^2+1, 4y^2+1) = \\gcd(y^2+1, (4y^2+1) - 4(y^2+1)) = \\gcd(y^2+1, 4y^2+1 - 4y^2-4) = \\gcd(y^2+1, -3) = \\gcd(y^2+1, 3)\\).\nLet's examine \\(y^2+1 \\pmod 3\\).\nIf \\(y \\equiv 0 \\pmod 3\\), then \\(y^2 \\equiv 0 \\pmod 3\\), so \\(y^2+1 \\equiv 1 \\pmod 3\\).\nIf \\(y \\equiv 1 \\pmod 3\\), then \\(y^2 \\equiv 1 \\pmod 3\\), so \\(y^2+1 \\equiv 2 \\pmod 3\\).\nIf \\(y \\equiv 2 \\pmod 3\\), then \\(y^2 \\equiv 4 \\equiv 1 \\pmod 3\\), so \\(y^2+1 \\equiv 2 \\pmod 3\\).\nIn all cases, \\(y^2+1\\) is not divisible by 3.\nTherefore, \\(\\gcd(y^2+1, 3) = 1\\).\nThis means \\(\\gcd(A,B)=1\\).\nSo, \\(\\text{lcm}(A,B) = AB = (y^2+1)(4y^2+1)\\).\nSince \\(x-1\\) must be a multiple of \\((y^2+1)(4y^2+1)\\), we can write\n\\[ x-1 = C(y^2+1)(4y^2+1) \\]\nfor some integer \\(C\\).\nSince \\(x>1\\), \\(x-1 > 0\\). Also, \\(y^2+1 > 0\\) and \\(4y^2+1 > 0\\). Thus, we must have \\(C \\ge 1\\).\n\nStep 2: Use \\(n=4\\).\nFor \\(n=4\\), \\(\\varphi(4)=\\varphi(2^2)=2^2-2^1=2\\). The condition \\((*)\\) becomes\n\\[ (4y)^2+1 \\mid x^{\\varphi(4)}-1, \\]\nso\n\\[ (4y)^2+1 \\mid x^2-1. \\]\nLet \\(M = (4y)^2+1 = 16y^2+1\\).\nWe have \\(M \\mid (x-1)(x+1)\\).\nSubstitute \\(x-1 = C(y^2+1)(4y^2+1)\\):\n\\[ M \\mid C(y^2+1)(4y^2+1) \\cdot [C(y^2+1)(4y^2+1)+2]. \\]\nLet \\(Y=y^2\\). Then \\(M = 16Y+1\\). The expression being divided by \\(M\\) is\n\\[ P(Y) = C(Y+1)(4Y+1) \\cdot [C(Y+1)(4Y+1)+2]. \\]\nThe condition is that \\(16Y+1 \\mid P(Y)\\) for all \\(Y \\in \\{1^2, 2^2, 3^2, \\dots\\}\\) (i.e., for all \\(Y=y^2\\) where \\(y \\in \\mathbb{Z}^+\\)).\n\nStep 3: Polynomial divisibility argument.\nLet \\(P(Y)\\) be the polynomial in \\(Y\\) defined above. Let \\(D(Y) = 16Y+1\\).\nBy the Polynomial Remainder Theorem, there exist polynomials \\(S(Y)\\) (quotient) and \\(R(Y)\\) (remainder) with rational coefficients such that \\(P(Y) = S(Y)D(Y) + R(Y)\\), where the degree of \\(R(Y)\\) is less than the degree of \\(D(Y)\\). Since \\(D(Y)\\) has degree 1, \\(R(Y)\\) must be a constant, say \\(R_0\\).\nThus, \\(P(Y) = S(Y)(16Y+1) + R_0\\).\nThis identity holds for all \\(Y \\in \\mathbb{C}\\). In particular, it holds for \\(Y = -1/16\\).\nSubstituting \\(Y = -1/16\\) into \\(P(Y) = S(Y)(16Y+1) + R_0\\), we get \\(P(-1/16) = S(-1/16)(16(-1/16)+1) + R_0 = S(-1/16) \\cdot 0 + R_0\\).\nSo \\(R_0 = P(-1/16)\\).\nLet's calculate \\(P(-1/16)\\).\nThe term \\(C(Y+1)(4Y+1)\\) becomes, at \\(Y=-1/16\\):\n\\(C(-1/16+1)(4(-1/16)+1) = C(15/16)(-1/4+1) = C(15/16)(3/4) = C \\frac{45}{64}\\).\nSo, \\(P(-1/16) = \\left(C \\frac{45}{64}\\right) \\cdot \\left(C \\frac{45}{64} + 2\\right)\\).\nSo \\(R_0 = C \\frac{45}{64} \\left(C \\frac{45}{64} + 2\\right)\\).\n\nWe are given that \\(\\frac{P(Y)}{16Y+1}\\) must be an integer for all \\(Y=y^2\\) where \\(y \\in \\mathbb{Z}^+\\).\nFrom \\(P(Y) = S(Y)(16Y+1) + R_0\\), we have\n\\[ \\frac{P(Y)}{16Y+1} = S(Y) + \\frac{R_0}{16Y+1}. \\]\nThis expression must be an integer for \\(Y=y^2\\), for all \\(y \\in \\mathbb{Z}^+\\).\nLet \\(s_j\\) be the rational coefficients of the polynomial \\(S(Y)\\). Let \\(L\\) be the least common multiple of the denominators of these coefficients \\(s_j\\). Then \\(L \\cdot S(Y)\\) is a polynomial with integer coefficients.\nSo, for any integer value \\(Y=y^2\\), \\(L \\cdot S(y^2)\\) is an integer.\nThe condition that \\(S(y^2) + \\frac{R_0}{16y^2+1}\\) is an integer for all \\(y \\in \\mathbb{Z}^+\\) implies that\n\\[ L \\left(S(y^2) + \\frac{R_0}{16y^2+1}\\right) = L S(y^2) + \\frac{L R_0}{16y^2+1} \\]\nmust be an integer multiple of \\(L\\) for all \\(y \\in \\mathbb{Z}^+\\). Since \\(L S(y^2)\\) is an integer, it must be that \\(\\frac{L R_0}{16y^2+1}\\) is an integer for all \\(y \\in \\mathbb{Z}^+\\).\nLet \\(K = L R_0\\). Then \\(K\\) is a rational constant (it does not depend on \\(y\\)).\nWe need \\(\\frac{K}{16y^2+1}\\) to be an integer for all \\(y \\in \\mathbb{Z}^+\\).\nIf \\(K \\ne 0\\), we can choose \\(y\\) large enough such that \\(16y^2+1 > |K|\\). For such \\(y\\), \\(\\frac{K}{16y^2+1}\\) cannot be a non-zero integer, because its absolute value is less than 1. So it must be 0.\nThis implies \\(K=0\\).\nTherefore, \\(L R_0 = 0\\). Since \\(L \\ge 1\\) (it is an lcm of denominators), we must have \\(R_0=0\\).\n\nStep 4: The contradiction.\nSince \\(R_0=0\\), we have\n\\[ C \\frac{45}{64} \\left(C \\frac{45}{64} + 2\\right) = 0. \\]\nWe have established that \\(C\\) is an integer and \\(C \\ge 1\\).\nThus, \\(C \\frac{45}{64}\\) is not zero.\nSo, the second factor must be zero:\n\\[ C \\frac{45}{64} + 2 = 0. \\]\nThis implies \\(C \\frac{45}{64} = -2\\), so\n\\[ C = -2 \\cdot \\frac{64}{45} = -\\frac{128}{45}. \\]\nThis value of \\(C\\) is not a positive integer. This contradicts the established fact that \\(C \\ge 1\\).\nThus, the initial assumption that \\(x>1\\) must be false.\n\nTherefore, the only possibility is \\(x=1\\).\n\nFinal check of the argument:\n1.  The derivation that \\(x-1 = C(y^2+1)(4y^2+1)\\) with \\(C \\in \\mathbb{Z}, C \\ge 1\\) if \\(x>1\\) is sound.\n2.  The derivation of \\(R_0 = P(-1/16) = C \\frac{45}{64} (C \\frac{45}{64} + 2)\\) is algebraically correct.\n3.  The argument that \\(R_0\\) must be zero relies on \\(\\frac{L R_0}{(4y)^2+1}\\) being an integer for all \\(y \\in \\mathbb{Z}^+\\). This part is sound. For this fraction to be an integer for infinitely many values of \\(y\\) that make the denominator arbitrarily large, the numerator must be zero.\n4.  The conclusion \\(C = -128/45\\) contradicts \\(C \\ge 1\\).\n\nAll steps seem correct and logically sound. The conclusion that \\(x=1\\) must be true.\n\nThe final answer is $\\boxed{x=1}$.",
+    "domain": "bmo",
+    "explicit_subgoals": [],
+    "sample_id": "review-13d5ce1e8abe464e9f77a5d3b56a4ddf",
+    "theorem": "Let \\( x \\) and \\( y \\) be positive integers. If for each positive integer \\( n \\) we have that\n\n\\[\n(n y)^{2}+1 \\mid x^{\\varphi(n)}-1\n\\]\n\nprove that \\( x=1 \\)."
+  },
+  {
+    "assumptions": [
+      "x、y 为奇整数。"
+    ],
+    "candidate_text": "因为 x、y 为奇整数，所以存在整数 m,n，使得 x=2m+1，y=2n+1。于是\nx+y=(2m+1)+(2n+1)=2(m+n+1)。\n由于 m+n+1 是整数，故 x+y 是偶数。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-159f667b28a540aca7cdaab0740b726e",
+    "theorem": "证明两个奇整数之和为偶数。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "\\begin{proof}\n\n    By Cauchy's theorem we have that if $G$ is a group of order 21 then it has an element $a$ of order 3 and an element $b$ of order 7. By exercise 2.5.41 we have that the subgroup generated by $b$ is normal, so there is some $i=0,1,2,3,4,5,6$ such that $a b a^{-1}=b^i$. We know $i \\neq$ 0 since that implies $a b=a$ and so that $b=e$, a contradiction, and we know $i \\neq 1$ since then $a b=b a$ and this would imply $G$ is abelian, which we are assuming is not the case.\n\nNow, $a$ has order 3 so we must have $b=a^3 b a^{-3}=b^{i^3}$ mod 7 , and so $i$ is restricted by the modular equation $i^3 \\equiv 1 \\bmod 7$\n\n\\begin{center}\n\n\\begin{tabular}{|c|c|}\n\n\\hline$x$ & $x^3 \\bmod 7$ \\\\\n\n\\hline 2 & 1 \\\\\n\n\\hline 3 & 6 \\\\\n\n\\hline 4 & 1 \\\\\n\n\\hline 5 & 6 \\\\\n\n\\hline 6 & 6 \\\\\n\n\\hline\n\n\\end{tabular}\n\n\\end{center}\n\nTherefore the only options are $i=2$ and $i=4$. Now suppose $G$ is such that $a b a^{-1}=b^2$ and let $G^{\\prime}$ be another group of order 21 with an element $c$ of order 3 and an element $d$ of order 7 such that $c d c^{-1}=d^4$. We now prove that $G$ and $G^{\\prime}$ are isomorphic. Define\n\n$$\n\n\\begin{aligned}\n\n\\phi: G & \\rightarrow G^{\\prime} \\\\\n\na & \\mapsto c^{-1} \\\\\n\nb & \\mapsto d\n\n\\end{aligned}\n\n$$\n\nsince $a$ and $c^{-1}$ have the same order and $b$ and $d$ have the same order this is a well defined function. Since\n\n$$\n\n\\begin{aligned}\n\n\\phi(a) \\phi(b) \\phi(a)^{-1} & =c^{-1} d c \\\\\n\n& =\\left(c d^{-1} c^{-1}\\right)^{-1} \\\\\n\n& =\\left(d^{-4}\\right)^{-1} \\\\\n\n& =d^4 \\\\\n\n& =\\left(d^2\\right)^2 \\\\\n\n& =\\phi(b)^2\n\n\\end{aligned}\n\n$$\n\n$\\phi$ is actually a homomorphism. For any $c^i d^j \\in G^{\\prime}$ we have $\\phi\\left(a^{-i} b^j\\right)=c^i d^j$ so $\\phi$ is onto and $\\phi\\left(a^i b^j\\right)=c^{-i} d^j=e$ only if $i=j=0$, so $\\phi$ is 1-to-l. Therefore $G$ and $G^{\\prime}$ are isomorphic and so up to isomorphism there is only one nonabelian group of order 21 .\n\n\\end{proof}",
+    "domain": "abstract_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-16d8027595bc46069b6d80c5355f45af",
+    "theorem": "Prove that any two nonabelian groups of order 21 are isomorphic."
+  },
+  {
+    "assumptions": [
+      "a,b 为奇整数。"
+    ],
+    "candidate_text": "由 a,b 为奇整数，存在整数 m,n，使得 a=2m+1，b=2n+1。因此\n\na+b=(2m+1)+(2n+1)=2(m+n+1)。\n\n由于 m+n+1 是整数，a+b 是 2 的整数倍，故 a+b 为偶数。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-1c33e53c902b4a4fb3fa6e1758e56d59",
+    "theorem": "证明两个奇整数之和为偶数。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "The smallest value is \\(\\boxed{11}\\).\n\nFor necessity, let the first player write four copies of \\(24\\) and five copies of \\(23\\). Their total is\n\\[\n4\\cdot24+5\\cdot23=211.\n\\]\nEvery proper sublist has sum at most \\(211-23=188\\), while the whole list has sum \\(211\\). Thus no selectable sum lies in \\([190,210]\\), so \\(N=10\\), and hence every \\(N\\le 10\\), fails.\n\nFor sufficiency, consider any permitted list. Suppose no sublist has sum in \\([189,211]\\). Choose a sublist \\(B\\) whose sum \\(s\\le188\\) is maximal. Since the total sum is at least \\(200\\), some term \\(x\\) is outside \\(B\\). Maximality gives \\(s+x>188\\), and the assumed gap then gives \\(s+x\\ge212\\). Since \\(x\\le25\\), we obtain \\(s\\ge187\\). Hence \\(s\\in\\{187,188\\}\\).\n\nIf \\(s=187\\), every outside term must equal \\(25\\). Fix such a term. Replacing any \\(y\\in B\\) by this \\(25\\) gives sum \\(212-y\\). If \\(y\\le23\\), this lies in \\([189,211]\\), a contradiction. Thus every term of \\(B\\) is at least \\(24\\). But terms from \\(\\{24,25\\}\\) cannot sum to \\(187\\): seven sum to at most \\(175\\), while eight sum to at least \\(192\\).\n\nNow suppose \\(s=188\\). Every outside term is at least \\(24\\). If an outside term were \\(24\\), replacing any \\(y\\in B\\) by it would give \\(212-y\\); hence every \\(y\\in B\\) would have to be at least \\(24\\), again impossible because terms from \\(\\{24,25\\}\\) cannot sum to \\(188\\). Therefore every outside term equals \\(25\\).\n\nUsing an outside \\(25\\), replacing \\(y\\in B\\) gives sum \\(213-y\\). For every \\(2\\le y\\le24\\), this belongs to \\([189,211]\\). Therefore every term of \\(B\\), and consequently every term of the whole list, is either \\(1\\) or \\(25\\).\n\nLet \\(p\\) be the number of \\(25\\)'s. If \\(p\\ge8\\), eight of them sum to \\(200\\). If \\(p\\le7\\), the total-sum condition guarantees at least \\(200-25p\\) copies of \\(1\\); selecting all \\(p\\) copies of \\(25\\) and \\(200-25p\\) copies of \\(1\\) again gives sum \\(200\\). Both cases contradict the assumed gap.\n\nThus every permitted list has a selectable sum in \\([189,211]\\), so \\(N=11\\) suffices. Combined with the construction, the minimum is \\(11\\).",
+    "domain": "baltic_mo",
+    "explicit_subgoals": [],
+    "sample_id": "review-21354646db104a3299aec6150fc3daa9",
+    "theorem": "Let \\( N \\) be a positive integer. Two persons play the following game. The first player writes a list of positive integers not greater than \\( 25 \\), not necessarily different, such that their sum is at least \\( 200 \\). The second player wins if he can select some of these numbers so that their sum \\( S \\) satisfies the condition \\( 200-N \\leq S \\leq 200+N \\). What is the smallest value of \\( N \\) for which the second player has a winning strategy?"
+  },
+  {
+    "assumptions": [
+      "a 为实数。"
+    ],
+    "candidate_text": "平方与开平方互相抵消，所以 sqrt(a^2)=a。\n又因为每个实数 a 都等于 |a|，所以 sqrt(a^2)=|a|。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-21f08d99ee4e49cc95a7ac4f9c538833",
+    "theorem": "证明对任意实数 a，都有 sqrt(a^2)=|a|。"
+  },
+  {
+    "assumptions": [
+      "a,b 为实数，且 a<b。"
+    ],
+    "candidate_text": "由 a<b，得 b-a>0。又 a^2+ab+b^2=(a+b/2)^2+3b^2/4≥0；若其等于 0，则 a=b=0，与 a<b 矛盾，故 a^2+ab+b^2>0。因此 b^3-a^3=(b-a)(a^2+ab+b^2)>0，即 a^3<b^3。\n再分别乘以 a 和 b，得到 a^3<b^3。\n因此立方函数严格递增。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-29fd5a61564845e7ba1469b589f66dda",
+    "theorem": "证明若实数 a<b，则 a^3<b^3。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "For each \\(x\\in[0,1)\\), \\(x^n\\to 0\\), while \\(f_n(1)=1\\) for every \\(n\\). Hence the pointwise limit is\n\\[\nf(x)=\\begin{cases}0,&0\\le x<1,\\\\1,&x=1.\\end{cases}\n\\]\nIf \\((f_n)\\) converged uniformly, its uniform limit would necessarily be \\(f\\). Set \\(\\varepsilon=\\tfrac12\\). For every \\(N\\in\\mathbb Z_+\\), choose \\(n=N\\) and \\(x=2^{-1/N}\\in[0,1)\\). Then \\(f(x)=0\\) and\n\\[\n|f_n(x)-f(x)|=x^N=\\frac12.\n\\]\nThus, for every \\(N\\), there exist \\(n\\ge N\\) and \\(x\\in[0,1]\\) such that \\(|f_n(x)-f(x)|\\ge\\varepsilon\\), contradicting the definition of uniform convergence. Therefore \\((f_n)\\) does not converge uniformly on \\([0,1]\\).",
+    "domain": "topology",
+    "explicit_subgoals": [],
+    "sample_id": "review-306dbefcb73447c79fb81413dd6f33c1",
+    "theorem": "Define $f_{n}:[0,1] \\rightarrow \\mathbb{R}$ by the equation $f_{n}(x)=x^{n}$. Show that the sequence $\\left(f_{n}\\right)$ does not converge uniformly."
+  },
+  {
+    "assumptions": [
+      "x,y 为实数且 x=y。"
+    ],
+    "candidate_text": "由 x=y，将等式两边同乘以 x，得 x^2=xy；再将原等式两边同乘以 y，得 xy=y^2。由等式的传递性，x^2=y^2。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-3177ff7ef7194491839a1cbdfd2c7c7d",
+    "theorem": "证明若 x,y 为实数且 x=y，则 x^2=y^2。"
+  },
+  {
+    "assumptions": [
+      "x,y 为实数且 x=y。"
+    ],
+    "candidate_text": "设 x,y∈ℝ 且 x=y。等式两边同乘 x，得 x²=xy；等式两边同乘 y，得 xy=y²。因此由等式的传递性，x²=xy=y²，故 x²=y²。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-31fbfbac453c412c8695456a4a3e497e",
+    "theorem": "证明若 x,y 为实数且 x=y，则 x^2=y^2。"
+  },
+  {
+    "assumptions": [
+      "x,y 为实数且 x=y。"
+    ],
+    "candidate_text": "由 x=y，等式两边同乘 x，得 x²=xy；等式两边同乘 y，得 xy=y²（使用实数乘法交换律）。因此由等式的传递性，x²=y²。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-3357b9e8b8df43f1ae0b83a1428023cb",
+    "theorem": "证明若 x,y 为实数且 x=y，则 x^2=y^2。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Since \\(f:X\\to\\mathbb R\\) is continuous and \\(\\{0\\}\\) is closed in \\(\\mathbb R\\), the inverse image \\(f^{-1}(\\{0\\})\\) is closed in \\(X\\). By definition,\n\\[\nZ(f)=\\{p\\in X:f(p)=0\\}=f^{-1}(\\{0\\}).\n\\]\nTherefore \\(Z(f)\\) is closed.",
+    "domain": "real_analysis",
+    "explicit_subgoals": [],
+    "sample_id": "review-33b140ebe8314d2998cf7de806b466e6",
+    "theorem": "Let $f$ be a continuous real function on a metric space $X$. Let $Z(f)$ (the zero set of $f$ ) be the set of all $p \\in X$ at which $f(p)=0$. Prove that $Z(f)$ is closed."
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "For each \\(x\\in[0,1)\\), \\(x^n\\to0\\), while \\(f_n(1)=1\\) for every \\(n\\). Thus the pointwise limit is\n\\[\nf(x)=\\begin{cases}0,&0\\le x<1,\\\\1,&x=1.\\end{cases}\n\\]\nAny uniform limit would necessarily equal this pointwise limit. Fix \\(\\varepsilon=\\tfrac12\\). For every \\(N\\in\\mathbb Z_+\\), take \\(n=N\\) and \\(x=2^{-1/N}<1\\). Then\n\\[\n|f_n(x)-f(x)|=x^n=\\left(2^{-1/N}\\right)^N=\\tfrac12.\n\\]\nHence for every \\(N\\) there exist \\(n\\ge N\\) and \\(x\\in[0,1]\\) such that \\(|f_n(x)-f(x)|\\ge\\varepsilon\\). Therefore \\((f_n)\\) does not converge uniformly on \\([0,1]\\).",
+    "domain": "topology",
+    "explicit_subgoals": [],
+    "sample_id": "review-34b1df259100431f9143ae5b9bf6ac81",
+    "theorem": "Define $f_{n}:[0,1] \\rightarrow \\mathbb{R}$ by the equation $f_{n}(x)=x^{n}$. Show that the sequence $\\left(f_{n}\\right)$ does not converge uniformly."
+  },
+  {
+    "assumptions": [
+      "x,y 为实数且 x=y。"
+    ],
+    "candidate_text": "由 x=y，将等式两边同乘 x，得 x^2=xy；将等式两边同乘 y，得 xy=y^2。因此由等式的传递性，x^2=y^2。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-3bbb24500bcc414baa6c1861d72fa4f9",
+    "theorem": "证明若 x,y 为实数且 x=y，则 x^2=y^2。"
+  },
+  {
+    "assumptions": [
+      "a,b 为实数，且 a<b。"
+    ],
+    "candidate_text": "设实数 a<b。则 b-a>0，且\nb³-a³=(b-a)(a²+ab+b²)。\n又\n2(a²+ab+b²)=a²+b²+(a+b)²>0，\n因为右侧为平方和，而 a<b 排除了 a=b=0。因此 a²+ab+b²>0，于是 b³-a³>0，即 a³<b³。故立方函数在实数域上严格递增。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-3c209e34b3eb4aaca6e628fde57c59ed",
+    "theorem": "证明若实数 a<b，则 a^3<b^3。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "To solve the problem, we analyze the game between two players:\n\n- **Player 1** writes a list of positive integers (each ≤ 25) such that their **sum is at least 200**.\n- **Player 2** wins if they can select a **subset** of these numbers whose **sum $ S $** satisfies:\n  $$\n  200 - N \\leq S \\leq 200 + N\n  $$\n- The goal is to find the **smallest** such $ N $ for which **Player 2 always has a winning strategy**, regardless of how Player 1 chooses the list.\n\n---\n\n### Key Observations\n\n1. **Subset Sum Problem**: The core of the problem is a variant of the **subset sum problem**, where we are not looking for a specific target sum, but rather a **range** around 200.\n\n2. **Worst-Case Strategy for Player 1**: To make it as hard as possible for Player 2, Player 1 will try to construct a list of numbers such that **no subset sum** falls within the interval $[200 - N, 200 + N]$. The **minimal such $ N $** for which this is **impossible** is the answer.\n\n3. **Bounding the Numbers**: Since all numbers are ≤ 25, and the total sum is at least 200, the number of elements in the list is at least $ \\lceil 200 / 25 \\rceil = 8 $.\n\n4. **Worst-Case Construction**: A natural candidate for a \"bad\" list is one where all numbers are the same, say $ k $, and the total sum is just enough to exceed 200. This maximizes the spacing between subset sums, making it harder for Player 2 to find a subset sum in the desired range.\n\n---\n\n### Constructing a Worst-Case Example\n\nLet’s consider the case where Player 1 chooses **ten 21s**, giving a total sum of:\n$$\n10 \\times 21 = 210\n$$\nThe possible subset sums are:\n$$\n21, 42, 63, \\dots, 210\n$$\nThese are all **multiples of 21**. The closest subset sums to 200 are:\n- $ 189 = 9 \\times 21 $, which is **11 less** than 200\n- $ 210 = 10 \\times 21 $, which is **10 more** than 200\n\nThus, the **closest subset sum** to 200 is **210**, which is **10 units away** from 200. Therefore, **Player 2 cannot win with $ N = 9 $** in this case.\n\nThis shows that **$ N = 10 $** is **necessary**.\n\n---\n\n### Proving Sufficiency of $ N = 10 $\n\nWe now show that **$ N = 10 $** is **sufficient** for Player 2 to always win, regardless of how Player 1 constructs the list.\n\n#### Case 1: Total Sum $ S \\leq 210 $\n\nIf the total sum of the list is **less than or equal to 210**, then Player 2 can simply choose the **entire list**, and the sum will be in the range $[200, 210]$, which is within $[200 - 10, 200 + 10]$. So Player 2 wins.\n\n#### Case 2: Total Sum $ S > 210 $\n\nThis is the more challenging case. We need to show that **some subset** of the list has a sum in the range $[190, 210]$.\n\nWe use a **partial sum argument**:\n\n- Consider the **partial sums** of the list, i.e., the sums of the first $ i $ elements for $ i = 1, 2, \\dots, n $.\n- Since the total sum is $ > 210 $, and the elements are all $ \\leq 25 $, there must be a **partial sum** that crosses from below 190 to above 210.\n- Let $ s_i $ be the first partial sum that exceeds 190. Then $ s_{i-1} < 190 $, and $ s_i = s_{i-1} + a_i > 190 $.\n- Since $ a_i \\leq 25 $, we have:\n  $$\n  s_i \\leq s_{i-1} + 25 < 190 + 25 = 215\n  $$\n  So $ s_i \\in (190, 215] $\n\n- Now, we can **remove some elements** from the subset that sums to $ s_i $ to bring the sum down into the range $[190, 210]$. Since the elements are all $ \\leq 25 $, and the total sum is large, we can always find a subset of the first $ i $ elements that sums to a value in $[190, 210]$.\n\nThis argument shows that **no matter how Player 1 constructs the list**, Player 2 can always find a subset sum in the range $[190, 210]$, i.e., within $ N = 10 $ of 200.\n\n---\n\n### Conclusion\n\n- The **worst-case** list (e.g., ten 21s) shows that **$ N = 10 $** is **necessary**.\n- The **partial sum argument** shows that **$ N = 10 $** is **sufficient** for Player 2 to always win.\n\nThus, the **smallest** such $ N $ is:\n\n$$\n\\boxed{10}\n$$",
+    "domain": "baltic_mo",
+    "explicit_subgoals": [],
+    "sample_id": "review-431e2d7eff3c4cb98475a6750e818d08",
+    "theorem": "Let \\( N \\) be a positive integer. Two persons play the following game. The first player writes a list of positive integers not greater than \\( 25 \\), not necessarily different, such that their sum is at least \\( 200 \\). The second player wins if he can select some of these numbers so that their sum \\( S \\) satisfies the condition \\( 200-N \\leq S \\leq 200+N \\). What is the smallest value of \\( N \\) for which the second player has a winning strategy?"
+  },
+  {
+    "assumptions": [
+      "x、y 为奇整数。"
+    ],
+    "candidate_text": "存在整数 m,n，使 x=2m+1，y=2n+1。\n所以 x+y 是偶数。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-4472134904ab4be99b308a2011e51575",
+    "theorem": "证明两个奇整数之和为偶数。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Proof.  We think of the final “blocked’’ configuration as the result of tearing out \\(b(n)\\) disjoint 3-stamp blocks (each block either 3 in a row or 3 in a column) so that no further 3-stamp block remains.  Call any three consecutive positions in a row or in a column a “potential triple.’’  There are in all  \n\\[\nH \\;=\\; n\\,(n-2)\n\\quad\\text{horizontal triples,}\n\\qquad\nV \\;=\\; n\\,(n-2)\n\\quad\\text{vertical triples,}\n\\]\nand hence \n\\[\nT \\;=\\;H+V \\;=\\;2\\,n\\,(n-2)\n\\]\npotential triples that must each be “hit’’ (i.e.\\ each must lose at least one stamp) by our removed blocks.\n\n1.  Lower bound \\(b(n)\\ge \\tfrac1{7}n^2-cn\\).  \n \nFix any one of the \\(b(n)\\) removed blocks.  If it is a horizontal block occupying cells \\((i,j),(i,j+1),(i,j+2)\\), then it “hits’’ (i.e.\\ destroys at least one cell of) at most\n  •  all horizontal triples that include one of those three cells;  in a row of length \\(n\\), each interior cell lies in 3 horizontal triples and each end‐cell in 1 or 2, and one checks easily that the three consecutive cells \\((i,j),(i,j+1),(i,j+2)\\) together lie in at most 5 distinct horizontal triples;  \n  •  all vertical triples that include one of those three cells;  each of the three removed stamps lies in at most 3 vertical triples, so altogether at most \\(3\\times3=9\\) vertical triples.  \nHence that one horizontal block can destroy at most \\(5+9=14\\) of the \\(T\\) potential triples.  Likewise any vertical block destroys at most \\(14\\) potential triples.  \n\nSince in the final configuration every one of the \\(T=2n(n-2)\\) potential triples must be destroyed by at least one of the removed blocks, and since each block can destroy at most \\(14\\) triples, we get the inequality\n\\[\n14\\,b(n)\\;\\ge\\;2\\,n(n-2)\\;=\\;2n^2-4n,\n\\]\ni.e.\n\\[\nb(n)\\;\\ge\\;\\frac{2n^2-4n}{14}\n\\;=\\;\\frac1{7}\\,n^2-\\frac{2}{7}\\,n.\n\\]\nThus the stated lower bound holds with \\(c=\\tfrac{2}{7}\\).\n\n2.  Upper bound \\(b(n)\\le \\tfrac1{5}n^2+dn\\).\n\nWe give an explicit “tiling’’ construction with density \\(1/5\\), up to an \\(O(n)\\) boundary correction.  Assume for simplicity that \\(n\\) is a multiple of 5; the leftover strip of width \\(<5\\) on the right and top can then be handled by at most \\(O(n)\\) extra blocks without changing the leading term.\n\nPartition the \\(n\\times n\\) grid into \\(\\tfrac n5\\times\\tfrac n5\\) little \\(5\\times5\\) macrosquares.  In each \\(5\\times5\\) macro with local coordinates \\((r,c)\\), \\(1\\le r,c\\le5\\), remove exactly the following 5 blocks (each of size 3):\n\n  A)  A horizontal block in row \\(r=2\\), columns \\(c=1,2,3\\).\n\n  B)  A horizontal block in row \\(r=4\\), columns \\(c=3,4,5\\).\n\n  C)  A vertical block in column \\(c=2\\), rows \\(r=3,4,5\\).\n\n  D)  A vertical block in column \\(c=4\\), rows \\(r=1,2,3\\).\n\n  E)  A horizontal block in row \\(r=5\\), columns \\(c=2,3,4\\).\n\nOne checks by an easy (though a bit tedious) case‐by‐case verification that in this repeated pattern every horizontal triple of three consecutive stamps in any row will contain at least one removed stamp (from one of the above horizontal blocks in its macro or in an adjacent macro), and similarly every vertical triple of three consecutive stamps in any column meets one of the vertical blocks C) or D).  Thus after tearing out these \\(5\\) blocks in each \\(5\\times5\\) cell there is no triple left anywhere in the \\(n\\times n\\) square.\n\nSince there are \\(\\tfrac n5\\) macros in each direction, the total number of blocks used is\n\\[\n5\\;\\times\\;\\Bigl(\\frac n5\\Bigr)^2\n\\;=\\;\\frac15\\,n^2.\n\\]\nAdding the \\(O(n)\\) extra blocks needed to cover the final partial strips (of width \\(<5\\)) along the top and right edges gives\n\\[\nb(n)\\;\\le\\;\\frac15\\,n^2 \\;+\\;O(n).\n\\]\nHence the upper bound holds with some constant \\(d\\).\n\nCombining (1) and (2) completes the proof: for all \\(n>0\\),\n\\[\n\\frac1{7}\\,n^2-\\frac{2}{7}n\\;\\le\\;b(n)\\;\\le\\;\\frac1{5}\\,n^2+d\\,n,\n\\]\nas required.  ∎",
+    "domain": "usamo",
+    "explicit_subgoals": [],
+    "sample_id": "review-461d80bfca7e4f7a97ce74d05c3b8d5a",
+    "theorem": "I have an \\(n \\times n\\) sheet of stamps, from which I've been asked to tear out blocks of three adjacent stamps in a single row or column. (I can only tear along the perforations separating adjacent stamps, and each block must come out of the sheet in one piece.) Let \\(b(n)\\) be the smallest number of blocks I can tear out and make it impossible to tear out any more blocks. Prove that there are real constants \\(c\\) and \\(d\\) such that\n\n\\[\n\\frac{1}{7} n^{2}-c n \\leq b(n) \\leq \\frac{1}{5} n^{2}+d n\n\\]\n\nfor all \\(n>0\\)."
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "\\begin{proof}\n\n    The sequence $\\left(f_n\\right)_n$ does not converge uniformly, since given $0<\\varepsilon<1$ and $N \\in \\mathbb{Z}_{+}$, for $x=\\varepsilon^{1 / N}$ we have $d\\left(f_N(x), f(x)\\right)=\\varepsilon$. We can also apply Theorem 21.6: the convergence is not uniform since $f$ is not continuous.\n\n\\end{proof}",
+    "domain": "topology",
+    "explicit_subgoals": [],
+    "sample_id": "review-491958f8d87a4a90ae178c827e2b52bf",
+    "theorem": "Define $f_{n}:[0,1] \\rightarrow \\mathbb{R}$ by the equation $f_{n}(x)=x^{n}$. Show that the sequence $\\left(f_{n}\\right)$ does not converge uniformly."
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Since \\(\\{0\\}\\) is closed in \\(\\mathbb{R}\\) and the continuous map \\(f:X\\to\\mathbb{R}\\) has closed preimages of closed sets, \\(f^{-1}(\\{0\\})\\) is closed in \\(X\\). Moreover,\n\\[\nZ(f)=\\{p\\in X:f(p)=0\\}=f^{-1}(\\{0\\}).\n\\]\nTherefore \\(Z(f)\\) is closed.",
+    "domain": "real_analysis",
+    "explicit_subgoals": [],
+    "sample_id": "review-4953c153d2db40978f62779a2a028291",
+    "theorem": "Let $f$ be a continuous real function on a metric space $X$. Let $Z(f)$ (the zero set of $f$ ) be the set of all $p \\in X$ at which $f(p)=0$. Prove that $Z(f)$ is closed."
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "\\begin{proof}\n\n    $Z(f)=f^{-1}(\\{0\\})$, which is the inverse image of a closed set. Hence $Z(f)$ is closed.\n\n\\end{proof}",
+    "domain": "real_analysis",
+    "explicit_subgoals": [],
+    "sample_id": "review-49d38e43dec74c5a88b64b481fcd8dc2",
+    "theorem": "Let $f$ be a continuous real function on a metric space $X$. Let $Z(f)$ (the zero set of $f$ ) be the set of all $p \\in X$ at which $f(p)=0$. Prove that $Z(f)$ is closed."
+  },
+  {
+    "assumptions": [
+      "a,b 为奇整数。"
+    ],
+    "candidate_text": "设 a,b 为奇整数。根据奇整数的定义，存在整数 m,n，使得 a=2m+1，b=2n+1。因此\na+b=(2m+1)+(2n+1)=2(m+n+1)。\n由于 m+n+1 是整数，故 a+b 能被 2 整除，所以 a+b 是偶数。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-4c91704ad3164d6bb3dd6db97e0e968d",
+    "theorem": "证明两个奇整数之和为偶数。"
+  },
+  {
+    "assumptions": [
+      "a 为实数。"
+    ],
+    "candidate_text": "证明：任取 a∈ℝ，按 a 的符号分类。\n\n若 a≥0，则 |a|=a。由于 a≥0 且 a² 的非负平方根为 a，故 √(a²)=a=|a|。\n\n若 a<0，则 |a|=-a>0，且 (-a)²=a²。因此 -a 是 a² 的非负平方根，故 √(a²)=-a=|a|。\n\n两种情形穷尽所有实数 a，所以对任意实数 a，都有 √(a²)=|a|。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-4e5f5f1209c8417fb0f97c5f2b5bf7a3",
+    "theorem": "证明对任意实数 a，都有 sqrt(a^2)=|a|。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "\\begin{proof}\n\n    The sequence $\\left(f_n\\right)_n$ does not converge uniformly, since given $0<\\varepsilon<1$ and $N \\in \\mathbb{Z}_{+}$, for $x=\\varepsilon^{1 / N}$ we have $d\\left(f_N(x), f(x)\\right)=\\varepsilon$. We can also apply Theorem 21.6: the convergence is not uniform since $f$ is not continuous.\n\n\\end{proof}",
+    "domain": "topology",
+    "explicit_subgoals": [],
+    "sample_id": "review-4ed10f5a23d940a7a380f50bea6628dd",
+    "theorem": "Define $f_{n}:[0,1] \\rightarrow \\mathbb{R}$ by the equation $f_{n}(x)=x^{n}$. Show that the sequence $\\left(f_{n}\\right)$ does not converge uniformly."
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "To solve the problem, we analyze the game between two players:\n\n- **Player 1** writes a list of positive integers (each ≤ 25) such that their **sum is at least 200**.\n- **Player 2** wins if they can select a **subset** of these numbers whose **sum $ S $** satisfies:\n  $$\n  200 - N \\leq S \\leq 200 + N\n  $$\n- The goal is to find the **smallest** such $ N $ for which **Player 2 always has a winning strategy**, regardless of how Player 1 chooses the list.\n\n---\n\n### Key Observations\n\n1. **Subset Sum Problem**: The core of the problem is a variant of the **subset sum problem**, where we are not looking for a specific target sum, but rather a **range** around 200.\n\n2. **Worst-Case Strategy for Player 1**: To make it as hard as possible for Player 2, Player 1 will try to construct a list of numbers such that **no subset sum** falls within the interval $[200 - N, 200 + N]$. The **minimal such $ N $** for which this is **impossible** is the answer.\n\n3. **Bounding the Numbers**: Since all numbers are ≤ 25, and the total sum is at least 200, the number of elements in the list is at least $ \\lceil 200 / 25 \\rceil = 8 $.\n\n4. **Worst-Case Construction**: A natural candidate for a \"bad\" list is one where all numbers are the same, say $ k $, and the total sum is just enough to exceed 200. This maximizes the spacing between subset sums, making it harder for Player 2 to find a subset sum in the desired range.\n\n---\n\n### Constructing a Worst-Case Example\n\nLet’s consider the case where Player 1 chooses **ten 21s**, giving a total sum of:\n$$\n10 \\times 21 = 210\n$$\nThe possible subset sums are:\n$$\n21, 42, 63, \\dots, 210\n$$\nThese are all **multiples of 21**. The closest subset sums to 200 are:\n- $ 189 = 9 \\times 21 $, which is **11 less** than 200\n- $ 210 = 10 \\times 21 $, which is **10 more** than 200\n\nThus, the **closest subset sum** to 200 is **210**, which is **10 units away** from 200. Therefore, **Player 2 cannot win with $ N = 9 $** in this case.\n\nThis shows that **$ N = 10 $** is **necessary**.\n\n---\n\n### Proving Sufficiency of $ N = 10 $\n\nWe now show that **$ N = 10 $** is **sufficient** for Player 2 to always win, regardless of how Player 1 constructs the list.\n\n#### Case 1: Total Sum $ S \\leq 210 $\n\nIf the total sum of the list is **less than or equal to 210**, then Player 2 can simply choose the **entire list**, and the sum will be in the range $[200, 210]$, which is within $[200 - 10, 200 + 10]$. So Player 2 wins.\n\n#### Case 2: Total Sum $ S > 210 $\n\nThis is the more challenging case. We need to show that **some subset** of the list has a sum in the range $[190, 210]$.\n\nWe use a **partial sum argument**:\n\n- Consider the **partial sums** of the list, i.e., the sums of the first $ i $ elements for $ i = 1, 2, \\dots, n $.\n- Since the total sum is $ > 210 $, and the elements are all $ \\leq 25 $, there must be a **partial sum** that crosses from below 190 to above 210.\n- Let $ s_i $ be the first partial sum that exceeds 190. Then $ s_{i-1} < 190 $, and $ s_i = s_{i-1} + a_i > 190 $.\n- Since $ a_i \\leq 25 $, we have:\n  $$\n  s_i \\leq s_{i-1} + 25 < 190 + 25 = 215\n  $$\n  So $ s_i \\in (190, 215] $\n\n- Now, we can **remove some elements** from the subset that sums to $ s_i $ to bring the sum down into the range $[190, 210]$. Since the elements are all $ \\leq 25 $, and the total sum is large, we can always find a subset of the first $ i $ elements that sums to a value in $[190, 210]$.\n\nThis argument shows that **no matter how Player 1 constructs the list**, Player 2 can always find a subset sum in the range $[190, 210]$, i.e., within $ N = 10 $ of 200.\n\n---\n\n### Conclusion\n\n- The **worst-case** list (e.g., ten 21s) shows that **$ N = 10 $** is **necessary**.\n- The **partial sum argument** shows that **$ N = 10 $** is **sufficient** for Player 2 to always win.\n\nThus, the **smallest** such $ N $ is:\n\n$$\n\\boxed{10}\n$$",
+    "domain": "baltic_mo",
+    "explicit_subgoals": [],
+    "sample_id": "review-5381c60f6f324297b82b8ad5a0484962",
+    "theorem": "Let \\( N \\) be a positive integer. Two persons play the following game. The first player writes a list of positive integers not greater than \\( 25 \\), not necessarily different, such that their sum is at least \\( 200 \\). The second player wins if he can select some of these numbers so that their sum \\( S \\) satisfies the condition \\( 200-N \\leq S \\leq 200+N \\). What is the smallest value of \\( N \\) for which the second player has a winning strategy?"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Let \\(G\\) and \\(H\\) be arbitrary nonabelian groups of order \\(21\\). We first establish a common normal form for either group \\(K\\in\\{G,H\\}\\).\n\nBy Sylow’s theorems, the number of Sylow \\(7\\)-subgroups divides \\(3\\) and is congruent to \\(1\\pmod 7\\), so it is \\(1\\). Thus the Sylow \\(7\\)-subgroup \\(P=\\langle b\\rangle\\) is normal. Choose a subgroup \\(Q=\\langle a\\rangle\\) of order \\(3\\). Since \\(P\\cap Q=\\{e\\}\\) and \\(|P||Q|=21\\), we have \\(K=PQ\\), and every element of \\(K\\) has a unique expression \\(b^j a^i\\), where \\(0\\le j<7\\) and \\(0\\le i<3\\).\n\nBecause \\(P\\) is normal, conjugation by \\(a\\) induces an automorphism of \\(P\\), so\n\\[\naba^{-1}=b^r\n\\]\nfor some \\(r\\in\\{1,2,3,4,5,6\\}\\). Since \\(a^3=e\\),\n\\[\nb=a^3ba^{-3}=b^{r^3},\n\\]\nso \\(r^3\\equiv1\\pmod 7\\). The solutions are \\(r\\equiv1,2,4\\pmod 7\\). If \\(r=1\\), then \\(a\\) commutes with \\(b\\); because \\(a,b\\) generate \\(K\\), this would make \\(K\\) abelian. Hence \\(r=2\\) or \\(r=4\\). If \\(r=4\\), replace \\(a\\) by \\(a^{-1}\\); the resulting conjugation exponent is \\(4^{-1}\\equiv2\\pmod 7\\). Therefore generators may be chosen so that\n\\[\na^3=b^7=e,\\qquad aba^{-1}=b^2.\n\\]\n\nApplying this to both groups, choose generators \\(a,b\\) of \\(G\\) and \\(c,d\\) of \\(H\\) satisfying\n\\[\naba^{-1}=b^2,\\qquad cdc^{-1}=d^2.\n\\]\nDefine\n\\[\n\\phi:G\\to H,\\qquad \\phi(b^j a^i)=d^j c^i.\n\\]\nThe uniqueness of the normal forms makes \\(\\phi\\) well-defined and bijective. Moreover,\n\\[\n(b^j a^i)(b^\\ell a^k)=b^{j+2^i\\ell}a^{i+k},\n\\]\nand the identical formula holds in \\(H\\):\n\\[\n(d^j c^i)(d^\\ell c^k)=d^{j+2^i\\ell}c^{i+k}.\n\\]\nConsequently \\(\\phi(xy)=\\phi(x)\\phi(y)\\) for all \\(x,y\\in G\\). Thus \\(\\phi\\) is an isomorphism. Since \\(G\\) and \\(H\\) were arbitrary, any two nonabelian groups of order \\(21\\) are isomorphic.",
+    "domain": "abstract_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-59300ec10964466bab0da1eece1d3469",
+    "theorem": "Prove that any two nonabelian groups of order 21 are isomorphic."
+  },
+  {
+    "assumptions": [
+      "a,b 为实数，且 a<b。"
+    ],
+    "candidate_text": "由因式分解，\n\\[\nb^3-a^3=(b-a)(a^2+ab+b^2).\n\\]\n因为 \\(a<b\\)，所以 \\(b-a>0\\)。又\n\\[\na^2+ab+b^2=\\left(a+\\frac b2\\right)^2+\\frac34b^2\\ge 0.\n\\]\n若其等于零，则 \\(b=0\\) 且 \\(a=0\\)，这与 \\(a<b\\) 矛盾，故 \\(a^2+ab+b^2>0\\)。因此 \\(b^3-a^3>0\\)，即 \\(a^3<b^3\\)。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-5a1c40502c514ff9a10fd6436a82c7e2",
+    "theorem": "证明若实数 a<b，则 a^3<b^3。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "To solve the problem, we analyze the game between two players:\n\n- **Player 1** writes a list of positive integers (each ≤ 25) such that their **sum is at least 200**.\n- **Player 2** wins if they can select a **subset** of these numbers whose **sum $ S $** satisfies:\n  $$\n  200 - N \\leq S \\leq 200 + N\n  $$\n- The goal is to find the **smallest** such $ N $ for which **Player 2 always has a winning strategy**, regardless of how Player 1 chooses the list.\n\n---\n\n### Key Observations\n\n1. **Subset Sum Problem**: The core of the problem is a variant of the **subset sum problem**, where we are not looking for a specific target sum, but rather a **range** around 200.\n\n2. **Worst-Case Strategy for Player 1**: To make it as hard as possible for Player 2, Player 1 will try to construct a list of numbers such that **no subset sum** falls within the interval $[200 - N, 200 + N]$. The **minimal such $ N $** for which this is **impossible** is the answer.\n\n3. **Bounding the Numbers**: Since all numbers are ≤ 25, and the total sum is at least 200, the number of elements in the list is at least $ \\lceil 200 / 25 \\rceil = 8 $.\n\n4. **Worst-Case Construction**: A natural candidate for a \"bad\" list is one where all numbers are the same, say $ k $, and the total sum is just enough to exceed 200. This maximizes the spacing between subset sums, making it harder for Player 2 to find a subset sum in the desired range.\n\n---\n\n### Constructing a Worst-Case Example\n\nLet’s consider the case where Player 1 chooses **ten 21s**, giving a total sum of:\n$$\n10 \\times 21 = 210\n$$\nThe possible subset sums are:\n$$\n21, 42, 63, \\dots, 210\n$$\nThese are all **multiples of 21**. The closest subset sums to 200 are:\n- $ 189 = 9 \\times 21 $, which is **11 less** than 200\n- $ 210 = 10 \\times 21 $, which is **10 more** than 200\n\nThus, the **closest subset sum** to 200 is **210**, which is **10 units away** from 200. Therefore, **Player 2 cannot win with $ N = 9 $** in this case.\n\nThis shows that **$ N = 10 $** is **necessary**.\n\n---\n\n### Proving Sufficiency of $ N = 10 $\n\nWe now show that **$ N = 10 $** is **sufficient** for Player 2 to always win, regardless of how Player 1 constructs the list.\n\n#### Case 1: Total Sum $ S \\leq 210 $\n\nIf the total sum of the list is **less than or equal to 210**, then Player 2 can simply choose the **entire list**, and the sum will be in the range $[200, 210]$, which is within $[200 - 10, 200 + 10]$. So Player 2 wins.\n\n#### Case 2: Total Sum $ S > 210 $\n\nThis is the more challenging case. We need to show that **some subset** of the list has a sum in the range $[190, 210]$.\n\nWe use a **partial sum argument**:\n\n- Consider the **partial sums** of the list, i.e., the sums of the first $ i $ elements for $ i = 1, 2, \\dots, n $.\n- Since the total sum is $ > 210 $, and the elements are all $ \\leq 25 $, there must be a **partial sum** that crosses from below 190 to above 210.\n- Let $ s_i $ be the first partial sum that exceeds 190. Then $ s_{i-1} < 190 $, and $ s_i = s_{i-1} + a_i > 190 $.\n- Since $ a_i \\leq 25 $, we have:\n  $$\n  s_i \\leq s_{i-1} + 25 < 190 + 25 = 215\n  $$\n  So $ s_i \\in (190, 215] $\n\n- Now, we can **remove some elements** from the subset that sums to $ s_i $ to bring the sum down into the range $[190, 210]$. Since the elements are all $ \\leq 25 $, and the total sum is large, we can always find a subset of the first $ i $ elements that sums to a value in $[190, 210]$.\n\nThis argument shows that **no matter how Player 1 constructs the list**, Player 2 can always find a subset sum in the range $[190, 210]$, i.e., within $ N = 10 $ of 200.\n\n---\n\n### Conclusion\n\n- The **worst-case** list (e.g., ten 21s) shows that **$ N = 10 $** is **necessary**.\n- The **partial sum argument** shows that **$ N = 10 $** is **sufficient** for Player 2 to always win.\n\nThus, the **smallest** such $ N $ is:\n\n$$\n\\boxed{10}\n$$",
+    "domain": "baltic_mo",
+    "explicit_subgoals": [],
+    "sample_id": "review-5a6295d6e1834c90816e1ef72df707e2",
+    "theorem": "Let \\( N \\) be a positive integer. Two persons play the following game. The first player writes a list of positive integers not greater than \\( 25 \\), not necessarily different, such that their sum is at least \\( 200 \\). The second player wins if he can select some of these numbers so that their sum \\( S \\) satisfies the condition \\( 200-N \\leq S \\leq 200+N \\). What is the smallest value of \\( N \\) for which the second player has a winning strategy?"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Let G be a nonabelian group of order 21. By Sylow's theorems, the number n_7 of Sylow 7-subgroups satisfies n_7\\mid 3 and n_7\\equiv1\\pmod 7, so n_7=1. Thus G has a unique, hence normal, subgroup N=\\langle b\\rangle of order 7. By Cauchy's theorem, G also has a subgroup P=\\langle a\\rangle of order 3. Since N\\cap P=\\{e\\}, we have |NP|=7\\cdot3=21, and therefore G=NP.\n\nBecause N is normal, conjugation by a induces an automorphism of N, so\n\\[\naba^{-1}=b^i\n\\]\nfor some i\\in\\{1,\\dots,6\\}. Since a^3=e,\n\\[\nb=a^3ba^{-3}=b^{i^3},\n\\]\nso i^3\\equiv1\\pmod7. The solutions are i\\equiv1,2,4\\pmod7. If i=1, then a and b commute; since they generate G, this would make G abelian. Hence i=2 or i=4. If i=4, replace a by a^{-1}; conjugation by a^{-1} is the inverse automorphism, whose exponent is 4^{-1}\\equiv2\\pmod7. Thus generators may always be chosen so that\n\\[\na^3=b^7=e,\\qquad aba^{-1}=b^2.\n\\]\n\nNow let G and H be any two nonabelian groups of order 21. Choose generators a,b for G and c,d for H as above, so\n\\[\naba^{-1}=b^2,\\qquad cdc^{-1}=d^2.\n\\]\nEvery element of G has a unique form b^s a^r with 0\\le s<7 and 0\\le r<3: existence follows from G=NP, and uniqueness follows from N\\cap P=\\{e\\}. Likewise, every element of H has a unique form d^s c^r.\n\nDefine\n\\[\n\\phi(b^s a^r)=d^s c^r.\n\\]\nThis is well-defined and bijective by uniqueness of these normal forms. Moreover,\n\\[\n(b^s a^r)(b^t a^u)=b^{s+2^r t}a^{r+u},\n\\]\nbecause a^r b^t a^{-r}=b^{2^r t}. The identical multiplication rule holds in H, so\n\\[\n\\phi((b^s a^r)(b^t a^u))\n=d^{s+2^r t}c^{r+u}\n=(d^s c^r)(d^t c^u).\n\\]\nThus \\phi is a bijective homomorphism, hence an isomorphism. Therefore any two nonabelian groups of order 21 are isomorphic.",
+    "domain": "abstract_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-5b0cebe4fcde4fd78f6693bf62fba4a5",
+    "theorem": "Prove that any two nonabelian groups of order 21 are isomorphic."
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Interpret a final configuration as a maximal collection of pairwise disjoint straight 3-stamp blocks.\n\nFor the lower bound, first let n≥2. There are n(n−2) horizontal and n(n−2) vertical triples, hence 2n(n−2) potential triples altogether. Maximality means that every potential triple contains a removed stamp.\n\nA removed horizontal block meets at most five horizontal potential triples: their starting positions differ from that of the block by at most two. Its three stamps each meet at most three vertical triples, giving at most nine more. Thus one block meets at most 14 potential triples. The same argument applies to a vertical block. Therefore\n\n14b(n) ≥ 2n(n−2),\n\nso\n\nb(n) ≥ n²/7 − 2n/7.\n\nFor n=1, b(1)=0 and the same stated inequality holds. Thus we may take c=2/7.\n\nFor the upper bound, consider first the whole infinite square grid. In row r, for every integer k, select the horizontal block whose columns are\n\n5k+r, 5k+r+1, 5k+r+2.\n\nThese blocks are pairwise disjoint. In each row the unselected columns occur in runs of only two, so every horizontal triple meets a selected block. Every vertical triple also meets one: if a stamp in row r and column q is unselected, then q−r modulo 5 lies in {3,4}. If three stamps in rows r,r+1,r+2 and column q were all unselected, then, writing x=q−r modulo 5, we would have\n\nx, x−1, x−2 ∈ {3,4},\n\nwhich is impossible. Hence this infinite periodic packing meets every horizontal and vertical triple.\n\nNow retain only those selected blocks lying completely inside the n×n sheet. In each row there are at most n/5+1 such blocks, so their total number is at most\n\nn²/5+n.\n\nLet S consist of the cells in the first two or last two columns; thus |S|≤4n. We claim that every triple not hit by the retained blocks intersects S. Indeed, the infinite packing hits that triple. If the relevant infinite block was not retained, then it crossed the left or right boundary, and every one of its cells lying in the sheet is in S.\n\nStarting with the retained blocks, greedily tear out any further available block until none remains. Every added block was unhit by the original retained blocks, so it intersects S. Since the added blocks are disjoint, charge each to a distinct cell of S. Consequently at most 4n blocks are added. The resulting configuration is maximal and uses at most\n\nn²/5+n+4n = n²/5+5n\n\nblocks. Therefore b(n)≤n²/5+5n, so d=5 works. Together with the lower bound, this proves the theorem for every positive integer n.",
+    "domain": "usamo",
+    "explicit_subgoals": [],
+    "sample_id": "review-5da3ad7b8c254d41b413f44bd2505178",
+    "theorem": "I have an \\(n \\times n\\) sheet of stamps, from which I've been asked to tear out blocks of three adjacent stamps in a single row or column. (I can only tear along the perforations separating adjacent stamps, and each block must come out of the sheet in one piece.) Let \\(b(n)\\) be the smallest number of blocks I can tear out and make it impossible to tear out any more blocks. Prove that there are real constants \\(c\\) and \\(d\\) such that\n\n\\[\n\\frac{1}{7} n^{2}-c n \\leq b(n) \\leq \\frac{1}{5} n^{2}+d n\n\\]\n\nfor all \\(n>0\\)."
+  },
+  {
+    "assumptions": [
+      "a,b 为实数，且 a<b。"
+    ],
+    "candidate_text": "因为 a<b，所以 b-a>0。又\n\na²+ab+b²=(a+b/2)²+3b²/4≥0。\n\n若 a²+ab+b²=0，则 b=0 且 a+b/2=0，从而 a=b=0，与 a<b 矛盾。因此 a²+ab+b²>0。于是\n\nb³-a³=(b-a)(a²+ab+b²)>0，\n\n故 a³<b³。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-5da92a54103241e7ab3c2f6ac4735233",
+    "theorem": "证明若实数 a<b，则 a^3<b^3。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "The smallest value is \\(\\boxed{11}\\).\n\nTo prove necessity, let the first player write five \\(23\\)'s and four \\(24\\)'s. Their total is\n\\[\n5\\cdot23+4\\cdot24=211.\n\\]\nEvery proper subset has sum at most \\(211-23=188\\), while the whole list has sum \\(211\\). Thus no subset sum lies in \\([190,210]\\), so \\(N=10\\) (and hence every smaller \\(N\\)) is insufficient.\n\nNow prove that \\(N=11\\) always suffices. From the given list choose an inclusion-minimal sublist whose sum \\(T\\) is at least \\(200\\). Since every entry is at most \\(25\\), minimality gives \\(T\\le224\\).\n\nIf \\(200\\le T\\le211\\), this sublist itself has sum in \\([189,211]\\).\n\nSuppose \\(212\\le T\\le224\\), and write \\(T=200+d\\), where \\(12\\le d\\le24\\). By minimality, removing any entry \\(a\\) makes the sum less than \\(200\\); hence\n\\[\na>T-200=d.\n\\]\nWe seek an entry satisfying\n\\[\nd-11\\le a\\le d+11,\n\\]\nbecause then\n\\[\n189=T-(d+11)\\le T-a\\le T-(d-11)=211.\n\\]\nIf \\(d\\ge14\\), every entry works: \\(a>d\\ge d-11\\) and \\(a\\le25\\le d+11\\).\n\nIf \\(d=13\\), then \\(T=213\\). Some entry is at most \\(24=d+11\\), since otherwise all entries would equal \\(25\\), making \\(T\\) divisible by \\(25\\), which \\(213\\) is not.\n\nIf \\(d=12\\), then \\(T=212\\). Some entry is at most \\(23=d+11\\): otherwise all entries would be at least \\(24\\); at most eight entries would total at most \\(200\\), while at least nine would total at least \\(216\\), both impossible.\n\nThus in every case, deleting a suitable entry from the minimal sublist produces a subset sum in \\([189,211]\\). Therefore \\(N=11\\) is sufficient and is the smallest possible value.",
+    "domain": "baltic_mo",
+    "explicit_subgoals": [],
+    "sample_id": "review-6f2c7cd20b2b472dbe035780d6b3c5bd",
+    "theorem": "Let \\( N \\) be a positive integer. Two persons play the following game. The first player writes a list of positive integers not greater than \\( 25 \\), not necessarily different, such that their sum is at least \\( 200 \\). The second player wins if he can select some of these numbers so that their sum \\( S \\) satisfies the condition \\( 200-N \\leq S \\leq 200+N \\). What is the smallest value of \\( N \\) for which the second player has a winning strategy?"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "For each \\(x\\in[0,1)\\), we have \\(x^n\\to0\\), while \\(f_n(1)=1\\) for every \\(n\\). Thus the pointwise limit is\n\\[\nf(x)=\\begin{cases}0,&0\\le x<1,\\\\1,&x=1.\\end{cases}\n\\]\nAny uniform limit would necessarily equal this pointwise limit. Fix \\(\\varepsilon=\\tfrac12\\). For every \\(N\\in\\mathbb Z_+\\), let \\(n=N\\) and \\(x=2^{-1/N}\\). Then \\(x<1\\), so \\(f(x)=0\\), whereas\n\\[\n|f_n(x)-f(x)|=x^N=\\frac12.\n\\]\nHence for every \\(N\\) there exist \\(n\\ge N\\) and \\(x\\in[0,1]\\) such that \\(|f_n(x)-f(x)|\\ge\\tfrac12\\). Therefore \\((f_n)\\) does not converge uniformly on \\([0,1]\\).",
+    "domain": "topology",
+    "explicit_subgoals": [],
+    "sample_id": "review-75d888c9f1ef49c4871e870069c4e438",
+    "theorem": "Define $f_{n}:[0,1] \\rightarrow \\mathbb{R}$ by the equation $f_{n}(x)=x^{n}$. Show that the sequence $\\left(f_{n}\\right)$ does not converge uniformly."
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Since \\(\\{0\\}\\) is closed in \\(\\mathbb R\\) and \\(f:X\\to\\mathbb R\\) is continuous, the inverse image \\(f^{-1}(\\{0\\})\\) is closed in \\(X\\). Moreover,\n\\[\nf^{-1}(\\{0\\})=\\{p\\in X:f(p)=0\\}=Z(f).\n\\]\nTherefore \\(Z(f)\\) is closed.",
+    "domain": "real_analysis",
+    "explicit_subgoals": [],
+    "sample_id": "review-7683246f074c4c818480b7d92f502a0d",
+    "theorem": "Let $f$ be a continuous real function on a metric space $X$. Let $Z(f)$ (the zero set of $f$ ) be the set of all $p \\in X$ at which $f(p)=0$. Prove that $Z(f)$ is closed."
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Let G and H be arbitrary nonabelian groups of order 21.\n\nBy Sylow’s theorems, the number of Sylow 7-subgroups of G divides 3 and is congruent to 1 modulo 7, so it is 1. Thus G has a normal subgroup N=⟨b⟩ of order 7. Let A=⟨a⟩ be a subgroup of order 3. Since N∩A={e} and |N||A|=21, we have G=NA, and every element of G has a unique expression b^s a^r, where 0≤s<7 and 0≤r<3.\n\nConjugation by a induces an automorphism of N, so\n\na b a^{-1}=b^k\n\nfor some k∈{1,…,6}. Since a^3=e, we have k^3≡1 (mod 7). The solutions are k≡1,2,4 (mod 7). If k=1, then a commutes with b, and because G=⟨a,b⟩, G would be abelian. Hence k∈{2,4}.\n\nLikewise, choose H’s normal Sylow 7-subgroup ⟨d⟩ and a Sylow 3-subgroup ⟨c⟩. Then\n\nc d c^{-1}=d^ℓ\n\nfor some ℓ∈{2,4}. If ℓ=k, set x=c. If ℓ≠k, set x=c^{-1}. Since 2 and 4 are inverses modulo 7, in either case x has order 3 and\n\nx d x^{-1}=d^k.\n\nEvery element of H has a unique expression d^s x^r with 0≤s<7 and 0≤r<3. Define\n\nφ:G→H, φ(b^s a^r)=d^s x^r.\n\nThis is well-defined and bijective by uniqueness of the normal forms. Moreover,\n\n(b^s a^r)(b^t a^u)=b^{s+k^r t}a^{r+u},\n\nwith exponents reduced modulo 7 and 3. The identical relation in H gives\n\n(d^s x^r)(d^t x^u)=d^{s+k^r t}x^{r+u}.\n\nTherefore φ preserves multiplication, so it is an isomorphism. Since G and H were arbitrary, any two nonabelian groups of order 21 are isomorphic.",
+    "domain": "abstract_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-7838161e601940f28c4d341ea1105ad7",
+    "theorem": "Prove that any two nonabelian groups of order 21 are isomorphic."
+  },
+  {
+    "assumptions": [
+      "a,b 为整数，且 3|a、3|b。"
+    ],
+    "candidate_text": "由 3∣a 和 3∣b，根据整除的定义，存在整数 m,n，使得 a=3m、b=3n。因此\n\\[\na+b=3m+3n=3(m+n).\n\\]\n由于整数对加法封闭，m+n∈\\mathbb Z，故根据整除的定义，3∣(a+b)。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-800109ee243647e48c0cd67b1f44f4aa",
+    "theorem": "证明两个能被 3 整除的整数之和仍能被 3 整除。"
+  },
+  {
+    "assumptions": [
+      "a 为实数。"
+    ],
+    "candidate_text": "设 a∈ℝ。分两种情况：\n1. 若 a≥0，则 a 是 a² 的非负平方根，因此 √(a²)=a=|a|。\n2. 若 a<0，则 -a>0，且 (-a)²=a²，因此 -a 是 a² 的非负平方根，故 √(a²)=-a=|a|。\n综上，对任意实数 a，都有 √(a²)=|a|。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-800ca6f7f14345db848a41d74bd4bfea",
+    "theorem": "证明对任意实数 a，都有 sqrt(a^2)=|a|。"
+  },
+  {
+    "assumptions": [
+      "a,b 为整数，且 3|a、3|b。"
+    ],
+    "candidate_text": "由 3∣a，存在整数 m，使得 a=3m；由 3∣b，存在整数 n，使得 b=3n。因此\n\na+b=3m+3n=3(m+n)。\n\n由于 m,n∈ℤ，所以 m+n∈ℤ。根据整除的定义，3∣(a+b)。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-82a8fc6425ef442cb15d546f9b436cbf",
+    "theorem": "证明两个能被 3 整除的整数之和仍能被 3 整除。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "\\begin{proof}\n\n    $Z(f)=f^{-1}(\\{0\\})$, which is the inverse image of a closed set.\n Hence $Z(f)$ is closed.\n\n\\end{proof}",
+    "domain": "real_analysis",
+    "explicit_subgoals": [],
+    "sample_id": "review-88dbe3ac6ae04bd4ad234144cf3e7763",
+    "theorem": "Let $f$ be a continuous real function on a metric space $X$. Let $Z(f)$ (the zero set of $f$ ) be the set of all $p \\in X$ at which $f(p)=0$. Prove that $Z(f)$ is closed."
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Take \\(c=\\frac27\\) and \\(d=8\\). Here \\(n\\) is a positive integer.\n\nFor the lower bound, suppose \\(n\\ge3\\), and consider any terminal configuration obtained after removing \\(q\\) disjoint blocks. Every original horizontal or vertical triple must meet a removed block; otherwise that triple could still be removed. There are\n\\[\n2n(n-2)\n\\]\nsuch triples.\n\nA horizontal removed block meets at most five horizontal triples: their initial positions differ from that of the block by at most two. Each of its three cells lies in at most three vertical triples, so it meets at most nine vertical triples. Thus it meets at most \\(14\\) potential triples altogether. The same bound holds for a vertical block. Consequently\n\\[\n14q\\ge 2n(n-2),\n\\]\nand hence every terminal configuration satisfies\n\\[\nq\\ge \\frac17n^2-\\frac27n.\n\\]\nIn particular this holds for \\(q=b(n)\\). For \\(n=1,2\\), we have \\(b(n)=0\\), and the same inequality remains valid.\n\nFor the upper bound, put \\(m=\\lfloor n/5\\rfloor\\) and \\(N=5m\\). In the \\(N\\times N\\) subsquare, divide the cells into \\(5\\times5\\) squares. In every such square remove the following five horizontal blocks, using local row and column coordinates:\n\\[\n(1,1),(1,2),(1,3);\\qquad (2,3),(2,4),(2,5);\n\\]\n\\[\n(3,1),(3,2),(3,3);\\qquad (4,3),(4,4),(4,5);\n\\]\n\\[\n(5,2),(5,3),(5,4).\n\\]\nThese five blocks are disjoint.\n\nThe pattern repeats with period five. In rows of local type \\(1,3\\), the removed column residues are \\(1,2,3\\); in rows of type \\(2,4\\), they are \\(3,4,5\\); and in rows of type \\(5\\), they are \\(2,3,4\\). Thus no row contains three consecutive remaining cells, including across boundaries between adjacent \\(5\\times5\\) squares.\n\nIn columns of local type \\(1,2,3,4,5\\), respectively, the removed row residues are\n\\[\n\\{1,3\\},\\quad \\{1,3,5\\},\\quad \\{1,2,3,4,5\\},\\quad \\{2,4,5\\},\\quad \\{2,4\\}.\n\\]\nEach periodically repeated set leaves runs of at most two consecutive cells. Hence no column of the \\(N\\times N\\) subsquare contains three consecutive remaining cells.\n\nThere are \\(m^2\\) small squares, so this first stage uses \\(5m^2=N^2/5\\) blocks. Now greedily remove any further available block in the entire \\(n\\times n\\) sheet until no block remains. Every block added at this stage contains a cell outside the \\(N\\times N\\) subsquare, since that subsquare already contains no available triple. The added blocks are disjoint, so their number is at most\n\\[\nn^2-N^2=(n-N)(n+N)\\le 4(2n)=8n.\n\\]\nTherefore the resulting terminal configuration uses at most\n\\[\n5m^2+8n=\\frac{N^2}{5}+8n\\le \\frac15n^2+8n\n\\]\nblocks. By the definition of \\(b(n)\\),\n\\[\nb(n)\\le \\frac15n^2+8n.\n\\]\nCombining the two estimates gives, for every positive integer \\(n\\),\n\\[\n\\frac17n^2-\\frac27n\\le b(n)\\le \\frac15n^2+8n.\n\\]",
+    "domain": "usamo",
+    "explicit_subgoals": [],
+    "sample_id": "review-8b7e78aa9c294616ae9c494c74b31fd0",
+    "theorem": "I have an \\(n \\times n\\) sheet of stamps, from which I've been asked to tear out blocks of three adjacent stamps in a single row or column. (I can only tear along the perforations separating adjacent stamps, and each block must come out of the sheet in one piece.) Let \\(b(n)\\) be the smallest number of blocks I can tear out and make it impossible to tear out any more blocks. Prove that there are real constants \\(c\\) and \\(d\\) such that\n\n\\[\n\\frac{1}{7} n^{2}-c n \\leq b(n) \\leq \\frac{1}{5} n^{2}+d n\n\\]\n\nfor all \\(n>0\\)."
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "\\begin{proof}\nFor every $x\\in[0,1)$, $x^n\\to0$, while $f_n(1)=1$ for every $n$. Thus $(f_n)$ converges pointwise to the function $f$ defined by $f(x)=0$ for $x<1$ and $f(1)=1$. Any uniform limit would also be a pointwise limit, so it would necessarily equal this $f$.\nThe sequence $\\left(f_n\\right)_n$ does not converge uniformly, since given $0<\\varepsilon<1$ and $N \\in \\mathbb{Z}_{+}$, for $x=\\varepsilon^{1 / N}$ we have $d\\left(f_N(x), f(x)\\right)=\\varepsilon$.\nWe can also apply Theorem 21.6: the convergence is not uniform since $f$ is not continuous.\n\\end{proof}",
+    "domain": "topology",
+    "explicit_subgoals": [],
+    "sample_id": "review-8ef986d4783c489193eadf9d6ac11e7d",
+    "theorem": "Define $f_{n}:[0,1] \\rightarrow \\mathbb{R}$ by the equation $f_{n}(x)=x^{n}$. Show that the sequence $\\left(f_{n}\\right)$ does not converge uniformly."
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Let \\(G\\) and \\(H\\) be nonabelian groups of order \\(21\\). By Sylow’s theorems, the number of Sylow \\(7\\)-subgroups divides \\(3\\) and is congruent to \\(1\\pmod 7\\), so each group has a unique, hence normal, Sylow \\(7\\)-subgroup.\n\nFor \\(G\\), choose generators \\(b\\) of a Sylow \\(7\\)-subgroup and \\(a\\) of a Sylow \\(3\\)-subgroup. Their intersection is trivial, so \\(G=\\langle b\\rangle\\langle a\\rangle\\), and every element has a unique expression \\(b^s a^r\\), where \\(0\\le s<7\\) and \\(0\\le r<3\\).\n\nSince \\(\\langle b\\rangle\\) is normal, conjugation by \\(a\\) gives\n\\[\naba^{-1}=b^i\n\\]\nfor some \\(i\\in\\{1,\\dots,6\\}\\). Because \\(a^3=e\\), conjugating three times gives \\(b=b^{i^3}\\), hence \\(i^3\\equiv1\\pmod 7\\). The solutions are \\(i=1,2,4\\). If \\(i=1\\), then \\(a\\) and \\(b\\) commute and generate \\(G\\), making \\(G\\) abelian, a contradiction. Thus \\(i=2\\) or \\(4\\). In the latter case, replacing \\(a\\) by \\(a^{-1}\\) changes the exponent to \\(4^{-1}\\equiv2\\pmod 7\\). Therefore we may choose \\(a,b\\) so that\n\\[\na^3=b^7=e,\\qquad aba^{-1}=b^2.\n\\]\n\nApplying the same argument to \\(H\\), choose generators \\(c,d\\) such that\n\\[\nc^3=d^7=e,\\qquad cdc^{-1}=d^2,\n\\]\nand every element of \\(H\\) has a unique expression \\(d^s c^r\\).\n\nDefine\n\\[\n\\phi:G\\to H,\\qquad \\phi(b^s a^r)=d^s c^r.\n\\]\nThis is well-defined by uniqueness of the normal forms. Since\n\\[\na^r b^t a^{-r}=b^{2^r t},\n\\]\nwe have\n\\[\n(b^s a^r)(b^t a^u)=b^{s+2^r t}a^{r+u}.\n\\]\nThe identical formula holds in \\(H\\), so \\(\\phi(xy)=\\phi(x)\\phi(y)\\). Hence \\(\\phi\\) is a homomorphism. It is bijective because it maps the unique \\(21\\) normal forms \\(b^s a^r\\) to the unique \\(21\\) normal forms \\(d^s c^r\\). Therefore \\(G\\cong H\\). Thus any two nonabelian groups of order \\(21\\) are isomorphic.",
+    "domain": "abstract_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-8f842522b1094b0a8e76d8b6c679a7a0",
+    "theorem": "Prove that any two nonabelian groups of order 21 are isomorphic."
+  },
+  {
+    "assumptions": [
+      "x、y 为奇整数。"
+    ],
+    "candidate_text": "由 x、y 为奇整数，存在整数 m,n，使得 x=2m+1，y=2n+1。因此\nx+y=(2m+1)+(2n+1)=2(m+n+1)。\n由于 m+n+1 是整数，故由偶整数的定义，x+y 是偶数。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-8fe931baf6604c7a953b88be545d4040",
+    "theorem": "证明两个奇整数之和为偶数。"
+  },
+  {
+    "assumptions": [
+      "x,y 为实数且 x=y。"
+    ],
+    "candidate_text": "等式两边分别乘以 x 和 y。\n由假设 x=y，两边同乘 x 得 x·x=y·x；两边同乘 y 得 x·y=y·y。又由乘法交换律 y·x=x·y，故由等式传递性得到 x·x=y·y。\n因此 x^2=y^2。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-a21c13433f624cd3a5c1f9973c20136d",
+    "theorem": "证明若 x,y 为实数且 x=y，则 x^2=y^2。"
+  },
+  {
+    "assumptions": [
+      "a,b 为整数，且 3|a、3|b。"
+    ],
+    "candidate_text": "由 3|a，存在整数 m，使得 a=3m；由 3|b，存在整数 n，使得 b=3n。因此\na+b=3m+3n=3(m+n)。\n又因为 m,n∈ℤ，所以 m+n∈ℤ。故根据整除的定义，3|(a+b)。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-a2eb1be202de4a64809fc43e1e0fd4d3",
+    "theorem": "证明两个能被 3 整除的整数之和仍能被 3 整除。"
+  },
+  {
+    "assumptions": [
+      "a,b 为奇整数。"
+    ],
+    "candidate_text": "设任意整数 a,b 均为奇数。则存在整数 m,n，使得 a=2m+1，b=2n+1。因此 a+b=2m+1+2n+1=2(m+n+1)。由于 m+n+1 为整数，故 a+b 为偶数。由 a,b 的任意性，任意两个奇数之和均为偶数。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-ac8720c840be44ff82a2f7dadbfc074d",
+    "theorem": "证明两个奇整数之和为偶数。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "\\begin{proof}\n\n    By Cauchy's theorem we have that if $G$ is a group of order 21 then it has an element $a$ of order 3 and an element $b$ of order 7. By exercise 2.5.41 we have that the subgroup generated by $b$ is normal, so there is some $i=0,1,2,3,4,5,6$ such that $a b a^{-1}=b^i$. We know $i \\neq$ 0 since that implies $a b=a$ and so that $b=e$, a contradiction, and we know $i \\neq 1$ since then $a b=b a$ and this would imply $G$ is abelian, which we are assuming is not the case.\n\nNow, $a$ has order 3 so we must have $b=a^3 b a^{-3}=b^{i^3}$ mod 7 , and so $i$ is restricted by the modular equation $i^3 \\equiv 1 \\bmod 7$\n\n\\begin{center}\n\n\\begin{tabular}{|c|c|}\n\n\\hline$x$ & $x^3 \\bmod 7$ \\\\\n\n\\hline 2 & 1 \\\\\n\n\\hline 3 & 6 \\\\\n\n\\hline 4 & 1 \\\\\n\n\\hline 5 & 6 \\\\\n\n\\hline 6 & 6 \\\\\n\n\\hline\n\n\\end{tabular}\n\n\\end{center}\n\nTherefore the only options are $i=2$ and $i=4$. Now suppose $G$ is such that $a b a^{-1}=b^2$ and let $G^{\\prime}$ be another group of order 21 with an element $c$ of order 3 and an element $d$ of order 7 such that $c d c^{-1}=d^4$. We now prove that $G$ and $G^{\\prime}$ are isomorphic. Define\n\n$$\n\n\\begin{aligned}\n\n\\phi: G & \\rightarrow G^{\\prime} \\\\\n\na & \\mapsto c^{-1} \\\\\n\nb & \\mapsto d\n\n\\end{aligned}\n\n$$\n\nsince $a$ and $c^{-1}$ have the same order and $b$ and $d$ have the same order this is a well defined function. Since\n\n$$\n\n\\begin{aligned}\n\n\\phi(a) \\phi(b) \\phi(a)^{-1} & =c^{-1} d c \\\\\n\n& =\\left(c d^{-1} c^{-1}\\right)^{-1} \\\\\n\n& =\\left(d^{-4}\\right)^{-1} \\\\\n\n& =d^4 \\\\\n\n& =\\left(d^2\\right)^2 \\\\\n\n& =\\phi(b)^2\n\n\\end{aligned}\n\n$$\n\n$\\phi$ is actually a homomorphism. For any $c^i d^j \\in G^{\\prime}$ we have $\\phi\\left(a^{-i} b^j\\right)=c^i d^j$ so $\\phi$ is onto and $\\phi\\left(a^i b^j\\right)=c^{-i} d^j=e$ only if $i=j=0$, so $\\phi$ is 1-to-l. Therefore $G$ and $G^{\\prime}$ are isomorphic and so up to isomorphism there is only one nonabelian group of order 21 .\n\n\\end{proof}",
+    "domain": "abstract_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-b110c030a6e3440dbbf3a9e387b425c0",
+    "theorem": "Prove that any two nonabelian groups of order 21 are isomorphic."
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Let the given condition be that for positive integers \\(x\\) and \\(y\\),\n\\[ (ny)^2+1 \\mid x^{\\varphi(n)}-1 \\quad (*). \\]\nThis must hold for all positive integers \\(n\\).\n\nIf \\(x=1\\), then \\(x^{\\varphi(n)}-1 = 1^{\\varphi(n)}-1 = 0\\). The condition becomes \\((ny)^2+1 \\mid 0\\), which is true for all positive integers \\(n\\) and \\(y\\). Thus, \\(x=1\\) is a solution. We want to prove it is the only solution.\n\nAssume \\(x > 1\\). Since \\(x\\) is an integer, this means \\(x \\ge 2\\).\n\nStep 1: Use \\(n=1\\) and \\(n=2\\).\nFor \\(n=1\\), \\(\\varphi(1)=1\\). The condition \\((*)\\) becomes \\( (1y)^2+1 \\mid x^{\\varphi(1)}-1 \\), so\n\\[ y^2+1 \\mid x-1. \\]\nSince \\(x \\ge 2\\) and \\(y \\ge 1\\), \\(x-1 \\ge 1\\) and \\(y^2+1 \\ge 2\\). So \\(x-1 > 0\\).\n\nFor \\(n=2\\), \\(\\varphi(2)=1\\). The condition \\((*)\\) becomes \\( (2y)^2+1 \\mid x^{\\varphi(2)}-1 \\), so\n\\[ (2y)^2+1 \\mid x-1. \\]\nThis is \\(4y^2+1 \\mid x-1\\).\n\nSince \\(x-1\\) is divisible by both \\(y^2+1\\) and \\(4y^2+1\\), it must be divisible by their least common multiple, \\(\\text{lcm}(y^2+1, 4y^2+1)\\).\nLet \\(A = y^2+1\\) and \\(B = 4y^2+1\\).\nWe calculate their greatest common divisor:\n\\(\\gcd(A,B) = \\gcd(y^2+1, 4y^2+1)\\).\nUsing the property \\(\\gcd(a,b) = \\gcd(a, b-ka)\\), we have\n\\(\\gcd(y^2+1, 4y^2+1) = \\gcd(y^2+1, (4y^2+1) - 4(y^2+1)) = \\gcd(y^2+1, 4y^2+1 - 4y^2-4) = \\gcd(y^2+1, -3) = \\gcd(y^2+1, 3)\\).\nLet's examine \\(y^2+1 \\pmod 3\\).\nIf \\(y \\equiv 0 \\pmod 3\\), then \\(y^2 \\equiv 0 \\pmod 3\\), so \\(y^2+1 \\equiv 1 \\pmod 3\\).\nIf \\(y \\equiv 1 \\pmod 3\\), then \\(y^2 \\equiv 1 \\pmod 3\\), so \\(y^2+1 \\equiv 2 \\pmod 3\\).\nIf \\(y \\equiv 2 \\pmod 3\\), then \\(y^2 \\equiv 4 \\equiv 1 \\pmod 3\\), so \\(y^2+1 \\equiv 2 \\pmod 3\\).\nIn all cases, \\(y^2+1\\) is not divisible by 3.\nTherefore, \\(\\gcd(y^2+1, 3) = 1\\).\nThis means \\(\\gcd(A,B)=1\\).\nSo, \\(\\text{lcm}(A,B) = AB = (y^2+1)(4y^2+1)\\).\nSince \\(x-1\\) must be a multiple of \\((y^2+1)(4y^2+1)\\), we can write\n\\[ x-1 = C(y^2+1)(4y^2+1) \\]\nfor some integer \\(C\\).\nSince \\(x>1\\), \\(x-1 > 0\\). Also, \\(y^2+1 > 0\\) and \\(4y^2+1 > 0\\). Thus, we must have \\(C \\ge 1\\).\n\nStep 2: Use \\(n=4\\).\nFor \\(n=4\\), \\(\\varphi(4)=\\varphi(2^2)=2^2-2^1=2\\). The condition \\((*)\\) becomes\n\\[ (4y)^2+1 \\mid x^{\\varphi(4)}-1, \\]\nso\n\\[ (4y)^2+1 \\mid x^2-1. \\]\nLet \\(M = (4y)^2+1 = 16y^2+1\\).\nWe have \\(M \\mid (x-1)(x+1)\\).\nSubstitute \\(x-1 = C(y^2+1)(4y^2+1)\\):\n\\[ M \\mid C(y^2+1)(4y^2+1) \\cdot [C(y^2+1)(4y^2+1)+2]. \\]\nLet \\(Y=y^2\\). Then \\(M = 16Y+1\\). The expression being divided by \\(M\\) is\n\\[ P(Y) = C(Y+1)(4Y+1) \\cdot [C(Y+1)(4Y+1)+2]. \\]\nThe condition is that \\(16Y+1 \\mid P(Y)\\) for all \\(Y \\in \\{1^2, 2^2, 3^2, \\dots\\}\\) (i.e., for all \\(Y=y^2\\) where \\(y \\in \\mathbb{Z}^+\\)).\n\nStep 3: Polynomial divisibility argument.\nLet \\(P(Y)\\) be the polynomial in \\(Y\\) defined above. Let \\(D(Y) = 16Y+1\\).\nBy the Polynomial Remainder Theorem, there exist polynomials \\(S(Y)\\) (quotient) and \\(R(Y)\\) (remainder) with rational coefficients such that \\(P(Y) = S(Y)D(Y) + R(Y)\\), where the degree of \\(R(Y)\\) is less than the degree of \\(D(Y)\\). Since \\(D(Y)\\) has degree 1, \\(R(Y)\\) must be a constant, say \\(R_0\\).\nThus, \\(P(Y) = S(Y)(16Y+1) + R_0\\).\nThis identity holds for all \\(Y \\in \\mathbb{C}\\). In particular, it holds for \\(Y = -1/16\\).\nSubstituting \\(Y = -1/16\\) into \\(P(Y) = S(Y)(16Y+1) + R_0\\), we get \\(P(-1/16) = S(-1/16)(16(-1/16)+1) + R_0 = S(-1/16) \\cdot 0 + R_0\\).\nSo \\(R_0 = P(-1/16)\\).\nLet's calculate \\(P(-1/16)\\).\nThe term \\(C(Y+1)(4Y+1)\\) becomes, at \\(Y=-1/16\\):\n\\(C(-1/16+1)(4(-1/16)+1) = C(15/16)(-1/4+1) = C(15/16)(3/4) = C \\frac{45}{64}\\).\nSo, \\(P(-1/16) = \\left(C \\frac{45}{64}\\right) \\cdot \\left(C \\frac{45}{64} + 2\\right)\\).\nSo \\(R_0 = C \\frac{45}{64} \\left(C \\frac{45}{64} + 2\\right)\\).\n\nWe are given that \\(\\frac{P(Y)}{16Y+1}\\) must be an integer for all \\(Y=y^2\\) where \\(y \\in \\mathbb{Z}^+\\).\nFrom \\(P(Y) = S(Y)(16Y+1) + R_0\\), we have\n\\[ \\frac{P(Y)}{16Y+1} = S(Y) + \\frac{R_0}{16Y+1}. \\]\nThis expression must be an integer for \\(Y=y^2\\), for all \\(y \\in \\mathbb{Z}^+\\).\nLet \\(s_j\\) be the rational coefficients of the polynomial \\(S(Y)\\). Let \\(L\\) be the least common multiple of the denominators of these coefficients \\(s_j\\). Then \\(L \\cdot S(Y)\\) is a polynomial with integer coefficients.\nSo, for any integer value \\(Y=y^2\\), \\(L \\cdot S(y^2)\\) is an integer.\nThe condition that \\(S(y^2) + \\frac{R_0}{16y^2+1}\\) is an integer for all \\(y \\in \\mathbb{Z}^+\\) implies that\n\\[ L \\left(S(y^2) + \\frac{R_0}{16y^2+1}\\right) = L S(y^2) + \\frac{L R_0}{16y^2+1} \\]\nmust be an integer multiple of \\(L\\) for all \\(y \\in \\mathbb{Z}^+\\). Since \\(L S(y^2)\\) is an integer, it must be that \\(\\frac{L R_0}{16y^2+1}\\) is an integer for all \\(y \\in \\mathbb{Z}^+\\).\nLet \\(K = L R_0\\). Then \\(K\\) is a rational constant (it does not depend on \\(y\\)).\nWe need \\(\\frac{K}{16y^2+1}\\) to be an integer for all \\(y \\in \\mathbb{Z}^+\\).\nIf \\(K \\ne 0\\), we can choose \\(y\\) large enough such that \\(16y^2+1 > |K|\\). For such \\(y\\), \\(\\frac{K}{16y^2+1}\\) cannot be a non-zero integer, because its absolute value is less than 1. So it must be 0.\nThis implies \\(K=0\\).\nTherefore, \\(L R_0 = 0\\). Since \\(L \\ge 1\\) (it is an lcm of denominators), we must have \\(R_0=0\\).\n\nStep 4: The contradiction.\nSince \\(R_0=0\\), we have\n\\[ C \\frac{45}{64} \\left(C \\frac{45}{64} + 2\\right) = 0. \\]\nWe have established that \\(C\\) is an integer and \\(C \\ge 1\\).\nThus, \\(C \\frac{45}{64}\\) is not zero.\nSo, the second factor must be zero:\n\\[ C \\frac{45}{64} + 2 = 0. \\]\nThis implies \\(C \\frac{45}{64} = -2\\), so\n\\[ C = -2 \\cdot \\frac{64}{45} = -\\frac{128}{45}. \\]\nThis value of \\(C\\) is not a positive integer. This contradicts the established fact that \\(C \\ge 1\\).\nThus, the initial assumption that \\(x>1\\) must be false.\n\nTherefore, the only possibility is \\(x=1\\).\n\nFinal check of the argument:\n1.  The derivation that \\(x-1 = C(y^2+1)(4y^2+1)\\) with \\(C \\in \\mathbb{Z}, C \\ge 1\\) if \\(x>1\\) is sound.\n2.  The derivation of \\(R_0 = P(-1/16) = C \\frac{45}{64} (C \\frac{45}{64} + 2)\\) is algebraically correct.\n3.  The argument that \\(R_0\\) must be zero relies on \\(\\frac{L R_0}{(4y)^2+1}\\) being an integer for all \\(y \\in \\mathbb{Z}^+\\). This part is sound. For this fraction to be an integer for infinitely many values of \\(y\\) that make the denominator arbitrarily large, the numerator must be zero.\n4.  The conclusion \\(C = -128/45\\) contradicts \\(C \\ge 1\\).\n\nAll steps seem correct and logically sound. The conclusion that \\(x=1\\) must be true.\n\nThe final answer is $\\boxed{x=1}$.",
+    "domain": "bmo",
+    "explicit_subgoals": [],
+    "sample_id": "review-b1ff97208030463aaac25c370f89b538",
+    "theorem": "Let \\( x \\) and \\( y \\) be positive integers. If for each positive integer \\( n \\) we have that\n\n\\[\n(n y)^{2}+1 \\mid x^{\\varphi(n)}-1\n\\]\n\nprove that \\( x=1 \\)."
+  },
+  {
+    "assumptions": [
+      "a,b 为整数，且 3|a、3|b。"
+    ],
+    "candidate_text": "存在整数 m,n，使 a=3m，b=3n。\n于是 a+b=3m+3n=3(m+n)。\n因为 m+n 是整数，所以 3|a+b。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-b40eb92dfbb748468cc3841a112baf9a",
+    "theorem": "证明两个能被 3 整除的整数之和仍能被 3 整除。"
+  },
+  {
+    "assumptions": [
+      "a 为实数。"
+    ],
+    "candidate_text": "对任意实数 a，分情况讨论。若 a≥0，则由算术平方根的定义，sqrt(a^2)=a=|a|。若 a<0，则 -a>0 且 a^2=(-a)^2，故 sqrt(a^2)=sqrt((-a)^2)=-a=|a|。因此对任意实数 a，都有 sqrt(a^2)=|a|。\n又因为每个实数 a 都等于 |a|，所以 sqrt(a^2)=|a|。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-b5c4ca3f33c3441abc89c27a1a822137",
+    "theorem": "证明对任意实数 a，都有 sqrt(a^2)=|a|。"
+  },
+  {
+    "assumptions": [
+      "x、y 为奇整数。"
+    ],
+    "candidate_text": "因为 x、y 为奇整数，所以存在整数 m,n，使得 x=2m+1，y=2n+1。于是\nx+y=(2m+1)+(2n+1)=2(m+n+1)。\n由于 m+n+1 是整数，故 x+y 是偶数。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-ba625b914dcf4e37b375a03f7cd7ccdc",
+    "theorem": "证明两个奇整数之和为偶数。"
+  },
+  {
+    "assumptions": [
+      "a,b 为整数，且 3|a、3|b。"
+    ],
+    "candidate_text": "存在整数 m,n，使 a=3m，b=3n。\n于是 a+b=3m+3n=3(m+n)。\n因为 m+n 是整数，所以 3|a+b。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-bbff15a46a3b4ea68a66b25470fbabdf",
+    "theorem": "证明两个能被 3 整除的整数之和仍能被 3 整除。"
+  },
+  {
+    "assumptions": [
+      "a,b 为奇整数。"
+    ],
+    "candidate_text": "例如 1+3=4 是偶数。\n同理，任意两个奇整数之和都是偶数。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-bca5a85ea7784f8a9aadbef507eb9ff3",
+    "theorem": "证明两个奇整数之和为偶数。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Let the given condition be that for positive integers \\(x\\) and \\(y\\),\n\\[ (ny)^2+1 \\mid x^{\\varphi(n)}-1 \\quad (*). \\]\nThis must hold for all positive integers \\(n\\).\n\nIf \\(x=1\\), then \\(x^{\\varphi(n)}-1 = 1^{\\varphi(n)}-1 = 0\\). The condition becomes \\((ny)^2+1 \\mid 0\\), which is true for all positive integers \\(n\\) and \\(y\\). Thus, \\(x=1\\) is a solution. We want to prove it is the only solution.\n\nAssume \\(x > 1\\). Since \\(x\\) is an integer, this means \\(x \\ge 2\\).\n\nStep 1: Use \\(n=1\\) and \\(n=2\\).\nFor \\(n=1\\), \\(\\varphi(1)=1\\). The condition \\((*)\\) becomes \\( (1y)^2+1 \\mid x^{\\varphi(1)}-1 \\), so\n\\[ y^2+1 \\mid x-1. \\]\nSince \\(x \\ge 2\\) and \\(y \\ge 1\\), \\(x-1 \\ge 1\\) and \\(y^2+1 \\ge 2\\). So \\(x-1 > 0\\).\n\nFor \\(n=2\\), \\(\\varphi(2)=1\\). The condition \\((*)\\) becomes \\( (2y)^2+1 \\mid x^{\\varphi(2)}-1 \\), so\n\\[ (2y)^2+1 \\mid x-1. \\]\nThis is \\(4y^2+1 \\mid x-1\\).\n\nSince \\(x-1\\) is divisible by both \\(y^2+1\\) and \\(4y^2+1\\), it must be divisible by their least common multiple, \\(\\text{lcm}(y^2+1, 4y^2+1)\\).\nLet \\(A = y^2+1\\) and \\(B = 4y^2+1\\).\nWe calculate their greatest common divisor:\n\\(\\gcd(A,B) = \\gcd(y^2+1, 4y^2+1)\\).\nUsing the property \\(\\gcd(a,b) = \\gcd(a, b-ka)\\), we have\n\\(\\gcd(y^2+1, 4y^2+1) = \\gcd(y^2+1, (4y^2+1) - 4(y^2+1)) = \\gcd(y^2+1, 4y^2+1 - 4y^2-4) = \\gcd(y^2+1, -3) = \\gcd(y^2+1, 3)\\).\nLet's examine \\(y^2+1 \\pmod 3\\).\nIf \\(y \\equiv 0 \\pmod 3\\), then \\(y^2 \\equiv 0 \\pmod 3\\), so \\(y^2+1 \\equiv 1 \\pmod 3\\).\nIf \\(y \\equiv 1 \\pmod 3\\), then \\(y^2 \\equiv 1 \\pmod 3\\), so \\(y^2+1 \\equiv 2 \\pmod 3\\).\nIf \\(y \\equiv 2 \\pmod 3\\), then \\(y^2 \\equiv 4 \\equiv 1 \\pmod 3\\), so \\(y^2+1 \\equiv 2 \\pmod 3\\).\nIn all cases, \\(y^2+1\\) is not divisible by 3.\nTherefore, \\(\\gcd(y^2+1, 3) = 1\\).\nThis means \\(\\gcd(A,B)=1\\).\nSo, \\(\\text{lcm}(A,B) = AB = (y^2+1)(4y^2+1)\\).\nSince \\(x-1\\) must be a multiple of \\((y^2+1)(4y^2+1)\\), we can write\n\\[ x-1 = C(y^2+1)(4y^2+1) \\]\nfor some integer \\(C\\).\nSince \\(x>1\\), \\(x-1 > 0\\). Also, \\(y^2+1 > 0\\) and \\(4y^2+1 > 0\\). Thus, we must have \\(C \\ge 1\\).\n\nStep 2: Use \\(n=4\\).\nFor \\(n=4\\), \\(\\varphi(4)=\\varphi(2^2)=2^2-2^1=2\\). The condition \\((*)\\) becomes\n\\[ (4y)^2+1 \\mid x^{\\varphi(4)}-1, \\]\nso\n\\[ (4y)^2+1 \\mid x^2-1. \\]\nLet \\(M = (4y)^2+1 = 16y^2+1\\).\nWe have \\(M \\mid (x-1)(x+1)\\).\nSubstitute \\(x-1 = C(y^2+1)(4y^2+1)\\):\n\\[ M \\mid C(y^2+1)(4y^2+1) \\cdot [C(y^2+1)(4y^2+1)+2]. \\]\nLet \\(Y=y^2\\). Then \\(M = 16Y+1\\). The expression being divided by \\(M\\) is\n\\[ P(Y) = C(Y+1)(4Y+1) \\cdot [C(Y+1)(4Y+1)+2]. \\]\nThe condition is that \\(16Y+1 \\mid P(Y)\\) for all \\(Y \\in \\{1^2, 2^2, 3^2, \\dots\\}\\) (i.e., for all \\(Y=y^2\\) where \\(y \\in \\mathbb{Z}^+\\)).\n\nStep 3: Polynomial divisibility argument.\nLet \\(P(Y)\\) be the polynomial in \\(Y\\) defined above. Let \\(D(Y) = 16Y+1\\).\nBy the Polynomial Remainder Theorem, there exist polynomials \\(S(Y)\\) (quotient) and \\(R(Y)\\) (remainder) with rational coefficients such that \\(P(Y) = S(Y)D(Y) + R(Y)\\), where the degree of \\(R(Y)\\) is less than the degree of \\(D(Y)\\). Since \\(D(Y)\\) has degree 1, \\(R(Y)\\) must be a constant, say \\(R_0\\).\nThus, \\(P(Y) = S(Y)(16Y+1) + R_0\\).\nThis identity holds for all \\(Y \\in \\mathbb{C}\\). In particular, it holds for \\(Y = -1/16\\).\nSubstituting \\(Y = -1/16\\) into \\(P(Y) = S(Y)(16Y+1) + R_0\\), we get \\(P(-1/16) = S(-1/16)(16(-1/16)+1) + R_0 = S(-1/16) \\cdot 0 + R_0\\).\nSo \\(R_0 = P(-1/16)\\).\nLet's calculate \\(P(-1/16)\\).\nThe term \\(C(Y+1)(4Y+1)\\) becomes, at \\(Y=-1/16\\):\n\\(C(-1/16+1)(4(-1/16)+1) = C(15/16)(-1/4+1) = C(15/16)(3/4) = C \\frac{45}{64}\\).\nSo, \\(P(-1/16) = \\left(C \\frac{45}{64}\\right) \\cdot \\left(C \\frac{45}{64} + 2\\right)\\).\nSo \\(R_0 = C \\frac{45}{64} \\left(C \\frac{45}{64} + 2\\right)\\).\n\nWe are given that \\(\\frac{P(Y)}{16Y+1}\\) must be an integer for all \\(Y=y^2\\) where \\(y \\in \\mathbb{Z}^+\\).\nFrom \\(P(Y) = S(Y)(16Y+1) + R_0\\), we have\n\\[ \\frac{P(Y)}{16Y+1} = S(Y) + \\frac{R_0}{16Y+1}. \\]\nThis expression must be an integer for \\(Y=y^2\\), for all \\(y \\in \\mathbb{Z}^+\\).\nLet \\(s_j\\) be the rational coefficients of the polynomial \\(S(Y)\\). Let \\(L\\) be the least common multiple of the denominators of these coefficients \\(s_j\\). Then \\(L \\cdot S(Y)\\) is a polynomial with integer coefficients.\nSo, for any integer value \\(Y=y^2\\), \\(L \\cdot S(y^2)\\) is an integer.\nThe condition that \\(S(y^2) + \\frac{R_0}{16y^2+1}\\) is an integer for all \\(y \\in \\mathbb{Z}^+\\) implies that\n\\[ L \\left(S(y^2) + \\frac{R_0}{16y^2+1}\\right) = L S(y^2) + \\frac{L R_0}{16y^2+1} \\]\nmust be an integer multiple of \\(L\\) for all \\(y \\in \\mathbb{Z}^+\\). Since \\(L S(y^2)\\) is an integer, it must be that \\(\\frac{L R_0}{16y^2+1}\\) is an integer for all \\(y \\in \\mathbb{Z}^+\\).\nLet \\(K = L R_0\\). Then \\(K\\) is a rational constant (it does not depend on \\(y\\)).\nWe need \\(\\frac{K}{16y^2+1}\\) to be an integer for all \\(y \\in \\mathbb{Z}^+\\).\nIf \\(K \\ne 0\\), we can choose \\(y\\) large enough such that \\(16y^2+1 > |K|\\). For such \\(y\\), \\(\\frac{K}{16y^2+1}\\) cannot be a non-zero integer, because its absolute value is less than 1. So it must be 0.\nThis implies \\(K=0\\).\nTherefore, \\(L R_0 = 0\\). Since \\(L \\ge 1\\) (it is an lcm of denominators), we must have \\(R_0=0\\).\n\nStep 4: The contradiction.\nSince \\(R_0=0\\), we have\n\\[ C \\frac{45}{64} \\left(C \\frac{45}{64} + 2\\right) = 0. \\]\nWe have established that \\(C\\) is an integer and \\(C \\ge 1\\).\nThus, \\(C \\frac{45}{64}\\) is not zero.\nSo, the second factor must be zero:\n\\[ C \\frac{45}{64} + 2 = 0. \\]\nThis implies \\(C \\frac{45}{64} = -2\\), so\n\\[ C = -2 \\cdot \\frac{64}{45} = -\\frac{128}{45}. \\]\nThis value of \\(C\\) is not a positive integer. This contradicts the established fact that \\(C \\ge 1\\).\nThus, the initial assumption that \\(x>1\\) must be false.\n\nTherefore, the only possibility is \\(x=1\\).\n\nFinal check of the argument:\n1.  The derivation that \\(x-1 = C(y^2+1)(4y^2+1)\\) with \\(C \\in \\mathbb{Z}, C \\ge 1\\) if \\(x>1\\) is sound.\n2.  The derivation of \\(R_0 = P(-1/16) = C \\frac{45}{64} (C \\frac{45}{64} + 2)\\) is algebraically correct.\n3.  The argument that \\(R_0\\) must be zero relies on \\(\\frac{L R_0}{(4y)^2+1}\\) being an integer for all \\(y \\in \\mathbb{Z}^+\\). This part is sound. For this fraction to be an integer for infinitely many values of \\(y\\) that make the denominator arbitrarily large, the numerator must be zero.\n4.  The conclusion \\(C = -128/45\\) contradicts \\(C \\ge 1\\).\n\nAll steps seem correct and logically sound. The conclusion that \\(x=1\\) must be true.\n\nThe final answer is $\\boxed{x=1}$.",
+    "domain": "bmo",
+    "explicit_subgoals": [],
+    "sample_id": "review-bf5336afb3a447b78f8f7b838c479075",
+    "theorem": "Let \\( x \\) and \\( y \\) be positive integers. If for each positive integer \\( n \\) we have that\n\n\\[\n(n y)^{2}+1 \\mid x^{\\varphi(n)}-1\n\\]\n\nprove that \\( x=1 \\)."
+  },
+  {
+    "assumptions": [
+      "x、y 为奇整数。"
+    ],
+    "candidate_text": "存在整数 m,n，使 x=2m+1，y=2n+1。\n所以 x+y 是偶数。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-c301b8fa6d5441819de7b601fbcf7fe4",
+    "theorem": "证明两个奇整数之和为偶数。"
+  },
+  {
+    "assumptions": [
+      "a 为实数。"
+    ],
+    "candidate_text": "任取实数 a。分两种情况：\n1. 若 a≥0，则 |a|=a。由于 a 非负且 a²=a²，按非负平方根的定义，√(a²)=a=|a|。\n2. 若 a<0，则 |a|=-a。此时 -a>0，且 (-a)²=a²，故按非负平方根的定义，√(a²)=-a=|a|。\n\n因此，对任意实数 a，都有 √(a²)=|a|。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-c3447d96db22424e839e47c35f7388c1",
+    "theorem": "证明对任意实数 a，都有 sqrt(a^2)=|a|。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Since \\(\\{0\\}\\) is closed in \\(\\mathbb{R}\\) and \\(f:X\\to\\mathbb{R}\\) is continuous, the inverse image \\(f^{-1}(\\{0\\})\\) is closed in \\(X\\). But\n\\[\nZ(f)=\\{p\\in X:f(p)=0\\}=f^{-1}(\\{0\\}).\n\\]\nTherefore \\(Z(f)\\) is closed.",
+    "domain": "real_analysis",
+    "explicit_subgoals": [],
+    "sample_id": "review-c7504adeec3f41a9b8888f6808a808af",
+    "theorem": "Let $f$ be a continuous real function on a metric space $X$. Let $Z(f)$ (the zero set of $f$ ) be the set of all $p \\in X$ at which $f(p)=0$. Prove that $Z(f)$ is closed."
+  },
+  {
+    "assumptions": [
+      "a,b 为奇整数。"
+    ],
+    "candidate_text": "例如 1+3=4 是偶数。\n同理，任意两个奇整数之和都是偶数。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-ca2f42ba2b29462d966db18b91779703",
+    "theorem": "证明两个奇整数之和为偶数。"
+  },
+  {
+    "assumptions": [
+      "a,b 为整数，且 3|a、3|b。"
+    ],
+    "candidate_text": "由 3|a、3|b，存在整数 m,n，使得 a=3m、b=3n。因此\na+b=3m+3n=3(m+n)。\n又因 m+n∈ℤ，故 3|(a+b)。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-ce74ac86ba824a3ca348e8e9cbfac7d5",
+    "theorem": "证明两个能被 3 整除的整数之和仍能被 3 整除。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Assume for contradiction that \\(x>1\\). Taking \\(n=2\\), for which \\(\\varphi(2)=1\\), gives\n\\[\n4y^2+1\\mid x-1.\n\\]\nChoose a prime \\(p\\mid 4y^2+1\\). The number \\(4y^2+1\\) is odd and is not divisible by \\(3\\), since \\(4y^2+1\\equiv y^2+1\\not\\equiv0\\pmod3\\). Hence \\(p\\ge5\\). Let\n\\[\na=v_p(x-1)\\ge1\n\\]\nand choose an integer \\(k>a\\).\n\nSet \\(f(T)=y^2T^2+1\\). Since \\(f(2)\\equiv0\\pmod p\\) and\n\\[\nf'(2)=4y^2\\not\\equiv0\\pmod p,\n\\]\nHensel lifting gives an integer \\(r\\) such that\n\\[\nr\\equiv2\\pmod p,\\qquad f(r)\\equiv0\\pmod{p^k}.\n\\]\nThus \\(s=-r\\) also satisfies \\(f(s)\\equiv0\\pmod{p^k}\\), with \\(s\\equiv p-2\\pmod p\\).\n\nLet \\(b=(p-1)^2\\). Since \\(b-1=p(p-2)\\), we have \\(v_p(b-1)=1\\). By LTE, for every positive integer \\(m\\),\n\\[\nv_p(b^m-1)=1+v_p(m).\n\\]\nTherefore \\(b\\) has order \\(p^{k-1}\\) modulo \\(p^k\\). Hence it generates the subgroup of units congruent to \\(1\\pmod p\\), which has order \\(p^{k-1}\\).\n\nBecause \\(s(p-2)^{-1}\\equiv1\\pmod p\\), there exists \\(t\\ge0\\) such that\n\\[\nb^t\\equiv s(p-2)^{-1}\\pmod{p^k}.\n\\]\nDefine\n\\[\nn=(p-2)(p-1)^{2t}=(p-2)b^t.\n\\]\nThen \\(n\\equiv s\\pmod{p^k}\\), so\n\\[\np^k\\mid n^2y^2+1.\n\\]\nEvery prime divisor \\(q\\) of \\(n\\) divides either \\(p-2\\) or \\(p-1\\), and therefore \\(q<p\\). From\n\\[\n\\varphi(n)=\\prod_{q^e\\parallel n}q^{e-1}(q-1),\n\\]\nit follows that \\(p\\nmid\\varphi(n)\\).\n\nThe hypothesis now gives\n\\[\nn^2y^2+1\\\\mid x^{\\varphi(n)}-1,\n\\]\nand hence \\(p^k\\mid x^{\\varphi(n)}-1\\). But since \\(p\\) is odd, \\(p\\mid x-1\\), and \\(p\\nmid\\varphi(n)\\), LTE yields\n\\[\nv_p\\!\\left(x^{\\varphi(n)}-1\\right)\n=v_p(x-1)+v_p(\\varphi(n))=a<k,\n\\]\ncontradicting \\(p^k\\mid x^{\\varphi(n)}-1\\).\n\nThus \\(x>1\\) is impossible. Since \\(x\\) is a positive integer, \\(x=1\\).",
+    "domain": "bmo",
+    "explicit_subgoals": [],
+    "sample_id": "review-d054e883a06a424e8bff89185246d273",
+    "theorem": "Let \\( x \\) and \\( y \\) be positive integers. If for each positive integer \\( n \\) we have that\n\n\\[\n(n y)^{2}+1 \\mid x^{\\varphi(n)}-1\n\\]\n\nprove that \\( x=1 \\)."
+  },
+  {
+    "assumptions": [
+      "a,b 为奇整数。"
+    ],
+    "candidate_text": "设 a,b 为奇整数。根据奇整数的定义，存在整数 m,n，使得 a=2m+1，b=2n+1。因此\n\\[\na+b=(2m+1)+(2n+1)=2(m+n+1)。\n\\]\n由于 m+n+1 是整数，故 a+b 是偶数。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-d530257e580548de9c88fcebbc3682df",
+    "theorem": "证明两个奇整数之和为偶数。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Fix a prime q≡1 (mod 4) with q∤y. Since −1 is a quadratic residue modulo q, choose r with 1≤r<q such that (ry)^2≡−1 (mod q).\n\nTaking n=r in the hypothesis shows q∣x^{φ(r)}−1. Hence q∤x. Let d=ord_q(x); then d∣q−1, so gcd(d,q)=1.\n\nSuppose d>2. By the Chinese remainder theorem, there is a residue class a modulo qd satisfying\n\na≡r (mod q),  a≡−1 (mod d).\n\nThis class is coprime to qd. By Dirichlet’s theorem on primes in arithmetic progressions, choose a prime n≡a (mod qd). Then q∣(ny)^2+1, so the hypothesis gives\n\nx^{n−1}=x^{φ(n)}≡1 (mod q).\n\nThus d∣n−1. But n≡−1 (mod d), so d∣2, contradicting d>2. Therefore d≤2, and hence x^2≡1 (mod q).\n\nThere are infinitely many primes q≡1 (mod 4) not dividing y. Indeed, if q_1,…,q_k were all of them, set A=2yq_1⋯q_k and take a prime divisor q of A^2+1. Then q∤A, and A has order 4 modulo q, so q≡1 (mod 4), producing a new such prime.\n\nConsequently, x^2−1 is divisible by infinitely many distinct primes. Therefore x^2−1=0. Since x is a positive integer, x=1.",
+    "domain": "bmo",
+    "explicit_subgoals": [],
+    "sample_id": "review-e0c4ea2ae05245c6a8aa39586262edf8",
+    "theorem": "Let \\( x \\) and \\( y \\) be positive integers. If for each positive integer \\( n \\) we have that\n\n\\[\n(n y)^{2}+1 \\mid x^{\\varphi(n)}-1\n\\]\n\nprove that \\( x=1 \\)."
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Proof.  We think of the final “blocked’’ configuration as the result of tearing out \\(b(n)\\) disjoint 3-stamp blocks (each block either 3 in a row or 3 in a column) so that no further 3-stamp block remains.  Call any three consecutive positions in a row or in a column a “potential triple.’’  There are in all  \n\\[\nH \\;=\\; n\\,(n-2)\n\\quad\\text{horizontal triples,}\n\\qquad\nV \\;=\\; n\\,(n-2)\n\\quad\\text{vertical triples,}\n\\]\nand hence \n\\[\nT \\;=\\;H+V \\;=\\;2\\,n\\,(n-2)\n\\]\npotential triples that must each be “hit’’ (i.e.\\ each must lose at least one stamp) by our removed blocks.\n\n1.  Lower bound \\(b(n)\\ge \\tfrac1{7}n^2-cn\\).  \n \nFix any one of the \\(b(n)\\) removed blocks.  If it is a horizontal block occupying cells \\((i,j),(i,j+1),(i,j+2)\\), then it “hits’’ (i.e.\\ destroys at least one cell of) at most\n  •  all horizontal triples that include one of those three cells;  in a row of length \\(n\\), each interior cell lies in 3 horizontal triples and each end‐cell in 1 or 2, and one checks easily that the three consecutive cells \\((i,j),(i,j+1),(i,j+2)\\) together lie in at most 5 distinct horizontal triples;  \n  •  all vertical triples that include one of those three cells;  each of the three removed stamps lies in at most 3 vertical triples, so altogether at most \\(3\\times3=9\\) vertical triples.  \nHence that one horizontal block can destroy at most \\(5+9=14\\) of the \\(T\\) potential triples.  Likewise any vertical block destroys at most \\(14\\) potential triples.  \n\nSince in the final configuration every one of the \\(T=2n(n-2)\\) potential triples must be destroyed by at least one of the removed blocks, and since each block can destroy at most \\(14\\) triples, we get the inequality\n\\[\n14\\,b(n)\\;\\ge\\;2\\,n(n-2)\\;=\\;2n^2-4n,\n\\]\ni.e.\n\\[\nb(n)\\;\\ge\\;\\frac{2n^2-4n}{14}\n\\;=\\;\\frac1{7}\\,n^2-\\frac{2}{7}\\,n.\n\\]\nThus the stated lower bound holds with \\(c=\\tfrac{2}{7}\\).\n\n2.  Upper bound \\(b(n)\\le \\tfrac1{5}n^2+dn\\).\n\nWe give an explicit “tiling’’ construction with density \\(1/5\\), up to an \\(O(n)\\) boundary correction.  Assume for simplicity that \\(n\\) is a multiple of 5; the leftover strip of width \\(<5\\) on the right and top can then be handled by at most \\(O(n)\\) extra blocks without changing the leading term.\n\nPartition the \\(n\\times n\\) grid into \\(\\tfrac n5\\times\\tfrac n5\\) little \\(5\\times5\\) macrosquares.  In each \\(5\\times5\\) macro with local coordinates \\((r,c)\\), \\(1\\le r,c\\le5\\), remove exactly the following 5 blocks (each of size 3):\n\n  A)  A horizontal block in row \\(r=2\\), columns \\(c=1,2,3\\).\n\n  B)  A horizontal block in row \\(r=4\\), columns \\(c=3,4,5\\).\n\n  C)  A vertical block in column \\(c=2\\), rows \\(r=3,4,5\\).\n\n  D)  A vertical block in column \\(c=4\\), rows \\(r=1,2,3\\).\n\n  E)  A horizontal block in row \\(r=5\\), columns \\(c=2,3,4\\).\n\nOne checks by an easy (though a bit tedious) case‐by‐case verification that in this repeated pattern every horizontal triple of three consecutive stamps in any row will contain at least one removed stamp (from one of the above horizontal blocks in its macro or in an adjacent macro), and similarly every vertical triple of three consecutive stamps in any column meets one of the vertical blocks C) or D).  Thus after tearing out these \\(5\\) blocks in each \\(5\\times5\\) cell there is no triple left anywhere in the \\(n\\times n\\) square.\n\nSince there are \\(\\tfrac n5\\) macros in each direction, the total number of blocks used is\n\\[\n5\\;\\times\\;\\Bigl(\\frac n5\\Bigr)^2\n\\;=\\;\\frac15\\,n^2.\n\\]\nAdding the \\(O(n)\\) extra blocks needed to cover the final partial strips (of width \\(<5\\)) along the top and right edges gives\n\\[\nb(n)\\;\\le\\;\\frac15\\,n^2 \\;+\\;O(n).\n\\]\nHence the upper bound holds with some constant \\(d\\).\n\nCombining (1) and (2) completes the proof: for all \\(n>0\\),\n\\[\n\\frac1{7}\\,n^2-\\frac{2}{7}n\\;\\le\\;b(n)\\;\\le\\;\\frac1{5}\\,n^2+d\\,n,\n\\]\nas required.  ∎",
+    "domain": "usamo",
+    "explicit_subgoals": [],
+    "sample_id": "review-e19ab540944848d7988d500ed04cee9d",
+    "theorem": "I have an \\(n \\times n\\) sheet of stamps, from which I've been asked to tear out blocks of three adjacent stamps in a single row or column. (I can only tear along the perforations separating adjacent stamps, and each block must come out of the sheet in one piece.) Let \\(b(n)\\) be the smallest number of blocks I can tear out and make it impossible to tear out any more blocks. Prove that there are real constants \\(c\\) and \\(d\\) such that\n\n\\[\n\\frac{1}{7} n^{2}-c n \\leq b(n) \\leq \\frac{1}{5} n^{2}+d n\n\\]\n\nfor all \\(n>0\\)."
+  },
+  {
+    "assumptions": [
+      "x,y 为实数且 x=y。"
+    ],
+    "candidate_text": "等式两边分别乘以 x 和 y。\n因此 x^2=y^2。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-e235d8165723425499b4c43d7db2b3f4",
+    "theorem": "证明若 x,y 为实数且 x=y，则 x^2=y^2。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Let \\(n\\) be a positive integer. We prove the result with \\(c=\\frac27\\) and \\(d=5\\).\n\nFor the lower bound, consider any terminal configuration using \\(m\\) blocks. For \\(n\\ge2\\), there are \\(n(n-2)\\) horizontal and \\(n(n-2)\\) vertical triples, hence \\(2n(n-2)\\) potential triples. Terminality implies that every potential triple contains a removed stamp.\n\nA horizontal removed block intersects at most five horizontal triples, since the starting position of an intersecting triple has at most five possibilities. Each of its three stamps belongs to at most three vertical triples, so it intersects at most nine vertical triples. Thus it intersects at most fourteen potential triples. The same bound holds for a vertical removed block. Therefore\n\\[\n14m\\ge 2n(n-2),\n\\]\nand hence\n\\[\nm\\ge \\frac17n^2-\\frac27n.\n\\]\nThis holds for every terminal configuration, so\n\\[\nb(n)\\ge \\frac17n^2-\\frac27n.\n\\]\nFor \\(n=1\\), the inequality is immediate.\n\nFor the upper bound, index the infinite square grid by integer pairs. In row \\(i\\), place horizontal blocks whose starting columns are all integers congruent to \\(i\\pmod 5\\). Thus the marked positions are exactly those \\((i,j)\\) satisfying\n\\[\nj-i\\pmod5\\in\\{0,1,2\\}.\n\\]\nThese blocks are pairwise disjoint.\n\nEvery horizontal triple meets the marked set because, in a fixed row, only two consecutive residue classes modulo five are unmarked. Every vertical triple also meets it. Indeed, for the triple in column \\(j\\) and rows \\(r,r+1,r+2\\), writing \\(x=j-r\\), its three positions are marked respectively when\n\\[\nx\\in\\{0,1,2\\},\\qquad x\\in\\{1,2,3\\},\\qquad x\\in\\{2,3,4\\}\\pmod5.\n\\]\nThese sets cover all residues modulo five.\n\nNow tear out every periodic block lying wholly inside the \\(n\\times n\\) board. Each row contains at most \\(n/5+1\\) such blocks, so their number is at most\n\\[\n\\frac15n^2+n.\n\\]\nLet \\(B\\) be the set of stamps in the first two or last two columns; then \\(|B|\\le4n\\). Any triple remaining after the initial removals must meet \\(B\\): it meets some marked position in the infinite pattern, and the periodic block containing that position was omitted only because it crossed the left or right boundary. Every position of such a block that lies on the board belongs to \\(B\\).\n\nContinue greedily removing available triples until none remains. Any triple available at a later stage was also available immediately after the initial removals, since removals can only destroy triples. Hence every additional block meets \\(B\\). The additional blocks are disjoint, so they use distinct stamps of \\(B\\); consequently there are at most \\(4n\\) additional blocks.\n\nThus a terminal configuration exists using at most\n\\[\n\\frac15n^2+n+4n=\\frac15n^2+5n\n\\]\nblocks. Therefore\n\\[\nb(n)\\le \\frac15n^2+5n.\n\\]\nCombining the bounds gives, for every positive integer \\(n\\),\n\\[\n\\frac17n^2-\\frac27n\\le b(n)\\le\\frac15n^2+5n.\n\\]\nHence the required constants may be chosen as \\(c=\\frac27\\) and \\(d=5\\).",
+    "domain": "usamo",
+    "explicit_subgoals": [],
+    "sample_id": "review-e9f70b443e734808aa284ddc88200af5",
+    "theorem": "I have an \\(n \\times n\\) sheet of stamps, from which I've been asked to tear out blocks of three adjacent stamps in a single row or column. (I can only tear along the perforations separating adjacent stamps, and each block must come out of the sheet in one piece.) Let \\(b(n)\\) be the smallest number of blocks I can tear out and make it impossible to tear out any more blocks. Prove that there are real constants \\(c\\) and \\(d\\) such that\n\n\\[\n\\frac{1}{7} n^{2}-c n \\leq b(n) \\leq \\frac{1}{5} n^{2}+d n\n\\]\n\nfor all \\(n>0\\)."
+  },
+  {
+    "assumptions": [
+      "x、y 为奇整数。"
+    ],
+    "candidate_text": "因为 x、y 为奇整数，所以存在整数 m,n，使得 x=2m+1，y=2n+1。于是\nx+y=(2m+1)+(2n+1)=2(m+n+1)。\n由于 m+n+1 是整数，故 x+y 是偶数。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-ef96576e4f5e471f95d518ca074b080c",
+    "theorem": "证明两个奇整数之和为偶数。"
+  },
+  {
+    "assumptions": [],
+    "candidate_text": "Let the cells be indexed by \\((r,s)\\), where \\(1\\le r,s\\le n\\). We may assume \\(n\\) is a positive integer.\n\nFor \\(n\\ge3\\), there are\n\\[\n2n(n-2)\n\\]\npotential blocks of three consecutive cells: \\(n(n-2)\\) horizontal and the same number vertical. In a final configuration admitting no further block, every potential block contains a removed stamp.\n\nA removed horizontal block meets at most five horizontal potential blocks: their starting columns can range over at most five values. Its three cells each lie in at most three vertical potential blocks, so it meets at most nine vertical potential blocks. Thus it meets at most fourteen potential blocks altogether. The same bound holds for a removed vertical block. Consequently,\n\\[\n14b(n)\\ge 2n(n-2),\n\\]\nso\n\\[\nb(n)\\ge \\frac17n^2-\\frac27n.\n\\]\nFor \\(n=1,2\\), the same inequality holds because \\(b(n)=0\\). Hence we may take \\(c=2/7\\).\n\nFor the upper bound, consider the infinite periodic marking in which \\((r,s)\\) is marked exactly when\n\\[\ns+2r\\pmod 5\\in\\{0,1,2\\}.\n\\]\nIn each fixed row, the marked cells occur in disjoint runs of three consecutive cells, separated by two unmarked cells. From the \\(n\\times n\\) sheet, tear out every such marked run that lies wholly within the sheet. These are disjoint horizontal three-stamp blocks. There are at most \\(n/5+1\\) of them in each row, hence at most\n\\[\n\\frac15n^2+n\n\\]\nin total.\n\nThe infinite marking meets every horizontal triple, since no row has three consecutive unmarked cells. It also meets every vertical triple: for three consecutive rows in a fixed column, the residues \\(s+2r\\) are\n\\[\na,\\ a+2,\\ a+4\\pmod5,\n\\]\nwhich are distinct, and therefore cannot all belong to the two unmarked residues \\(\\{3,4\\}\\).\n\nLet \\(E\\) consist of the first two and last two columns of the sheet; thus \\(|E|\\le4n\\). Every marked cell whose column lies between \\(3\\) and \\(n-2\\) belongs to a marked run lying wholly inside the sheet. It follows that after the preceding removals, every surviving potential block intersects \\(E\\).\n\nNow continue greedily, tearing out any available three-stamp block until none remains. Removing stamps cannot create a new block, so every additionally removed block intersects \\(E\\). Since these additional blocks are disjoint, each uses a distinct stamp of \\(E\\); hence there are at most \\(4n\\) of them. We have therefore produced a maximal configuration using at most\n\\[\n\\frac15n^2+n+4n=\\frac15n^2+5n\n\\]\nblocks. Thus \\(b(n)\\le \\frac15n^2+5n\\), so one may take \\(d=5\\).\n\nTherefore, for every positive integer \\(n\\),\n\\[\n\\frac17n^2-\frac27n\\le b(n)\\le \\frac15n^2+5n.\n\\]",
+    "domain": "usamo",
+    "explicit_subgoals": [],
+    "sample_id": "review-f8e7e9e8426142d4be4518c83975acc2",
+    "theorem": "I have an \\(n \\times n\\) sheet of stamps, from which I've been asked to tear out blocks of three adjacent stamps in a single row or column. (I can only tear along the perforations separating adjacent stamps, and each block must come out of the sheet in one piece.) Let \\(b(n)\\) be the smallest number of blocks I can tear out and make it impossible to tear out any more blocks. Prove that there are real constants \\(c\\) and \\(d\\) such that\n\n\\[\n\\frac{1}{7} n^{2}-c n \\leq b(n) \\leq \\frac{1}{5} n^{2}+d n\n\\]\n\nfor all \\(n>0\\)."
+  },
+  {
+    "assumptions": [
+      "a,b 为实数，且 a<b。"
+    ],
+    "candidate_text": "由 a<b 可知 a^2<b^2。\n再分别乘以 a 和 b，得到 a^3<b^3。\n因此立方函数严格递增。",
+    "domain": "elementary_algebra",
+    "explicit_subgoals": [],
+    "sample_id": "review-f9ed69a230a04fa1b2e533c32666bf0a",
+    "theorem": "证明若实数 a<b，则 a^3<b^3。"
+  }
+]

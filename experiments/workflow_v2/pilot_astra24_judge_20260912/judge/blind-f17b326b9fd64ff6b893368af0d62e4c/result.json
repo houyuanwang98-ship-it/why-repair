@@ -1,0 +1,50 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 7874,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "reported_latency_seconds": 18.786639553999976,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "c376b79abd5f67acc83b0058783c8592ee06bdd31b2497c72a705c7415f05e5f"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "62dc6731289b10f33c70f27f4dc5c60e5a702c5aba026cb5e0774b55ac10089d",
+    "call-001-judge/request.json": "2f1cfe39dad3130f2d397d547ce24e812c61e3a41a66cd1bc2fbecac680a6a7b",
+    "call-001-judge/response.json": "7a71ae148042441a64aaf93b3348f2ec1f5855ecdd5ab199e52808dbeeb9f713",
+    "call-001-judge/validated.json": "58f17c2969da77d9e417050186e68ba02cbd4e7a1fe1e2918bd74f7680468458"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "The condition is that \\(16Y+1 \\mid P(Y)\\) for all \\(Y \\in \\{1^2, 2^2, 3^2, \\dots\\}\\)",
+        "reason": "The hypothesis quantifies over n, not y. For the fixed pair (x,y), n=4 yields divisibility only at the single value Y=y², not at every positive square."
+      },
+      {
+        "quote": "If \\(K \\ne 0\\), we can choose \\(y\\) large enough such that \\(16y^2+1 > |K|\\).",
+        "reason": "The given y cannot be varied. Moreover, C was defined from x and y, so no common fixed C or K has been established across varying y. Consequently the deduction R₀=0 and the contradiction are unsupported."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "7aac52acb8e709b6514e06b1bf716f1a6fc78789bd2f5dbaffe09f390e7c81f6",
+    "problem_preservation": "fail",
+    "reason": "The proof replaces universality in n with universality in y. Its polynomial remainder argument therefore does not establish x=1.",
+    "rigor": "fail",
+    "sample_id": "blind-f17b326b9fd64ff6b893368af0d62e4c",
+    "unresolved_obligations": [
+      "Derive a contradiction for a fixed positive-integer pair (x,y) with x>1 using the hypothesis for all positive integers n."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

@@ -1,0 +1,321 @@
+{
+  "assignment": {
+    "case_id": "arith-3-4-delta-1",
+    "strategy": "retain_stale_for_experiment",
+    "task_id": "6c1874a2df6837d42d21ab7b218366a5036ed55dc781a4a9aec18243bae70b9f"
+  },
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 7923,
+    "model_attempts": 2,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 20.62819427100021,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "evaluate",
+        "request_digest": "9a9bbade1e0ef2228b63370caf1d7127936d26c68b1f4aec6704d22780558438"
+      },
+      {
+        "call": 2,
+        "phase": "audit",
+        "request_digest": "b78332486525b3759a5a592b40438ac6709f8ee47976e2acaeaabdf119927ab3"
+      }
+    ]
+  },
+  "candidate_text": "Define t=a+b+1=8.\nThen t^2=49.\na^2=9.\nb^2=16.\nTherefore a^2+b^2=25.",
+  "evaluated_nodes": [
+    "n1"
+  ],
+  "events": [
+    {
+      "event": "node_evaluated",
+      "status": "closed",
+      "target": {
+        "node_id": "n1",
+        "version": 1
+      }
+    },
+    {
+      "event": "node_evaluated",
+      "status": "closed",
+      "target": {
+        "node_id": "n2",
+        "version": 1
+      }
+    },
+    {
+      "event": "node_evaluated",
+      "status": "closed",
+      "target": {
+        "node_id": "n3",
+        "version": 1
+      }
+    },
+    {
+      "event": "node_evaluated",
+      "status": "closed",
+      "target": {
+        "node_id": "n4",
+        "version": 1
+      }
+    },
+    {
+      "event": "node_evaluated",
+      "status": "closed",
+      "target": {
+        "node_id": "n5",
+        "version": 1
+      }
+    },
+    {
+      "event": "patch_applied",
+      "invalidated": [
+        "n1",
+        "n2"
+      ],
+      "new_descendants": [
+        "n2"
+      ],
+      "new_graph": "3b4759c466a42f2c2f025dd31f4c78decf627c0194eea00ee607b583a12f328f",
+      "old_descendants": [
+        "n2"
+      ],
+      "old_graph": "d26203737dc1ec6cc0ce99da46a0024030f713da889e2096dd7cd0063a3d7831",
+      "patch_digest": "2acd1530fa3395e08fcd7f3f70fad7697fd6f036a9bcea3419f867999bebac37",
+      "stale_reused_for_ablation": [
+        {
+          "node_id": "n2",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "event": "node_evaluated",
+      "status": "closed",
+      "target": {
+        "node_id": "n1",
+        "version": 2
+      }
+    }
+  ],
+  "evidence_files": {
+    "call-001-evaluate/accounting.json": "f5258a1398b70b468a8c9316c7ad5896f4feb693d27a25bed5549dea61e55c82",
+    "call-001-evaluate/request.json": "4f9b1eba2d6b15bf454e101abe4e7cfdb5cce5781cc7eaf6865672b4dee7cf3c",
+    "call-001-evaluate/response.json": "df5af2a74d55305fa69c058682b143a4c4ad763770e3a1d85fc2c861b9038892",
+    "call-001-evaluate/validated.json": "b6a19de79d08c465da35d28b3ebe6c441d0be0d45d0e5a11a8b7ad5f4fb37278",
+    "call-002-audit/accounting.json": "32d8a165d38159c4ed355cea1a7396c1f8ef114770c5482d91727b17d7629e85",
+    "call-002-audit/request.json": "bbaf75c3a8b43db1aa7221f1b98bbe3176a5311a553dfb266b44347a09155d04",
+    "call-002-audit/response.json": "b42df9711f62b15a41a638253aed74f14652449f7c3497fe3e3018731f527aa6",
+    "call-002-audit/validated.json": "648532a4c004bfc715d96b5adb31cd32b88f71818753042d99db5b989ed8f201"
+  },
+  "failure": null,
+  "human_verified": false,
+  "internal_audit": {
+    "goal_coverage": "pass",
+    "issues": [
+      {
+        "kind": "invalid",
+        "node_id": "n2",
+        "quote": "Then t^2=49.",
+        "reason": "From n1, t=8, so t^2=64, not 49. This false statement is unnecessary; n3 and n4 correctly yield 9+16=25."
+      }
+    ],
+    "problem_preserved": "pass",
+    "reason": "The target is fully established from a=3 and b=4, but the candidate proof contains the false intermediate claim t^2=49.",
+    "rigor": "fail",
+    "unresolved_conditions": [],
+    "validity": "fail"
+  },
+  "local_success_before_audit": true,
+  "patch": {
+    "base_state_digest": "839c18f23fd01d27d1d4ea99381364c332eab0fff1a6a68f17492168e07f3827",
+    "certificate_id": "87a916fe125f3a5e5b235a362cf1effc760e13d94034b24677cc8fa84b209523",
+    "counterexample": null,
+    "nodes": [
+      {
+        "claim": "Define t=a+b+1=8.",
+        "depends_on": [],
+        "goal_refs": [],
+        "node_id": "n1",
+        "scope": [],
+        "text": "Define t=a+b+1=8."
+      }
+    ],
+    "operation": "replace",
+    "reason": "Identical preassigned local edit across revalidation strategies",
+    "target": {
+      "node_id": "n1",
+      "version": 1
+    },
+    "target_dependencies_after": []
+  },
+  "scheduled_revalidation": [
+    "n1"
+  ],
+  "state": {
+    "edits": 1,
+    "graph_uncertain": false,
+    "nodes": [
+      {
+        "claim": "Define t=a+b+1=8.",
+        "depends_on": [],
+        "evaluation": {
+          "call_id": 1,
+          "context_fingerprint": "0cc8960d602a6a2d6e90268f38befeb894f270c3f8680296efcdb81603e90e5d",
+          "result": {
+            "checked_obligation": "Verify the definition and equality t=a+b+1=8 under the assumptions a=3 and b=4.",
+            "counterexample": null,
+            "reason": "Substitution gives a+b+1=3+4+1=8, so defining t by this integer value is valid.",
+            "status": "closed",
+            "target": {
+              "node_id": "n1",
+              "version": 2
+            },
+            "unresolved_conditions": []
+          }
+        },
+        "goal_refs": [],
+        "node_id": "n1",
+        "scope": [],
+        "source_span": null,
+        "status": "closed",
+        "synthetic": false,
+        "text": "Define t=a+b+1=8.",
+        "version": 2
+      },
+      {
+        "claim": "Then t^2=49.",
+        "depends_on": [
+          "n1"
+        ],
+        "evaluation": {
+          "call_id": "constructed_integer_oracle",
+          "context_fingerprint": "735f8b595812205bbf1bcda9792d68a138b53552770c69bf2dd19e5a909bbe68",
+          "result": {
+            "checked_obligation": "Then t^2=49.",
+            "counterexample": null,
+            "reason": "Initial fixture verified by disclosed exact-integer construction",
+            "status": "closed",
+            "target": {
+              "node_id": "n2",
+              "version": 1
+            },
+            "unresolved_conditions": []
+          }
+        },
+        "goal_refs": [],
+        "node_id": "n2",
+        "scope": [],
+        "source_span": [
+          16,
+          28
+        ],
+        "status": "closed",
+        "synthetic": false,
+        "text": "Then t^2=49.",
+        "version": 1
+      },
+      {
+        "claim": "a^2=9.",
+        "depends_on": [],
+        "evaluation": {
+          "call_id": "constructed_integer_oracle",
+          "context_fingerprint": "8c8b9da0115200d3749ff23562978bc3404fbd26ef55aa0f4de728fefff2b7f9",
+          "result": {
+            "checked_obligation": "a^2=9.",
+            "counterexample": null,
+            "reason": "Initial fixture verified by disclosed exact-integer construction",
+            "status": "closed",
+            "target": {
+              "node_id": "n3",
+              "version": 1
+            },
+            "unresolved_conditions": []
+          }
+        },
+        "goal_refs": [],
+        "node_id": "n3",
+        "scope": [],
+        "source_span": [
+          29,
+          35
+        ],
+        "status": "closed",
+        "synthetic": false,
+        "text": "a^2=9.",
+        "version": 1
+      },
+      {
+        "claim": "b^2=16.",
+        "depends_on": [],
+        "evaluation": {
+          "call_id": "constructed_integer_oracle",
+          "context_fingerprint": "191b103d13e15b7c1d3f0a94f612585e0a55af945c6a2e1355ebf49e683dbfa4",
+          "result": {
+            "checked_obligation": "b^2=16.",
+            "counterexample": null,
+            "reason": "Initial fixture verified by disclosed exact-integer construction",
+            "status": "closed",
+            "target": {
+              "node_id": "n4",
+              "version": 1
+            },
+            "unresolved_conditions": []
+          }
+        },
+        "goal_refs": [],
+        "node_id": "n4",
+        "scope": [],
+        "source_span": [
+          36,
+          43
+        ],
+        "status": "closed",
+        "synthetic": false,
+        "text": "b^2=16.",
+        "version": 1
+      },
+      {
+        "claim": "Therefore a^2+b^2=25.",
+        "depends_on": [
+          "n3",
+          "n4"
+        ],
+        "evaluation": {
+          "call_id": "constructed_integer_oracle",
+          "context_fingerprint": "999620eec667a4b51f35a93d5543bd1267b8e4bcddaa46cad331a5f389ca5981",
+          "result": {
+            "checked_obligation": "Therefore a^2+b^2=25.",
+            "counterexample": null,
+            "reason": "Initial fixture verified by disclosed exact-integer construction",
+            "status": "closed",
+            "target": {
+              "node_id": "n5",
+              "version": 1
+            },
+            "unresolved_conditions": []
+          }
+        },
+        "goal_refs": [
+          "main"
+        ],
+        "node_id": "n5",
+        "scope": [],
+        "source_span": [
+          44,
+          65
+        ],
+        "status": "closed",
+        "synthetic": false,
+        "text": "Therefore a^2+b^2=25.",
+        "version": 1
+      }
+    ],
+    "problem_digest": "c451908b72396c2588183c6096aa2aaef284e166e0c3f58d2a94a62d4bcb6d4d"
+  },
+  "success_after_audit": false
+}

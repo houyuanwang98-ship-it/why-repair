@@ -1,0 +1,55 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 6612,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 36.01673431499967,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "380c82a2044c434c982e4344303f9546dfb48f4f1e2c7a195a2880d9cf6a5fd8"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "fa3daa15629203efd54309663e10000750c1a4bcd6436a9636c3397b7fae1c99",
+    "call-001-judge/request.json": "3cc1b0f1096c76dee573673ec76e2468d82c0b3f4d58d113a2895e0919c63f4b",
+    "call-001-judge/response.json": "4029a6bedf84b2b522aa38e4cb2b1410c410e771d70de3b37d275e3c1343a511",
+    "call-001-judge/validated.json": "8b01214399656bce1324e899795bb285a1801e61f563a1cd0884e64fac71f7d7"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "there must be a **partial sum** that crosses from below 190 to above 210.",
+        "reason": "This is not necessary: ten 25s have a partial sum of 200 and no consecutive partial sums jumping from below 190 to above 210."
+      },
+      {
+        "quote": "Let $ s_i $ be the first partial sum that exceeds 190. Then $ s_{i-1} < 190 $",
+        "reason": "The predecessor may equal 190, as for nineteen 10s followed by 25."
+      },
+      {
+        "quote": "we can always find a subset of the first $ i $ elements that sums to a value in $[190, 210]$.",
+        "reason": "False: take five 23s followed by four 24s. The first partial sum exceeding 190 is 211, but every proper subset sums to at most 188. Removing elements cannot produce the required sum."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "0c81db12dc43310765f5292d002d27323f3deb3662d01da632332bbea6ecef15",
+    "problem_preservation": "pass",
+    "reason": "Ten 21s correctly establish the lower bound N ≥ 10, but the asserted sufficiency relies on false partial-sum claims.",
+    "rigor": "fail",
+    "sample_id": "blind-36dcc46a08604b3fab67168dccf46fd6",
+    "unresolved_obligations": [
+      "Prove that every admissible list has a subset sum in [190,210]; the submitted sufficiency argument fails."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

@@ -1,0 +1,160 @@
+{
+  "assignment": {
+    "case_id": "m2-018",
+    "method": "full_system",
+    "model_config_digest": "eaf8ecb497f044e0a140710a9fe313d979ed04963e5663dd78286a628a003b42",
+    "problem_digest": "bc6e1e8fdbb955a2832e5103f2e24d8601ade22a0926480dd84e25b03171c8a3",
+    "replicate": 0,
+    "source_group": "aeea43f31d81e8f836caff96f0fa1b04d9b73832f8381af8b2288fe9e2622f9d",
+    "task_id": "6b094cce5c3075c413bc09a00a7c15387fb95b4e8042349a83a9e3eb50600787"
+  },
+  "evidence_files": {
+    "call-001-graph/accounting.json": "05d434dc4957de00fa2b4707caa0b80d445f5ecb4d32480ccc2ab9ca33944363",
+    "call-001-graph/request.json": "83e172c4cdff55a9f1932e604da94a06a8f6d27ead751895a24b21d077f7243a",
+    "call-001-graph/response.json": "1a31bcb84a45235e840dff439b1e0e5ff8db928f71c054c7833c848b935b5664",
+    "call-001-graph/validated.json": "62d44dc8594d59c4b1cdb1358099a3b5c1760c25aa403e37980e525da2ced5f7",
+    "call-002-evaluate/accounting.json": "cd22fbf4160a50bbdb60a13ab3459e523a43dfff25fbd9efd6ccfdaeec6903cd",
+    "call-002-evaluate/request.json": "5208a7a1e8451c92c41a362ecae442b85aae90e15fecb06c57e052a4f15ad887",
+    "call-002-evaluate/response.json": "4c70119298d6c65f7c75b966672c531948800520a6afa2db389662c9dcf15624",
+    "call-002-evaluate/validated.json": "189a13484fd26c2dc9e1df1db045d0f0ca2e939e4bce9e47c3b657b5e99d949d",
+    "call-003-evaluate/accounting.json": "74587fa54cfad14b6c954a3869f17a302d8a87f99820b1e096df7b0892d8f2ae",
+    "call-003-evaluate/request.json": "1a265307fb5f7baf4c338d3738856dfb594526a5deb29ab4a18c43ba1647d765",
+    "call-003-evaluate/response.json": "f10f44d9a410c3c289b1665d91028874d208fba4a5a6792e708689150ae121f1",
+    "call-003-evaluate/validated.json": "c0ca8789c4203722b17544ecc02bdacb296f932b4966fd6199667091086e07b2",
+    "call-004-audit/accounting.json": "baf74b7343e1915cd98d7139997a2cfa5d0f86d1ec29be7207f1378ae1e8fb5e",
+    "call-004-audit/request.json": "4b196b4ad34b6e6351972ff6fbc44bf0c4efe50d0edb50fb03c4242026c7b0c6",
+    "call-004-audit/response.json": "20159ae644cd864af9308f6ab83106c4e8ea76dac5c06eee1247d2323eb660e0",
+    "call-004-audit/validated.json": "f41e53425d76e679d809ff6b57ff2764e7f9b2cf35d47141f59ece842eb1fc18",
+    "identity.json": "8135f40029e6481bf60eb71c1a589055ec8e60d1a85ad07c4df349d891bf3ad2"
+  },
+  "outcome": {
+    "accounting_complete": true,
+    "candidate_text": "等式两边分别乘以 x 和 y。\n因此 x^2=y^2。",
+    "cost_usd": null,
+    "events": [
+      {
+        "event": "node_evaluated",
+        "status": "closed",
+        "target": {
+          "node_id": "n1",
+          "version": 1
+        }
+      },
+      {
+        "event": "node_evaluated",
+        "status": "closed",
+        "target": {
+          "node_id": "n2",
+          "version": 1
+        }
+      }
+    ],
+    "evidence_kind": "live_model",
+    "human_verified": false,
+    "internal_checks": [
+      "source_graph_validation",
+      "internal_final_audit"
+    ],
+    "known_total_tokens": 16561,
+    "model_attempts": 4,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 85.59036700999877,
+    "snapshot": {
+      "edits": 0,
+      "graph_uncertain": true,
+      "nodes": [
+        {
+          "claim": "由已知等式 x=y，将左边乘以 x、右边乘以 y。",
+          "depends_on": [],
+          "evaluation": {
+            "call_id": 2,
+            "context_fingerprint": "cc3b239b6c314f7f2ec314790ef16ccc93dd7d493d1920e180757187252b3c3e",
+            "result": {
+              "checked_obligation": "验证由假设 x=y，把左边乘以 x、右边乘以 y 是否可合法得到 x^2=y^2。",
+              "counterexample": null,
+              "reason": "成立。由 x=y 可在等式两边同乘 x，得 x^2=xy；又由 x=y，在 xy 中以 y 替换 x，得 xy=y^2，因此 x^2=y^2。等价地，由两个等式 x=y 相乘可得 x·x=y·y。",
+              "status": "closed",
+              "target": {
+                "node_id": "n1",
+                "version": 1
+              },
+              "unresolved_conditions": []
+            }
+          },
+          "goal_refs": [],
+          "node_id": "n1",
+          "scope": [],
+          "source_span": [
+            0,
+            15
+          ],
+          "status": "closed",
+          "synthetic": false,
+          "text": "等式两边分别乘以 x 和 y。",
+          "version": 1
+        },
+        {
+          "claim": "得到平方相等的结论 x^2=y^2。",
+          "depends_on": [
+            "n1"
+          ],
+          "evaluation": {
+            "call_id": 3,
+            "context_fingerprint": "25a2532887ccdd97db2343425baed62f75c32d9511ba5ca87f3f1e9a3d024aed",
+            "result": {
+              "checked_obligation": "由已知的实数等式 x=y 推出 x^2=y^2。",
+              "counterexample": null,
+              "reason": "由 x=y，利用乘法对等式的相容性，有 x·x=y·y，即 x^2=y^2。",
+              "status": "closed",
+              "target": {
+                "node_id": "n2",
+                "version": 1
+              },
+              "unresolved_conditions": []
+            }
+          },
+          "goal_refs": [
+            "main"
+          ],
+          "node_id": "n2",
+          "scope": [],
+          "source_span": [
+            16,
+            27
+          ],
+          "status": "closed",
+          "synthetic": false,
+          "text": "因此 x^2=y^2。",
+          "version": 1
+        }
+      ],
+      "problem_digest": "bc6e1e8fdbb955a2832e5103f2e24d8601ade22a0926480dd84e25b03171c8a3"
+    },
+    "stop_reason": "由假设 x=y，等式两边的乘数 x 与 y 也相等，故 x·x=y·y，即 x^2=y^2；结论完整且未改变原命题。",
+    "system_claim": "proof_valid",
+    "terminal_status": "proof_ready",
+    "trace": [
+      {
+        "call": 1,
+        "phase": "graph",
+        "request_digest": "59a872627b8cf9d658d7c809bb76b068a4380ea1d9e2d16c0917b33eeb6ff457"
+      },
+      {
+        "call": 2,
+        "phase": "evaluate",
+        "request_digest": "9cf635b26f260336fc74ed43509a03b72fd2595c7d038fcc2047d80238e4fa39"
+      },
+      {
+        "call": 3,
+        "phase": "evaluate",
+        "request_digest": "ba8d87173653c873a46453c5d5d3fab6d33435c0aac7347783a6e883e697c65e"
+      },
+      {
+        "call": 4,
+        "phase": "audit",
+        "request_digest": "faf99adcb6e1124ca486c6a734b6246af86e49f0a97aba5f2cddd1adbbb20381"
+      }
+    ]
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "goal_coverage": {
+      "enum": [
+        "pass",
+        "fail",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "issues": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "enum": [
+              "gap",
+              "invalid",
+              "undetermined"
+            ],
+            "type": "string"
+          },
+          "node_id": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "quote": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "reason": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        "required": [
+          "node_id",
+          "kind",
+          "quote",
+          "reason"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "problem_preserved": {
+      "enum": [
+        "pass",
+        "fail",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "reason": {
+      "minLength": 1,
+      "pattern": "\\S",
+      "type": "string"
+    },
+    "rigor": {
+      "enum": [
+        "pass",
+        "fail",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "unresolved_conditions": {
+      "items": {
+        "minLength": 1,
+        "pattern": "\\S",
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "validity": {
+      "enum": [
+        "pass",
+        "fail",
+        "unknown"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "validity",
+    "rigor",
+    "problem_preserved",
+    "goal_coverage",
+    "issues",
+    "unresolved_conditions",
+    "reason"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,251 @@
+{
+  "ambiguities": [
+    "Although the theorem says “for all n>0,” an n by n sheet and b(n) naturally restrict n to positive integers; b(n) is not defined for noninteger real n.",
+    "The proof treats a terminal result as a static family of disjoint triminoes, but it does not specify whether every such family can be removed sequentially under the stated tearing rule.",
+    "The scope of “Assume for simplicity that n is a multiple of 5” is unclear because the same sentence immediately discusses leftover strips, which arise only when n is not a multiple of 5."
+  ],
+  "nodes": [
+    {
+      "claim": "Terminality implies that every potential triple contains a removed stamp. The static description does not justify that every proposed disjoint family can be realized by the permitted tearing process.",
+      "depends_on": [],
+      "goal_refs": [
+        "main"
+      ],
+      "node_id": "N1",
+      "scope": [],
+      "text": "Proof.  We think of the final “blocked’’ configuration as the result of tearing out \\(b(n)\\) disjoint 3-stamp blocks (each block either 3 in a row or 3 in a column) so that no further 3-stamp block remains.  Call any three consecutive positions in a row or in a column a “potential triple.’’"
+    },
+    {
+      "claim": "The counts are correct for integer n at least 3, and give zero correctly for n=2. For n=1 the actual number is zero, not the negative value given by these formulas.",
+      "depends_on": [
+        "N1"
+      ],
+      "goal_refs": [
+        "main",
+        "subgoal-1"
+      ],
+      "node_id": "N2",
+      "scope": [],
+      "text": "There are in all  \n\\[\nH \\;=\\; n\\,(n-2)\n\\quad\\text{horizontal triples,}\n\\qquad\nV \\;=\\; n\\,(n-2)\n\\quad\\text{vertical triples,}\n\\]\nand hence \n\\[\nT \\;=\\;H+V \\;=\\;2\\,n\\,(n-2)\n\\]\npotential triples that must each be “hit’’ (i.e.\\ each must lose at least one stamp) by our removed blocks."
+    },
+    {
+      "claim": "States the lower-bound subgoal.",
+      "depends_on": [],
+      "goal_refs": [
+        "subgoal-1"
+      ],
+      "node_id": "N3",
+      "scope": [],
+      "text": "1.  Lower bound \\(b(n)\\ge \\tfrac1{7}n^2-cn\\)."
+    },
+    {
+      "claim": "The bound 14 is correct: a length-three row interval intersects at most five horizontal triples, while its three cells belong to at most nine vertical triples. The wording about every interior cell lying in three triples is imprecise near the row ends but does not affect the bound.",
+      "depends_on": [
+        "N1",
+        "N2"
+      ],
+      "goal_refs": [
+        "subgoal-1"
+      ],
+      "node_id": "N4",
+      "scope": [],
+      "text": "Fix any one of the \\(b(n)\\) removed blocks.  If it is a horizontal block occupying cells \\((i,j),(i,j+1),(i,j+2)\\), then it “hits’’ (i.e.\\ destroys at least one cell of) at most\n  •  all horizontal triples that include one of those three cells;  in a row of length \\(n\\), each interior cell lies in 3 horizontal triples and each end‐cell in 1 or 2, and one checks easily that the three consecutive cells \\((i,j),(i,j+1),(i,j+2)\\) together lie in at most 5 distinct horizontal triples;  \n  •  all vertical triples that include one of those three cells;  each of the three removed stamps lies in at most 3 vertical triples, so altogether at most \\(3\\times3=9\\) vertical triples.  \nHence that one horizontal block can destroy at most \\(5+9=14\\) of the \\(T\\) potential triples."
+    },
+    {
+      "claim": "Correct by interchanging rows and columns in N4.",
+      "depends_on": [
+        "N4"
+      ],
+      "goal_refs": [
+        "subgoal-1"
+      ],
+      "node_id": "N5",
+      "scope": [],
+      "text": "Likewise any vertical block destroys at most \\(14\\) potential triples."
+    },
+    {
+      "claim": "For integer n at least 2, this follows by double counting incidences between potential triples and removed blocks. The cited interpretation of T does not apply when n=1.",
+      "depends_on": [
+        "N2",
+        "N5"
+      ],
+      "goal_refs": [
+        "subgoal-1"
+      ],
+      "node_id": "N6",
+      "scope": [],
+      "text": "Since in the final configuration every one of the \\(T=2n(n-2)\\) potential triples must be destroyed by at least one of the removed blocks, and since each block can destroy at most \\(14\\) triples, we get the inequality\n\\[\n14\\,b(n)\\;\\ge\\;2\\,n(n-2)\\;=\\;2n^2-4n,\n\\]"
+    },
+    {
+      "claim": "This is a correct algebraic rearrangement of N6.",
+      "depends_on": [
+        "N6"
+      ],
+      "goal_refs": [
+        "subgoal-1"
+      ],
+      "node_id": "N7",
+      "scope": [],
+      "text": "i.e.\n\\[\nb(n)\\;\\ge\\;\\frac{2n^2-4n}{14}\n\\;=\\;\\frac1{7}\\,n^2-\\frac{2}{7}\\,n.\n\\]"
+    },
+    {
+      "claim": "N7 proves this for integer n at least 2. The omitted n=1 case follows directly from b(1)=0, so the stated c works for all positive integer n.",
+      "depends_on": [
+        "N7"
+      ],
+      "goal_refs": [
+        "main",
+        "subgoal-1"
+      ],
+      "node_id": "N8",
+      "scope": [],
+      "text": "Thus the stated lower bound holds with \\(c=\\tfrac{2}{7}\\)."
+    },
+    {
+      "claim": "States the upper-bound subgoal.",
+      "depends_on": [],
+      "goal_refs": [
+        "subgoal-2"
+      ],
+      "node_id": "N9",
+      "scope": [],
+      "text": "2.  Upper bound \\(b(n)\\le \\tfrac1{5}n^2+dn\\)."
+    },
+    {
+      "claim": "Announces a construction; it supplies no justification by itself.",
+      "depends_on": [
+        "N9"
+      ],
+      "goal_refs": [
+        "subgoal-2"
+      ],
+      "node_id": "N10",
+      "scope": [],
+      "text": "We give an explicit “tiling’’ construction with density \\(1/5\\), up to an \\(O(n)\\) boundary correction."
+    },
+    {
+      "claim": "The reduction is unsupported: when n is a multiple of 5 there is no leftover strip, while for other n no legal O(n)-block completion is described.",
+      "depends_on": [
+        "N10"
+      ],
+      "goal_refs": [
+        "subgoal-2"
+      ],
+      "node_id": "N11",
+      "scope": [],
+      "text": "Assume for simplicity that \\(n\\) is a multiple of 5; the leftover strip of width \\(<5\\) on the right and top can then be handled by at most \\(O(n)\\) extra blocks without changing the leading term."
+    },
+    {
+      "claim": "This partition is valid under the assumption that n is divisible by 5.",
+      "depends_on": [
+        "N11"
+      ],
+      "goal_refs": [
+        "subgoal-2"
+      ],
+      "node_id": "N12",
+      "scope": [
+        "N11"
+      ],
+      "text": "Partition the \\(n\\times n\\) grid into \\(\\tfrac n5\\times\\tfrac n5\\) little \\(5\\times5\\) macrosquares."
+    },
+    {
+      "claim": "This is not a legal family of disjoint blocks: C and E both contain the cell (5,2), so they cannot both be torn out.",
+      "depends_on": [
+        "N12"
+      ],
+      "goal_refs": [
+        "subgoal-2"
+      ],
+      "node_id": "N13",
+      "scope": [
+        "N11"
+      ],
+      "text": "In each \\(5\\times5\\) macro with local coordinates \\((r,c)\\), \\(1\\le r,c\\le5\\), remove exactly the following 5 blocks (each of size 3):\n\n  A)  A horizontal block in row \\(r=2\\), columns \\(c=1,2,3\\).\n\n  B)  A horizontal block in row \\(r=4\\), columns \\(c=3,4,5\\).\n\n  C)  A vertical block in column \\(c=2\\), rows \\(r=3,4,5\\).\n\n  D)  A vertical block in column \\(c=4\\), rows \\(r=1,2,3\\).\n\n  E)  A horizontal block in row \\(r=5\\), columns \\(c=2,3,4\\)."
+    },
+    {
+      "claim": "False. In each macro, row 1 columns 1,2,3 form an untouched horizontal triple, and column 1 rows 3,4,5 form an untouched vertical triple.",
+      "depends_on": [
+        "N12",
+        "N13"
+      ],
+      "goal_refs": [
+        "subgoal-2"
+      ],
+      "node_id": "N14",
+      "scope": [
+        "N11"
+      ],
+      "text": "One checks by an easy (though a bit tedious) case‐by‐case verification that in this repeated pattern every horizontal triple of three consecutive stamps in any row will contain at least one removed stamp (from one of the above horizontal blocks in its macro or in an adjacent macro), and similarly every vertical triple of three consecutive stamps in any column meets one of the vertical blocks C) or D)."
+    },
+    {
+      "claim": "Invalid: N13 gives overlapping blocks, and N14 supplies explicit triples that remain intact.",
+      "depends_on": [
+        "N13",
+        "N14"
+      ],
+      "goal_refs": [
+        "subgoal-2"
+      ],
+      "node_id": "N15",
+      "scope": [
+        "N11"
+      ],
+      "text": "Thus after tearing out these \\(5\\) blocks in each \\(5\\times5\\) cell there is no triple left anywhere in the \\(n\\times n\\) square."
+    },
+    {
+      "claim": "The arithmetic is correct for five nominal blocks per macro, but it does not count a legal terminal construction because of N13 and N14.",
+      "depends_on": [
+        "N12",
+        "N13"
+      ],
+      "goal_refs": [
+        "subgoal-2"
+      ],
+      "node_id": "N16",
+      "scope": [
+        "N11"
+      ],
+      "text": "Since there are \\(\\tfrac n5\\) macros in each direction, the total number of blocks used is\n\\[\n5\\;\\times\\;\\Bigl(\\frac n5\\Bigr)^2\n\\;=\\;\\frac15\\,n^2.\n\\]"
+    },
+    {
+      "claim": "Unsupported. No disjoint boundary construction is supplied, and the intact triples from N14 occur throughout the macros rather than only in boundary strips, so an O(n) boundary correction cannot repair this pattern.",
+      "depends_on": [
+        "N14",
+        "N16"
+      ],
+      "goal_refs": [
+        "subgoal-2"
+      ],
+      "node_id": "N17",
+      "scope": [],
+      "text": "Adding the \\(O(n)\\) extra blocks needed to cover the final partial strips (of width \\(<5\\)) along the top and right edges gives\n\\[\nb(n)\\;\\le\\;\\frac15\\,n^2 \\;+\\;O(n).\n\\]"
+    },
+    {
+      "claim": "Does not follow, because neither the periodic construction nor the asserted boundary correction is valid.",
+      "depends_on": [
+        "N17"
+      ],
+      "goal_refs": [
+        "main",
+        "subgoal-2"
+      ],
+      "node_id": "N18",
+      "scope": [],
+      "text": "Hence the upper bound holds with some constant \\(d\\)."
+    },
+    {
+      "claim": "The conclusion is not proved: the lower estimate is supported, subject to the small-case check, but the upper estimate depends on the invalid construction in N13–N18.",
+      "depends_on": [
+        "N8",
+        "N18"
+      ],
+      "goal_refs": [
+        "main"
+      ],
+      "node_id": "N19",
+      "scope": [],
+      "text": "Combining (1) and (2) completes the proof: for all \\(n>0\\),\n\\[\n\\frac1{7}\\,n^2-\\frac{2}{7}n\\;\\le\\;b(n)\\;\\le\\;\\frac1{5}\\,n^2+d\\,n,\n\\]\nas required.  ∎"
+    }
+  ]
+}

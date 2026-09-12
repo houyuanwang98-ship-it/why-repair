@@ -1,0 +1,60 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 5977,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 45.4052171480007,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "b8449a4c5cf6695df356343456e26c068b766d02e7dd8dd234508bc675ceb242"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "85d3400a637afe46922ff9721a728333704821c2d06559b9eb1b2df89f0d9262",
+    "call-001-judge/request.json": "19487c3d6cbe2a07671488362d70749b58213e72510e3f09d6d6b2a58edffa80",
+    "call-001-judge/response.json": "21f7a4c1494be5124dd277e8af3ba726b6428ac91ec2b2a0718c46c77832039e",
+    "call-001-judge/validated.json": "9024bc0051ab8f8eff0e4fdec1dae49bec1b3670c3151be1b7c51c2899293348"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "since $a$ and $c^{-1}$ have the same order and $b$ and $d$ have the same order this is a well defined function.",
+        "reason": "Matching generator orders does not establish a well-defined map on the group. A normal-form definition or justification using defining relations is missing."
+      },
+      {
+        "quote": "& =\\left(c d^{-1} c^{-1}\\right)^{-1}",
+        "reason": "This expression equals cdc^{-1}=d^4, whereas the preceding expression c^{-1}dc equals d^2. They are distinct because d has order 7."
+      },
+      {
+        "quote": "& =\\left(d^2\\right)^2 \\\\\n\n& =\\phi(b)^2",
+        "reason": "The left expression is d^4, but phi(b)^2=d^2. Thus the displayed homomorphism verification contains another false equality."
+      },
+      {
+        "quote": "Therefore $G$ and $G^{\\prime}$ are isomorphic and so up to isomorphism there is only one nonabelian group of order 21 .",
+        "reason": "The argument considers only groups with opposite chosen action exponents. It does not justify uniqueness among groups having the same exponent, so this universal conclusion is not established."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "33bd5d8e57420c311f600b8061bc5cea6e5a3b7ffa306c0d31927d6ea6106b81",
+    "problem_preservation": "pass",
+    "reason": "The reduction to action exponents 2 and 4 is sound, but the proposed isomorphism proof contains false equalities and lacks the justification needed for the universal conclusion.",
+    "rigor": "fail",
+    "sample_id": "blind-f0cbdb91f4154df4bc97e027cc30ae12",
+    "unresolved_obligations": [
+      "Establish that the generator assignment extends to a well-defined homomorphism.",
+      "Justify the isomorphism claim for arbitrary pairs, including groups with the same chosen action exponent."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

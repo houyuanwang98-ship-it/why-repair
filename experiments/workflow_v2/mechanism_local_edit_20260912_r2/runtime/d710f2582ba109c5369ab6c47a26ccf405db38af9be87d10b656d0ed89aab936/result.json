@@ -1,0 +1,339 @@
+{
+  "assignment": {
+    "case_id": "arith-4-7-delta-1",
+    "strategy": "dependency_closure",
+    "task_id": "d710f2582ba109c5369ab6c47a26ccf405db38af9be87d10b656d0ed89aab936"
+  },
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 11984,
+    "model_attempts": 3,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 32.34802759400054,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "evaluate",
+        "request_digest": "74579beae1e2778473d71034124da6c4be9e7887f732128b84483fec0b85f026"
+      },
+      {
+        "call": 2,
+        "phase": "evaluate",
+        "request_digest": "af6eea918c4758aec6bc1dbed050268668426987c573fe787b2d2865035fb7a9"
+      },
+      {
+        "call": 3,
+        "phase": "audit",
+        "request_digest": "1f92312e1c29564f3c4b7f303de3b87f017b86ed6c2e0eefda7cd2a485650ad8"
+      }
+    ]
+  },
+  "candidate_text": "Define t=a+b+1=12.\nThen t^2=121.\na^2=16.\nb^2=49.\nTherefore a^2+b^2=65.",
+  "evaluated_nodes": [
+    "n1",
+    "n2"
+  ],
+  "events": [
+    {
+      "event": "node_evaluated",
+      "status": "closed",
+      "target": {
+        "node_id": "n1",
+        "version": 1
+      }
+    },
+    {
+      "event": "node_evaluated",
+      "status": "closed",
+      "target": {
+        "node_id": "n2",
+        "version": 1
+      }
+    },
+    {
+      "event": "node_evaluated",
+      "status": "closed",
+      "target": {
+        "node_id": "n3",
+        "version": 1
+      }
+    },
+    {
+      "event": "node_evaluated",
+      "status": "closed",
+      "target": {
+        "node_id": "n4",
+        "version": 1
+      }
+    },
+    {
+      "event": "node_evaluated",
+      "status": "closed",
+      "target": {
+        "node_id": "n5",
+        "version": 1
+      }
+    },
+    {
+      "event": "patch_applied",
+      "invalidated": [
+        "n1",
+        "n2"
+      ],
+      "new_descendants": [
+        "n2"
+      ],
+      "new_graph": "2c04499d62424e7e09056014f87fdb0dc27faf1b6818ff7cebf4a1ba7dfa9cb4",
+      "old_descendants": [
+        "n2"
+      ],
+      "old_graph": "263218be0e27af8bff888066e8aa792536c7a622949d16fbee4d2ffc18a4f6cf",
+      "patch_digest": "4ff6f2dc4e3eb6d7ebe9d97866a2151ab01fc95cb31a445c5fb5f90a21f2e69c",
+      "stale_reused_for_ablation": []
+    },
+    {
+      "event": "node_evaluated",
+      "status": "closed",
+      "target": {
+        "node_id": "n1",
+        "version": 2
+      }
+    },
+    {
+      "event": "node_evaluated",
+      "status": "invalid",
+      "target": {
+        "node_id": "n2",
+        "version": 2
+      }
+    }
+  ],
+  "evidence_files": {
+    "call-001-evaluate/accounting.json": "24dceb4489bb30a5b17c52bc03a6acc652ae7df6962633b68f4030862eeecfe6",
+    "call-001-evaluate/request.json": "c0703a329bcd82ca6daf6f0d03f065407fe1ea167dab7343d54f7a6bcd237021",
+    "call-001-evaluate/response.json": "aa3c1b677fa59d68566413498e14dc35f772be65c15f34973e0b35f935bd3ea2",
+    "call-001-evaluate/validated.json": "6f66d463e2184eea4e4cfe6cbffe00e0305783601dc40b59c8f27d24c8d00d6d",
+    "call-002-evaluate/accounting.json": "6cc2849fd347686169866db81aadc8383057514b5c492489977e37d17b16c821",
+    "call-002-evaluate/request.json": "5a6b3b7f6d1ad60e56c8df4da53fee22802afe0cb72f1c56008b1d77e953580b",
+    "call-002-evaluate/response.json": "8d62ed7997b37b227dda7bc7ef2555fb5d762091240cb89b763dc73e12dc6e2a",
+    "call-002-evaluate/validated.json": "ab133d1ce790c1ab9cb66dfa9664a84f1f61c512a21c44eac466b874ca733217",
+    "call-003-audit/accounting.json": "9b1d8eb42f85a366a1fe3117f664b8bdb041d3ac8597c91df5fbb647c9700baa",
+    "call-003-audit/request.json": "e46a08f08b472e47793a7de77fb45ab6bc706cd66d7df4875d6fa975408f2054",
+    "call-003-audit/response.json": "01669b21be5366a30e6e6fb06acf2456810e9905dd51eac1150effad079d7396",
+    "call-003-audit/validated.json": "3f151c5a3b4f7019e47c2f4982ef5aa1e96b0d3aba77ed9386503ab303979ad5"
+  },
+  "failure": null,
+  "human_verified": false,
+  "internal_audit": {
+    "goal_coverage": "pass",
+    "issues": [
+      {
+        "kind": "invalid",
+        "node_id": "n2",
+        "quote": "Then t^2=121.",
+        "reason": "From n1, t=12, so t^2=144, not 121. This false side claim is unnecessary for the otherwise valid derivation 16+49=65."
+      }
+    ],
+    "problem_preserved": "pass",
+    "reason": "The target is correctly obtained from a=4 and b=7 via a^2=16 and b^2=49, but the proof contains the false assertion t^2=121.",
+    "rigor": "fail",
+    "unresolved_conditions": [],
+    "validity": "fail"
+  },
+  "local_success_before_audit": false,
+  "patch": {
+    "base_state_digest": "b8080e618d054e583d4f802e8e469079fbf4831c58c5fe5e73f6ad713de4e6ea",
+    "certificate_id": "4fc94074b3f3f16ae25d30e70faa593d74d9169b8a01ee632449bfdb5091cd35",
+    "counterexample": null,
+    "nodes": [
+      {
+        "claim": "Define t=a+b+1=12.",
+        "depends_on": [],
+        "goal_refs": [],
+        "node_id": "n1",
+        "scope": [],
+        "text": "Define t=a+b+1=12."
+      }
+    ],
+    "operation": "replace",
+    "reason": "Identical preassigned local edit across revalidation strategies",
+    "target": {
+      "node_id": "n1",
+      "version": 1
+    },
+    "target_dependencies_after": []
+  },
+  "scheduled_revalidation": [
+    "n1",
+    "n2"
+  ],
+  "state": {
+    "edits": 1,
+    "graph_uncertain": false,
+    "nodes": [
+      {
+        "claim": "Define t=a+b+1=12.",
+        "depends_on": [],
+        "evaluation": {
+          "call_id": 1,
+          "context_fingerprint": "dc258306e2d785e12e376170ea3830c5f6c0e3f111906391063a2a4f12360e02",
+          "result": {
+            "checked_obligation": "Under the integer assumptions a=4 and b=7, verify the definition t=a+b+1 and the asserted value t=12.",
+            "counterexample": null,
+            "reason": "Substitution gives a+b+1=4+7+1=12, so defining t=a+b+1 yields t=12. This uses only integer arithmetic and requires no external theorem.",
+            "status": "closed",
+            "target": {
+              "node_id": "n1",
+              "version": 2
+            },
+            "unresolved_conditions": []
+          }
+        },
+        "goal_refs": [],
+        "node_id": "n1",
+        "scope": [],
+        "source_span": null,
+        "status": "closed",
+        "synthetic": false,
+        "text": "Define t=a+b+1=12.",
+        "version": 2
+      },
+      {
+        "claim": "Then t^2=121.",
+        "depends_on": [
+          "n1"
+        ],
+        "evaluation": {
+          "call_id": 2,
+          "context_fingerprint": "87d36189131fd82290166ed8850f65c875328c7c983e691ce112a22debd17140",
+          "result": {
+            "checked_obligation": "From the closed predecessor t=a+b+1=12, check whether t^2=121.",
+            "counterexample": {
+              "scope": "local",
+              "target": "t^2=121",
+              "witness": "t=12, for which t^2=144≠121"
+            },
+            "reason": "The predecessor gives t=12, so t^2=12^2=144, not 121; hence the local claim is false.",
+            "status": "invalid",
+            "target": {
+              "node_id": "n2",
+              "version": 2
+            },
+            "unresolved_conditions": []
+          }
+        },
+        "goal_refs": [],
+        "node_id": "n2",
+        "scope": [],
+        "source_span": [
+          17,
+          30
+        ],
+        "status": "invalid",
+        "synthetic": false,
+        "text": "Then t^2=121.",
+        "version": 2
+      },
+      {
+        "claim": "a^2=16.",
+        "depends_on": [],
+        "evaluation": {
+          "call_id": "constructed_integer_oracle",
+          "context_fingerprint": "e0af8edd7f1fd04d840f9432cd3c5a3b42a7f729ff235bb2fcf6a015a4dd66c1",
+          "result": {
+            "checked_obligation": "a^2=16.",
+            "counterexample": null,
+            "reason": "Initial fixture verified by disclosed exact-integer construction",
+            "status": "closed",
+            "target": {
+              "node_id": "n3",
+              "version": 1
+            },
+            "unresolved_conditions": []
+          }
+        },
+        "goal_refs": [],
+        "node_id": "n3",
+        "scope": [],
+        "source_span": [
+          31,
+          38
+        ],
+        "status": "closed",
+        "synthetic": false,
+        "text": "a^2=16.",
+        "version": 1
+      },
+      {
+        "claim": "b^2=49.",
+        "depends_on": [],
+        "evaluation": {
+          "call_id": "constructed_integer_oracle",
+          "context_fingerprint": "9338973c8ec90f6ea917f35a2dcf664a2b173e850dcb051a9110b8307d5f1835",
+          "result": {
+            "checked_obligation": "b^2=49.",
+            "counterexample": null,
+            "reason": "Initial fixture verified by disclosed exact-integer construction",
+            "status": "closed",
+            "target": {
+              "node_id": "n4",
+              "version": 1
+            },
+            "unresolved_conditions": []
+          }
+        },
+        "goal_refs": [],
+        "node_id": "n4",
+        "scope": [],
+        "source_span": [
+          39,
+          46
+        ],
+        "status": "closed",
+        "synthetic": false,
+        "text": "b^2=49.",
+        "version": 1
+      },
+      {
+        "claim": "Therefore a^2+b^2=65.",
+        "depends_on": [
+          "n3",
+          "n4"
+        ],
+        "evaluation": {
+          "call_id": "constructed_integer_oracle",
+          "context_fingerprint": "5d5efb2b79a5e7ec892cbd08342f02f2f99877c875a81e1563a50bd2a1741773",
+          "result": {
+            "checked_obligation": "Therefore a^2+b^2=65.",
+            "counterexample": null,
+            "reason": "Initial fixture verified by disclosed exact-integer construction",
+            "status": "closed",
+            "target": {
+              "node_id": "n5",
+              "version": 1
+            },
+            "unresolved_conditions": []
+          }
+        },
+        "goal_refs": [
+          "main"
+        ],
+        "node_id": "n5",
+        "scope": [],
+        "source_span": [
+          47,
+          68
+        ],
+        "status": "closed",
+        "synthetic": false,
+        "text": "Therefore a^2+b^2=65.",
+        "version": 1
+      }
+    ],
+    "problem_digest": "a0a0de59d3425fccf28095ae4f103ced5c95383e8f68e9703a5cc2c5348860ee"
+  },
+  "success_after_audit": false
+}

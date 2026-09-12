@@ -1,6 +1,6 @@
 # Usage guide
 
-This guide covers installation, command-line workflows, resumable adjudication sessions, evaluation, and input data.
+This guide covers installation, command-line workflows, resumable adjudication sessions, evaluation, and input data. The model overrides below apply to the historical runners; workflow v2 uses fixed models and a separate [scheduler guide](workflow_v2/SCHEDULER.md).
 
 ## Setup
 

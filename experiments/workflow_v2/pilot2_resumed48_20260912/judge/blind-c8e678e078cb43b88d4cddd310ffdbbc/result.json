@@ -1,0 +1,47 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 4953,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 28.612245232000532,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "bd531ba7b29052cb41179617ed58f401c2c8d3ab7c23554305ae99f53133738b"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "329a3117cf6c8ae0befa81486c5c22d7c455c8524aec784fab925d239f3567ac",
+    "call-001-judge/request.json": "8e04da72d02a58addb89093eb866e42c648a90160cea55d7a9af56f0632ae4b1",
+    "call-001-judge/response.json": "a5585ea2c8ceeeb18c25ae2d58cb4622f0d0eebfbc17f4daf054ba4ca7f86265",
+    "call-001-judge/validated.json": "bbf27ae41ed231416ba5f2ab293a99fc27c68504e2399199e523ba71ff6fbc69"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "将不等式 a<b 两边同时乘以 c，得到 ac<bc。",
+        "reason": "该推论错误：乘数 c<0 时不能保持不等号方向。例如 a=0、b=1、c=-1 满足假设，但所得 0<-1 为假。后续改向不能使这个已明确断言的错误步骤成立。"
+      }
+    ],
+    "goal_coverage": "pass",
+    "input_digest": "3a4e450102e01d71ae0a2ca8217f26f9e755206c4889504f6f495ceeca5c9b64",
+    "problem_preservation": "pass",
+    "reason": "候选保留了原题并明确给出目标结论，但提交的推导包含错误中间结论，且没有独立的有效论证。",
+    "rigor": "fail",
+    "sample_id": "blind-c8e678e078cb43b88d4cddd310ffdbbc",
+    "unresolved_obligations": [
+      "需要给出不依赖错误中间不等式 ac<bc 的有效推导。"
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

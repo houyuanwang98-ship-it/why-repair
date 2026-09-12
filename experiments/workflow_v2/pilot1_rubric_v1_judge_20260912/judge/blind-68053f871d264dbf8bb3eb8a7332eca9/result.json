@@ -1,0 +1,55 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 6546,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 25.271589567000774,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "413397dc879ff574ad91a1364b45b0438abe769fe51d304fc50953745f4fc9ac"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "8889969526e1e6be86c1059121c464c02d1efc469e9281d73a4d41b9020a7e43",
+    "call-001-judge/request.json": "55c46603cf38b6a52d1088a8d3ba3a0323e8614f5ff55e75ec5c24151da2cf25",
+    "call-001-judge/response.json": "3794dbba1850f06bc868aa4bf74420ad6d2cf4a46c66ec276a3aac4c1a2c5f76",
+    "call-001-judge/validated.json": "3917606310406c772f226bd135420973a7d188935de2da4ec87484ceb965feed"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "E)  A horizontal block in row \\(r=5\\), columns \\(c=2,3,4\\).",
+        "reason": "Blocks C and E overlap at (5,2). They cannot both be torn out as intact three-stamp blocks."
+      },
+      {
+        "quote": "Thus after tearing out these \\(5\\) blocks in each \\(5\\times5\\) cell there is no triple left anywhere in the \\(n\\times n\\) square.",
+        "reason": "Even treating removal as the union of the listed cells, row 1, columns 1–3 remain intact. Column 1, rows 3–5 also remain intact. Thus the construction is not blocked, already for n=5."
+      },
+      {
+        "quote": "T \\;=\\;H+V \\;=\\;2\\,n\\,(n-2)",
+        "reason": "For n=1 this gives −2 potential triples, whereas there are zero. The counting formula requires n≥2."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "cf33afa4ed465d63bdfac21cf37c57af36e9b3a031f07e2b54668311881deacc",
+    "problem_preservation": "pass",
+    "reason": "The lower-bound counting works for n≥2, but the upper-bound construction both overlaps blocks and leaves intact triples. Consequently the required two-sided bound is not proved.",
+    "rigor": "fail",
+    "sample_id": "blind-68053f871d264dbf8bb3eb8a7332eca9",
+    "unresolved_obligations": [
+      "Establish the upper bound using legally removable disjoint blocks whose removal leaves no intact triple, with a justified linear boundary correction."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

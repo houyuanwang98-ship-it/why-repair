@@ -1,0 +1,51 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 5864,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 27.640334518000145,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "294d257106b14a1f0dc299eb786d7d6b938a062ea65eecafcfb285a19b196e88"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "ad5508c5368be4a061f221bc78d47c25603deb5a283ba056d072065ce30e2ddc",
+    "call-001-judge/request.json": "07533b8cb0efa0dd559faf6a0b0098787bd30ffb901cff5ba800421e4ac8316b",
+    "call-001-judge/response.json": "5b37f6714302b2e3a423ba516ac06a873e17bf2d12b05128cd82f74fa2272a2e",
+    "call-001-judge/validated.json": "46b04dff99e7e9b2cff54a4c7547900cc44d7a8f8a56569983d1fd80bd940dff"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "so $a^{(p-1) / 2} \\not \\equiv 1(\\bmod 2)$",
+        "reason": "The preceding congruence modulo p does not imply this statement modulo 2. For example, p=3 and a=5 satisfy the converse hypothesis, but a is congruent to 1 modulo 2."
+      },
+      {
+        "quote": "since $-a$ has order $p-1)$",
+        "reason": "This contradicts the converse hypothesis that -a has order (p-1)/2. It is the supplied justification for the odd-prime tests, so those tests are not correctly justified as submitted."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "2828a553297208b0dadc7f51fffb0e6c019c6d6752e69abf87f6de48c36fd1a1",
+    "problem_preservation": "pass",
+    "reason": "The forward implication is correct. The converse contains an invalid modular inference and relies on an incorrect order assertion; correcting these would require changing the submitted argument.",
+    "rigor": "fail",
+    "sample_id": "blind-7cf34dc9692448f0a0a6b66e1ee53e8d",
+    "unresolved_obligations": [
+      "Justify the odd-prime order tests using the actual hypothesis ord_p(-a)=(p-1)/2 to complete the converse."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

@@ -1,0 +1,51 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 4766,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 12.84749776100034,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "18630302834670911dc8fdb8ec26141d695301c4154b584b47c00a2c2279f7c2"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "5b8b0a9e59a99fbe888b71586d4b66153a2caa4622b719efa1eef285fa31fd48",
+    "call-001-judge/request.json": "2c25ec0ed1799c49c1cf4ea740bd25bb21c58a7bd1240a9facf5926aa1a8e3fb",
+    "call-001-judge/response.json": "046365794c8084e6cbcd1829ca97bb6212df790710a54655968a5c51e26af9fe",
+    "call-001-judge/validated.json": "e0e81419439e906cb1c4ccd70e3a40e7aade189551afc7e042226742abffd87a"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "平方与开平方互相抵消，所以 sqrt(a^2)=a。",
+        "reason": "实数平方后取算术平方根不一定得到原数。例如 a=-1 时，sqrt(a^2)=1，而 a=-1。"
+      },
+      {
+        "quote": "又因为每个实数 a 都等于 |a|",
+        "reason": "该全称断言错误。例如 a=-1 时，|a|=1，不等于 a。"
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "58a59e73b0ae782b2ef075a70e84cd699ef05d4b368b782130f12bb4fd4e8972",
+    "problem_preservation": "pass",
+    "reason": "候选尝试证明原命题，但两步关键推理均对负实数不成立，因而未建立结论。",
+    "rigor": "fail",
+    "sample_id": "blind-21008c605fa04a85bb3c8c0c918d9f04",
+    "unresolved_obligations": [
+      "须对任意实数 a 正确证明 sqrt(a^2)=|a|，尤其须涵盖 a<0 的情形。"
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

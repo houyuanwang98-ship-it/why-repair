@@ -1,0 +1,64 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "confirmation": {
+      "enum": [
+        "confirmed",
+        "false_positive",
+        "uncertain"
+      ],
+      "type": "string"
+    },
+    "failed_edge": {
+      "minLength": 1,
+      "pattern": "\\S",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "gap",
+        "invalid",
+        "undetermined"
+      ],
+      "type": "string"
+    },
+    "quote": {
+      "minLength": 1,
+      "pattern": "\\S",
+      "type": "string"
+    },
+    "reason": {
+      "minLength": 1,
+      "pattern": "\\S",
+      "type": "string"
+    },
+    "target": {
+      "additionalProperties": false,
+      "properties": {
+        "node_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "type": "string"
+        },
+        "version": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "node_id",
+        "version"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "target",
+    "confirmation",
+    "kind",
+    "failed_edge",
+    "quote",
+    "reason"
+  ],
+  "type": "object"
+}

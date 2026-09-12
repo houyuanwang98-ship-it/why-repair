@@ -1,0 +1,47 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 8036,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 19.672957090000182,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "1e6b58ebbea858a176aa85da15bc9900c99f858f1ab07467ae7fc98562fbb411"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "4ced6885cffd4584aab965e0f841bb58cc0cb82d72fd4669873c1fc3058263c4",
+    "call-001-judge/request.json": "64a97939bd5e01867c533bede38fae0d7b1ed13fdb3cd2dd537116758ec784b7",
+    "call-001-judge/response.json": "922bdf26420a46dd5c2f65f5c58c6c6cb272dd2d5d71696496f2970821c589df",
+    "call-001-judge/validated.json": "b952a12091f20bb0d04be61debcdb41bf7661dd51ac9a792798593ed323d6abd"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "The condition is that \\(16Y+1 \\mid P(Y)\\) for all \\(Y \\in \\{1^2, 2^2, 3^2, \\dots\\}\\) (i.e., for all \\(Y=y^2\\) where \\(y \\in \\mathbb{Z}^+\\)).",
+        "reason": "The hypothesis quantifies over n, not over y with fixed C. For the fixed pair (x,y), n=4 gives this divisibility only at Y=y². Moreover, C=(x−1)/((y²+1)(4y²+1)) depends on that pair. Thus varying y while holding the polynomial fixed is unjustified, and the subsequent unbounded-denominator argument does not establish R₀=0."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "594f1f99e431938c1bc45da4a7db9719ff5fff58d9486c1ca5346fe4bf8a867c",
+    "problem_preservation": "fail",
+    "reason": "The contradiction depends on an invalid change of quantifiers from all n to all y. The correct preliminary calculations do not establish the conclusion.",
+    "rigor": "fail",
+    "sample_id": "blind-b31d3fad06cd4fbf8321f4a91b324da9",
+    "unresolved_obligations": [
+      "Derive a contradiction from x>1 for a fixed positive integer y using the hypothesis for all positive integers n."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

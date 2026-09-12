@@ -1,0 +1,51 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 6489,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "output_contract_corrections": 0,
+    "reported_latency_seconds": 20.463896630000136,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "70b08d5ef38c83cb26288145ddbb343ec82c18c39de160e18da5c7325292640f"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "0e7580c9f1b135cfd58e192edf148fd9027335244506d56f1610d95dd4d65bc3",
+    "call-001-judge/request.json": "33c4428f0915559c87890987075794575c7e50f4a50e7704915e7220a0b428ef",
+    "call-001-judge/response.json": "93e263d77044fcd3e8e0a1c36fe12dc490c40f4d8c505e19bfaff2ef2d2e2a36",
+    "call-001-judge/validated.json": "110e9e3a94f451637f13e34931d2eda96f0ea1cc8b301119ce0f6d04ff029560"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "E)  A horizontal block in row \\(r=5\\), columns \\(c=2,3,4\\).",
+        "reason": "Blocks C and E overlap at (5,2). They cannot both be torn out as intact three-stamp blocks, so the construction is illegal."
+      },
+      {
+        "quote": "Thus after tearing out these \\(5\\) blocks in each \\(5\\times5\\) cell there is no triple left anywhere in the \\(n\\times n\\) square.",
+        "reason": "Even treating all listed cells as removed, row 1, columns 1–3 remain intact within each macrosquare. Likewise column 1, rows 3–5 remain intact. Thus the claimed blocking property is false even for n=5."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "22a32fd0dff2299201b87f672a8555293c5f6b4eb425e3c485f488992167db96",
+    "problem_preservation": "pass",
+    "reason": "The triple-counting lower bound is sound, with n=1 immediate separately. The upper bound fails because the proposed blocks overlap and leave intact triples.",
+    "rigor": "fail",
+    "sample_id": "blind-ea556c5ffa8d4fb3aa8d01712e2c950a",
+    "unresolved_obligations": [
+      "Establish the upper bound using legally disjoint blocks that leave no available triple, with a uniform linear boundary allowance."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

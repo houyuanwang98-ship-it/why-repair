@@ -1,0 +1,55 @@
+{
+  "calls": {
+    "accounting_complete": true,
+    "cost_usd": null,
+    "evidence_kind": "live_model",
+    "known_total_tokens": 5756,
+    "model_attempts": 1,
+    "model_snapshot_verified": false,
+    "reported_latency_seconds": 23.02942123699995,
+    "trace": [
+      {
+        "call": 1,
+        "phase": "judge",
+        "request_digest": "b19215b8f455c6feb85a0bb3a895eb3e30a30a9a07d7909659407ed9f8ea6307"
+      }
+    ]
+  },
+  "evidence_files": {
+    "call-001-judge/accounting.json": "001e75dec2d2d8d0c2116aa5ebbfb65c7fc517e209a079fbbad6fe896b551454",
+    "call-001-judge/request.json": "1cb6628e0064eb96caf089c899fef8060169b348542f78e849b90cc524e86eb8",
+    "call-001-judge/response.json": "a1a3fa9702518f6769e311e5fc9ab217f755e37bcd2a6c0125dda6ff9f63011f",
+    "call-001-judge/validated.json": "e8467658372b6595a77e632bc073e66fcef91004a3b9fbf37ca843d8bea6d515"
+  },
+  "judgment": {
+    "candidate_kind": "proof",
+    "counterexample_validity": "not_applicable",
+    "evidence_scope": "model_only",
+    "findings": [
+      {
+        "quote": "since $a$ and $c^{-1}$ have the same order and $b$ and $d$ have the same order this is a well defined function.",
+        "reason": "Matching generator orders does not establish that an assignment extends to a well-defined group map; relations or unique normal forms must be justified."
+      },
+      {
+        "quote": "& =\\left(c d^{-1} c^{-1}\\right)^{-1}",
+        "reason": "This expression equals cdc^{-1}=d^4, whereas the preceding expression c^{-1}dc equals d^2. They are distinct because d has order 7. The subsequent equality d^4=phi(b)^2 is also false."
+      },
+      {
+        "quote": "Therefore $G$ and $G^{\\prime}$ are isomorphic and so up to isomorphism there is only one nonabelian group of order 21 .",
+        "reason": "The argument considers only a pair with respective actions 2 and 4. It does not establish that arbitrary groups with the same action are isomorphic."
+      }
+    ],
+    "goal_coverage": "fail",
+    "input_digest": "2b28fcdd879f375c4c4a3a9c0243a9493a666605f5be1463ab4bcc3207447072",
+    "problem_preservation": "pass",
+    "reason": "The initial restriction to actions 2 and 4 is correct, but the isomorphism argument contains false equalities and an unjustified extension from generators.",
+    "rigor": "fail",
+    "sample_id": "blind-89dfed01509d4f8b82c222d2bdbbb3fe",
+    "unresolved_obligations": [
+      "Justify extension of the generator assignment and establish the homomorphism property without the false equalities.",
+      "Establish isomorphism for every pair of nonabelian groups, including pairs with the same conjugation action."
+    ],
+    "validity": "invalid"
+  },
+  "status": "scored"
+}

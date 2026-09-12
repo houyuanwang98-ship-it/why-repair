@@ -1,0 +1,126 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "candidate_kind": {
+      "enum": [
+        "proof",
+        "counterexample",
+        "abstention",
+        "malformed"
+      ],
+      "type": "string"
+    },
+    "counterexample_validity": {
+      "enum": [
+        "valid",
+        "invalid",
+        "undetermined",
+        "not_applicable"
+      ],
+      "type": "string"
+    },
+    "evidence_scope": {
+      "enum": [
+        "model_only"
+      ],
+      "type": "string"
+    },
+    "findings": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "quote": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "reason": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        "required": [
+          "quote",
+          "reason"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "goal_coverage": {
+      "enum": [
+        "pass",
+        "fail",
+        "unknown",
+        "not_applicable"
+      ],
+      "type": "string"
+    },
+    "input_digest": {
+      "minLength": 1,
+      "pattern": "\\S",
+      "type": "string"
+    },
+    "problem_preservation": {
+      "enum": [
+        "pass",
+        "fail",
+        "unknown",
+        "not_applicable"
+      ],
+      "type": "string"
+    },
+    "reason": {
+      "minLength": 1,
+      "pattern": "\\S",
+      "type": "string"
+    },
+    "rigor": {
+      "enum": [
+        "pass",
+        "fail",
+        "unknown",
+        "not_applicable"
+      ],
+      "type": "string"
+    },
+    "sample_id": {
+      "minLength": 1,
+      "pattern": "\\S",
+      "type": "string"
+    },
+    "unresolved_obligations": {
+      "items": {
+        "minLength": 1,
+        "pattern": "\\S",
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "validity": {
+      "enum": [
+        "valid",
+        "invalid",
+        "undetermined",
+        "not_applicable"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "sample_id",
+    "input_digest",
+    "candidate_kind",
+    "validity",
+    "rigor",
+    "problem_preservation",
+    "goal_coverage",
+    "counterexample_validity",
+    "findings",
+    "unresolved_obligations",
+    "evidence_scope",
+    "reason"
+  ],
+  "type": "object"
+}
