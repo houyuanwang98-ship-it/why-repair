@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-233",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $U\\subseteq Y$. If $U$ is open in $Y$, then $p^{-1}(U)$ is open in $X$ because $p$ is continuous. Conversely, if $p^{-1}(U)$ is open in $X$, then, since $p\\circ f=1_Y$, we have\n\\[\nU=1_Y^{-1}(U)=(p\\circ f)^{-1}(U)=f^{-1}\\left(p^{-1}(U)\\right),\n\\]\nwhich is open in $Y$ because $f$ is continuous. Therefore, $p$ is a quotient map.\n\\end{proof}",
+      "reason": "Added the forward implication supplied by continuity of $p$; the original proof established only the converse."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor every subset $U\\subseteq Y$, continuity of $p$ implies\n\\[\nU\\text{ open in }Y\\quad\\Longrightarrow\\quad p^{-1}(U)\\text{ open in }X.\n\\]\nFor the reverse implication, suppose that $p^{-1}(U)$ is open in $X$. Using $p\\circ f=1_Y$, we obtain\n\\[\nU=1_Y^{-1}(U)=(p\\circ f)^{-1}(U)=f^{-1}\\bigl(p^{-1}(U)\\bigr).\n\\]\nThis is open in $Y$ by continuity of $f$. Hence $U$ is open in $Y$ if and only if $p^{-1}(U)$ is open in $X$, so $p$ is a quotient map.\n\\end{proof}",
+      "reason": "Checking the quotient-map criterion revealed that both directions must be stated; the revised proof verifies each one."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $U\\subseteq Y$. Since $p$ is continuous, if $U$ is open in $Y$, then $p^{-1}(U)$ is open in $X$. Now assume that $p^{-1}(U)$ is open in $X$. Because $p\\circ f=1_Y$,\n\\[\nf^{-1}\\left(p^{-1}(U)\\right)=(p\\circ f)^{-1}(U)=1_Y^{-1}(U)=U.\n\\]\nThe left-hand side is open in $Y$ by continuity of $f$, so $U$ is open in $Y$. Thus, for every $U\\subseteq Y$, $U$ is open exactly when $p^{-1}(U)$ is open. Therefore $p$ is a quotient map.\n\\end{proof}",
+      "reason": "A critic would flag the missing continuity direction; it is restored while retaining the section argument."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nTo prove that $p$ is a quotient map, let $U\\subseteq Y$. The implication\n\\[\nU\\text{ open in }Y\\implies p^{-1}(U)\\text{ open in }X\n\\]\nfollows from the continuity of $p$. Conversely, suppose $p^{-1}(U)$ is open in $X$. Since $p\\circ f=1_Y$, we have\n\\[\nU=1_Y^{-1}(U)=(p\\circ f)^{-1}(U)=f^{-1}\\bigl(p^{-1}(U)\\bigr).\n\\]\nContinuity of $f$ therefore implies that $U$ is open in $Y$. Hence\n\\[\nU\\text{ is open in }Y\\quad\\Longleftrightarrow\\quad p^{-1}(U)\\text{ is open in }X,\n\\]\nwhich is precisely the condition that $p$ be a quotient map.\n\\end{proof}",
+      "reason": "Dependency checking identified the omitted $p$-continuity implication; the local repair was independently checked against the full quotient criterion."
+    }
+  ]
+}

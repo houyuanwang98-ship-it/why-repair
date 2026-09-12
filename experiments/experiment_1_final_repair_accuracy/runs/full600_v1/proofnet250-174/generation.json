@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-174",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume, for contradiction, that $T$ is not a scalar multiple of the identity. Then there exists $u\\in V$ such that $u$ and $Tu$ are linearly independent. Extend $(u,Tu)$ to a basis $(u,Tu,v_1,\\ldots,v_n)$ of $V$. Let\n\\[\nU=\\operatorname{span}(u,v_1,\\ldots,v_n).\n\\]\nThen $U$ has dimension $\\dim V-1$, so it is invariant under $T$ by hypothesis. Since $u\\in U$, invariance implies $Tu\\in U$. But $Tu$ is not in $U$, because $(u,Tu,v_1,\\ldots,v_n)$ is a basis. This contradiction shows that $T$ is a scalar multiple of the identity operator.\n\\end{proof}",
+      "reason": "Corrected the malformed argument and fixed the crucial contradiction: invariance would force $Tu\\in U$, while the chosen basis ensures $Tu\\notin U$."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf $\\dim V=0$, the conclusion is immediate. Otherwise, suppose that $T$ is not a scalar multiple of the identity. Then for some nonzero $u\\in V$, the vectors $u$ and $Tu$ are linearly independent; indeed, if $Tu$ were a scalar multiple of $u$ for every nonzero $u$, linearity would imply that all such scalars are equal.\n\nExtend $u,Tu$ to a basis $(u,Tu,v_1,\\ldots,v_{n})$ of $V$, and define\n\\[\nU=\\operatorname{span}(u,v_1,\\ldots,v_n).\n\\]\nThis is a hyperplane, so by assumption it is invariant under $T$. Hence $Tu\\in U$. On the other hand, $Tu\\notin U$, since the displayed vectors form a basis. This contradiction proves that $T=\\lambda I_V$ for some scalar $\\lambda$.\n\\end{proof}",
+      "reason": "Self-check removed the original variable inconsistencies and supplied the needed justification for choosing $u$ with $u,Tu$ independent."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $n=\\dim V$. If $n\\le 1$, every linear operator on $V$ is already a scalar multiple of the identity, so assume $n\\ge 2$. Suppose toward a contradiction that $T$ is not scalar. Then there is a vector $u\\in V$ for which $Tu\\notin\\operatorname{span}(u)$. Extend the linearly independent pair $(u,Tu)$ to a basis\n\\[\n(u,Tu,v_1,\\ldots,v_{n-2}).\n\\]\nSet\n\\[\nH=\\operatorname{span}(u,v_1,\\ldots,v_{n-2}).\n\\]\nThus $\\dim H=n-1$. By the hypothesis, $H$ is $T$-invariant. Since $u\\in H$, this gives $Tu\\in H$. But $Tu\\notin H$, because $Tu$ is a member of the chosen basis and is not among the basis vectors spanning $H$. This contradiction establishes $T=\\lambda I_V$ for some scalar $\\lambda$.\n\\end{proof}",
+      "reason": "A critic check corrected the basis indexing and explicitly handled dimensions $0$ and $1$."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWrite $n=\\dim V$. For $n=0$ or $n=1$, the conclusion is immediate. Assume $n\\ge2$. We first note that, if $T$ is not scalar, then there exists $u\\in V$ such that $u$ and $Tu$ are linearly independent. Otherwise, $Tu=\\lambda_u u$ for every nonzero $u$. Applying this to two linearly independent vectors $x,y$ and to $x+y$ shows $\\lambda_x=\\lambda_y=\\lambda_{x+y}$; hence the scalar is independent of the vector and $T$ is scalar, a contradiction.\n\nChoose such a vector $u$ and extend $(u,Tu)$ to a basis\n\\[\n(u,Tu,v_1,\\ldots,v_{n-2})\n\\]\nof $V$. Let\n\\[\nH=\\operatorname{span}(u,v_1,\\ldots,v_{n-2}).\n\\]\nThen $\\dim H=n-1$, so $H$ is invariant under $T$ by hypothesis. Therefore $Tu\\in H$, since $u\\in H$. This is impossible because the displayed list is a basis, and $Tu$ is not in the span of the other basis vectors. Thus $T$ must be a scalar multiple of the identity.\n\\end{proof}",
+      "reason": "Dependency-aware review verified the dimension cases, existence lemma, hyperplane construction, and descendant conclusion; no further repair was needed."
+    }
+  ]
+}

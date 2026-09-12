@@ -1,0 +1,29 @@
+{
+  "case_id": "B09",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "由配方法，x^2-4x+4=(x-2)^2。由于 x 为实数，x-2 也为实数，且任意实数的平方非负，因此 (x-2)^2≥0。故 x^2-4x+4≥0。",
+      "reason": "原证明配方正确，且使用了实数平方非负这一有效性质。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "因 x∈ℝ，有\nx^2-4x+4=x^2-4x+4+4-4=(x-2)^2-0=(x-2)^2。\n又因 x-2∈ℝ，故 (x-2)^2≥0。因此 x^2-4x+4≥0。",
+      "reason": "检查后确认等式变形和不等式依据均正确，仅使定义域衔接更明确。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "设 x 为任意实数。则\nx^2-4x+4=(x-2)^2。\n平方恒非负，故 (x-2)^2≥0，从而 x^2-4x+4≥0。命题得证。",
+      "reason": "生成证明完整，批评检查未发现假设遗漏、代数错误或逻辑跳步。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "依赖关系为：配方恒等式 x^2-4x+4=(x-2)^2，依赖 x∈ℝ；平方非负性 (x-2)^2≥0，依赖 x-2∈ℝ；由等式替换得到结论。由于 x 为任意实数，x-2 为实数，故平方非负，因而 x^2-4x+4≥0。该论证经过局部依赖检查、独立复核，并可直接验证结论，无需修复。",
+      "reason": "各依赖条件已满足，独立复核与后代结论重验证均通过。"
+    }
+  ]
+}

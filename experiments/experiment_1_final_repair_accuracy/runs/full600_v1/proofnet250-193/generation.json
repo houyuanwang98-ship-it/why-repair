@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-193",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $X$ be a linearly ordered set with its order topology. We use the following elementary fact: if $x\\in B$, where $B$ is a basic order-topology neighborhood of $x$, then there is a basic neighborhood $V$ of $x$ such that $\\overline V\\subseteq B$. Indeed, for $B=(a,b)$ choose points strictly between $a,x$ and $x,b$ whenever they exist; if one side has no such point, use the corresponding half-open basic interval, and if neither side has such a point then $\\{x\\}$ is open. The same argument applies to the basic rays $[\\min X,b)$ and $(a,\\max X]$.\n\nNow let $U$ be open and let $x\\in U$. By the definition of the order topology, there is a basic neighborhood $B$ with $x\\in B\\subseteq U$. By the fact above, choose an open neighborhood $V$ of $x$ with $\\overline V\\subseteq B\\subseteq U$. Thus every point and every open neighborhood of that point admit an open neighborhood whose closure lies in the original neighborhood. Hence $X$ is regular.\n\\end{proof}",
+      "reason": "Replaced the flawed four-case argument with the standard basis-shrinking argument, including endpoints and gaps."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $X$ be a linearly ordered set equipped with the order topology. First, $X$ is $T_1$: for each $x\\in X$, the complement of $\\{x\\}$ is a union of open rays and intervals, hence is open.\n\nWe prove regularity. Let $x\\in U$, with $U$ open. Choose a basic order-topology neighborhood $B$ such that $x\\in B\\subseteq U$. Basic neighborhoods are open intervals and, when an endpoint exists, the corresponding half-open rays.\n\nWe claim that $B$ contains an open neighborhood $V$ of $x$ whose closure is contained in $B$. If $B=(a,b)$ and there are $c,d$ with $a<c<x<d<b$, take $V=(c,d)$; then $\\overline V\\subseteq[c,d]\\subseteq(a,b)$. If only the left (respectively right) interior point exists, use $(c,x]$ (respectively $[x,d)$), which is a basic open neighborhood in the relevant order-topology situation, and its closure is contained in $[c,x]\\subseteq(a,b)$ (respectively $[x,d]\\subseteq(a,b)$). If neither exists, then $(a,b)=\\{x\\}$, so $V=\\{x\\}$ works. For a basic ray, the same construction is made only on its finite-endpoint side; if no interior point exists, the ray itself is a singleton.\n\nTherefore there is an open $V$ with $x\\in V$ and $\\overline V\\subseteq B\\subseteq U$. Hence $X$ is regular.\n\\end{proof}",
+      "reason": "After checking endpoint and immediate-successor/predecessor cases, retained the basis-shrinking proof and explicitly established $T_1$."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $X$ be a linearly ordered set with its order topology. We use the following interval lemma.\n\n\\emph{Interval lemma.} If $x$ belongs to a basic open set $B$ of the order topology, then there is an open set $V$ with $x\\in V$ and $\\overline V\\subseteq B$.\n\nTo prove the lemma, suppose first that $B=(a,b)$. If points can be chosen on both sides of $x$ inside $B$, choose $a<c<x<d<b$ and set $V=(c,d)$. Since $\\overline{(c,d)}\\subseteq[c,d]$, we obtain $\\overline V\\subseteq[c,d]\\subseteq(a,b)$. If one side has no available interior point, then $x$ is adjacent to the corresponding endpoint, and the appropriate one-sided basic neighborhood, such as $(a,x]$ or $[x,b)$, has closure contained in $[a,x]$ or $[x,b]$ and hence in $B$; if both sides are unavailable, $B=\\{x\\}$ and $V=\\{x\\}$. For a basic ray, use the same argument on its finite side. This proves the lemma.\n\nNow let $U$ be any open neighborhood of $x$. Choose a basic open set $B$ with $x\\in B\\subseteq U$. The lemma gives an open neighborhood $V$ of $x$ such that\n\\[\nx\\in V\\subseteq\\overline V\\subseteq B\\subseteq U.\n\\]\nThus $X$ is regular. (It is also $T_1$, because each singleton is closed: its complement is open.)\n\\end{proof}",
+      "reason": "A critic check exposed endpoint and gap cases in the original proof; the repaired proof isolates them in a verified interval lemma."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $X$ be a linearly ordered set with the order topology. We verify the regularity criterion directly: for every $x\\in U$ with $U$ open, there is an open $V$ such that $x\\in V\\subseteq\\overline V\\subseteq U$.\n\nChoose a basic neighborhood $B$ of $x$ with $B\\subseteq U$. If $B$ is an open interval $(a,b)$, choose a smaller interval around $x$ whenever possible. If there are $c,d$ with $a<c<x<d<b$, let $V=(c,d)$; then\n\\[\n\\overline V\\subseteq[c,d]\\subseteq(a,b)=B.\n\\]\nIf $x$ is adjacent to $a$ or $b$, use the corresponding one-sided basic neighborhood; its closure is contained in the closed interval between $x$ and the chosen interior point, which lies in $(a,b)$. If $x$ is adjacent to both endpoints, then $B=\\{x\\}$, which is open and closed. If $B$ is a basic ray at a minimum or maximum, apply the same construction on its only finite side; if that side has no interior point, the ray is a singleton. Thus in every case there is an open $V$ with\n\\[\nx\\in V\\quad\\text{and}\\quad\\overline V\\subseteq B\\subseteq U.\n\\]\n\nFinally, $X$ is $T_1$ because the complement of each singleton is a union of open intervals and rays. Therefore $X$ is regular.\n\\end{proof}",
+      "reason": "The dependency check verified the basis cases, the endpoint/gap repairs, and the final regularity criterion; no descendant claim required modification."
+    }
+  ]
+}

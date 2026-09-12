@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-221",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume, for contradiction, that $f(x)=x^3+3x+2$ is reducible over $\\mathbb{Q}$. Since $f$ has degree three, it must then have a rational root.\n\nBy the rational root theorem, any rational root must be among $\\pm1,\\pm2$. Direct computation gives\n\\[\nf(1)=6,\\quad f(-1)=-2,\\quad f(2)=16,\\quad f(-2)=-12.\n\\]\nThus $f$ has no rational root. Therefore, a cubic polynomial over a field is irreducible if and only if it has no root in that field, so $f(x)$ is irreducible in $\\mathbb{Q}[x]$.\n\\end{proof}",
+      "reason": "Replaced the invalid divisibility inference with the rational root theorem and checked all possible roots."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nThe polynomial $f(x)=x^3+3x+2$ is primitive and has degree three. If it were reducible in $\\mathbb{Q}[x]$, then it would have a linear factor, hence a rational root.\n\nBy the rational root theorem, a rational root must divide the constant term $2$ and have numerator dividing the leading coefficient $1$. Hence the only possibilities are $1,-1,2,-2$. However,\n\\[\nf(1)=6,\\qquad f(-1)=-2,\\qquad f(2)=16,\\qquad f(-2)=-12.\n\\]\nNone is zero, so $f$ has no rational root. Consequently, $f$ is irreducible over $\\mathbb{Q}$.\n\\end{proof}",
+      "reason": "After checking the argument, I corrected the unsupported claim that $p\\mid q^3$ implies $p\\mid q$."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose that $f(x)=x^3+3x+2$ is reducible in $\\mathbb{Q}[x]$. Because $f$ has degree $3$, its factorization would contain a factor of degree $1$, so $f$ would have a rational root.\n\nWrite such a root as $p/q$ in lowest terms with $q>0$. The rational root theorem implies that $p$ divides $2$ and $q$ divides $1$. Therefore $p/q\\in\\{\\pm1,\\pm2\\}$. Evaluating,\n\\[\nf(-2)=-12,\\quad f(-1)=-2,\\quad f(1)=6,\\quad f(2)=16.\n\\]\nHence none of the possible rational roots is actually a root, a contradiction. Thus $f(x)$ is irreducible in $\\mathbb{Q}[x]$.\n\\end{proof}",
+      "reason": "The critic identified the original divisibility step as invalid and required an exhaustive rational-root check."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $f(x)=x^3+3x+2\\in\\mathbb{Q}[x]$. Since $f$ is a cubic, any nontrivial factorization over $\\mathbb{Q}$ would have a linear factor; equivalently, reducibility would imply the existence of a rational root.\n\nThe polynomial is primitive with leading coefficient $1$ and constant term $2$. By the rational root theorem, every rational root must be one of $\\pm1,\\pm2$. But\n\\[\nf(-2)=-12,\\qquad f(-1)=-2,\\qquad f(1)=6,\\qquad f(2)=16.\n\\]\nThus $f$ has no root in $\\mathbb{Q}$. Therefore it has no linear factor over $\\mathbb{Q}$ and, being cubic, is irreducible in $\\mathbb{Q}[x]$.\n\\end{proof}",
+      "reason": "Dependency-aware review isolated the faulty divisibility inference, applied the minimal local repair, and verified the cubic irreducibility criterion and all candidate roots."
+    }
+  ]
+}

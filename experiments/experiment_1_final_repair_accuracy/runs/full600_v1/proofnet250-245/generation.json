@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-245",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $g\\in G$. Since $K\\trianglelefteq G$, conjugation by $g$ restricts to an automorphism of $K$. Because $H$ is characteristic in $K$, this automorphism maps $H$ to itself. Thus $gHg^{-1}=H$ for every $g\\in G$, so $H\\trianglelefteq G$.\n\\end{proof}",
+      "reason": "Corrected the restriction argument and concluded normality directly from invariance under conjugation."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nTo prove that $H$ is normal in $G$, let $g\\in G$. Define $\\varphi_g:K\\to K$ by $\\varphi_g(k)=gkg^{-1}$. This is well-defined because $K\\trianglelefteq G$, and it is an automorphism of $K$. Since $H$ is characteristic in $K$, every automorphism of $K$ preserves $H$, so $\\varphi_g(H)=H$. Therefore $gHg^{-1}=H$ for every $g\\in G$. Hence $H\\trianglelefteq G$.\n\\end{proof}",
+      "reason": "Checked that the relevant conjugation map is an automorphism of $K$ and avoided the incorrect claim that $H$ is characteristic in $G$."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $g\\in G$. Normality of $K$ in $G$ implies that $gKg^{-1}=K$. Consequently, the map $c_g:K\\to K$ given by $c_g(k)=gkg^{-1}$ is an automorphism of $K$. As $H$ is characteristic in $K$, it is fixed by every automorphism of $K$; hence $c_g(H)=H$. Thus\n\\[\ngHg^{-1}=H.\n\\]\nSince this holds for every $g\\in G$, $H$ is normal in $G$.\n\\end{proof}",
+      "reason": "The critic check identified that characteristicity must be applied to the conjugation automorphism of $K$, after establishing that normality makes the restriction well-defined."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor each $g\\in G$, consider conjugation by $g$. Because $K\\trianglelefteq G$, we have $gKg^{-1}=K$, so conjugation restricts to an automorphism $c_g\\in\\operatorname{Aut}(K)$. Since $H$ is characteristic in $K$, every automorphism of $K$ sends $H$ onto $H$. Therefore\n\\[\nc_g(H)=gHg^{-1}=H.\n\\]\nThis holds for every $g\\in G$, which is precisely the condition that $H\\trianglelefteq G$.\n\\end{proof}",
+      "reason": "Dependency and review checks confirm the local repair: establish $c_g\\in\\operatorname{Aut}(K)$, apply characteristicity, and revalidate the normality conclusion."
+    }
+  ]
+}

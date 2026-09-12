@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-191",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet \\(H\\leq G\\) with \\([G:H]=p\\). Let \\(G\\) act on the \\(p\\) left cosets of \\(H\\), giving a homomorphism \\(\\varphi:G\\to S_p\\), and let \\(K=\\ker\\varphi\\). Then \\(K\\leq H\\), since an element fixing every left coset in particular fixes \\(H\\).\n\nBecause \\(G\\) is a \\(p\\)-group, \\(|\\varphi(G)|=[G:K]\\) is a power of \\(p\\). Also \\(|\\varphi(G)|\\mid p!\\), and the highest power of \\(p\\) dividing \\(p!\\) is \\(p\\). Hence \\([G:K]\\) is either \\(1\\) or \\(p\\).\n\nIf \\([G:K]=1\\), then \\(K=G\\), so \\(H\\) is fixed by conjugation and is normal in \\(G\\). If \\([G:K]=p\\), then \\([G:K]=[G:H][H:K]=p[H:K]\\), so \\([H:K]=1\\) and \\(K=H\\). Since \\(K\\) is the kernel of the coset action, \\(K\\trianglelefteq G\\), and therefore \\(H\\trianglelefteq G\\).\n\\end{proof}",
+      "reason": "Replaced the flawed conjugacy-action argument with the standard coset action and kernel-index argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet \\(H\\leq G\\) satisfy \\([G:H]=p\\). The action of \\(G\\) by left multiplication on the set \\(G/H\\) of \\(p\\) cosets induces a homomorphism\n\\[\n\\varphi:G\\longrightarrow S_p.\n\\]\nWrite \\(K=\\ker\\varphi\\). The kernel fixes every coset, hence in particular fixes the coset \\(H\\), so \\(K\\leq H\\). Since \\(G\\) has order a power of \\(p\\), the image \\(\\varphi(G)\\) also has order a power of \\(p\\). As \\(\\varphi(G)\\leq S_p\\), its order divides \\(p!\\); because \\(p\\) is prime, the only powers of \\(p\\) dividing \\(p!\\) are \\(1\\) and \\(p\\). Thus \\([G:K]=|\\varphi(G)|\\) is either \\(1\\) or \\(p\\).\n\nIf \\([G:K]=1\\), then \\(K=G\\), and consequently \\(H\\) is fixed under conjugation by every element of \\(G\\); hence \\(H\\trianglelefteq G\\). If \\([G:K]=p\\), then\n\\[\np=[G:K]=[G:H][H:K]=p[H:K],\n\\]\nso \\([H:K]=1\\) and \\(H=K\\). Since kernels are normal, \\(H\\trianglelefteq G\\).\n\\end{proof}",
+      "reason": "After checking the index calculation and the kernel containment, the revised proof is complete and preserves all hypotheses."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet \\(H\\leq G\\) be a subgroup of index \\(p\\). Consider the permutation action of \\(G\\) on the \\(p\\)-element set \\(G/H\\) by left multiplication. Let\n\\[\n\\varphi:G\\to S_p\n\\]\nbe the associated homomorphism, and put \\(K=\\ker\\varphi\\). Since every element of \\(K\\) fixes the coset \\(H\\), we have \\(K\\leq H\\).\n\nBy the first isomorphism theorem, \\([G:K]=|\\varphi(G)|\\). This is a power of \\(p\\), because \\(G\\) is a \\(p\\)-group. On the other hand, \\(|\\varphi(G)|\\) divides \\(|S_p|=p!\\). The exponent of \\(p\\) in \\(p!\\) is exactly one, so \\([G:K]\\in\\{1,p\\}\\).\n\nIf \\([G:K]=p\\), then\n\\[\np=[G:K]=[G:H][H:K]=p[H:K],\n\\]\nwhich gives \\(K=H\\). Thus \\(H\\) is a kernel and is normal in \\(G\\). If \\([G:K]=1\\), then \\(K=G\\), so the coset action is trivial. In particular, every \\(g\\in G\\) fixes the coset \\(H\\), meaning \\(gHg^{-1}=H\\); hence \\(H\\trianglelefteq G\\). Therefore every subgroup of index \\(p\\) is normal.\n\\end{proof}",
+      "reason": "The critic check confirms the action, kernel containment, factorial divisibility, and both cases are valid."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet \\(H\\leq G\\) with \\([G:H]=p\\). Let \\(G\\) act on the set of left cosets \\(G/H\\) by left multiplication. Since this set has \\(p\\) elements, the action yields a homomorphism\n\\[\n\\varphi:G\\to S_p.\n\\]\nLet \\(K=\\ker\\varphi\\). The subgroup \\(K\\) fixes every left coset, including \\(H\\), so \\(K\\leq H\\). Also, \\(K\\trianglelefteq G\\).\n\nThe image \\(\\varphi(G)\\) is a quotient of the \\(p\\)-group \\(G\\), so its order is a power of \\(p\\). Since \\(\\varphi(G)\\leq S_p\\), its order divides \\(p!\\). Because \\(p\\) is prime, \\(p\\) occurs with exponent one in \\(p!\\), and therefore \\(|\\varphi(G)|\\) is either \\(1\\) or \\(p\\). Equivalently, \\([G:K]\\in\\{1,p\\}\\).\n\nIf \\([G:K]=p\\), then the index formula gives\n\\[\np=[G:K]=[G:H][H:K]=p[H:K],\n\\]\nso \\(H=K\\), and hence \\(H\\trianglelefteq G\\). If \\([G:K]=1\\), then \\(K=G\\), so the action on \\(G/H\\) is trivial. Thus every \\(g\\in G\\) fixes the coset \\(H\\), which is equivalent to \\(gH=H\\), or \\(gHg^{-1}=H\\). Hence \\(H\\trianglelefteq G\\).\n\nTherefore every subgroup of index \\(p\\) in \\(G\\) is normal.\n\\end{proof}",
+      "reason": "Dependency checks pass: the coset action supplies the kernel, the p-group image bound gives the two cases, and each case independently yields normality."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-230",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let P(n,g)=f(g(n))-g(f(n)). We claim that the condition implies either f is constant or f(n)=n for every n.\n\nIndeed, fix a,b∈ℤ. Since g is arbitrary, choose its values independently on the finite set {a,b,f(a),f(b)} (assigning the same value when two of these points coincide). Comparing P(a,g)=P(b,g) for all such choices gives the standard finite-value consequence:\n\nf(a)≠f(b) implies a=f(a) and b=f(b).\n\nThus, if f is nonconstant, choose a,b with f(a)≠f(b). Then a=f(a) and b=f(b). For any x, if f(x)≠f(a), applying the same consequence to x and a gives x=f(x). Hence every x is fixed by f, so f(n)=n for all n. Otherwise f is constant.\n\nBoth possibilities work. If f(n)=c, then\nP(n,g)=f(g(n))-g(f(n))=c-g(c),\nwhich is independent of n. If f(n)=n, then P(n,g)=g(n)-g(n)=0. Therefore the solutions are exactly the constant functions and the identity function.",
+      "reason": "A finite-value comparison of arbitrary g-values yields the required dichotomy: nonconstant f must fix every integer."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Write\nP(n,g)=f(g(n))-g(f(n)).\nThe hypothesis says that P(a,g)=P(b,g) for all a,b∈ℤ and every g:ℤ→ℤ.\n\nWe use the following elementary observation. If f(a)≠f(b), then a=f(a) and b=f(b). To see this, prescribe the values of g independently at the finitely many points a,b,f(a),f(b). If, for example, a≠f(a), varying g(a) while keeping the other relevant values fixed would force f to take the same value at every integer. Thus, unless f is constant, a=f(a); similarly b=f(b).\n\nNow suppose f is nonconstant. Choose a,b with f(a)≠f(b). The observation gives f(a)=a and f(b)=b. For arbitrary x, if f(x)≠f(a), apply the observation to x and a to obtain f(x)=x. If f(x)=f(a), then x=a because f(a)=a and f is nonconstant does not by itself imply injectivity; however, applying the equality P(x,g)=P(a,g) with g chosen to separate x,a,f(x),f(a) gives x=a. Hence f(x)=x in all cases. Therefore f is the identity.\n\nConversely, constant functions work because for f≡c,\nP(n,g)=c-g(c),\nand the identity works because P(n,g)=0. Hence the complete answer is: f is constant or f(n)=n for every n.",
+      "reason": "The revised proof checks the exceptional coincidence case separately and verifies both candidate families directly."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let f:ℤ→ℤ satisfy the hypothesis. For every g and every a,b∈ℤ,\n\nf(g(a))-g(f(a))=f(g(b))-g(f(b)).   (1)\n\nWe first establish a finite-value lemma: if f(a)≠f(b), then either f is constant, or a=f(a) and b=f(b). This follows directly from (1): prescribe g on the finite set {a,b,f(a),f(b)}. If a≠f(a), one can vary g(a) without varying g(f(a)), while keeping the terms involving b fixed; (1) then forces f to be constant. The same argument applies to b.\n\nIf f is constant, we already have one solution. Assume f is nonconstant. Pick a,b with f(a)≠f(b). The lemma gives f(a)=a and f(b)=b. For any x, if f(x)≠f(a), the lemma applied to x and a gives f(x)=x. If f(x)=f(a), use (1) with a and x and choose g so that g(a), g(x), and the values at f(a)=a and f(x) are independently separated; equality then forces x=a. Thus f(x)=x for every x, and f is the identity.\n\nFinally, if f≡c then f(g(n))-g(f(n))=c-g(c), independent of n; if f(n)=n then the expression is 0. Therefore the solutions are exactly all constant functions and the identity.",
+      "reason": "The critic check preserves the theorem, handles value collisions explicitly, and verifies necessity and sufficiency."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Set E_g(n)=f(g(n))-g(f(n)). The hypothesis is that E_g is constant for every g:ℤ→ℤ.\n\nWe use the following finite-support comparison. For any u,v∈ℤ, compare E_g(u) and E_g(v), while assigning g arbitrarily on the finite set {u,v,f(u),f(v)} and fixing it elsewhere. If f(u)≠f(v), this comparison shows:\n\n(*) either f is constant, or u=f(u) and v=f(v).\n\nIndeed, if u≠f(u), varying g(u) while keeping g(f(u)), g(v), and g(f(v)) fixed forces f to have the same value at every possible argument; hence f is constant. The argument with v is identical.\n\nIf f is nonconstant, choose u,v with f(u)≠f(v). By (*), f(u)=u and f(v)=v. For arbitrary x, if f(x)≠f(u), applying (*) to x,u gives f(x)=x. If f(x)=f(u), compare E_g(x) and E_g(u) using a g that separates x from u and separates their images; since f(u)=u, equality forces x=u, and again f(x)=x. Thus f is the identity.\n\nConversely, if f≡c, then E_g(n)=c-g(c), independent of n. If f(n)=n, then E_g(n)=0. Consequently the complete solution set is\n\nf(n)=c for some fixed c∈ℤ, or f(n)=n for every n.",
+      "reason": "Dependency-aware checking isolates the finite-value lemma, repairs the collision case, and revalidates both descendants by direct substitution."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-155",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine $f:G\\to G$ by $f(x)=x^{-1}\\sigma(x)$. We claim that $f$ is injective. If $f(x)=f(y)$, then\n\\[\nx^{-1}\\sigma(x)=y^{-1}\\sigma(y),\n\\]\nso, after multiplying appropriately,\n\\[\nxy^{-1}=\\sigma(x)\\sigma(y)^{-1}=\\sigma(xy^{-1}).\n\\]\nThus $xy^{-1}$ is fixed by $\\sigma$. By hypothesis, $xy^{-1}=1$, and hence $x=y$.\n\nSince $G$ is finite, $f$ is therefore surjective. For any $z\\in G$, choose $x\\in G$ such that $z=x^{-1}\\sigma(x)$. Using $\\sigma^2=\\mathrm{id}$, we obtain\n\\[\n\\sigma(z)=\\sigma(x)^{-1}\\sigma^2(x)=\\sigma(x)^{-1}x\n=(x^{-1}\\sigma(x))^{-1}=z^{-1}.\n\\]\nHence $\\sigma(z)=z^{-1}$ for every $z\\in G$. Since $\\sigma$ is an automorphism, inversion is a homomorphism, so\n\\[\n(xy)^{-1}=\\sigma(xy)=\\sigma(x)\\sigma(y)=x^{-1}y^{-1}.\n\\]\nBut $(xy)^{-1}=y^{-1}x^{-1}$, so $y^{-1}x^{-1}=x^{-1}y^{-1}$, and therefore $xy=yx$. Thus $G$ is abelian.\n\\end{proof}",
+      "reason": "The original argument is valid after explicitly justifying the rearrangement and the final implication that inversion being a homomorphism forces commutativity."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $f(x)=x^{-1}\\sigma(x)$ for $x\\in G$. Suppose $f(x)=f(y)$. Then\n\\[\nx^{-1}\\sigma(x)=y^{-1}\\sigma(y),\n\\]\nwhich implies\n\\[\nxy^{-1}=\\sigma(x)\\sigma(y)^{-1}=\\sigma(xy^{-1}).\n\\]\nThus $xy^{-1}$ is fixed by $\\sigma$. The fixed-point hypothesis gives $xy^{-1}=1$, so $x=y$. Hence $f$ is injective and, because $G$ is finite, surjective.\n\nTake any $z\\in G$. There is an $x\\in G$ with $z=x^{-1}\\sigma(x)$. Then\n\\[\n\\sigma(z)=\\sigma(x)^{-1}\\sigma^2(x)=\\sigma(x)^{-1}x=z^{-1}.\n\\]\nTherefore $\\sigma(z)=z^{-1}$ for every $z\\in G$. Since $\\sigma$ preserves products,\n\\[\ny^{-1}x^{-1}=(xy)^{-1}=\\sigma(xy)=\\sigma(x)\\sigma(y)=x^{-1}y^{-1}.\n\\]\nTaking inverses yields $xy=yx$. Since $x,y$ were arbitrary, $G$ is abelian.\n\\end{proof}",
+      "reason": "The checked revision preserves the theorem and makes the quantification over arbitrary elements and the commutativity conclusion explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nConsider the map $f:G\\to G$ defined by\n\\[\nf(x)=x^{-1}\\sigma(x).\n\\]\nIf $f(x)=f(y)$, then\n\\[\nx^{-1}\\sigma(x)=y^{-1}\\sigma(y),\n\\]\nand hence\n\\[\nxy^{-1}=\\sigma(x)\\sigma(y)^{-1}=\\sigma(xy^{-1}).\n\\]\nThus $xy^{-1}$ is fixed by $\\sigma$. The assumption on fixed points implies $xy^{-1}=1$, so $x=y$. Consequently $f$ is injective. Finiteness of $G$ implies that $f$ is surjective.\n\nLet $z\\in G$. Choose $x\\in G$ with $z=f(x)=x^{-1}\\sigma(x)$. Since $\\sigma^2$ is the identity,\n\\[\n\\sigma(z)=\\sigma(x)^{-1}\\sigma^2(x)=\\sigma(x)^{-1}x=z^{-1}.\n\\]\nAs $z$ was arbitrary, $\\sigma(z)=z^{-1}$ for all $z\\in G$. Applying this to a product and using that $\\sigma$ is an automorphism gives\n\\[\n(xy)^{-1}=\\sigma(xy)=\\sigma(x)\\sigma(y)=x^{-1}y^{-1}.\n\\]\nOn the other hand, $(xy)^{-1}=y^{-1}x^{-1}$. Thus $y^{-1}x^{-1}=x^{-1}y^{-1}$, and taking inverses gives $xy=yx$. Therefore $G$ is abelian.\n\\end{proof}",
+      "reason": "The critic check confirms injectivity, finite surjectivity, use of $\\sigma^2=\\mathrm{id}$, and the final inversion argument."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine $f:G\\to G$ by $f(x)=x^{-1}\\sigma(x)$. We first verify injectivity. If $f(x)=f(y)$, then\n\\[\nx^{-1}\\sigma(x)=y^{-1}\\sigma(y).\n\\]\nMultiplying on the left by $x$ and on the right by $\\sigma(y)^{-1}$ gives\n\\[\n\\sigma(x)\\sigma(y)^{-1}=xy^{-1}.\n\\]\nBecause $\\sigma$ is an automorphism, this is\n\\[\n\\sigma(xy^{-1})=xy^{-1}.\n\\]\nThe fixed-point hypothesis now implies $xy^{-1}=1$, so $x=y$. Thus $f$ is injective, and finiteness of $G$ makes it surjective.\n\nFor arbitrary $z\\in G$, choose $x\\in G$ such that $z=x^{-1}\\sigma(x)$. Then\n\\[\n\\sigma(z)=\\sigma(x)^{-1}\\sigma^2(x)=\\sigma(x)^{-1}x=z^{-1},\n\\]\nwhere the last equality follows from the formula for the inverse of $x^{-1}\\sigma(x)$. Therefore\n\\[\n\\sigma(z)=z^{-1}\\qquad(z\\in G).\n\\]\nSince $\\sigma$ is a homomorphism, for all $x,y\\in G$ we have\n\\[\ny^{-1}x^{-1}=(xy)^{-1}=\\sigma(xy)=\\sigma(x)\\sigma(y)=x^{-1}y^{-1}.\n\\]\nTaking inverses yields $xy=yx$. Hence $G$ is abelian.\n\\end{proof}",
+      "reason": "Dependency checks pass: the repaired injectivity supports surjectivity, surjectivity supports the inversion identity for every element, and that identity independently yields commutativity."
+    }
+  ]
+}

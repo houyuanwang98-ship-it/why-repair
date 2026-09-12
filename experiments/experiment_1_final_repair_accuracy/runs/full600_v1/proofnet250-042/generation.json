@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-042",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWrite $a=-A$ with $A>0$. Since $p\\equiv q\\pmod{4a}$, we also have $p\\equiv q\\pmod{4A}$. By Proposition 5.3.3(b),\n\\[\n\\left(\\frac{A}{p}\\right)=\\left(\\frac{A}{q}\\right).\n\\]\nMoreover,\n\\[\n\\left(\\frac{a}{p}\\right)=\\left(\\frac{-A}{p}\\right)=(-1)^{(p-1)/2}\\left(\\frac{A}{p}\\right),\n\\qquad\n\\left(\\frac{a}{q}\\right)=\\left(\\frac{-A}{q}\\right)=(-1)^{(q-1)/2}\\left(\\frac{A}{q}\\right).\n\\]\nBecause $p\\equiv q\\pmod{4a}$, there is $k\\in\\mathbb Z$ such that $p=q+4ak$. Hence\n\\[\n\\frac{p-1}{2}=\\frac{q-1}{2}+2ak,\n\\]\nso $(-1)^{(p-1)/2}=(-1)^{(q-1)/2}$. Combining these equalities gives\n\\[\n\\left(\\frac{a}{p}\\right)=\\left(\\frac{a}{q}\\right).\n\\]\n\\end{proof}",
+      "reason": "Corrected the malformed exponent and made the sign and congruence steps explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $A=-a>0$. Then $4a$ and $4A$ define the same congruence condition, so $p\\equiv q\\pmod{4A}$. Proposition 5.3.3(b) therefore yields\n\\[\n\\left(\\frac{A}{p}\\right)=\\left(\\frac{A}{q}\\right).\n\\]\nAlso,\n\\[\n\\left(\\frac{-A}{p}\\right)=(-1)^{(p-1)/2}\\left(\\frac{A}{p}\\right),\n\\qquad\n\\left(\\frac{-A}{q}\\right)=(-1)^{(q-1)/2}\\left(\\frac{A}{q}\\right).\n\\]\nFrom $p=q+4ak$ for some $k\\in\\mathbb Z$, we obtain\n\\[\n\\frac{p-1}{2}=\\frac{q-1}{2}+2ak,\n\\]\nwhich implies $(-1)^{(p-1)/2}=(-1)^{(q-1)/2}$. Since $a=-A$, the preceding identities and the equality of the symbols for $A$ give\n\\[\n\\left(\\frac{a}{p}\\right)=\\left(\\frac{a}{q}\\right).\n\\]\n\\end{proof}",
+      "reason": "Revised the proof to use $A=-a$ consistently and verified the parity argument."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet $A=-a$, so $A>0$ and $a=-A$. Since congruence modulo a nonzero integer is unchanged when the modulus is negated, $p\\equiv q\\pmod{4A}$. Proposition 5.3.3(b) gives\n\\[\n\\left(\\frac{A}{p}\\right)=\\left(\\frac{A}{q}\\right).\n\\]\nThe supplementary law for the Legendre symbol gives\n\\[\n\\left(\\frac{a}{p}\\right)=\\left(\\frac{-A}{p}\\right)=(-1)^{(p-1)/2}\\left(\\frac{A}{p}\\right),\n\\]\nand similarly\n\\[\n\\left(\\frac{a}{q}\\right)=(-1)^{(q-1)/2}\\left(\\frac{A}{q}\\right).\n\\]\nBecause $p\\equiv q\\pmod{4a}$, write $p=q+4ak$. Then\n\\[\n(p-1)/2=(q-1)/2+2ak,\n\\]\nso the two powers of $-1$ are equal. Together with $(A/p)=(A/q)$, this proves\n\\[\n(a/p)=(a/q).\n\\]\n\\end{proof}",
+      "reason": "The critic-repaired version fixes the syntax error and confirms that the modulus sign change and parity calculation are valid."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $A=-a>0$. The congruence $p\\equiv q\\pmod{4a}$ is equivalent to $p\\equiv q\\pmod{4A}$. Since $p\\nmid a$, the Legendre symbols in the statement are defined; moreover, under the stated prime-symbol conventions, Proposition 5.3.3(b) applies and gives\n\\[\n\\left(\\frac{A}{p}\\right)=\\left(\\frac{A}{q}\\right).\n\\]\nNow use the standard identity\n\\[\n\\left(\\frac{-A}{r}\\right)=(-1)^{(r-1)/2}\\left(\\frac{A}{r}\\right)\n\\]\nfor $r=p,q$. Since $p\\equiv q\\pmod{4a}$, there exists $k\\in\\mathbb Z$ with $p=q+4ak$, and therefore\n\\[\n\\frac{p-1}{2}-\\frac{q-1}{2}=2ak\\in 2\\mathbb Z.\n\\]\nThus $(-1)^{(p-1)/2}=(-1)^{(q-1)/2}$. Substituting $a=-A$ and combining this parity equality with the equality for $A$ yields\n\\[\n\\left(\\frac{a}{p}\\right)=\\left(\\frac{-A}{p}\\right)=\\left(\\frac{-A}{q}\\right)=\\left(\\frac{a}{q}\\right).\n\\]\n\\end{proof}",
+      "reason": "Dependency and descendant checks preserve the theorem while repairing only the malformed Legendre-symbol exponent and clarifying the congruence dependency."
+    }
+  ]
+}

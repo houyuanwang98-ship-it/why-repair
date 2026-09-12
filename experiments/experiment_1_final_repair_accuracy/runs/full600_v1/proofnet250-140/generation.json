@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-140",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "irreparable",
+      "final_proof": "The theorem cannot be proved as stated because finite-dimensionality is not assumed. Let $V=\\mathbb{R}[x]$ and define $T(p)=xp$. Then $T$ has no real eigenvalues: if $xp=\\lambda p$ for a nonzero polynomial $p$, then $(x-\\lambda)p=0$, impossible in the integral domain $\\mathbb{R}[x]$. The whole space $U=V$ is $T$-invariant, but it has infinite dimension, so it does not have an even finite dimension. Thus the theorem requires an additional finite-dimensional assumption.",
+      "reason": "The argument uses the odd-dimensional eigenvalue theorem, which applies only to finite-dimensional spaces; the stated domain permits infinite-dimensional counterexamples."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "irreparable",
+      "final_proof": "The claimed conclusion is false without assuming that $V$ (or each invariant subspace) is finite-dimensional. Take $V=\\mathbb{R}[x]$ and $T(p)=xp$. For any nonzero $p\\in V$, the equation $T(p)=\\lambda p$ gives $(x-\\lambda)p=0$, which is impossible. Hence $T$ has no eigenvalues. However, $U=V$ is invariant under $T$ and has infinite dimension, not an even finite dimension. Therefore no proof preserving the theorem and assumptions exists.",
+      "reason": "Internal checking exposes the missing finite-dimensional hypothesis and a direct counterexample."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "irreparable",
+      "final_proof": "A proof is impossible under the stated assumptions. Let $V=\\mathbb{R}[x]$ and let $T$ be multiplication by $x$. If $p\\ne0$ were an eigenvector with eigenvalue $\\lambda\\in\\mathbb{R}$, then $xp=\\lambda p$, hence $(x-\\lambda)p=0$, contradicting that $\\mathbb{R}[x]$ has no zero divisors. Thus $T$ has no eigenvalues. Yet $V$ itself is a $T$-invariant subspace and is infinite-dimensional, so the assertion that every invariant subspace has even dimension fails as stated. A finite-dimensionality assumption is necessary.",
+      "reason": "The critic rejects the generated proof because its key claim is valid only in finite odd dimensions."
+    },
+    {
+      "method": "full_system",
+      "outcome": "irreparable",
+      "final_proof": "The theorem is not valid on the stated domain. Consider $V=\\mathbb{R}[x]$ with $T(p)=xp$. The operator has no eigenvalues, since $xp=\\lambda p$ for nonzero $p$ would imply $(x-\\lambda)p=0$, impossible in the integral domain $\\mathbb{R}[x]$. The descendant subspace $U=V$ is invariant under $T$, but $U$ is infinite-dimensional and therefore does not have an even finite dimension. Consequently, the requested theorem cannot be preserved or repaired locally; it becomes correct after adding that $V$ is finite-dimensional.",
+      "reason": "Dependency and descendant checks identify the absent finite-dimensional premise as a fatal defect, confirmed by an independent counterexample."
+    }
+  ]
+}

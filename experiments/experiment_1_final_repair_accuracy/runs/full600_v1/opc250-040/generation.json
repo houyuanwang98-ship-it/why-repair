@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-040",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "undetermined",
+      "final_proof": "No complete valid proof can be given from the supplied argument. Its key step for n≥k+1 is invalid: it asserts 3^{k+1}−7^k>k^4+(k+1)^2, whereas for k=4 this is 243−2401<0. The remaining finite checks are also asserted without complete verification.",
+      "reason": "The one-pass rewrite exposes a decisive reversed inequality, so the claimed elimination of all k≥4 is unsupported."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "undetermined",
+      "final_proof": "The proposed conclusion (2,4) is not established by the supplied proof. For n≥k+1, the proof uses 3^n−7^k≥3^{k+1}−7^k>k^4+(k+1)^2, but already at k=4 the middle quantity is −2158, not positive. Thus the argument does not exclude the entire intermediate range where 3^n is near 7^k. The small-case assertions for k=3 and the eventual inequalities are likewise not fully proved. No valid complete proof preserving the theorem can therefore be certified here.",
+      "reason": "Internal checking finds an essential false inequality and insufficiently justified tail bounds."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "undetermined",
+      "final_proof": "A critic rejects the supplied proof at Part 1. The claimed inequality 3^{k+1}−7^k>k^4+(k+1)^2 contradicts the displayed claim (2) and is false for every relevant initial case, including k=4. Consequently, the proof does not rule out k≥4; checking only k=1,2,3 cannot complete the theorem. Since no counterexample to the theorem itself has been established, the correct status is undetermined rather than irreparable.",
+      "reason": "The critic identifies a fatal logical error but does not establish that the theorem is false."
+    },
+    {
+      "method": "full_system",
+      "outcome": "undetermined",
+      "final_proof": "Dependency-aware review fails at the lemma-to-conclusion dependency. Although (2) is numerically true for k≥4, it gives 7^k>3^{k+1}+k^4+(k+1)^2; it does not imply 3^{k+1}−7^k>k^4+(k+1)^2. For example, at k=4 the latter reads −2158>881. Therefore the descendant claim excluding all n≥k+1 is unsupported, and the proof cannot be locally repaired without a new argument handling the intermediate values of n. No theorem counterexample is known from the supplied data, so the result remains undetermined.",
+      "reason": "Independent review confirms the broken dependency and that a minimal local repair is impossible."
+    }
+  ]
+}

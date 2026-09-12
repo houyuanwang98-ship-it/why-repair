@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-190",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let r=(p-1)/2, so q=3r-1. Therefore\n\\[\nS_q=\\sum_{i=1}^{r}\\frac1{(3i-1)(3i)(3i+1)}.\n\\]\nUsing\n\\[\n\\frac1{(x-1)x(x+1)}=\\frac1{2(x-1)}-\\frac1x+\\frac1{2(x+1)},\n\\]\nwe obtain\n\\[\n2S_q=\\sum_{i=1}^r\\left(\\frac1{3i-1}-\\frac2{3i}+\\frac1{3i+1}\\right).\n\\]\nThe terms on the right are precisely the reciprocals occurring in\n\\[\nH_{(3p-1)/2}-H_{(p-1)/2}=\\sum_{k=(p+1)/2}^{(3p-1)/2}\\frac1k,\n\\]\nwith the multiples of 3 contributing the stated coefficient; hence\n\\[\n\\frac1p-2S_q-1=-\\sum_{\\substack{k=(p+1)/2\\\\k\\ne p}}^{(3p-1)/2}\\frac1k=-T.\n\\]\nThe denominators in T are nonzero modulo p, and their residues modulo p are exactly 1,2,\\ldots,p-1. Thus, modulo p,\n\\[\nT\\equiv\\sum_{a=1}^{p-1}a^{-1}\\equiv\\sum_{a=1}^{p-1}a\\equiv0.\n\\]\nWriting T=N/D in lowest terms, p\\nmid D, so p\\mid N. If \\(\\frac1p-2S_q=\\frac mn\\), then\n\\[\n\\frac{m-n}{n}=-T=-\\frac ND.\n\\]\nSince \\(\\gcd(N,D)=1\\), D divides n, and therefore \\(m-n=-N(n/D)\\), which is divisible by p.",
+      "reason": "Corrected the residue-class and harmonic-sum argument, then used the complete set of nonzero residues modulo p."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Put r=(p-1)/2; then q=3r-1 and\n\\[\nS_q=\\sum_{i=1}^r\\frac1{(3i-1)(3i)(3i+1)}.\n\\]\nPartial fractions give\n\\[\n2S_q=\\sum_{i=1}^r\\left(\\frac1{3i-1}-\\frac2{3i}+\\frac1{3i+1}\\right).\n\\]\nRearranging these residue classes modulo 3 yields\n\\[\n\\frac1p-2S_q-1=-\\sum_{\\substack{k=(p+1)/2\\\\k\\ne p}}^{(3p-1)/2}\\frac1k.\n\\]\nCall the sum on the right T. There are p−1 terms, and reducing their denominators modulo p gives every element of \\(\\mathbb F_p^\\times\\) exactly once. Consequently\n\\[\nT\\equiv\\sum_{a=1}^{p-1}a^{-1}=\\sum_{a=1}^{p-1}a=0\\pmod p.\n\\]\nIf T=N/D in lowest terms, then p does not divide D and p divides N. Since \\(\\frac1p-2S_q=m/n\\), we have\n\\[\n\\frac{m-n}{n}=-T=-\\frac ND.\n\\]\nThus D divides n, so \\(m-n=-N(n/D)\\), proving \\(p\\mid(m-n)\\).",
+      "reason": "Internally checked the indexing, partial fractions, and modular denominator argument and retained only the valid steps."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let r=(p-1)/2. Then q=3r-1, and\n\\[\n2S_q=\\sum_{i=1}^{r}\\left(\\frac1{3i-1}-\\frac2{3i}+\\frac1{3i+1}\\right),\n\\]\nby the identity\n\\[\n\\frac2{(x-1)x(x+1)}=\\frac1{x-1}-\\frac2x+\\frac1{x+1}.\n\\]\nCombining the three residue classes shows\n\\[\n\\frac1p-2S_q=1-T,\n\\qquad\nT=\\sum_{\\substack{k=(p+1)/2\\\\k\\ne p}}^{(3p-1)/2}\\frac1k.\n\\]\nThe integers in T reduce modulo p to the complete set \\(1,\\dots,p-1\\). Since inversion permutes this set,\n\\[\nT\\equiv\\sum_{a=1}^{p-1}a^{-1}=\\sum_{a=1}^{p-1}a=0\\pmod p.\n\\]\nWrite T=N/D in lowest terms. Every denominator is coprime to p, hence p∤D; the congruence implies p∣N. Finally,\n\\[\n\\frac{m-n}{n}=\\frac1p-2S_q-1=-\\frac ND.\n\\]\nBecause N/D is reduced, D∣n, and so \\(m-n=-N(n/D)\\) is divisible by p.",
+      "reason": "A critic check removed the unsupported claim that numerator divisibility follows merely from experimentation and supplied the modular permutation proof."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Set r=(p-1)/2, so q=3r-1. The definition of S_q gives\n\\[\n2S_q=\\sum_{i=1}^{r}\\frac2{(3i-1)(3i)(3i+1)}\n=\\sum_{i=1}^{r}\\left(\\frac1{3i-1}-\\frac2{3i}+\\frac1{3i+1}\\right).\n\\]\nCollecting the terms with denominators between \\((p+1)/2\\) and \\((3p-1)/2\\) gives the exact identity\n\\[\n\\frac1p-2S_q=1-\\sum_{\\substack{k=(p+1)/2\\\\k\\ne p}}^{(3p-1)/2}\\frac1k.\n\\]\nLet\n\\[\nT=\\sum_{\\substack{k=(p+1)/2\\\\k\\ne p}}^{(3p-1)/2}\\frac1k=\\frac ND\n\\]\nbe in lowest terms. The p−1 denominators in T are all prime to p, and their residues modulo p are exactly \\(1,2,\\ldots,p-1\\). Hence\n\\[\nT\\equiv\\sum_{a=1}^{p-1}a^{-1}\\equiv\\sum_{a=1}^{p-1}a\n=\\frac{p(p-1)}2\\equiv0\\pmod p.\n\\]\nThus p∣N. Since \\(\\frac1p-2S_q=\\frac mn\\), subtracting 1 yields\n\\[\n\\frac{m-n}{n}=-T=-\\frac ND.\n\\]\nReducedness implies D∣n, so \\(m-n=-N(n/D)\\), and therefore p∣m−n. This also applies to any integer representation of the rational number, since all such representations are integer multiples of a reduced one.",
+      "reason": "Dependency-aware checking repaired the key modular lemma and revalidated the final divisibility through the rational-representation step."
+    }
+  ]
+}

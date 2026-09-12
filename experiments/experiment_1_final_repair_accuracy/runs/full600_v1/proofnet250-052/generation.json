@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-052",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose, toward a contradiction, that \\(\\bigcup_{n\\ge 1}A_n=B\\cup C\\), where \\(B\\) and \\(C\\) are disjoint nonempty open subsets of \\(\\bigcup_{n\\ge 1}A_n\\). Since \\(A_1\\) is connected, it lies entirely in either \\(B\\) or \\(C\\). Without loss of generality, let \\(A_1\\subset B\\).\n\nAssume \\(A_n\\subset B\\). Since \\(A_{n+1}\\) is connected and is contained in \\(B\\cup C\\), it lies entirely in \\(B\\) or entirely in \\(C\\). It cannot lie in \\(C\\), because then \\(A_n\\cap A_{n+1}\\subset B\\cap C=\\varnothing\\), contradicting \\(A_n\\cap A_{n+1}\\ne\\varnothing\\). Hence \\(A_{n+1}\\subset B\\). By induction, \\(A_n\\subset B\\) for every \\(n\\), so \\(\\bigcup_{n\\ge1}A_n\\subset B\\), contradicting that \\(C\\) is nonempty. Therefore \\(\\bigcup_{n\\ge1}A_n\\) is connected.\n\\end{proof}",
+      "reason": "Added the needed nonemptiness in the separation and explicitly justified the connectedness-based dichotomy for each successor set."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet \\(U=\\bigcup_{n\\ge1}A_n\\). Suppose that \\(U\\) is disconnected. Then \\(U=B\\cup C\\), where \\(B,C\\) are disjoint nonempty open subsets of \\(U\\). Because \\(A_1\\) is connected and \\(A_1\\subset U=B\\cup C\\), we have \\(A_1\\subset B\\) or \\(A_1\\subset C\\). Relabeling \\(B\\) and \\(C\\) if necessary, assume \\(A_1\\subset B\\).\n\nWe claim inductively that \\(A_n\\subset B\\) for every \\(n\\). This is true for \\(n=1\\). If \\(A_n\\subset B\\), then connectedness of \\(A_{n+1}\\) implies that \\(A_{n+1}\\subset B\\) or \\(A_{n+1}\\subset C\\). The latter is impossible, since \\(A_n\\cap A_{n+1}\\ne\\varnothing\\) would give a point in \\(B\\cap C\\). Thus \\(A_{n+1}\\subset B\\). Consequently, \\(U\\subset B\\), contradicting \\(C\\ne\\varnothing\\). Hence \\(U\\) is connected.\n\\end{proof}",
+      "reason": "The revised proof checks the separation definition, preserves the original induction, and closes the contradiction using the nonempty complementary piece."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet \\(U=\\bigcup_{n=1}^{\\infty}A_n\\). Assume that \\(U\\) admits a separation \\(U=V\\cup W\\), with \\(V\\) and \\(W\\) disjoint, nonempty, open subsets of \\(U\\). Since \\(A_1\\) is connected, it is contained in one side of the separation. Interchanging the sides if necessary, suppose \\(A_1\\subset V\\).\n\nFor each \\(n\\), we show that \\(A_n\\subset V\\). Suppose \\(A_n\\subset V\\). The connected set \\(A_{n+1}\\subset V\\cup W\\) must be contained wholly in \\(V\\) or wholly in \\(W\\). If it were contained in \\(W\\), then the assumed nonempty intersection \\(A_n\\cap A_{n+1}\\) would be contained in \\(V\\cap W\\), which is empty. Therefore \\(A_{n+1}\\subset V\\). Induction gives \\(A_n\\subset V\\) for all \\(n\\), and hence \\(U\\subset V\\), contradicting \\(W\\ne\\varnothing\\). Thus no separation exists, and \\(U\\) is connected.\n\\end{proof}",
+      "reason": "The critic-repaired version makes the separation conditions and the key intersection contradiction explicit, eliminating the proof’s omitted case justification."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet \\(U=\\bigcup_{n=1}^{\\infty}A_n\\). To prove that \\(U\\) is connected, suppose for contradiction that \\(U=V\\cup W\\), where \\(V\\) and \\(W\\) are disjoint nonempty open subsets of \\(U\\).\n\nThe connected set \\(A_1\\) is contained in \\(V\\cup W\\), so it must be contained in one of the two sets. After exchanging \\(V\\) and \\(W\\) if necessary, assume \\(A_1\\subset V\\). We now prove by induction that \\(A_n\\subset V\\) for every \\(n\\). The assertion holds for \\(n=1\\). If \\(A_n\\subset V\\), then the connected set \\(A_{n+1}\\subset V\\cup W\\) is contained in either \\(V\\) or \\(W\\). It cannot be contained in \\(W\\), because \\(A_n\\cap A_{n+1}\\ne\\varnothing\\) would then imply \\(A_n\\cap A_{n+1}\\subset V\\cap W=\\varnothing\\). Hence \\(A_{n+1}\\subset V\\).\n\nThus every \\(A_n\\) lies in \\(V\\), so \\(U\\subset V\\), contradicting the nonemptiness of \\(W\\). Therefore \\(U\\) has no separation and is connected.\n\\end{proof}",
+      "reason": "Dependency checks confirm the only local gap was the implicit connected-set dichotomy and the missing nonempty-separation condition; both were repaired, and the induction and contradiction were independently revalidated."
+    }
+  ]
+}

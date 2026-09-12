@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-231",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet R=\\mathbb{Z}[\\sqrt{2}]. Suppose, for contradiction, that x^2-\\sqrt{2} is reducible over R. Since it is a monic polynomial of degree 2 over the integral domain R, it must then have a root in R. Write such a root as a+b\\sqrt{2}, where a,b\\in\\mathbb{Z}. Then\n\\[\n(a+b\\sqrt{2})^2-\\sqrt{2}=a^2+2b^2+(2ab-1)\\sqrt{2}=0.\n\\]\nBecause 1 and \\sqrt{2} are linearly independent over \\mathbb{Z}, we obtain 2ab-1=0, so 2ab=1, which is impossible for integers a and b. Thus x^2-\\sqrt{2} has no root in R and is irreducible over R.\\end{proof}",
+      "reason": "The original argument is valid after correcting notation and making the degree-two reducibility implication explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSet R=\\mathbb{Z}[\\sqrt{2}]. The ring R is an integral domain. Assume that\n\\[\nf(x)=x^2-\\sqrt{2}\n\\]\nis reducible in R[x]. Since f has degree 2, one of its factors has degree 1, and hence f has a root r\\in R. Write r=a+b\\sqrt{2} with a,b\\in\\mathbb{Z}. The equation f(r)=0 gives\n\\[\na^2+2b^2+2ab\\sqrt{2}=\\sqrt{2}.\n\\]\nComparing the coefficients of 1 and \\sqrt{2} yields 2ab=1, impossible because 2ab is even. Therefore f has no root in R, so it is irreducible over \\mathbb{Z}[\\sqrt{2}].\\end{proof}",
+      "reason": "Internal checking confirms the root argument works because the polynomial has degree two over an integral domain."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet R=\\mathbb{Z}[\\sqrt{2}]. Suppose that f(x)=x^2-\\sqrt{2} factors nontrivially in R[x]. Since f is monic of degree 2 and R is an integral domain, such a factorization would give a linear factor and therefore a root in R. Thus there would exist a,b\\in\\mathbb{Z} such that\n\\[\n(a+b\\sqrt{2})^2=\\sqrt{2}.\n\\]\nExpanding gives\n\\[\na^2+2b^2+2ab\\sqrt{2}=\\sqrt{2}.\n\\]\nThe representation u+v\\sqrt{2} with u,v\\in\\mathbb{Z} is unique, so comparison of the \\sqrt{2}-coefficients gives 2ab=1. This is impossible since 2ab is even. Hence f has no root in R and cannot factor nontrivially. Therefore x^2-\\sqrt{2} is irreducible over \\mathbb{Z}[\\sqrt{2}].\\end{proof}",
+      "reason": "The critic check found no substantive defect; the proof explicitly justifies both the factor-to-root step and coefficient comparison."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet R=\\mathbb{Z}[\\sqrt{2}] and f(x)=x^2-\\sqrt{2}. The given assumption that R is a U.F.D. implies in particular that R is an integral domain. If f were reducible in R[x], then, because \\deg f=2, it would factor as a product of two degree-one polynomials and consequently have a root in R. Let r=a+b\\sqrt{2}\\in R be such a root, with a,b\\in\\mathbb{Z}. Then\n\\[\n0=f(r)=(a+b\\sqrt{2})^2-\\sqrt{2}=a^2+2b^2+(2ab-1)\\sqrt{2}.\n\\]\nThe elements 1 and \\sqrt{2} are linearly independent over \\mathbb{Z}; hence 2ab-1=0. This would imply 2ab=1, impossible for integers a,b. Thus f has no root in R, so it is irreducible in R[x]. Therefore x^2-\\sqrt{2} is irreducible over \\mathbb{Z}[\\sqrt{2}].\\end{proof}",
+      "reason": "Dependency checks validate the integral-domain and degree-two steps; no repair is needed, and independent review finds the argument complete."
+    }
+  ]
+}

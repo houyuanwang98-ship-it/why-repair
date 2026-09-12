@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-185",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $h,g:\\bar A\\to Y$ be continuous extensions of $f$. Suppose, toward a contradiction, that $h(x)\\ne g(x)$ for some $x\\in\\bar A$. Since $h=g=f$ on $A$, we have $x\\notin A$. As $x\\in\\bar A$, every neighbourhood of $x$ meets $A$.\n\nBecause $Y$ is Hausdorff, there are disjoint neighbourhoods $U$ of $h(x)$ and $V$ of $g(x)$. By continuity, $W=h^{-1}(U)\\cap g^{-1}(V)$ is a neighbourhood of $x$. Hence $W\\cap A\\ne\\varnothing$; choose $y\\in W\\cap A$. Then $h(y)=g(y)$, while $h(y)\\in U$ and $g(y)\\in V$, so $h(y)\\in U\\cap V$, contradicting $U\\cap V=\\varnothing$. Therefore $h=g$ on $\\bar A$, and the extension is unique.\n\\end{proof}",
+      "reason": "The argument is valid after explicitly using that every neighbourhood of a point in $\\bar A$ meets $A$."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume that $g_1,g_2:\\bar A\\to Y$ are continuous extensions of $f$. We show that $g_1=g_2$. If not, choose $x\\in\\bar A$ with $g_1(x)\\ne g_2(x)$. Since both maps extend $f$, they agree on $A$, so $x\\notin A$.\n\nThe Hausdorff property gives disjoint neighbourhoods $U_1$ and $U_2$ of $g_1(x)$ and $g_2(x)$, respectively. The set\n\\[\nN=g_1^{-1}(U_1)\\cap g_2^{-1}(U_2)\n\\]\nis a neighbourhood of $x$. Since $x\\in\\bar A$, there exists $a\\in N\\cap A$. Thus $g_1(a)=f(a)=g_2(a)$, but this common value belongs to $U_1\\cap U_2$, a contradiction. Hence $g_1=g_2$ on $\\bar A$.\n\\end{proof}",
+      "reason": "An internal consistency check confirms that closure supplies the required point of $A$ in the common preimage neighbourhood."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $g_1,g_2:\\bar A\\to Y$ be continuous functions extending $f$. Suppose there is $x\\in\\bar A$ such that $g_1(x)\\ne g_2(x)$. Since $g_1$ and $g_2$ agree on $A$, this point is not in $A$.\n\nChoose disjoint open neighbourhoods $U_1$ of $g_1(x)$ and $U_2$ of $g_2(x)$, possible because $Y$ is Hausdorff. Continuity implies that\n\\[\nN=g_1^{-1}(U_1)\\cap g_2^{-1}(U_2)\n\\]\nis a neighbourhood of $x$ in $\\bar A$. Since $x\\in\\bar A$, $N\\cap A\\ne\\varnothing$. For any $a\\in N\\cap A$, the extension property gives $g_1(a)=f(a)=g_2(a)$, whereas $g_1(a)\\in U_1$ and $g_2(a)\\in U_2$. Consequently the common value lies in $U_1\\cap U_2$, contradicting disjointness. Therefore $g_1=g_2$ on $\\bar A$.\n\\end{proof}",
+      "reason": "The critic check removes the unnecessary limit-point notation and verifies the closure and Hausdorff steps directly."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $h,g:\\bar A\\to Y$ be continuous extensions of $f$. We prove that $h=g$. Suppose instead that $h(x)\\ne g(x)$ for some $x\\in\\bar A$. Since $h$ and $g$ both equal $f$ on $A$, we have $x\\notin A$.\n\nBy Hausdorffness of $Y$, there exist disjoint open sets $U,V\\subseteq Y$ with $h(x)\\in U$ and $g(x)\\in V$. The set\n\\[\nN=h^{-1}(U)\\cap g^{-1}(V)\n\\]\nis a neighbourhood of $x$ in $\\bar A$. Because $x\\in\\bar A$, the definition of closure gives $N\\cap A\\ne\\varnothing$. Choose $a\\in N\\cap A$. Then\n\\[\nh(a)=f(a)=g(a),\n\\]\nwhile $h(a)\\in U$ and $g(a)\\in V$. Thus the same point belongs to $U\\cap V$, contradicting $U\\cap V=\\varnothing$. Hence $h=g$ on $\\bar A$, so $g$ is uniquely determined by $f$.\n\\end{proof}",
+      "reason": "Dependency and descendant checks confirm the sole needed repair: explicitly invoke the definition of closure for the neighbourhood $N$."
+    }
+  ]
+}

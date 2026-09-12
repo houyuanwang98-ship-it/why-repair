@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-225",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $\\varphi$ be an automorphism of $G$. Since automorphisms preserve subgroup order and the property of being a $p$-subgroup, $\\varphi(P)$ is a Sylow $p$-subgroup of $G$. Because $P\\triangleleft G$, every conjugate of $P$ equals $P$; since all Sylow $p$-subgroups are conjugate, $P$ is the unique Sylow $p$-subgroup of $G$. Therefore $\\varphi(P)=P$.\n\\end{proof}",
+      "reason": "Clarifies why normality of a Sylow subgroup implies uniqueness."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $\\varphi\\in\\operatorname{Aut}(G)$. The subgroup $\\varphi(P)$ has the same order as $P$, so it is also a Sylow $p$-subgroup of $G$. Since $P$ is normal, for every $g\\in G$ we have $gPg^{-1}=P$. By Sylow conjugacy, every Sylow $p$-subgroup is conjugate to $P$, and hence $P$ is the unique Sylow $p$-subgroup. Thus $\\varphi(P)=P$.\n\\end{proof}",
+      "reason": "Checks the image is Sylow and explicitly justifies uniqueness via Sylow conjugacy."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nTake any automorphism $\\varphi$ of $G$. Because $\\varphi$ is an isomorphism, $|\\varphi(P)|=|P|$; consequently, $\\varphi(P)$ is a Sylow $p$-subgroup of $G$. Now $P\\triangleleft G$. If $Q$ is any Sylow $p$-subgroup, Sylow's theorem gives $Q=gPg^{-1}$ for some $g\\in G$, and normality gives $gPg^{-1}=P$. Hence $Q=P$, so $P$ is the only Sylow $p$-subgroup. Therefore $\\varphi(P)=P$.\n\\end{proof}",
+      "reason": "The critic-repaired version supplies the missing Sylow-conjugacy argument and avoids relying on an unstated claim."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $\\varphi\\in\\operatorname{Aut}(G)$. Since $\\varphi$ preserves subgroup order, $\\varphi(P)$ has order $|P|$. Thus $\\varphi(P)$ is a Sylow $p$-subgroup of $G$. On the other hand, any Sylow $p$-subgroup $Q$ of $G$ is conjugate to $P$ by Sylow's theorem: $Q=gPg^{-1}$ for some $g\\in G$. The assumption $P\\triangleleft G$ implies $gPg^{-1}=P$, so $Q=P$. Therefore $P$ is the unique Sylow $p$-subgroup, and consequently $\\varphi(P)=P$.\n\\end{proof}",
+      "reason": "Dependency check confirms the only needed repair is the explicit proof of uniqueness; the conclusion then revalidates directly."
+    }
+  ]
+}

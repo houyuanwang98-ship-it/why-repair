@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-243",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be a group of order $224=2^5\\cdot 7$. By Sylow's theorems, the number $n_2$ of Sylow $2$-subgroups satisfies\n\\[\nn_2\\mid 7\\qquad\\text{and}\\qquad n_2\\equiv 1\\pmod 2.\n\\]\nHence $n_2=1$ or $n_2=7$.\n\nSuppose that $n_2=7$. The conjugation action of $G$ on its seven Sylow $2$-subgroups gives a homomorphism $\\varphi:G\\to S_7$. Its kernel is normal in $G$. If $G$ were simple, then $\\ker\\varphi$ would be either trivial or all of $G$. The action is nontrivial, since a trivial action would make every Sylow $2$-subgroup normal, contradicting their being distinct. Thus $\\ker\\varphi$ is trivial, so $\\varphi$ is injective.\n\nTherefore $G$ would be isomorphic to a subgroup of $S_7$, forcing $|G|=224$ to divide $|S_7|=5040$ by Lagrange's theorem. This is impossible, since $224\\nmid 5040$. Hence $n_2\\ne 7$, so $n_2=1$. The unique Sylow $2$-subgroup has order $32$ and is normal. It is a proper nontrivial subgroup of $G$, so $G$ is not simple.\n\\end{proof}",
+      "reason": "Corrected the unjustified injectivity and divisibility claims and completed the Sylow argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ have order $224=2^5\\cdot 7$. Sylow's theorems imply that the number $n_2$ of Sylow $2$-subgroups divides $7$ and is congruent to $1$ modulo $2$. Thus $n_2\\in\\{1,7\\}$.\n\nAssume for contradiction that $G$ is simple and that $n_2=7$. Conjugation induces an action of $G$ on the set of seven Sylow $2$-subgroups, hence a homomorphism $\\varphi:G\\to S_7$. The action is not trivial: if it were trivial, each Sylow $2$-subgroup would be fixed by conjugation by every element of $G$, and hence would be normal. A normal Sylow subgroup is unique, contradicting $n_2=7$.\n\nConsequently, $\\ker\\varphi$ is a proper normal subgroup of $G$. Simplicity gives $\\ker\\varphi=1$, so $G$ embeds in $S_7$. Lagrange's theorem would then imply $224\\mid 7!=5040$, but $5040/224=22.5$, a contradiction.\n\nTherefore $n_2=1$. The unique Sylow $2$-subgroup has order $32$ and is normal in $G$, and since it is proper and nontrivial, $G$ is not simple.\n\\end{proof}",
+      "reason": "Internal checking made the kernel argument explicit and separated the contradiction from the final normal-subgroup conclusion."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWrite $|G|=224=2^5\\cdot 7$, and let $n_2$ denote the number of Sylow $2$-subgroups of $G$. Sylow's theorems give\n\\[\nn_2\\mid 7\\quad\\text{and}\\quad n_2\\equiv1\\pmod2,\n\\]\nso $n_2=1$ or $n_2=7$.\n\nSuppose $n_2=7$. Let $G$ act by conjugation on the set $\\Omega$ of its Sylow $2$-subgroups. This produces a homomorphism $\\varphi:G\\to\\operatorname{Sym}(\\Omega)\\cong S_7$. If $G$ were simple, then the kernel of this homomorphism would be either $1$ or $G$. It cannot be $G$, because then the action would be trivial and every member of $\\Omega$ would be normal in $G$; but a normal Sylow $2$-subgroup is unique. Thus $\\ker\\varphi=1$.\n\nHence $G$ embeds in $S_7$. By Lagrange's theorem, this would require $224\\mid |S_7|=5040$. However, $5040=2^4\\cdot3^2\\cdot5\\cdot7$ has only a factor $2^4$, whereas $224$ contains $2^5$. This contradiction rules out $n_2=7$.\n\nThus $n_2=1$. The unique Sylow $2$-subgroup is normal and has order $32$, so it is a proper nontrivial normal subgroup of $G$. Therefore $G$ is not simple.\n\\end{proof}",
+      "reason": "The critic-level repair verifies the action, kernel alternatives, and the exact arithmetic obstruction $2^5\\nmid5040$."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be a group of order $224=2^5\\cdot7$. Let $n_2$ be the number of Sylow $2$-subgroups. Sylow's theorems imply\n\\[\nn_2\\mid 7,\\qquad n_2\\equiv1\\pmod2,\n\\]\nso $n_2=1$ or $n_2=7$.\n\nAssume that $G$ is simple. If $n_2=7$, conjugation gives a homomorphism\n\\[\n\\varphi:G\\longrightarrow S_7.\n\\]\nThe action is nontrivial. Indeed, if it were trivial, then every Sylow $2$-subgroup would be normal in $G$, whereas a normal Sylow subgroup is unique. Therefore $\\ker\\varphi$ is a proper normal subgroup of $G$. Since $G$ is simple, $\\ker\\varphi=1$, and $G$ embeds in $S_7$.\n\nLagrange's theorem would then give\n\\[\n224=|G|\\mid |S_7|=5040,\n\\]\nwhich is false because $224=2^5\\cdot7$ and $5040$ is not divisible by $2^5$. Hence $n_2\\ne7$, so $n_2=1$.\n\nThus $G$ has a unique Sylow $2$-subgroup $P$, and $P\\triangleleft G$ with $|P|=32$. Since $1<|P|<|G|$, $P$ is a proper nontrivial normal subgroup, contradicting simplicity. Consequently, no group of order $224$ is simple.\n\\end{proof}",
+      "reason": "Dependency checks establish the Sylow case split, validate the action-kernel step and order obstruction, then revalidate the normal subgroup conclusion."
+    }
+  ]
+}

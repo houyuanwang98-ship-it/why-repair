@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-164",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Rewrite the equation as\n\\[\n2-\\frac1{p+1}+\\frac1q=2-\\frac4{n+2},\n\\]\nso\n\\[\n\\frac1{p+1}-\\frac1q=\\frac4{n+2}>0.\n\\]\nHence \\(q>p+1\\). Put \\(d=q-p-1>0\\). Then\n\\[\n\\frac{d}{(p+1)q}=\\frac4{n+2},\n\\qquad n+2=\\frac{4(p+1)q}{d}.\n\\]\nThus \\(d\\mid4(p+1)q\\). Since \\(q=p+1+d\\), this implies \\(d\\mid4(p+1)^2\\).\n\nIf \\(p\\) is odd, then \\(p+1\\) is even. Any odd prime divisor of \\(d\\) divides \\(p+1\\), hence divides \\(q=p+1+d\\), impossible because \\(q>p+1\\). Therefore \\(d\\) is a power of \\(2\\). If \\(d\\ge2\\), then \\(q=p+1+d\\) is even and greater than \\(2\\), impossible. Hence \\(d=1\\), giving \\(q-p=2\\).\n\nIf \\(p=2\\), then \\(d\\mid4(3)^2=36\\), and \\(q=3+d\\) must be prime. Checking the positive divisors of \\(36\\), the only possibilities are \\(d=2\\) and \\(d=4\\), yielding \\(q=5,7\\). Thus \\(q-p=3\\) or \\(5\\).\n\nAll occur: \\((p,q,n)=(3,5,78),(2,5,28),(2,7,19)\\). Therefore\n\\[\n\\boxed{q-p\\in\\{2,3,5\\}}.\n\\]",
+      "reason": "The conclusion is correct, but the original proof’s exclusion of all other cases was not rigorous; the divisibility argument completes it."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "From\n\\[\n\\frac{p}{p+1}+\\frac{q+1}{q}=\\frac{2n}{n+2}\n\\]\nwe obtain\n\\[\n2-\\frac1{p+1}+\\frac1q=2-\\frac4{n+2},\n\\]\nhence\n\\[\n\\frac1{p+1}-\\frac1q=\\frac4{n+2}>0.\n\\]\nTherefore \\(q>p+1\\). Let \\(d=q-p-1\\). Cross-multiplication gives\n\\[\nn+2=\\frac{4(p+1)q}{d}.\n\\]\nSince \\(q=p+1+d\\), integrality implies \\(d\\mid4(p+1)^2\\).\n\nFor odd \\(p\\), every odd prime factor of \\(d\\) would divide \\(p+1\\), and hence also \\(q=p+1+d\\), contradicting primality of \\(q>p+1\\). Thus \\(d\\) is a power of two. Since \\(p+1\\) is even, any \\(d\\ge2\\) makes \\(q\\) an even integer greater than \\(2\\). Consequently \\(d=1\\), so \\(q-p=2\\).\n\nFor \\(p=2\\), we have \\(d\\mid36\\) and \\(q=3+d\\) prime. Among the positive divisors of \\(36\\), only \\(d=2,4\\) give prime values \\(q=5,7\\). These yield differences \\(3,5\\).\n\nThe corresponding positive integers \\(n\\) are respectively \\(78,28,19\\), so every listed value occurs. Hence\n\\[\n\\boxed{2,3,5}.\n\\]",
+      "reason": "After checking the draft, the missing case exclusion was replaced by a complete prime-divisor argument."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Set \\(d=q-p-1\\). Simplifying the equation yields\n\\[\n\\frac1{p+1}-\\frac1q=\\frac4{n+2}>0,\n\\]\nso \\(d>0\\), and\n\\[\n n+2=\\frac{4(p+1)q}{d}.\n\\]\nThus \\(d\\mid4(p+1)q\\). Because \\(q=p+1+d\\), subtracting \\(4(p+1)d\\) shows \\(d\\mid4(p+1)^2\\).\n\nSuppose first that \\(p\\) is odd. If an odd prime \\(r\\mid d\\), then \\(r\\mid4(p+1)^2\\), so \\(r\\mid p+1\\). Hence \\(r\\mid q=p+1+d\\), contradicting that \\(q\\) is prime and \\(q>p+1\\). Therefore \\(d=2^a\\). Since \\(p+1\\) is even, \\(a\\ge1\\) would make \\(q=p+1+d\\) even and greater than \\(2\\). Hence \\(d=1\\), and \\(q-p=d+1=2\\).\n\nNow let \\(p=2\\). Then \\(d\\mid36\\), while \\(q=3+d\\) is prime. Testing the divisors \\(1,2,3,4,6,9,12,18,36\\), only \\(d=2,4\\) work, giving \\(q-p=3,5\\).\n\nIndeed, \\((p,q,n)=(3,5,78),(2,5,28),(2,7,19)\\) satisfy the equation. Therefore the complete set is\n\\[\n\\boxed{\\{2,3,5\\}}.\n\\]",
+      "reason": "The critic identified the unsupported phrase “systematically test” and replaced it with a proof covering every divisor case."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "The equation is equivalent to\n\\[\n2-\\frac1{p+1}+\\frac1q=2-\\frac4{n+2},\n\\]\nso\n\\[\n\\frac1{p+1}-\\frac1q=\\frac4{n+2}>0.\n\\]\nConsequently \\(q>p+1\\). Write \\(d=q-p-1\\), so \\(d>0\\) and \\(q=p+1+d\\). The last equation gives\n\\[\n n+2=\\frac{4(p+1)q}{d},\n\\]\ntherefore \\(d\\mid4(p+1)q\\), and hence \\(d\\mid4(p+1)^2\\).\n\nIf \\(p>2\\), then \\(p\\) is odd and \\(p+1\\) is even. Any odd prime divisor of \\(d\\) divides \\(p+1\\), hence divides \\(q=p+1+d\\), which is impossible since \\(q>p+1\\) is prime. Thus \\(d\\) is a power of two. If \\(d\\ge2\\), then \\(q\\) is even and exceeds \\(2\\), again impossible. Hence \\(d=1\\), and \\(q-p=2\\).\n\nIf \\(p=2\\), then \\(d\\mid36\\) and \\(q=3+d\\) is prime. The divisor check gives only \\(d=2\\) and \\(d=4\\), corresponding to \\(q=5,7\\), and hence differences \\(3,5\\).\n\nThe values are attained with \\((p,q,n)=(3,5,78),(2,5,28),(2,7,19)\\). Independent rechecking of the original equation confirms each triple, and the case split exhausts all primes \\(p\\). Therefore\n\\[\n\\boxed{q-p\\in\\{2,3,5\\}}.\n\\]",
+      "reason": "Dependency and descendant checks confirm the repair preserves the theorem and exhausts both \\(p>2\\) and \\(p=2\\)."
+    }
+  ]
+}

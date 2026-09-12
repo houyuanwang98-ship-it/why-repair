@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-024",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSince $A$ is nonempty and bounded below, $-A$ is nonempty and bounded above, so $\\sup(-A)$ exists. Let $\\alpha=-\\sup(-A)$. For every $x\\in A$, we have $-x\\in -A$, hence $-x\\leq\\sup(-A)$ and therefore $\\alpha\\leq x$. Thus $\\alpha$ is a lower bound of $A$.\n\nIf $\\beta$ is any lower bound of $A$, then $\\beta\\leq x$ for every $x\\in A$, so $-x\\leq -\\beta$ for every $x\\in A$. Hence $-\\beta$ is an upper bound of $-A$, and consequently $\\sup(-A)\\leq -\\beta$. Multiplying by $-1$ gives $\\beta\\leq -\\sup(-A)=\\alpha$. Thus $\\alpha$ is the greatest lower bound of $A$, so\n\\[\n\\inf A=-\\sup(-A).\n\\]\n\\end{proof}",
+      "reason": "The submitted proof is valid; this version makes the existence of $\\sup(-A)$ explicit and preserves the argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nBecause $A$ is nonempty and bounded below, the set $-A$ is nonempty and bounded above: if $m$ is a lower bound for $A$, then $-m$ is an upper bound for $-A$. Therefore $s=\\sup(-A)$ exists. Set $\\alpha=-s$.\n\nFor each $x\\in A$, $-x\\in -A$, so $-x\\leq s$. Thus $\\alpha=-s\\leq x$, and $\\alpha$ is a lower bound for $A$.\n\nNow let $\\beta$ be any lower bound for $A$. Then $\\beta\\leq x$ for every $x\\in A$, which implies $-x\\leq -\\beta$ for every $x\\in A$. Hence $-\\beta$ is an upper bound for $-A$, so $s\\leq -\\beta$. Therefore $\\beta\\leq -s=\\alpha$.\n\nThus $\\alpha$ is a lower bound of $A$ that is at least every lower bound of $A$. Hence $\\alpha=\\inf A$, and therefore\n\\[\n\\inf A=-\\sup(-A).\n\\]\n\\end{proof}",
+      "reason": "Internal checking confirms the order reversal and supremum/infimum extremal steps are correct."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $s=\\sup(-A)$. This supremum exists because $-A$ is nonempty and bounded above: nonemptiness follows from that of $A$, and any lower bound of $A$ yields, after negation, an upper bound of $-A$.\n\nFor every $x\\in A$, the number $-x$ belongs to $-A$, so $-x\\leq s$. Negating this inequality gives $-s\\leq x$. Hence $-s$ is a lower bound of $A$.\n\nConversely, if $\\beta$ is any lower bound of $A$, then $\\beta\\leq x$ for all $x\\in A$. Negating gives $-x\\leq -\\beta$ for all $x\\in A$, so $-\\beta$ is an upper bound of $-A$. By the defining property of the supremum, $s\\leq -\\beta$, and hence $\\beta\\leq -s$.\n\nTherefore $-s$ is the greatest lower bound of $A$. Since $s=\\sup(-A)$, we conclude that\n\\[\n\\inf A=-\\sup(-A).\n\\]\n\\end{proof}",
+      "reason": "Critic verification finds no mathematical defect; the proof explicitly establishes existence and both defining properties of the infimum."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $m$ be a lower bound of $A$. Since $A$ is nonempty, $-A$ is nonempty, and for every $y\\in -A$ there is an $x\\in A$ with $y=-x$. From $m\\leq x$ we obtain $y=-x\\leq -m$, so $-A$ is bounded above. Thus $s=\\sup(-A)$ exists.\n\nWe first show that $-s$ is a lower bound of $A$. If $x\\in A$, then $-x\\in -A$, and therefore $-x\\leq s$. Hence $-s\\leq x$.\n\nNow let $\\beta$ be any lower bound of $A$. For every $x\\in A$, $\\beta\\leq x$, so $-x\\leq -\\beta$. Thus every element of $-A$ is at most $-\\beta$, meaning that $-\\beta$ is an upper bound of $-A$. Since $s$ is the least upper bound of $-A$, $s\\leq -\\beta$, and therefore $\\beta\\leq -s$.\n\nConsequently, $-s$ is a lower bound of $A$ that is greater than or equal to every lower bound of $A$. It follows that $-s=\\inf A$. Substituting $s=\\sup(-A)$ yields\n\\[\n\\inf A=-\\sup(-A).\n\\]\n\\end{proof}",
+      "reason": "Dependency checks confirm boundedness implies existence of the needed supremum, and the local order-reversal argument passes independent review and descendant revalidation."
+    }
+  ]
+}

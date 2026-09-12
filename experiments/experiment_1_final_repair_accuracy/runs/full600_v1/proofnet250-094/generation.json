@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-094",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor every integer $k$, we have\n\\[\n(g^{-1}xg)^k=g^{-1}x^kg.\n\\]\nFor $k\\geq 0$ this follows by induction, and for $k<0$ it follows by taking inverses.\n\nIf $|x|=\\infty$ and $|g^{-1}xg|=m<\\infty$, then\n\\[\n1=(g^{-1}xg)^m=g^{-1}x^mg,\n\\]\nso $x^m=1$, a contradiction. Conversely, if $|g^{-1}xg|=\\infty$ and $|x|=m<\\infty$, then\n\\[\n1=g^{-1}x^mg=(g^{-1}xg)^m,\n\\]\na contradiction. Thus either both orders are infinite or both are finite.\n\nIf $|x|=n$ and $|g^{-1}xg|=m$ are finite, then\n\\[\n(g^{-1}xg)^n=g^{-1}x^ng=1,\n\\]\nso $m\\leq n$. Also,\n\\[\n(g^{-1}xg)^m=g^{-1}x^mg=1,\n\\]\nso $x^m=1$ and $n\\leq m$. Hence $n=m$, and therefore $|x|=|g^{-1}xg|$.\n\\end{proof}",
+      "reason": "Repaired the proof by stating the conjugation identity for all integers and applying the order-minimality argument symmetrically."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nConjugation respects powers: for every $k\\in\\mathbb Z$,\n\\[\n(g^{-1}xg)^k=g^{-1}x^kg.\n\\]\nIndeed, the identity is immediate for $k=0$, follows by induction for $k>0$, and for $k<0$ follows by taking inverses.\n\nFirst assume $|x|=n<\\infty$. Then\n\\[\n(g^{-1}xg)^n=g^{-1}x^ng=1,\n\\]\nso the order of $g^{-1}xg$ is finite and divides $n$. Conversely, if $|g^{-1}xg|=m<\\infty$, then\n\\[\n1=(g^{-1}xg)^m=g^{-1}x^mg,\n\\]\nwhich implies $x^m=1$; hence $|x|$ divides $m$. Therefore, when either order is finite, each divides the other, so they are equal.\n\nIf $|x|=\\infty$ but $|g^{-1}xg|=m<\\infty$, the displayed identity gives $x^m=1$, a contradiction. The converse is identical. Thus both orders are infinite in the remaining case, and in all cases\n\\[\n|x|=|g^{-1}xg|.\n\\]\n\\end{proof}",
+      "reason": "After checking the finite and infinite cases, the revised proof uses mutual divisibility and explicitly rules out mixed finite/infinite orders."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $y=g^{-1}xg$. For every $k\\in\\mathbb Z$,\n\\[\ny^k=(g^{-1}xg)^k=g^{-1}x^kg.\n\\]\nFor nonnegative $k$ this is proved by induction; for negative $k$ it follows from the positive case by inversion.\n\nSuppose first that $|x|=n$ is finite. Then $x^n=1$, and hence\n\\[\ny^n=g^{-1}x^ng=1.\n\\]\nThus $|y|$ is finite and $|y|\\mid n$. Conversely, if $|y|=m$ is finite, then $y^m=1$, so\n\\[\n1=y^m=g^{-1}x^mg,\n\\]\nwhich gives $x^m=1$ and therefore $|x|\\mid m$. Consequently $|x|=|y|$ whenever either order is finite.\n\nIt remains to consider infinite order. If $|x|=\\infty$ and $|y|$ were finite, then $y^m=1$ for some $m>0$, implying $x^m=1$, a contradiction. Interchanging $x$ and $y$ gives the converse. Therefore $|x|=\\infty$ exactly when $|y|=\\infty$, proving the result.\n\\end{proof}",
+      "reason": "The generator’s argument was retained after a critic check confirmed the power identity, mutual divisibility, and infinite-order exclusion."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet $y=g^{-1}xg$. The map $c_g:G\\to G$ defined by $c_g(a)=g^{-1}ag$ is an automorphism, with inverse $c_{g^{-1}}$. In particular, for every $k\\in\\mathbb Z$,\n\\[\ny^k=c_g(x)^k=c_g(x^k)=g^{-1}x^kg.\n\\]\n\nIf $x$ has finite order $n$, then $x^n=1$, so $y^n=1$; hence $y$ has finite order. Conversely, if $y$ has finite order $m$, then $y^m=1$, and conjugating by $g$ yields $x^m=1$. Thus $x$ has finite order exactly when $y$ does.\n\nWhen both orders are finite, let $|x|=n$ and $|y|=m$. Since $y^n=1$, minimality of $m$ gives $m\\mid n$ (in particular $m\\le n$). Since $x^m=1$, minimality of $n$ gives $n\\mid m$. Therefore $n=m$. When one order is infinite, the equivalence above shows that the other is infinite as well. Hence\n\\[\n|x|=|g^{-1}xg|.\n\\]\n\\end{proof}",
+      "reason": "The dependency-aware check replaced the lengthy lemma with the automorphism fact, verified finite-order divisibility and infinite-order descendants, and found no remaining gap."
+    }
+  ]
+}

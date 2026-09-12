@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-074",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Proof. Let the first row be a_j=j, and let the second row be the cyclic shift determined by k=i-1, where 0≤k≤n-1. Thus b_j is the residue of j+k in {1,...,n}. If every column has sum S, then summing all columns gives nS=3n(n+1)/2, so S=3(n+1)/2. Hence n must be odd.\n\nNow let n=2m+1, so S=3(m+1). The third-row entries are forced by c_j=S-j-b_j. If k<m, then c_1=3m+1-k>2m+1=n, so the third row is invalid. If k>m+1, then c_n=m+2-k<1, so it is invalid.\n\nFor k=m, the first m+1 entries are\n2m+1,2m-1,...,1,\nwhile the remaining m entries are\n2m,2m-2,...,2.\nThus the third row is a permutation of {1,...,n}. For k=m+1, the same calculation gives the even numbers followed by the odd numbers, again a permutation. Therefore precisely these two shifts work when n≥3, and each determines the third row uniquely. For n=1 there is only one shift and one filling.\n\nConsequently, fillings exist exactly for odd n; the number is 1 when n=1 and 2 when n≥3 is odd. ∎",
+      "reason": "The original argument is correct in substance; this rewrite makes the shift exclusion and the n=1 exception explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Proof. Write the rows as (a_j),(b_j),(c_j), with a_j=j. Let the cyclic shift start at i=k+1, where 0≤k≤n-1. Then b_j=j+k when j+k≤n and b_j=j+k-n otherwise.\n\nIf all column sums equal S, then\nnS=Σa_j+Σb_j+Σc_j=3·n(n+1)/2,\nso S=3(n+1)/2. Thus n is odd. Put n=2m+1; then S=3(m+1), and c_j=S-j-b_j is uniquely determined.\n\nFor k<m, c_1=3m+1-k>2m+1=n, so no permutation is possible. For k>m+1, since the last column wraps, c_n=S-n-(n+k-n)=S-n-k=m+2-k<1. Hence only k=m and k=m+1 can work.\n\nIf k=m, then for j=1,...,m+1,\nc_j=2m+3-2j,\nwhich yields all odd numbers from 2m+1 down to 1; for j=m+2,...,2m+1, the values are all even numbers from 2m down to 2. Thus c is a permutation of {1,...,n}. If k=m+1, the corresponding two blocks are the even numbers and the odd numbers, so c is again a permutation.\n\nTherefore for every odd n≥3 there are exactly two fillings, one for each of k=m,m+1, while n=1 has one filling. No even n is possible. ∎",
+      "reason": "Internal checking preserves the theorem while tightening the endpoint calculations and separately handling the degenerate case n=1."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Proof. Let k∈{0,...,n-1} encode the cyclic shift of the second row. Since each row is a permutation of 1,...,n, summing the equal column sums gives\nnS=3(1+2+...+n)=3n(n+1)/2.\nThus S=3(n+1)/2, which is integral only when n is odd.\n\nAssume n=2m+1. The third row is forced: c_j=S-j-b_j. We test the possible shifts. If k<m, then b_1=1+k and hence\nc_1=3(m+1)-1-(1+k)=3m+1-k>2m+1=n.\nIf k>m+1, then b_n=n+k-n=k and hence\nc_n=3(m+1)-n-k=m+2-k<1.\nThus only k=m or k=m+1 remain.\n\nFor k=m, the non-wrapping columns give\nc_j=2m+3-2j \u0011 (j=1,...,m+1),\nso they contain all odd numbers 2m+1,...,1. The wrapping columns give all even numbers 2m,...,2. Hence c is a permutation of 1,...,2m+1. For k=m+1, the same computation interchanges the odd and even blocks, so c is again a permutation.\n\nConsequently, odd n≥3 admit exactly two fillings, and even n admit none. When n=1, the two descriptions coincide modulo 1, giving exactly one filling. ∎",
+      "reason": "A generator-critic pass removes redundant casework and verifies both boundary exclusions and the special case n=1."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Proof. Let a_j=j. Encode the cyclic shift of the second row by k=i-1, 0≤k≤n-1, so b_j is the element of {1,...,n} congruent to j+k modulo n. Let the common column sum be S.\n\nBecause each row is a permutation of {1,...,n},\n nS=Σ_{j=1}^n(a_j+b_j+c_j)=3·n(n+1)/2,\nso S=3(n+1)/2. Therefore n must be odd.\n\nConversely, let n=2m+1. Then S=3(m+1), and c_j=S-j-b_j is forced once k is chosen. If k<m, there is no wrap in the first column and\nc_1=S-1-(1+k)=3m+1-k>2m+1=n,\nso c is not a permutation of {1,...,n}. If k>m+1, the last column wraps and b_n=k, giving\nc_n=S-n-k=m+2-k<1,\nagain impossible. Hence k must be m or m+1.\n\nFor k=m, the first m+1 values of c are\n2m+1,2m-1,...,1,\nand the final m values are\n2m,2m-2,...,2.\nThus c is exactly a permutation of {1,...,2m+1}. For k=m+1, the first block consists of the even values and the second block of the odd values, so c is also a permutation. Both shifts therefore produce valid grids, and no other shift can do so.\n\nThus the possible values are precisely the odd positive integers. The number of fillings is 1 for n=1 and 2 for every odd n≥3. ∎",
+      "reason": "Dependency checks establish necessity, forced construction, exclusion of all other shifts, and descendant revalidation of the n=1 boundary case."
+    }
+  ]
+}

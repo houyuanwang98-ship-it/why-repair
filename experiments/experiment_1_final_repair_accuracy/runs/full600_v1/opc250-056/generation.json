@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-056",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Subtracting the first equation from the second gives\n\\[\n9p_1+4p_2-3p_4=0,\n\\]\nso\n\\[\n9p_1+4p_2=3p_4.\n\\]\nReducing modulo 3 yields \\(p_2\\equiv0\\pmod3\\). Since \\(p_2\\) is prime, \\(p_2=3\\). Hence\n\\[\np_4=3p_1+4.\n\\]\nSubstitution into the first equation gives\n\\[\n2p_1+9+5p_3+7(3p_1+4)=162,\n\\]\nso\n\\[\n23p_1+5p_3=125.\n\\]\nBecause \\(p_3\\ge2\\), we have \\(23p_1\\le115\\), hence \\(p_1\\le5\\). Since \\(p_1\\) is prime and distinct from \\(p_2=3\\), the possibilities are \\(p_1=2\\) or \\(5\\).\n\nIf \\(p_1=2\\), then \\(p_4=10\\), not prime. If \\(p_1=5\\), then \\(p_4=19\\), and the equation \\(23p_1+5p_3=125\\) gives \\(p_3=2\\). These primes are distinct, and direct substitution verifies both original equations.\n\nTherefore the unique product is\n\\[\np_1p_2p_3p_4=5\\cdot3\\cdot2\\cdot19=\\boxed{570}.\n\\]",
+      "reason": "The supplied proof is valid; the reduction modulo 3 and finite prime check establish uniqueness."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let \\(p_1,p_2,p_3,p_4\\) be distinct primes satisfying the two equations. Subtracting the first equation from the second gives\n\\[\n9p_1+4p_2=3p_4.\n\\]\nModulo 3, this implies \\(p_2\\equiv0\\pmod3\\), so primality forces \\(p_2=3\\). Thus\n\\[\np_4=3p_1+4.\n\\]\nUsing these in the first equation,\n\\[\n2p_1+3(3)+5p_3+7(3p_1+4)=162,\n\\]\nwhich simplifies to\n\\[\n23p_1+5p_3=125.\n\\]\nSince \\(p_3\\ge2\\), \\(23p_1\\le115\\), so \\(p_1\\le5\\). The prime values compatible with \\(p_1\\ne p_2=3\\) are \\(2\\) and \\(5\\).\n\nFor \\(p_1=2\\), \\(p_4=10\\), impossible. For \\(p_1=5\\), \\(p_4=19\\), and then \\(5p_3=125-115=10\\), giving \\(p_3=2\\). Hence \\((p_1,p_2,p_3,p_4)=(5,3,2,19)\\), which consists of distinct primes and satisfies both equations.\n\nTherefore\n\\[\n\\boxed{p_1p_2p_3p_4=570}.\n\\]",
+      "reason": "Internal checking confirms every algebraic step, the primality restriction, distinctness, and verification."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "Subtract the equations to eliminate \\(p_3\\):\n\\[\n(11-2)p_1+(7-3)p_2+(4-7)p_4=0,\n\\]\nso\n\\[\n9p_1+4p_2=3p_4.\n\\]\nThe left side modulo 3 is \\(p_2\\), hence \\(3\\mid p_2\\). Since \\(p_2\\) is prime, \\(p_2=3\\), and therefore\n\\[\np_4=3p_1+4.\n\\]\nSubstituting into the first equation yields\n\\[\n2p_1+9+5p_3+21p_1+28=162,\n\\]\nso\n\\[\n23p_1+5p_3=125.\n\\]\nAs \\(p_3\\ge2\\), we get \\(p_1\\le5\\). The only prime candidates not equal to 3 are \\(p_1=2,5\\).\n\nThe choice \\(p_1=2\\) gives \\(p_4=10\\), not prime. The choice \\(p_1=5\\) gives \\(p_4=19\\), and then \\(p_3=2\\). Thus the only admissible quadruple is\n\\[\n(p_1,p_2,p_3,p_4)=(5,3,2,19).\n\\]\nIndeed, the two left sides equal \\(10+9+10+133=162\\) and \\(55+21+10+76=162\\), respectively. Hence the sole product is\n\\[\n\\boxed{570}.\n\\]",
+      "reason": "A generator-style derivation was checked for omitted candidates and arithmetic errors; none were found."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "From the difference of the two given equations,\n\\[\n9p_1+4p_2=3p_4. \\tag{1}\n\\]\nReducing (1) modulo 3 gives \\(p_2\\equiv0\\pmod3\\). Since \\(p_2\\) is prime, \\(p_2=3\\). Equation (1) then becomes\n\\[\np_4=3p_1+4. \\tag{2}\n\\]\nSubstitute \\(p_2=3\\) and (2) into the first equation:\n\\[\n2p_1+9+5p_3+7(3p_1+4)=162,\n\\]\ntherefore\n\\[\n23p_1+5p_3=125. \\tag{3}\n\\]\nBecause \\(p_3\\ge2\\), equation (3) implies \\(23p_1\\le115\\), hence \\(p_1\\le5\\). Since \\(p_1\\) is prime and distinct from 3, only \\(p_1=2\\) or \\(p_1=5\\) need be considered.\n\nFor \\(p_1=2\\), (2) gives \\(p_4=10\\), contradicting primality. For \\(p_1=5\\), (2) gives \\(p_4=19\\), and (3) gives \\(p_3=2\\). The resulting primes \\(5,3,2,19\\) are pairwise distinct and satisfy both original equations, so no descendant condition is violated.\n\nThus the only possible product is\n\\[\n5\\cdot3\\cdot2\\cdot19=\\boxed{570}.\n\\]",
+      "reason": "Dependency-aware checking confirms the repaired chain preserves the theorem, assumptions, uniqueness, distinctness, and both equation constraints."
+    }
+  ]
+}

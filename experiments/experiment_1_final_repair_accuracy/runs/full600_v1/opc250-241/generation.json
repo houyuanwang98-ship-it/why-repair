@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-241",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let \\(M_n\\) be the largest gap after the first \\(n\\) points. We use the standard binary-splitting lemma: for every nested sequence of points in an interval of length \\(d\\), and every \\(k\\ge1\\),\n\\[\nM_{2^{k+1}-2}\\ge \\frac d{2^k}.\n\\]\nIndeed, before all gaps can be reduced below \\(d/2^k\\), each of the \\(2^k\\) descendants of the original interval must have been split to depth at least \\(k\\); the resulting binary tree requires at least \\(2^{k+1}-1\\) points, so with only \\(2^{k+1}-2\\) points one gap is still at least \\(d/2^k\\).\n\nIf the sequence is admissible, then \\(M_n\\le1/n\\). Taking \\(n=2^{k+1}-2\\) gives\n\\[\n\\frac d{2^k}\\le\\frac1{2^{k+1}-2},\n\\qquad d\\le\\frac{2^k}{2^{k+1}-2}.\n\\]\nLetting \\(k\\to\\infty\\) yields \\(d\\le\\tfrac12\\).\n\nConversely, let \\(d=\\tfrac12\\), and recursively bisect a currently longest gap, always inserting its midpoint. After \\(n\\) insertions, if \\(2^k-1\\le n\\le2^{k+1}-2\\), every gap has length at most\n\\[\n\\frac{d}{2^k}=\\frac1{2^{k+1}}\\le\\frac1n.\n\\]\nThus this sequence is admissible, and \\(d=\\tfrac12\\) is good. Therefore\n\\[\n\\sup\\{d\\mid d\\text{ is good}\\}=\\boxed{\\tfrac12}.\n\\]",
+      "reason": "Repaired the invalid claim that greedy splitting minimizes the fixed-\u0007n largest gap; the proof now uses the required nested binary-tree bound."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Write \\(G_n\\) for the largest segment after the first \\(n\\) points. We need the following nested-splitting fact: if \\(2^{k+1}-2\\) points have been inserted successively, then\n\\[\nG_{2^{k+1}-2}\\ge d/2^k.\n\\]\nTo see this, regard each insertion as splitting one leaf of a binary tree. A leaf at depth less than \\(k\\) has length at least \\(d/2^k\\). Eliminating all such leaves requires splitting every leaf at depths \\(0,1,\\ldots,k-1\\), which takes \\(1+2+\\cdots+2^k=2^{k+1}-1\\) insertions. Hence one such leaf remains after \\(2^{k+1}-2\\) insertions.\n\nFor a good sequence, \\(G_n\\le1/n\\). Consequently,\n\\[\n\\frac d{2^k}\\le G_{2^{k+1}-2}\\le\\frac1{2^{k+1}-2},\n\\]\nso\n\\[\nd\\le\\frac{2^k}{2^{k+1}-2}.\n\\]\nPassing to the limit gives \\(d\\le1/2\\).\n\nFor \\(d=1/2\\), insert the midpoint of a longest current segment at every stage. After \\(n\\) insertions, choose \\(k\\) with \\(2^k-1\\le n\\le2^{k+1}-2\\). The longest segment is at most \\(d/2^k=1/2^{k+1}\\), which is at most \\(1/n\\). Therefore \\(1/2\\) is good, and the supremum is \\(\\boxed{1/2}\\).",
+      "reason": "A consistency check exposed that the original fixed-\u0007n minimax assertion was false; the revised proof uses only a nested-tree obstruction and a valid construction."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let \\(L_n\\) denote the maximum segment length after \\(n\\) successive insertions. The crucial lower-bound lemma is\n\\[\nL_{2^{k+1}-2}\\ge d/2^k \\qquad(k\\ge1).\n\\]\nEach segment is a leaf of a binary splitting tree. Any leaf at depth below \\(k\\) has length at least \\(d/2^k\\). To make every leaf have depth at least \\(k\\), one must split all leaves at depths \\(0,\\ldots,k-1\\), requiring\n\\[\n1+2+\\cdots+2^k=2^{k+1}-1\n\\]\ninsertions. Thus after one fewer insertion a segment of length at least \\(d/2^k\\) remains.\n\nIf the sequence is good, \\(L_n\\le1/n\\), hence\n\\[\nd/2^k\\le1/(2^{k+1}-2).\n\\]\nTherefore \\(d\\le2^k/(2^{k+1}-2)\\) for every \\(k\\), and so \\(d\\le1/2\\).\n\nFor the reverse inequality, take \\(d=1/2\\) and always bisect a longest segment. During the stage range \\(2^k-1\\le n\\le2^{k+1}-2\\), every segment has length at most \\(d/2^k=1/2^{k+1}\\le1/n\\). The inserted midpoints form an infinite sequence in \\((0,d)\\), so \\(1/2\\) is good. Hence\n\\[\n\\boxed{\\sup\\{d\\mid d\\text{ is good}\\}=1/2}.\n\\]",
+      "reason": "The critic rejected the original greedy-optimality induction and the non-nested infimum argument; both were replaced by a dependency-valid obstruction."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "For a finite initial segment, let \\(L_n\\) be the largest gap in \\([0,d]\\). We first establish the nested obstruction\n\\[\nL_{2^{k+1}-2}\\ge d/2^k. \\tag{1}\n\\]\nEach insertion splits one existing gap, so the history is a binary tree whose leaves are the current gaps. A leaf of depth less than \\(k\\) has length at least \\(d/2^k\\). Removing every such leaf requires splitting every leaf at depths \\(0,1,\\ldots,k-1\\), a total of \\(2^{k+1}-1\\) splits. Thus with \\(2^{k+1}-2\\) splits, at least one gap remains of length at least \\(d/2^k\\), proving (1).\n\nFor a good sequence, \\(L_n\\le1/n\\) for every \\(n\\). Substituting \\(n=2^{k+1}-2\\) into (1) gives\n\\[\n d\\le\\frac{2^k}{2^{k+1}-2}.\n\\]\nSince this holds for all \\(k\\), letting \\(k\\to\\infty\\) yields \\(d\\le1/2\\).\n\nNow set \\(d=1/2\\). Insert successively the midpoint of a longest gap. If \\(2^k-1\\le n\\le2^{k+1}-2\\), the longest gap is at most\n\\[\n\\frac{d}{2^k}=\\frac1{2^{k+1}}\u0007\frac1n.\n\\]\nHence all admissibility conditions hold, so \\(1/2\\) is good. The upper and lower bounds agree:\n\\[\n\\sup\\{d\\mid d\\text{ is good}\\}=\\boxed{\\tfrac12}.\n\\]",
+      "reason": "Dependency-aware review removed the false global-optimality step and revalidated the construction and all downstream inequalities."
+    }
+  ]
+}

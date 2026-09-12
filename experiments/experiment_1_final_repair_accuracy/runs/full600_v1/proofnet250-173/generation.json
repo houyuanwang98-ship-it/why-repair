@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-173",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nUsing the Euclidean inner product on $\\mathbb{R}^k$,\n\\[\n|\\mathbf{x}+\\mathbf{y}|^2=(\\mathbf{x}+\\mathbf{y})\\cdot(\\mathbf{x}+\\mathbf{y})=|\\mathbf{x}|^2+2\\mathbf{x}\\cdot\\mathbf{y}+|\\mathbf{y}|^2,\n\\]\nand\n\\[\n|\\mathbf{x}-\\mathbf{y}|^2=(\\mathbf{x}-\\mathbf{y})\\cdot(\\mathbf{x}-\\mathbf{y})=|\\mathbf{x}|^2-2\\mathbf{x}\\cdot\\mathbf{y}+|\\mathbf{y}|^2.\n\\]\nAdding these equalities gives\n\\[\n|\\mathbf{x}+\\mathbf{y}|^2+|\\mathbf{x}-\\mathbf{y}|^2=2|\\mathbf{x}|^2+2|\\mathbf{y}|^2.\n\\]\n\\end{proof}",
+      "reason": "The algebraic expansion is valid; the unnecessary parallelogram claim was removed."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor $\\mathbf{x},\\mathbf{y}\\in\\mathbb{R}^k$, expand the squared norms using the Euclidean inner product:\n\\[\n\\begin{aligned}\n|\\mathbf{x}+\\mathbf{y}|^2+|\\mathbf{x}-\\mathbf{y}|^2\n&=(\\mathbf{x}+\\mathbf{y})\\cdot(\\mathbf{x}+\\mathbf{y})+(\\mathbf{x}-\\mathbf{y})\\cdot(\\mathbf{x}-\\mathbf{y})\\\\\n&=(|\\mathbf{x}|^2+2\\mathbf{x}\\cdot\\mathbf{y}+|\\mathbf{y}|^2)\n +( |\\mathbf{x}|^2-2\\mathbf{x}\\cdot\\mathbf{y}+|\\mathbf{y}|^2)\\\\\n&=2|\\mathbf{x}|^2+2|\\mathbf{y}|^2.\n\\end{aligned}\n\\]\nThe cross terms cancel, proving the identity.\n\\end{proof}",
+      "reason": "The revised proof checks notation, uses the stated domain, and explicitly verifies cancellation of cross terms."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $\\mathbf{x},\\mathbf{y}\\in\\mathbb{R}^k$. By bilinearity and symmetry of the Euclidean inner product,\n\\[\n\\begin{aligned}\n|\\mathbf{x}+\\mathbf{y}|^2+|\\mathbf{x}-\\mathbf{y}|^2\n&=(\\mathbf{x}+\\mathbf{y})\\cdot(\\mathbf{x}+\\mathbf{y})+(\\mathbf{x}-\\mathbf{y})\\cdot(\\mathbf{x}-\\mathbf{y})\\\\\n&=\\mathbf{x}\\cdot\\mathbf{x}+2\\mathbf{x}\\cdot\\mathbf{y}+\\mathbf{y}\\cdot\\mathbf{y}\n +\\mathbf{x}\\cdot\\mathbf{x}-2\\mathbf{x}\\cdot\\mathbf{y}+\\mathbf{y}\\cdot\\mathbf{y}\\\\\n&=2\\mathbf{x}\\cdot\\mathbf{x}+2\\mathbf{y}\\cdot\\mathbf{y}\\\\\n&=2|\\mathbf{x}|^2+2|\\mathbf{y}|^2.\n\\end{aligned}\n\\]\nThus the required identity holds.\n\\end{proof}",
+      "reason": "The critic-valid proof establishes the identity directly and avoids an imprecise geometric interpretation."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSince $\\mathbf{x},\\mathbf{y}\\in\\mathbb{R}^k$, their Euclidean norms satisfy $|\\mathbf{v}|^2=\\mathbf{v}\\cdot\\mathbf{v}$. Therefore,\n\\[\n\\begin{aligned}\n|\\mathbf{x}+\\mathbf{y}|^2+|\\mathbf{x}-\\mathbf{y}|^2\n&=(\\mathbf{x}+\\mathbf{y})\\cdot(\\mathbf{x}+\\mathbf{y})+(\\mathbf{x}-\\mathbf{y})\\cdot(\\mathbf{x}-\\mathbf{y})\\\\\n&=\\bigl(|\\mathbf{x}|^2+2\\mathbf{x}\\cdot\\mathbf{y}+|\\mathbf{y}|^2\\bigr)\n +\\bigl(|\\mathbf{x}|^2-2\\mathbf{x}\\cdot\\mathbf{y}+|\\mathbf{y}|^2\\bigr)\\\\\n&=2|\\mathbf{x}|^2+2|\\mathbf{y}|^2.\n\\end{aligned}\n\\]\nHence the claimed equality is proved.\n\\end{proof}",
+      "reason": "Dependency and descendant checks confirm that replacing the distracting geometric sentence with the direct inner-product derivation preserves the theorem."
+    }
+  ]
+}

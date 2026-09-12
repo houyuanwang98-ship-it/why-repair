@@ -1,0 +1,52 @@
+{
+  "case_id": "opc250-146",
+  "original": {
+    "verdict": "invalid",
+    "problem_preserved": true,
+    "rigorous": false,
+    "error_count": 2,
+    "reason": "The key lemma is false: two distinct numbers in the interval can have different gcds with D that are each at least n. For example, n=3, D=12, and A=5 give gcd(12,6)=6 and gcd(12,8)=4. The proof wrongly asserts that gcd(D,A+i) divides i-j without showing it divides A+j. Also, in the d1<n branch it incorrectly says every later number is divisible by d1, though the needed conclusion follows simply because the full gcd divides d1."
+  },
+  "candidates": [
+    {
+      "candidate_id": "candidate-1",
+      "judgment": {
+        "verdict": "invalid",
+        "problem_preserved": true,
+        "rigorous": false,
+        "error_count": 1,
+        "reason": "Its central assertion that at most one gcd(d1,a2+k) can be at least n is false. A gcd with a2+i need not divide a2+j, so it need not divide i-j; n=3, d1=12, a2=5 is a counterexample."
+      }
+    },
+    {
+      "candidate_id": "candidate-2",
+      "judgment": {
+        "verdict": "invalid",
+        "problem_preserved": true,
+        "rigorous": false,
+        "error_count": 1,
+        "reason": "The claimed contradiction is invalid: g=gcd(d1,a2+k) does not generally divide a2+ell, hence does not divide k-ell. The stated at-most-one conclusion is false, e.g. n=3, d1=12, a2=5."
+      }
+    },
+    {
+      "candidate_id": "candidate-3",
+      "judgment": {
+        "verdict": "invalid",
+        "problem_preserved": true,
+        "rigorous": false,
+        "error_count": 1,
+        "reason": "It incorrectly infers that two separate gcds of size at least n yield a common divisor of the two terms of size at least n. They need not share such a divisor. For n=3, d1=12, a2=5, the gcds are 6 and 4 for two consecutive choices."
+      }
+    },
+    {
+      "candidate_id": "candidate-4",
+      "judgment": {
+        "verdict": "invalid",
+        "problem_preserved": true,
+        "rigorous": false,
+        "error_count": 1,
+        "reason": "The proof falsely claims gcd(d1,a2+k) divides a2+k-(a2+ell); it has not established divisibility of a2+ell. Thus its key at-most-one claim is false, as shown by n=3, d1=12, a2=5."
+      }
+    }
+  ]
+}

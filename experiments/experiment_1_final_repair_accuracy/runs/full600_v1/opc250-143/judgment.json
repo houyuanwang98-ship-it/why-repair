@@ -1,0 +1,52 @@
+{
+  "case_id": "opc250-143",
+  "original": {
+    "verdict": "invalid",
+    "problem_preserved": true,
+    "rigorous": false,
+    "error_count": 1,
+    "reason": "The final solution set is correct, but n=1 is in the stated domain and is not handled. The valuation/LTE argument uses exponent n-1=0 there, for which it is inapplicable; n=1 must be excluded because 0 is divisible by 2^2016."
+  },
+  "candidates": [
+    {
+      "candidate_id": "candidate-1",
+      "judgment": {
+        "verdict": "invalid",
+        "problem_preserved": true,
+        "rigorous": false,
+        "error_count": 1,
+        "reason": "It omits the domain case n=1. LTE is applied with r=n-1=0 for that case, so the proof is incomplete despite the correct final set."
+      }
+    },
+    {
+      "candidate_id": "candidate-2",
+      "judgment": {
+        "verdict": "invalid",
+        "problem_preserved": true,
+        "rigorous": false,
+        "error_count": 1,
+        "reason": "It restricts LTE to odd n>1 but never separately disposes of n=1, which lies in the positive-integer domain."
+      }
+    },
+    {
+      "candidate_id": "candidate-3",
+      "judgment": {
+        "verdict": "valid",
+        "problem_preserved": true,
+        "rigorous": true,
+        "error_count": 0,
+        "reason": "It correctly excludes n=1, applies the standard 2-adic LTE formula for n>1, treats both residue classes modulo 4, and proves the converse."
+      }
+    },
+    {
+      "candidate_id": "candidate-4",
+      "judgment": {
+        "verdict": "valid",
+        "problem_preserved": true,
+        "rigorous": true,
+        "error_count": 0,
+        "reason": "It correctly excludes n=1 from the full required condition, applies LTE validly for n>1, and establishes necessity and sufficiency of the stated congruence."
+      }
+    }
+  ]
+}

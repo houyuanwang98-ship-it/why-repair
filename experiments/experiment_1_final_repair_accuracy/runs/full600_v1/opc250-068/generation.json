@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-068",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "For three reals with a+b+c=0, Newton’s identities give\n\\[\nS_3=a^3+b^3+c^3=3abc,\n\\]\nand, since each variable satisfies \\(r^3+\\sigma_2r-\\sigma_3=0\\),\n\\[\nS_5=-\\sigma_2S_3+\\sigma_3(a^2+b^2+c^2).\n\\]\nHere \\(\\sigma_2=ab+bc+ca=-\\tfrac12(a^2+b^2+c^2)\\), so\n\\[\nS_5=\\frac52abc(a^2+b^2+c^2)=\\frac56(a^2+b^2+c^2)S_3.\n\\]\nThe factor is positive unless \\(a=b=c=0\\), when both sums are zero. Thus \\(S_3>0\\iff S_5>0\\).\n\nFor four reals, put \\(P=a+b=-(c+d)\\), \\(X=ab\\), and \\(Y=cd\\). Then\n\\[\nS_3=3P(Y-X),\n\\]\nwhile the identity \\(x^5+y^5=(x+y)^5-5xy(x+y)^3+5x^2y^2(x+y)\\) gives\n\\[\nS_5=5P(Y-X)[P^2-(X+Y)].\n\\]\nMoreover, \\(X\\le P^2/4\\) and \\(Y\\le P^2/4\\), hence\n\\[\nP^2-(X+Y)\\ge \\frac12P^2\\ge0.\n\\]\nEquality forces \\(P=X=Y=0\\), hence all four variables are zero. Therefore\n\\[\nS_5=\\frac53S_3[P^2-(X+Y)],\n\\]\nwith a strictly positive factor whenever either sum can be positive. Consequently \\(S_3>0\\iff S_5>0\\).",
+      "reason": "The original four-variable proof contained an incorrect expansion in equation (6); replacing it with the valid quadratic-root bounds repairs the argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Let \\(S_k^{(3)}=a^k+b^k+c^k\\) and \\(S_k^{(4)}=a^k+b^k+c^k+d^k\\).\n\n(a) Since \\(a+b+c=0\\),\n\\[\nS_3^{(3)}=3abc.\n\\]\nWriting \\(\\sigma_2=ab+bc+ca\\) and \\(\\sigma_3=abc\\), each of \\(a,b,c\\) satisfies \\(r^3+\\sigma_2r-\\sigma_3=0\\). Thus\n\\[\nS_5^{(3)}=-\\sigma_2S_3^{(3)}+\\sigma_3(a^2+b^2+c^2).\n\\]\nSince \\(\\sigma_2=-\\tfrac12(a^2+b^2+c^2)\\),\n\\[\nS_5^{(3)}=\\frac52\\,abc(a^2+b^2+c^2)\n=\\frac56(a^2+b^2+c^2)S_3^{(3)}.\n\\]\nThe multiplier is positive unless all variables vanish, in which case both sums are zero. Hence the required equivalence follows.\n\n(b) Set \\(P=a+b=-(c+d)\\), \\(X=ab\\), and \\(Y=cd\\). Pairwise power identities yield\n\\[\nS_3^{(4)}=3P(Y-X),\n\\]\n\\[\nS_5^{(4)}=5P(Y-X)[P^2-(X+Y)].\n\\]\nBecause \\(a,b\\) are real roots of \\(t^2-Pt+X\\), its discriminant is nonnegative, so \\(X\\le P^2/4\\). Likewise \\(Y\\le P^2/4\\). Therefore\n\\[\nP^2-(X+Y)\\ge P^2/2\\ge0.\n\\]\nIf equality holds, then \\(P=0\\) and \\(X=Y=0\\), forcing \\(a=b=c=d=0\\). Thus, whenever \\(S_3^{(4)}\\) is positive, the bracket is strictly positive, and\n\\[\nS_5^{(4)}=\\frac53S_3^{(4)}[P^2-(X+Y)]\n\nenforces the same sign. Hence \\(S_3^{(4)}>0\\iff S_5^{(4)}>0\\).",
+      "reason": "Internal checking found the claimed sum-of-squares identity was false, so the revised proof uses discriminant bounds that establish the needed positivity directly."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "For part (a), let \\(q=a^2+b^2+c^2\\). From \\(a+b+c=0\\),\n\\[\na^3+b^3+c^3=3abc.\n\\]\nAlso, using \\(r^3+(ab+bc+ca)r-abc=0\\) for \\(r=a,b,c\\), and \\(ab+bc+ca=-q/2\\), we obtain\n\\[\na^5+b^5+c^5=\\frac52abc\\,q=\\frac56q(a^3+b^3+c^3).\n\\]\nIf the variables are not all zero, \\(q>0\\); if they are all zero, both sides are zero. Hence the two sums are positive simultaneously.\n\nFor part (b), define\n\\[\nP=a+b=-(c+d),\\qquad X=ab,\\\\qquad Y=cd.\n\\]\nThen\n\\[\na^3+b^3+c^3+d^3=3P(Y-X),\n\\]\nand\n\\[\na^5+b^5+c^5+d^5=5P(Y-X)(P^2-X-Y).\n\\]\nThe realness of \\(a,b\\) implies \\((a-b)^2=P^2-4X\\ge0\\), so \\(X\\le P^2/4\\); similarly \\(Y\\le P^2/4\\). Consequently\n\\[\nP^2-X-Y\\ge P^2/2\\ge0.\n\\]\nIf this factor is zero, then \\(P=0\\), \\(X=Y=0\\), and hence \\(a=b=c=d=0\\). Otherwise it is positive. Therefore the fifth-power sum is a positive multiple of the cube sum whenever the latter is nonzero, proving\n\\[\na^3+b^3+c^3+d^3>0\\iff a^5+b^5+c^5+d^5>0.\n\\]",
+      "reason": "The critic rejected the original false expansion for the four-variable factor and replaced it with the discriminant argument, which is valid for real pairs."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Write \\(S_k^{(n)}\\) for the sum of the \\(k\\)-th powers of the \\(n\\) variables.\n\nFor \\(n=3\\), the zero-sum condition gives\n\\[\nS_3^{(3)}=3abc.\n\\]\nLet \\(\\sigma_2=ab+bc+ca\\) and \\(\\sigma_3=abc\\). Since \\(r^3+\\sigma_2r-\\sigma_3=0\\) for each variable,\n\\[\nS_5^{(3)}=-\\sigma_2S_3^{(3)}+\\sigma_3S_2^{(3)}.\n\\]\nBut \\(\\sigma_2=-S_2^{(3)}/2\\), hence\n\\[\nS_5^{(3)}=\\frac56S_2^{(3)}S_3^{(3)}.\n\\]\nThe coefficient is positive unless all variables are zero, where both sums vanish. This proves (a).\n\nFor \\(n=4\\), set \\(P=a+b=-(c+d)\\), \\(X=ab\\), and \\(Y=cd\\). Directly,\n\\[\nS_3^{(4)}=3P(Y-X),\\qquad\nS_5^{(4)}=5P(Y-X)(P^2-X-Y).\n\\]\nSince \\((a-b)^2=P^2-4X\\ge0\\) and \\((c-d)^2=P^2-4Y\\ge0\\),\n\\[\nP^2-X-Y\\ge \\frac12P^2\\ge0.\n\\]\nEquality implies \\(P=X=Y=0\\), hence \\(a=b=c=d=0\\). Thus, for every nonzero configuration, the factor is strictly positive, and\n\\[\nS_5^{(4)}=\\frac53S_3^{(4)}(P^2-X-Y).\n\\]\nTherefore the two sums have the same sign, and in particular \\(S_3^{(4)}>0\\iff S_5^{(4)}>0\\).",
+      "reason": "Dependency review isolated one invalid intermediate identity in the supplied proof; the local replacement was independently checked via pair discriminants, and both sign-equivalence descendants were revalidated."
+    }
+  ]
+}

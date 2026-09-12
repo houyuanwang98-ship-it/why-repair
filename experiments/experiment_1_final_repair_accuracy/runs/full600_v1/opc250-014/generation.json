@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-014",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "We prove that the only integer solution is (0,0,0). Suppose (a,b,c) satisfies 5a^2+9b^2=13c^2. Reducing modulo 5 gives 4b^2≡3c^2 (mod 5). If c is not divisible by 5, then c^2≡1 or 4 (mod 5), while 4b^2 can only be 0, 1, or 4 (mod 5). But 3c^2 is respectively 3 or 2, neither of which is possible. Hence 5|c, and then the congruence gives 5|b. Substituting b=5b_1 and c=5c_1 yields a^2=5(13c_1^2−9b_1^2), so 5|a. Thus every solution has a=5a_1, b=5b_1, c=5c_1, and (a_1,b_1,c_1) again satisfies the original equation. If a nonzero solution existed, choose one minimizing |a|+|b|+|c|. Division by 5 would produce a nonzero solution with strictly smaller positive sum, a contradiction. Therefore no nonzero solution exists, and the complete set is \\(\\boxed{(0,0,0)}\\).",
+      "reason": "The original descent argument is valid after stating the modulo-5 residue check compactly and applying minimality."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "The triple (0,0,0) plainly satisfies the equation. We show it is the only one. Assume that (a,b,c) is a nonzero integer solution and choose one for which S=|a|+|b|+|c| is minimal. Modulo 5, the equation becomes 4b^2≡3c^2. Squares modulo 5 are 0,1,4. If c^2≡1, then 3c^2≡3, which is not among 0,1,4; if c^2≡4, then 3c^2≡2, also impossible. Consequently c^2≡0, so 5|c. Then 4b^2≡0 implies 5|b. Write b=5b_1 and c=5c_1. The equation becomes 5a^2+225b_1^2=325c_1^2, hence a^2=5(13c_1^2−9b_1^2), so 5|a. Write a=5a_1. Dividing the original equation by 25 shows that (a_1,b_1,c_1) is another integer solution. It is nonzero and has sum of absolute values S/5<S, contradicting the choice of (a,b,c). Thus no nonzero solution exists, and the answer is \\(\\boxed{(0,0,0)}\\).",
+      "reason": "Internal checking confirms the descent needs the explicit fact that the reduced triple remains nonzero; that point is included."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "First, (0,0,0) is a solution. Suppose a nonzero solution exists, and choose one, (a,b,c), minimizing S=|a|+|b|+|c|. Reducing 5a^2+9b^2=13c^2 modulo 5 gives 4b^2≡3c^2 (mod 5). Since the quadratic residues modulo 5 are 0,1,4, if 5∤c then c^2 is 1 or 4, making 3c^2 equal to 3 or 2 modulo 5. Neither value can equal 4b^2, whose possible values are 0,1,4. Therefore 5|c. The congruence then gives 5|b. Substituting b=5B and c=5C gives 5a^2+225B^2=325C^2, so a^2=5(13C^2−9B^2); hence 5|a. Put a=5A. After division by 25 we obtain 5A^2+9B^2=13C^2. Thus (A,B,C) is a solution. Because (a,b,c) is nonzero, (A,B,C) is nonzero, while |A|+|B|+|C|=S/5<S, contradicting minimality. Hence the assumed nonzero solution cannot exist. Therefore all integer triples are exactly \\(\\boxed{(0,0,0)}\\).",
+      "reason": "A critic check preserves the theorem and verifies the divisibility, rescaling, and strict-descent steps."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let T be the set of integer triples satisfying 5a^2+9b^2=13c^2. The zero triple belongs to T. We establish that every element of T is divisible componentwise by 5. Indeed, modulo 5 we have 4b^2≡3c^2. If c^2≡1 or 4 modulo 5, then 3c^2≡3 or 2, whereas 4b^2 can only be 0,1, or 4, a contradiction. Hence c^2≡0 and 5|c; then 4b^2≡0 gives 5|b. Writing b=5B and c=5C in the original equation gives a^2=5(13C^2−9B^2), so 5|a. Therefore, for every (a,b,c)∈T, the triple (a/5,b/5,c/5) is integral and lies in T, since division by 25 recovers the same equation. If T contained a nonzero triple, choose one minimizing the positive quantity |a|+|b|+|c|. The componentwise division by 5 gives a nonzero descendant in T with one-fifth that quantity, contradicting minimality. Thus T contains no nonzero triple. Consequently T=\\{(0,0,0)\\}, i.e. the answer is \\(\\boxed{(0,0,0)}\\).",
+      "reason": "Dependency-aware review verifies the local modulo-5 lemma, descendant preservation, nonzeroness, and termination of descent; no further repair is needed."
+    }
+  ]
+}

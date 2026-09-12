@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-197",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $I$ be a nonzero ideal in $\\mathbb{Z}[i]$. Choose $z=a+bi\\in I$ with $z\\neq 0$, where $a,b\\in\\mathbb{Z}$.\n\nIf $b=0$, then $z=a$ is a nonzero integer in $I$. If $a=0$, then $z=bi$ with $b\\neq 0$, and since $i\\in\\mathbb{Z}[i]$, we have $iz=-b\\in I$, which is a nonzero integer.\n\nFinally, suppose $a\\neq 0$ and $b\\neq 0$. Since $I$ is an ideal, both $z^2$ and $-2az$ belong to $I$. Therefore,\n\\[\nz^2-2az=(a+bi)^2-2a(a+bi)=-a^2-b^2\\in I.\n\\]\nBecause $a$ and $b$ are nonzero, $-a^2-b^2$ is a nonzero integer. Thus every nonzero ideal in $\\mathbb{Z}[i]$ contains a nonzero integer.\n\\end{proof}",
+      "reason": "The supplied proof is valid; the one-pass rewrite only streamlines the case analysis and algebra."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $I$ be a nonzero ideal of $\\mathbb{Z}[i]$. There exists $z=a+bi\\in I$, with $z\\neq 0$ and $a,b\\in\\mathbb{Z}$.\n\nIf $b=0$, then $a=z\\in I$ is a nonzero integer. If $a=0$, then $b\\neq 0$, and ideal closure under multiplication by $i$ gives\n\\[\niz=i(bi)=-b\\in I,\n\\]\nwhich is a nonzero integer.\n\nOtherwise, $a,b\\neq 0$. Since $z\\in I$ and $I$ is an ideal, $z^2,-2az\\in I$. Hence\n\\[\nz^2-2az=(a+bi)^2-2a(a+bi)=-a^2-b^2\\in I.\n\\]\nThis is a nonzero integer because $a,b\\neq 0$. Therefore, $I$ contains a nonzero integer.\n\\end{proof}",
+      "reason": "Internal checking confirms all ideal-membership steps and the nonzero conclusion; no substantive repair is needed."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $I\\subseteq\\mathbb{Z}[i]$ be a nonzero ideal. Pick $0\\neq z=a+bi\\in I$, with $a,b\\in\\mathbb{Z}$.\n\nIf $b=0$, then $z=a$ is already a nonzero integer in $I$. If $a=0$, then $b\\neq 0$, and multiplication by $i$ yields\n\\[\niz=-b\\in I,\n\\]\nso $I$ contains a nonzero integer.\n\nAssume now that $a\\neq 0$ and $b\\neq 0$. Ideal closure implies $z^2\\in I$ and $-2az\\in I$. Consequently,\n\\[\nz^2-2az=(a+bi)^2-2a(a+bi)=-a^2-b^2\\in I.\n\\]\nThe element $-a^2-b^2$ is a nonzero element of $\\mathbb{Z}$. Thus $I$ contains a nonzero integer.\n\\end{proof}",
+      "reason": "A generator/critic check finds the original argument correct, including the sign computation and the case $a=0$."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $I$ be a nonzero ideal of the ring $\\mathbb{Z}[i]$. Choose $z=a+bi\\in I$ with $z\\neq 0$, where $a,b\\in\\mathbb{Z}$.\n\nIf $b=0$, then $z=a$ is a nonzero integer in $I$. If $a=0$, then $b\\neq 0$ and, because $I$ is an ideal,\n\\[\niz=i(bi)=-b\\in I.\n\\]\nThus in either of these cases $I$ contains a nonzero integer.\n\nIt remains to consider $a,b\\neq 0$. Since $z\\in I$ and $I$ is an ideal, $z^2\\in I$ and $-2az\\in I$. By additive closure,\n\\[\nz^2-2az=(a+bi)^2-2a(a+bi)=-a^2-b^2\\in I.\n\\]\nSince $a,b\\neq 0$, the integer $-a^2-b^2$ is nonzero. Hence every nonzero ideal in $\\mathbb{Z}[i]$ contains a nonzero integer.\n\\end{proof}",
+      "reason": "Dependency-aware review verifies the witness choice, ideal closure, algebraic identity, and descendant conclusion; the proof is already sound, so no local repair is required."
+    }
+  ]
+}

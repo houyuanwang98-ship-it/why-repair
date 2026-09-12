@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-038",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let x=a_{16}. Then \\(\\sum_{i=1}^{15}a_i=100-x\\) and \\(\\sum_{i=1}^{15}a_i^2=1000-x^2\\). By Cauchy–Schwarz,\n\\[\n(100-x)^2=\\left(\\sum_{i=1}^{15}a_i\\right)^2\\le 15\\sum_{i=1}^{15}a_i^2=15(1000-x^2).\n\\]\nThus\n\\[\n16x^2-200x-5000\\le0,\n\\]\nor \\(2x^2-25x-625\\le0\\). Its roots are \\(-25/2\\) and \\(25\\), so \\(x\\le25\\).\n\nEquality is attained by taking \\(a_1=\\cdots=a_{15}=5\\) and \\(a_{16}=25\\). Indeed, the sum is \\(15\\cdot5+25=100\\), and the sum of squares is \\(15\\cdot25+625=1000\\). Therefore the maximum possible value is \\(\\boxed{25}\\).",
+      "reason": "The supplied proof is valid; the Cauchy–Schwarz bound is sharp and the equality example satisfies both conditions."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "Set \\(x=a_{16}\\). The first fifteen numbers have sum \\(100-x\\) and squared sum \\(1000-x^2\\). Applying Cauchy–Schwarz to them gives\n\\[\n(100-x)^2\\le 15(1000-x^2).\n\\]\nAfter simplification,\n\\[\n2x^2-25x-625\\le0.\n\\]\nThe corresponding roots are\n\\[\n\\frac{25\\pm\\sqrt{5625}}4=\\frac{25\\pm75}4,\n\\]\nnamely \\(-25/2\\) and \\(25\\). Hence \\(a_{16}=x\\le25\\).\n\nFor \\(a_1=\\cdots=a_{15}=5\\) and \\(a_{16}=25\\), we have\n\\[\n\\sum_{i=1}^{16}a_i=75+25=100,\n\\qquad\n\\sum_{i=1}^{16}a_i^2=375+625=1000.\n\\]\nThus the bound is attained, and the maximum is \\(\\boxed{25}\\).",
+      "reason": "Internal checking confirms the algebra, root calculation, equality condition, and feasibility example are all correct."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let \\(x=a_{16}\\), and write \\(T=\\sum_{i=1}^{15}a_i=100-x\\) and \\(R=\\sum_{i=1}^{15}a_i^2=1000-x^2\\). Since the first fifteen terms are real, Cauchy–Schwarz requires\n\\[\nT^2\\le15R.\n\\]\nTherefore\n\\[\n(100-x)^2\\le15(1000-x^2),\n\\]\nwhich is equivalent to\n\\[\n2x^2-25x-625\\le0.\n\\]\nThe roots are \\(-25/2\\) and \\(25\\), so every feasible \\(x\\) satisfies \\(x\\le25\\).\n\nThe upper endpoint is feasible: choose\n\\[\n(a_1,\\ldots,a_{16})=(5,\\ldots,5,25).\n\\]\nThen the two required sums are \\(100\\) and \\(1000\\), respectively. Hence \\(x=25\\) is attainable, so the maximum possible value of \\(a_{16}\\) is \\(\\boxed{25}\\).",
+      "reason": "The critic check found no gap: necessity follows from Cauchy–Schwarz, and sufficiency is established by an explicit equality case."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let \\(x=a_{16}\\). Eliminating the remaining variables from the two constraints gives\n\\[\n\\sum_{i=1}^{15}a_i=100-x,\n\\qquad\n\\sum_{i=1}^{15}a_i^2=1000-x^2.\n\\]\nAny fifteen real numbers with these sums must satisfy Cauchy–Schwarz:\n\\[\n(100-x)^2\\le15(1000-x^2).\n\\]\nEquivalently,\n\\[\n16x^2-200x-5000\\le0,\n\\]\nwhose roots are \\(-25/2\\) and \\(25\\). Thus \\(x\\le25\\).\n\nAt \\(x=25\\), equality holds in Cauchy–Schwarz, so the first fifteen variables may all be equal. Taking \\(a_1=\\cdots=a_{15}=5\\) yields\n\\[\n15(5)+25=100,\n\\qquad\n15(5^2)+25^2=1000.\n\\]\nThus the endpoint is feasible and no larger value is possible. Therefore\n\\[\n\\boxed{25}\n\\]\nis the maximum possible value of \\(a_{16}\\).",
+      "reason": "Dependency-aware checking verifies the bound, equality construction, original constraints, and endpoint revalidation; no repair was needed."
+    }
+  ]
+}

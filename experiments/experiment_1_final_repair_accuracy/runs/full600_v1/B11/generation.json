@@ -1,0 +1,29 @@
+{
+  "case_id": "B11",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "存在整数 m,n，使 a=4m，b=4n。于是 a+b=4m+4n=4(m+n)。由于 m+n 为整数，故 4|(a+b)。",
+      "reason": "原证明有效，仅将整除结论展开为定义并补足了最后一步。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "由 4|a、4|b，存在整数 m,n，使 a=4m、b=4n。则 a+b=4m+4n=4(m+n)。因 m+n 为整数，故 4|a+b。因此，两个能被 4 整除的整数之和仍能被 4 整除。",
+      "reason": "检查后确认假设、整数性和整除定义均已充分衔接，结论成立。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "根据 4|a、4|b，存在整数 m,n，使 a=4m、b=4n。于是\n a+b=4m+4n=4(m+n)。\n又因 m+n∈整数，故存在整数 k=m+n 使 a+b=4k，所以 4|a+b。",
+      "reason": "生成证明后核查了代数变形及见证数 m+n 的整数性，未发现漏洞。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "假设 a,b 为整数且 4|a、4|b。由整除定义，存在 m,n∈整数，使 a=4m、b=4n。于是\n a+b=4m+4n=4(m+n)。\n由于整数对加法封闭，m+n∈整数，因此按整除定义可得 4|a+b。故两个能被 4 整除的整数之和仍能被 4 整除。",
+      "reason": "依赖链完整：假设给出整数见证元，代数合并得到和的见证元，独立复核并确认结论及其后续依赖均保持有效。"
+    }
+  ]
+}

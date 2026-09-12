@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-220",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let n_1,n_2 be good. A positive definite integral binary quadratic form of discriminant -20 is equivalent to exactly one of the reduced forms\n\\[f_1(X,Y)=X^2+5Y^2,\\qquad f_2(X,Y)=2X^2+2XY+3Y^2.\\]\nMoreover, the proper classes of these forms form a group under Gauss composition; here f_1 is the identity and f_2\\circ f_2=f_1. (This follows directly from the usual composition law, since the reduced forms of discriminant -20 are precisely the two displayed forms.)\n\nThus, if n_i is represented by a form Q_i of discriminant -20, choose a proper equivalence Q_i\\sim f_{j_i}. Proper equivalence preserves represented integers, so n_i is represented by f_{j_i}. Gauss composition gives a form Q_3 of discriminant -20 whose class is f_{j_1}\\circ f_{j_2}, and the composition identity gives that the product of represented values is represented by Q_3. Hence n_1n_2 is represented by an integral quadratic form of discriminant -20. Therefore n_1n_2 is good. \\(\\square\\)",
+      "reason": "The original argument incorrectly asserted an overly strong bilinear composition statement without supplying valid hypotheses or formulas. This repair uses the complete reduced-form classification and Gauss composition."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Write a good number as Q(u,v), where Q=[a,b,c] is an integral positive definite form with discriminant b^2-4ac=-20. Since -20<0, Q is positive definite. By reduction theory, every such form is properly equivalent to one of\n\\[ [1,0,5]\\quad\\text{or}\\quad [2,2,3]. \\]\nIndeed, for a reduced form one has |b|\\le a\\le c; the equation 4ac-b^2=20 then leaves only these two possibilities, up to proper equivalence.\n\nGauss composition of primitive forms of the same discriminant is defined and preserves the discriminant. Both displayed forms are primitive, and their proper classes constitute the class group of discriminant -20. The composition theorem says: if Q_1 represents n_1 and Q_2 represents n_2, then Q_1\\circ Q_2 represents n_1n_2. Applying this to forms representing the given good numbers produces an integral form Q_3 with discriminant -20 representing n_1n_2. Consequently n_1n_2 is good by definition. \\(\\square\\)",
+      "reason": "Self-check exposed that the gcd discussion was unnecessary and that the claimed universal bilinear formulas were unsupported. The revised proof invokes the precise composition theorem after verifying primitivity and the relevant discriminant."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let \\(n_1=Q_1(x_1,y_1)\\) and \\(n_2=Q_2(x_2,y_2)\\), with \\(Q_i\\) integral and \\(\\operatorname{disc}(Q_i)=-20\\). Since \\(-20\\) is a fundamental discriminant, every integral form of discriminant \\(-20\\) is primitive: if a common divisor \\(d>1\\) divided its coefficients, then \\(d^2\\mid20\\); hence \\(d=2\\), which would make the reduced discriminant divided by 4 equal to \\(-5\\), impossible modulo 4.\n\nTherefore Gauss's composition theorem applies to \\(Q_1,Q_2\\). It supplies an integral primitive form \\(Q_3\\) of the same discriminant and integers \\(X,Y\\) (obtained from the composition construction applied to \\((x_1,y_1),(x_2,y_2)\\)) such that\n\\[Q_3(X,Y)=Q_1(x_1,y_1)Q_2(x_2,y_2)=n_1n_2.\\]\nThus \\(Q_3\\) has integer coefficients, discriminant \\(-20\\), and represents the positive integer \\(n_1n_2\\). Hence that product is good. \\(\\square\\)",
+      "reason": "The critic rejects the source's vague and partly incorrect explicit formulas, while retaining the valid primitivity observation and stating exactly the composition theorem needed."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "We use the standard composition theorem for primitive integral binary quadratic forms: if primitive forms of the same discriminant \\(D\\) represent integers \\(r\\) and \\(s\\), then their Gauss composition is a primitive integral form of discriminant \\(D\\) representing \\(rs\\).\n\nFirst, every integral form \\([a,b,c]\\) of discriminant \\(-20\\) is primitive. If \\(d=\\gcd(a,b,c)>1\\), then \\(d^2\\mid20\\), so \\(d=2\\). Dividing the coefficients by 2 would give an integral form of discriminant \\(-5\\), but an integral discriminant has the form \\(b'^2-4a'c'\\), which is congruent to 0 or 1 modulo 4, whereas \\(-5\\equiv3\\pmod4\\), a contradiction.\n\nNow let \\(n_1,n_2\\) be good, represented respectively by forms \\(Q_1,Q_2\\) of discriminant \\(-20\\). The preceding paragraph makes both forms primitive, so composition yields a primitive integral form \\(Q_3\\) with discriminant \\(-20\\) and integers \\(X,Y\\) satisfying\n\\[Q_3(X,Y)=Q_1(\\cdot)Q_2(\\cdot)=n_1n_2.\\]\nTherefore the product is represented in the required form and is good. \\(\\square\\)",
+      "reason": "Dependency checks isolate the only needed prerequisite—primitivity—then apply composition and revalidate the descendant claim directly. The repaired proof avoids the source's unsupported coefficient formulas."
+    }
+  ]
+}

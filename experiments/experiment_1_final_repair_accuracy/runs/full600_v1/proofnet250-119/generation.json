@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-119",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $X=\\mathbb{R}$, $U_1=(-\\infty,0)$, and $U_2=(0,\\infty)$. Their complements in $X$ are $[0,\\infty)$ and $(-\\infty,0]$, respectively, both infinite; hence $U_1,U_2\\in\\mathcal{T}_\\infty$. However,\n\\[\nU_1\\cup U_2=\\mathbb{R}\\setminus\\{0\\},\n\\]\nwhose complement is the nonempty finite set $\\{0\\}$. Thus $U_1\\cup U_2\\notin\\mathcal{T}_\\infty$. Therefore, $\\mathcal{T}_\\infty$ is not necessarily a topology on $X$.\n\\end{proof}",
+      "reason": "The original proof is valid; the rewrite makes the complement check explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nTake $X=\\mathbb{R}$ and define $U_1=(-\\infty,0)$ and $U_2=(0,\\infty)$. Since $X\\setminus U_1=[0,\\infty)$ and $X\\setminus U_2=(-\\infty,0]$ are infinite, both sets belong to $\\mathcal{T}_\\infty$. But\n\\[\nX\\setminus(U_1\\cup U_2)=\\{0\\},\n\\]\nwhich is neither infinite, empty, nor all of $X$. Hence $U_1\\cup U_2\\notin\\mathcal{T}_\\infty$, so $\\mathcal{T}_\\infty$ fails closure under unions and need not be a topology on $X$.\n\\end{proof}",
+      "reason": "Internal checking confirms the witnesses satisfy membership while their union does not."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $X=\\mathbb{R}$, $U_1=(-\\infty,0)$, and $U_2=(0,\\infty)$. We have\n\\[\nX\\setminus U_1=[0,\\infty),\\qquad X\\setminus U_2=(-\\infty,0],\n\\]\nand both complements are infinite. Therefore $U_1,U_2\\in\\mathcal{T}_\\infty$. Their union is\n\\[\nU_1\\cup U_2=\\mathbb{R}\\setminus\\{0\\},\n\\]\nso its complement is $\\{0\\}$, a finite nonempty proper subset of $X$. Consequently $U_1\\cup U_2\\notin\\mathcal{T}_\\infty$. Thus the collection is not closed under finite unions and does not need to be a topology on $X$.\n\\end{proof}",
+      "reason": "A critic check finds no logical gap: the union axiom is directly refuted by these two members."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nChoose $X=\\mathbb{R}$ and let\n\\[\nU_1=(-\\infty,0),\\qquad U_2=(0,\\infty).\n\\]\nThen\n\\[\nX\\setminus U_1=[0,\\infty),\\qquad X\\setminus U_2=(-\\infty,0],\n\\]\nwhich are both infinite. Hence $U_1,U_2\\in\\mathcal{T}_\\infty$. On the other hand,\n\\[\nU_1\\cup U_2=\\mathbb{R}\\setminus\\{0\\},\n\\qquad X\\setminus(U_1\\cup U_2)=\\{0\\}.\n\\]\nThe latter is neither infinite, empty, nor equal to all of $X$, so $U_1\\cup U_2\\notin\\mathcal{T}_\\infty$. Therefore $\\mathcal{T}_\\infty$ is not closed under unions and need not be a topology on $X$.\n\\end{proof}",
+      "reason": "Dependency checks validate witness membership, union computation, and the exact failed topology axiom; no repair is needed."
+    }
+  ]
+}

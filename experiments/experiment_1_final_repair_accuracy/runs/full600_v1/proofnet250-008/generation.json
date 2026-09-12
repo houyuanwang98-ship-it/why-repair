@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-008",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSince $H$ is a subgroup of the solvable group $G$, it is solvable. Consider its derived series\n\\[\nH=H^{(0)}\\unrhd H^{(1)}\\unrhd\\cdots\\unrhd H^{(r)}=1.\n\\]\nChoose $r$ minimal with $H^{(r)}=1$. Then $H^{(r-1)}$ is nontrivial, and\n\\[\nH^{(r-1)}/H^{(r)}=H^{(r-1)}\n\\]\nis abelian. Each $H^{(i)}$ is characteristic in $H$, and since $H\\unlhd G$, it follows that $H^{(r-1)}\\unlhd G$. Taking $A=H^{(r-1)}$ gives the required nontrivial abelian subgroup of $H$.\n\\end{proof}",
+      "reason": "The original proof incorrectly identified the first term of a solvable series and did not establish normality in $G$; the derived-series repair supplies both properties."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet\n\\[\nH=H^{(0)}\\unrhd H^{(1)}\\unrhd\\cdots\\unrhd H^{(n)}=1\n\\]\nbe the derived series of $H$. Such an $n$ exists because $H$ is solvable as a subgroup of the solvable group $G$. Since $H\\neq1$, choose $n$ minimal. Then $H^{(n-1)}\\neq1$, while\n\\[\nH^{(n-1)}/H^{(n)}=H^{(n-1)}\n\\]\nis abelian. Moreover, every derived subgroup $H^{(i)}$ is characteristic in $H$. Because $H\\unlhd G$, every characteristic subgroup of $H$ is normal in $G$. Therefore $A=H^{(n-1)}$ is a nontrivial subgroup of $H$, is abelian, and satisfies $A\\unlhd G$.\n\\end{proof}",
+      "reason": "The revised proof checks nontriviality, abelianness, and the required ambient normality separately."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nThe subgroup $H$ is solvable, since solvability is inherited by subgroups. Let $H^{(i)}$ denote the $i$th derived subgroup of $H$. Thus\n\\[\nH^{(0)}=H,\\qquad H^{(i+1)}=[H^{(i)},H^{(i)}],\n\\]\nand $H^{(m)}=1$ for some $m$. Let $m$ be the least such index. Then $H^{(m-1)}\\neq1$ and $H^{(m)}=1$, so\n\\[\n[H^{(m-1)},H^{(m-1)}]=1.\n\\]\nHence $A:=H^{(m-1)}$ is abelian and nontrivial. Each derived subgroup is characteristic in $H$, so $A$ is invariant under every automorphism induced by conjugation by an element of $G$. Consequently $A\\unlhd G$. Thus $A$ has all the required properties.\n\\end{proof}",
+      "reason": "A critic check confirms that the chosen penultimate derived subgroup is nontrivial, abelian, contained in $H$, and $G$-normal."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nBecause $G$ is solvable, its subgroup $H$ is solvable. Form the derived series of $H$:\n\\[\nH=H^{(0)}\\unrhd H^{(1)}\\unrhd\\cdots\\unrhd H^{(d)}=1.\n\\]\nLet $d$ be minimal with $H^{(d)}=1$. Since $H$ is nontrivial, $d\\geq1$ and $H^{(d-1)}\\neq1$. Also,\n\\[\nH^{(d)}=[H^{(d-1)},H^{(d-1)}]=1,\n\\]\nso $H^{(d-1)}$ is abelian. Derived subgroups are characteristic, hence $H^{(d-1)}$ is characteristic in $H$. Since $H\\unlhd G$, characteristicity implies\n\\[\nH^{(d-1)}\\unlhd G.\n\\]\nTherefore $A=H^{(d-1)}$ is a nontrivial abelian subgroup of $H$ normal in $G$.\n\\end{proof}",
+      "reason": "The dependency check selects the penultimate derived term; independent verification confirms containment, nontriviality, abelianness, and normality, with no descendant obligations."
+    }
+  ]
+}

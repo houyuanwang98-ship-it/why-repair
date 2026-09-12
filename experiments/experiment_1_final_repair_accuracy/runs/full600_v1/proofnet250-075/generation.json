@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-075",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $U=\\mathbb{Z}^2$. It is nonempty since $(0,0)\\in U$. If $(a,b),(c,d)\\in U$, then $(a+c,b+d)\\in\\mathbb{Z}^2$, so $U$ is closed under addition. If $(a,b)\\in U$, then $(-a,-b)\\in\\mathbb{Z}^2$, so $U$ is closed under additive inverses. However, $(1,0)\\in U$ while $\\frac12(1,0)=(\\frac12,0)\\notin U$. Thus $U$ is not closed under scalar multiplication and therefore is not a subspace of $\\mathbf{R}^2$.\n\\end{proof}",
+      "reason": "Explicitly verifies nonemptiness, both closure properties, and failure of scalar closure."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nTake $U=\\mathbb{Z}^2\\subseteq\\mathbf{R}^2$. Since $(0,0)\\in U$, the set is nonempty. For any $(m,n),(p,q)\\in U$, we have\n\\[\n(m,n)+(p,q)=(m+p,n+q)\\in\\mathbb{Z}^2,\n\\]\nbecause sums of integers are integers. Also,\n\\[\n-(m,n)=(-m,-n)\\in\\mathbb{Z}^2,\n\\]\nbecause negatives of integers are integers. Nevertheless, $(1,0)\\in U$ but $(1/2,0)=(1/2)(1,0)\\notin U$. Hence $U$ is not closed under scalar multiplication, so it is not a subspace of $\\mathbf{R}^2$.\n\\end{proof}",
+      "reason": "The revised proof checks every defining requirement and gives a concrete scalar-multiplication counterexample."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine\n\\[\nU=\\mathbb{Z}^2=\\{(x,y)\\in\\mathbf{R}^2:x,y\\in\\mathbb{Z}\\}.\n\\]\nThis set is nonempty because $(0,0)\\in U$. If $u=(m,n)$ and $v=(p,q)$ belong to $U$, then $u+v=(m+p,n+q)\\in U$, since integers are closed under addition. Further, $-u=(-m,-n)\\in U$, since integers are closed under negation. Thus $U$ satisfies the required closure conditions. But $(1,0)\\in U$, whereas multiplying it by the real scalar $1/2$ gives $(1/2,0)\\notin U$. Therefore $U$ is not closed under scalar multiplication and is not a subspace of $\\mathbf{R}^2$.\n\\end{proof}",
+      "reason": "A critic-style check identifies and repairs the missing explicit proof that the candidate is not a subspace."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet\n\\[\nU=\\mathbb{Z}^2\\subseteq\\mathbf{R}^2.\n\\]\nThe set is nonempty because $(0,0)\\in U$. For $u=(m,n),v=(p,q)\\in U$, both pairs have integer coordinates, and therefore\n\\[\nu+v=(m+p,n+q)\\in\\mathbb{Z}^2=U.\n\\]\nLikewise,\n\\[\n-u=(-m,-n)\\in\\mathbb{Z}^2=U.\n\\]\nHence $U$ is closed under addition and additive inverses. On the other hand, $(1,0)\\in U$, but for the real scalar $1/2$,\n\\[\n\\frac12(1,0)=\\left(\\frac12,0\\right)\\notin\\mathbb{Z}^2.\n\\]\nThus $U$ fails closure under scalar multiplication, so it is not a subspace of $\\mathbf{R}^2$.\n\\end{proof}",
+      "reason": "All dependencies are verified locally, the scalar-closure defect is repaired, and the complete argument remains valid under independent review."
+    }
+  ]
+}

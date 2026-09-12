@@ -1,0 +1,29 @@
+{
+  "case_id": "m2-049",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "由 x,y 为有理数，存在整数 p,q,r,s，且 q,s≠0，使得 x=p/q，y=r/s。于是\nx+y=p/q+r/s=(ps+rq)/(qs)。\n由于 ps+rq 与 qs 均为整数，且 qs≠0，因此 x+y 为有理数。",
+      "reason": "原证明结论正确；仅规范化了通分表达式。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "因为 x,y 为有理数，存在整数 p,q,r,s，满足 q≠0、s≠0，且 x=p/q、y=r/s。通分得\nx+y=(ps+rq)/(qs)。\n其中 ps+rq 和 qs 是整数，并且 qs≠0。因此 x+y 可表示为两个整数之比，故 x+y 为有理数。",
+      "reason": "自检确认表示、通分及非零条件均充分，修订后保持原结论。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "由有理数的定义，存在整数 p,q,r,s，满足 q,s≠0，使 x=p/q、y=r/s。于是\nx+y=p/q+r/s=(ps+rq)/(qs)。\n因为 ps+rq、qs 为整数，且 q、s 均非零，所以 qs≠0。故 x+y 是两个整数之比，即为有理数。",
+      "reason": "批评检查未发现逻辑缺口；补出了通分后的分子并明确验证了分母非零。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "设 x,y 为有理数。根据有理数的定义，存在整数 p,q,r,s，满足 q≠0、s≠0，且 x=p/q、y=r/s。则\nx+y=p/q+r/s=(ps+rq)/(qs)。\n整数对加法和乘法封闭，因此 ps+rq 与 qs 都是整数；又因 q、s≠0，整数乘法的无零因子性给出 qs≠0。于是 x+y 可表示为分母非零的两个整数之比，故 x+y 为有理数。",
+      "reason": "依赖条件完整，局部核验和独立复核均通过；无需修复，相关结论保持成立。"
+    }
+  ]
+}

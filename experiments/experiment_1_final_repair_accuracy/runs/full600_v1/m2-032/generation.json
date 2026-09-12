@@ -1,0 +1,29 @@
+{
+  "case_id": "m2-032",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "因 x>1，所以 x>0。将不等式 x>1 两边同乘以正数 x，得 x^2>x。因此，对实数 x>1，必有 x^2>x。",
+      "reason": "将不充分的中间结论替换为直接有效的乘法保序论证。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "由 x>1 可知 x>0。由于乘以正数 x 不改变不等号方向，将 x>1 两边乘以 x，得到 x^2>x，命题得证。",
+      "reason": "检查后确认原推理缺少由 x^2>1 推出 x^2>x 的依据，并补充正性与保序步骤。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "已知 x 为实数且 x>1，因此 x>0。将 x>1 两边乘以正数 x，依据不等式乘法保序性，得到 x^2>x。故命题成立。",
+      "reason": "批评环节发现原证明的推论不合法，生成的新证明直接建立所需不等式。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "假设 x 为实数且 x>1。由 x>1 得 x>0；于是将不等式 x>1 两边同乘以正数 x，方向保持不变，得到 x^2>x。因此，若实数 x>1，则 x^2>x。",
+      "reason": "依赖检查定位到原证明的跳步；采用最小局部修复后，独立复核并确认结论及其后续依赖均成立。"
+    }
+  ]
+}

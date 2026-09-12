@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-121",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let\n\\[\nS(n)=\\sum_{k=1}^n k^{\\varphi(n)}.\n\\]\nFor \\(n=1\\), \\(S(1)=1\\), so \\(\\gcd(S(1),1)=1\\).\n\nAssume \\(n>1\\), and let \\(p^e\\mid n\\) with \\(p^e\\) the exact power of the prime \\(p\\) dividing \\(n\\). Reducing modulo \\(p\\), every residue class modulo \\(p\\) occurs \\(n/p\\) times among \\(1,\\ldots,n\\). Thus\n\\[\nS(n)\\equiv \\frac np\\sum_{r=1}^{p-1}r^{\\varphi(n)}\\pmod p.\n\\]\nSince \\(p-1\\mid\\varphi(n)\\) (indeed \\(\\varphi(n)=\\prod_{q^a\\parallel n}q^{a-1}(q-1)\\)), Fermat’s theorem and the cyclicity of \\((\\mathbb Z/p\\mathbb Z)^\\times\\) give\n\\[\n\\sum_{r=1}^{p-1}r^{\\varphi(n)}\\equiv p-1\\equiv-1\\pmod p.\n\\]\nTherefore\n\\[\nS(n)\\equiv-\\frac np\\pmod p.\n\\]\nIf \\(e\\ge2\\), then \\(p\\mid n/p\\), so \\(p\\mid S(n)\\), and \\(S(n)\\) is not coprime to \\(n\\). If \\(e=1\\), then \\(p\\nmid n/p\\), so \\(p\\nmid S(n)\\).\n\nHence \\(\\gcd(S(n),n)=1\\) exactly when no prime square divides \\(n\\), i.e. exactly when \\(n\\) is square-free. This includes \\(n=1\\). Thus the answer is\n\\[\n\\boxed{n\\text{ is square-free}}.\n\\]",
+      "reason": "The original conclusion was correct; the totient factorization was repaired to include prime-power factors."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Define\n\\[\nS(n)=\\sum_{k=1}^{n}k^{\\varphi(n)}.\n\\]\nFor \\(n=1\\), we have \\(S(1)=1\\), hence \\(\\gcd(S(1),1)=1\\).\n\nNow let \\(n>1\\). For each prime \\(p\\mid n\\), write \\(n=p^em\\), where \\(p\\nmid m\\). Modulo \\(p\\), the integers \\(1,\\ldots,n\\) contain each residue class exactly \\(n/p\\) times. Since \\(\\varphi(n)>0\\), the zero residue contributes zero, and therefore\n\\[\nS(n)\\equiv\\frac np\\sum_{r=1}^{p-1}r^{\\varphi(n)}\\pmod p.\n\\]\nThe standard formula\n\\[\n\\varphi(n)=\\prod_{q^a\\parallel n}q^{a-1}(q-1)\n\\]\nshows that \\(p-1\\mid\\varphi(n)\\). Since the nonzero residues modulo \\(p\\) form a cyclic group of order \\(p-1\\),\n\\[\n\\sum_{r=1}^{p-1}r^{\\varphi(n)}\\equiv p-1\\equiv-1\\pmod p.\n\\]\nThus \\(S(n)\\equiv-n/p\\pmod p\\). Consequently, \\(p\\mid S(n)\\) precisely when \\(p\\mid n/p\\), equivalently when \\(p^2\\mid n\\).\n\nTherefore, if \\(n\\) has a squared prime divisor, then \\(\\gcd(S(n),n)>1\\). Conversely, if \\(n\\) is square-free, then no prime divisor of \\(n\\) divides \\(S(n)\\), so \\(\\gcd(S(n),n)=1\\). Including the case \\(n=1\\), the required set is\n\\[\n\\boxed{\\{n\\in\\mathbb N:n\\text{ is square-free}\\}}.\n\\]",
+      "reason": "Self-check confirmed the modular argument and corrected the displayed formula for \\(\\varphi(n)\\)."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let \\(S(n)=\\sum_{k=1}^{n}k^{\\varphi(n)}\\). We prove that \\(\\gcd(S(n),n)=1\\) iff \\(n\\) is square-free.\n\nFor \\(n=1\\), this is immediate because \\(S(1)=1\\).\n\nSuppose \\(n>1\\), and let \\(p\\mid n\\). Write \\(n=p^em\\), with \\(p\\nmid m\\). Each residue modulo \\(p\\) occurs \\(n/p\\) times in \\(1,\\ldots,n\\), so\n\\[\nS(n)\\equiv\\frac np\\sum_{r=1}^{p-1}r^{\\varphi(n)}\\pmod p.\n\\]\nHere the zero residue may be omitted because \\(\\varphi(n)>0\\). The correct totient formula is\n\\[\n\\varphi(n)=\\prod_{q^a\\parallel n}q^{a-1}(q-1),\n\\]\nso \\(p-1\\mid\\varphi(n)\\). If \\(g\\) generates the nonzero residues modulo \\(p\\), then\n\\[\n\\sum_{r=1}^{p-1}r^{\\varphi(n)}\n=\\sum_{j=0}^{p-2}g^{j\\varphi(n)}\n\\equiv p-1\\equiv-1\\pmod p.\n\\]\nHence\n\\[\nS(n)\\equiv-\\frac np\\pmod p.\n\\]\nIf \\(e\\ge2\\), then \\(p\\mid n/p\\), hence \\(p\\mid S(n)\\). If \\(e=1\\), then \\(p\\nmid n/p\\), hence \\(p\\nmid S(n)\\).\n\nThus a prime divides both \\(S(n)\\) and \\(n\\) exactly when its square divides \\(n\\). Therefore \\(S(n)\\) is coprime to \\(n\\) exactly for square-free \\(n\\), with \\(1\\) included.\n\\[\n\\boxed{n\\text{ is square-free}.}\n\\]",
+      "reason": "The critic identified the only gap: the totient product needed prime-power exponents; the repaired proof preserves the valid conclusion."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Set\n\\[\nS(n)=\\sum_{k=1}^{n}k^{\\varphi(n)}.\n\\]\nWe claim that \\(\\gcd(S(n),n)=1\\) exactly for square-free \\(n\\).\n\nFor \\(n=1\\), \\(S(1)=1\\), so the claim holds. Let \\(n>1\\). Fix a prime divisor \\(p\\mid n\\), and write \\(n=p^em\\) with \\(p\\nmid m\\). Reduction modulo \\(p\\) partitions the summation indices into complete residue classes, each occurring \\(n/p\\) times. Hence\n\\[\nS(n)\\equiv\\frac np\\sum_{r=1}^{p-1}r^{\\varphi(n)}\\pmod p,\n\\]\nwhere the term for \\(r=0\\) vanishes because \\(\\varphi(n)>0\\).\n\nUsing\n\\[\n\\varphi(n)=\\prod_{q^a\\parallel n}q^{a-1}(q-1),\n\\]\nwe have \\(p-1\\mid\\varphi(n)\\). The multiplicative group modulo \\(p\\) is cyclic of order \\(p-1\\), so its elements satisfy \\(r^{\\varphi(n)}=1\\) modulo \\(p\\). Therefore\n\\[\n\\sum_{r=1}^{p-1}r^{\\varphi(n)}\\equiv p-1\\equiv-1\\pmod p,\n\\]\nand consequently\n\\[\nS(n)\\equiv-\\frac np\\pmod p. \\tag{*}\n\\]\n\nIf \\(p^2\\mid n\\), then \\(p\\mid n/p\\), and (*) yields \\(p\\mid S(n)\\). Thus \\(n\\) is not admissible. If \\(p^2\\nmid n\\), then \\(p\\nmid n/p\\), and (*) yields \\(p\\nmid S(n)\\). Applying this independently to every prime divisor of a square-free \\(n\\), no prime divisor of \\(n\\) divides \\(S(n)\\); hence \\(\\gcd(S(n),n)=1\\).\n\nThe characterization is therefore\n\\[\n\\boxed{n\\in\\mathbb N\\text{ is admissible iff }n\\text{ is square-free}},\n\\]\nwhere \\(1\\) is included.",
+      "reason": "Dependency review found and repaired the totient-factorization gap; the prime-divisor criterion was independently rechecked for both directions."
+    }
+  ]
+}

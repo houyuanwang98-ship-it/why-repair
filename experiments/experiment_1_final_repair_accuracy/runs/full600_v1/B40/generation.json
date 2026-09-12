@@ -1,0 +1,29 @@
+{
+  "case_id": "B40",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "由 6|n 可知存在整数 k，使 n=6k。于是 n^2=36k^2=12(3k^2)，且 3k^2 为整数，所以 12|n^2。",
+      "reason": "将错误的“6|n 推出 12|n”改为直接令 n=6k 并完成整除证明。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "因为 6|n，存在整数 k 使 n=6k。故 n^2=(6k)^2=36k^2=12(3k^2)。由于 3k^2 为整数，得到 12|n^2。",
+      "reason": "检查发现原证明错误地断言 6|n 可推出 12|n，已改用定义验证结论。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "由假设 6|n，设 n=6k，其中 k 为整数。则 n^2=36k^2=12(3k^2)。因 3k^2 是整数，故 n^2 能被 12 整除。",
+      "reason": "批评环节识别出中间整除断言不成立，生成了不依赖该断言的有效证明。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "假设 n 为整数且 6|n。根据整除定义，存在整数 k 使 n=6k。于是 n^2=36k^2=12(3k^2)，其中 3k^2 为整数。因此 12|n^2，即 n^2 能被 12 整除。",
+      "reason": "依赖检查定位了错误前提转换；局部替换为 n=6k 后，独立复核并验证了最终整除结论。"
+    }
+  ]
+}

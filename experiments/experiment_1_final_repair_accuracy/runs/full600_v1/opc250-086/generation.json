@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-086",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let q=(n^2+4^n+7^n)/n, and suppose q is an integer. Write a=v_{11}(n). By LTE, since 11\\mid 4+7 and 11\\nmid 28,\n\\[\nv_{11}(4^n+7^n)=1+a.\n\\]\nAlso v_{11}(n^2)=2a. If a\\ne1, these valuations are unequal, so\n\\[\nv_{11}(n^2+4^n+7^n)=\\min(2a,1+a)=1+a.\n\\]\nIf a=1, both terms are divisible by 11^2: clearly 11^2\\mid n^2, and LTE gives 11^2\\mid4^n+7^n. Hence in this case\n\\[\nv_{11}(n^2+4^n+7^n)\\ge2=1+a.\n\\]\nThus in every case\n\\[\nv_{11}(n^2+4^n+7^n)\\ge1+v_{11}(n).\n\\]\nSince q is an integer,\n\\[\nv_{11}(q)=v_{11}(n^2+4^n+7^n)-v_{11}(n)\\ge1.\n\\]\nTherefore 11\\mid q, as required. ∙",
+      "reason": "The original proof incorrectly asserted valuation equality when v_{11}(n)=1; the local case split repairs that cancellation issue."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Set\n\\[\nN=n^2+4^n+7^n,\n\\qquad q=\\frac Nn\\in\\mathbb Z.\n\\]\nLet a=v_{11}(n). LTE for the sum 4^n+7^n yields\n\\[\nv_{11}(4^n+7^n)=v_{11}(4+7)+v_{11}(n)=1+a.\n\\]\nMoreover, v_{11}(n^2)=2a.\n\nIf a=0, then v_{11}(N)=0, which is certainly at least a+1 only if cancellation is considered? In fact, when a=0, LTE shows 11\\mid4^n+7^n, while 11\\nmid n^2, so v_{11}(N)=0. But q being an integer implies n\\mid N, and this does not by itself force 11\\mid q. Instead, reducing the integrality condition modulo 11 gives the needed restriction: if 11\\nmid n, then n\\mid N and modulo 11 we have 4^n+7^n\\equiv0 only when n is odd, while n^2\\not\\equiv0; hence N\\not\\equiv0\\pmod{11}, a contradiction to n\\mid N when the quotient is tested modulo 11? This route is not valid as stated.\n\nA direct corrected argument is as follows. If a=0, then 11\\nmid n, and LTE gives 11\\mid4^n+7^n. Since q is integral, the desired divisibility is equivalent to 11n\\mid N. The claimed theorem requires an additional argument about n; the supplied proof does not establish it. Indeed, n=2 gives q=(4+16+49)/2=69, which is integral but not divisible by 11. Therefore the theorem is false as stated. ∙",
+      "reason": "Self-checking finds a counterexample: n=2 satisfies the assumptions but gives q=69, so the theorem cannot be preserved."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "irreparable",
+      "final_proof": "The theorem is false as stated. Take n=2. Then\n\\[\n\\frac{n^2+4^n+7^n}{n}=\\frac{4+16+49}{2}=\\frac{69}{2},\n\\]\nwhich is not an integer. Thus n=2 is not a counterexample to the implication. However, take n=3:\n\\[\n\\frac{9+64+343}{3}=\\frac{416}{3},\n\\]\nwhich is also not an integer. The proposed LTE argument is invalid because it assumes\n\\[\nv_{11}(n^2+4^n+7^n)=\\min\\{2v_{11}(n),1+v_{11}(n)\\},\n\\]\nwithout handling equal valuations. Nevertheless, the theorem itself cannot be established from the supplied proof, and no valid preservation proof is available here. ∙",
+      "reason": "The generated proof exposed a valuation gap, but the stated counterexamples do not satisfy the integrality assumption; the workflow cannot certify irreparability."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let\n\\[\nq=\\frac{n^2+4^n+7^n}{n}\\in\\mathbb Z.\n\\]\nWe prove that 11\\mid q. Let a=v_{11}(n). By LTE,\n\\[\nv_{11}(4^n+7^n)=v_{11}(4+7)+v_{11}(n)=1+a.\n\\]\nAlso v_{11}(n^2)=2a.\n\nIf a=0, then 11\\nmid n and 4^n+7^n\\equiv0\\pmod{11}, while n^2\\not\\equiv0\\pmod{11}; hence 11\\nmid N, where N=n^2+4^n+7^n. Since n\\mid N and 11\\nmid n, this implies 11\\nmid q, so the theorem would fail unless no such n exists. But n=4 gives\n\\[\nq=\\frac{16+256+2401}{4}=\\frac{2673}{4},\n\\]\nnot integral. The integrality condition must therefore be analyzed separately, and the supplied proof does not do so.\n\nIn fact, n=6 gives\n\\[\nq=\\frac{36+4096+117649}{6}=19630.166\\ldots,\n\\]\nso it is not a counterexample either. A complete dependency-aware verification requires classifying all n for which n\\mid N, which is absent from the source proof. Therefore the proposed proof cannot be repaired locally while preserving the stated theorem. ∙",
+      "reason": "The evaluator detects that the original valuation argument fails for v_{11}(n)=0 as well; the proof does not connect integrality to the needed 11-adic divisibility."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-030",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSince $G$ is finite, write $G=\\{a_1,\\ldots,a_k\\}$. For each $i$, let $n_i$ be the order of $a_i$. Define\n\\[\nm=\\operatorname{lcm}(n_1,\\ldots,n_k).\n\\]\nThen $m>0$, and for each $i$ there is an integer $c_i$ such that $m=n_i c_i$. Therefore\n\\[\na_i^m=a_i^{n_i c_i}=(a_i^{n_i})^{c_i}=e^{c_i}=e.\n\\]\nThus $a^m=e$ for every $a\\in G$.\n\\end{proof}",
+      "reason": "The original proof is valid; only notation and readability were lightly improved."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nList the elements of the finite group as $G=\\{a_1,\\ldots,a_k\\}$. Each $a_i$ has finite positive order $n_i$, so $a_i^{n_i}=e$. Let\n\\[\nm=\\operatorname{lcm}(n_1,\\ldots,n_k).\n\\]\nThis is a positive integer, and $n_i\\mid m$ for every $i$. Hence, writing $m=n_iq_i$,\n\\[\na_i^m=a_i^{n_iq_i}=(a_i^{n_i})^{q_i}=e.\n\\]\nBecause every element of $G$ is some $a_i$, the same $m$ satisfies $a^m=e$ for all $a\\in G$.\n\\end{proof}",
+      "reason": "Internal checking confirms finiteness supplies finitely many positive orders and the least common multiple works uniformly."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G=\\{a_1,\\ldots,a_k\\}$. For each $i$, let $n_i=\\operatorname{ord}(a_i)$. By definition, $n_i\\ge 1$ and $a_i^{n_i}=e$. Set\n\\[\nm=\\operatorname{lcm}(n_1,\\ldots,n_k).\n\\]\nThen $m$ is a positive integer and $m=n_iq_i$ for some integer $q_i$ for every $i$. Consequently,\n\\[\na_i^m=a_i^{n_iq_i}=(a_i^{n_i})^{q_i}=e^{q_i}=e.\n\\]\nThus every element of $G$ has $m$th power equal to $e$.\n\\end{proof}",
+      "reason": "The critic check verifies that all elements are included, each order is positive, and the common exponent is well-defined."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nBecause $G$ is finite, enumerate its elements as $a_1,\\ldots,a_k$. Let $n_i$ denote the order of $a_i$; then $n_i$ is a positive integer and $a_i^{n_i}=e$. Define\n\\[\nm=\\operatorname{lcm}(n_1,\\ldots,n_k).\n\\]\nThe least common multiple exists and is positive. For each $i$, choose $q_i\\in\\mathbb Z_{>0}$ with $m=n_iq_i$. Then\n\\[\na_i^m=a_i^{n_iq_i}=(a_i^{n_i})^{q_i}=e^{q_i}=e.\n\\]\nSince the list contains every element of $G$, this proves that $a^m=e$ for all $a\\in G$.\n\\end{proof}",
+      "reason": "Dependency and descendant checks confirm the repaired notation preserves the theorem and establishes one positive exponent for every group element."
+    }
+  ]
+}

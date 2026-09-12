@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-204",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSince $V$ is finite dimensional, choose a basis $v_1,\\dots,v_m$ of $\\operatorname{null}T$ and extend it to a basis $v_1,\\dots,v_m,u_1,\\dots,u_n$ of $V$. Let $U=\\operatorname{span}\\{u_1,\\dots,u_n\\}$. Then $V=U+\\operatorname{null}T$. Moreover, if $x\\in U\\cap\\operatorname{null}T$, then $x$ has both a linear combination of the $u_i$ and a linear combination of the $v_j$. The basis independence implies that all coefficients are zero, so $x=0$. Thus $U\\cap\\operatorname{null}T=\\{0\\}$.\n\nFor any $y\\in\\operatorname{range}T$, write $v=u+k$ with $u\\in U$ and $k\\in\\operatorname{null}T$, where $Tv=y$. Then $y=Tv=Tu+Tk=Tu$. Hence $\\operatorname{range}T\\subseteq\\{Tu:u\\in U\\}$. The reverse inclusion is immediate because $Tu\\in\\operatorname{range}T$ for every $u\\in U$. Therefore $\\operatorname{range}T=\\{Tu:u\\in U\\}$.\n\\end{proof}",
+      "reason": "Corrected the kernel/range variable collision and supplied the required direct-sum and range arguments."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $K=\\operatorname{null}T$. Choose a basis of $K$ and extend it to a basis of $V$. Let $U$ be the span of the added basis vectors. The resulting basis shows that every $v\\in V$ can be written as $v=u+k$ for some $u\\in U$ and $k\\in K$, so $V=U+K$. If $x\\in U\\cap K$, its expression using the added basis vectors and its expression using the basis of $K$ give a linear dependence among the extended basis, hence $x=0$. Therefore $U\\cap\\operatorname{null}T=\\{0\\}$.\n\nIf $y\\in\\operatorname{range}T$, choose $v\\in V$ with $Tv=y$ and write $v=u+k$ as above. Since $Tk=0$, we have $y=Tv=Tu$. Thus $\\operatorname{range}T\\subseteq\\{Tu:u\\in U\\}$. Conversely, every $Tu$ lies in $\\operatorname{range}T$, giving the reverse inclusion. Hence $\\operatorname{range}T=\\{Tu:u\\in U\\}$.\n\\end{proof}",
+      "reason": "An internal consistency check confirmed that the decomposition must use a distinct kernel vector and that both set inclusions are necessary."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nPut $K=\\operatorname{null}T$. Because $V$ is finite dimensional, there is a subspace $U$ such that $V=U\\oplus K$; explicitly, take a basis of $K$, extend it to a basis of $V$, and let $U$ be the span of the added vectors. The direct-sum relation immediately gives $U\\cap K=\\{0\\}$.\n\nTo prove the range identity, let $y\\in\\operatorname{range}T$. Then $y=Tv$ for some $v\\in V$. Since $V=U\\oplus K$, write $v=u+k$ with $u\\in U$ and $k\\in K$. Consequently, $y=Tv=Tu+Tk=Tu$, so $y\\in\\{Tu:u\\in U\\}$. This proves one inclusion. The other follows from $Tu\\in\\operatorname{range}T$ for every $u\\in U$. Therefore $\\operatorname{range}T=\\{Tu:u\\in U\\}$.\n\\end{proof}",
+      "reason": "The critic identified the invalid reuse of the range element as a kernel element and required an explicit direct-sum construction plus two range inclusions."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $K=\\operatorname{null}T$. Select a basis for $K$ and extend it to a basis for $V$. Define $U$ to be the span of the basis vectors added in the extension. Then the basis decomposition yields $V=U\\oplus K$. In particular, $U\\cap\\operatorname{null}T=U\\cap K=\\{0\\}$.\n\nFor the range condition, if $y\\in\\operatorname{range}T$, choose $v\\in V$ with $Tv=y$. By $V=U\\oplus K$, there are unique $u\\in U$ and $k\\in K$ such that $v=u+k$. Hence $y=Tv=Tu+Tk=Tu$, since $Tk=0$. Thus $\\operatorname{range}T\\subseteq\\{Tu:u\\in U\\}$. Conversely, $Tu\\in\\operatorname{range}T$ for every $u\\in U$, so $\\{Tu:u\\in U\\}\\subseteq\\operatorname{range}T$. Therefore $\\operatorname{range}T=\\{Tu:u\\in U\\}$.\n\\end{proof}",
+      "reason": "Dependency checking isolated the faulty decomposition, the local repair introduced a kernel symbol $k$, and independent revalidation confirms both conclusions and their dependencies."
+    }
+  ]
+}

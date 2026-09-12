@@ -1,0 +1,29 @@
+{
+  "case_id": "B15",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "由 a|b，存在整数 k，使得 b=ak。于是 bc=akc=a(kc)。由于 k、c 为整数，kc 为整数，因此 a|bc。",
+      "reason": "补充了整除定义所需的因子 kc 为整数。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "由 a|b，存在整数 k，使 b=ak。两边同乘以整数 c，得 bc=akc=a(kc)。又因 kc 为整数，故根据整除定义，a|bc。",
+      "reason": "检查后明确写出乘法步骤和整数性，论证完整。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "因为 a|b，存在整数 k 使 b=ak。将等式两边乘以 c，得到 bc=(ak)c=a(kc)。其中 kc 是整数，所以存在整数 kc 使 bc=a(kc)，从而 a|bc。",
+      "reason": "批评检查确认原证明省略了关键等式，已作最小补充。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "假设 a、b、c 为整数且 a|b。由整除定义，存在整数 k 使 b=ak。则 bc=(ak)c=a(kc)，且 kc 为整数。因此存在整数 kc 使 bc=a(kc)，故 a|bc。该结论正是所要证明的命题。",
+      "reason": "依赖关系、局部修复及独立复核均通过；后续结论无需额外重验证。"
+    }
+  ]
+}

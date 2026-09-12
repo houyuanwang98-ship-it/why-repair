@@ -1,0 +1,29 @@
+{
+  "case_id": "B31",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "因为 a、b 为偶整数，所以存在整数 m、n，使 a=2m，b=2n。于是 a+b=2(m+n)，其中 m+n 为整数，因此 a+b 为偶数。",
+      "reason": "将错误的“能被4整除”改为偶整数的定义“能被2整除”。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "由 a、b 为偶整数，分别存在整数 m、n，使 a=2m、b=2n。故 a+b=2m+2n=2(m+n)。由于 m+n 为整数，a+b 可被2整除，因此 a+b 为偶数。",
+      "reason": "检查并修正了原证明中关于4整除的错误，结论和假设保持不变。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "设 a、b 为偶整数。根据偶整数的定义，存在整数 m、n，使 a=2m、b=2n。因此 a+b=2m+2n=2(m+n)。因 m+n 为整数，故 a+b 为偶数。",
+      "reason": "批评环节发现原证明第一句不成立；生成证明改用偶数的定义完成论证。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "依赖于“偶整数可表示为2倍整数”这一事实。由假设，存在整数 m、n，使 a=2m、b=2n。于是 a+b=2(m+n)，且 m+n 为整数，所以 a+b 为偶数。该局部修复不改变定理、假设或定义域，且后续推导均有效。",
+      "reason": "依赖检查定位到首句错误，进行最小局部修复，并重新验证结论及其后续推导。"
+    }
+  ]
+}

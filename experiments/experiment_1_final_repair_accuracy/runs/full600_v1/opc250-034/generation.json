@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-034",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Assume the sequence has period n. Let g be the greatest common divisor of the terms in one period, and write a_k=g b_k. Since 2015^i is the maximal power of 2015 dividing a_k+a_{k-1}, the same power is maximal for b_k+b_{k-1}; hence (b_k) satisfies the same recurrence. Moreover, gcd(b_k)=1.\n\nBecause 2015 is odd, every quotient 2015^i is odd. Therefore, reducing the recurrence modulo 2 gives\n\\[\nb_{k+1}\\equiv b_k+b_{k-1}\\pmod 2.\n\\]\nThe sequence (b_k) is not identically even, since its terms have gcd 1. Thus its nonzero parity sequence satisfies the Fibonacci recurrence over \\(\\mathbb F_2\\). Starting from any nonzero pair, the successive pairs are\n\\[\n(x,y)\\mapsto(y,x+y)\\mapsto(x+y,x)\\mapsto(x,y),\n\\]\nso the parity sequence has exact period 3. Since (b_k) has period n, its parity sequence also has period n; hence \\(3\\mid n\\). Thus the period of the original sequence is divisible by 3.",
+      "reason": "Dividing by the common gcd yields a primitive periodic sequence, whose nonzero modulo-2 dynamics has exact period 3 because every normalization factor is odd."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Let n be a period of the given sequence, and let \\(g=\\gcd(a_1,\\ldots,a_n)\\). Define \\(b_k=a_k/g\\), extending periodically. If\n\\[\na_{k+1}=\\frac{a_k+a_{k-1}}{2015^{i_k}},\n\\]\nthen\n\\[\nb_{k+1}=\\frac{b_k+b_{k-1}}{2015^{i_k}},\n\\]\nbecause dividing by g does not change the 2015-adic valuation of the numerator. Also \\(\\gcd(b_1,\\ldots,b_n)=1\\).\n\nEach \\(2015^{i_k}\\) is odd, so modulo 2,\n\\[\nb_{k+1}=b_k+b_{k-1}.\n\\]\nThe parity sequence is not identically zero, since the b_k have gcd 1. Over \\(\\mathbb F_2\\), the map on consecutive pairs is\n\\[\n(x,y)\\longmapsto(y,x+y).\n\\]\nIts nonzero states form 3-cycles: \\((x,y)\\), \\((y,x+y)\\), and \\((x+y,x)\\) are distinct and the next state returns to \\((x,y)\\). Consequently the parity sequence has period exactly 3. Since it is also n-periodic, we conclude that \\(3\\mid n\\). Therefore every period of the original sequence is divisible by 3.",
+      "reason": "The checked argument handles the possible common factor by normalization and then uses the exact nonzero period of the induced recurrence modulo 2."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Suppose the sequence is periodic with period n. Let g be the gcd of all terms in one period and put \\(b_k=a_k/g\\). The defining relation becomes\n\\[\nb_{k+1}=\\frac{b_k+b_{k-1}}{2015^{i_k}},\n\\]\nwith the same exponents \\(i_k\\), because multiplication by g does not affect the maximal power of 2015 dividing the numerator. The normalized sequence is periodic and has gcd 1.\n\nSince 2015 is odd, reducing this relation modulo 2 gives\n\\[\nb_{k+1}\\equiv b_k+b_{k-1}\\pmod 2.\n\\]\nAt least one b_k is odd, so the resulting parity sequence is nonzero. For a consecutive parity pair \\((x,y)\\), the recurrence sends it to \\((y,x+y)\\u0029. Applying this map three times gives the original pair:\n\\[\n(x,y)\\to(y,x+y)\\to(x+y,x)\\to(x,y).\n\\]\nNo nonzero pair has period 1 or 2 under this map: period 1 would imply \\(x=y=0\\), and period 2 likewise forces \\(x=y=0\\). Hence every nonzero orbit has exact period 3. The parity sequence, being induced from an n-periodic sequence, is n-periodic; therefore 3 divides n. Thus the original period is divisible by 3.",
+      "reason": "The critic-relevant points are explicitly verified: normalization preserves the recurrence, parity is nonzero, and periods 1 and 2 are impossible for a nonzero parity state."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let n be any period of the positive integer sequence. Define\n\\[\ng=\\gcd(a_1,\\ldots,a_n),\\qquad b_k=a_k/g.\n\\]\nThe sequence \\((b_k)\\) is n-periodic and primitive, meaning that the gcd of its terms is 1. For each k, write\n\\[\na_k+a_{k-1}=2015^{i_k}a_{k+1},\n\\]\nwhere \\(2015^{i_k}\\) is the maximal power of 2015 dividing the left-hand side. Dividing by g gives\n\\[\nb_k+b_{k-1}=2015^{i_k}b_{k+1},\n\\]\nand the exponent remains maximal, so the normalized sequence satisfies the same rule.\n\nReduce this identity modulo 2. Since 2015 is odd,\n\\[\nb_{k+1}\\equiv b_k+b_{k-1}\\pmod 2.\n\\]\nThe parity sequence is not zero everywhere, because the b_k have gcd 1. Its consecutive-state transition over \\(\\mathbb F_2\\) is\n\\[\n(x,y)\to(y,x+y).\n\\]\nA direct calculation shows\n\\[\n(x,y)\to(y,x+y)\to(x+y,x)\to(x,y).\n\\]\nIf a nonzero state had period 1, then \\(x=y=0\\); if it had period 2, then again \\(x=y=0\\). Thus every nonzero state has exact period 3. Hence the parity sequence has exact period 3.\n\nBecause the parity sequence inherits period n from \\((b_k)\\), its exact period divides n. Therefore \\(3\\mid n\\), proving that the period of the original sequence is divisible by 3.",
+      "reason": "The dependency chain is validated: gcd normalization preserves maximal 2015-adic exponents, primitive normalization guarantees a nonzero parity certificate, and the modulo-2 descendant forces period divisibility by 3."
+    }
+  ]
+}

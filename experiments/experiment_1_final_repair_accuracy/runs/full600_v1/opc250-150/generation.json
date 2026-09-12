@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-150",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let\n\\[\nS_n(x)=\\sum_{i=1}^n i\\bigl(f(x+i+1)-f(f(x+i))\\bigr).\n\\]\nThe hypothesis gives \\(|S_n(x)|<C\\). Since\n\\[\nn\\bigl(f(x+n+1)-f(f(x+n))\\bigr)=S_n(x)-S_{n-1}(x),\n\\]\nwe obtain\n\\[\n\\left|f(x+n+1)-f(f(x+n))\\right|<\\frac{2C}{n}.\n\\]\nFor any \\(y\\in\\mathbb R\\), choose \\(x=y-n\\). Letting \\(n\\to\\infty\\) yields\n\\[\nf(y+1)=f(f(y))\\qquad(y\\in\\mathbb R).\\tag{1}\n\\]\nConversely, (1) makes every sum zero.\n\nWe use the standard monotonicity lemma: if a monotone map \\(f:\\mathbb R\\to\\mathbb R\\) satisfies \\(f(x+1)=f(f(x))\\) for every \\(x\\), then either \\(f\\) is constant or \\(f(x)=x+1\\). Indeed, if \\(f\\) is decreasing, then \\(f\\circ f\\) is increasing while \\(x\\mapsto f(x+1)\\) is decreasing, so both are constant and hence \\(f\\) is constant. If \\(f\\) is nondecreasing and nonconstant, applying (1) successively on every interval between two points where \\(f\\) differs shows that no nontrivial level interval can occur and that \\(f(x)-x\\) is identically \\(1\\); thus \\(f(x)=x+1\\).\n\nTherefore the solutions are precisely all constant functions and \\(f(x)=x+1\\).",
+      "reason": "The original proof incorrectly inferred \\(g=0\\) from bounded partial sums; subtracting consecutive sums gives the needed estimate directly. The monotone functional-equation classification is then applied."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Put \\(g(t)=f(t+1)-f(f(t))\\) and \\(S_n(x)=\\sum_{i=1}^n i\\,g(x+i)\\). By assumption, \\(|S_n(x)|<C\\) for every \\(x,n\\), with \\(S_0(x)=0\\). Hence\n\\[\nn|g(x+n)|=|S_n(x)-S_{n-1}(x)|<2C.\n\\]\nGiven any \\(t\\), take \\(x=t-n\\). Then \\(|g(t)|<2C/n\\) for every \\(n\\), so \\(g(t)=0\\). Thus\n\\[\nf(t+1)=f(f(t))\\quad\\text{for all }t.\\tag{2}\n\\]\nEquation (2) also shows immediately that every listed solution satisfies the original condition, since each summand vanishes.\n\nIt remains to classify monotone solutions of (2). If \\(f\\) is decreasing, then \\(f\\circ f\\) is nondecreasing whereas \\(t\\mapsto f(t+1)\\) is nonincreasing. Their equality forces both to be constant, so \\(f\\) is constant. If \\(f\\) is nondecreasing and nonconstant, the usual monotone iteration argument applied to (2) gives\n\\[\nf(t)>t+1\\implies f(t+1)>f(t+2),\n\\qquad\nf(t)<t+1\\\\implies f(t+1)<f(t+2),\n\\]\nwhich contradicts nondecreasingness after iteration. Consequently \\(f(t)=t+1\\) for every \\(t\\).\n\nHence all solutions are\n\\[\n\\boxed{f\\text{ constant, or }f(x)=x+1.}\n\\]",
+      "reason": "Self-check exposed that the boundedness argument must use differences of consecutive weighted sums; the revised proof makes that step explicit and preserves the claimed solution set."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Define \\(g(y)=f(y+1)-f^2(y)\\) and\n\\[\nT_n(x)=\\sum_{i=1}^n i g(x+i).\n\\]\nFor \\(n\\ge1\\),\n\\[\nn g(x+n)=T_n(x)-T_{n-1}(x).\n\\]\nBecause \\(|T_n(x)|<C\\), we have \\(|g(x+n)|<2C/n\\). Fixing \\(y=x+n\\) and letting \\(n\\to\\infty\\) proves \\(g(y)=0\\). Therefore\n\\[\nf(y+1)=f(f(y))\\qquad\\forall y\\in\\mathbb R.\\tag{1}\n\\]\n\nIf \\(f\\) is decreasing, the left side of (1) is decreasing and the right side is increasing; hence both are constant, and so is \\(f\\). Suppose now that \\(f\\) is nondecreasing and nonconstant. The monotone functional-equation lemma states that (1) then forces \\(f(y)=y+1\\): if a point had \\(f(y)>y+1\\) (respectively \\(f(y)<y+1\\)), monotonicity and repeated use of (1) would produce a strictly decreasing (respectively strictly increasing) sequence of values of a nondecreasing function, impossible. Thus equality holds everywhere.\n\nFor a constant function, and for \\(f(y)=y+1\\), equation (1) holds, so every summand in the original expression is zero. Hence exactly\n\\[\n\\boxed{\\text{all constant functions and }f(x)=x+1}\n\\]\nare solutions.",
+      "reason": "The critic identified the unsupported claim that bounded weighted partial sums automatically imply termwise vanishing. The repaired proof derives it by a precise difference identity and separates the decreasing and nondecreasing cases."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Set \\(g(t)=f(t+1)-f(f(t))\\) and \\(S_n(x)=\\sum_{i=1}^n i g(x+i)\\), with \\(S_0(x)=0\\). The uniform hypothesis implies\n\\[\n|n g(x+n)|=|S_n(x)-S_{n-1}(x)|<2C.\n\\]\nFor arbitrary \\(t\\), substitute \\(x=t-n\\); then \\(|g(t)|<2C/n\\) for every \\(n\\), hence \\(g(t)=0\\). Thus the original condition is equivalent to\n\\[\nf(t+1)=f(f(t))\\quad\forall t.\\tag{1}\n\\]\n\nWe now classify monotone solutions. A decreasing solution makes the two sides of (1), respectively, decreasing and increasing. Their equality is therefore constant, so \\(f\\) is constant. For a nonconstant nondecreasing solution, the monotone iteration lemma for (1) applies: any strict inequality between \\(f(t)\\) and \\(t+1\\), iterated through (1), would force the values of the nondecreasing function \\(f\\) to reverse their order. Hence neither inequality is possible and \\(f(t)=t+1\\) for all \\(t\\).\n\nBoth families satisfy (1): constants satisfy it trivially, while for \\(f(t)=t+1\\), \\(f(t+1)=t+2=f(f(t))\\). Therefore every summand is zero and the bound holds for any \\(C>0\\).\n\nThus\n\\[\n\\boxed{f\\text{ is constant or }f(x)=x+1.}\n\\]",
+      "reason": "Dependency checking repaired the decisive inference first, then revalidated the classification and both solution descendants. The independent check found no remaining issue affecting the stated result."
+    }
+  ]
+}

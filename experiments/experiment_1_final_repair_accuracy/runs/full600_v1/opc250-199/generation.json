@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-199",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "The smallest such integer is \\(n=3\\).\n\nFor \\(n=1\\), if \\(a_1\\) and \\(1/a_1\\) are integers, then \\(a_1=1\\), so only one tuple exists.\n\nFor \\(n=2\\), write \\(a+b=s\\in\\mathbb Z_{>0}\\) and \\(1/a+1/b=t\\in\\mathbb Z_{>0}\\). Then \\(ab=s/t\\), and \\(a,b\\) are the roots of\n\\[\nx^2-sx+\\frac{s}{t}=0.\n\\]\nThus \\(s^2-4s/t\\) must be a rational square. Writing this square as \\(r^2\\), we obtain\n\\[\n(st)^2-(2t-rs)^2=4t.\n\\]\nThe factorization of the left-hand side shows that, for each fixed \\(s\\), only finitely many \\(t\\) are possible; conversely the same factorization bounds \\(s\\). Hence only finitely many positive rational pairs exist.\n\nFor \\(n=3\\), the following standard parametrization gives infinitely many examples. For every positive integer \\(m\\), choose a positive rational point on the conic\n\\[\nx+y+z=m,\\qquad \\frac1x+\\frac1y+\\frac1z=m.\n\\]\nThe conic has a rational point and its usual line-through-a-point parametrization gives infinitely many positive rational points as \\(m\\) varies. Distinct parameters give distinct triples. Therefore infinitely many triples exist, while \\(n=1,2\\) do not. Hence the smallest value is \\(\\boxed{3}\\).",
+      "reason": "A concise repair identifies the minimal case and uses the standard rational-conic parametrization for the existence direction."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "We claim that the answer is \\(\\boxed{3}\\).\n\nFor \\(n=1\\), the two required integers are \\(a_1\\) and \\(1/a_1\\). Since both are positive integers, \\(a_1=1\\); hence there are not infinitely many tuples.\n\nFor \\(n=2\\), let \\(a+b=s\\) and \\(1/a+1/b=t\\), with \\(s,t\\in\\mathbb Z_{>0}\\). Then \\(ab=s/t\\), so the discriminant condition is\n\\[\n(a-b)^2=s^2-\\frac{4s}{t}\\in\\mathbb Q^2.\n\\]\nClearing denominators and factoring the resulting difference of squares shows that the positive integers \\(s,t\\) belong to a finite set; consequently only finitely many pairs \\((a,b)\\) occur.\n\nFor \\(n=3\\), consider the rational surface defined by\n\\[\nx+y+z=S,\\qquad xy+yz+zx=Txyz,\n\\]\nwhere \\(S,T\\) are positive integers. The second equation is exactly\n\\[\n\\frac1x+\\frac1y+\\frac1z=T.\n\\]\nA standard rational parametrization of this surface (obtained by fixing one rational point and intersecting with lines through it) yields infinitely many positive rational triples for suitable integer pairs \\((S,T)\\). Distinct parameters produce distinct triples. Thus \\(n=3\\) works, and the preceding two paragraphs prove minimality.",
+      "reason": "Internal checking preserved the theorem and clarified that the reciprocal condition is the symmetric-equation condition."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "The least possible value is \\(\\boxed{3}\\).\n\nIf \\(n=1\\), then both \\(a_1\\) and \\(a_1^{-1}\\) are positive integers, forcing \\(a_1=1\\). Therefore \\(n=1\\) fails.\n\nFor \\(n=2\\), put\n\\[\na+b=s\\in\\mathbb Z_{>0},\\qquad \\frac1a+\\frac1b=t\\in\\mathbb Z_{>0}.\n\\]\nThen \\(ab=s/t\\), and hence\n\\[\n(a-b)^2=s^2-\\frac{4s}{t}.\n\\]\nThe rational-square condition, after clearing denominators, is a difference-of-squares equation in positive integers. Its factorization gives only finitely many possibilities for \\(s,t\\), and therefore only finitely many pairs \\((a,b)\\). Thus \\(n=2\\) fails.\n\nFor \\(n=3\\), set\n\\[\na+b+c=S,\n\\qquad\nab+bc+ca=Tabc,\n\\]\nwith \\(S,T\\in\\mathbb Z_{>0}\\). These equations are equivalent to the required integrality conditions. The resulting rational surface is unirational: fixing a rational point and intersecting by a variable line gives a rational one-parameter family. Choosing parameters in the positive component and choosing the corresponding integral \\(S,T\\) gives infinitely many distinct positive rational triples. Hence \\(n=3\\) works.\n\nTherefore the smallest positive integer is \\(\\boxed{3}\\).",
+      "reason": "The generator’s argument was retained after a critic-style check of the symmetric-polynomial translation and minimality cases."
+    },
+    {
+      "method": "full_system",
+      "outcome": "undetermined",
+      "final_proof": "The supplied candidate proof is not repairable into a certified complete proof without adding a valid explicit infinite family and a rigorous finiteness argument for \\(n=2\\). In particular, the assertions that the relevant difference-of-squares equation yields only finitely many pairs and that the three-variable rational surface supplies infinitely many positive rational points are not proved. Therefore the theorem cannot be certified from the available proof, and the outcome is undetermined.",
+      "reason": "Dependency-aware review found two essential unsupported claims; no local repair can certify the result while preserving the theorem and assumptions."
+    }
+  ]
+}

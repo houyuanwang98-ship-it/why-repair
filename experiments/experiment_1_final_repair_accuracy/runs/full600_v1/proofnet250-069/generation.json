@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-069",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $z=\\cos(1^\\circ)+i\\sin(1^\\circ)$. Since $z^{360}=1$, $z$ is a root of the polynomial $X^{360}-1\\in\\mathbb{Q}[X]$, hence $z$ is algebraic over $\\mathbb{Q}$. Its complex conjugate $\\overline z=\\cos(1^\\circ)-i\\sin(1^\\circ)$ is also algebraic. Therefore\n\\[\n\\cos(1^\\circ)=\\frac{z+\\overline z}{2}\n\\]\nis algebraic over $\\mathbb{Q}$, because the algebraic numbers form a field.\\end{proof}",
+      "reason": "The original argument is valid in substance; the repair explicitly justifies why the real part of an algebraic number is algebraic."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet $z=\\cos(1^\\circ)+i\\sin(1^\\circ)=e^{i\\pi/180}$. Then\n\\[\nz^{360}=e^{2\\pi i}=1,\n\\]\nso $z$ is algebraic over $\\mathbb{Q}$, being a root of $X^{360}-1$. Since algebraic numbers over $\\mathbb{Q}$ are closed under complex conjugation, $\\overline z$ is algebraic as well. Hence\n\\[\n\\cos(1^\\circ)=\\operatorname{Re}(z)=\\frac{z+\\overline z}{2}\n\\]\nis algebraic over $\\mathbb{Q}$.\\end{proof}",
+      "reason": "Internal checking confirms the root-of-unity step and supplies the needed conjugation and field-closure details."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nBy De Moivre's formula,\n\\[\n\\left(\\cos(1^\\circ)+i\\sin(1^\\circ)\\right)^{360}=\\cos(360^\\circ)+i\\sin(360^\\circ)=1.\n\\]\nThus $z=\\cos(1^\\circ)+i\\sin(1^\\circ)$ satisfies $z^{360}-1=0$, with $z^{360}-1\\in\\mathbb{Q}[X]$, and is therefore algebraic over $\\mathbb{Q}$. Its conjugate $\\overline z$ is also algebraic. Since\n\\[\n\\cos(1^\\circ)=\\frac{z+\\overline z}{2},\n\\]\nand algebraic numbers are closed under addition and division by nonzero rational numbers, $\\cos(1^\\circ)$ is algebraic over $\\mathbb{Q}$.\\end{proof}",
+      "reason": "The critic-checked version makes the polynomial witness, conjugation, and extraction of the real part explicit."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine $z=\\cos(1^\\circ)+i\\sin(1^\\circ)$. The angle $1^\\circ$ equals $\\pi/180$, so\n\\[\nz^{360}=e^{360i\\pi/180}=e^{2\\pi i}=1.\n\\]\nConsequently, $z$ is algebraic over $\\mathbb{Q}$ because it satisfies $X^{360}-1=0$. Complex conjugation preserves algebraicity: if $z$ is algebraic, then $\\overline z$ is algebraic, since it satisfies the polynomial obtained by conjugating the coefficients of a polynomial satisfied by $z$; here the coefficients are rational. Therefore, using closure of the algebraic numbers under field operations,\n\\[\n\\cos(1^\\circ)=\\frac{z+\\overline z}{2}\n\\]\nis algebraic over $\\mathbb{Q}$.\\end{proof}",
+      "reason": "Dependency checks validate the root-of-unity certificate, conjugation step, and final field operation; no descendant claims require further repair."
+    }
+  ]
+}

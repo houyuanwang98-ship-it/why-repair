@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-098",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf $I=(0)$, there is nothing to prove. Otherwise choose a nonzero matrix $A=(a_{ij})\\in I$. Since some entry $a_{pq}\\neq 0$, for any $i,j\\in\\{1,2\\}$ we have\n\\[\nE_{ip}AE_{qj}=a_{pq}E_{ij}\\in I,\n\\]\nwhere $E_{rs}$ denotes the matrix unit with a $1$ in position $(r,s)$ and zeros elsewhere. Because $a_{pq}\\neq0$ and $I$ is closed under multiplication by real scalar matrices, $E_{ij}\\in I$ for every $i,j$. Hence every matrix $\\sum_{i,j}r_{ij}E_{ij}$ belongs to $I$, so $I=R$. Therefore $I=(0)$ or $I=R$.\n\\end{proof}",
+      "reason": "The original proof incorrectly assumes a nonzero entry is in the $(1,1)$ position; the repair handles an arbitrary nonzero entry."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose $I\\neq(0)$ and choose $A=(a_{kl})\\in I$ with $A\\neq0$. There are indices $p,q$ such that $a_{pq}\\neq0$. Let $E_{rs}$ be the standard matrix units. The ideal property gives, for all $i,j$,\n\\[\nE_{ip}AE_{qj}=a_{pq}E_{ij}\\in I.\n\\]\nMultiplying by the scalar matrix $a_{pq}^{-1}I_2$ shows that $E_{ij}\\in I$ for all $i,j$. Since the matrix units form a basis of $R$ as a real vector space, every element of $R$ lies in $I$. Thus $I=R$. Consequently, $I=(0)$ or $I=R$.\n\\end{proof}",
+      "reason": "A check of the ideal and scalar-closure steps yields a uniform argument with no positional WLOG assumption."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume $I$ is a nonzero ideal. Choose $A=(a_{rs})\\in I\\setminus\\{0\\}$ and choose $p,q$ with $a_{pq}\\ne0$. For standard matrix units, direct multiplication gives\n\\[\nE_{ip}AE_{qj}=a_{pq}E_{ij}\\quad(i,j=1,2).\n\\]\nBecause $I$ is a two-sided ideal, the left-hand side belongs to $I$. Since $I$ is an additive subgroup of the real matrix ring, it is closed under multiplication by the central scalar matrix $a_{pq}^{-1}I_2$; hence every $E_{ij}$ belongs to $I$. Therefore, for any $B=(b_{ij})\\in R$,\n\\[\nB=\\sum_{i,j=1}^2b_{ij}E_{ij}\\in I.\n\\]\nSo $I=R$. If $I$ is not nonzero, then $I=(0)$, proving the claim.\n\\end{proof}",
+      "reason": "The critic-checked version verifies the arbitrary-entry reduction, the matrix-unit identity, and the scalar normalization."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $I$ be an ideal of $R$. If $I=(0)$, the conclusion holds. Suppose instead that $I$ contains a nonzero matrix $A=(a_{rs})$. Choose $p,q$ with $a_{pq}\\neq0$. For each $i,j\\in\\{1,2\\}$, let $E_{ij}$ denote the corresponding matrix unit. Since $I$ is a two-sided ideal,\n\\[\nE_{ip}AE_{qj}\\in I.\n\\]\nComputing the product gives\n\\[\nE_{ip}AE_{qj}=a_{pq}E_{ij}.\n\\]\nThe scalar matrix $a_{pq}^{-1}I_2$ lies in the center of $R$, and multiplication by it preserves $I$; consequently $E_{ij}\\in I$ for every $i,j$. Every $B\\in R$ has the form $B=\\sum_{i,j}b_{ij}E_{ij}$, so additive closure implies $B\\in I$. Hence $I=R$. Thus $I=(0)$ or $I=R$.\n\\end{proof}",
+      "reason": "Dependency checks validate the repaired arbitrary-entry argument and its descendants: ideal closure, matrix-unit computation, scalar normalization, and spanning."
+    }
+  ]
+}

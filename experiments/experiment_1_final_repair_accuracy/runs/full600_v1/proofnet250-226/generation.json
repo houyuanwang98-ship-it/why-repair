@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-226",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "irreparable",
+      "final_proof": "The statement cannot be proved as written because it assumes equality on P but only declares E to be dense, without stating that P is dense or that P=E. Counterexample: let X={0,1} with the discrete metric, Y=R, E=X (so E is dense), and P=∅. Define f(x)=0 for both x, while g(0)=0 and g(1)=1. Both maps are continuous, and g(p)=f(p) for every p∈P vacuously, but g(1)≠f(1). Thus the theorem is false as stated.",
+      "reason": "The proof silently replaces P by E; that missing connection is essential."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "irreparable",
+      "final_proof": "No valid proof exists for the theorem as stated. Take X={0,1} with the discrete metric, Y=R, E=X, and P=∅. Then E is dense in X, and the continuous maps f(x)=0 and g(0)=0, g(1)=1 satisfy g(p)=f(p) for all p∈P. Nevertheless, g(1)≠f(1). Hence the conclusion fails.",
+      "reason": "Internal checking reveals that the dense set E is unrelated to the set P on which equality is assumed."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "irreparable",
+      "final_proof": "The proposed conclusion is false under the given wording. Let X={0,1} have the discrete metric and let Y=R. Set E=X, which is dense in X, and P=∅. Let f be identically 0 and let g(0)=0, g(1)=1. Since X is discrete, f and g are continuous. The hypothesis g(p)=f(p) for every p∈P holds vacuously, but g(1)≠f(1). Therefore no proof preserving the stated theorem is possible.",
+      "reason": "A critic detects the unsupported step asserting that the equality set is dense: the hypothesis only gives density of E, not of P or the equality set."
+    },
+    {
+      "method": "full_system",
+      "outcome": "irreparable",
+      "final_proof": "The theorem is not derivable with the stated assumptions. Use X={0,1} with the discrete metric, Y=R, E=X, and P=∅. The set E is dense, and the maps f(x)=0 and g(0)=0, g(1)=1 are continuous. The premise holds for every p∈P, since P is empty, while the asserted conclusion fails at x=1. Thus descendant revalidation cannot certify the proof: the required repair would change the theorem by replacing P with E or by assuming P is dense.",
+      "reason": "Dependency analysis identifies the final density inference as invalid because P is disconnected from the only dense-set assumption, E."
+    }
+  ]
+}

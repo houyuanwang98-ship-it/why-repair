@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-238",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let m be the current number of cells, and let s_m be the sum just before the deletion from m cells. For every m≥2, successful continuation requires 1≤s_m≤m. Since the deleted entry is non-negative, the next sum satisfies s_{m-1}≤s_m. Thus, read backwards, the deletion ranks form a weakly increasing sequence.\n\nReverse the process from the surviving middle cell. The middle cell must receive exactly n inserted cells on each side. Because insertion ranks are weakly increasing, all left insertions precede all right insertions. The left insertions are therefore forced to have rank 1: after k left insertions the middle has rank k+1, and any rank other than 1 would either violate monotonicity or delete the middle in the forward process. Hence s_2=s_3=⋯=s_{n+1}=1.\n\nThe n right insertions correspond to a Dyck path of semilength n: at the j-th stage their ranks lie between n+2 and n+1+j and are weakly increasing. The standard ballot-path bijection shows that these choices are counted by the Catalan number C_n=1/(n+1)·binom(2n,n).\n\nFinally, after the last deletion the remaining cell has value s_1, and s_1 may be either 0 or 1 because s_2=1. Both choices are valid. Therefore the number of balanced sequences is\n\n2C_n=\\boxed{\\frac{2}{n+1}\\binom{2n}{n}}.",
+      "reason": "The original Catalan count omitted the two possible values of the final surviving entry."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Write s_m for the sum when m cells remain. A successful deletion requires 1≤s_m≤m, and deleting a non-negative entry gives s_{m-1}≤s_m. Consequently, in the reverse construction the deletion positions are weakly increasing.\n\nStart with the original middle cell and insert the deleted cells in reverse order. To finish with the middle cell surviving, exactly n inserted cells must lie to its left and n to its right. Weak increase of the insertion positions implies that all left insertions occur first. Those n left insertions are forced to occur in position 1, so the sums at lengths 2 through n+1 are all 1.\n\nThe remaining n right insertions are encoded by weakly increasing positions satisfying the usual upper bounds imposed by the current length. Under the standard bijection with lattice paths, these are Dyck paths of semilength n, hence there are C_n of them.\n\nThe final one-cell sum is not required to be positive: it may be 0 or 1. Thus every admissible insertion pattern gives two sequences, and\n\n\\[\\#\\{\u0000balanced sequences\\}=2C_n=\\boxed{\\frac{2}{n+1}\\binom{2n}{n}}.\\]",
+      "reason": "Checking the terminal state reveals an independent factor of two, which the supplied proof missed."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let s_m denote the sum immediately before deleting a cell from a configuration of length m. If the deleted cell has value d_m, then s_{m-1}=s_m-d_m≤s_m. Hence the deletion ranks are weakly increasing when the process is read backwards.\n\nConstruct a balanced process backwards from its surviving middle cell. There must be n insertions on either side of it. Since the insertion ranks are weakly increasing, the left insertions come first. At each such stage, the only possible rank is 1; otherwise the rank would eventually meet the current position of the middle cell or violate weak increase. Thus the left half contributes no choices.\n\nFor the right half, the admissible weakly increasing ranks are in bijection with Dyck paths of semilength n (equivalently, with ballot sequences having n up-steps and n down-steps). Therefore the number of rank patterns is\n\\[C_n=\\frac1{n+1}\\binom{2n}{n}.\\]\n\nAfter all deletions, the remaining entry equals the final sum s_1. Since the preceding sum is s_2=1, non-negativity permits exactly s_1=0 or s_1=1. Both lead to termination with the middle cell remaining. Hence\n\\[\\boxed{2C_n=\\frac{2}{n+1}\\binom{2n}{n}}.\\]",
+      "reason": "The critic check identifies the omitted terminal-value choice and confirms that it doubles, rather than changes, the Catalan family."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "For a configuration of length m≥2, let s_m be its sum before deletion. A successful run has 1≤s_m≤m, and if the deleted entry is d_m≥0, then s_{m-1}=s_m-d_m≤s_m. Thus the deletion ranks are weakly increasing in reverse time.\n\nA dependency-aware reverse construction starts with the eventual surviving middle cell. Its final position requires n insertions on the left and n on the right. Monotonicity forces every left insertion to precede every right insertion. The left insertion ranks are forced to be 1, so s_2=⋯=s_{n+1}=1. The right insertion ranks satisfy precisely the ballot inequalities; encoding each permitted rank change by a lattice step gives a Dyck path of semilength n. Therefore there are C_n admissible rank patterns.\n\nThe terminal state is a necessary descendant check: the remaining value is s_1, and because s_2=1 we have s_1∈{0,1}. Both values are non-negative and both terminate the process with exactly the original middle cell remaining. Hence\n\\[\\#=2C_n=\\boxed{\\frac{2}{n+1}\\binom{2n}{n}}.\\]\n\nThis also independently revalidates the result at the terminal descendant, where the supplied argument had lost a factor of two.",
+      "reason": "The dependency and terminal-state checks repair the missing factor and verify that both terminal values produce valid balanced sequences."
+    }
+  ]
+}

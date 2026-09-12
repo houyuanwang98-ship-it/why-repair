@@ -1,0 +1,29 @@
+{
+  "case_id": "m2-026",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "irreparable",
+      "final_proof": "该定理无法在给定假设下证明。反例：a=1，b=2 时，a、b 为整数且 ab=2 为偶数，但 a=1 不是偶数。因此“a 与 b 都为偶数”的结论不成立。",
+      "reason": "原证明错误地假设偶数乘积的两个因子都必须为偶数；实际上只需至少一个因子为偶数。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "irreparable",
+      "final_proof": "无法保持原定理。取 a=1、b=2，则 a,b 为整数，且 ab=2 为偶数，但 a 不是偶数，故不能推出 a 与 b 都是偶数。正确结论应为：a、b 中至少有一个是偶数。",
+      "reason": "检查后发现结论被反例否定，不能通过局部改写修复为原定理。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "irreparable",
+      "final_proof": "该命题为假，因而不存在满足给定假设并推出原结论的证明。反例取 a=1，b=2：ab=2 为偶数，而 a=1 为奇数。故不能证明 a、b 都为偶数；可成立的结论是至少一个因子为偶数。",
+      "reason": "批评检查识别出生成证明的核心前提“偶数乘积只能由两个偶因子产生”是错误的。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "irreparable",
+      "final_proof": "依赖检查表明，假设仅为 a,b 为整数且 ab 为偶数。取反例 a=1、b=2，可验证 ab=2 为偶数，但 a=1 为奇数。因此原结论“a 与 b 都为偶数”不由假设推出，后续修复与独立复核均无法保留该定理。正确可证结论为：a 与 b 至少有一个为偶数。",
+      "reason": "依赖-aware 验证发现假设不足；反例在结论层面直接失败，因此不存在可重验证的局部修复。"
+    }
+  ]
+}

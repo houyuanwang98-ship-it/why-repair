@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-116",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "There are exactly 2012 terms in the sum, and for every k=2,\\ldots,2013 we have 1/k\\leq 1/2. Hence\\n\\n\\[\\n\\frac12+\\frac13+\\cdots+\\frac1{2013}\\leq 2012\\cdot\\frac12=1006.\\n\\]\\n\\nTherefore\\n\\n\\[\\n1-\\frac1{2012}\\left(\\frac12+\\frac13+\\cdots+\\frac1{2013}\\right)\\geq 1-\\frac{1006}{2012}=\\frac12.\\n\\]\\n\\nSince \\(2012\\sqrt{2013}>2\\), we have \\(\\frac1{2012\\sqrt{2013}}<\\frac12\\). Consequently,\\n\\n\\[\\n1-\\frac1{2012}\\left(\\frac12+\\frac13+\\cdots+\\frac1{2013}\\right)\\geq\\frac1{2012\\sqrt{2013}}.\\n\\]",
+      "reason": "The original proof is valid but unnecessarily elaborate; a direct uniform bound proves the claim immediately."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Let \\(S=\\sum_{k=2}^{2013}\\frac1k\\). The sum contains \\(2013-2+1=2012\\) terms, and each satisfies \\(\\frac1k\\leq\\frac12\\). Thus \\(S\\leq1006\\), so\\n\\n\\[\\n1-\\frac{S}{2012}\\geq1-\\frac{1006}{2012}=\\frac12.\\n\\]\\n\\nMoreover, \\(2012\\sqrt{2013}>2\\), hence \\(\\frac1{2012\\sqrt{2013}}<\\frac12\\). Therefore\\n\\n\\[\\n1-\\frac{1}{2012}\\left(\\frac12+\\frac13+\\ldots+\\frac1{2013}\\right)\\geq\\frac12>\\frac1{2012\\sqrt{2013}},\\n\\]\\nwhich proves the required inequality.",
+      "reason": "Internal checking confirms the term count and inequality directions; the revised proof is shorter and fully rigorous."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "For \\(k=2,\\ldots,2013\\), \\(1/k\\leq1/2\\). Since there are 2012 such integers,\\n\\n\\[\\n\\sum_{k=2}^{2013}\\frac1k\\leq2012\\cdot\\frac12=1006.\\n\\]\\n\\nIt follows that\\n\\n\\[\\n1-\\frac1{2012}\\sum_{k=2}^{2013}\\frac1k\\geq1-\\frac{1006}{2012}=\\frac12.\\n\\]\\n\\nFinally, \\(2012\\sqrt{2013}>2\\), so \\(\\frac1{2012\\sqrt{2013}}<\\frac12\\). Hence\\n\\n\\[\\n1-\\frac{1}{2012}\\left(\\frac12+\\frac13+\\ldots+\\frac1{2013}\\right)\\geq\\frac1{2012\\sqrt{2013}}.\\n\\]",
+      "reason": "A critic check identifies no flaw in the simple bound: the sum has exactly 2012 terms, and the resulting comparison is strict."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Write \\(S=\\sum_{k=2}^{2013}1/k\\). The dependency needed for the target is a lower bound on \\(1-S/2012\\). For every index in the unchanged range, \\(1/k\\leq1/2\\), and there are 2012 indices. Thus\\n\\n\\[\\nS\\leq2012\\cdot\\frac12=1006,\\qquad 1-\\frac{S}{2012}\\geq\\frac12.\\n\\]\\n\\nThe descendant comparison is valid because \\(2012\\sqrt{2013}>2\\), which gives\\n\\n\\[\\n\\frac1{2012\\sqrt{2013}}<\\frac12.\\n\\]\\n\\nCombining these inequalities yields\\n\\n\\[\\n1-\\frac{1}{2012}\\left(\\frac12+\\frac13+\\ldots+\\frac1{2013}\\right)\\geq\\frac1{2012\\sqrt{2013}}.\\n\\]",
+      "reason": "Dependency review, local repair, independent checking, and descendant revalidation all pass; the theorem and domain remain unchanged."
+    }
+  ]
+}

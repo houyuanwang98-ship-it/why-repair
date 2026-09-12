@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-082",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nPair each element $g\\in G$ with its inverse $g^{-1}$. If $g\\neq g^{-1}$, these two elements form a distinct pair. The remaining elements are precisely those satisfying $g=g^{-1}$, equivalently $g^2=e$. Since $|G|$ is even, the number of remaining elements has the same parity as $|G|$, because all distinct inverse-pairs contribute an even number of elements. Thus the number of elements satisfying $g^2=e$ is even. Since $e$ is one such element, there is another element $a\\neq e$ with $a^2=e$. Therefore $a$ has order $2$.\n\\end{proof}",
+      "reason": "Corrected the parity argument by distinguishing inverse-pairs from all self-inverse elements."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nConsider the involution $g\\mapsto g^{-1}$ on $G$. Every element not equal to its inverse belongs to a two-element orbit $\\{g,g^{-1}\\}$. Hence the elements fixed by this involution, namely\n\\[\nF=\\{g\\in G:g=g^{-1}\\}=\\{g\\in G:g^2=e\\},\n\\]\nhave cardinality congruent to $|G|$ modulo $2$. Because $|G|$ is even, $|F|$ is even. The identity $e$ belongs to $F$, so $F$ contains some element $a\\neq e$. For this element, $a^2=e$ while $a\\neq e$, and consequently $a$ has order $2$.\n\\end{proof}",
+      "reason": "The revised proof explicitly verifies the involution and the parity conclusion before extracting a nonidentity element."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nPartition $G$ into inverse-orbits. Each orbit has either two elements, of the form $\\{g,g^{-1}\\}$ with $g\\neq g^{-1}$, or one element, consisting of a solution to $g=g^{-1}$, equivalently $g^2=e$. Since $G$ has even cardinality, the number of one-element inverse-orbits is even: the two-element orbits contribute an even number of elements. The identity is one of these one-element orbits. Therefore there is a second one-element orbit, represented by some $a\\neq e$. Then $a=a^{-1}$, so $a^2=e$. Since $a$ is not the identity, its order is exactly $2$.\n\\end{proof}",
+      "reason": "The critic-checked version removes the false claim that an unpaired element must exist merely from the identity and states the orbit-counting argument precisely."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $\\iota:G\\to G$ be defined by $\\iota(g)=g^{-1}$. This is an involution. Its nonfixed orbits have the form $\\{g,g^{-1}\\}$ and contain exactly two elements, while its fixed points satisfy\n\\[\n\\iota(g)=g\\quad\\Longleftrightarrow\\quad g=g^{-1}\\quad\\Longleftrightarrow\\quad g^2=e.\n\\]\nThus\n\\[\n|G|=2m+|\\operatorname{Fix}(\\iota)|\n\\]\nfor some integer $m$. Since $|G|$ is even, $|\\operatorname{Fix}(\\iota)|$ is even. The identity $e$ is fixed by $\\iota$, so the fixed-point set contains an element $a\\neq e$. Then $a^2=e$, and $a\\neq e$ implies that the order of $a$ is exactly $2$.\n\\end{proof}",
+      "reason": "A dependency-aware check confirms the only needed repair is the fixed-point parity step; the conclusion and all assumptions are preserved."
+    }
+  ]
+}

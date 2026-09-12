@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-250",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSince $f$ is continuous and $\\{0\\}\\subseteq\\mathbb{R}$ is closed, its inverse image\n\\[\nZ(f)=f^{-1}(\\{0\\})\n\\]\nis closed in $X$.\n\\end{proof}",
+      "reason": "The supplied proof is already correct; this is a one-pass clarity rewrite."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nThe singleton $\\{0\\}$ is closed in $\\mathbb{R}$. By continuity of $f$, the inverse image of every closed subset of $\\mathbb{R}$ is closed in $X$. Because\n\\[\nZ(f)=\\{p\\in X:f(p)=0\\}=f^{-1}(\\{0\\}),\n\\]\nwe conclude that $Z(f)$ is closed.\n\\end{proof}",
+      "reason": "A check confirms that the original argument uses exactly the continuity preimage property needed."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $C=\\mathbb{R}\\setminus\\{0\\}$. Since $\\{0\\}$ is closed, $C$ is open. By continuity of $f$, the set\n\\[\nX\\setminus Z(f)=\\{p\\in X:f(p)\\neq 0\\}=f^{-1}(C)\n\\]\nis open. Therefore $Z(f)$ is closed.\n\\end{proof}",
+      "reason": "The generated proof was independently checked via the open-complement characterization and is valid."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nThe codomain is $\\mathbb{R}$, where the singleton $\\{0\\}$ is closed. Continuity of $f$ implies that the preimage of this closed set is closed in $X$. Since\n\\[\nf^{-1}(\\{0\\})=\\{p\\in X:f(p)=0\\}=Z(f),\n\\]\n$Z(f)$ is closed in $X$.\n\\end{proof}",
+      "reason": "Dependency checks, local verification, independent review, and descendant revalidation all confirm the proof without repair."
+    }
+  ]
+}

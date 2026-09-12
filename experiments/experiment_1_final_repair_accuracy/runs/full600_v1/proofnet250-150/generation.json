@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-150",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf $F=\\varnothing$, any $\\delta>0$ works. Otherwise define\n\\[\n\\rho_F(x)=\\inf\\{d(x,q):q\\in F\\}.\n\\]\nThe function $\\rho_F$ is continuous, so it attains its minimum on the compact set $K$. Let $r\\in K$ satisfy\n\\[\n\\rho_F(r)=\\min_{x\\in K}\\rho_F(x).\n\\]\nSince $K\\cap F=\\varnothing$ and $F$ is closed, $r\\notin F$ implies $\\rho_F(r)>0$. Choose $0<\\delta<\\rho_F(r)$. For every $p\\in K$ and $q\\in F$,\n\\[\nd(p,q)\\geq\\rho_F(p)\\geq\\rho_F(r)>\\delta.\n\\]\nThus such a $\\delta$ exists.\n\\end{proof}",
+      "reason": "Corrected the variable roles, explicitly handled the empty-set case, and justified positivity and compact attainment."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWhen $F=\\varnothing$, the assertion is vacuous, so take any $\\delta>0$. Assume $F\\neq\\varnothing$ and set\n\\[\nf(x)=d(x,F)=\\inf_{q\\in F}d(x,q).\n\\]\nThe distance-to-$F$ function is $1$-Lipschitz, hence continuous. Therefore, since $K$ is compact, there is $r\\in K$ with\n\\[\nf(r)=\\min_{x\\in K}f(x).\n\\]\nBecause $F$ is closed and $r\\notin F$, we have $f(r)>0$. Choose $\\delta=f(r)/2$. Then for any $p\\in K$ and $q\\in F$,\n\\[\nd(p,q)\\ge f(p)\\ge f(r)=2\\delta>\\delta.\n\\]\nHence the required positive number $\\delta$ exists.\n\\end{proof}",
+      "reason": "The revised proof checks continuity, compactness, the closed-set separation fact, and both possible cases for $F$."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf $F=\\varnothing$, choose any positive $\\delta$. Suppose $F\\ne\\varnothing$. Define\n\\[\ng(x)=\\inf_{y\\in F}d(x,y).\n\\]\nFor all $x,z\\in X$, $|g(x)-g(z)|\\le d(x,z)$, so $g$ is continuous. Compactness of $K$ gives a point $r\\in K$ such that\n\\[\ng(r)=\\min_{x\\in K}g(x).\n\\]\nSince $F$ is closed and $r\\notin F$, $g(r)>0$. Let $\\delta=g(r)/2$. If $p\\in K$ and $q\\in F$, then\n\\[\nd(p,q)\\ge g(p)\\ge g(r)=2\\delta>\\delta.\n\\]\nTherefore there exists $\\delta>0$ satisfying the claim.\n\\end{proof}",
+      "reason": "A critic check removed the original proof’s reversed quantifier labels and closed the undefined-distance-to-empty-set gap."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf $F=\\varnothing$, the conclusion is vacuous and any $\\delta>0$ suffices. Now assume $F\\ne\\varnothing$. Let\n\\[\nh(x)=\\inf_{y\\in F}d(x,y).\n\\]\nThe triangle inequality implies\n\\[\n|h(x)-h(z)|\\le d(x,z)\n\\]\nfor all $x,z\\in X$, so $h$ is continuous. Since $K$ is compact, $h$ attains its minimum at some $r\\in K$:\n\\[\nh(r)=\\min_{x\\in K}h(x).\n\\]\nThe sets $K$ and $F$ are disjoint, so $r\\notin F$. As $F$ is closed, $h(r)>0$. Choose $\\delta=h(r)/2$. For arbitrary $p\\in K$ and $q\\in F$,\n\\[\nd(p,q)\\ge h(p)\\ge h(r)=2\\delta>\\delta.\n\\]\nThus the required $\\delta$ exists.\n\\end{proof}",
+      "reason": "Dependency-aware checking confirms every step needed for separation; the local repairs also cover $F=\\varnothing$ and revalidate the final quantifiers."
+    }
+  ]
+}

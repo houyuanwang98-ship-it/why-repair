@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-180",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Proof. The feasible set is compact, so the continuous function F=\\sum_{i=1}^{59}a_i^2 attains a maximum. At a maximizing point, at most one coordinate can lie in (-2,17). Indeed, if a_j\\ge a_k and both are interior, let \\varepsilon=\\min\\{17-a_j,a_k+2\\}>0 and replace (a_j,a_k) by (a_j+\\varepsilon,a_k-\\varepsilon). The constraints remain valid, while F changes by\n\\[\n2\\varepsilon(a_j-a_k)+2\\varepsilon^2>0,\n\\]\ncontradicting maximality.\n\nThere cannot be no interior coordinate: if p coordinates equal 17 and q=59-p equal -2, then 17p-2q=0 and p+q=59, which would give 19p=118, impossible. Thus exactly one coordinate is interior. Let p coordinates equal 17, q coordinates equal -2, and let the remaining coordinate be c. Then p+q=58 and\n\\[\nc=2q-17p=116-19p.\n\\]\nThe condition -2\\le c\\le17 gives 99\\le19p\\le118, hence p=6. Therefore q=52 and c=2. Consequently,\n\\[\n\\sum_{i=1}^{59}a_i^2\\le 6\\cdot17^2+52\\cdot(-2)^2+2^2=1946<2006.\n\\]\nThus \\(a_1^2+\\cdots+a_{59}^2\\le2006\\). ∼",
+      "reason": "The original argument is valid; this one-pass rewrite makes compactness and the zero-interior case explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Proof. Let \\(F=\\sum_{i=1}^{59}a_i^2\\). Since the admissible set is compact, choose a maximizer. If two coordinates \\(a_j,a_k\\) are interior, assume \\(a_j\\ge a_k\\) and set\n\\[\n\\varepsilon=\\min(17-a_j,a_k+2)>0.\n\\]\nReplacing \\(a_j,a_k\\) by \\(a_j+\\varepsilon,a_k-\\varepsilon\\) preserves the sum and the interval constraints, and changes \\(F\\) by\n\\[\n(a_j+\\varepsilon)^2+(a_k-\\varepsilon)^2-a_j^2-a_k^2\n=2\\varepsilon(a_j-a_k)+2\\varepsilon^2>0,\n\\]\na contradiction. Hence at most one coordinate is interior.\n\nIf all coordinates were endpoints, with p entries 17 and 59-p entries -2, the zero-sum condition would be \\(17p-2(59-p)=0\\), i.e. \\(19p=118\\), impossible. Hence one coordinate, say c, is interior. If p entries are 17 and q entries are -2, then p+q=58 and\n\\[\nc=2q-17p=116-19p.\n\\]\nBecause \\(-2\\le c\\le17\\), we have \\(99\\le19p\\le118\\), so the integer p is 6. Thus q=52 and c=2. Therefore\n\\[\nF\\le6(17)^2+52(2)^2+2^2=1946<2006.\n\\]\nThe desired inequality follows. ∎",
+      "reason": "Internal checking confirms the extremal argument and repairs the omitted possibility of zero interior coordinates."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Proof. The admissible set\n\\[\nS=\\{(a_i)\\in[-2,17]^{59}:\\sum_{i=1}^{59}a_i=0\\}\n\\]\nis compact, so F=\\sum a_i^2 has a maximizer on S. We first show that a maximizer has at most one interior coordinate. If two coordinates are interior, relabel them so that a_j\\ge a_k and choose\n\\[\n0<\\varepsilon\\le\\min(17-a_j,a_k+2).\n\\]\nThe replacement \\((a_j,a_k)\\mapsto(a_j+\\varepsilon,a_k-\\varepsilon)\\) remains feasible and increases F by \\(2\\varepsilon(a_j-a_k)+2\\varepsilon^2>0\\), a contradiction.\n\nNow suppose a maximizer has no interior coordinate. If p coordinates equal 17 and q equal -2, then p+q=59 and 17p-2q=0, yielding 19p=118, impossible. Therefore exactly one coordinate is interior. Write p for the number of 17's, q for the number of -2's, and c for the remaining coordinate. Then\n\\[\np+q=58,\n\\qquad c=2q-17p=116-19p.\n\\]\nThe bound \\(-2\\le c\\le17\\) implies\n\\[\n-2\\le116-19p\\le17,\n\\]\nso \\(99\\le19p\\le118\\). Thus p=6, q=52, and c=2. Hence the maximum is at most\n\\[\n6\\cdot289+52\\cdot4+4=1946.\n\\]\nThus \\(\\sum_{i=1}^{59}a_i^2\\le1946<2006\\), proving the theorem. ∎",
+      "reason": "A critic-style check catches and closes the only potential gap: the proof must exclude an all-endpoint maximizer."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Proof. Define\n\\[\nS=\\{(a_1,\\ldots,a_{59})\\in[-2,17]^{59}:a_1+\\cdots+a_{59}=0\\}.\n\\]\nThe set S is compact, and F(a)=\\sum_{i=1}^{59}a_i^2 is continuous; hence F has a maximizer in S.\n\nAt such a maximizer, at most one coordinate is strictly between -2 and 17. For if a_j,a_k are both interior, assume a_j\\ge a_k and put \\(\\varepsilon=\\min\\{17-a_j,a_k+2\\}>0\\). The feasible replacement \\((a_j,a_k)\\mapsto(a_j+\\varepsilon,a_k-\\varepsilon)\\) changes F by\n\\[\n2\\varepsilon(a_j-a_k)+2\\varepsilon^2>0,\n\\]\nwhich is impossible at a maximum.\n\nAn all-endpoint maximizer is impossible: if p coordinates are 17 and 59-p are -2, then the zero-sum condition gives \\(17p-2(59-p)=0\\), or \\(19p=118\\), contrary to p being an integer. Thus precisely one coordinate is interior. Let p coordinates be 17, q coordinates be -2, and let the remaining coordinate be c. Then p+q=58 and\n\\[\nc=2q-17p=116-19p.\n\\]\nSince c\\in[-2,17], \\(99\\le19p\\le118\\), forcing p=6. Hence q=52 and c=2, and so\n\\[\nF\\le6\\cdot17^2+52\\cdot(-2)^2+2^2=1946<2006.\n\\]\nTherefore \\(a_1^2+\\cdots+a_{59}^2\\le2006\\). ∎",
+      "reason": "Dependency-aware review verifies existence of a maximizer, the boundary-pushing lemma, endpoint exclusion, arithmetic, and the final descendant inequality."
+    }
+  ]
+}

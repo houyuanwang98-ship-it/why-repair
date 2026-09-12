@@ -1,0 +1,29 @@
+{
+  "case_id": "B20",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "因为 a+b 为偶数，所以存在整数 k，使 a+b=2k。若 a 为偶数，设 a=2m，则 b=2k-2m=2(k-m)，故 b 为偶数；若 a 为奇数，设 a=2m+1，则 b=2k-(2m+1)=2(k-m-1)+1，故 b 为奇数。因此 a,b 同奇偶。",
+      "reason": "补充了由和为偶数推出另一整数奇偶性的完整论证。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "整数 a 只有奇、偶两种奇偶性。若 a=2m，则由 a+b=2k 得 b=2(k-m)，所以 b 为偶数；若 a=2m+1，则 b=2k-2m-1=2(k-m-1)+1，所以 b 为奇数。两种情形下 a 与 b 的奇偶性均相同，故 a,b 同奇偶。",
+      "reason": "检查并覆盖了 a 的全部可能情形，论证闭合。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "设 a+b=2k，其中 k 为整数。生成候选分情况证明：若 a=2m，则 b=2(k-m) 为偶数；若 a=2m+1，则 b=2(k-m-1)+1 为奇数。检查可知，两种情形分别对应 a、b 同为偶数或同为奇数，且已覆盖整数 a 的全部情况。因此 a,b 同奇偶。",
+      "reason": "经核查，代数变形正确且分情况完备。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "由假设，存在整数 k 使 a+b=2k。考虑 a 的奇偶性：若 a=2m，则 b=2k-a=2(k-m)，故 b 为偶数；若 a=2m+1，则 b=2k-a=2(k-m-1)+1，故 b 为奇数。于是无论 a 为偶数还是奇数，b 都与 a 具有相同奇偶性。因此 a,b 同奇偶。该结论只依赖给定的整数性与和为偶数，且无后续推论需要额外修复。",
+      "reason": "完成依赖检查、局部修复与独立复核；结论和假设均保持不变。"
+    }
+  ]
+}

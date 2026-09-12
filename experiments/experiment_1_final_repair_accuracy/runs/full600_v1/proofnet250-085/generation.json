@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-085",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "irreparable",
+      "final_proof": "\\begin{proof}\nThe theorem cannot be proved as stated because no assumption is made that $p\\nmid a$. For the odd prime $p=3$ and $a=0$, the only prime divisor of $p-1=2$ is $q=2$, and\n\\[\na^{(p-1)/q}=0^1=0\\not\\equiv 1\\pmod 3.\n\\]\nThus the condition on the right holds, but $a=0$ is not a primitive root modulo $3$, since it is not relatively prime to $3$ and has no multiplicative order modulo $3$. Hence the claimed equivalence is false under the given assumptions.\n\\end{proof}",
+      "reason": "The missing condition $\\gcd(a,p)=1$ is essential; the counterexample $p=3$, $a=0$ invalidates the converse."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "irreparable",
+      "final_proof": "\\begin{proof}\nNo proof exists with the theorem, assumptions, and domain unchanged. Take $p=3$ and $a=0$. Then $p$ is an odd prime, and for the prime divisor $q=2$ of $p-1$,\n\\[\n0^{(3-1)/2}=0\\not\\equiv1\\pmod3.\n\\]\nTherefore the stated criterion is satisfied. However, $0$ is not a primitive root modulo $3$, because it is not a unit modulo $3$. This contradicts the asserted ``if'' direction, so the theorem is irreparable as stated.\n\\end{proof}",
+      "reason": "Internal checking exposes a decisive counterexample caused by the absent coprimality assumption."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "irreparable",
+      "final_proof": "\\begin{proof}\nThe proposed equivalence is false without an assumption that $a$ be a unit modulo $p$. Let $p=3$ and $a=0$. Since $p-1=2$ and $q=2$ is its only prime divisor,\n\\[\na^{(p-1)/q}=0\\not\\equiv1\\pmod3.\n\\]\nHence the right-hand condition holds. But $a=0$ cannot be a primitive root modulo $3$, as primitive roots must generate the multiplicative group $(\\mathbb Z/3\\mathbb Z)^\\times$ and consequently must be relatively prime to $3$. Thus the theorem has a counterexample and cannot be repaired while preserving its stated assumptions and domain.\n\\end{proof}",
+      "reason": "A critic check rejects the converse using $p=3,a=0$; adding $p\\nmid a$ would change the theorem."
+    },
+    {
+      "method": "full_system",
+      "outcome": "irreparable",
+      "final_proof": "\\begin{proof}\nA dependency-aware check shows that the converse requires $a$ to have a multiplicative order modulo $p$, which is not guaranteed by the stated assumptions. This is not a locally repairable proof gap: choose $p=3$ and $a=0$. The sole prime divisor of $p-1$ is $q=2$, and\n\\[\n0^{(p-1)/q}=0\\not\\equiv1\\pmod3,\n\\]\nso the criterion holds, while $0$ is not a primitive root modulo $3$ because it is not invertible modulo $3$. Independent review therefore rejects the theorem itself, and descendant revalidation cannot certify any proof preserving the original statement. An additional assumption such as $\\gcd(a,p)=1$ is necessary.\n\\end{proof}",
+      "reason": "The evaluator certificate identifies missing invertibility, and the independent counterexample prevents theorem-preserving repair."
+    }
+  ]
+}

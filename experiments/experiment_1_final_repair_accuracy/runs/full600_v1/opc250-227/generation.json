@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-227",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let v₂ denote the 2-adic valuation. If a is even, then v₂(aᵏ+b) is bounded independently of k, so the required divisibility by every power of 2 is impossible. Hence a and b are odd.\n\nEvery odd 2-adic unit has a unique representation\nu=(-1)^ε5^A, with ε∈{0,1} and A∈ℤ₂. Write\n a=(-1)^α5^A,   -b=(-1)^β5^B,\nand put q=v₂(A), r=v₂(B), allowing v₂(0)=∞. Since a is a positive integer, A≠0, so q<∞.\n\nFor n≥3, the congruence aᵏ≡−b (mod 2ⁿ) is equivalent to\nαk≡β (mod 2),   Ak≡B (mod 2ⁿ⁻²).\nThe second congruence is solvable for arbitrarily large n exactly when r≥q. If α=0, k has no effect on the sign, so β=0 is also necessary and sufficient.\n\nIf α=1 and r=q, dividing the second congruence by 2^q shows that k is odd modulo 2, so β=1 is necessary and sufficient. If α=1 and r>q (including r=∞), the same congruence forces k even modulo 2, so β=0 is necessary and sufficient.\n\nConversely, under these conditions, solve Ak≡B (mod 2ⁿ⁻²); the resulting parity is exactly the required one, and adding a suitable multiple of the modulus makes k positive. Thus aᵏ≡−b (mod 2ⁿ) for every n.\n\nTherefore the interesting pairs are precisely the odd pairs satisfying r≥q and, in addition,\n(i) α=0 implies β=0;\n(ii) α=1 implies β=1 exactly when r=q, and β=0 when r>q (or r=∞),\nwhere a=(-1)^α5^A and −b=(-1)^β5^B.",
+      "reason": "The supplied proof incorrectly allowed arbitrary parity adjustment and assumed B/2^q was odd. The repaired proof tracks the forced parity of k."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Write each odd 2-adic unit uniquely as (-1)^ε5^X. If a is even, v₂(aᵏ+b) is uniformly bounded, so no even a is interesting; hence a,b are odd.\n\nSet\n a=(-1)^α5^A,   -b=(-1)^β5^B,\nq=v₂(A)<∞,   r=v₂(B),\nwith v₂(0)=∞. For n≥3, using that 5 has order 2ⁿ⁻² modulo 2ⁿ,\naᵏ≡−b (mod 2ⁿ)\niff\nαk≡β (mod 2),   Ak≡B (mod 2ⁿ⁻²).\n\nThe second congruence is solvable for every sufficiently large n iff r≥q. If α=0, the first congruence requires β=0. This condition is sufficient because the exponent congruence can then be solved and k may be chosen positive.\n\nSuppose α=1. If r=q, after division by 2^q the exponent congruence has an odd right-hand side and therefore forces k odd; hence β must equal 1. If r>q, or r=∞, it forces k even for all sufficiently large n; hence β must equal 0. These conditions are also sufficient, since the parity forced by the exponent congruence agrees with β.\n\nThus (a,b) is interesting exactly when a,b are odd, r≥q, and either α=0,β=0, or α=1 with β=1 iff r=q (otherwise β=0).",
+      "reason": "Self-checking exposed that parity cannot generally be changed by adding the exponent modulus; the final proof incorporates the resulting parity constraint."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Assume first that a is even. Writing a=2^s a₀ with s≥1, one checks that v₂(aᵏ+b)≤v₂(b)+1 for every k, contradicting the definition. Hence a and b are odd.\n\nFor odd units, use the standard decomposition\n u=(-1)^ε5^X,\nwhere ε∈{0,1} and X∈ℤ₂. Write\n a=(-1)^α5^A,\u00160 -b=(-1)^β5^B,\nq=v₂(A), r=v₂(B), with v₂(0)=∞. Here q is finite because no positive integer equals −1 in ℤ₂.\n\nFor n≥3, since 5 has order 2ⁿ⁻² modulo 2ⁿ,\naᵏ≡−b mod 2ⁿ\nis equivalent to\nAk≡B mod 2ⁿ⁻² and αk≡β mod 2.\nThe exponent congruence is solvable for all n exactly when r≥q.\n\nIf α=0, the sign condition is β=0, and this is sufficient. If α=1 and r=q, dividing by 2^q shows that every solution k is odd, so β=1 is required and sufficient. If α=1 and r>q, including r=∞, every solution k is even for all large n, so β=0 is required and sufficient. In each sufficient case, solutions can be chosen positive.\n\nConsequently, the complete classification is: a pair is interesting iff a and b are odd, r≥q, and\nα=0⇒β=0,\nwhile for α=1 one has β=1 exactly when r=q and β=0 when r>q or r=∞.",
+      "reason": "The critic rejected the original sufficiency argument because parity adjustment fails when the exponent modulus is even; the corrected classification includes the missing sign/exponent compatibility."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let N be the positive integers. If a is even, write a=2^s a₀ with s≥1. Comparing the valuations of aᵏ and b shows that v₂(aᵏ+b) is bounded by v₂(b)+1, so (a,b) cannot be interesting. Thus both a and b are odd.\n\nFor every odd 2-adic unit u there are unique ε(u)∈{0,1} and X(u)∈ℤ₂ such that u=(-1)^ε5^X. Write\n a=(-1)^α5^A,\n -b=(-1)^β5^B,\nand define q=v₂(A), r=v₂(B), with v₂(0)=∞. Since a is a positive integer, A≠0 and q is finite.\n\nFor n≥3, the order of 5 modulo 2ⁿ is 2ⁿ⁻². Therefore\n aᵏ≡−b (mod 2ⁿ)\niff\nAk≡B (mod 2ⁿ⁻²),   αk≡β (mod 2).\n\nThe first congruence has solutions for arbitrarily large n exactly when r≥q. Its solutions have parity determined as follows: if r=q, then k is odd modulo 2; if r>q, including r=∞, then k is even modulo 2. If α=0, the sign condition requires β=0. If α=1, it requires β=1 in the first case and β=0 in the second case.\n\nThese conditions are sufficient: for each n solve the exponent congruence, whose forced parity agrees with the stated sign condition, and add a multiple of its modulus if necessary to obtain k∈N. Hence aᵏ+b is divisible by 2ⁿ for every n.\n\nTherefore the interesting ordered pairs are exactly those for which a and b are odd, r≥q, and either α=0,β=0, or α=1 with β=1 precisely when r=q and β=0 when r>q or r=∞.",
+      "reason": "Dependency-aware review found two defects: the original valuation case split omitted a case, and the parity-adjustment step was invalid. The final proof repairs both and revalidates the classification."
+    }
+  ]
+}

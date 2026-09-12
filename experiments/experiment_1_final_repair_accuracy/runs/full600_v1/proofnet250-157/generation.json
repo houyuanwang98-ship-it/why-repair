@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-157",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $G$ act on the set of left cosets $G/H$ by left multiplication. This gives a homomorphism\n\\[\n\\lambda:G\\to S_{G/H}.\n\\]\nLet $K=\\ker\\lambda$. Then $K\\trianglelefteq G$. Moreover, every element of $K$ fixes the coset $H$, so\n\\[\nK\\leq \\operatorname{stab}_G(H)=H.\n\\]\nBy the First Isomorphism Theorem, $G/K$ embeds in $S_{G/H}$. Since $|G/H|=[G:H]=n$, we have\n\\[\n[G:K]=|G/K|\\leq |S_{G/H}|=n!.\n\\]\nThus $K$ has all the required properties.\n\\end{proof}",
+      "reason": "The original argument is valid; only notation and exposition were lightly normalized."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nBecause $[G:H]=n$, the set of left cosets $G/H$ has $n$ elements. The left multiplication action of $G$ on $G/H$ induces a homomorphism\n\\[\n\\lambda:G\\longrightarrow S_{G/H}.\n\\]\nSet $K=\\ker(\\lambda)$. Kernels are normal, so $K\\trianglelefteq G$. If $k\\in K$, then $k$ fixes the coset $H$, hence $kH=H$, which implies $k\\in H$. Therefore $K\\leq H$.\n\nThe First Isomorphism Theorem gives $G/K\\cong\\operatorname{im}(\\lambda)$, so\n\\[\n[G:K]=|G/K|=|\\operatorname{im}(\\lambda)|\\leq |S_{G/H}|=n!.\n\\]\nTherefore there exists a normal subgroup $K\\leq H$ with $[G:K]\\leq n!$.\n\\end{proof}",
+      "reason": "Internal checking confirms the action, kernel containment, and index bound all preserve the theorem."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $X=G/H$ be the set of left cosets, so $|X|=n$. The action of $G$ on $X$ by left multiplication defines a homomorphism\n\\[\n\\lambda:G\\to \\operatorname{Sym}(X).\n\\]\nLet $K=\\ker\\lambda$. Then $K\\trianglelefteq G$. Since each element of $K$ fixes every coset, in particular it fixes $H$, and thus\n\\[\nK\\leq\\operatorname{Stab}_G(H)=H.\n\\]\nThe induced map $G/K\\to\\operatorname{Sym}(X)$ is injective. Consequently,\n\\[\n[G:K]=|G/K|\\leq |\\operatorname{Sym}(X)|=n!.\n\\]\nHence $K$ is a normal subgroup of $G$, contained in $H$, and has index at most $n!$.\n\\end{proof}",
+      "reason": "A critic check finds no substantive gap: the stabilizer computation and factorial count are correct."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $X=G/H$ denote the set of left cosets of $H$ in $G$. Since $[G:H]=n$, we have $|X|=n$. Left multiplication defines an action of $G$ on $X$, and hence a homomorphism\n\\[\n\\lambda:G\\to S_X.\n\\]\nDefine $K=\\ker\\lambda$. The kernel is normal in $G$. Furthermore, if $k\\in K$, then $k$ fixes the coset $H$, so $kH=H$ and therefore $k\\in H$. Thus $K\\leq H$.\n\nThe action homomorphism factors through an injective homomorphism\n\\[\nG/K\\hookrightarrow S_X.\n\\]\nTherefore,\n\\[\n[G:K]=|G/K|\\leq |S_X|=|X|!=n!.\n\\]\nThus $K\\trianglelefteq G$, $K\\leq H$, and $|G:K|\\leq n!$, as required.\n\\end{proof}",
+      "reason": "Dependency checks validate the action, kernel properties, factorization, and descendant index bound; no repair was needed."
+    }
+  ]
+}

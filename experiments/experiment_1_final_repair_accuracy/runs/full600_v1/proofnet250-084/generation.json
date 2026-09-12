@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-084",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nApply Eisenstein's criterion with the prime $p$. The leading coefficient of $x^n-p$ is $1$, which is not divisible by $p$. Every intermediate coefficient is $0$, hence divisible by $p$, and the constant coefficient is $-p$, which is not divisible by $p^2$. Therefore, $x^n-p$ is irreducible in $\\mathbb{Q}[x]$.\n\\end{proof}",
+      "reason": "The original proof invoked Eisenstein's criterion but did not verify its conditions."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nConsider $f(x)=x^n-p$. Its leading coefficient is $1$, so it is not divisible by $p$. All coefficients other than the leading coefficient and the constant coefficient are $0$, and thus are divisible by $p$. Finally, the constant coefficient $-p$ is not divisible by $p^2$. Eisenstein's criterion therefore implies that $f(x)$ is irreducible in $\\mathbb{Q}[x]$.\n\\end{proof}",
+      "reason": "After checking each Eisenstein condition, the omitted justification was supplied."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $f(x)=x^n-p$. We use Eisenstein's criterion at the prime $p$. The coefficient of $x^n$ is $1$, which is not divisible by $p$; the coefficients of $x^{n-1},\\ldots,x$ are all $0$, hence divisible by $p$; and the constant coefficient is $-p$, which is not divisible by $p^2$. Thus all hypotheses of Eisenstein's criterion hold, so $x^n-p$ is irreducible over $\\mathbb{Q}$.\n\\end{proof}",
+      "reason": "The critic identified that merely naming Eisenstein's criterion was incomplete and required explicit coefficient checks."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet $f(x)=x^n-p$. Use the prime $p$ in Eisenstein's criterion. The leading coefficient of $f$ is $1$, so it is not divisible by $p$. Every nonleading, nonconstant coefficient is $0$ and is therefore divisible by $p$. The constant coefficient is $-p$, which is not divisible by $p^2$. Hence Eisenstein's criterion applies and proves that $f(x)=x^n-p$ is irreducible in $\\mathbb{Q}[x]$.\n\\end{proof}",
+      "reason": "The dependency check confirmed that only the missing Eisenstein-condition verification required repair; independent review found no remaining defect."
+    }
+  ]
+}

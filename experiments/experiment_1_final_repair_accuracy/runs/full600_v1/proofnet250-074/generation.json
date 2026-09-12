@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-074",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor $a+bi\\in\\mathbb Z[i]$, divisibility by $1+i$ is equivalent to $a\\equiv b\\pmod 2$: indeed,\n\\[\n(1+i)\\left(\\frac{a+b}{2}+\\frac{b-a}{2}i\\right)=a+bi\n\\]\nwhen $a\\equiv b\\pmod 2$. If $a\\not\\equiv b\\pmod 2$, then $a-1\\equiv b\\pmod 2$, so $a-1+bi\\in(1+i)$ and hence $a+bi\\equiv1\\pmod{(1+i)}$. Thus every residue class is either $(1+i)$ or $1+(1+i)$, and these classes are distinct because $1\\notin(1+i)$. Therefore the quotient has exactly two elements. A unital ring with two elements is a field, so $\\mathbb Z[i]/(1+i)$ is a field of order $2$.\n\\end{proof}",
+      "reason": "The parity argument is made explicit, and distinctness of the two cosets is justified."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nThe elements of $(1+i)$ are precisely the Gaussian integers whose real and imaginary parts have the same parity. In fact,\n\\[\n(1+i)(u+vi)=(u-v)+(u+v)i,\n\\]\nwhose two coordinates have the same parity; conversely, if $a\\equiv b\\pmod2$, taking $u=(a+b)/2$ and $v=(b-a)/2$ gives\n\\[\n(1+i)(u+vi)=a+bi.\n\\]\nHence, for every $a+bi$, either $a+bi\\in(1+i)$ or $a-1+bi\\in(1+i)$. Thus there are at most two cosets. They are distinct since $1\\notin(1+i)$, so the quotient has exactly two elements. Its nonzero element is the class of $1$, which is its own multiplicative identity; consequently every nonzero element is invertible. Therefore $\\mathbb Z[i]/(1+i)$ is a field of order $2$.\n\\end{proof}",
+      "reason": "Internal checking confirms the divisibility characterization and explicitly verifies both coset count and field structure."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $I=(1+i)$. Since\n\\[\n(a+bi)(1-i)=(a+b)+(b-a)i,\n\\]\nwe have $a+bi\\in I$ exactly when $a+b$ and $b-a$ are even, equivalently when $a\\equiv b\\pmod2$. Therefore every $a+bi$ is congruent modulo $I$ either to $0$ (if $a\\equiv b\\pmod2$) or to $1$ (if $a\\not\\equiv b\\pmod2$), because in the latter case $(a-1)+bi\\in I$. Since $1\\notin I$, the two cosets are distinct, and $\\mathbb Z[i]/I$ has order $2$. The quotient is a unital ring with only two elements, so its sole nonzero element, $1+I$, is invertible. Hence it is a field of order $2$.\n\\end{proof}",
+      "reason": "The critic check replaces the potentially opaque multiplication step with a direct ideal-membership criterion and confirms the quotient is nontrivial."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet $I=(1+i)$. For $a+bi\\in\\mathbb Z[i]$, if $a\\equiv b\\pmod2$, then\n\\[\na+bi=(1+i)\\left(\\frac{a+b}{2}+\\frac{b-a}{2}i\\right)\\in I.\n\\]\nIf $a\\not\\equiv b\\pmod2$, then $a-1\\equiv b\\pmod2$, so the preceding argument gives $(a-1)+bi\\in I$, and hence $a+bi\\in1+I$. Thus every coset modulo $I$ is either $I$ or $1+I$. These cosets are distinct: if $1+I=I$, then $1\\in I$, which would imply $1=(1+i)(u+vi)$ for integers $u,v$, forcing the coordinate equations $u-v=1$ and $u+v=0$, whose solution $u=1/2$, $v=-1/2$ is not integral. Therefore the quotient has exactly two elements. Its only nonzero element is $1+I$, the multiplicative identity, so it is invertible. Hence $\\mathbb Z[i]/(1+i)$ is a field of order $2$.\n\\end{proof}",
+      "reason": "Dependency checks validate ideal membership, coset exhaustiveness, distinctness, and the field conclusion; the local repair explicitly proves the ideal is proper."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-187",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet K\\leq G. If K\\leq H, we are done. Otherwise choose k\\in K\\setminus H. Since H\\trianglelefteq G and [G:H]=p, the quotient G/H is cyclic of order p. The coset kH is nonidentity, hence generates G/H. Therefore, for every g\\in G, there is an integer a such that gH=(kH)^a=k^aH, so g\\in KH. Thus G=KH. By the Second Isomorphism Theorem,\n\\[\nK/(K\\cap H)\\cong KH/H=G/H,\n\\]\nso |K:K\\cap H|=|G:H|=p.\n\\end{proof}",
+      "reason": "Replaced the undefined subgroup N with H and supplied the quotient-generation and isomorphism justifications."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFix K\\leq G. If K\\subseteq H, the first alternative holds. Suppose instead that K\\nsubseteq H, and choose k\\in K\\setminus H. Because H is normal and has prime index p, G/H is cyclic of order p. Since kH is not the identity coset, it generates G/H. Hence every coset gH equals (kH)^a for some integer a, and therefore g=k^a h for some h\\in H. As k^a\\in K, this gives g\\in KH, so G=KH.\n\nThe Second Isomorphism Theorem gives\n\\[\nK/(K\\cap H)\\cong KH/H=G/H.\n\\]\nConsequently |K:K\\cap H|=|G:H|=p, proving the claim.\n\\end{proof}",
+      "reason": "The revised proof checks both cases and explicitly verifies that the index conclusion follows from the Second Isomorphism Theorem."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet K\\leq G. If K\\leq H, there is nothing to prove. Assume K\\not\\leq H and select k\\in K\\setminus H. Since H\\trianglelefteq G and [G:H]=p, the quotient G/H has order p and is therefore cyclic. The element kH is nontrivial in G/H, so it generates G/H. Thus, for any g\\in G, there exists a\\in\\mathbb Z with gH=k^aH, which implies g=k^ah for some h\\in H. Hence g\\in KH and G=KH.\n\nMoreover, the map K\\to G/H defined by x\\mapsto xH is a surjective homomorphism, because KH=G, and its kernel is K\\cap H. Therefore\n\\[\nK/(K\\cap H)\\cong G/H,\n\\]\nand so |K:K\\cap H|=|G/H|=p.\n\\end{proof}",
+      "reason": "A critic-style check removed the ambiguous notation and verified surjectivity and the kernel directly before applying the isomorphism theorem."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet K\\leq G. Consider the quotient homomorphism \\pi:G\\to G/H. If K\\leq H, the first alternative holds. Otherwise choose k\\in K\\setminus H. Then \\pi(k)\\neq 1. Since |G/H|=[G:H]=p is prime, G/H is cyclic and every nonidentity element generates it. Hence \\pi(K) contains \\pi(k), so \\pi(K)=G/H.\n\nIt follows that for every g\\in G there exists x\\in K with \\pi(x)=\\pi(g), and therefore x^{-1}g\\in H. Thus g\\in KH, proving G=KH. The restriction \\pi|_K:K\\to G/H is surjective and has kernel K\\cap H. By the First Isomorphism Theorem,\n\\[\nK/(K\\cap H)\\cong G/H.\n\\]\nTherefore |K:K\\cap H|=|G/H|=p, as required.\n\\end{proof}",
+      "reason": "Dependency checks establish the quotient image, product equality, kernel, and index in order; the final proof independently revalidates all descendants of the repaired argument."
+    }
+  ]
+}

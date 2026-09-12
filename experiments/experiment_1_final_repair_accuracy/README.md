@@ -13,7 +13,7 @@
 - `full_source_manifest.json`：所有全量数据来源摘要。
 - `build_full_dataset.py`：在仓库根目录执行即可复算数据整理；会重建初始账本，后续真实模型结果须另存run目录。
 
-全量状态：`full_dataset_rebuilt_execution_pending`。本轮无新模型调用，全量对比尚未完成。
+全量状态：`full_run_596_of_600_judged`。候选证明已生成600/600题，独立盲评已完成596/600题，剩余4题。实时快照见 [PROGRESS.md](PROGRESS.md)。
 
 ## 实验摘要
 

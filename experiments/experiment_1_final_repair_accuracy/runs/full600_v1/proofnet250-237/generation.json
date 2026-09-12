@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-237",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $|H|=p$ and $|K|=q$. Since $H$ and $K$ are subgroups of $G$, their intersection $H\\cap K$ is a subgroup of both $H$ and $K$. By Lagrange's Theorem, $|H\\cap K|$ divides both $p$ and $q$. Because $\\gcd(p,q)=1$, it follows that $|H\\cap K|=1$. Hence $H\\cap K=1$.\n\\end{proof}",
+      "reason": "The argument is valid; the repair removes the unnecessary reference to a previous exercise and states the subgroup fact directly."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $|H|=p$ and $|K|=q$. The intersection $H\\cap K$ is a subgroup of both $H$ and $K$. Therefore, by Lagrange's Theorem, $|H\\cap K|$ divides both $p$ and $q$. Since $p$ and $q$ are relatively prime, $|H\\cap K|$ divides $\\gcd(p,q)=1$, so $|H\\cap K|=1$. Thus $H\\cap K=1$.\n\\end{proof}",
+      "reason": "Internal checking confirms the proof follows directly from the subgroup-intersection property, Lagrange's Theorem, and coprimality."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet $L=H\\cap K$. Then $L$ is a subgroup of $H$ and of $K$. Hence Lagrange's Theorem gives\n\\[\n|L|\\mid |H| \\quad\\text{and}\\quad |L|\\mid |K|.\n\\]\nSince $|H|$ and $|K|$ are relatively prime, their only common positive divisor is $1$. Consequently $|L|=1$, and therefore $L=\\{1_G\\}$. Thus $H\\cap K=1$.\n\\end{proof}",
+      "reason": "The critic verifies that the generated proof explicitly identifies the unique element of the intersection and preserves the original theorem."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $L=H\\cap K$. Because $H$ and $K$ are subgroups of $G$, $L$ is a subgroup of each. Thus, by Lagrange's Theorem,\n\\[\n|L|\\mid |H| \\quad\\text{and}\\quad |L|\\mid |K|.\n\\]\nThe orders $|H|$ and $|K|$ are relatively prime, so the only positive integer dividing both is $1$. Hence $|L|=1$. Since $L$ contains the identity element of $G$, it follows that $L=\\{1_G\\}$, and therefore $H\\cap K=1$.\n\\end{proof}",
+      "reason": "Dependency checks validate the intersection-subgroup step, divisibility step, coprimality step, and final singleton conclusion; independent review finds no descendant claims requiring revalidation."
+    }
+  ]
+}

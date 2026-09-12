@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-240",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let \\(y=2+\\sqrt3\\), so \\(y^{-1}=2-\\sqrt3\\) and \\(y+y^{-1}=4\\). Define\n\\[\nb_k=\\frac{y^{2^k}+y^{-2^k}}2.\n\\]\nThen \\(b_0=2=a_0\\), and\n\\[\n2b_k^2-1=\\frac{y^{2^{k+1}}+y^{-2^{k+1}}}{2}=b_{k+1}.\n\\]\nThus \\(a_k=b_k\\) for every \\(k\\).\n\nLet an odd prime \\(p\\mid a_n\\). Since \\(p\\ne2\\), reducing in the field \\(\\mathbb F_{p^2}\\) gives\n\\[\ny^{2^n}+y^{-2^n}=0,\n\\]\nso \\(y^{2^{n+1}}=-1\\) and hence \\(y^{2^{n+2}}=1\\). Therefore the multiplicative order of \\(y\\) is exactly \\(2^{n+2}\\).\n\nThe element \\(y\\) satisfies \\(X^2-4X+1=0\\). Frobenius sends it to one of the two roots, so \\(y^p=y\\) or \\(y^p=y^{-1}\\). Consequently, the order of \\(y\\) divides either \\(p-1\\) or \\(p+1\\). Hence \\(2^{n+2}\\) divides one of \\(p-1,p+1\\). The other is even because \\(p\\) is odd. Thus\n\\[\nv_2(p^2-1)=v_2(p-1)+v_2(p+1)\\ge n+2+1=n+3,\n\\]\nwhich proves \\(2^{n+3}\\mid p^2-1\\).",
+      "reason": "The original argument incorrectly asserted that Frobenius necessarily sends the quadratic root to its inverse; allowing both roots repairs the proof."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Put \\(y=2+\\sqrt3\\), so that \\(y^{-1}=2-\\sqrt3\\). We claim\n\\[\na_k=\\frac{y^{2^k}+y^{-2^k}}2.\n\\]\nThis holds for \\(k=0\\), since \\((y+y^{-1})/2=2\\), and the identity \\(2\\cosh^2 t-1=\\cosh(2t)\\) algebraically shows that the displayed expression satisfies the recurrence. Hence the claim follows by induction.\n\nIf \\(p\\mid a_n\\), then in \\(\\mathbb F_{p^2}\\) we have\n\\[\ny^{2^n}+y^{-2^n}=0.\n\\]\nMultiplying by \\(y^{2^n}\\) yields \\(y^{2^{n+1}}=-1\\), so \\(y^{2^{n+2}}=1\\). Since \\(y^{2^{n+1}}\\ne1\\), the order of \\(y\\) is exactly \\(2^{n+2}\\).\n\nNow \\(y\\) is a root of \\(X^2-4X+1\\), whose roots are \\(y\\) and \\(y^{-1}\\). Therefore Frobenius satisfies \\(y^p\\in\\{y,y^{-1}\\}\\). If \\(y^p=y\\), then the order of \\(y\\) divides \\(p-1\\); if \\(y^p=y^{-1}\\), it divides \\(p+1\\). In either case, \\(2^{n+2}\\) divides one of \\(p-1\\) or \\(p+1\\). Since the other factor is even,\n\\[\n2^{n+3}\\mid(p-1)(p+1)=p^2-1.\n\\]\nThus the required assertion holds.",
+      "reason": "Internal checking replaces the unjustified Frobenius branch with the valid two-case alternative and preserves the theorem."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let \\(u=2+\\sqrt3\\). Then \\(u^{-1}=2-\\sqrt3\\) and \\(u+u^{-1}=4\\). Set\n\\[\nc_k=\\frac{u^{2^k}+u^{-2^k}}2.\n\\]\nWe have \\(c_0=2\\), and\n\\[\n2c_k^2-1=\\frac{u^{2^{k+1}}+u^{-2^{k+1}}}{2}.\n\\]\nThus \\(c_k\\) obeys the same initial condition and recurrence as \\(a_k\\), so \\(c_k=a_k\\).\n\nSuppose \\(p\\) is an odd prime dividing \\(a_n\\). In \\(\\mathbb F_{p^2}\\), the equation \\(a_n=0\\) gives\n\\[\nu^{2^n}+u^{-2^n}=0,\n\\]\nwhence \\(u^{2^{n+1}}=-1\\). It follows that \\(u\\) has order exactly \\(2^{n+2}\\): its order divides \\(2^{n+2}\\), but does not divide \\(2^{n+1}\\).\n\nThe element \\(u\\) satisfies \\(X^2-4X+1=0\\). The Frobenius image \\(u^p\\) is therefore either \\(u\\) or \\(u^{-1}\\). In the first case, \\(u^{p-1}=1\\); in the second, \\(u^{p+1}=1\\). Hence \\(2^{n+2}\\mid p-1\\) or \\(2^{n+2}\\mid p+1\\). Because \\(p\\) is odd, the remaining one of \\(p-1,p+1\\) is divisible by 2. Therefore\n\\[\nv_2(p^2-1)\\ge(n+2)+1=n+3,\n\\]\nso \\(2^{n+3}\\mid p^2-1\\).",
+      "reason": "A critic check identified the only substantive gap: Frobenius may fix the root or invert it; both cases yield the needed divisibility."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Define \\(u=2+\\sqrt3\\), so \\(u^{-1}=2-\\sqrt3\\) and \\(u+u^{-1}=4\\). For\n\\[\nc_k=\\frac{u^{2^k}+u^{-2^k}}2,\n\\]\nwe have \\(c_0=2\\) and\n\\[\n2c_k^2-1=\\frac{u^{2^{k+1}}+u^{-2^{k+1}}}{2}=c_{k+1}.\n\\]\nBy induction, \\(c_k=a_k\\) for all \\(k\\).\n\nLet \\(p\\) be an odd prime with \\(p\\mid a_n\\). Work in \\(\\mathbb F_{p^2}\\), where \\(u\\) is represented by a root of \\(X^2-4X+1\\). Since \\(u\\ne0\\), the congruence \\(a_n=0\\pmod p\\) implies\n\\[\nu^{2^n}+u^{-2^n}=0,\n\\]\nso \\(u^{2^{n+1}}=-1\\) and \\(u^{2^{n+2}}=1\\). Thus \\(\\operatorname{ord}(u)=2^{n+2}\\).\n\nFrobenius preserves the polynomial \\(X^2-4X+1\\), whose roots are \\(u\\) and \\(u^{-1}\\). Hence \\(u^p=u\\) or \\(u^p=u^{-1}\\). Accordingly, \\(u^{p-1}=1\\) or \\(u^{p+1}=1\\), and therefore\n\\[\n2^{n+2}\\mid p-1\\quad\\text{or}\\quad 2^{n+2}\\mid p+1.\n\\]\nSince \\(p\\) is odd, both \\(p-1\\) and \\(p+1\\) are even. In particular, the factor not divisible by \\(2^{n+2}\\) contributes at least one additional factor of 2, giving\n\\[\n2^{n+3}\\mid(p-1)(p+1)=p^2-1.\n\\]\nThis proves the theorem.",
+      "reason": "Dependency-aware checking validates the closed form, exact order, both Frobenius branches, and the final 2-adic step; the local repair is the corrected Frobenius case split."
+    }
+  ]
+}

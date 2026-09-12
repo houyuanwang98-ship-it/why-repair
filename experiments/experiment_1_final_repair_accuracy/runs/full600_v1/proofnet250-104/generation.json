@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-104",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $E:=(0,1)$ and define $f:E\\to\\mathbb{R}$ by $f(x)=1/x$. Since $x\\mapsto 1/x$ is continuous on $(0,1)$, $f$ is continuous on $E$. Suppose that there were a continuous function $g:\\mathbb{R}\\to\\mathbb{R}$ such that $g(x)=f(x)$ for every $x\\in E$. Continuity of $g$ at $0$ implies that $g$ is bounded on some neighborhood of $0$: there exist $\\delta>0$ and $M>0$ such that $|g(x)|\\le M$ whenever $|x|<\\delta$. For $x\\in(0,\\min\\{\\delta,1\\})$, this gives $1/x=|f(x)|=|g(x)|\\le M$, which is impossible for sufficiently small positive $x$. Hence no such continuous extension $g$ exists.\\n\\end{proof}",
+      "reason": "Replaced the incorrect appeal to the intermediate value theorem with the local boundedness consequence of continuity at $0$."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nTake $E=(0,1)$ and let $f(x)=1/x$ for $x\\in E$. The function $f$ is continuous on $E$. Assume, toward a contradiction, that a continuous $g:\\mathbb{R}\\to\\mathbb{R}$ satisfies $g|_E=f$. Since $g$ is continuous at $0$, there is an $\\varepsilon>0$ such that $|g(x)-g(0)|<1$ whenever $|x|<\\varepsilon$. Thus $|g(x)|\\le |g(0)|+1$ for all $|x|<\\varepsilon$. But for every $x\\in(0,\\min\\{\\varepsilon,1\\})$, we have $g(x)=1/x$, and $1/x$ is unbounded as $x\\to0^+$. This is a contradiction. Therefore $f$ has no continuous extension to $\\mathbb{R}$.\\n\\end{proof}",
+      "reason": "Self-check identified that boundedness must follow from continuity at $0$ (or compactness via the extreme value theorem), and the proof was revised accordingly."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine $E=(0,1)$ and $f:E\\to\\mathbb{R}$ by $f(x)=1/x$. This $f$ is continuous because reciprocal is continuous away from $0$. Suppose there exists a continuous extension $g:\\mathbb{R}\\to\\mathbb{R}$ with $g(x)=f(x)$ on $E$. Let $a=g(0)$. By continuity of $g$ at $0$, for $\\eta=1$ there exists $\\delta>0$ such that $|g(x)-a|<1$ whenever $|x|<\\delta$. Consequently, $|g(x)|<|a|+1$ for such $x$. Choose $x\\in(0,\\min\\{\\delta,1/(|a|+2)\\})$. Then $x\\in E$, so $|g(x)|=1/x>|a|+2$, contradicting $|g(x)|<|a|+1$. Hence no continuous extension exists.\\n\\end{proof}",
+      "reason": "The critic check verified continuity of $f$, the correct use of continuity at the missing endpoint, and an explicit choice of the contradictory point."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $E=(0,1)$ and define $f:E\\to\\mathbb{R}$ by $f(x)=1/x$. Then $f$ is continuous on $E$. Assume that there is a continuous $g:\\mathbb{R}\\to\\mathbb{R}$ with $g(x)=f(x)$ for every $x\\in E$. Set $L=g(0)$. By continuity at $0$, there is $\\delta>0$ such that\n\\[\n|g(x)-L|<1\\qquad\\text{whenever }|x|<\\delta.\n\\]\nTherefore $|g(x)|<|L|+1$ for every $|x|<\\delta$. On the other hand, since $g(x)=1/x$ for $x\\in E$, any positive $x<\\min\\{\\delta,1/(|L|+2)\\}$ satisfies\n\\[\n|g(x)|=\\frac1x>|L|+2,\n\\]\nwhich is a contradiction. Thus no continuous function on $\\mathbb{R}$ extends $f$, proving the claim.\\n\\end{proof}",
+      "reason": "Dependency checks confirm the domain, continuity of $f$, extension assumption, local continuity bound, contradiction, and final conclusion; the only needed local repair was replacing the invalid IVT claim."
+    }
+  ]
+}

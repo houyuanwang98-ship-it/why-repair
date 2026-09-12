@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-106",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let \\(\\omega=e^{2\\pi i/3}\\), so \\(1+\\omega+\\omega^2=0\\). Define\n\\[\nt_n=a_n+b_n+c_n,\\quad u_n=a_n+\\omega b_n+\\omega^2c_n,\\quad v_n=a_n+\\omega^2b_n+\\omega c_n.\n\\]\nDirect expansion gives\n\\[\nt_{n+1}=t_n^2,\\qquad u_{n+1}=v_n^2,\\qquad v_{n+1}=u_n^2.\n\\]\nSince \\(|a_n|,|b_n|,|c_n|\\le 2022\\), all three transformed sequences are bounded. Thus \\(t_n=t_0^{2^n}\\), so boundedness implies \\(|t_0|\\le1\\). Also \\(u_{n+2}=u_n^4\\) and \\(v_{n+2}=v_n^4\\), hence boundedness implies \\(|u_0|\\le1\\) and \\(|v_0|\\le1\\).\n\nThe discrete Fourier identity yields\n\\[\n|t_0|^2+|u_0|^2+|v_0|^2=3\\bigl(|a_0|^2+|b_0|^2+|c_0|^2\\bigr).\n\\]\nTherefore\n\\[\n3\\bigl(|a_0|^2+|b_0|^2+|c_0|^2\\bigr)\\le3,\n\\]\nwhich proves \\(\\boxed{|a_0|^2+|b_0|^2+|c_0|^2\\le1}\\).",
+      "reason": "The original argument is valid after making the transformed recurrences and boundedness implications explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Put \\(\\omega=e^{2\\pi i/3}\\), and set\n\\[\nT_n=a_n+b_n+c_n,\\quad U_n=a_n+\\omega b_n+\\omega^2c_n,\\quad V_n=a_n+\\omega^2b_n+\\omega c_n.\n\\]\nUsing \\(1+\\omega+\\omega^2=0\\) and expanding the recurrence, we obtain\n\\[\nT_{n+1}=T_n^2,\\qquad U_{n+1}=V_n^2,\\qquad V_{n+1}=U_n^2.\n\\]\nThe assumed bounds on \\(a_n,b_n,c_n\\) imply that \\(T_n,U_n,V_n\\) are bounded. Since \\(T_n=T_0^{2^n}\\), we must have \\(|T_0|\\le1\\). Further,\n\\[\nU_{n+2}=U_n^4,\\\\qquad V_{n+2}=V_n^4,\n\\]\nso boundedness gives \\(|U_0|\\le1\\) and \\(|V_0|\\le1\\).\n\nBy orthogonality of the three cube-root Fourier vectors,\n\\[\n|T_0|^2+|U_0|^2+|V_0|^2\n=3(|a_0|^2+|b_0|^2+|c_0|^2).\n\\]\nThe left side is at most \\(3\\), and hence\n\\[\n|a_0|^2+|b_0|^2+|c_0|^2\\le1.\n\\]\nThis is the required conclusion.",
+      "reason": "A self-check confirms the Fourier-mode recurrences and applies the bounded-orbit condition to each mode, including the two-step modes."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let \\(\\omega\\) be a primitive cube root of unity. Define\n\\[\nT_n=a_n+b_n+c_n,\\quad U_n=a_n+\\omega b_n+\\omega^2c_n,\\quad V_n=a_n+\\omega^2b_n+\\omega c_n.\n\\]\nA direct calculation gives\n\\[\nT_{n+1}=T_n^2,\n\\qquad U_{n+1}=V_n^2,\n\\qquad V_{n+1}=U_n^2.\n\\]\nThe original sequences are bounded, so these linear combinations are bounded as well. Consequently, \\(T_n=T_0^{2^n}\\) being bounded forces \\(|T_0|\\le1\\). Moreover,\n\\[\nU_{n+2}=U_n^4,\n\\qquad V_{n+2}=V_n^4,\n\\]\nand boundedness forces \\(|U_0|\\le1\\) and \\(|V_0|\\le1\\): otherwise the corresponding subsequence would tend to infinity.\n\nExpanding the squares and using cancellation of the nontrivial cube-root terms gives the Parseval identity\n\\[\n|T_0|^2+|U_0|^2+|V_0|^2\n=3(|a_0|^2+|b_0|^2+|c_0|^2).\n\\]\nThus the right-hand side is at most \\(3\\), proving\n\\[\n\\boxed{|a_0|^2+|b_0|^2+|c_0|^2\\le1}.\n\\]",
+      "reason": "The proof was checked for the only delicate points: the mode identities, the two-step growth argument, and the normalization in Parseval's identity."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let \\(\\omega=e^{2\\pi i/3}\\), and introduce the Fourier coordinates\n\\[\nT_n=a_n+b_n+c_n,\\qquad U_n=a_n+\\omega b_n+\\omega^2c_n,\\qquad V_n=a_n+\\omega^2b_n+\\omega c_n.\n\\]\nBecause \\(1+\\omega+\\omega^2=0\\), substitution into the given recurrence yields\n\\[\nT_{n+1}=T_n^2,\\qquad U_{n+1}=V_n^2,\\qquad V_{n+1}=U_n^2.\n\\]\nEach of \\(T_n,U_n,V_n\\) is bounded, since each is a fixed linear combination of \\(a_n,b_n,c_n\\), whose moduli are all at most \\(2022\\). Therefore\n\\[\nT_n=T_0^{2^n},\n\\qquad U_{n+2}=U_n^4,\n\\qquad V_{n+2}=V_n^4.\n\\]\nIf any of \\(|T_0|,|U_0|,|V_0|\\) exceeded \\(1\\), the corresponding sequence or subsequence would be unbounded. Hence\n\\[\n|T_0|,|U_0|,|V_0|\\le1.\n\\]\nFinally, the inverse Fourier transform (equivalently, Parseval's identity) gives\n\\[\n|T_0|^2+|U_0|^2+|V_0|^2\n=3\\left(|a_0|^2+|b_0|^2+|c_0|^2\\right).\n\\]\nThe left side is at most \\(3\\), so\n\\[\n|a_0|^2+|b_0|^2+|c_0|^2\\le1.\n\\]\nThus the theorem follows.",
+      "reason": "Dependency checks validate every transformed recurrence, the bounded-subsequence inference, and the final normalization; no descendant claim requires further repair."
+    }
+  ]
+}

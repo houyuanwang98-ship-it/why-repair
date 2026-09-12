@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-026",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let S_j=\\sum_{k=1}^j k^{-1} in \\mathbb Z/p\\mathbb Z, with S_0=0. Since inversion permutes \\{1,\\dots,p-1\\},\n\\[\nS_{p-1}=\\sum_{k=1}^{p-1}k^{-1}=\\sum_{k=1}^{p-1}k=\\frac{p(p-1)}2\\equiv0\\pmod p.\n\\]\nAlso, for 1\\le r\\le p-1, (p-r)^{-1}\\equiv-r^{-1}\\pmod p. Therefore, for 0\\le j\\le p-1,\n\\[\nS_{p-1}-S_j=\\sum_{k=j+1}^{p-1}k^{-1}\n=\\sum_{r=1}^{p-1-j}(p-r)^{-1}\n\\equiv-S_{p-1-j}\\pmod p.\n\\]\nBecause S_{p-1}=0, this gives S_j=S_{p-1-j}. For p=2 the assertion is immediate. If p is odd, the indices 1,\\dots,p-2 split, under j\\mapsto p-1-j, into (p-3)/2 pairs, together with the single fixed index (p-1)/2. The remaining index p-1 contributes one further value. Thus the sequence S_1,\\dots,S_{p-1} has at most\n\\[\n\\frac{p-3}{2}+1+1=\\frac{p+1}{2}\n\\]\ndistinct elements. ∙",
+      "reason": "The supplied proof is valid; the rewrite preserves its symmetry and counting argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "Work modulo p and define S_0=0 and S_j=\\sum_{k=1}^j k^{-1} for 1\\le j\\le p-1. The map k\\mapsto k^{-1} permutes the nonzero residue classes, so\n\\[\nS_{p-1}\\equiv\\sum_{k=1}^{p-1}k=\\frac{p(p-1)}2\\equiv0.\n\\]\nMoreover, (p-r)^{-1}\\equiv-r^{-1}. Hence\n\\[\nS_j=S_{p-1}-\\sum_{k=j+1}^{p-1}k^{-1}\n\\equiv-\\sum_{r=1}^{p-1-j}(p-r)^{-1}\n\\equiv S_{p-1-j}\n\\]\nfor every 0\\le j\\le p-1. If p=2, there is only one term and the claim is clear. For odd p, among the indices 1,\\dots,p-2, the involution j\\mapsto p-1-j has (p-3)/2 two-element orbits and one fixed point, j=(p-1)/2. Thus these indices yield at most (p-3)/2+1 distinct values. The final index p-1 adds at most one more value, giving at most\n\\[\n\\frac{p-3}{2}+1+1=\\frac{p+1}{2}.\n\\]\nTherefore the stated sequence contains at most (p+1)/2 distinct elements. ∎",
+      "reason": "Internal checking confirms the endpoint S_{p-1}=0 and the fixed-point count; no repair is needed."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let\n\\[\nS_j=1^{-1}+2^{-1}+\\cdots+j^{-1}\\pmod p,\n\\qquad S_0=0.\n\\]\nSince the inverses of 1,\\dots,p-1 are a permutation of these residues,\n\\[\nS_{p-1}\\equiv1+2+\\cdots+(p-1)=\\frac{p(p-1)}2\\equiv0\\pmod p.\n\\]\nFor every r, we have (p-r)^{-1}\\equiv-r^{-1}\\pmod p. Consequently,\n\\[\nS_{p-1}-S_j\n=\\sum_{k=j+1}^{p-1}k^{-1}\n=\\sum_{r=1}^{p-1-j}(p-r)^{-1}\n\\equiv-S_{p-1-j}.\n\\]\nUsing S_{p-1}=0 yields\n\\[\nS_j\\equiv S_{p-1-j}\\pmod p. \\tag{*}\n\\]\nFor p=2 the conclusion is immediate. Assume p is odd. The involution j\\mapsto p-1-j pairs the indices 1,\\dots,p-2 except for the fixed index (p-1)/2. Hence the first p-2 partial sums have at most (p-3)/2+1=(p-1)/2 distinct values by (*). The last partial sum S_{p-1} contributes at most one additional value. Therefore the entire sequence has at most\n\\[\n\\frac{p-1}{2}+1=\\frac{p+1}{2}\n\\]\ndistinct elements. ∎",
+      "reason": "A critic check finds the involution has exactly one fixed index in the relevant range and the endpoint is counted separately; the proof remains valid."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "Set S_0=0 and, for 1\\le j\\le p-1, let S_j=\\sum_{k=1}^j k^{-1} in \\mathbb Z/p\\mathbb Z. The inversion map is a permutation of the nonzero residues, so\n\\[\nS_{p-1}=\\sum_{k=1}^{p-1}k^{-1}=\\sum_{k=1}^{p-1}k\\equiv0\\pmod p.\n\\]\nFor 1\\le r\\le p-1,\n\\[\n(p-r)^{-1}\\equiv(-r)^{-1}\\equiv-r^{-1}\\pmod p.\n\\]\nThus, for every 0\\le j\\le p-1,\n\\[\nS_{p-1}-S_j\n=\\sum_{k=j+1}^{p-1}k^{-1}\n=\\sum_{r=1}^{p-1-j}(p-r)^{-1}\n\\equiv-S_{p-1-j}.\n\\]\nSince S_{p-1}=0, we obtain S_j=S_{p-1-j}. If p=2, the assertion is immediate. For odd p, the indices 1,\\dots,p-2 consist of (p-3)/2 paired indices under this involution and one fixed index (p-1)/2. Therefore S_1,\\dots,S_{p-2} contain at most (p-3)/2+1=(p-1)/2 distinct values. Adding S_{p-1} can increase the count by at most one, so the full sequence contains at most\n\\[\n\\frac{p-1}{2}+1=\\frac{p+1}{2}\n\\]\ndistinct elements. ∎",
+      "reason": "Dependency-aware review verifies the inverse permutation, endpoint sum, symmetry, orbit count, and final descendant bound; no local repair is required."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "B38",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "设 a=2m+1，b=2n+1，其中 m,n 为整数。则\nab=(2m+1)(2n+1)=2(2mn+m+n)+1。\n因此 ab 为奇数。",
+      "reason": "删除了错误的“乘积除以4总是余1”断言，直接用奇数的代数形式证明。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "因为 a、b 为奇整数，存在整数 m、n，使 a=2m+1、b=2n+1。于是\nab=(2m+1)(2n+1)=4mn+2m+2n+1=2(2mn+m+n)+1。\n故 ab 可表示为 2k+1（其中 k 为整数），所以 ab 为奇数。",
+      "reason": "检查发现原证明中的模4断言并不对所有奇整数成立，改用定义完成验证。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "由 a、b 为奇整数，分别存在整数 r、s，使 a=2r+1，b=2s+1。则\nab=(2r+1)(2s+1)=4rs+2r+2s+1=2(2rs+r+s)+1。\n由于 2rs+r+s 为整数，ab 是奇数。",
+      "reason": "批评环节识别出原证明的模4陈述是错误的；生成的修正版保留原结论并补足定义性论证。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "目标只需证明 ab 不能被2整除。因 a、b 为奇整数，存在整数 m、n，使 a=2m+1、b=2n+1。计算得\nab=4mn+2m+2n+1=2(2mn+m+n)+1。\n所以 ab 是形如 2q+1 的整数，必为奇数。该结论直接由给定假设推出，且不存在需要重新验证的后续结论。",
+      "reason": "依赖检查定位唯一错误为模4断言；进行最小局部替换后，独立检查确认结论及其依据均成立。"
+    }
+  ]
+}

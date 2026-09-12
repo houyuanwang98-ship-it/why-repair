@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-176",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $I$ be a nonzero ideal of $R$. Consider the set $I/\\sim$ of associate classes of nonzero elements of $I$, ordered by\n\\[\n[x]\\le [y]\\quad\\Longleftrightarrow\\quad y\\mid x.\n\\]\nCondition (ii) implies that every chain has an upper bound: indeed, choosing representatives along a chain gives a divisibility sequence, which is eventually constant up to associates. Thus, by Zorn's lemma, $I/\\sim$ has a maximal element. Choose $a\\in I$ representing it. Equivalently, $a$ has no proper divisor in $I$ up to associates.\n\nFor any nonzero $x\\in I$, condition (i) gives a greatest common divisor $d$ of $a$ and $x$ with\n\\[\nd=ra+sx\n\\]\nfor some $r,s\\in R$. Hence $d\\in I$. Since $d\\mid a$ and $a$ has no proper divisor in $I$, $d$ is associate to $a$. Therefore $a\\mid x$. This also holds for $x=0$, so $I=(a)$.\n\nThus every nonzero ideal of $R$ is principal, and the zero ideal is $(0)$. Hence $R$ is a Principal Ideal Domain.\n\\end{proof}",
+      "reason": "The original proof omitted the argument that every element of $I$ is divisible by the selected minimal element; applying condition (i) to that element repairs the conclusion."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $I\\neq(0)$ be an ideal of $R$. On the nonzero elements of $I$, identify associates and define\n\\[\n[x]\\le [y]\\quad\\text{if and only if}\\quad y\\mid x.\n\\]\nA chain in this order corresponds to a sequence of elements in which each subsequent element divides the preceding one. By condition (ii), such a chain is eventually constant up to associates, and hence has an upper bound. Zorn's lemma therefore yields a maximal class $[a]$ in $I/\\sim$.\n\nWe claim that $I=(a)$. Let $x\\in I$ be nonzero. By condition (i), $a$ and $x$ have a greatest common divisor $d$ satisfying\n\\[\nd=ra+sx\n\\]\nfor some $r,s\\in R$. Since $I$ is an ideal, $d\\in I$. Also $d\\mid a$, so maximality of $[a]$ in the reversed divisibility order implies that $d$ is associate to $a$. Consequently $a\\mid x$. Thus every nonzero element of $I$ lies in $(a)$, while $(a)\\subseteq I$ because $a\\in I$. Therefore $I=(a)$.\n\nThe zero ideal is principal as well, so every ideal of $R$ is principal. Hence $R$ is a Principal Ideal Domain.\n\\end{proof}",
+      "reason": "After checking the divisibility order and ideal-containment steps, the missing gcd argument was added explicitly."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $I$ be a nonzero ideal of $R$. Let $S=I\\setminus\\{0\\}$, and let $S/\\sim$ denote the set of associate classes. Define\n\\[\n[x]\\preceq [y]\\quad\\Longleftrightarrow\\quad y\\mid x.\n\\]\nThis is a partial order. Every chain has an upper bound: its elements can be represented by a divisibility sequence, and condition (ii) says that the sequence is eventually constant up to associates. Hence Zorn's lemma gives a maximal class $[a]$ in $S/\\sim$.\n\nTake any nonzero $x\\in I$. By (i), there are $r,s\\in R$ and a greatest common divisor $d$ of $a$ and $x$ such that\n\\[\nd=ra+sx.\n\\]\nThus $d\\in I$, and $d\\mid a$. Therefore $[a]\\preceq[d]$. Maximality of $[a]$ forces $[d]=[a]$, so $d$ and $a$ are associates. Since $d\\mid x$, it follows that $a\\mid x$. Thus $x\\in(a)$.\n\nAs $a\\in I$, we have $(a)\\subseteq I$, and the preceding paragraph gives $I\\subseteq(a)$. Therefore $I=(a)$. The zero ideal is $(0)$, so every ideal of $R$ is principal. Hence $R$ is a Principal Ideal Domain.\n\\end{proof}",
+      "reason": "The critic identifies the unsupported final inference in the candidate and verifies it by taking the gcd of the maximal representative with an arbitrary element of the ideal."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $I$ be any nonzero ideal of $R$. Consider the partially ordered set $I/\\sim$ of associate classes of nonzero elements of $I$, with\n\\[\n[x]\\le [y]\\quad\\Longleftrightarrow\\quad y\\mid x.\n\\]\nFor every chain, choose representatives and arrange them as a divisibility sequence. Condition (ii) implies that this sequence is eventually constant up to associates, so the chain has an upper bound. By Zorn's lemma, there is a maximal class $[a]$.\n\nWe show that $I=(a)$. Let $x\\in I$ be nonzero. By condition (i), $a$ and $x$ have a greatest common divisor $d$ of the form\n\\[\nd=ra+sx\n\\]\nwith $r,s\\in R$. Since $a,x\\in I$, this expression gives $d\\in I$. Since $d\\mid a$, we have $[a]\\le[d]$. The maximality of $[a]$ implies $[d]=[a]$; hence $a$ and $d$ are associates. Since $d\\mid x$, we conclude that $a\\mid x$. Therefore every nonzero $x\\in I$ belongs to $(a)$, and $0$ does as well. Thus $I\\subseteq(a)$. The reverse inclusion follows from $a\\in I$, so $I=(a)$.\n\nThe zero ideal is principal, and therefore every ideal of $R$ is principal. Hence $R$ is a Principal Ideal Domain.\n\\end{proof}",
+      "reason": "Dependency checking confirms the Zorn argument and repairs the sole missing dependency: maximality must be applied to the gcd of the selected element and each arbitrary element of $I$."
+    }
+  ]
+}

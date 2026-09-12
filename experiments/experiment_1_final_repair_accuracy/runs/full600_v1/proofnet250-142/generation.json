@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-142",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "irreparable",
+      "final_proof": "No proof exists with the theorem and assumptions unchanged. The statement is false when p is not explicitly assumed prime: take p=65. Then p≡1 (mod 4) and 65=1^2+64\\cdot1^2, but x^4≡2 (mod 65) has no solution because modulo 5, every fourth power is 0 or 1, never 2.",
+      "reason": "The missing primality assumption is essential; the unchanged theorem has a counterexample."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "irreparable",
+      "final_proof": "The theorem cannot be preserved under the stated assumptions. For p=65, the right-hand condition holds since 65=1^2+64\\cdot1^2, while x^4≡2 (mod 65) is impossible: reducing modulo 5 gives x^4≡0 or 1, not 2. Hence the claimed equivalence is false, so no repaired proof exists without adding that p is prime.",
+      "reason": "Internal checking exposes a counterexample caused by the absent primality assumption."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "irreparable",
+      "final_proof": "A valid proof cannot be generated for the unchanged theorem. Let p=65. We have 65≡1 (mod 4) and 65=1^2+64\\cdot1^2. However, if x^4≡2 (mod 65), then x^4≡2 (mod 5), contradicting the fact that fourth powers modulo 5 are only 0 and 1. Thus the equivalence fails, and the theorem requires an additional hypothesis such as p being prime.",
+      "reason": "The critic’s counterexample invalidates the theorem as stated."
+    },
+    {
+      "method": "full_system",
+      "outcome": "irreparable",
+      "final_proof": "Dependency-aware verification cannot certify this proof because the theorem is false under the given empty assumptions. Set p=65. Then p≡1 (mod 4) and p=1^2+64\\cdot1^2, but no integer x satisfies x^4≡2 (mod 65), since reduction modulo 5 would require x^4≡2 (mod 5), whereas x^4 is 0 or 1 modulo 5. Therefore no local repair or descendant revalidation can produce a proof while preserving the theorem and assumptions.",
+      "reason": "The required primality dependency is absent, and the statement has the explicit counterexample p=65."
+    }
+  ]
+}

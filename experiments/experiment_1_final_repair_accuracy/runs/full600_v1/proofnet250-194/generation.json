@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-194",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nWe must show that\n\\[\na(ax+xa)=(ax+xa)a.\n\\]\nUsing distributivity and associativity,\n\\[\na(ax+xa)=a^2x+axa=0+axa=axa,\n\\]\nwhile\n\\[\n(ax+xa)a=axa+xa^2=axa+0=axa.\n\\]\nThus $a(ax+xa)=(ax+xa)a$, so $ax+xa$ commutes with $a.\\qed\n\\end{proof}",
+      "reason": "The original proof correctly expands both products and uses $a^2=0$."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nBy distributivity and associativity,\n\\[\n\\begin{aligned}\na(ax+xa)&=a^2x+axa=axa,\\\\\n(ax+xa)a&=axa+xa^2=axa.\n\\end{aligned}\n\\]\nHere we used the assumption $a^2=0$ in both computations. Therefore\n\\[\na(ax+xa)=(ax+xa)a,\n\\]\nwhich proves that $ax+xa$ commutes with $a.\\qed\n\\end{proof}",
+      "reason": "Internal checking confirms that both sides reduce to the same expression, with no commutativity assumption on $R$ required."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $y=ax+xa$. Then, using associativity and distributivity,\n\\[\nay=a(ax+xa)=a^2x+axa=axa,\n\\]\nand\n\\[\nya=(ax+xa)a=axa+xa^2=axa.\n\\]\nSince $a^2=0$, these equalities give $ay=ya$. Hence $y=ax+xa$ commutes with $a$.\\qed\n\\end{proof}",
+      "reason": "The generated argument passes the critic check: it introduces the target element and verifies the defining commutation equality directly."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSet $y=ax+xa$. The required certificate is the pair of reductions\n\\[\na y=a(ax+xa)=a^2x+axa=axa\n\\]\nand\n\\[\ny a=(ax+xa)a=axa+xa^2=axa,\n\\]\nwhere the only simplification used is the hypothesis $a^2=0$. Thus $ay=ya$, and therefore $ax+xa$ commutes with $a$.\\qed\n\\end{proof}",
+      "reason": "Dependency-aware checking identifies only associativity, distributivity, and $a^2=0$ as dependencies; the equality is locally valid and independently revalidated."
+    }
+  ]
+}

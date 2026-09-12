@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-045",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let the coin values, listed in nondecreasing order, be x_1\\le x_2\\le\\cdots\\le x_D. For each i=1,\\ldots,D-n+1, consider the n consecutive coins x_i,\\ldots,x_{i+n-1}, whose sum is T_i=x_i+\\cdots+x_{i+n-1}. We have T_{i+1}-T_i=x_{i+n}-x_i\\ge0. Equality would imply x_i=x_{i+1}=\\cdots=x_{i+n}, so some value occurs at least n+1 times, contradicting n-diversity. Hence T_1<T_2<\\cdots<T_{D-n+1}, giving at least D-n+1 distinct n-reachable numbers. Thus D=n+k-1 guarantees at least k such numbers.\n\nTo prove minimality, if D<n, there are no n-coin subsets. If n\\le D\\le n+k-2, choose n coins of value 0 and D-n coins of value 1. This is n-diverse because D-n\\le k-2\\le n-2, and its n-coin sums are determined by the number of 1-valued coins, which can range from 0 to D-n. Therefore it has at most D-n+1\\le k-1 distinct reachable sums. Consequently the least possible value is \\boxed{D=n+k-1}.",
+      "reason": "The original upper-bound argument was unsupported; consecutive sorted windows give a rigorous strict-increase argument, and the lower-bound construction covers every smaller D."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "We claim that the least integer is D=n+k-1.\n\nArrange the D coin values as x_1\\le\\cdots\\le x_D. For j=1,\\ldots,D-n+1, let A_j=x_j+\\cdots+x_{j+n-1}. Each A_j is n-reachable. Moreover,\nA_{j+1}-A_j=x_{j+n}-x_j\\ge0.\nIf this difference were zero, monotonicity would force x_j=x_{j+1}=\\cdots=x_{j+n}; then one value would occur n+1 times, impossible. Thus the A_j are strictly increasing, so there are at least D-n+1 distinct n-reachable sums. Taking D=n+k-1 gives at least k.\n\nFor sharpness, when D<n no n coins can be selected. For n\\le D\\le n+k-2, take n coins of value 0 and D-n coins of value 1. Since D-n\\le k-2<n, this collection is n-diverse. Every n-coin sum is an integer between 0 and D-n, so there are at most D-n+1\\le k-1 distinct sums. Hence no smaller D works, and \\boxed{D=n+k-1}.",
+      "reason": "After checking the counting and edge cases D<n, the proof is valid once the unsupported extremal claim is replaced by the consecutive-window lemma."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let D be the number of coins and write their integral values in increasing order, with repetition, as x_1\\le\\cdots\\le x_D. Define\nS_i=x_i+x_{i+1}+\\cdots+x_{i+n-1}\\qquad(1\\le i\\le D-n+1).\nEach S_i is n-reachable. Also,\nS_{i+1}-S_i=x_{i+n}-x_i\\ge0.\nIf equality held, then x_i=x_{i+n}; because the sequence is nondecreasing, all x_i,\\ldots,x_{i+n} would be equal. That would give n+1 coins of one value, contrary to n-diversity. Therefore S_1,\\ldots,S_{D-n+1} are distinct, and every n-diverse collection with D coins has at least D-n+1 reachable sums.\n\nFor D=n+k-1 this lower bound equals k. Conversely, for any D<n there are no n-coin selections. For n\\le D\\le n+k-2, use n coins of value 0 and D-n coins of value 1. The multiplicities are at most n, and the possible n-coin sums are 0,1,\\ldots,D-n, hence at most D-n+1\\le k-1 sums. Thus every smaller positive D fails, and the answer is\n\\boxed{n+k-1}.",
+      "reason": "A critic check identified that the claimed two-value extremality did not prove sufficiency; the repaired proof uses a strict sliding-window invariant and verifies all smaller-size cases."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Set D_*=n+k-1. We prove both sufficiency and necessity.\n\nSufficiency: Let C be any n-diverse collection of D_* coins, and list its values as x_1\\le\\cdots\\le x_{D_*}. For i=1,\\ldots,D_*-n+1, let S_i=x_i+\\cdots+x_{i+n-1}. These are sums of n coins. Since\nS_{i+1}-S_i=x_{i+n}-x_i\\ge0,\nand equality would force the n+1 consecutive values x_i,\\ldots,x_{i+n} to be equal, n-diversity implies S_{i+1}>S_i. Hence there are D_*-n+1=k distinct n-reachable numbers.\n\nNecessity: If D<n, no n-reachable number exists. If n\\le D<n+k-1, take n coins of value 0 and D-n coins of value 1. Here D-n\\le k-2\\le n-2, so the collection is n-diverse. An n-coin selection has a sum equal to the number of selected 1-valued coins, yielding at most D-n+1\\le k-1 distinct sums. Thus every D<n+k-1 fails. Therefore the least positive integer is \\boxed{D=n+k-1}.",
+      "reason": "Dependency-aware checking isolates the key lemma, repairs only the invalid sufficiency step, and revalidates the lower-bound construction and all descendants."
+    }
+  ]
+}

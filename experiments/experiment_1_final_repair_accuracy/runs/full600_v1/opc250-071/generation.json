@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-071",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "For fixed x,u,v, apply the given identity at (x+u,v) and (x-u,v), then add:\n\\[\n\\begin{aligned}\n&f(x+u+v)+f(x+u-v)+f(x-u+v)+f(x-u-v)\\\\\n&\\quad-2f(x+u)-2f(x-u)=[g(x+u)+g(x-u)]v^2.\\tag{1}\n\\end{aligned}\n\\]\nApplying it at (x,u+v) and (x,u-v), and adding, gives\n\\[\nf(x+u+v)+f(x-u-v)+f(x+u-v)+f(x-u+v)-4f(x)=2g(x)(u^2+v^2).\\tag{2}\n\\]\nThe original identity at (x,u) implies\n\\[\n2f(x+u)+2f(x-u)-4f(x)=2g(x)u^2.\n\\]\nCombining this with (1) and (2) yields\n\\[\ng(x+u)+g(x-u)=2g(x).\n\\]\nSince g is continuous, the continuous midpoint-affine solutions are affine: \\(g(x)=ax+b\\). Concavity of f gives \\(g(x)y^2\\le0\\), hence \\(g(x)\\le0\\) for every x. An affine function bounded above on \\(\\mathbb R\\) must have \\(a=0\\), so \\(g\\equiv b\\le0\\).\n\nSet \\(F(x)=f(x)-\\frac b2x^2\\). Then\n\\[\nF(x+y)+F(x-y)-2F(x)=0.\n\\]\nThus F satisfies the midpoint Jensen equation. Since f is finite and concave on \\(\\mathbb R\\), it is continuous; consequently F is continuous. A continuous solution of the midpoint Jensen equation is affine, so \\(F(x)=px+q\\). Therefore\n\\[\nf(x)=\\frac b2x^2+px+q,\n\\]\nwhich is quadratic.",
+      "reason": "The original argument used an incorrect four-point identity. This proof replaces it with a valid consistency calculation and supplies the needed continuity step for the final Jensen equation."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Let\n\\[\nD(x,t):=f(x+t)+f(x-t)-2f(x)=g(x)t^2.\n\\]\nFor arbitrary x,u,v, adding \\(D(x+u,v)\\) and \\(D(x-u,v)\\) gives\n\\[\n\\sum_{\\epsilon,\\delta\\in\\{-1,1\\}}f(x+\\epsilon u+\\delta v)-2f(x+u)-2f(x-u)=[g(x+u)+g(x-u)]v^2.\\tag{1}\n\\]\nOn the other hand, adding \\(D(x,u+v)\\) and \\(D(x,u-v)\\) gives\n\\[\n\\sum_{\\epsilon,\\delta}f(x+\\epsilon u+\\delta v)-4f(x)=2g(x)(u^2+v^2).\\tag{2}\n\\]\nAlso, \\(D(x,u)\\) gives \\(2f(x+u)+2f(x-u)-4f(x)=2g(x)u^2\\). Subtracting this relation appropriately from (2) and comparing with (1), we obtain\n\\[\n[g(x+u)+g(x-u)]v^2=2g(x)v^2.\n\\]\nTaking any nonzero v,\n\\[\ng(x+u)+g(x-u)=2g(x).\n\\]\nContinuity implies \\(g(x)=ax+b\\). Since f is concave, \\(D(x,y)\\le0\\), so \\(g(x)\\le0\\) for all x. Hence a=0 and \\(g\\equiv b\\le0\\).\n\nDefine \\(F(x)=f(x)-\\frac b2x^2\\). Then \\(F(x+y)+F(x-y)=2F(x)\\). Equivalently, F satisfies the midpoint Jensen equation. A finite concave function on the open interval \\(\\mathbb R\\) is continuous, so F is continuous. Therefore F is affine: \\(F(x)=px+q\\). Hence\n\\[\nf(x)=\\frac b2x^2+px+q,\n\\]\nso f is quadratic.",
+      "reason": "Internal checking corrected the invalid decomposition in the supplied proof and verified the consistency argument, concavity sign, and continuity needed to exclude non-linear Jensen solutions."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "First, concavity gives, for every x and y,\n\\[\ng(x)y^2=f(x+y)+f(x-y)-2f(x)\\le0.\n\\]\nThus \\(g(x)\\le0\\) for all x.\n\nWe next show that g is affine. For arbitrary x,u,v, the sum of the identities at \\((x+u,v)\\) and \\((x-u,v)\\) is\n\\[\nS-2f(x+u)-2f(x-u)=[g(x+u)+g(x-u)]v^2,\n\\]\nwhere \\(S\\) denotes the sum of the four corner values \\(f(x\\pm u\\pm v)\\). The sum of the identities at \\((x,u+v)\\) and \\((x,u-v)\\) is\n\\[\nS-4f(x)=2g(x)(u^2+v^2).\n\\]\nFinally, the identity at \\((x,u)\\) gives\n\\[\n2f(x+u)+2f(x-u)-4f(x)=2g(x)u^2.\n\\]\nUsing the last equality to eliminate the middle terms in the first equality and comparing with the second yields\n\\[\n[g(x+u)+g(x-u)]v^2=2g(x)v^2.\n\\]\nFor \\(v\\ne0\\), this is \\(g(x+u)+g(x-u)=2g(x)\\). Since g is continuous, \\(g(x)=ax+b\\). Its global nonpositivity forces \\(a=0\\), so \\(g\\equiv b\\le0\\).\n\nNow put \\(F(x)=f(x)-\\frac b2x^2\\). Then\n\\[\nF(x+y)+F(x-y)-2F(x)=0.\n\\]\nThe function f is finite and concave on \\(\\mathbb R\\), hence continuous, and so is F. The continuous midpoint Jensen equation implies \\(F(x)=px+q\\). Therefore \\(f(x)=\\frac b2x^2+px+q\\), a quadratic function.",
+      "reason": "The critic identified the supplied proof’s false expansion and required an explicit derivation of the four-point consistency relation plus justification that the Jensen remainder is continuous."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Define \\(D_x(t)=f(x+t)+f(x-t)-2f(x)\\). The hypothesis says \\(D_x(t)=g(x)t^2\\).\n\nFor arbitrary x,u,v, add the equations for \\((x+u,v)\\) and \\((x-u,v)\\). If\n\\[\nS=f(x+u+v)+f(x+u-v)+f(x-u+v)+f(x-u-v),\n\\]\nthen\n\\[\nS-2f(x+u)-2f(x-u)=[g(x+u)+g(x-u)]v^2.\\tag{1}\n\\]\nAdding the equations for \\((x,u+v)\\) and \\((x,u-v)\\) gives\n\\[\nS-4f(x)=2g(x)(u^2+v^2).\\tag{2}\n\\]\nThe equation for \\((x,u)\\) gives\n\\[\n2f(x+u)+2f(x-u)-4f(x)=2g(x)u^2.\\tag{3}\n\\]\nEquations (1)--(3) imply\n\\[\n[g(x+u)+g(x-u)]v^2=2g(x)v^2.\n\\]\nChoosing \\(v\\ne0\\), we obtain the midpoint equation\n\\[\ng(x+u)+g(x-u)=2g(x).\n\\]\nBecause g is continuous, it is affine, \\(g(x)=ax+b\\). Concavity of f implies \\(g(x)y^2\\le0\\), hence \\(g\\le0\\) everywhere; therefore a=0 and \\(g\\equiv b\\le0\\).\n\nLet \\(F(x)=f(x)-\\frac b2x^2\\). Then \\(F(x+y)+F(x-y)=2F(x)\\). Since a finite concave function on \\(\\mathbb R\\) is continuous, F is continuous. The midpoint Jensen equation then makes F affine, \\(F(x)=px+q\\). Consequently\n\\[\nf(x)=\\frac b2x^2+px+q,\n\\]\nso f is quadratic. All derived relations use only the stated hypothesis, and the final form remains concave because \\(b\\le0\\).",
+      "reason": "Dependency checking isolated the false supplied identity, the local repair establishes g’s midpoint equation, and the final Jensen step is revalidated using continuity of finite concave functions."
+    }
+  ]
+}

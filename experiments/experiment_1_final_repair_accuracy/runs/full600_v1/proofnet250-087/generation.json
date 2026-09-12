@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-087",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor every $x\\in R$,\n\\[\n2x=(2x)^3=8x^3=8x,\n\\]\nso $6x=0$. Expanding $(x+y)^3$ and $(x-y)^3$ and subtracting gives\n\\[\n2(x^2y+xyx+yx^2)=0.\n\\]\nMultiplying this identity on the left and right by $x$, respectively, yields\n\\[\n2(xy+x^2yx+xyx^2)=0,\n\\quad\n2(x^2yx+xyx^2+yx)=0.\n\\]\nSubtracting, we obtain\n\\[\n2(xy-yx)=0. \\tag{1}\n\\]\nSince $x^3=x$, we have\n\\[\n(x+x^2)^3=4(x+x^2),\n\\]\nso $3(x+x^2)=0$. Applying this to $x+y$ and subtracting the corresponding identities for $x$ and $y$ gives\n\\[\n3(xy+yx)=0. \\tag{2}\n\\]\nLet $d=xy-yx$ and $s=xy+yx$. From (2), $3xy=-3yx$, hence\n\\[\n3d=3xy-3yx=-6yx=0.\n\\]\nTogether with (1), this gives $2d=3d=0$, and therefore $d=(3-2)d=0$. Thus $xy=yx$ for all $x,y\\in R$, so $R$ is commutative.\n\\end{proof}",
+      "reason": "Corrected the invalid deduction of $3(xy-yx)=0$ by deriving it from $3(xy+yx)=0$ and $6yx=0$."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor any $x\\in R$, $(2x)^3=2x$, while $(2x)^3=8x^3=8x$, hence $6x=0$. Also, subtracting the expansions of $(x+y)^3$ and $(x-y)^3$ gives\n\\[\n2(x^2y+xyx+yx^2)=0.\n\\]\nAfter multiplying on the left and on the right by $x$, respectively, and subtracting, we get\n\\[\n2(xy-yx)=0. \\tag{1}\n\\]\nMoreover,\n\\[\n(x+x^2)^3=x^3+3x^4+3x^5+x^6=4(x+x^2),\n\\]\nso $3(x+x^2)=0$. Using this for $x+y$, $x$, and $y$ gives\n\\[\n3(xy+yx)=0. \\tag{2}\n\\]\nNow (2) implies $3xy=-3yx$. Since $6yx=0$, it follows that\n\\[\n3(xy-yx)=3xy-3yx=-6yx=0.\n\\]\nCombining this with (1), and using $1=3-2$, yields\n\\[\nxy-yx=(3-2)(xy-yx)=0.\n\\]\nThus $xy=yx$ for all $x,y\\in R$, and $R$ is commutative.\n\\end{proof}",
+      "reason": "Internal checking identified the final-step gap and replaced it with a valid Bézout argument using annihilation by both $2$ and $3$."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFirst, for every $x\\in R$,\n\\[\n2x=(2x)^3=8x^3=8x,\n\\]\nso $6x=0$. For $x,y\\in R$, subtracting the identities obtained by expanding $(x+y)^3$ and $(x-y)^3$ gives\n\\[\n2(x^2y+xyx+yx^2)=0.\n\\]\nMultiplication on the left and on the right by $x$, followed by subtraction, gives\n\\[\n2(xy-yx)=0. \\tag{1}\n\\]\nNext,\n\\[\n(x+x^2)^3=x^3+3x^4+3x^5+x^6=4(x+x^2),\n\\]\nthus $3(x+x^2)=0$. Applying this to $x+y$ and subtracting the identities for $x$ and $y$ yields\n\\[\n3(xy+yx)=0. \\tag{2}\n\\]\nA critic check of the final algebra shows that one must not infer $3(xy-yx)=0$ directly from $6xy=0$. Instead, (2) gives $3xy=-3yx$, and hence\n\\[\n3(xy-yx)=-6yx=0.\n\\]\nTogether with (1), the commutator $d=xy-yx$ satisfies $2d=3d=0$. Since $d=(3-2)d$, we have $d=0$. Therefore $xy=yx$ for all $x,y$, and $R$ is commutative.\n\\end{proof}",
+      "reason": "The critic rejected the original unsupported implication and supplied the minimal valid repair."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $x,y\\in R$. Since $(2x)^3=2x$ and $(2x)^3=8x^3=8x$, we have $6x=0$ for every $x$. Expanding $(x+y)^3$ and $(x-y)^3$ and subtracting gives\n\\[\n2(x^2y+xyx+yx^2)=0.\n\\]\nMultiplying this relation on the left and right by $x$, respectively, gives\n\\[\n2(xy+x^2yx+xyx^2)=0,\n\\qquad\n2(x^2yx+xyx^2+yx)=0.\n\\]\nTherefore\n\\[\n2(xy-yx)=0. \\tag{1}\n\\]\nAlso,\n\\[\n(x+x^2)^3=x^3+3x^4+3x^5+x^6=4(x+x^2),\n\\]\nso $3(x+x^2)=0$. Applying this to $x+y$, then subtracting the cases $x$ and $y$, yields\n\\[\n3(xy+yx)=0. \\tag{2}\n\\]\nSet $d=xy-yx$. From (2), $3xy=-3yx$, and from $6yx=0$ we obtain\n\\[\n3d=3xy-3yx=-6yx=0.\n\\]\nEquation (1) gives $2d=0$. Since $1=3-2$ in the integers, $d=(3-2)d=0$. Hence $xy=yx$. As $x,y$ were arbitrary, $R$ is commutative.\n\\end{proof}",
+      "reason": "Dependency review verified each identity and revalidated the conclusion after the local repair; all descendants remain valid."
+    }
+  ]
+}

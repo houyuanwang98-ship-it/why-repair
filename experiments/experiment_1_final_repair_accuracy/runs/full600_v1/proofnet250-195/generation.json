@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-195",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf $f(0)=0$ or $f(1)=1$, we are done. Otherwise, since $f([0,1])\\subseteq[0,1]$, we have $f(0)>0$ and $f(1)<1$. Define $g:[0,1]\\to\\mathbb{R}$ by $g(x)=f(x)-x$. Then $g$ is continuous, $g(0)>0$, and $g(1)<0$. By the intermediate value theorem, there exists $x\\in(0,1)$ such that $g(x)=0$. Hence $f(x)=x$.\n\\end{proof}",
+      "reason": "Corrected the codomain of $g$ from $[0,1]$ to $\\mathbb{R}$; the endpoint argument and IVT then apply."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nConsider $g(x)=f(x)-x$ on $[0,1]$. The function $g$ is continuous. If $f(0)=0$ or $f(1)=1$, the corresponding endpoint is a fixed point. If neither equality holds, then $f(0)>0$ and $f(1)<1$, because $f(0),f(1)\\in[0,1]$. Thus $g(0)>0$ and $g(1)<0$. The intermediate value theorem gives some $x\\in(0,1)$ with $g(x)=0$, so $f(x)=x$.\n\\end{proof}",
+      "reason": "Self-check identified that $g$ need only map into $\\mathbb{R}$, not $[0,1]$, and retained the valid endpoint cases."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $g:[0,1]\\to\\mathbb{R}$ be defined by $g(x)=f(x)-x$. Since $f$ is continuous, $g$ is continuous. If $f(0)=0$ or $f(1)=1$, there is already a fixed point. Otherwise, $f(0)\\ne0$ and $f(1)\\ne1$. As $f(0),f(1)\\in[0,1]$, this implies $f(0)>0$ and $f(1)<1$. Consequently,\n\\[\ng(0)=f(0)>0,\\qquad g(1)=f(1)-1<0.\n\\]\nBy the intermediate value theorem, $g$ vanishes at some $x\\in(0,1)$. Therefore $f(x)=x$.\n\\end{proof}",
+      "reason": "The critic caught the invalid stated range for $g$ and verified the non-fixed endpoint inequalities before applying IVT."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine $g:[0,1]\\to\\mathbb{R}$ by $g(x)=f(x)-x$. This is continuous because $f$ and the identity function are continuous. If $f(0)=0$ or $f(1)=1$, the required fixed point is immediate. Otherwise, the fact that $f$ maps $[0,1]$ into $[0,1]$ gives $f(0)>0$ and $f(1)<1$. Hence\n\\[\ng(0)>0\\quad\\text{and}\\quad g(1)<0.\n\\]\nThe intermediate value theorem yields an $x\\in[0,1]$ with $g(x)=0$; indeed, the strict endpoint inequalities imply $x\\in(0,1)$. Thus $f(x)=x$.\n\\end{proof}",
+      "reason": "Dependency review found one local defect—the codomain of $g$—and revalidated continuity, endpoint signs, IVT, and the fixed-point conclusion after repair."
+    }
+  ]
+}

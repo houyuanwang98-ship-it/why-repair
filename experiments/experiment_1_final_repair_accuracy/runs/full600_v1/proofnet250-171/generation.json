@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-171",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $\\dim V=n\\ge 2$, and choose an orthonormal basis $(e_1,\\ldots,e_n)$ of $V$. Define $S,T\\in\\mathcal L(V)$ by\n\\[\nS\\left(\\sum_{j=1}^n a_j e_j\\right)=a_2e_1-a_1e_2,\n\\qquad\nT\\left(\\sum_{j=1}^n a_j e_j\\right)=a_2e_1+a_1e_2.\n\\]\nThen\n\\[\nS^*\\left(\\sum_{j=1}^n a_j e_j\\right)=-a_2e_1+a_1e_2,\n\\]\nso $SS^*=S^*S$. Also, $T^*=T$, and hence both $S$ and $T$ are normal.\n\nOn the other hand,\n\\[\n(S+T)\\left(\\sum_{j=1}^n a_j e_j\\right)=2a_2e_1,\n\\qquad\n(S+T)^*\\left(\\sum_{j=1}^n a_j e_j\\right)=2a_1e_2.\n\\]\nThus $(S+T)(S+T)^*e_1=4e_1$, whereas $(S+T)^*(S+T)e_1=0$. Therefore $S+T$ is not normal. Hence the set of normal operators is not closed under addition and is not a subspace of $\\mathcal L(V)$.\n\\end{proof}",
+      "reason": "Corrected the malformed formulas and explicitly exhibited unequal products."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWrite $n=\\dim V\\ge2$ and let $(e_1,\\ldots,e_n)$ be an orthonormal basis. For $x=\\sum_{j=1}^n a_je_j$, set\n\\[\nSx=a_2e_1-a_1e_2,\\qquad Tx=a_2e_1+a_1e_2.\n\\]\nThe adjoints satisfy\n\\[\nS^*x=-a_2e_1+a_1e_2=S^{-1}x,\n\\qquad T^*x=a_2e_1+a_1e_2=Tx.\n\\]\nConsequently, $S^*S=SS^*=I$ on $\\operatorname{span}\\{e_1,e_2\\}$ and both products vanish on its orthogonal complement; thus $S$ is normal. Since $T$ is self-adjoint, $T$ is normal.\n\nLet $A=S+T$. Then $Ax=2a_2e_1$ and $A^*x=2a_1e_2$. In particular,\n\\[\nAA^*e_1=4e_1,\n\\qquad A^*Ae_1=0.\n\\]\nTherefore $AA^*\\ne A^*A$, so $A$ is not normal. The normal operators are therefore not closed under addition, and hence they do not form a subspace of $\\mathcal L(V)$.\n\\end{proof}",
+      "reason": "Self-check confirmed normality of each summand and used a basis vector to witness non-normality of their sum."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $n=\\dim V\\ge2$, and choose an orthonormal basis $(e_1,\\dots,e_n)$. Define operators $S,T\\in\\mathcal L(V)$ by\n\\[\nS e_1=-e_2,\\quad S e_2=e_1,\\quad S e_j=0\\ (j\\ge3),\n\\]\nand\n\\[\nT e_1=e_2,\\quad T e_2=e_1,\\quad T e_j=0\\ (j\\ge3).\n\\]\nThen $S^*e_1=e_2$, $S^*e_2=-e_1$, and $S^*e_j=0$ for $j\\ge3$, so $SS^*=S^*S$. Also $T^*=T$. Hence $S$ and $T$ are normal.\n\nSet $A=S+T$. We have\n\\[\nAe_1=0,\\qquad Ae_2=2e_1,\n\\]\nwhile $A^*e_1=2e_2$. Consequently,\n\\[\nAA^*e_1=4e_1\\ne0=A^*Ae_1.\n\\]\nThus $A=S+T$ is not normal. Therefore the set of normal operators is not closed under addition and cannot be a subspace of $\\mathcal L(V)$.\n\\end{proof}",
+      "reason": "A critic-style check replaced cumbersome coordinate calculations with an equivalent basis-action proof and verified the adjoint products."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume $\\dim V=n\\ge2$ and choose an orthonormal basis $(e_1,\\ldots,e_n)$. Define $S,T\\in\\mathcal L(V)$ by their actions on the basis:\n\\[\nSe_1=-e_2,\\quad Se_2=e_1,\\quad Se_j=0\\ (j\\ge3),\n\\]\n\\[\nTe_1=e_2,\\quad Te_2=e_1,\\quad Te_j=0\\ (j\\ge3).\n\\]\nThe adjoint of $S$ is given by\n\\[\nS^*e_1=e_2,\\quad S^*e_2=-e_1,\\quad S^*e_j=0\\ (j\\ge3).\n\\]\nIt follows directly on the basis that $S^*S=SS^*$, so $S$ is normal. Since $T^*=T$, $T$ is normal as well.\n\nNow let $A=S+T$. Then\n\\[\nAe_1=0,\\qquad Ae_2=2e_1,\n\\]\nand, because $A^*=S^*+T^*$,\n\\[\nA^*e_1=2e_2.\n\\]\nTherefore\n\\[\nAA^*e_1=A(2e_2)=4e_1,\n\\qquad\nA^*Ae_1=A( e_1)=0.\n\\]\nHence $AA^*\\ne A^*A$, so $A$ is not normal. Thus two normal operators, $S$ and $T$, have a sum that is not normal. The set of normal operators on $V$ is not closed under addition, and therefore is not a subspace of $\\mathcal L(V)$.\n\\end{proof}",
+      "reason": "Dependency checks establish well-defined operators, adjoints, summand normality, and a valid descendant witness for failure under addition."
+    }
+  ]
+}

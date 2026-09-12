@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-101",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe show that $L(a)$ is an additive subgroup of $R$. Since $0a=0$, we have $0\\in L(a)$. If $x,y\\in L(a)$, then $xa=ya=0$, and hence\n\\[\n(x-y)a=xa-ya=0.\n\\]\nThus $x-y\\in L(a)$.\n\nFinally, let $r\\in R$ and $x\\in L(a)$. Since $xa=0$, associativity gives\n\\[\n(rx)a=r(xa)=r0=0.\n\\]\nTherefore $rx\\in L(a)$. Hence $L(a)$ is an ideal of $R$.\n\\end{proof}",
+      "reason": "Corrected the variable mismatch and supplied the subgroup and absorption conditions explicitly."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nThe set $L(a)$ contains $0$, because $0a=0$. For $x,y\\in L(a)$, we have $xa=ya=0$, so\n\\[\n(x-y)a=xa-ya=0.\n\\]\nConsequently, $L(a)$ is an additive subgroup of $R$ by the subgroup criterion.\n\nIf $r\\in R$ and $x\\in L(a)$, then $xa=0$. By associativity and distributivity,\n\\[\n(rx)a=r(xa)=r\\cdot 0=0.\n\\]\nThus $rx\\in L(a)$. Therefore $L(a)$ is an ideal of $R$.\n\\end{proof}",
+      "reason": "An internal consistency check confirmed closure under subtraction and multiplication by arbitrary ring elements."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $x,y\\in L(a)$. Then $xa=0$ and $ya=0$, and therefore\n\\[\n(x-y)a=xa-ya=0.\n\\]\nAlso, $0\\in L(a)$ since $0a=0$. Hence $L(a)$ is an additive subgroup of $(R,+)$.\n\nNow let $r\\in R$ and $x\\in L(a)$. Using associativity,\n\\[\n(rx)a=r(xa)=r0=0.\n\\]\nThus $rx\\in L(a)$. Since this holds for every $r\\in R$ and $x\\in L(a)$, $L(a)$ is an ideal of $R$.\n\\end{proof}",
+      "reason": "The critic identified that the original argument used an undeclared multiplier and unnecessarily invoked commutativity; the proof was repaired accordingly."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe verify the ideal criteria. First, $0\\in L(a)$ because $0a=0$. If $x,y\\in L(a)$, then $xa=ya=0$, so\n\\[\n(x-y)a=xa-ya=0.\n\\]\nThus $L(a)$ is an additive subgroup of $R$.\n\nFor arbitrary $r\\in R$ and $x\\in L(a)$, associativity yields\n\\[\n(rx)a=r(xa)=r\\cdot 0=0.\n\\]\nHence $rx\\in L(a)$. Therefore $L(a)$ is an ideal of $R$.\n\\end{proof}",
+      "reason": "Dependency checks pass: subgroup closure establishes the additive component, absorption is independently verified, and no descendants require further repair."
+    }
+  ]
+}

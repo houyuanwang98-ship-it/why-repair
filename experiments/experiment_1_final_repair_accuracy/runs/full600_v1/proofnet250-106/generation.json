@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-106",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet\n\\[\np=\\sum_{j=1}^m\\langle v,e_j\\rangle e_j.\n\\]\nSince the list is orthonormal, \\(p\\in\\operatorname{span}(e_1,\\ldots,e_m)\\), and\n\\[\n\\|p\\|^2=\\sum_{j=1}^m|\\langle v,e_j\\rangle|^2.\n\\]\nIf \\(v\\in\\operatorname{span}(e_1,\\ldots,e_m)\\), then orthonormality gives \\(v=p\\), so\n\\[\n\\|v\\|^2=\\sum_{j=1}^m|\\langle v,e_j\\rangle|^2.\n\\]\nConversely, \\(v-p\\) is orthogonal to every \\(e_j\\), hence to \\(p\\). Therefore, by the Pythagorean theorem,\n\\[\n\\|v\\|^2=\\|p\\|^2+\\|v-p\\|^2.\n\\]\nIf the stated equality holds, then \\(\\|v-p\\|^2=0\\), so \\(v=p\\in\\operatorname{span}(e_1,\\ldots,e_m)\\). Thus the equivalence follows.\n\\end{proof}",
+      "reason": "Replaced the invalid decomposition and undefined cases with the orthogonal projection onto the span."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet\n\\[\np=\\sum_{j=1}^m\\langle v,e_j\\rangle e_j.\n\\]\nFor each \\(k\\), orthonormality implies\n\\[\n\\langle v-p,e_k\\rangle=\\langle v,e_k\\rangle-\\sum_{j=1}^m\\langle v,e_j\\rangle\\langle e_j,e_k\\rangle=0.\n\\]\nThus \\(v-p\\perp p\\), and\n\\[\n\\|v\\|^2=\\|p\\|^2+\\|v-p\\|^2,\n\\qquad\n\\|p\\|^2=\\sum_{j=1}^m|\\langle v,e_j\\rangle|^2.\n\\]\nIf \\(v\\in\\operatorname{span}(e_1,\\ldots,e_m)\\), then \\(v=p\\), and the desired equality follows. If the desired equality holds, the displayed identities give \\(\\|v-p\\|^2=0\\), hence \\(v=p\\). Therefore \\(v\\in\\operatorname{span}(e_1,\\ldots,e_m)\\).\n\\end{proof}",
+      "reason": "Checked both implications and explicitly verified the projection residual is orthogonal to the given span."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine the orthogonal projection candidate\n\\[\np=\\sum_{j=1}^m\\langle v,e_j\\rangle e_j.\n\\]\nBecause \\((e_1,\\ldots,e_m)\\) is orthonormal, \\(p\\in\\operatorname{span}(e_1,\\ldots,e_m)\\),\n\\[\n\\|p\\|^2=\\sum_{j=1}^m|\\langle v,e_j\\rangle|^2,\n\\]\nand \\(v-p\\) is orthogonal to every vector in that span. Consequently,\n\\[\n\\|v\\|^2=\\|p\\|^2+\\|v-p\\|^2.\n\\]\nIf \\(v\\) belongs to the span, uniqueness of its orthonormal-coordinate expansion gives \\(v=p\\), so the equality in the theorem holds. Conversely, if that equality holds, then\n\\[\n\\|p\\|^2+\\|v-p\\|^2=\\|p\\|^2,\n\\]\nso \\(\\|v-p\\|=0\\). Hence \\(v=p\\), and therefore \\(v\\in\\operatorname{span}(e_1,\\ldots,e_m)\\).\n\\end{proof}",
+      "reason": "The critic-repaired proof uses one projection identity, avoids division by a possibly zero vector, and establishes exact equality conditions."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet \\(W=\\operatorname{span}(e_1,\\ldots,e_m)\\) and define\n\\[\np=\\sum_{j=1}^m\\langle v,e_j\\rangle e_j\\in W.\n\\]\nFor every \\(k\\), orthonormality gives \\(\\langle v-p,e_k\\rangle=0\\). Hence \\(v-p\\perp W\\), in particular \\(v-p\\perp p\\). Therefore\n\\[\n\\|v\\|^2=\\|p+(v-p)\\|^2=\\|p\\|^2+\\|v-p\\|^2,\n\\]\nwhile\n\\[\n\\|p\\|^2=\\sum_{j=1}^m|\\langle v,e_j\\rangle|^2.\n\\]\nIf \\(v\\in W\\), then both \\(v\\) and \\(p\\) lie in \\(W\\), and \\(v-p\\perp W\\); hence \\(v-p=0\\). Thus the stated equality holds. Conversely, if the stated equality holds, the two displayed formulas imply \\(\\|v-p\\|^2=0\\), so \\(v=p\\in W\\). This proves the equivalence.\n\\end{proof}",
+      "reason": "Dependency-aware checking confirms the projection, norm identity, and equality case; the repaired argument also revalidates both theorem directions."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-024",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "By Vieta’s formulas,\n\\[\nx_1+x_2=2a+1,\\quad x_1x_2=a,\n\\]\n\\[\nx_3+x_4=4-a,\\quad x_3x_4=a-1.\n\\]\nHence\n\\[\nx_1+x_2+x_3+x_4=a+5.\n\\]\nSince the displayed condition requires \\(a\\ne0\\), \\(x_2\\ne0\\), and \\(x_3\\ne0\\), we may multiply through by \\(ax_2x_3\\). The condition becomes\n\\[\na(x_1x_2+x_3x_4)=x_1x_2x_3x_4(a+5).\n\\]\nTherefore\n\\[\na(2a-1)=a(a-1)(a+5).\n\\]\nAs \\(a\\ne0\\),\n\\[\n2a-1=(a-1)(a+5),\n\\]\nso\n\\[\na^2+2a-4=0,\n\\]\nand thus \\(a=-1\\pm\\sqrt5\\).\n\nThe first discriminant is \\((2a+1)^2-4a=4a^2+1>0\\). The second is\n\\[\n(a-4)^2-4(a-1)=a^2-12a+20=(a-2)(a-10).\n\\]\nBoth proposed values are less than \\(2\\), so both quadratics have real roots. They are neither \\(0\\) nor \\(1\\), so all required denominators are nonzero. Hence\n\\[\n\\boxed{a=-1\\pm\\sqrt5}.\n\\]",
+      "reason": "The algebraic reduction is valid after explicitly enforcing the denominators and checking both discriminants."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Let the roots be labeled as in the statement. Vieta gives\n\\[\nx_1x_2=a,\\quad x_3x_4=a-1,\\quad x_1+x_2+x_3+x_4=a+5.\n\\]\nThe expression is defined only when \\(a\\ne0\\), \\(x_2\\ne0\\), and \\(x_3\\ne0\\). Under these conditions,\n\\[\n\\frac{x_1}{x_3}+\\frac{x_4}{x_2}\n=\\frac{x_1x_2+x_3x_4}{x_2x_3}\n=\\frac{2a-1}{x_2x_3}.\n\\]\nEquating this with the right-hand side and multiplying by \\(ax_2x_3\\) yields\n\\[\na(2a-1)=x_1x_2x_3x_4(a+5)=a(a-1)(a+5).\n\\]\nSince \\(a\\ne0\\), this reduces to\n\\[\na^2+2a-4=0,\n\\]\nwhose solutions are \\(a=-1\\pm\\sqrt5\\).\n\nFor the first equation, \\(\\Delta_1=4a^2+1>0\\). For the second,\n\\[\n\\Delta_2=(a-2)(a-10).\n\\]\nBoth values \\(-1\\pm\\sqrt5\\) are below \\(2\\), hence \\(\\Delta_2>0\\). Also neither equals \\(0\\) or \\(1\\), so the original fractions are defined. Therefore the complete solution is\n\\[\n\\boxed{a=-1-\\sqrt5\\ \\text{or}\\ a=-1+\\sqrt5}.\n\\]",
+      "reason": "A consistency check confirms the candidate values satisfy root reality and every domain restriction."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Using Vieta’s relations,\n\\[\nx_1x_2=a,\\nx_3x_4=a-1,\n\tx_1+x_2+x_3+x_4=a+5.\n\\]\nRewrite the left side as\n\\[\n\\frac{x_1}{x_3}+\frac{x_4}{x_2}\n=\\frac{x_1x_2+x_3x_4}{x_2x_3}\n=\\frac{2a-1}{x_2x_3}.\n\\]\nBecause the original equation is defined only for \\(a x_2x_3\\ne0\\), cross-multiplication is legitimate. We obtain\n\\[\na(2a-1)=x_1x_2x_3x_4(a+5)=a(a-1)(a+5).\n\\]\nThus \\(a\\ne0\\) and\n\\[\n2a-1=(a-1)(a+5),\n\\]\nwhich gives\n\\[\na^2+2a-4=0,\n\\qquad a=-1\\pm\\sqrt5.\n\\]\nNow \\(\\Delta_1=4a^2+1>0\\), while\n\\[\n\\Delta_2=a^2-12a+20=(a-2)(a-10)>0\n\\]\nfor both values, since both are less than \\(2\\). Neither candidate is \\(0\\) or \\(1\\), so the necessary denominators do not vanish. Hence both work, and no other values can work:\n\\[\n\\boxed{a=-1\\pm\\sqrt5}.\n\\]",
+      "reason": "The generated argument was checked for the missed domain conditions and the second quadratic’s discriminant; both were correctly incorporated."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "The first quadratic has real roots exactly when\n\\[\n\\Delta_1=(2a+1)^2-4a=4a^2+1>0,\n\\]\nwhich is always true. The second has real roots when\n\\[\n\\Delta_2=(a-4)^2-4(a-1)=(a-2)(a-10)\\ge0,\n\\]\nso initially \\(a\\le2\\) or \\(a\\ge10\\).\n\nFor any admissible labeling, Vieta gives\n\\[\nx_1x_2=a,\\\tilde x_3x_4=a-1,\n\\quad x_1+x_2+x_3+x_4=a+5.\n\\]\nThe condition itself requires \\(a\\ne0\\), \\(x_2\\ne0\\), and \\(x_3\\ne0\\). Consequently,\n\\[\n\\frac{x_1}{x_3}+\\frac{x_4}{x_2}\n=\\frac{x_1x_2+x_3x_4}{x_2x_3}\n=\\frac{2a-1}{x_2x_3}.\n\\]\nAfter multiplication by \\(ax_2x_3\\), the required equality is equivalent to\n\\[\na(2a-1)=a(a-1)(a+5).\n\\]\nSince \\(a\\ne0\\), this is\n\\[\na^2+2a-4=0,\n\\]\nso the only candidates are \\(a=-1\\pm\\sqrt5\\). Both satisfy \\(a<2\\), hence \\(\\Delta_2>0\\); neither is \\(0\\) or \\(1\\), so the fractions are defined. Substitution into the equivalent identity verifies the equality. Therefore\n\\[\n\\boxed{a=-1\\pm\\sqrt5}.\n\\]",
+      "reason": "The dependency checks cover reality, domain restrictions, equivalence under cross-multiplication, and final candidate validation."
+    }
+  ]
+}

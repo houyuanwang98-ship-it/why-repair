@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-053",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet\n\\[\nm=\\frac{x+y}{2},\\qquad v=x-y.\n\\]\nThen $|v|=d$, and the hypothesis $2r>d$ implies\n\\[\n\\rho:=\\sqrt{r^2-\\frac{d^2}{4}}>0.\n\\]\nSince $k\\ge 3$, the orthogonal complement $v^\\perp$ has dimension at least $2$. Hence its sphere\n\\[\n\\{w\\in v^\\perp:|w|=\\rho\\}\n\\]\ncontains infinitely many distinct vectors. For each such $w$, set $z=m+w$. Because $w\\cdot v=0$, we have\n\\[\n|z-x|^2=\\left|w-\\frac v2\\right|^2=|w|^2+\\frac{|v|^2}{4}=\\rho^2+\\frac{d^2}{4}=r^2,\n\\]\nand similarly\n\\[\n|z-y|^2=\\left|w+\\frac v2\\right|^2=r^2.\n\\]\nThus every such $z$ satisfies $|z-x|=|z-y|=r$, and there are infinitely many of them.\\end{proof}",
+      "reason": "Replaced the incorrect component-count argument with the dimension of the orthogonal complement, which directly yields an infinite sphere of solutions."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nPut $m=(x+y)/2$ and $u=(x-y)/d$. Then $|u|=1$. Since $k\\ge3$, there exist orthonormal vectors $e_1,e_2$ perpendicular to $u$. Define\n\\[\n\\rho=\\sqrt{r^2-d^2/4}>0.\n\\]\nFor every $\\theta\\in[0,2\\pi)$, let\n\\[\nw_\\theta=\\rho(\\cos\\theta\\,e_1+\\sin\\theta\\,e_2),\\qquad z_\\theta=m+w_\\theta.\n\\]\nThese $z_\\theta$ are infinitely many distinct points. Moreover, $w_\\theta\\perp x-y$ and $|w_\\theta|=\\rho$, so\n\\[\n|z_\\theta-x|^2=\\left|w_\\theta-\\frac{x-y}{2}\\right|^2\n=\\rho^2+\\frac{d^2}{4}=r^2,\n\\]\nwith the cross term zero. Likewise,\n\\[\n|z_\\theta-y|^2=\\left|w_\\theta+\\frac{x-y}{2}\\right|^2=r^2.\n\\]\nTherefore $|z_\\theta-x|=|z_\\theta-y|=r$ for infinitely many $\\theta$.\\end{proof}",
+      "reason": "The revised proof explicitly parametrizes a circle inside the solution set and verifies distinctness and both distance equations."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $c=(x+y)/2$ and $a=(x-y)/2$. Then $|a|=d/2$. The assumption $2r>d$ gives $r^2-|a|^2>0$. Since $k\\ge3$, choose orthonormal vectors $p,q$ perpendicular to $a$. For each $t\\in\\mathbb R$, define\n\\[\nw_t=\\sqrt{r^2-|a|^2}\\,\\frac{p+tq}{\\sqrt{1+t^2}},\n\\qquad z_t=c+w_t.\n\\]\nThe vectors $w_t$ are distinct for infinitely many values of $t$, because the directions $(p+tq)/\\sqrt{1+t^2}$ are distinct. Also $w_t\\perp a$ and $|w_t|^2=r^2-|a|^2$. Hence\n\\[\n|z_t-x|^2=|w_t-a|^2=|w_t|^2+|a|^2=r^2,\n\\]\nand\n\\[\n|z_t-y|^2=|w_t+a|^2=|w_t|^2+|a|^2=r^2.\n\\]\nThus the infinitely many points $z_t$ satisfy the required equalities.\\end{proof}",
+      "reason": "A critic check confirms positivity, existence of two perpendicular directions, distinct parametrization, and vanishing cross terms."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine\n\\[\nm=\\frac{x+y}{2},\\qquad V=\\{w\\in\\mathbb R^k:w\\cdot(x-y)=0\\},\n\\qquad \\rho=\\sqrt{r^2-\\frac{d^2}{4}}.\n\\]\nBecause $2r>d$, we have $\\rho>0$. Since $x-y\\ne0$ and $k\\ge3$, the subspace $V$ has dimension $k-1\\ge2$. Therefore the sphere\n\\[\nS=\\{w\\in V:|w|=\\rho\\}\n\\]\ncontains infinitely many points. For each $w\\in S$, let $z=m+w$. Then\n\\[\nz-x=w-\\frac{x-y}{2},\\qquad z-y=w+\\frac{x-y}{2}.\n\\]\nAs $w\\perp(x-y)$, both cross terms vanish, and consequently\n\\[\n|z-x|^2=|w|^2+\\frac{|x-y|^2}{4}=\\rho^2+\\frac{d^2}{4}=r^2,\n\\]\nwhile the same calculation gives $|z-y|^2=r^2$. Hence every $w\\in S$ produces a point $z$ with $|z-x|=|z-y|=r$. Distinct $w$ produce distinct $z$, so there are infinitely many such points.\\end{proof}",
+      "reason": "The dependency-aware check validates the positive radius, dimension of the orthogonal complement, construction, equations, and injectivity of the mapping $w\\mapsto z$."
+    }
+  ]
+}

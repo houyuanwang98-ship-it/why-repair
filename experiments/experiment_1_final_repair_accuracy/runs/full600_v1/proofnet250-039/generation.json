@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-039",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFix an integer $n>1$ and let $D_{2n}=\\langle r,s\\mid r^n=s^2=1,\\ srs=r^{-1}\\rangle$. Let $H=\\langle r\\rangle$, the subgroup of all rotations. Since $s\\notin H$, $H$ is proper. If $H<K\\leq D_{2n}$, then $K$ contains an element outside $H$. Every element of $D_{2n}\\setminus H$ is a reflection, so $sr^k\\in K$ for some $k\\in\\{0,\\ldots,n-1\\}$. Also $r^{n-k}\\in H\\subseteq K$, and hence\n\\[\ns=(sr^k)r^{n-k}\\in K.\n\\]\nThus $K$ contains $r$ and $s$, so $K=\\langle r,s\\rangle=D_{2n}$. Therefore there is no proper subgroup strictly between $H$ and $D_{2n}$, and $H$ is maximal.\n\\end{proof}",
+      "reason": "Replaced the incorrect appeal to a maximal subset with a direct argument for every proper overgroup."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $n>1$ and write\n\\[\nD_{2n}=\\langle r,s\\mid r^n=s^2=1,\\ srs=r^{-1}\\rangle.\n\\]\nThe rotations form the subgroup $H=\\langle r\\rangle$. It is proper because $s$ is a reflection and $s\\notin H$. Let $K$ be a subgroup with $H\\subsetneq K\\subseteq D_{2n}$. Choose $x\\in K\\setminus H$. Since each element of the dihedral group is either a rotation $r^j$ or a reflection $sr^j$, we have $x=sr^k$ for some $k$. Because $r^{n-k}\\in H\\subseteq K$, closure gives\n\\[\ns=(sr^k)r^{n-k}\\in K.\n\\]\nConsequently $K$ contains both generators $r$ and $s$ of $D_{2n}$, so $K=D_{2n}$, contradicting $K\\subsetneq D_{2n}$. Hence no proper subgroup properly contains $H$, and $H$ is maximal.\n\\end{proof}",
+      "reason": "The revised proof was checked for subgroup quantifiers and explicitly establishes that every strict overgroup is the whole group."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor $n>1$, let\n\\[\nD_{2n}=\\langle r,s\\mid r^n=1,\u0010s^2=1,\u0010srs=r^{-1}\\rangle,\n\\]\nand let $H=\\langle r\\rangle$ be the subgroup of rotations. Since $s$ is not a rotation, $H\\neq D_{2n}$. Suppose $K$ is a subgroup satisfying $H<K\\leq D_{2n}$. Select $x\\in K\\setminus H$. The standard form of elements in a dihedral group implies $x=sr^k$ for some $k\\in\\{0,1,\\ldots,n-1\\}$. Since $r^{n-k}\\in H\\subseteq K$, we obtain\n\\[\ns=(sr^k)r^{n-k}\\in K.\n\\]\nTherefore $K$ contains $r$ and $s$, and hence contains $\\langle r,s\\rangle=D_{2n}$. Thus $K=D_{2n}$. Every subgroup properly containing $H$ is consequently the whole group, so $H$ is maximal.\n\\end{proof}",
+      "reason": "The critic-required correction removes the unsupported maximal-subset step and verifies the product and generation claims."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $n>1$ and define\n\\[\nD_{2n}=\\langle r,s\\mid r^n=s^2=1,\\ srs=r^{-1}\\rangle.\n\\]\nThe subgroup of all rotations is $H=\\langle r\\rangle$. It is proper because $s\\notin H$. To verify maximality, let $K$ be any subgroup with $H<K\\leq D_{2n}$. Choose an element $x\\in K\\setminus H$. Since the elements of $D_{2n}$ are precisely $r^j$ and $sr^j$ for $0\\leq j<n$, the element $x$ has the form $sr^k$ for some $k$. The rotation $r^{n-k}$ belongs to $H$ and hence to $K$. Therefore\n\\[\ns=(sr^k)r^{n-k}\\in K.\n\\]\nNow $r\\in H\\subseteq K$ and $s\\in K$, so\n\\[\nD_{2n}=\\langle r,s\\rangle\\subseteq K.\n\\]\nThus $K=D_{2n}$. Hence $H$ has no proper subgroup overgroup and is a maximal subgroup of $D_{2n}$.\n\\end{proof}",
+      "reason": "Dependency checks validate the element classification, subgroup closure, and generator containment; the local repair was independently rechecked with no descendant claims left unsupported."
+    }
+  ]
+}

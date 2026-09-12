@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-246",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Since \\(a+b+c=0\\),\n\\[\n0=(a+b+c)^2=a^2+b^2+c^2+2(ab+bc+ca),\n\\]\nso \\(ab+bc+ca=-\\tfrac12\\). Thus \\(a,b,c\\) are the roots of\n\\[\np(x)=x^3-\\frac12x-abc.\n\\]\nBecause the roots are real, the discriminant is nonnegative. For \\(x^3+px+q\\), the discriminant is \\(-4p^3-27q^2\\). Hence\n\\[\n0\\leq -4\\left(-\\frac12\\right)^3-27(abc)^2\n=\\frac12-27(abc)^2,\n\\]\nwhich gives\n\\[\na^2b^2c^2=(abc)^2\\leq\\frac1{54}.\n\\]\n\nEquality holds exactly when the discriminant is zero, so the cubic has a repeated root. A repeated root \\(r\\) satisfies\n\\[\n3r^2-\\frac12=0,\n\\]\nthus \\(r=\\pm1/\\sqrt6\\). The remaining root, using the zero sum, is \\(-2r\\). Therefore equality holds, up to permutation, precisely for\n\\[\n\\left(\\frac1{\\sqrt6},\\frac1{\\sqrt6},-\\frac2{\\sqrt6}\\right)\n\\quad\\text{or}\\quad\n\\left(-\\frac1{\\sqrt6},-\\frac1{\\sqrt6},\\frac2{\\sqrt6}\\right).\n\\]",
+      "reason": "The supplied argument is valid; the one-pass rewrite preserves the theorem and equality cases."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "From \\(a+b+c=0\\) and \\(a^2+b^2+c^2=1\\),\n\\[\nab+bc+ca=\\frac{(a+b+c)^2-(a^2+b^2+c^2)}2=-\\frac12.\n\\]\nConsequently, \\(a,b,c\\) are the three real roots of\n\\[\nx^3+(ab+bc+ca)x-abc=x^3-\\frac12x-abc.\n\\]\nIts discriminant is\n\\[\n-4\\left(-\\frac12\\right)^3-27(abc)^2=\\frac12-27(abc)^2.\n\\]\nSince all three roots are real, this is nonnegative. Therefore\n\\[\n(abc)^2\\leq\\frac1{54},\n\\]\nwhich is the desired inequality.\n\nEquality occurs precisely when the discriminant vanishes. Then the repeated root \\(r\\) satisfies \\(p'(r)=3r^2-\\tfrac12=0\\), so \\(r=\\pm1/\\sqrt6\\). Since the roots sum to zero, the third root is \\(-2r\\). Thus, including all permutations, equality holds exactly at\n\\[\n\\left(\\frac1{\\sqrt6},\\frac1{\\sqrt6},-\\frac2{\\sqrt6}\\right)\n\\quad\\text{and}\\quad\n\\left(-\\frac1{\\sqrt6},-\\frac1{\\sqrt6},\\frac2{\\sqrt6}\\right).\n\\]",
+      "reason": "An internal consistency check confirms the discriminant and repeated-root calculations, so no substantive repair is needed."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let \\(k=abc\\). By the identities in the hypotheses,\n\\[\nab+bc+ca=-\\frac12.\n\\]\nViète’s formulas show that \\(a,b,c\\) are the roots of\n\\[\nf(x)=x^3-\\frac12x-k.\n\\]\nA cubic with three real roots has nonnegative discriminant. Here\n\\[\n\\Delta(f)=-4\\left(-\\frac12\\right)^3-27(-k)^2\n=\\frac12-27k^2.\n\\]\nThus \\(\\Delta(f)\\ge0\\), and hence\n\\[\na^2b^2c^2=k^2\\le\\frac1{54}.\n\\]\n\nThe critic’s equality check is as follows. Equality requires \\(\\Delta(f)=0\\), meaning that \\(f\\) has a repeated root \\(r\\). Since \\(f'(r)=0\\),\n\\[\n3r^2-\\frac12=0,\n\\]\nso \\(r=\\pm1/\\sqrt6\\). The third root is \\(-2r\\), because the sum of the roots is zero. Both resulting triples satisfy the square-sum condition, and their products have square \\(1/54\\). Therefore equality holds exactly, up to permutation, for\n\\[\n\\left(\\frac1{\\sqrt6},\\frac1{\\sqrt6},-\\frac2{\\sqrt6}\\right),\n\\qquad\n\\left(-\\frac1{\\sqrt6},-\\frac1{\\sqrt6},\\frac2{\\sqrt6}\\right).\n\\]",
+      "reason": "Generator and critic checks find the proof logically sound and confirm the equality characterization."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "The constraints imply\n\\[\nab+bc+ca=-\\frac12,\n\\]\nbecause \\((a+b+c)^2=a^2+b^2+c^2+2(ab+bc+ca)=0\\). Therefore the monic polynomial with roots \\(a,b,c\\) is\n\\[\nf(x)=x^3-\\frac12x-abc.\n\\]\nIts roots are real by assumption. For a depressed cubic \\(x^3+px+q\\), the discriminant is \\(-4p^3-27q^2\\); hence\n\\[\n\\Delta(f)=\\frac12-27(abc)^2\\ge0.\n\\]\nIt follows that\n\\[\na^2b^2c^2=(abc)^2\\le\\frac1{54}.\n\\]\n\nFor equality, every implication above must be sharp, so \\(\\Delta(f)=0\\). Thus \\(f\\) has a repeated root \\(r\\), and simultaneously\n\\[\nf'(r)=3r^2-\\frac12=0.\n\\]\nHence \\(r=\\pm1/\\sqrt6\\). The remaining root is \\(-2r\\), by the zero-sum condition. Conversely, each such triple has sum zero, square sum\n\\[\n\\frac16+\\frac16+\\frac46=1,\n\\]\nand product square \\(1/54\\). Therefore the equality cases, including all permutations, are exactly\n\\[\n\\left(\\frac1{\\sqrt6},\\frac1{\\sqrt6},-\\frac2{\\sqrt6}\\right)\n\\quad\\text{or}\\quad\n\\left(-\\frac1{\\sqrt6},-\\frac1{\\sqrt6},\\frac2{\\sqrt6}\\right).\n\\]",
+      "reason": "Dependency and descendant checks validate the original proof, including necessity and sufficiency of the equality cases; no local repair is required."
+    }
+  ]
+}

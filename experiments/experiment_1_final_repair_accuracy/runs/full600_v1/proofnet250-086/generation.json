@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-086",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSince $ab=ba$, $a$ commutes with every power of $b$, and $b$ commutes with every power of $a$. Hence every element of the subgroup $H=\\langle a,b\\rangle$ can be written as $a^i b^j$ for some $i,j\\in\\mathbb Z$. If $g=a^i b^j$ and $h=a^k b^l$ are elements of $H$, then\n\\[\ngh=a^i b^j a^k b^l=a^{i+k}b^{j+l}=a^{k+i}b^{l+j}=a^k b^l a^i b^j=hg.\n\\]\nThus every two elements of $H$ commute, so $H$ is an abelian group.\n\\end{proof}",
+      "reason": "The original argument is valid in substance but needed justification that all elements of $H$ have the form $a^i b^j$, with integer exponents."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nBecause $a$ and $b$ commute, their inverses and all integer powers commute as well: $a^i b^j=b^j a^i$ for all $i,j\\in\\mathbb Z$. Any word in $a^{\\pm1}$ and $b^{\\pm1}$ can therefore be rearranged by collecting all powers of $a$ and all powers of $b$. Consequently, every element of $H=\\langle a,b\\rangle$ has the form $a^i b^j$ for some integers $i,j$.\n\nLet $g=a^i b^j$ and $h=a^k b^l$ be elements of $H$. Then\n\\[\ngh=a^i b^j a^k b^l=a^{i+k}b^{j+l}=a^{k+i}b^{l+j}=a^k b^l a^i b^j=hg.\n\\]\nThus all elements of $H$ commute, and hence $H$ is abelian.\n\\end{proof}",
+      "reason": "The revised proof explicitly checks the generated-subgroup representation and handles inverses through integer exponents."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $H=\\langle a,b\\rangle$. Since $ab=ba$, we also have $a^r b^s=b^s a^r$ for all $r,s\\in\\mathbb Z$. Every element of $H$ is represented by a finite word in $a^{\\pm1}$ and $b^{\\pm1}$; commuting these factors allows the word to be rewritten as $a^i b^j$ for some $i,j\\in\\mathbb Z$.\n\nTake arbitrary $g,h\\in H$, say $g=a^i b^j$ and $h=a^k b^l$. Using the commutation of powers,\n\\[\ngh=a^i b^j a^k b^l=a^{i+k}b^{j+l}=a^{k+i}b^{l+j}=a^k b^l a^i b^j=hg.\n\\]\nTherefore arbitrary elements of $H$ commute, so $H$ is an abelian group.\n\\end{proof}",
+      "reason": "The proof survives critic review after adding the missing word-rearrangement justification and confirming arbitrary elements are covered."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet $H=\\langle a,b\\rangle$. From $ab=ba$, it follows that $a^{\\pm1}$ commutes with $b^{\\pm1}$, and hence $a^i$ commutes with $b^j$ for all $i,j\\in\\mathbb Z$. Thus any word in the generators $a^{\\pm1},b^{\\pm1}$ can be rearranged and combined into the form $a^i b^j$. Therefore every element of $H$ has that form.\n\nFor arbitrary $g,h\\in H$, write $g=a^i b^j$ and $h=a^k b^l$. Then\n\\[\ngh=a^i b^j a^k b^l=a^{i+k}b^{j+l}=a^{k+i}b^{l+j}=a^k b^l a^i b^j=hg.\n\\]\nHence every pair of elements of $H$ commutes. Therefore $H$ is abelian.\n\\end{proof}",
+      "reason": "Dependency review confirms the only gap was the normal-form claim; it is repaired locally, and the arbitrary-element conclusion is revalidated."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "B42",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "因为 a 为实数，所以 a^2≥0。算术平方根 sqrt(a^2) 是非负数，且 |a|≥0，并且 |a|^2=a^2。因此 sqrt(a^2)=|a|。",
+      "reason": "将错误的“sqrt(a^2)=a”改为依据非负性和平方相等的正确论证。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "由 a 为实数，a^2≥0。根据绝对值定义，|a|≥0，且 |a|^2=a^2。由于 sqrt(a^2) 表示 a^2 的非负平方根，而 |a| 正是满足平方为 a^2 的非负数，故 sqrt(a^2)=|a|。",
+      "reason": "检查后补充了算术平方根的非负性条件，避免把平方根直接还原为 a。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "设 a 为任意实数。生成候选论证：a^2 的非负平方根为 |a|，因为 |a|≥0 且 |a|^2=a^2。因此，根据算术平方根的唯一性，sqrt(a^2)=|a|。该论证对 a≥0 和 a<0 均成立。",
+      "reason": "批评并修正了候选步骤中将 sqrt(a^2) 误写为 a 的符号错误。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "已知 a∈R。令 b=|a|，则 b≥0 且 b^2=a^2。根据算术平方根的定义，sqrt(a^2) 是满足 x≥0 且 x^2=a^2 的唯一实数；b 满足这两个条件。因此 sqrt(a^2)=b=|a|。该结论同时覆盖 a≥0 与 a<0 的情形。",
+      "reason": "依赖检查发现原证明把平方根错误地还原为 a；局部替换该步骤后，独立复核及相关结论均通过。"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "B22",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "由 0≤y<x，得 x-y>0；又因 x+y≥0，且 x>y≥0，所以 x+y>0。于是\nx^2-y^2=(x-y)(x+y)>0，故 y^2<x^2。",
+      "reason": "补出平方差分解及两个正因子的符号，完成原证明的缺失推理。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "由 0≤y<x 可得 x-y>0，且 x+y>0。根据平方差公式，\nx^2-y^2=(x-y)(x+y)>0。\n因此 x^2>y^2，即 y^2<x^2。",
+      "reason": "检查后确认原结论正确，但需明确说明 x-y>0 并使用平方差公式。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "因为 0≤y<x，所以 x-y>0；同时 x>0 且 y≥0，从而 x+y>0。由平方差公式，\nx^2-y^2=(x-y)(x+y)>0。\n故 x^2>y^2，即 y^2<x^2。",
+      "reason": "批评环节发现“x+y>0”本身不足以推出平方比较，已补充 x-y>0 和平方差公式。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "已知 x,y∈ℝ，且 0≤y<x。于是 x-y>0；又 x>y≥0，故 x+y>0。依平方差公式，\nx^2-y^2=(x-y)(x+y)>0。\n因此 y^2<x^2，证毕。",
+      "reason": "依赖检查定位到平方差公式所需的两个符号条件，完成最小局部修复；独立复核与结论重验证均通过。"
+    }
+  ]
+}

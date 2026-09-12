@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-046",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor each $g\\in G$, let $\\operatorname{Fix}(g)=\\{a\\in A:g(a)=a\\}$. Since $G$ is transitive, it has exactly one orbit on $A$. By the orbit-counting lemma,\n\\[\n\\frac{1}{|G|}\\sum_{g\\in G}|\\operatorname{Fix}(g)|=1,\n\\]\nso\n\\[\n\\sum_{g\\in G}|\\operatorname{Fix}(g)|=|G|.\n\\]\nSuppose, for contradiction, that every $g\\in G$ fixes some element of $A$. Then every summand is at least $1$. The identity fixes all $|A|>1$ elements, so\n\\[\n\\sum_{g\\in G}|\\operatorname{Fix}(g)|>|G|,\n\\]\ncontradicting the preceding equality. Hence some $\\sigma\\in G$ has $\\operatorname{Fix}(\\sigma)=\\varnothing$, i.e. $\\sigma(a)\\ne a$ for all $a\\in A$.\n\\end{proof}",
+      "reason": "Replaced the invalid subgroup-union claim with the orbit-counting lemma."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $f(g)=|\\{a\\in A:g(a)=a\\}|$ for $g\\in G$. Counting pairs $(g,a)$ with $g(a)=a$ in two ways gives\n\\[\n\\sum_{g\\in G}f(g)=\\sum_{a\\in A}|G_a|.\n\\]\nBecause the action is transitive, all point stabilizers have the same size, and orbit-stabilizer gives $|G_a|=|G|/|A|$. Therefore\n\\[\n\\sum_{g\\in G}f(g)=|A|\\cdot\\frac{|G|}{|A|}=|G|.\n\\]\nIf every element of $G$ fixed at least one point of $A$, then $f(g)\\ge1$ for every $g$. Moreover, $f(1)=|A|>1$, so the sum would be strictly greater than $|G|$, a contradiction. Thus there exists $\\sigma\\in G$ with $f(\\sigma)=0$, and consequently $\\sigma(a)\\ne a$ for every $a\\in A$.\n\\end{proof}",
+      "reason": "Internal checking confirmed the counting argument handles all finite transitive actions and yields the required derangement."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nConsider the action of $G$ on $A$. For $g\\in G$, write $\\operatorname{Fix}(g)$ for its fixed-point set. The orbit-counting lemma states that the number of $G$-orbits on $A$ equals\n\\[\n\\frac1{|G|}\\sum_{g\\in G}|\\operatorname{Fix}(g)|.\n\\]\nTransitivity means that the number of orbits is $1$, hence\n\\[\n\\sum_{g\\in G}|\\operatorname{Fix}(g)|=|G|.\n\\]\nAssume that no element acts without fixed points. Then $|\\operatorname{Fix}(g)|\\ge1$ for every $g\\in G$. Since the identity fixes every point and $|A|>1$, its contribution is strictly larger than $1$, and therefore\n\\[\n\\sum_{g\\in G}|\\operatorname{Fix}(g)|>|G|,\n\\]\nwhich is impossible. Hence some $\\sigma\\in G$ has no fixed point, so $\\sigma(a)\\ne a$ for all $a\\in A$.\n\\end{proof}",
+      "reason": "The critic rejected the original unsupported covering assertion and validated a Burnside-based replacement."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ act on $A$ as given, and define\n\\[\nX=\\{(g,a)\\in G\\times A:g(a)=a\\}.\n\\]\nCounting $X$ by its second coordinate gives\n\\[\n|X|=\\sum_{a\\in A}|G_a|.\n\\]\nTransitivity implies that for any $a,b\\in A$, the stabilizers $G_a$ and $G_b$ are conjugate, so they have equal order. By orbit-stabilizer, $|G_a|=|G|/|A|$. Thus\n\\[\n|X|=|A|\\frac{|G|}{|A|}=|G|.\n\\]\nCounting instead by the first coordinate gives\n\\[\n|X|=\\sum_{g\\in G}|\\operatorname{Fix}(g)|.\n\\]\nIf every $g\\in G$ fixed some point of $A$, then each term in this sum would be at least $1$. The identity fixes $|A|>1$ points, so the sum would exceed $|G|$, contradicting $|X|=|G|$. Therefore some $\\sigma\\in G$ has no fixed point, meaning $\\sigma(a)\\ne a$ for every $a\\in A$.\n\\end{proof}",
+      "reason": "A dependency check identified the false union-of-conjugates step; local replacement by double counting was independently validated, with the conclusion rechecked."
+    }
+  ]
+}

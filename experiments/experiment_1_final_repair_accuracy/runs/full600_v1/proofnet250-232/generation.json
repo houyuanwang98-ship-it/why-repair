@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-232",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet \\(\\varphi\\in\\operatorname{Aut}(G)\\). Since automorphisms preserve subgroup order, \\(|\\varphi(H)|=|H|=p^n\\). Suppose \\(\\varphi(H)\\ne H\\). Then \\(H\\cap\\varphi(H)\\) is a proper subgroup of the \\(p\\)-group \\(H\\), so \\(|H\\cap\\varphi(H)|=p^s\\) for some \\(s<n\\). Because \\(G\\) is abelian, \\(H\\varphi(H)\\) is a subgroup of \\(G\\), and\n\\[\n|H\\varphi(H)|=\\frac{|H|\\,|\\varphi(H)|}{|H\\cap\\varphi(H)|}=p^{2n-s}.\n\\]\nBy Lagrange's theorem, \\(p^{2n-s}\\mid |G|=p^n m\\), so \\(p^{n-s}\\mid m\\). Since \\(n-s>0\\), this implies \\(p\\mid m\\), contradicting the hypothesis. Hence \\(\\varphi(H)=H\\). Since \\(\\varphi\\) was arbitrary, \\(H\\) is characteristic in \\(G\\).\n\\end{proof}",
+      "reason": "Corrected terminology and preserved the original subgroup-product argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet \\(\\varphi\\) be any automorphism of \\(G\\). Then \\(\\varphi(H)\\) is a subgroup of \\(G\\) with order \\(p^n\\). If \\(\\varphi(H)\\ne H\\), then \\(H\\cap\\varphi(H)\\) is a proper subgroup of \\(H\\), whose order is \\(p^s\\) for some integer \\(0\\le s<n\\). Since \\(G\\) is abelian, the product \\(H\\varphi(H)\\) is a subgroup of \\(G\\). Therefore\n\\[\n|H\\varphi(H)|=\\frac{|H|\\,|\\varphi(H)|}{|H\\cap\\varphi(H)|}=p^{2n-s}.\n\\]\nLagrange's theorem gives \\(p^{2n-s}\\mid p^n m\\), hence \\(p^{n-s}\\mid m\\). But \\(n-s\\ge1\\), so \\(p\\mid m\\), a contradiction. Thus \\(\\varphi(H)=H\\). As every automorphism of \\(G\\) fixes \\(H\\), the subgroup \\(H\\) is characteristic in \\(G\\).\n\\end{proof}",
+      "reason": "Checked the proper-intersection claim and made the divisibility contradiction explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nTake an arbitrary \\(\\varphi\\in\\operatorname{Aut}(G)\\). We have \\(|\\varphi(H)|=|H|=p^n\\). Assume for contradiction that \\(\\varphi(H)\\ne H\\). Then \\(H\\cap\\varphi(H)\\) is a proper subgroup of \\(H\\), so, by Lagrange's theorem and the fact that \\(|H|\\) is a power of \\(p\\), there is an integer \\(s<n\\) such that\n\\[\n|H\\cap\\varphi(H)|=p^s.\n\\]\nThe group \\(G\\) is abelian, so \\(H\\varphi(H)\\le G\\). Using the product formula,\n\\[\n|H\\varphi(H)|=\\frac{p^n p^n}{p^s}=p^{2n-s}.\n\\]\nSince this subgroup lies in \\(G\\), its order divides \\(|G|=p^n m\\). Consequently \\(p^{n-s}\\mid m\\), which forces \\(p\\mid m\\), contrary to \\(p\\nmid m\\). Hence \\(\\varphi(H)=H\\). Therefore every automorphism of \\(G\\) fixes \\(H\\), and \\(H\\) is characteristic in \\(G\\).\n\\end{proof}",
+      "reason": "The critic-checked version verifies subgroup closure, the intersection exponent, and the final divisibility step."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet \\(\\varphi\\) be an arbitrary automorphism of \\(G\\). Automorphisms preserve order, so \\(|\\varphi(H)|=p^n\\). We claim that \\(\\varphi(H)=H\\). If not, then \\(H\\cap\\varphi(H)\\) is a proper subgroup of \\(H\\). Since \\(|H|=p^n\\), its order is \\(p^s\\) for some \\(s<n\\). Because \\(G\\) is abelian, \\(H\\varphi(H)\\) is a subgroup of \\(G\\), and\n\\[\n|H\\varphi(H)|=\\frac{|H|\\,|\\varphi(H)|}{|H\\cap\\varphi(H)|}=p^{2n-s}.\n\\]\nBy Lagrange's theorem, \\(p^{2n-s}\\mid |G|=p^n m\\). Cancelling \\(p^n\\) yields \\(p^{n-s}\\mid m\\). Since \\(n-s\\ge1\\), this implies \\(p\\mid m\\), contradicting the assumption \\(p\\nmid m\\). Thus \\(\\varphi(H)=H\\). As \\(\\varphi\\) was arbitrary, \\(H\\) is a characteristic subgroup of \\(G\\).\n\\end{proof}",
+      "reason": "Dependency checks confirm each claim supports the next; the local repair preserves the theorem and revalidates the conclusion for every automorphism."
+    }
+  ]
+}

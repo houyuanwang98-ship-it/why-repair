@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-130",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "irreparable",
+      "final_proof": "The theorem cannot be proved under the stated assumptions. Let V=\\ell^2(\\mathbb Z) and let T be the bilateral shift, T((x_n)_{n\\in\\mathbb Z})=(x_{n-1})_{n\\in\\mathbb Z}. Then T is unitary, hence normal. It has no eigenvalues: if Tx=\\lambda x, then x_n=\\lambda^{-n}x_0 for every n, which cannot define a nonzero element of \\ell^2(\\mathbb Z) for any \\lambda. Thus all eigenvalues of T are real vacuously, but T is not self-adjoint, since T^* is the opposite shift and T\\ne T^*. Therefore the claimed equivalence is false without an additional finite-dimensional (or suitable spectral) assumption.",
+      "reason": "The proof incorrectly invokes the finite-dimensional complex spectral theorem; in the stated generality, a normal operator need not have an orthonormal eigenbasis, and the theorem has a counterexample."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "irreparable",
+      "final_proof": "No proof exists with the theorem, assumptions, and domain unchanged. Consider V=\\ell^2(\\mathbb Z) and the bilateral shift T defined by (Tx)_n=x_{n-1}. This operator is unitary, so T is normal. If Tx=\\lambda x for a nonzero x, then x_n=\\lambda^{-n}x_0 for all n. Such a sequence is not square-summable for any \\lambda\\in\\mathbb C, so T has no eigenvalues. Consequently, the assertion that all eigenvalues are real is vacuously true. However, T^* is the inverse shift, and T\\ne T^*, so T is not self-adjoint. Hence the theorem is false as stated.",
+      "reason": "Internal checking exposes that the spectral-theorem step requires finite dimensionality, which is absent; the bilateral shift disproves the converse."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "irreparable",
+      "final_proof": "The requested theorem is false on the stated complex inner-product space and therefore cannot be proved. Let V=\\ell^2(\\mathbb Z), and define the bilateral shift by (Tx)_n=x_{n-1}. Since T is unitary, TT^*=T^*T=I, so T is normal. An eigenvector equation Tx=\\lambda x gives x_n=\\lambda^{-n}x_0 for every n. For a nonzero vector this sequence fails to belong to \\ell^2(\\mathbb Z), regardless of \\lambda; hence T has no eigenvalues, and all of its eigenvalues are real vacuously. Nevertheless, T^* is the opposite shift, so T\\ne T^* and T is not self-adjoint. Thus the claimed if-and-only-if statement fails under the given assumptions.",
+      "reason": "A critic check rejects the generator’s use of an orthonormal eigenbasis: that conclusion is unavailable in infinite dimensions, and the bilateral shift is a concrete counterexample."
+    },
+    {
+      "method": "full_system",
+      "outcome": "irreparable",
+      "final_proof": "No repaired proof can preserve the theorem and its stated domain. Take V=\\ell^2(\\mathbb Z) and let T be the bilateral shift, (Tx)_n=x_{n-1}. T is unitary and therefore normal. If Tx=\\lambda x for a nonzero x, then x_n=\\lambda^{-n}x_0 for all n\\in\\mathbb Z; this cannot be square-summable, so T has no eigenvalues. Hence every eigenvalue of T is real vacuously. But T^* is the inverse bilateral shift, so T\\ne T^*, and T is not self-adjoint. The claimed equivalence is therefore false as stated. The descendant conclusion also fails because the omitted finite-dimensional hypothesis is exactly what would justify an orthonormal eigenbasis via the complex spectral theorem.",
+      "reason": "Dependency evaluation identifies the missing finite-dimensional hypothesis; local repair is impossible without changing the domain, and independent counterexample review confirms failure."
+    }
+  ]
+}

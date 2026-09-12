@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-073",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "irreparable",
+      "final_proof": "The theorem is false as stated because an open set need not be connected. Let $\\Omega=D(0,1)\\cup D(3,1)$, and define $f(z)=0$ on $D(0,1)$ and $f(z)=1$ on $D(3,1)$. Then $f$ is holomorphic on $\\Omega$, and $\\operatorname{Re}(f)$ is not globally constant (it equals $0$ and $1$ on the two components), so this does not satisfy the hypothesis. A valid counterexample must have constant real part: define $f(z)=0$ on $D(0,1)$ and $f(z)=i$ on $D(3,1)$. Then $f$ is holomorphic on $\\Omega$, $\\operatorname{Re}(f)=0$ everywhere, but $f$ is not constant. Hence the theorem cannot be proved without assuming that $\\Omega$ is connected.",
+      "reason": "The missing connectedness assumption is essential; $f'=0$ implies only that $f$ is constant on each connected component."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "irreparable",
+      "final_proof": "The claim cannot be proved under the stated assumptions. Take the disconnected open set $\\Omega=D(0,1)\\cup D(3,1)$ and define\n\\[\nf(z)=\\begin{cases}0,&z\\in D(0,1),\\\\ i,&z\\in D(3,1).\\end{cases}\n\\]\nThe function is holomorphic on each component and therefore holomorphic on $\\Omega$. Its real part is identically $0$ on $\\Omega$, but $f$ is not constant. Thus the theorem is false as stated. If $\\Omega$ were assumed connected, the Cauchy–Riemann equations would give $f'=0$, and hence $f$ would be constant.",
+      "reason": "Internal checking exposes that disconnected open sets permit different imaginary constants on different components."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "irreparable",
+      "final_proof": "No valid proof exists with the given assumptions. Consider\n\\[\n\\Omega=D(0,1)\\cup D(3,1),\\qquad\nf(z)=\\begin{cases}0,&z\\in D(0,1),\\\\ i,&z\\in D(3,1).\\end{cases}\n\\]\nSince $f$ is constant on each component, it is holomorphic on $\\Omega$. Moreover, $\\operatorname{Re}(f)=0$ everywhere in $\\Omega$, while $f$ takes two distinct values and is therefore not constant. This counterexample disproves the theorem. The intended conclusion is valid if “open set” is replaced by “connected open set.”",
+      "reason": "A critic check identifies the unsupported step from $f'=0$ to global constancy; that implication requires connectedness."
+    },
+    {
+      "method": "full_system",
+      "outcome": "irreparable",
+      "final_proof": "The dependency-aware check fails at the conclusion: from the Cauchy–Riemann equations one obtains $f'(z)=0$, which guarantees that $f$ is constant only on each connected component of $\\Omega$. The theorem is therefore irreparable without an additional connectedness assumption. Indeed, let\n\\[\n\\Omega=D(0,1)\\cup D(3,1),\\qquad\nf(z)=\\begin{cases}0,&z\\in D(0,1),\\\\ i,&z\\in D(3,1).\\end{cases}\n\\]\nThen $f$ is holomorphic on $\\Omega$ and $\\operatorname{Re}(f)=0$ everywhere, but $f$ is not constant. Thus descendant revalidation also fails for the stated theorem; it becomes true after adding that $\\Omega$ is connected.",
+      "reason": "The evaluator certificate is invalid at the global-constancy step, and independent review confirms the disconnected-domain counterexample."
+    }
+  ]
+}

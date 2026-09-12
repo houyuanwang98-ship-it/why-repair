@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-088",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor $n\\ge 1$, rationalizing gives\n\\[\n\\sqrt{n+1}-\\sqrt n\n=\\frac{1}{\\sqrt{n+1}+\\sqrt n}\n<\\frac{1}{2\\sqrt n}.\n\\]\nSince $1/(2\\sqrt n)\\to 0$ and the left-hand side is nonnegative, the squeeze theorem implies\n\\[\n\\sqrt{n+1}-\\sqrt n\\to 0.\n\\]\n\\end{proof}",
+      "reason": "Added the missing domain qualification and squeeze-theorem conclusion."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor every $n\\in\\mathbb N$,\n\\[\n0\\le \\sqrt{n+1}-\\sqrt n\n=\\frac{(n+1)-n}{\\sqrt{n+1}+\\sqrt n}\n=\\frac{1}{\\sqrt{n+1}+\\sqrt n}.\n\\]\nAs $n\\to\\infty$, the denominator tends to infinity, so the fraction tends to $0$. Therefore,\n\\[\n\\sqrt{n+1}-\\sqrt n\\longrightarrow 0.\n\\]\n\\end{proof}",
+      "reason": "Replaced the unnecessary inequality with a direct limit argument and made nonnegativity explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor $n\\ge 1$, we have\n\\[\n0\\le \\sqrt{n+1}-\\sqrt n\n=\\frac{(\\sqrt{n+1}-\\sqrt n)(\\sqrt{n+1}+\\sqrt n)}{\\sqrt{n+1}+\\sqrt n}\n=\\frac{1}{\\sqrt{n+1}+\\sqrt n}\n\\le \\frac{1}{2\\sqrt n}.\n\\]\nBecause $1/(2\\sqrt n)\\to0$, the squeeze theorem yields\n\\[\n\\sqrt{n+1}-\\sqrt n\\to0.\n\\]\n\\end{proof}",
+      "reason": "The original algebra was valid but omitted the limit argument; this version supplies a complete squeeze proof."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $a_n=\\sqrt{n+1}-\\sqrt n$. For all sufficiently large $n$ (indeed, for $n\\ge1$),\n\\[\n0\\le a_n\n=\\frac{(n+1)-n}{\\sqrt{n+1}+\\sqrt n}\n=\\frac{1}{\\sqrt{n+1}+\\sqrt n}\n\\le \\frac{1}{2\\sqrt n}.\n\\]\nThe bound $1/(2\\sqrt n)$ converges to $0$. Hence, by the squeeze theorem,\n\\[\n\\lim_{n\\to\\infty}a_n=0,\n\\]\nwhich is exactly\n\\[\n\\sqrt{n+1}-\\sqrt n\\longrightarrow0.\n\\]\n\\end{proof}",
+      "reason": "Verified the algebra, denominator positivity, bound direction, and descendant limit conclusion; repaired only the missing convergence step."
+    }
+  ]
+}

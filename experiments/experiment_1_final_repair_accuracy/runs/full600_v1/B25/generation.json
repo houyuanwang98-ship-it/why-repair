@@ -1,0 +1,29 @@
+{
+  "case_id": "B25",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "设 a,b 为奇整数，则存在整数 m,n，使 a=2m+1，b=2n+1。因此 a+b=(2m+1)+(2n+1)=2(m+n+1)，其中 m+n+1 为整数，故 a+b 为偶数。",
+      "reason": "将示例性论证改为适用于任意奇整数的代数证明。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "由 a,b 为奇整数，存在整数 m,n，使得 a=2m+1、b=2n+1。于是\n a+b=2m+1+2n+1=2(m+n+1)。\n因 m+n+1 是整数，a+b 可表示为 2 与某整数的乘积，所以 a+b 为偶数。",
+      "reason": "检查后补足了“任意”情形，并明确说明乘数仍为整数。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "奇整数可分别写成 a=2m+1、b=2n+1，其中 m,n∈Z。故\n a+b=(2m+1)+(2n+1)=2(m+n+1)。\n由于整数对加法封闭，m+n+1∈Z，所以 a+b 是偶数。该证明不依赖特定数值，适用于所有满足假设的 a,b。",
+      "reason": "批评示例论证仅验证个别情形后，生成并保留了覆盖全称结论的形式化证明。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "根据“a,b 为奇整数”，存在整数 m,n，使 a=2m+1，b=2n+1。计算得\n a+b=(2m+1)+(2n+1)=2(m+n+1)。\n整数 m+n+1 仍为整数，因此 a+b 具有 2k（k∈Z）的形式，按偶整数定义，a+b 为偶数。该推导直接从假设得到结论，故完成证明。",
+      "reason": "依赖链为“奇整数表示→代数合并→整数封闭性→偶整数定义”；局部补入缺失的全称推导后，结论及其适用范围均通过复核。"
+    }
+  ]
+}

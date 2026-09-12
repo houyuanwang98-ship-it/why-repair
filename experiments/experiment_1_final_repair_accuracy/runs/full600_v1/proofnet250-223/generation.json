@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-223",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet \\(\\mathcal B=\\{(a,b)\\subseteq\\mathbb R\\mid a<b,\\ a,b\\in\\mathbb Q\\}\\). Since \\(\\mathbb Q\\) is countable, \\(\\mathcal B\\) is countable. Define\n\\[\n\\mathcal C=\\{(a,b)\\times(c,d)\\mid a<b,\\ c<d,\\ a,b,c,d\\in\\mathbb Q\\}.\n\\]\nThus \\(\\mathcal C\\) is countable as a finite product of countable sets.\n\nEach member of \\(\\mathcal C\\) is open in \\(\\mathbb R^2\\). Let \\(U\\subseteq\\mathbb R^2\\) be open and let \\(x=(x_1,x_2)\\in U\\). There is \\(\\varepsilon>0\\) such that the open Euclidean ball \\(B(x,\\varepsilon)\\) is contained in \\(U\\). Choose rationals \\(a<x_1<b\\) and \\(c<x_2<d\\) sufficiently close to \\(x_1\\) and \\(x_2\\), respectively, so that\n\\[\nx\\in(a,b)\\times(c,d)\\subseteq B(x,\\varepsilon)\\subseteq U.\n\\]\nTherefore every point of every open set lies in a member of \\(\\mathcal C\\) contained in that open set. Hence \\(\\mathcal C\\) is a basis for \\(\\mathbb R^2\\).\\end{proof}",
+      "reason": "The original proof asserted the product-basis conclusion without proving countability or the basis refinement property."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet\n\\[\n\\mathcal C=\\{(a,b)\\times(c,d)\\mid a<b,\\ c<d,\\ a,b,c,d\\in\\mathbb Q\\}.\n\\]\nThere are countably many rational quadruples, so \\(\\mathcal C\\) is countable.\n\nWe verify the basis criterion. Every element of \\(\\mathcal C\\) is open in the usual topology on \\(\\mathbb R^2\\). If \\(U\\) is open in \\(\\mathbb R^2\\) and \\((x,y)\\in U\\), choose \\(r>0\\) with \\(B((x,y),r)\\subseteq U\\). By density of \\(\\mathbb Q\\) in \\(\\mathbb R\\), choose rational numbers \\(a<x<b\\) and \\(c<y<d\\) such that \\(b-a<r\\) and \\(d-c<r\\), with the intervals chosen sufficiently small that\n\\[\n(x,y)\\in(a,b)\\times(c,d)\\subseteq B((x,y),r).\n\\]\nConsequently, for every open set and every point in it, there is a member of \\(\\mathcal C\\) containing that point and contained in the open set. This proves that \\(\\mathcal C\\) is a basis for \\(\\mathbb R^2\\).\\end{proof}",
+      "reason": "The revised proof explicitly checks countability, openness, and the required pointwise refinement condition."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet\n\\[\n\\mathcal C=\\{(a,b)\\times(c,d):a,b,c,d\\in\\mathbb Q,\\ a<b,\\ c<d\\}.\n\\]\nBecause \\(\\mathbb Q^4\\) is countable, \\(\\mathcal C\\) is countable.\n\nFor each \\(R=(a,b)\\times(c,d)\\in\\mathcal C\\), the set \\(R\\) is open in \\(\\mathbb R^2\\). Conversely, let \\(U\\) be any open subset of \\(\\mathbb R^2\\) and let \\(p=(x,y)\\in U\\). Since \\(U\\) is open, there exists \\(r>0\\) such that \\(B(p,r)\\subseteq U\\). Choose \\(\\delta>0\\) with \\(\\sqrt2\\,\\delta<r\\). Using density of the rationals, choose \\(a,b,c,d\\in\\mathbb Q\\) satisfying\n\\[\nx-\\delta<a<x<b<x+\\delta,\\qquad y-\\delta<c<y<d<y+\\delta.\n\\]\nThen \\(p\\in(a,b)\\times(c,d)\\), and every point of this rectangle is within distance less than \\(\\sqrt2\\,\\delta<r\\) of \\(p\\). Hence\n\\[\np\\in(a,b)\\times(c,d)\\subseteq B(p,r)\\subseteq U.\n\\]\nThus \\(\\mathcal C\\) satisfies the basis criterion and is a basis for \\(\\mathbb R^2\\).\\end{proof}",
+      "reason": "A critic would reject the source for skipping the basis criterion; this version supplies a precise rational-rectangle construction."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine\n\\[\n\\mathcal C=\\{(a,b)\\times(c,d)\\mid a,b,c,d\\in\\mathbb Q,\\ a<b,\\ c<d\\}.\n\\]\nWe prove that \\(\\mathcal C\\) is a countable basis for \\(\\mathbb R^2\\).\n\nFirst, \\(\\mathbb Q^4\\) is countable, and \\(\\mathcal C\\) is the image of the subset of \\(\\mathbb Q^4\\) consisting of quadruples with \\(a<b\\) and \\(c<d\\). Therefore \\(\\mathcal C\\) is countable.\n\nSecond, every member of \\(\\mathcal C\\) is open in \\(\\mathbb R^2\\). To verify that these sets generate the topology, let \\(U\\subseteq\\mathbb R^2\\) be open and let \\((x,y)\\in U\\). Choose \\(r>0\\) such that \\(B((x,y),r)\\subseteq U\\). By density of \\(\\mathbb Q\\), choose rational numbers satisfying\n\\[\nx-\\frac r{3}<a<x<b<x+\\frac r3,\n\\qquad\n y-\\frac r3<c<y<d<y+\\frac r3.\n\\]\nFor any \\((s,t)\\in(a,b)\\times(c,d)\\),\n\\[\n\\|(s,t)-(x,y)\\|_2\n<\\sqrt{(r/3)^2+(r/3)^2}<r.\n\\]\nHence\n\\[\n(x,y)\\in(a,b)\\times(c,d)\\subseteq B((x,y),r)\\subseteq U.\n\\]\nThe basis criterion is satisfied, so \\(\\mathcal C\\) is a basis for \\(\\mathbb R^2\\).\\end{proof}",
+      "reason": "The dependency-aware check confirms the needed countability and refinement obligations, and the local repair is independently validated by the Euclidean-distance estimate."
+    }
+  ]
+}

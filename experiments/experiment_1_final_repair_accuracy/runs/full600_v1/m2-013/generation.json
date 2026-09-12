@@ -1,0 +1,29 @@
+{
+  "case_id": "m2-013",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "由于 x 为实数且 x≠0，实数的平方满足 x^2≥0，且 x^2=0 当且仅当 x=0。因此 x^2不等于0。结合 x^2≥0，得到 x^2>0。",
+      "reason": "补充了平方为零当且仅当原数为零的关键论证。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "x为实数，所以x^2≥0。又因x≠0，若x^2=0则必有x=0，矛盾，故x^2≠0。因此x^2只能为正数，即x^2>0。",
+      "reason": "检查并修正了由非负性直接推出正性的逻辑缺口。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "由实数平方的性质，x^2≥0。反设x^2不大于0，则由x^2≥0可得x^2=0，进而x=0，这与已知x≠0矛盾。因此x^2>0。",
+      "reason": "批评环节识别出原证明缺少排除平方为零的步骤，并加入反证补全。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "已知x∈ℝ且x≠0。平方的基本性质给出x^2≥0；同时，实数满足x^2=0当且仅当x=0，所以由x≠0可知x^2≠0。非负且非零的实数必为正数，故x^2>0。",
+      "reason": "依赖检查确认仅需加入“平方为零当且仅当原数为零”，复核后结论及其后续依赖均成立。"
+    }
+  ]
+}

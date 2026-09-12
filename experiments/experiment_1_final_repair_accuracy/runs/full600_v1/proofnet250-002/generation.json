@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-002",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet m=(p-1)/2=2t+1. Suppose first that a is a primitive root modulo p, so a has order p-1=2m. Then a^m\\equiv -1\\pmod p, since a^m has order 2. Therefore\n(-a)^m=(-1)^m a^m\\equiv(-1)(-1)\\equiv1\\pmod p,\nwhere m is odd. If (-a)^n\\equiv1\\pmod p, then\n a^{2n}=(-a)^{2n}\\equiv1\\pmod p.\nSince a has order 2m, we have 2m\\mid 2n, hence m\\mid n. Thus -a has order m=(p-1)/2.\n\nConversely, suppose that -a has order m. Since m is odd,\n a^m=(-1)^m(-a)^m\\equiv-1\\pmod p.\nAlso, for every n with a^n\\equiv1\\pmod p, squaring gives\n (-a)^{2n}=a^{2n}\\equiv1\\pmod p.\nThus m\\mid2n. Because m is odd, m\\mid n. Hence the order of a is at least m; and a^m\\not\\equiv1, while a^{2m}\\equiv1. Therefore a has order 2m=p-1, so a is a primitive root modulo p.\n\\end{proof}",
+      "reason": "Corrected the converse and replaced the invalid prime-factor argument with a direct order-divisibility proof."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nPut m=(p-1)/2. Since p=4t+3, m=2t+1 is odd.\n\nIf a is a primitive root modulo p, then \\operatorname{ord}_p(a)=p-1=2m. Consequently a^m\\equiv-1\\pmod p. Hence\n(-a)^m=(-1)^m a^m\\equiv1\\pmod p.\nIf (-a)^n\\equiv1\\pmod p, then a^{2n}=(-a)^{2n}\\equiv1\\pmod p. Therefore 2m\\mid2n, so m\\mid n. Thus \\operatorname{ord}_p(-a)=m.\n\nConversely, assume \\operatorname{ord}_p(-a)=m. Then\n a^m=(-1)^m(-a)^m\\equiv-1\\pmod p,\nso a^{2m}\\equiv1\\pmod p. If a^n\\equiv1\\pmod p, then (-a)^{2n}=a^{2n}\\equiv1\\pmod p. Since -a has order m, m\\mid2n; as m is odd, m\\mid n. Thus no positive exponent smaller than m can annihilate a, and a^m\\not\\equiv1. Together with a^{2m}\\equiv1, this shows \\operatorname{ord}_p(a)=2m=p-1. Hence a is a primitive root modulo p.\n\\end{proof}",
+      "reason": "Internal checking identified the original converse’s incorrect claims about order p-1 and repaired them using the oddness of (p-1)/2."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet m=(p-1)/2=2t+1, which is odd.\n\nAssume that a is a primitive root modulo p. Then \\operatorname{ord}_p(a)=2m, and hence a^m is the unique element of order 2 in the multiplicative group modulo p. Thus a^m\\equiv-1\\pmod p. It follows that\n(-a)^m\\equiv(-1)^m a^m\\equiv1\\pmod p.\nIf (-a)^n\\equiv1\\pmod p, then a^{2n}=(-a)^{2n}\\equiv1\\pmod p. Since the order of a is 2m, 2m\\mid2n, and therefore m\\mid n. Hence \\operatorname{ord}_p(-a)=m.\n\nNow assume that \\operatorname{ord}_p(-a)=m. Because m is odd,\n a^m=(-1)^m(-a)^m\\equiv-1\\pmod p.\nThus a^{2m}\\equiv1\\pmod p. If a^n\\equiv1\\pmod p, then (-a)^{2n}=a^{2n}\\equiv1\\pmod p, so m\\mid2n. The oddness of m implies m\\mid n. Therefore the order of a is not less than m, while a^m\\not\\equiv1 and a^{2m}\\equiv1. Hence \\operatorname{ord}_p(a)=2m=p-1, proving that a is a primitive root modulo p.\n\\end{proof}",
+      "reason": "A critic check removed unsupported factorization claims and verified both order directions and all parity uses."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet m=(p-1)/2=2t+1. In particular, m is odd and p-1=2m.\n\nSuppose that a is a primitive root modulo p. Then \\operatorname{ord}_p(a)=2m. Hence a^m has order 2, so a^m\\equiv-1\\pmod p. Therefore\n(-a)^m=(-1)^m a^m\\equiv1\\pmod p.\nFor any n such that (-a)^n\\equiv1\\pmod p, we have a^{2n}=(-a)^{2n}\\equiv1\\pmod p. Since a has order 2m, 2m\\mid2n, and consequently m\\mid n. Thus \\operatorname{ord}_p(-a)=m.\n\nConversely, suppose that \\operatorname{ord}_p(-a)=m. Since m is odd,\n a^m=(-1)^m(-a)^m\\equiv-1\\pmod p.\nConsequently a^{2m}\\equiv1\\pmod p. If a^n\\equiv1\\pmod p, then (-a)^{2n}=a^{2n}\\equiv1\\pmod p. The assumed order of -a gives m\\mid2n, and oddness of m gives m\\mid n. Thus the order of a is at least m. Since a^m\\not\\equiv1 and a^{2m}\\equiv1, its order is exactly 2m=p-1. Hence a is a primitive root modulo p.\n\\end{proof}",
+      "reason": "Dependency review certified the key parity and order implications, repaired the converse locally, and rechecked the descendant conclusion."
+    }
+  ]
+}

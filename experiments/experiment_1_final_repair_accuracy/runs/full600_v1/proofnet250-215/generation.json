@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-215",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSince $P$ is a normal Sylow $p$-subgroup of $G$, it is the unique Sylow $p$-subgroup of $G$: every conjugate of $P$ is a Sylow $p$-subgroup, and normality makes every such conjugate equal to $P$.\n\nLet $Q$ be any Sylow $p$-subgroup of $H$. Since $Q$ is a $p$-subgroup of $G$, it is contained in some Sylow $p$-subgroup $P_1$ of $G$. By uniqueness, $P_1=P$, so $Q\\le P\\cap H$. Thus $P\\cap H$ contains a Sylow $p$-subgroup of $H$. Because $P\\cap H$ is itself a $p$-subgroup of $H$, it must equal $Q$. Therefore $P\\cap H$ is the unique Sylow $p$-subgroup of $H$.\n\\end{proof}",
+      "reason": "Replaces the invalid order calculation with the standard containment argument using uniqueness of the normal Sylow subgroup of $G$."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nNormality of $P$ implies that $P$ is the unique Sylow $p$-subgroup of $G$, since all Sylow $p$-subgroups are conjugate in $G$.\n\nThe intersection $P\\cap H$ is a $p$-subgroup of $H$. Let $Q$ be a Sylow $p$-subgroup of $H$. By the Sylow containment theorem, $Q$ is contained in a Sylow $p$-subgroup $R$ of $G$. Since $P$ is unique in $G$, we have $R=P$, and hence $Q\\le P\\cap H$.\n\nAs $Q$ is maximal among $p$-subgroups of $H$ and $P\\cap H$ is a $p$-subgroup containing $Q$, it follows that $P\\cap H=Q$. Consequently, every Sylow $p$-subgroup $Q$ of $H$ equals $P\\cap H$, proving uniqueness.\n\\end{proof}",
+      "reason": "The revised proof checks both required points: the intersection is a $p$-subgroup and every Sylow subgroup of $H$ is forced into it."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nBecause $P\\trianglelefteq G$ and $P$ is a Sylow $p$-subgroup, it is the unique Sylow $p$-subgroup of $G$. Indeed, every Sylow $p$-subgroup of $G$ is conjugate to $P$, while every conjugate of $P$ is $P$ itself.\n\nSet $K=P\\cap H$. Then $K$ is a $p$-subgroup of $H$. Choose a Sylow $p$-subgroup $Q$ of $H$. The subgroup $Q$ is a $p$-subgroup of $G$, so it lies in a Sylow $p$-subgroup $R$ of $G$. Uniqueness in $G$ gives $R=P$, and therefore $Q\\le K$.\n\nSince $K$ is a $p$-subgroup of $H$ containing the Sylow $p$-subgroup $Q$, maximality of $Q$ gives $K=Q$. Thus $P\\cap H$ is a Sylow $p$-subgroup of $H$. The same argument applies to every Sylow $p$-subgroup of $H$, so all of them equal $P\\cap H$.\n\\end{proof}",
+      "reason": "The repaired argument avoids the source proof's unjustified claim about $|PH|$ and directly establishes existence and uniqueness."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $Q$ be a Sylow $p$-subgroup of $H$. Since $P$ is normal in $G$ and is Sylow, it is the unique Sylow $p$-subgroup of $G$: any Sylow $p$-subgroup of $G$ is conjugate to $P$, and normality gives $gPg^{-1}=P$ for every $g\\in G$.\n\nThe subgroup $Q$ is a $p$-subgroup of $G$, so it is contained in some Sylow $p$-subgroup $R$ of $G$. By uniqueness, $R=P$, hence $Q\\le P\\cap H$. Since $P\\cap H$ is itself a $p$-subgroup of $H$, and $Q$ is maximal among such subgroups, we obtain $P\\cap H=Q$.\n\nTherefore $P\\cap H$ is a Sylow $p$-subgroup of $H$. If $Q'$ is any other Sylow $p$-subgroup of $H$, the same argument gives $Q'=P\\cap H$. Hence $P\\cap H$ is the unique Sylow $p$-subgroup of $H$.\n\\end{proof}",
+      "reason": "Dependency and descendant checks confirm the local repair: uniqueness in $G$ implies containment of every Sylow subgroup of $H$ in the intersection, which then proves both Sylow status and uniqueness."
+    }
+  ]
+}

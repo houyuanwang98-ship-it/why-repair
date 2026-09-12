@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-001",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be a nonabelian group of order $21$. By Sylow's theorems, its Sylow $7$-subgroup $N$ is unique and hence normal, while its Sylow $3$-subgroup has order $3$. Choose generators $b$ of $N$ and $a$ of a Sylow $3$-subgroup. Then $G=N\\rtimes\\langle a\\rangle$, and conjugation by $a$ induces an automorphism of $N$. Thus\n\\[\naba^{-1}=b^i\n\\]\nfor some $i\\in(\\mathbb Z/7\\mathbb Z)^\\times$. Since $a^3=e$, we have $i^3\\equiv1\\pmod 7$. The nonzero solutions are $i=1,2,4$. If $i=1$, then $a$ and $b$ commute, so $G$ is abelian, contrary to hypothesis. Hence $i=2$ or $i=4$.\n\nThe two actions are equivalent: replacing $a$ by $a^{-1}$ changes the action $b\\mapsto b^2$ into $b\\mapsto b^4$. Therefore every nonabelian group of order $21$ has the presentation\n\\[\n\\langle a,b\\mid a^3=b^7=e,\\ aba^{-1}=b^2\\rangle.\n\\]\nConsequently any two such groups have the same presentation and are isomorphic.\\end{proof}",
+      "reason": "Corrected the unjustified well-definedness and homomorphism claims by using the semidirect-product presentation and identifying the two possible nontrivial actions as inverse actions."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be a nonabelian group of order $21$. By Sylow's theorem, the number of Sylow $7$-subgroups divides $3$ and is congruent to $1$ modulo $7$, so it is $1$. Let $N=\\langle b\\rangle$ be this normal subgroup, with $|b|=7$. Let $\\langle a\\rangle$ be a subgroup of order $3$.\n\nSince $N\\cap\\langle a\\rangle=\\{e\\}$ and $|N||\\langle a\\rangle|=21$, every element of $G$ has a unique form $b^j a^k$, with $0\\le j<7$ and $0\\le k<3$. Conjugation by $a$ gives an automorphism of $N$, so $aba^{-1}=b^i$ for some $i\\in(\\mathbb Z/7\\mathbb Z)^\\times$. From $a^3=e$ we obtain $i^3\\equiv1\\pmod 7$. Thus $i\\in\\{1,2,4\\}$.\n\nIf $i=1$, then $a$ commutes with $b$, and since $a,b$ generate $G$, the group is abelian. Hence $i=2$ or $i=4$. If $i=2$, then $G$ has the presentation\n\\[\n\\langle a,b\\mid a^3=b^7=e,\\ aba^{-1}=b^2\\rangle.\n\\]\nIf $i=4$, replace $a$ by $a^{-1}$; then\n\\[\na^{-1}ba=b^4,\n\\]\nso, with the new generator $a^{-1}$, the presentation is again the displayed one. Therefore any two nonabelian groups of order $21$ are isomorphic.\\end{proof}",
+      "reason": "After checking the draft, made the normal-form argument explicit and correctly handled the $i=4$ case by inverting the order-$3$ generator."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be a nonabelian group of order $21$. Sylow's theorems imply that the Sylow $7$-subgroup $N$ is unique, hence normal. Write $N=\\langle b\\rangle$, and choose $a\\in G$ of order $3$. Since $N\\cap\\langle a\\rangle=1$ and their orders multiply to $21$, we have $G=N\\langle a\\rangle$ and $G\\cong N\\rtimes\\langle a\\rangle$.\n\nThe action of $\\langle a\\rangle$ on $N$ is determined by\n\\[\naba^{-1}=b^i,\n\\]\nwhere $i$ is a nonzero residue modulo $7$. Applying conjugation three times gives $b=b^{i^3}$, so $i^3\\equiv1\\pmod7$. Since $(\\mathbb Z/7\\mathbb Z)^\\times$ is cyclic of order $6$, the solutions are $i=1,2,4$. The case $i=1$ gives a trivial action and hence an abelian group, so nonabelianity forces $i=2$ or $i=4$.\n\nThe actions corresponding to $2$ and $4=2^{-1}$ yield isomorphic semidirect products: in the second product, replace the generator $a$ of the factor of order $3$ by $a^{-1}$. Thus both cases are represented by\n\\[\n\\langle a,b\\mid a^3=b^7=e,\\ aba^{-1}=b^2\\rangle.\n\\]\nHence all nonabelian groups of order $21$ are isomorphic.\\end{proof}",
+      "reason": "The critic identified that equal generator orders do not define a homomorphism; the repaired proof instead classifies the semidirect-product actions and verifies their equivalence."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ and $H$ be nonabelian groups of order $21$. For either group, Sylow's theorems show that the Sylow $7$-subgroup is unique and therefore normal. Choose generators $b$ and $d$ for the respective Sylow $7$-subgroups, and choose elements $a$ and $c$ of order $3$.\n\nIn $G$, conjugation by $a$ gives an automorphism of $\\langle b\\rangle$, so\n\\[\naba^{-1}=b^i\n\\]\nfor some $i\\in(\\mathbb Z/7\\mathbb Z)^\\times$. Because $a^3=e$, $i^3\\equiv1\\pmod7$. Hence $i\\in\\{1,2,4\\}$. The value $i=1$ would make $a$ commute with $b$, and these elements generate $G$, contradicting nonabelianity. Thus $i=2$ or $4$. Replacing $a$ by $a^{-1}$ if necessary, we may assume\n\\[\naba^{-1}=b^2.\n\\]\nThe same argument, after possibly replacing $c$ by $c^{-1}$, gives\n\\[\nc d c^{-1}=d^2.\n\\]\n\nSince the Sylow subgroups have coprime orders and generate the groups, every element of $G$ and $H$ has a unique normal form $b^j a^k$ and $d^j c^k$, respectively, with $j\\in\\mathbb Z/7\\mathbb Z$ and $k\\in\\mathbb Z/3\\mathbb Z$. Define\n\\[\n\\varphi:G\\to H,\\qquad \\varphi(b)=d,\\quad \\varphi(a)=c.\n\\]\nThe defining relations are preserved: $a^3=c^3=e$, $b^7=d^7=e$, and\n\\[\n\\varphi(aba^{-1})=cdc^{-1}=d^2=\\varphi(b^2).\n\\]\nTherefore $\\varphi$ is a homomorphism. It maps the $21$ distinct normal forms in $G$ to the $21$ distinct normal forms in $H$, so it is bijective. Hence $G\\cong H$.\\end{proof}",
+      "reason": "Provided a dependency-aware classification, repaired the action choice locally, and independently revalidated the presentation map and bijectivity via unique normal forms."
+    }
+  ]
+}

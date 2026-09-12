@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-017",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet W be open in X\\times Y. By the product topology, W is a union of basis elements U_\\alpha\\times V_\\alpha, where each U_\\alpha is open in X and each V_\\alpha is open in Y. Therefore\n\\[\n\\pi_1(W)=\\bigcup_\\alpha \\pi_1(U_\\alpha\\times V_\\alpha)=\\bigcup_\\alpha U_\\alpha,\n\\]\nwhich is open in X. Similarly,\n\\[\n\\pi_2(W)=\\bigcup_\\alpha \\pi_2(U_\\alpha\\times V_\\alpha)=\\bigcup_\\alpha V_\\alpha,\n\\]\nwhich is open in Y. Hence both projections are open maps.\n\\end{proof}",
+      "reason": "The supplied proof is valid; this version makes the union argument explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nTake any open set W\\subseteq X\\times Y. Since the product topology has the sets U\\times V, with U open in X and V open in Y, as a basis, there exist open sets U_\\alpha\\subseteq X and V_\\alpha\\subseteq Y such that\n\\[\nW=\\bigcup_\\alpha (U_\\alpha\\times V_\\alpha).\n\\]\nUsing that images commute with unions,\n\\[\n\\pi_1(W)=\\bigcup_\\alpha U_\\alpha,\n\\qquad\n\\pi_2(W)=\\bigcup_\\alpha V_\\alpha.\n\\]\nThese are unions of open sets in X and Y, respectively, so they are open. Thus \\pi_1 and \\pi_2 are open maps.\n\\end{proof}",
+      "reason": "An internal check confirms the basis and image-of-union steps establish the claim without extra assumptions."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet W be open in X\\times Y. For every (x,y)\\in W, the product topology provides open sets U_{x,y}\\subseteq X and V_{x,y}\\subseteq Y such that\n\\[\n(x,y)\\in U_{x,y}\\times V_{x,y}\\subseteq W.\n\\]\nConsequently,\n\\[\nW=\\bigcup_{(x,y)\\in W}(U_{x,y}\\times V_{x,y}).\n\\]\nHence\n\\[\n\\pi_1(W)=\\bigcup_{(x,y)\\in W}U_{x,y},\n\\qquad\n\\pi_2(W)=\\bigcup_{(x,y)\\in W}V_{x,y}.\n\\]\nThe first set is open in X and the second is open in Y. Therefore \\pi_1 and \\pi_2 are open maps.\n\\end{proof}",
+      "reason": "The critic check finds no gap: every open product set has a rectangular basis refinement, and projections preserve unions."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet W\\subseteq X\\times Y be open. By the definition of the product topology, there is an index set A and open sets U_\\alpha\\subseteq X and V_\\alpha\\subseteq Y such that\n\\[\nW=\\bigcup_{\\alpha\\in A}(U_\\alpha\\times V_\\alpha).\n\\]\nThe projection identities on each basis element are\n\\[\n\\pi_1(U_\\alpha\\times V_\\alpha)=U_\\alpha,\n\\qquad\n\\pi_2(U_\\alpha\\times V_\\alpha)=V_\\alpha.\n\\]\nTherefore, by preservation of arbitrary unions under images,\n\\[\n\\pi_1(W)=\\bigcup_{\\alpha\\in A}U_\\alpha\\quad\\text{and}\\quad\n\\pi_2(W)=\\bigcup_{\\alpha\\in A}V_\\alpha.\n\\]\nThese sets are open in X and Y, respectively. Since W was arbitrary, both \\pi_1 and \\pi_2 are open maps.\n\\end{proof}",
+      "reason": "Dependency review validates the basis decomposition, projection identities, union preservation, and final universal quantifier; no repair is needed."
+    }
+  ]
+}

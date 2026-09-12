@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-007",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "irreparable",
+      "final_proof": "No such function exists. If E is bounded, choose M>0 with E\\subset[-M,M]. Any uniformly continuous function f:R\\to R is bounded on [-M,M]: for ε=1, choose δ>0 such that |x-y|<δ implies |f(x)-f(y)|<1. Cover [-M,M] by finitely many intervals of length less than δ; choosing one point from each interval shows f is bounded on [-M,M], hence on E. Therefore the theorem is false, and the proposed proof fails because f(x)=x is bounded on every bounded set E.",
+      "reason": "The claim contradicts the fact that uniformly continuous real functions are bounded on bounded subsets."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "irreparable",
+      "final_proof": "The theorem cannot be proved because it is false. Let E be bounded, so E\\subset[-M,M] for some M. If f:R\\to R is uniformly continuous, then for ε=1 there is δ>0 such that |x-y|<δ implies |f(x)-f(y)|<1. The compact interval [-M,M] can be covered by finitely many sets of diameter less than δ. Selecting a point from each set, the corresponding finitely many values of f are bounded; every x\\in[-M,M] is within δ of one of them, so |f(x)| is bounded by a finite constant. Thus f is bounded on E. In particular, f(x)=x is bounded on E, despite being unbounded on R.",
+      "reason": "Checking the domain restriction reveals that unboundedness on R does not imply unboundedness on bounded E."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "irreparable",
+      "final_proof": "Assume, for contradiction, that there is a uniformly continuous f:R\\to R that is unbounded on a bounded set E. Choose M such that E\\subset[-M,M]. Uniform continuity with ε=1 gives δ>0 such that points less than δ apart have f-values less than 1 apart. Since [-M,M] is bounded, it is covered by finitely many intervals of radius δ/2. Let x_1,\\ldots,x_n be their centers. For every x\\in[-M,M], some i satisfies |x-x_i|<δ, and hence |f(x)|\\le |f(x_i)|+1. Therefore f is bounded on [-M,M], and consequently on E, a contradiction. Hence no function satisfies the theorem. The candidate f(x)=x is uniformly continuous, but it is bounded on every bounded E.",
+      "reason": "A critic check identifies the decisive counterexample to the claim: uniform continuity forces boundedness on bounded sets."
+    },
+    {
+      "method": "full_system",
+      "outcome": "irreparable",
+      "final_proof": "The dependency check fails at the theorem statement: boundedness of E is incompatible with the requested conclusion. Indeed, let E\\subset R be bounded, so E\\subset[-M,M] for some M. For any uniformly continuous f:R\\to R, take ε=1 and obtain δ>0 such that |x-y|<δ implies |f(x)-f(y)|<1. A finite δ-net x_1,\\ldots,x_n for [-M,M] exists. Thus for each x\\in[-M,M], some i satisfies |x-x_i|<δ, and therefore |f(x)|\\le\\max_i|f(x_i)|+1. Hence f is bounded on [-M,M], and so on E. This independently revalidates every descendant claim and shows that no local repair can preserve the theorem. The proposed f(x)=x is bounded on E, although unbounded on the whole line.",
+      "reason": "The theorem is mathematically false; the bounded-set conclusion is forced for every uniformly continuous real function."
+    }
+  ]
+}

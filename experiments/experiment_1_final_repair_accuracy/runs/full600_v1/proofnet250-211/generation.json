@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-211",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nFor any residue classes $\\bar a,\\bar b,\\bar c\\in\\mathbb Z/n\\mathbb Z$, using the definition of multiplication,\n\\[\n\\begin{aligned}\n(\\bar a\\cdot\\bar b)\\cdot\\bar c\n&=\\overline{ab}\\cdot\\bar c\n=\\overline{(ab)c}\n=\\overline{a(bc)}\n=\\bar a\\cdot\\overline{bc}\n=\\bar a\\cdot(\\bar b\\cdot\\bar c).\n\\end{aligned}\n\\]\nThe middle equality follows from associativity of integer multiplication. Hence multiplication in $\\mathbb Z/n\\mathbb Z$ is associative.\n\\end{proof}",
+      "reason": "The supplied proof is valid; this is a one-pass polished rewrite."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $\\bar a,\\bar b,\\bar c\\in\\mathbb Z/n\\mathbb Z$. By definition of multiplication on residue classes,\n\\[\n(\\bar a\\cdot\\bar b)\\cdot\\bar c\n=\\overline{(ab)c}.\n\\]\nSince multiplication in $\\mathbb Z$ is associative, $(ab)c=a(bc)$. Therefore,\n\\[\n\\overline{(ab)c}=\\overline{a(bc)}=\\bar a\\cdot\\overline{bc}=\\bar a\\cdot(\\bar b\\cdot\\bar c).\n\\]\nThus multiplication of residue classes modulo $n$ is associative.\n\\end{proof}",
+      "reason": "Internal checking confirms that each equality is justified by the quotient multiplication definition and integer associativity."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nTake arbitrary $\\bar a,\\bar b,\\bar c\\in\\mathbb Z/n\\mathbb Z$, represented by integers $a,b,c$. Then\n\\[\n\\begin{aligned}\n(\\bar a\\cdot\\bar b)\\cdot\\bar c\n&=(\\overline{ab})\\cdot\\bar c\n=\\overline{(ab)c}\\\\\n&=\\overline{a(bc)}\n=\\bar a\\cdot\\overline{bc}\n=\\bar a\\cdot(\\bar b\\cdot\\bar c).\n\\end{aligned}\n\\]\nThe third equality uses the associativity of multiplication in $\\mathbb Z$. Hence, for all residue classes $\\bar a,\\bar b,\\bar c$, we have $(\\bar a\\cdot\\bar b)\\cdot\\bar c=\\bar a\\cdot(\\bar b\\cdot\\bar c)$, proving associativity.\n\\end{proof}",
+      "reason": "A critic check finds no gap: arbitrary representatives are chosen and all operations are connected through the defining quotient operation."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $\\bar a,\\bar b,\\bar c$ be arbitrary elements of $\\mathbb Z/n\\mathbb Z$, with representatives $a,b,c\\in\\mathbb Z$. The quotient multiplication is defined by $\\bar x\\cdot\\bar y=\\overline{xy}$. Consequently,\n\\[\n\\begin{aligned}\n(\\bar a\\cdot\\bar b)\\cdot\\bar c\n&=\\overline{ab}\\cdot\\bar c\n=\\overline{(ab)c}\n=\\overline{a(bc)}\n=\\bar a\\cdot\\overline{bc}\n=\\bar a\\cdot(\\bar b\\cdot\\bar c).\n\\end{aligned}\n\\]\nThe equality $(ab)c=a(bc)$ holds in $\\mathbb Z$. Since the residue classes were arbitrary, multiplication on $\\mathbb Z/n\\mathbb Z$ is associative.\n\\end{proof}",
+      "reason": "Dependency review, local validation, and descendant revalidation all preserve the theorem and confirm the proof’s equality chain."
+    }
+  ]
+}

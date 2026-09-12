@@ -1,0 +1,29 @@
+{
+  "case_id": "m2-018",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "由已知 x=y。等式两边同乘以 x，得 x^2=xy。又因 x=y，将等式 x=y 两边同乘以 y，得 xy=y^2。因此 x^2=xy=y^2，即 x^2=y^2。",
+      "reason": "将原证明中不合法的“分别乘以 x 和 y”改为合法的等式变形。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "已知 x=y。平方函数在实数上保持等式，即对等式两边分别平方，得到 x^2=y^2。因此命题成立。",
+      "reason": "检查后确认结论正确，并用直接平方的合法等式运算重写证明。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "由 x=y，对等式两边同乘以 x，得到 x^2=xy。由于 x=y，对等式两边同乘以 y，得到 xy=y^2。由等式的传递性，x^2=y^2。",
+      "reason": "批评环节发现原证明的乘法表述不严谨，生成器据此补充了合法推导。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "前提为 x,y∈ℝ 且 x=y。对等式 x=y 应用实数上的平方运算，得到 x^2=y^2。该运算保持等式，且未增加任何假设；独立复核确认结论与前提一致。",
+      "reason": "依赖检查确认仅需使用等式保持平方这一局部修复，复核及后代结论验证均通过。"
+    }
+  ]
+}

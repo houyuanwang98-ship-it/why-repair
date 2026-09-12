@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-028",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let P(a,b,c,d) denote the assertion with 2ab=c^2+d^2. Taking all variables zero gives f(0)=0. Taking a=b=n and c=d=n gives f(2n)=4f(n).\n\nSet K=f(1) and g(n)=f(n)-Kn^2. Since Kn^2 satisfies the equation (because a^2+b^2+c^2+d^2=(a+b)^2), g also satisfies it, with g(0)=g(1)=0 and g(2n)=4g(n).\n\nWe use the following elementary lemma: for every odd n>1, there exist positive integers a,b,c,d<n such that n=a+b and 2ab=c^2+d^2. (This follows by the standard descent on n using the identity (x^2+y^2)(u^2+v^2)=(xu-yv)^2+(xv+yu)^2.)\n\nInduct on n. If n is even, n=2m with m<n, so g(n)=4g(m)=0. If n is odd and n>1, apply the lemma; then g(n)=g(a)+g(b)+g(c)+g(d)=0 by induction. Thus g≡0, and f(n)=Kn^2. Conversely, this function works because the constraint gives a^2+b^2+c^2+d^2=(a+b)^2. Hence all solutions are f(n)=Kn^2 for K∈Z_{\u0000≥0}.",
+      "reason": "The original proof used false sum-of-two-squares identities, especially 12=2^2+2^2 and 20k=(4k)^2+(2k)^2. The displayed repair isolates the required arithmetic lemma, but its proof is only cited rather than established in full."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "undetermined",
+      "final_proof": "The proposed theorem is true for the quadratic candidates, but the supplied proof does not establish uniqueness. Its induction depends on the claim that every odd n has a suitable decomposition. The exhibited identities are false: 12≠2^2+2^2, and 20k≠(4k)^2+(2k)^2 in general. Therefore no complete repaired proof can be certified from the supplied argument alone.",
+      "reason": "Internal checking detects invalid arithmetic and an unproved universal decomposition lemma."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "undetermined",
+      "final_proof": "The candidate family f(n)=Kn^2 does satisfy the equation, since\n\nK(a^2+b^2+c^2+d^2)=K(a^2+b^2+2ab)=K(a+b)^2.\n\nHowever, uniqueness is not proved. The proposed induction invokes invalid identities, including 12=2^2+2^2 and 20k=(4k)^2+(2k)^2. Consequently the proof cannot be accepted as complete without a separate proof of the required decomposition lemma.",
+      "reason": "A critic check rejects the key construction; the theorem may still be true, but the submitted proof does not justify it."
+    },
+    {
+      "method": "full_system",
+      "outcome": "undetermined",
+      "final_proof": "The dependency check certifies only the following: f(0)=0; f(2n)=4f(n); and every f(n)=Kn^2 is a valid solution. The descendant uniqueness claim is unsupported because its odd-induction dependency contains false arithmetic: 12 is not 2^2+2^2, and (4k)^2+(2k)^2=20k^2, not 20k. Removing that dependency leaves no established route to g(n)=0 for all odd n. Thus the theorem cannot be certified from this proof, although no counterexample to the theorem itself is supplied.",
+      "reason": "Independent review and descendant revalidation invalidate the central odd-case dependency; minimal local correction requires a new arithmetic lemma and proof."
+    }
+  ]
+}

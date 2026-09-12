@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-181",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor each $j$, write\n\\[\na_jb_j=(\\sqrt{j}\\,a_j)\\left(\\frac{b_j}{\\sqrt{j}}\\right).\n\\]\nApplying the Cauchy--Schwarz inequality to the vectors $(\\sqrt{j}\\,a_j)_{j=1}^n$ and $(b_j/\\sqrt{j})_{j=1}^n$, we obtain\n\\[\n\\left(\\sum_{j=1}^n a_jb_j\\right)^2\n=\\left(\\sum_{j=1}^n(\\sqrt{j}\\,a_j)\\frac{b_j}{\\sqrt{j}}\\right)^2\n\\leq\\left(\\sum_{j=1}^n ja_j^2\\right)\\left(\\sum_{j=1}^n\\frac{b_j^2}{j}\\right).\n\\]\nThus the desired inequality holds.\n\\end{proof}",
+      "reason": "The original proof correctly applies Cauchy--Schwarz but incorrectly concludes with equality instead of the required inequality."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSince $j\\geq 1$, all quantities $\\sqrt j$ are defined and nonzero. Hence\n\\[\n\\sum_{j=1}^n a_jb_j\n=\\sum_{j=1}^n(\\sqrt j\\,a_j)\\left(\\frac{b_j}{\\sqrt j}\\right).\n\\]\nBy Cauchy--Schwarz,\n\\[\n\\left(\\sum_{j=1}^n a_jb_j\\right)^2\n\\leq \\left(\\sum_{j=1}^n(\\sqrt j\\,a_j)^2\\right)\n\\left(\\sum_{j=1}^n\\left(\\frac{b_j}{\\sqrt j}\\right)^2\\right)\n=\\left(\\sum_{j=1}^n ja_j^2\\right)\\left(\\sum_{j=1}^n\\frac{b_j^2}{j}\\right).\n\\]\nTherefore the claimed inequality follows.\n\\end{proof}",
+      "reason": "Internal checking confirms that the weighted factorization is valid; only the final relation must remain an inequality, with equality only in the proportional-vector case."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine vectors in $\\mathbb R^n$ by\n\\[\nx=(\\sqrt1\\,a_1,\\sqrt2\\,a_2,\\ldots,\\sqrt n\\,a_n),\n\\qquad\ny=\\left(\\frac{b_1}{\\sqrt1},\\frac{b_2}{\\sqrt2},\\ldots,\\frac{b_n}{\\sqrt n}\\right).\n\\]\nThen $\\langle x,y\\rangle=\\sum_{j=1}^n a_jb_j$. Therefore, by Cauchy--Schwarz,\n\\[\n\\left(\\sum_{j=1}^n a_jb_j\\right)^2\n=\\langle x,y\\rangle^2\n\\leq \\|x\\|^2\\|y\\|^2\n=\\left(\\sum_{j=1}^n ja_j^2\\right)\n\\left(\\sum_{j=1}^n\\frac{b_j^2}{j}\\right).\n\\]\nThis proves the theorem.\n\\end{proof}",
+      "reason": "The critic identifies the unsupported equality in the source conclusion and verifies that the vector norms expand to the stated weighted sums."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet\n\\[\nx_j=\\sqrt j\\,a_j,\\qquad y_j=\\frac{b_j}{\\sqrt j}\\quad (1\\leq j\\leq n).\n\\]\nBecause $j>0$, these are well-defined real numbers, and\n\\[\nx_jy_j=(\\sqrt j\\,a_j)\\frac{b_j}{\\sqrt j}=a_jb_j.\n\\]\nThus $\\sum_{j=1}^n a_jb_j=\\sum_{j=1}^n x_jy_j$. Applying Cauchy--Schwarz gives\n\\[\n\\left(\\sum_{j=1}^n a_jb_j\\right)^2\n\\leq\\left(\\sum_{j=1}^n x_j^2\\right)\\left(\\sum_{j=1}^n y_j^2\\right)\n=\\left(\\sum_{j=1}^n ja_j^2\\right)\\left(\\sum_{j=1}^n\\frac{b_j^2}{j}\\right).\n\\]\nHence the claimed inequality holds for all real $a_1,\\ldots,a_n,b_1,\\ldots,b_n$.\n\\end{proof}",
+      "reason": "Dependency checks validate the positive-index substitutions, the inner-product identity, and both norm expansions; the minimal repair changes only the erroneous terminal equality to an inequality."
+    }
+  ]
+}

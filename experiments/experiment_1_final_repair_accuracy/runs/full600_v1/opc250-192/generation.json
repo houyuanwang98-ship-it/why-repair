@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-192",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let \u001b[? We use the finite-dimensional Gallai theorem: for every finite coloring of \u001b[R and every finite set F\u001b[subset\u001b[R, there exist t\u001b[ in\u001b[R and d>0 such that t+dF is monochromatic.\n\nApply this theorem to the given two-coloring of \u001b[R by the subsets A and B, with\nF={0,m,m+n}.\n\nThus there are t\u001b[ in\u001b[R and d>0 such that t, t+md, and t+(m+n)d all lie in the same subset. Set\nx=t, y=t+md, and z=t+(m+n)d. Then x<y<z, and\nm(z-y)=m(nd)=mnd=n(md)=n(y-x).\nTherefore the required three real numbers exist for every pair of positive integers (m,n).",
+      "reason": "The Baire-category step is invalid for arbitrary subsets; Gallai's finite-coloring theorem directly supplies the required monochromatic configuration."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Color each real number according to whether it belongs to A or B. We invoke Gallai's theorem for the real line: every finite coloring of \u001b[R contains a monochromatic homothetic copy t+dF of every finite set F\u001b[subset\u001b[R, with d>0.\n\nTake F={0,m,m+n}. Hence, for some real t and some d>0, the numbers\n t,\u001b[quad t+md,\u001b[quad t+(m+n)d\nall have the same color. Define\nx=t,\u001b[quad y=t+md,\u001b[quad z=t+(m+n)d.\n\nSince m,n,d>0, x<y<z. Moreover, all three numbers lie in A or all three lie in B, and\nm(z-y)=m((m+n)d-md)=mnd,\nwhile\nn(y-x)=n(md)=mnd.\nThus m(z-y)=n(y-x), as required.",
+      "reason": "After checking the draft, the proof was revised to use a theorem valid for arbitrary two-colorings, with the ordered pattern and algebra made explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Consider the partition of \u001b[R into the two color classes A and B. By Gallai's theorem, for every finite set F of real numbers and every finite coloring of \u001b[R, there is a translate and positive dilation t+dF that is monochromatic.\n\nUse F={0,m,m+n}. We obtain t\u001b[ in\u001b[R and d>0 such that\n{t,\u001b[ t+md,\u001b[ t+(m+n)d}\n is contained entirely in A or entirely in B. Let\nx=t,\u001b[quad y=t+md,\u001b[quad z=t+(m+n)d.\n\nBecause m,n,d are positive, x<y<z. Also,\n m(z-y)=m(nd)=mnd=n(md)=n(y-x).\nHence x,y,z are in the same subset and satisfy the required equation.",
+      "reason": "The critic identified the unsupported Baire claim and replaced it with the appropriate finite-coloring result, Gallai's theorem."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "We regard membership in A or B as a two-coloring of the real line. The applicable dependency is Gallai's finite-coloring theorem: if F is a finite subset of \u001b[R, then every finite coloring of \u001b[R contains a monochromatic set of the form t+dF for some t\u001b[ in\u001b[R and d>0.\n\nChoose F={0,m,m+n}. The theorem gives t and d>0 for which t+dF is monochromatic. Therefore the three numbers\nx=t,\u001b[quad y=t+md,\u001b[quad z=t+(m+n)d\nbelong to the same one of A and B. Since m,n,d>0, x<y<z. Finally,\n z-y=nd,\u001b[quad y-x=md,\nso\n m(z-y)=mnd=nmd=n(y-x).\n\nThis proves the assertion for every pair of positive integers (m,n).",
+      "reason": "Dependency review showed that Baire category requires hypotheses absent here; the minimal repair is replacing that step with Gallai's theorem, and the resulting configuration was independently rechecked."
+    }
+  ]
+}

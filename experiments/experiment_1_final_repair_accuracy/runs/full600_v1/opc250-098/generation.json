@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-098",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Proof. For fixed n, regard the relation as a quadratic in a_{n+1}. Its discriminant is\n(-4a_n)^2-16(a_n^2-1)=16,\nso\n a_{n+1}=(4a_n\\pm4)/8=(a_n\\pm1)/2.\n\nIf an integer sequence exists, then a_2=(a_1\\pm1)/2 is an integer, which requires a_1 to be odd. Conversely, suppose a_1 is odd. Then both (a_1+1)/2 and (a_1-1)/2 are integers. More generally, whenever a_n is odd, these two values are consecutive integers, so exactly one is odd. Choose that value for a_{n+1}. Inductively, every a_n is an odd integer, and the displayed relation holds at every step because a_{n+1}=(a_n\\pm1)/2 is a root of the quadratic.\n\nTherefore the possible values are precisely\n\\[\n\\boxed{a_1\\text{ is any odd integer}}.\n\\]\n\\(\\blacksquare\\)",
+      "reason": "The original conclusion is correct; this proof streamlines the parity induction and explicitly justifies indefinite continuation."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Proof. Completing the square gives\n\\[\n4a_{n+1}^2-4a_na_{n+1}+a_n^2-1=(2a_{n+1}-a_n)^2-1=0.\n\\]\nHence, for every n,\n\\[\n2a_{n+1}-a_n=\\pm1,\n\\qquad\text{so}\n\\qquad a_{n+1}=\\frac{a_n\\pm1}{2}.\n\\]\n\nIf the sequence is integer-valued, then a_2 is an integer, and therefore a_1\\pm1 is even. Thus a_1 must be odd.\n\nNow let a_1 be odd. If a_n is odd, then (a_n+1)/2 and (a_n-1)/2 are consecutive integers, so exactly one is odd. Select that one as a_{n+1}. It is an integer and odd, allowing the construction to continue for every n. The equation is satisfied because it is equivalent to (2a_{n+1}-a_n)^2=1.\n\nThus every odd integer can occur as a_1, and no even integer can occur. Therefore\n\\[\n\\boxed{a_1\\in 2\\mathbb Z+1}.\n\\]\n\\(\\blacksquare\\)",
+      "reason": "Self-checking exposes the clean completed-square form and verifies both necessity and an infinite integer-valued construction."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Proof. The left-hand side factors after completing the square:\n\\[\n4a_{n+1}^{2}-4a_na_{n+1}+a_n^2-1\n=(2a_{n+1}-a_n-1)(2a_{n+1}-a_n+1).\n\\]\nSince it vanishes, we have\n\\[\n2a_{n+1}-a_n=1\\quad\\text{or}\\quad 2a_{n+1}-a_n=-1,\n\\]\nwhich is equivalent to\n\\[\na_{n+1}=\\frac{a_n+1}{2}\\quad\\text{or}\\quad a_{n+1}=\\frac{a_n-1}{2}.\n\\]\n\nFor n=1, integrality of a_2 implies that a_1 is odd. This condition is sufficient as well. Starting with any odd a_1, if a_n is odd then the two candidate values are consecutive integers. Exactly one is odd, so choose that candidate as a_{n+1}. This produces an odd integer at every stage and hence defines an integer sequence for all positive n. Each transition satisfies the original relation by the factorization above.\n\nConsequently, the complete answer is\n\\[\n\\boxed{a_1\\text{ may be any odd integer}.}\n\\]\n\\(\\blacksquare\\)",
+      "reason": "The critic-confirmed repair uses factorization and checks the only delicate point: the recursive construction never gets stuck."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Proof. Define\n\\[\nF(x,y)=4y^2-4xy+x^2-1.\n\\]\nThe dependency from a_n to a_{n+1} is governed by\n\\[\nF(a_n,a_{n+1})=(2a_{n+1}-a_n)^2-1.\n\\]\nThus F(a_n,a_{n+1})=0 exactly when\n\\[\n2a_{n+1}-a_n=\\pm1,\n\\quad\text{i.e.}\\quad\n a_{n+1}=\\frac{a_n\\pm1}{2}.\n\\]\n\nNecessity follows from the first dependency: since a_2 is an integer, a_1+1 or a_1-1 must be divisible by 2. Hence a_1 is odd.\n\nFor sufficiency, take any odd integer a_1. Suppose inductively that a_n is odd. Then the two values (a_n+1)/2 and (a_n-1)/2 are consecutive integers, so precisely one is odd. Choose that value as a_{n+1}. This preserves integrality and oddness, so the construction revalidates every subsequent dependency indefinitely. By the defining equivalence, every selected transition satisfies the original relation.\n\nTherefore the necessary and sufficient condition is\n\\[\n\\boxed{a_1\\text{ is an odd integer}}.\n\\]\n\\(\\blacksquare\\)",
+      "reason": "Dependency and descendant checks confirm that oddness is preserved at every transition, establishing an infinite valid sequence for every odd initial value."
+    }
+  ]
+}

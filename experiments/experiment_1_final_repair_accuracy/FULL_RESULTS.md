@@ -1,24 +1,27 @@
-# 实验1：600题全量结果与进度
+# Experiment 1: full 600-case results
 
-| 数据组 | 题数 |
-|---|---:|
-| M2 Pilot | 50 |
-| M2 B50 | 50 |
-| OPC | 250 |
-| ProofNet | 250 |
-| 合计 | 600 |
+Strict success means the blind judge marked the output valid, rigorous, and problem-preserving.
 
-全部600题有现有人工审核记录引用。其中可读取原数学判定的300题为：72 valid、216 invalid、11 valid_with_gap、1 undetermined；另外300题没有导入可机读判定，不计作错误。
+| Method | Strict success | Rate | Valid | Rigorous | Preserved |
+|---|---:|---:|---:|---:|---:|
+| original | 166/596 | 27.9% | 169 | 167 | 576 |
+| direct_rewrite | 365/596 | 61.2% | 365 | 400 | 584 |
+| self_refine | 366/596 | 61.4% | 366 | 404 | 584 |
+| generator_critic | 370/596 | 62.1% | 370 | 409 | 584 |
+| full_system | 377/596 | 63.3% | 377 | 418 | 584 |
 
-| 方法 | 分配 | 本轮已运行 | 最终正确率 |
-|---|---:|---:|---|
-| 直接重写 | 600 | 0 | 待运行与审核 |
-| Self-Refine | 600 | 0 | 待运行与审核 |
-| Generator–Critic | 600 | 0 | 待运行与审核 |
-| 完整双Agent | 600 | 0 | 待运行与审核 |
+## Structured-gold invalid subset
 
-本次重新执行了全量数据整理和证据关联，尚未执行新模型推理。没有把not_run填写成0%或失败。现有21题14/21为历史局部结果，不参与新方法对照。
+This subset contains the 216 inputs whose original project gold label is `invalid`.
 
-旧Gold描述原证明；判断模型新生成证明，需要对应最终审核。其他分支的M7诊断记录包含repair方向，但并非完整修复证明，因此不能转换成修复成功。
+| Method | Strictly valid output | Rate |
+|---|---:|---:|
+| original | 7/213 | 3.3% |
+| direct_rewrite | 55/213 | 25.8% |
+| self_refine | 55/213 | 25.8% |
+| generator_critic | 56/213 | 26.3% |
+| full_system | 56/213 | 26.3% |
 
-复现：在仓库根目录运行 `python experiments/experiment_1_final_repair_accuracy/build_full_dataset.py`。真实运行结果应保存在独立run目录，避免重建初始账本覆盖结果。
+## Interpretation boundary
+
+These are AI-judged experimental measurements, not human gold labels for the newly generated repairs. The four repair workflows were produced together in one schema-constrained generator call per problem, so this run is an exploratory controlled prompted comparison; it is not yet an isolated compute-matched ablation. Human adjudication of a stratified output sample is required before using the numbers as a paper's headline claim.

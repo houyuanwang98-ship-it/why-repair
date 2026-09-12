@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-100",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume, for contradiction, that\n\\[\n3-z_1-z_2-z_3-z_4+z_1z_2z_3z_4=0.\n\\]\nWriting $w=z_1z_2z_3$, this gives\n\\[\n3-z_1-z_2-z_3=z_4(1-w),\n\\]\nso\n\\[\n|3-z_1-z_2-z_3|=|1-z_1z_2z_3|.\n\\]\nSet $z_1=e^{i\\alpha}$, $z_2=e^{i\\beta}$, $z_3=e^{i\\gamma}$ and\n\\[\nf(\\alpha,\\beta,\\gamma)=|3-z_1-z_2-z_3|^2-|1-z_1z_2z_3|^2.\n\\]\nA direct expansion gives\n\\[\nf=10-6\\cos\\alpha-6\\cos\\beta-6\\cos\\gamma+2\\cos(\\alpha+\\beta+\\gamma)+2\\cos(\\alpha-\\beta)+2\\cos(\\beta-\\gamma)+2\\cos(\\gamma-\\alpha).\n\\]\nThe function is periodic and continuously differentiable, so its minimum occurs at a critical point. Moreover,\n\\[\nf_\\alpha+f_\\beta+f_\\gamma=24\\sin\\frac{\\alpha+\\beta}{2}\\sin\\frac{\\beta+\\gamma}{2}\\sin\\frac{\\gamma+\\alpha}{2}.\n\\]\nThus at every critical point one of $z_1z_2=1$, $z_2z_3=1$, or $z_3z_1=1$. By symmetry suppose $z_1z_2=1$. Then\n\\[\nf=|3-2\\operatorname{Re}(z_1)-z_3|^2-|1-z_3|^2.\n\\]\nLet $a=3-2\\operatorname{Re}(z_1)\\ge1$. Since $|z_3|=1$,\n\\[\nf=(a-1)(a+1-2\\operatorname{Re}(z_3))\\ge0.\n\\]\nEquality forces $a=1$ or $\\operatorname{Re}(z_3)=1$, hence $z_1=1$ or $z_3=1$. Therefore equality is impossible because every $z_j\\ne1$, a contradiction.\n\\end{proof}",
+      "reason": "Repaired the missing contradiction by explicitly deriving the modulus equality from the assumed zero expression."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose that\n\\[\n3-z_1-z_2-z_3-z_4+z_1z_2z_3z_4=0.\n\\]\nThen, with $w=z_1z_2z_3$,\n\\[\n3-z_1-z_2-z_3=z_4(1-w),\n\\]\nand hence\n\\[\n|3-z_1-z_2-z_3|^2=|1-w|^2.\n\\]\nDefine\n\\[\nf(\\alpha,\\beta,\\gamma)=|3-e^{i\\alpha}-e^{i\\beta}-e^{i\\gamma}|^2-|1-e^{i(\\alpha+\\beta+\\gamma)}|^2.\n\\]\nThe function $f$ is continuously differentiable and periodic in all variables. Its global minimum is therefore attained at a critical point. Expanding and differentiating yields\n\\[\nf_\\alpha+f_\\beta+f_\\gamma\n=24\\sin\\frac{\\alpha+\\beta}{2}\\sin\\frac{\\beta+\\gamma}{2}\\sin\\frac{\\gamma+\\alpha}{2}.\n\\]\nConsequently, at a critical point, at least one of\n\\[\nz_1z_2=1,\\qquad z_2z_3=1,\\qquad z_3z_1=1\n\\]\nholds. By symmetry assume $z_1z_2=1$. Put $a=3-2\\operatorname{Re}(z_1)$. Since $|z_1|=1$, we have $a\\ge1$, and\n\\[\nf=|a-z_3|^2-|1-z_3|^2=(a-1)(a+1-2\\operatorname{Re}(z_3))\\ge0.\n\\]\nIf $f=0$, then either $a=1$, giving $z_1=1$, or $\\operatorname{Re}(z_3)=1$, giving $z_3=1$. Both contradict the hypotheses. Thus $f\\ne0$ under the assumed equality, contradiction.\n\\end{proof}",
+      "reason": "Self-check confirmed the extremum argument and made the equality cases explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume the claimed expression is zero. Rearranging gives\n\\[\n3-z_1-z_2-z_3=z_4(1-z_1z_2z_3).\n\\]\nBecause $|z_4|=1$, we obtain $f=0$, where\n\\[\nf=|3-z_1-z_2-z_3|^2-|1-z_1z_2z_3|^2.\n\\]\nWrite $z_1=e^{i\\alpha}$, $z_2=e^{i\\beta}$, and $z_3=e^{i\\gamma}$. The resulting function $f$ is periodic and smooth. At any global minimum, its gradient vanishes. A direct calculation gives\n\\[\nf_\\alpha+f_\\beta+f_\\gamma\n=24\\sin\\frac{\\alpha+\\beta}{2}\\sin\\frac{\\beta+\\gamma}{2}\\sin\\frac{\\gamma+\\alpha}{2}.\n\\]\nTherefore every critical point satisfies one of $z_1z_2=1$, $z_2z_3=1$, or $z_3z_1=1$. By relabeling, take $z_1z_2=1$. Then\n\\[\nf=|3-2\\operatorname{Re}(z_1)-z_3|^2-|1-z_3|^2.\n\\]\nSet $a=3-2\\operatorname{Re}(z_1)\\ge1$. Since $|z_3|=1$,\n\\[\nf=|a-z_3|^2-|1-z_3|^2=(a-1)(a+1-2\\operatorname{Re}(z_3))\\ge0.\n\\]\nThe second factor is nonnegative because $a\\ge1$ and $\\operatorname{Re}(z_3)\\le1$. If $f=0$, then $a=1$ or $\\operatorname{Re}(z_3)=1$, so $z_1=1$ or $z_3=1$, contrary to the assumptions. Hence $f\\ne0$, contradicting the consequence of the assumed zero expression.\n\\end{proof}",
+      "reason": "The critic check identified that the modulus equality must be tied directly to the original zero assumption; this is now explicit."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose, toward a contradiction, that\n\\[\n3-z_1-z_2-z_3-z_4+z_1z_2z_3z_4=0.\n\\]\nThen\n\\[\n3-z_1-z_2-z_3=z_4(1-z_1z_2z_3),\n\\]\nso, since $|z_4|=1$,\n\\[\n|3-z_1-z_2-z_3|=|1-z_1z_2z_3|.\n\\]\nFor $z_k=e^{i\\theta_k}$, $k=1,2,3$, define\n\\[\nf(\\theta_1,\\theta_2,\\theta_3)=|3-z_1-z_2-z_3|^2-|1-z_1z_2z_3|^2.\n\\]\nThus $f=0$. The function is smooth and periodic, hence has a global minimum at a critical point. Direct differentiation gives\n\\[\nf_{\\theta_1}+f_{\\theta_2}+f_{\\theta_3}\n=24\\sin\\frac{\\theta_1+\\theta_2}{2}\\sin\\frac{\\theta_2+\\theta_3}{2}\\sin\\frac{\\theta_3+\\theta_1}{2}.\n\\]\nAt a critical point, one factor vanishes; consequently one of\n\\[\nz_1z_2=1,\\qquad z_2z_3=1,\\qquad z_3z_1=1\n\\]\nholds. Relabeling if necessary, assume $z_1z_2=1$. Let $a=3-2\\operatorname{Re}(z_1)$. Then $a\\ge1$ and\n\\[\nf=|a-z_3|^2-|1-z_3|^2=(a-1)(a+1-2\\operatorname{Re}(z_3))\\ge0.\n\\]\nMoreover, equality can occur only if $a=1$ or $\\operatorname{Re}(z_3)=1$. The first condition implies $\\operatorname{Re}(z_1)=1$, hence $z_1=1$; the second implies $z_3=1$. Either contradicts the hypotheses. Therefore $f>0$ whenever all $z_1,z_2,z_3\\ne1$, contradicting $f=0$. The original expression is nonzero.\n\\end{proof}",
+      "reason": "Dependency review preserves the theorem and assumptions, validates the equality chain and all zero cases, and rechecks the final contradiction."
+    }
+  ]
+}

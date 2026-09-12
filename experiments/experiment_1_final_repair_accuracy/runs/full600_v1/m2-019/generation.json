@@ -1,0 +1,29 @@
+{
+  "case_id": "m2-019",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "由 5|a、5|b，存在整数 m、n，使得 a=5m、b=5n。于是 a-b=5m-5n=5(m-n)。因 m-n 为整数，故 5|(a-b)，即 a-b 是 5 的倍数。",
+      "reason": "补充了整除定义所需的存在性与整数性说明。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "因为 a、b 都是 5 的倍数，所以存在整数 m、n，使 a=5m、b=5n。则 a-b=5m-5n=5(m-n)。又因 m-n 是整数，根据整除定义，a-b 是 5 的倍数。",
+      "reason": "检查并补全了从倍数表示到整除结论的逻辑链。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "由假设 5|a 和 5|b，按照整除的定义，存在整数 m、n，使 a=5m、b=5n。于是\n a-b=5m-5n=5(m-n)。\n由于 m-n 是整数，故存在整数 k=m-n，使 a-b=5k。因此 5|(a-b)，即 a-b 是 5 的倍数。",
+      "reason": "批评检查确认原证明缺少整数系数及显式整除定义，已作局部补充。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "假设 a、b 为整数且 5|a、5|b。由整除定义，存在整数 m、n，使 a=5m、b=5n。于是\n a-b=5m-5n=5(m-n)。\n令 k=m-n，则 k 为整数，且 a-b=5k。根据整除定义，5|(a-b)，所以 a-b 是 5 的倍数。该结论仅依赖给定假设，且没有需要重新验证的后续结论。",
+      "reason": "依赖检查、局部修复与独立复核均确认证明成立；仅补足定义性细节。"
+    }
+  ]
+}

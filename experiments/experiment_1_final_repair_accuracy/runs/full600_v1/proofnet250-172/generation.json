@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-172",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSuppose, for contradiction, that integers $x,y$ satisfy $3x^2+2=y^2$. Reducing modulo $3$ gives\n\\[\ny^2\\equiv 2\\pmod 3.\n\\]\nThe possible residues modulo $3$ are $0,1,2$, whose squares are respectively $0,1,1$ modulo $3$. Thus $2$ is not a quadratic residue modulo $3$, a contradiction. Therefore $3x^2+2=y^2$ has no solution in integers.\n\\end{proof}",
+      "reason": "The original modular-arithmetic proof is valid; it only needed concise rewriting."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nAssume that $3x^2+2=y^2$ for some integers $x$ and $y$. Since $3x^2\\equiv 0\\pmod 3$, reducing the equation modulo $3$ yields\n\\[\ny^2\\equiv 2\\pmod 3.\n\\]\nHowever, every integer is congruent modulo $3$ to one of $0,1,$ or $2$, and the corresponding squares are congruent to $0,1,$ or $1$, respectively. Hence no integer square is congruent to $2$ modulo $3$, contradicting the displayed congruence. Thus the equation has no solution in integers.\n\\end{proof}",
+      "reason": "Internal checking confirms the reduction modulo $3$ and the complete residue check are both sound."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSuppose that integers $x$ and $y$ satisfy\n\\[\n3x^2+2=y^2.\n\\]\nModulo $3$, this implies\n\\[\ny^2\\equiv 2\\pmod 3.\n\\]\nBut the squares of the residue classes modulo $3$ are\n\\[\n0^2\\equiv 0,\\qquad 1^2\\equiv 1,\\qquad 2^2\\equiv 1\\pmod 3.\n\\]\nTherefore $y^2$ cannot be congruent to $2$ modulo $3$, which is a contradiction. Consequently, $3x^2+2=y^2$ has no solution in integers.\n\\end{proof}",
+      "reason": "The critic found no logical gap in the generated argument, so the valid modular proof is retained."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nAssume there exist integers $x,y$ such that $3x^2+2=y^2$. Reducing both sides modulo $3$ gives\n\\[\ny^2\\equiv 2\\pmod 3,\n\\]\nsince $3x^2\\equiv 0\\pmod 3$. Every residue modulo $3$ is one of $0,1,$ or $2$, and their squares are congruent to $0,1,$ and $1$ modulo $3$. Thus $2$ is not a square modulo $3$, contradicting $y^2\\equiv 2\\pmod 3$. Hence the equation $3x^2+2=y^2$ has no solution in integers.\n\\end{proof}",
+      "reason": "Dependency and descendant checks validate the original contradiction argument; no local repair is required."
+    }
+  ]
+}

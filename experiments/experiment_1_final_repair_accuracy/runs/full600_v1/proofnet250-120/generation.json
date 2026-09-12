@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-120",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf $p=q$, then $|G|=p^2$, so $G$ is abelian and has a nontrivial proper subgroup of order $p$; hence $G$ is not simple.\n\nNow suppose $p\\ne q$, and relabel the primes if necessary so that $p<q$. Let $n_q$ denote the number of Sylow $q$-subgroups. By Sylow's theorems, $n_q\\mid p$ and $n_q\\equiv 1\\pmod q$. Thus $n_q=1$ (since the only other possibility is $n_q=p<q$). Therefore the Sylow $q$-subgroup is normal and proper in $G$, so $G$ is not simple.\n\\end{proof}",
+      "reason": "The original argument incorrectly claimed uniqueness of a subgroup of order q from an element count and did not handle p=q."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf $p=q$, then $|G|=p^2$. Every group of order $p^2$ is abelian, and consequently it has a subgroup of order $p$, which is nontrivial and proper. Hence $G$ is not simple.\n\nAssume now that $p\\ne q$, and choose notation so that $p<q$. If $n_q$ is the number of Sylow $q$-subgroups, Sylow's theorems give\n\\[\n n_q\\mid p\\qquad\\text{and}\\qquad n_q\\equiv 1\\pmod q.\n\\]\nSince $n_q$ is either $1$ or $p$, and $p<q$, the congruence forces $n_q=1$. Thus the unique subgroup of order $q$ is normal in $G$. It is nontrivial and proper, so $G$ is not simple.\n\\end{proof}",
+      "reason": "A check exposed the need to separate the repeated-prime case and to use the larger prime's Sylow subgroup."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe consider two cases.\n\nFirst, if $p=q$, then $|G|=p^2$. A group of order $p^2$ is abelian, and any subgroup of order $p$ is therefore normal. Such a subgroup is nontrivial and proper, so $G$ is not simple.\n\nSecond, suppose $p\\ne q$. Without loss of generality, let $p<q$. Let $n_q$ be the number of Sylow $q$-subgroups of $G$. Sylow's theorems imply that $n_q$ divides $p$ and that $n_q\\equiv1\\pmod q$. Hence $n_q\\in\\{1,p\\}$. Because $p<q$, the value $p$ is not congruent to $1$ modulo $q$, so $n_q=1$. The unique Sylow $q$-subgroup is consequently normal in $G$, and it is a nontrivial proper subgroup. Therefore $G$ is not simple.\n\\end{proof}",
+      "reason": "The critic rejects the source's element-count conclusion and verifies the corrected Sylow argument, including the case p=q."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be a group of order $pq$, with $p$ and $q$ prime.\n\nIf $p=q$, then $|G|=p^2$. Every group of order $p^2$ is abelian, so a subgroup of order $p$ is normal. It is nontrivial and proper, and thus $G$ is not simple.\n\nSuppose instead that $p\\ne q$. Relabel the primes so that $p<q$. For the number $n_q$ of Sylow $q$-subgroups, Sylow's theorems give\n\\[\n n_q\\mid p \\quad\\text{and}\\quad n_q\\equiv1\\pmod q.\n\\]\nTherefore $n_q$ is either $1$ or $p$. Since $p<q$, the equality $n_q=p$ would give $p\\equiv1\\pmod q$, which is impossible. Hence $n_q=1$. The unique subgroup of order $q$ is normal in $G$ and is neither trivial nor all of $G$. Thus $G$ has a nontrivial proper normal subgroup, so it is not simple.\n\\end{proof}",
+      "reason": "Dependency checks establish the prime-equality branch and the distinct-prime Sylow branch; local repair replaces the invalid counting claim, and both branches revalidate the conclusion."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "m2-031",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "存在整数 k，使 n=2k。于是 n+1=2k+1。根据奇数的定义，n+1 为奇数。",
+      "reason": "将错误等式 2k+2 修正为 2k+1。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "因为 n 为偶整数，存在整数 k，使 n=2k。故 n+1=2k+1。由于 2k+1 是奇数的标准形式，所以 n+1 为奇数。",
+      "reason": "检查并修正了中间算术等式，使结论与奇数定义一致。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "由 n 为偶整数，存在整数 k 使得 n=2k。两边加 1，得 n+1=2k+1。因 k 为整数，2k+1 是奇数，故 n+1 为奇数。",
+      "reason": "批评检查发现原证明把 n+1 错写为 2k+2，已替换为正确推导。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "假设 n 为偶整数。按偶数定义，存在整数 k，使 n=2k。于是 n+1=2k+1。按奇数定义，任意形如 2k+1（其中 k 为整数）的数都是奇数，因此 n+1 为奇数。",
+      "reason": "依赖检查定位了唯一的局部等式错误；修复后独立复核定义、算术推导及结论均一致。"
+    }
+  ]
+}

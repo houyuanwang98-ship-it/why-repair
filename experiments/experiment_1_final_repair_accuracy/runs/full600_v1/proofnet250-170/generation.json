@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-170",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf $H$ has no nonzero elements, then $H=\\{0\\}$. Otherwise, choose $a\\in H$ with $a\\ne0$, and write $a=p/q$ in lowest terms, where $p,q\\in\\mathbb Z$ and $q\\ne0$. Since $H$ is a subgroup, $q a=p\\in H$. By the hypothesis, $1/a=q/p\\in H$, so $p(1/a)=q\\in H$. Because $\\gcd(p,q)=1$, there exist integers $x,y$ such that $px+qy=1$. Since $p,q\\in H$ and $H$ is a subgroup, $px+qy=1\\in H$. Thus every integer belongs to $H$. For every nonzero integer $n$, the hypothesis gives $1/n\\in H$, and therefore every rational number $m/n$ belongs to $H$. Hence $H=\\mathbb Q$.\n\\end{proof}",
+      "reason": "The original argument is valid after making the subgroup and integer-multiple steps explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nThere are two cases. If $H$ contains no nonzero element, then $H=\\{0\\}$. Now suppose that $a\\in H$ is nonzero. Express $a=p/q$ with $p,q\\in\\mathbb Z$, $q\\ne0$, and $\\gcd(p,q)=1$. Closure under integer multiples gives $p=qa\\in H$. Also, $q/p=1/a\\in H$ by the assumed property; hence $q=p(q/p)\\in H$. Bézout's identity supplies integers $r,s$ with $rp+sq=1$. Since $p,q\\in H$ and $H$ is an additive subgroup, $1=rp+sq\\in H$. Therefore $\\mathbb Z\\subseteq H$. If $m/n\\in\\mathbb Q$ with $n\\ne0$, then $1/n\\in H$ by the hypothesis, and $m/n=m(1/n)\\in H$. Thus $\\mathbb Q\\subseteq H$, while $H\\subseteq\\mathbb Q$ by definition, so $H=\\mathbb Q$.\n\\end{proof}",
+      "reason": "A check confirms the key point is obtaining both relatively prime integers $p$ and $q$ in $H$ before applying Bézout."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume first that $H$ has no nonzero elements. Then $H=\\{0\\}$. Otherwise choose $0\\ne a=p/q\\in H$, where $p,q\\in\\mathbb Z$, $q\\ne0$, and $\\gcd(p,q)=1$. Since $H$ is closed under integer multiples, $p=qa\\in H$. The hypothesis applied to $a$ yields $q/p=1/a\\in H$, and hence $q=p(q/p)\\in H$. By Bézout's identity, there are integers $u,v$ such that $up+vq=1$. Additive closure and closure under integer multiples imply $1\\in H$. Consequently $\\mathbb Z\\subseteq H$. For any rational $r=m/n$ with $n\\ne0$, we have $1/n\\in H$ because $n\\in H$ is nonzero, and then $r=m(1/n)\\in H$. Therefore $\\mathbb Q\\subseteq H$. Since $H$ is already a subgroup of $\\mathbb Q$, $H=\\mathbb Q$.\n\\end{proof}",
+      "reason": "The critic check finds no mathematical gap; the repaired version states the closure implications and avoids an ambiguous product notation."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf $H$ contains no nonzero element, then $H=\\{0\\}$. Otherwise let $a\\in H\\setminus\\{0\\}$ and write $a=p/q$ in lowest terms, with $p,q\\in\\mathbb Z$ and $q\\ne0$. Since $H$ is an additive subgroup, it is closed under multiplication by integers, so $p=qa\\in H$. By the hypothesis, $a^{-1}=q/p\\in H$; therefore $q=p(q/p)\\in H$. As $\\gcd(p,q)=1$, choose $r,s\\in\\mathbb Z$ with $rp+sq=1$. Integer-multiple and additive closure now give $1\\in H$. Hence every integer lies in $H$. For any $m/n\\in\\mathbb Q$ with $n\\ne0$, the nonzero element $n\\in H$ has inverse $1/n\\in H$, and integer-multiple closure gives $m/n=m(1/n)\\in H$. Thus $\\mathbb Q\\subseteq H$. Together with $H\\subseteq\\mathbb Q$, this proves $H=\\mathbb Q$.\n\\end{proof}",
+      "reason": "Dependency checks validate $p\\in H\\Rightarrow q\\in H\\Rightarrow1\\in H\\Rightarrow\\mathbb Q\\subseteq H$; independent review and descendant revalidation find no remaining issue."
+    }
+  ]
+}

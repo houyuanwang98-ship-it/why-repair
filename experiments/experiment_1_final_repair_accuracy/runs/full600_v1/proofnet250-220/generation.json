@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-220",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nBy Sylow's theorem, the number n_{19} of Sylow 19-subgroups satisfies n_{19}\\equiv 1\\pmod{19} and n_{19}\\mid 3^2\\cdot17=153. Hence n_{19}=1 or 153. If n_{19}=1, the unique Sylow 19-subgroup is normal.\n\nSuppose n_{19}=153. Similarly, the number n_{17} of Sylow 17-subgroups satisfies n_{17}\\equiv1\\pmod{17} and n_{17}\\mid3^2\\cdot19=171, so n_{17}=1 or 171. If n_{17}=1, the unique Sylow 17-subgroup is normal. If n_{17}=171, then the Sylow 19-subgroups contribute 153\\cdot18=2754 nonidentity elements, while the Sylow 17-subgroups contribute 171\\cdot16=2736 nonidentity elements. These sets are disjoint, since distinct subgroups of prime orders 17 and 19 intersect trivially, giving more than 2906 nonidentity elements in G, a contradiction.\n\nThus G has a normal Sylow subgroup, so G is not simple.\n\\end{proof}",
+      "reason": "The original proof incorrectly excluded n_{19}=153; the repaired argument handles that case using Sylow 17-subgroups and an element count."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet n_{19} and n_{17} denote the numbers of Sylow 19- and 17-subgroups, respectively. Sylow's theorems give\n\\[\nn_{19}\\mid153,\\quad n_{19}\\equiv1\\pmod{19},\n\\]\nso n_{19}\\in\\{1,153\\}, and\n\\[\nn_{17}\\mid171,\\quad n_{17}\\equiv1\\pmod{17},\n\\]\nso n_{17}\\in\\{1,171\\}.\n\nIf either n_{19}=1 or n_{17}=1, the corresponding Sylow subgroup is unique and therefore normal. It remains to rule out n_{19}=153 and n_{17}=171 simultaneously. In that case, the Sylow 19-subgroups contain 153\\cdot(19-1)=2754 distinct nonidentity elements, and the Sylow 17-subgroups contain 171\\cdot(17-1)=2736 distinct nonidentity elements. A subgroup of order 17 intersects a subgroup of order 19 trivially, so these two collections of nonidentity elements are disjoint. This would give at least 5490 nonidentity elements, contradicting |G|-1=2906.\n\nTherefore at least one Sylow subgroup is unique and normal. Hence G is not simple.\n\\end{proof}",
+      "reason": "Internal checking verified the admissible Sylow counts and corrected the counting contradiction; the proof now covers every case."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSince |G|=3^2\\cdot17\\cdot19, let n_{19} be the number of Sylow 19-subgroups. By Sylow's theorems,\n\\[\nn_{19}\\equiv1\\pmod{19},\\qquad n_{19}\\mid153,\n\\]\nhence n_{19}=1 or 153. In the first case, the Sylow 19-subgroup is normal.\n\nAssume n_{19}=153. Let n_{17} be the number of Sylow 17-subgroups. Then\n\\[\nn_{17}\\equiv1\\pmod{17},\\qquad n_{17}\\mid171,\n\\]\nso n_{17}=1 or 171. If n_{17}=1, the Sylow 17-subgroup is normal. If n_{17}=171, then distinct Sylow 19-subgroups intersect trivially and contribute 153\\cdot18=2754 nonidentity elements. Distinct Sylow 17-subgroups also intersect trivially and contribute 171\\cdot16=2736 nonidentity elements. Moreover, a subgroup of order 17 and one of order 19 have trivial intersection. Thus G would contain at least 2754+2736>2906 nonidentity elements, impossible.\n\nConsequently, G has a unique Sylow 19-subgroup or a unique Sylow 17-subgroup. In either case G has a nontrivial proper normal subgroup, and therefore G is not simple.\n\\end{proof}",
+      "reason": "Critic review identified the invalid claim that k=0; replacing it with the full Sylow case split yields a valid proof."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nBy Sylow's theorem, the number n_{19} of Sylow 19-subgroups divides 153 and is congruent to 1 modulo 19. Therefore n_{19}=1 or 153. If n_{19}=1, then the Sylow 19-subgroup is normal, and we are done.\n\nNow suppose n_{19}=153. The number n_{17} of Sylow 17-subgroups divides 171 and is congruent to 1 modulo 17, so n_{17}=1 or 171. If n_{17}=1, then the Sylow 17-subgroup is normal, and we are done.\n\nIt remains to rule out n_{17}=171. Distinct subgroups of order 19 intersect trivially, so the 153 Sylow 19-subgroups contain 153\\cdot18=2754 distinct nonidentity elements. Likewise, the 171 Sylow 17-subgroups contain 171\\cdot16=2736 distinct nonidentity elements. A subgroup of order 17 cannot share a nonidentity element with a subgroup of order 19, since their intersection would have order dividing both 17 and 19. Hence these two collections are disjoint, yielding 2754+2736>2906 nonidentity elements, whereas G has only |G|-1=2906 nonidentity elements. This contradiction shows that n_{17}\\ne171.\n\nThus one of the Sylow 19- or 17-subgroups is unique and normal. Therefore G has a nontrivial proper normal subgroup and is not simple.\n\\end{proof}",
+      "reason": "Dependency checks confirm the Sylow alternatives, disjointness, and cardinality contradiction; the repaired proof also revalidates the conclusion."
+    }
+  ]
+}

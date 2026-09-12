@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-095",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nBy the fundamental theorem of algebra, write\n\\[\np(z)=c\\prod_{k=1}^{m}(z-\\lambda_k),\\qquad c\\ne0,\n\\]\nwhere the roots are listed with multiplicity.\n\nIf $p$ has $m$ distinct roots, then each root has multiplicity one. Fix a root $\\lambda_j$ and write $p(z)=(z-\\lambda_j)q(z)$, where $q(\\lambda_j)\\ne0$. Differentiating gives\n\\[\np'(z)=q(z)+(z-\\lambda_j)q'(z),\n\\]\nso $p'(\\lambda_j)=q(\\lambda_j)\\ne0$. Thus $p$ and $p'$ have no root in common.\n\nConversely, if $p$ does not have $m$ distinct roots, then some root $\\lambda$ has multiplicity $n\\ge2$. Hence $p(z)=(z-\\lambda)^nq(z)$ with $q(\\lambda)\\ne0$. Differentiating,\n\\[\np'(z)=n(z-\\lambda)^{n-1}q(z)+(z-\\lambda)^nq'(z),\n\\]\nso $p'(\\lambda)=0$. Therefore $\\lambda$ is a common root of $p$ and $p'$. This proves the equivalence.\n\\end{proof}",
+      "reason": "The original proof had malformed differentiation and evaluation, and its converse needed an explicit multiplicity argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFactor $p$ over $\\mathbf C$, counting multiplicities:\n\\[\np(z)=c\\prod_{k=1}^m(z-\\lambda_k),\\quad c\\ne0.\n\\]\nThe roots of $p$ are distinct exactly when every root has multiplicity one.\n\nAssume first that all roots are distinct. For any root $\\lambda$, write $p(z)=(z-\\lambda)q(z)$ with $q(\\lambda)\\ne0$. Then\n\\[\np'(z)=q(z)+(z-\\lambda)q'(z),\n\\]\nand hence $p'(\\lambda)=q(\\lambda)\\ne0$. Thus no root of $p$ is a root of $p'$.\n\nFor the reverse implication, suppose $p$ and $p'$ have no common root. If $p$ had a repeated root $\\lambda$, then for some $n\\ge2$ we could write\n\\[\np(z)=(z-\\lambda)^nq(z),\\quad q(\\lambda)\\ne0.\n\\]\nDifferentiation yields\n\\[\np'(z)=n(z-\\lambda)^{n-1}q(z)+(z-\\lambda)^nq'(z),\n\\]\nso $p'(\\lambda)=0$, contradicting the absence of a common root. Therefore every root is simple, and since $\\deg p=m$, $p$ has $m$ distinct roots.\n\\end{proof}",
+      "reason": "The revised proof states the multiplicity criterion clearly and verifies both implications without relying on the flawed contrapositive wording."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet the factorization of $p$ over $\\mathbf C$, with multiplicities, be\n\\[\np(z)=c\\prod_{i=1}^r(z-\\alpha_i)^{n_i},\n\\qquad c\\ne0,\n\\qquad \\sum_{i=1}^r n_i=m.\n\\]\nThus $p$ has $m$ distinct roots if and only if $n_i=1$ for every $i$.\n\nIf $n_i=1$, write $p(z)=(z-\\alpha_i)q_i(z)$. Since $q_i(\\alpha_i)\\ne0$, differentiation gives\n\\[\np'(\\alpha_i)=q_i(\\alpha_i)\\ne0.\n\\]\nConsequently, if all $n_i=1$, $p$ and $p'$ have no common root.\n\nConversely, if some $n_i\\ge2$, then\n\\[\np(z)=(z-\\alpha_i)^{n_i}q_i(z),\n\\qquad q_i(\\alpha_i)\\ne0.\n\\]\nTherefore\n\\[\np'(z)=n_i(z-\\alpha_i)^{n_i-1}q_i(z)+(z-\\alpha_i)^{n_i}q_i'(z),\n\\]\nwhich implies $p'(\\alpha_i)=0$. Since also $p(\\alpha_i)=0$, the two polynomials have a common root. Hence the absence of common roots forces every $n_i=1$, so $p$ has $m$ distinct roots.\n\\end{proof}",
+      "reason": "A critic-style check favors a global multiplicity factorization, which makes the root count and repeated-root case explicit and eliminates hidden gaps."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFactor $p$ over $\\mathbf C$ with distinct roots $\\alpha_1,\\ldots,\\alpha_r$ and multiplicities $n_1,\\ldots,n_r$:\n\\[\np(z)=c\\prod_{i=1}^r(z-\\alpha_i)^{n_i},\n\\qquad c\\ne0,\n\\qquad \\sum_{i=1}^r n_i=m.\n\\]\nThus $p$ has $m$ distinct roots precisely when $r=m$, equivalently when every $n_i=1$.\n\nSuppose first that every $n_i=1$. For each $i$, write $p(z)=(z-\\alpha_i)q_i(z)$, where $q_i(\\alpha_i)\\ne0$. Then\n\\[\np'(z)=q_i(z)+(z-\\alpha_i)q_i'(z),\n\\]\nso $p'(\\alpha_i)=q_i(\\alpha_i)\\ne0$. Hence no root of $p$ is a root of $p'$.\n\nConversely, suppose $p$ and $p'$ have no common root. If some multiplicity $n_i$ were at least $2$, then differentiating\n\\[\np(z)=(z-\\alpha_i)^{n_i}q_i(z)\n\\]\nwould give\n\\[\np'(z)=n_i(z-\\alpha_i)^{n_i-1}q_i(z)+(z-\\alpha_i)^{n_i}q_i'(z),\n\\]\nso $p'(\\alpha_i)=0$. This contradicts the hypothesis, since $p(\\alpha_i)=0$ as well. Therefore all $n_i=1$, and consequently $r=m$; hence $p$ has $m$ distinct roots.\n\\end{proof}",
+      "reason": "The dependency check identifies multiplicity factorization as the central invariant; the local derivative repair is independently valid, and the converse revalidates the root-count conclusion."
+    }
+  ]
+}

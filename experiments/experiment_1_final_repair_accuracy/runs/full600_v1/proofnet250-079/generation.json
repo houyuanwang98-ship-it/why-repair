@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-079",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nBy the complex spectral theorem, since $V$ is finite-dimensional and $T$ is normal, there is an orthonormal basis $(e_1,\\ldots,e_n)$ of $V$ consisting of eigenvectors of $T$. Let $Te_j=\\lambda_j e_j$.\n\nApplying $T^9=T^8$ to $e_j$ gives\n\\[\n\\lambda_j^9e_j=\\lambda_j^8e_j,\n\\]\nso $\\lambda_j^8(\\lambda_j-1)=0$. Hence $\\lambda_j=0$ or $\\lambda_j=1$ for every $j$. Thus all eigenvalues are real, and, because $T$ is unitarily diagonalizable, $T$ is self-adjoint.\n\nMoreover,\n\\[\nT^2e_j=\\lambda_j^2e_j=\\lambda_je_j=Te_j\n\\]\nfor every $j$, since $\\lambda_j\\in\\{0,1\\}$. Therefore $T^2=T$ because the two operators agree on a basis.\n\\end{proof}",
+      "reason": "Corrected the eigenvector indexing, the malformed equation, and explicitly used normality plus the spectral theorem."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $(e_1,\\ldots,e_n)$ be an orthonormal eigenbasis for $T$, which exists by the complex spectral theorem because $T$ is normal. Write\n\\[\nTe_j=\\lambda_j e_j \\qquad (1\\le j\\le n).\n\\]\nSince $T^9=T^8$, applying both sides to $e_j$ yields\n\\[\n\\lambda_j^9e_j=\\lambda_j^8e_j.\n\\]\nAs $e_j\\ne0$, we obtain $\\lambda_j^8(\\lambda_j-1)=0$, and consequently $\\lambda_j=0$ or $\\lambda_j=1$.\n\nThus, relative to this orthonormal basis, $T$ is diagonal with diagonal entries in $\\{0,1\\}$. Such a diagonal matrix is equal to its conjugate transpose, so $T=T^*$; hence $T$ is self-adjoint. Also, $\\lambda_j^2=\\lambda_j$ for every $j$, so\n\\[\nT^2e_j=\\lambda_j^2e_j=\\lambda_je_j=Te_j.\n\\]\nTherefore $T^2=T$ on a basis, and hence on all of $V$.\n\\end{proof}",
+      "reason": "Rechecked the polynomial consequence and tied real diagonal entries directly to self-adjointness."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nBecause $T$ is normal on the complex finite-dimensional inner-product space $V$, the spectral theorem provides an orthonormal basis $(e_1,\\dots,e_n)$ and scalars $\\lambda_1,\\dots,\\lambda_n$ such that\n\\[\nTe_j=\\lambda_j e_j.\n\\]\nApplying the identity $T^9=T^8$ to $e_j$ gives\n\\[\n\\lambda_j^9e_j=\\lambda_j^8e_j,\n\\]\nwhence\n\\[\n\\lambda_j^8(\\lambda_j-1)=0.\n\\]\nTherefore every eigenvalue satisfies $\\lambda_j\\in\\{0,1\\}$.\n\nIn this orthonormal eigenbasis, $T$ has diagonal matrix $\\operatorname{diag}(\\lambda_1,\\dots,\\lambda_n)$ with real entries. Its adjoint has the same diagonal matrix, so $T^*=T$. Hence $T$ is self-adjoint.\n\nFinally, for each $j$,\n\\[\nT^2e_j=\\lambda_j^2e_j=\\lambda_je_j=Te_j,\n\\]\nwhere the middle equality follows from $\\lambda_j\\in\\{0,1\\}$. Since $T^2$ and $T$ agree on the basis, $T^2=T$.\n\\end{proof}",
+      "reason": "The critic check confirms that the scalar factorization gives exactly the two possible eigenvalues and that orthonormal diagonalization justifies the adjoint conclusion."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nBy the spectral theorem for normal operators, there is an orthonormal basis $(e_1,\\ldots,e_n)$ of $V$ consisting of eigenvectors of $T$. Set $Te_j=\\lambda_j e_j$.\n\nThe polynomial identity $T^9=T^8$ implies, on each eigenvector,\n\\[\n0=(T^9-T^8)e_j=(\\lambda_j^9-\\lambda_j^8)e_j\n=\\lambda_j^8(\\lambda_j-1)e_j.\n\\]\nSince $e_j\\ne0$, we have $\\lambda_j^8(\\lambda_j-1)=0$. Over $\\mathbb C$, this yields $\\lambda_j=0$ or $\\lambda_j=1$.\n\nThus $T$ is diagonal in an orthonormal basis with only real diagonal entries. Consequently its adjoint is represented in the same basis by the same diagonal matrix, and therefore $T^*=T$.\n\nFor every basis vector,\n\\[\n(T^2-T)e_j=(\\lambda_j^2-\\lambda_j)e_j=0,\n\\]\nagain because $\\lambda_j\\in\\{0,1\\}$. Hence $T^2-T$ vanishes on a basis, so $T^2=T$.\n\\end{proof}",
+      "reason": "Dependency checks validate the spectral reduction, scalar factorization, adjoint conclusion, and descendant identity independently."
+    }
+  ]
+}

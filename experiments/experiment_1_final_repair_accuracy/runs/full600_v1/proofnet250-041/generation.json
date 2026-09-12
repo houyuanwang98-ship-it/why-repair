@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-041",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "irreparable",
+      "final_proof": "\\begin{proof}\nThe theorem is false as stated because $\\Omega$ need not be connected. Let\n\\[\n\\Omega=D(0,1)\\cup D(3,1),\n\\]\nwhere the disks are disjoint, and define\n\\[\n\\varphi(z)=\n\\begin{cases}\nz,&z\\in D(0,1),\\\\\n3+\\dfrac{(z-3)^2}{4},&z\\in D(3,1).\n\\end{cases}\n\\]\nThis is holomorphic on $\\Omega$ and maps $\\Omega$ into itself: on $D(0,1)$ it is the identity, while on $D(3,1)$ its image lies in $D(3,1/4)\\subset D(3,1)$. Taking $z_0=0$, we have $\\varphi(z_0)=z_0$ and $\\varphi'(z_0)=1$. However, $\\varphi$ is not linear, since it is quadratic on $D(3,1)$. Hence no proof preserving the stated theorem exists.\n\\end{proof}",
+      "reason": "The missing connectedness assumption makes the theorem false."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "irreparable",
+      "final_proof": "\\begin{proof}\nNo valid proof can be given under the stated assumptions. Consider\n\\[\n\\Omega=D(0,1)\\cup D(3,1)\n\\]\nand define $\\varphi$ by\n\\[\n\\varphi(z)=z\\quad(z\\in D(0,1)),\\qquad\n\\varphi(z)=3+\\frac{(z-3)^2}{4}\\quad(z\\in D(3,1)).\n\\]\nThe two components are disjoint, so $\\varphi$ is holomorphic on $\\Omega$. Moreover, $\\varphi(D(0,1))\\subset D(0,1)$ and $\\varphi(D(3,1))\\subset D(3,1/4)\\subset D(3,1)$, so $\\varphi:\\Omega\\to\\Omega$. At $z_0=0$, $\\varphi(0)=0$ and $\\varphi'(0)=1$. Nevertheless, $\\varphi$ is not linear because its restriction to $D(3,1)$ is nonconstant quadratic. Thus the theorem is irreparable without adding connectedness (or an equivalent global hypothesis).\n\\end{proof}",
+      "reason": "Checking the disconnected case yields an explicit counterexample."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "irreparable",
+      "final_proof": "\\begin{proof}\nThe proposed conclusion does not follow from the hypotheses. Let\n\\[\n\\Omega=D(0,1)\\cup D(3,1),\n\\qquad\n\\varphi(z)=\n\\begin{cases}\nz,&|z|<1,\\\\[2mm]\n3+\\dfrac{(z-3)^2}{4},&|z-3|<1.\n\\end{cases}\n\\]\nBecause $\\Omega$ is disconnected, this piecewise definition is holomorphic. If $|z-3|<1$, then\n\\[\n\\left|\\varphi(z)-3\\right|=\\frac{|z-3|^2}{4}<\\frac14<1,\n\\]\nso $\\varphi$ maps the second disk into itself; it plainly maps the first disk into itself. With $z_0=0$, the fixed-point and derivative conditions hold. But $\\varphi$ is quadratic on the second component and therefore is not linear on $\\Omega$. Consequently, the theorem as stated has no proof.\n\\end{proof}",
+      "reason": "A critic detects that the original argument silently assumes connectedness; the counterexample confirms irreparability."
+    },
+    {
+      "method": "full_system",
+      "outcome": "irreparable",
+      "final_proof": "\\begin{proof}\nThe dependency check fails at the use of connectedness: it is not among the stated assumptions. Indeed, take\n\\[\n\\Omega=D(0,1)\\cup D(3,1)\n\\]\nand define\n\\[\n\\varphi(z)=\n\\begin{cases}\nz,&z\\in D(0,1),\\\\\n3+\\dfrac{(z-3)^2}{4},&z\\in D(3,1).\n\\end{cases}\n\\]\nThis map is holomorphic on the disconnected open set $\\Omega$. For $z\\in D(3,1)$,\n\\[\n|\\varphi(z)-3|=|z-3|^2/4<1/4,\n\\]\nso $\\varphi(D(3,1))\\subset D(3,1)$, and the first component is fixed pointwise. Thus $\\varphi:\\Omega\\to\\Omega$. Setting $z_0=0$ gives $\\varphi(z_0)=z_0$ and $\\varphi'(z_0)=1$, while $\\varphi$ is not linear because it is quadratic on the second component. Descendant revalidation therefore cannot establish the requested conclusion. The theorem cannot be preserved without adding connectedness.\n\\end{proof}",
+      "reason": "Dependency-aware review finds an unstated connectedness requirement, and independent revalidation confirms the counterexample."
+    }
+  ]
+}

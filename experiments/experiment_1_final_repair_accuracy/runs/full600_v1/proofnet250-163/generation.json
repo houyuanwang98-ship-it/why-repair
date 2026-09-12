@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-163",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $\\{x_n\\}$ be a Cauchy sequence in $X$. Given $\\varepsilon>0$, uniform continuity of $f$ provides $\\delta>0$ such that\n\\[\nd_X(x,u)<\\delta\\implies d_Y(f(x),f(u))<\\varepsilon.\n\\]\nSince $\\{x_n\\}$ is Cauchy, there exists $N$ such that $d_X(x_n,x_m)<\\delta$ whenever $m,n>N$. Therefore, $d_Y(f(x_n),f(x_m))<\\varepsilon$ whenever $m,n>N$. Hence $\\{f(x_n)\\}$ is Cauchy in $Y$.\n\\end{proof}",
+      "reason": "The supplied proof correctly applies uniform continuity to the Cauchy condition."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nFix any Cauchy sequence $\\{x_n\\}$ in $X$. To prove that $\\{f(x_n)\\}$ is Cauchy, let $\\varepsilon>0$. By uniform continuity, there is a $\\delta>0$ such that for all $x,u\\in X$,\n\\[\nd_X(x,u)<\\delta \\quad\\Longrightarrow\\quad d_Y(f(x),f(u))<\\varepsilon.\n\\]\nBecause $\\{x_n\\}$ is Cauchy, there exists $N$ such that $d_X(x_n,x_m)<\\delta$ for all $m,n>N$. Applying the implication with $x=x_n$ and $u=x_m$ gives\n\\[\nd_Y(f(x_n),f(x_m))<\\varepsilon\n\\]\nfor all $m,n>N$. Thus $\\{f(x_n)\\}$ is a Cauchy sequence in $Y$.\n\\end{proof}",
+      "reason": "The proof was checked for quantifier order and directly establishes the Cauchy criterion."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $\\{x_n\\}$ be any Cauchy sequence in $X$. Let $\\varepsilon>0$. Since $f$ is uniformly continuous, there exists $\\delta>0$ such that\n\\[\n\\forall x,u\\in X,\\qquad d_X(x,u)<\\delta\\implies d_Y(f(x),f(u))<\\varepsilon.\n\\]\nThe Cauchy property of $\\{x_n\\}$ yields an index $N$ such that for every $m,n>N$,\n\\[\nd_X(x_n,x_m)<\\delta.\n\\]\nConsequently, for every $m,n>N$,\n\\[\nd_Y(f(x_n),f(x_m))<\\varepsilon.\n\\]\nThis is exactly the definition of $\\{f(x_n)\\}$ being Cauchy in $Y$.\n\\end{proof}",
+      "reason": "A critic check finds no gap: the same arbitrary epsilon is used in uniform continuity and in the target Cauchy criterion."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nTake an arbitrary Cauchy sequence $\\{x_n\\}$ in $X$. We verify the Cauchy criterion for its image sequence. For any $\\varepsilon>0$, uniform continuity of $f$ supplies a $\\delta>0$ such that\n\\[\n d_X(x,u)<\\delta \\implies d_Y(f(x),f(u))<\\varepsilon\n\\]\nfor all $x,u\\in X$. Since $\\{x_n\\}$ is Cauchy, there exists $N$ such that\n\\[\n d_X(x_n,x_m)<\\delta\n\\]\nwhenever $m,n>N$. Hence, for all $m,n>N$,\n\\[\n d_Y(f(x_n),f(x_m))<\\varepsilon.\n\\]\nTherefore $\\{f(x_n)\\}$ is Cauchy in $Y$. Since the original Cauchy sequence was arbitrary, the conclusion holds for every Cauchy sequence in $X$.\n\\end{proof}",
+      "reason": "Dependency and descendant checks confirm that uniform continuity supplies the needed modulus and the Cauchy hypothesis supplies the matching index."
+    }
+  ]
+}

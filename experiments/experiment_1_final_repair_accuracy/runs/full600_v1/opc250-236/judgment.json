@@ -1,0 +1,52 @@
+{
+  "case_id": "opc250-236",
+  "original": {
+    "verdict": "invalid",
+    "problem_preserved": true,
+    "rigorous": false,
+    "error_count": 3,
+    "reason": "It falsely says Odin cannot write 1, assumes Odin is forced to continue decrementing a box rather than make another legal move, and assumes Evelyn can reserve boxes despite Odin freely occupying them."
+  },
+  "candidates": [
+    {
+      "candidate_id": "candidate-1",
+      "judgment": {
+        "verdict": "invalid",
+        "problem_preserved": true,
+        "rigorous": false,
+        "error_count": 3,
+        "reason": "A defective box can be changed directly to 0. If that creates the kth zero, the game ends immediately before Odin can create a replacement. The empty-box count also ignores Odin's ordinary fresh-box moves and Evelyn's other occupying moves."
+      }
+    },
+    {
+      "candidate_id": "candidate-2",
+      "judgment": {
+        "verdict": "invalid",
+        "problem_preserved": true,
+        "rigorous": false,
+        "error_count": 3,
+        "reason": "Evelyn may lower the maintained 3 directly to 0, possibly producing the kth zero and ending play before Odin responds. The asserted availability/counting argument is unsupported and ignores other occupied boxes."
+      }
+    },
+    {
+      "candidate_id": "candidate-3",
+      "judgment": {
+        "verdict": "invalid",
+        "problem_preserved": true,
+        "rigorous": false,
+        "error_count": 2,
+        "reason": "The local repair omits Evelyn lowering the defective box to 0; at the kth zero the terminal rule applies before Odin's proposed repair. Its claim that fewer than 2k boxes are occupied disregards other legal fresh-box moves."
+      }
+    },
+    {
+      "candidate_id": "candidate-4",
+      "judgment": {
+        "verdict": "invalid",
+        "problem_preserved": true,
+        "rigorous": false,
+        "error_count": 2,
+        "reason": "The strategy only repairs a marked box lowered to 1, not one lowered to 0. In particular, Evelyn can make that move as the kth zero, causing immediate termination. The occupancy bound also omits ordinary box-filling moves."
+      }
+    }
+  ]
+}

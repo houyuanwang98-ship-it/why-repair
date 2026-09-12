@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-127",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let c=f(0), and write\n\\[\n(E)\\quad f(f(x)+y)=2x+f(f(y)-x).\n\\]\nPutting y=-f(x) gives\n\\[\nf(0)=2x+f(f(-f(x))-x),\n\\]\nso f assumes every real value as x varies. Hence f is surjective. Choose d with f(d)=0. Setting y=d in (E),\n\\[\nf(f(x)+d)=2x+f(-x).\\tag{1}\n\\]\n\nSuppose f(u)=f(v), with k=v-u\\ne0. Comparing (E) for x=u and x=v gives\n\\[\nf(f(y)-u)-f(f(y)-v)=2k.\n\\]\nSurjectivity allows f(y) to be arbitrary, so\n\\[\nf(z+k)-f(z)=2k\\qquad(\\forall z).\\tag{2}\n\\]\nThus f(z+2k)=f(z)+4k. Replacing x by x+k in (1), the left side becomes\n\\[\nf(f(x)+2k+d)=f(f(x)+d)+4k,\n\\]\nwhile the right side becomes\n\\[\n2x+2k+f(-x-k)=2x+f(-x),\n\\]\nusing (2). This contradicts (1), since it would give 4k=0. Therefore f is injective.\n\nSetting x=0 in (E) gives\n\\[\nf(c+y)=f(f(y)).\n\\]\nInjectivity yields f(y)=c+y for every y. Conversely, for f(x)=x+c,\n\\[\nf(f(x)+y)=x+y+2c=2x+f(f(y)-x).\n\\]\nTherefore all solutions are\n\\[\n\\boxed{f(x)=x+c\\quad(c\\in\\mathbb R)}.\n\\]",
+      "reason": "The supplied proof is valid; the one-pass rewrite preserves the theorem and repairs only presentation-level compression."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let c=f(0). From (E) with y=-f(x),\n\\[\nf(f(-f(x))-x)=c-2x.\n\\]\nAs x ranges over \\(\\mathbb R\\), the right side ranges over \\(\\mathbb R\\), so f is surjective. Choose d such that f(d)=0. Then (E) with y=d gives\n\\[\nf(f(x)+d)=2x+f(-x).\\tag{1}\n\\]\n\nWe prove injectivity. If f(u)=f(v), set k=v-u. Comparing (E) at u and v yields\n\\[\nf(f(y)-u)-f(f(y)-v)=2k.\n\\]\nSurjectivity of f implies\n\\[\nf(z+k)-f(z)=2k\\qquad(\\forall z).\\tag{2}\n\\]\nIf k\\ne0, then (2) also gives f(z+2k)=f(z)+4k. Apply (1) with x+k in place of x. Its left side is f(f(x)+2k+d)=f(f(x)+d)+4k, whereas its right side is\n\\[\n2x+2k+f(-x-k)=2x+f(-x),\n\\]\nagain by (2). Comparing with (1) gives 4k=0, a contradiction. Hence k=0 and f is injective.\n\nNow set x=0 in (E):\n\\[\nf(c+y)=f(f(y)).\n\\]\nInjectivity gives c+y=f(y), so f(y)=y+c. Direct substitution verifies that every such function satisfies (E): both sides equal x+y+2c. Thus\n\\[\n\\boxed{f(x)=x+c\\ (c\\in\\mathbb R)}.\n\\]",
+      "reason": "Internal checking confirms each substitution and shift calculation, so no substantive repair is needed."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "Define\n\\[\n(E):\\quad f(f(x)+y)=2x+f(f(y)-x),\\qquad c=f(0).\n\\]\nTaking y=-f(x) gives\n\\[\nf(f(-f(x))-x)=c-2x,\n\\]\nwhich proves that f is surjective. Let d satisfy f(d)=0. Then\n\\[\nf(f(x)+d)=2x+f(-x).\\tag{1}\n\\]\n\nAssume f(u)=f(v), and put k=v-u. Comparing (E) for u and v gives\n\\[\nf(f(y)-u)-f(f(y)-v)=2k.\n\\]\nSince f is surjective, this implies\n\\[\nf(z+k)-f(z)=2k\\qquad(\\forall z).\\tag{2}\n\\]\nIf k\\ne0, then f(z+2k)=f(z)+4k. In (1), replace x by x+k. The left side becomes\n\\[\nf(f(x)+2k+d)=f(f(x)+d)+4k,\n\\]\nwhile the right side becomes\n\\[\n2x+2k+f(-x-k)=2x+f(-x).\n\\]\nThe latter equality follows from (2). Equation (1) for x therefore forces 4k=0, contradiction. Hence f is injective.\n\nWith x=0 in (E),\n\\[\nf(c+y)=f(f(y)).\n\\]\nInjectivity implies c+y=f(y), hence f(y)=y+c. Conversely, if f(y)=y+c, then\n\\[\nf(f(x)+y)=x+y+2c=2x+f(f(y)-x).\n\\]\nThus precisely the functions\n\\[\n\\boxed{f(x)=x+c\\quad(c\\in\\mathbb R)}\n\\]\nare solutions.",
+      "reason": "A generator-style derivation and independent check find no logical defect in the original argument."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let c=f(0). We use\n\\[\n(E)\\qquad f(f(x)+y)=2x+f(f(y)-x).\n\\]\nPutting y=-f(x) yields\n\\[\nf(f(-f(x))-x)=c-2x.\n\\]\nTherefore f is surjective. Choose d with f(d)=0; substituting y=d into (E) gives\n\\[\nf(f(x)+d)=2x+f(-x).\\tag{1}\n\\]\n\nTo establish injectivity, suppose f(u)=f(v), and let k=v-u. Comparing (E) with x=u and x=v gives\n\\[\nf(f(y)-u)-f(f(y)-v)=2k.\n\\]\nBy surjectivity, f(y) may be replaced by an arbitrary real number, hence\n\\[\nf(z+k)-f(z)=2k\\qquad(\\forall z).\\tag{2}\n\\]\nConsequently f(z+2k)=f(z)+4k. If k\\ne0, apply (1) at x+k. Since f(x+k)=f(x)+2k,\n\\[\nf(f(x+k)+d)=f(f(x)+d)+4k.\n\\]\nOn the other hand, by (2), f(-x-k)=f(-x)-2k, so the right side of (1) at x+k equals\n\\[\n2x+2k+f(-x-k)=2x+f(-x).\n\\]\nComparing with (1) at x gives 4k=0, contradiction. Thus k=0, and f is injective.\n\nSetting x=0 in (E) gives\n\\[\nf(c+y)=f(f(y)).\n\\]\nInjectivity implies c+y=f(y), so f(y)=y+c for all y. Finally, for any c\\in\\mathbb R,\n\\[\nf(f(x)+y)=x+y+2c,\n\\qquad\n2x+f(f(y)-x)=x+y+2c,\n\\]\nso the equation holds. Hence the complete solution set is\n\\[\n\\boxed{f(x)=x+c\\quad(c\\in\\mathbb R)}.\n\\]",
+      "reason": "Dependency checks validate surjectivity, injectivity, identification, and verification; no descendant step requires repair."
+    }
+  ]
+}

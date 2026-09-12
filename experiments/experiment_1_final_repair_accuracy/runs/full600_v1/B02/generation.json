@@ -1,0 +1,29 @@
+{
+  "case_id": "B02",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "存在整数 k，使 n=2k+1。平方得 n^2=4k^2+4k+1=2(2k^2+2k)+1。因为 2k^2+2k 是整数，所以 n^2 为奇数。",
+      "reason": "原证明完整且代数变形正确，无需修改。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "存在整数 k，使 n=2k+1。则\nn^2=(2k+1)^2=4k^2+4k+1=2(2k^2+2k)+1。\n由于 2k^2+2k 为整数，n^2 可表示为 2 的倍数加 1，因此 n^2 为奇数。",
+      "reason": "检查后确认假设、恒等式和奇数定义均使用正确。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "由 n 为奇整数，存在整数 k，使 n=2k+1。因此\nn^2=(2k+1)^2=4k^2+4k+1=2(2k^2+2k)+1。\n又因 k 为整数，2k^2+2k 为整数，故 n^2 是形如 2m+1 的整数，从而 n^2 为奇数。",
+      "reason": "生成证明经核查无逻辑漏洞，结论直接由奇数的标准表示得到。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "设 n 为奇整数，则存在整数 k，使 n=2k+1。于是\nn^2=(2k+1)^2=4k^2+4k+1=2(2k^2+2k)+1。\n令 m=2k^2+2k，则 m 为整数，且 n^2=2m+1。因此 n^2 为奇数。",
+      "reason": "依赖关系完整：奇数表示、平方展开、整数闭包和结论均通过独立复核；无需局部修复，后续结论也保持有效。"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-123",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSince $a$ is nilpotent, there exists $n\\ge 1$ such that $a^n=0$. For any $b\\in R$, commutativity gives $(ab)^n=a^n b^n=0$. Therefore\n\\[\n(1-ab)(1+ab+(ab)^2+\\cdots+(ab)^{n-1})=1-(ab)^n=1.\n\\]\nThe same identity holds in the reverse order because $R$ is commutative. Hence $1-ab$ is a unit for all $b\\in R$.\n\\end{proof}",
+      "reason": "Supplies the explicit nilpotence argument and inverse; the original ideal claim alone did not justify the conclusion."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $n\\ge1$ satisfy $a^n=0$. For every $b\\in R$, we have $(ab)^n=a^n b^n=0$. Set\n\\[\nu=1+ab+(ab)^2+\\cdots+(ab)^{n-1}.\n\\]\nThen $(1-ab)u=u(1-ab)=1-(ab)^n=1$. Thus $u$ is the inverse of $1-ab$, so $1-ab$ is a unit.\n\\end{proof}",
+      "reason": "The revised proof checks the required inverse identity in both orders and preserves all hypotheses and the domain."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nBecause $a$ is nilpotent, choose $n\\ge1$ with $a^n=0$. Fix any $b\\in R$. Since $R$ is commutative,\n\\[\n(ab)^n=a^n b^n=0.\n\\]\nUsing the finite geometric-series identity, we obtain\n\\[\n(1-ab)\\left(\\sum_{k=0}^{n-1}(ab)^k\\right)=1-(ab)^n=1.\n\\]\nAs $R$ is commutative, the product in the opposite order is also $1$. Consequently, $1-ab$ is a unit. Since $b$ was arbitrary, this holds for every $b\\in R$.\n\\end{proof}",
+      "reason": "The critic-repaired version replaces an unsupported assertion with a direct, verifiable construction of the inverse."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $a\\in R$ be nilpotent. Then there is an integer $n\\ge1$ such that $a^n=0$. For an arbitrary $b\\in R$, define\n\\[\nv=\\sum_{k=0}^{n-1}(ab)^k.\n\\]\nThe commutativity of $R$ implies $(ab)^n=a^n b^n=0$. Hence\n\\[\n(1-ab)v=1-(ab)^n=1\n\\quad\\text{and}\\quad\nv(1-ab)=1-(ab)^n=1.\n\\]\nThus $v$ is a two-sided inverse of $1-ab$, proving that $1-ab$ is a unit. Since $b$ was arbitrary, the conclusion holds for all $b\\in R$.\n\\end{proof}",
+      "reason": "Dependency checks confirm nilpotence, the geometric-series identity, and two-sided invertibility; the local repair is sufficient and independently revalidates the conclusion."
+    }
+  ]
+}

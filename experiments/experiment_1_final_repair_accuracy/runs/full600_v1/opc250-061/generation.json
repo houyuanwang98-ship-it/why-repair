@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-061",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "For every admissible x, we have\n\\[\nax-x^2=x(a-x),\\qquad ax+x^2=x(a+x),\n\\]\nso\n\\[\n\\frac{1+x}{ax-x^2}-\\frac{1-x}{ax+x^2}\n=\\frac1x\\left(\\frac{1+x}{a-x}-\\frac{1-x}{a+x}\\right).\n\\]\nSince \\(x\\ne0\\) and \\(x\\ne\\pm a\\), this becomes\n\\[\n\\frac{2(1+a)}{a^2-x^2}.\n\\]\nAlso,\n\\[\n\\frac{(x+1)(x-6)}{x^2-a^2}=-\\frac{(x+1)(x-6)}{a^2-x^2}.\n\\]\nThus the original equation is equivalent, on its domain, to\n\\[\n2(1+a)=-(x+1)(x-6),\n\\]\nor\n\\[\nx^2-5x+2a-4=0.\n\\]\nIf its two roots are distinct natural numbers \\(r_1,r_2\\), then Viète's formulas give \\(r_1+r_2=5\\). Hence \\(\\{r_1,r_2\\}\\) is either \\(\\{1,4\\}\\) or \\(\\{2,3\\}\\).\n\nFor \\(\\{1,4\\}\\), the product is 4, so \\(2a-4=4\\), giving \\(a=4\\). But \\(x=4=a\\) is outside the domain.\n\nFor \\(\\{2,3\\}\\), the product is 6, so \\(2a-4=6\\), giving \\(a=5\\). Both roots are admissible because \\(2,3\\ne0,\\pm5\\). Therefore\n\\[\n\\boxed{a=5},\n\\]\nwith roots \\(2,3\\).",
+      "reason": "The supplied proof is algebraically valid and already handles the domain restrictions needed for cancellation and reverse implication."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "The expressions are defined only when \\(x\\ne0\\) and \\(x\\ne\\pm a\\). For such x,\n\\[\n\\begin{aligned}\n\\frac{1+x}{ax-x^2}-\\frac{1-x}{ax+x^2}\n&=\\frac1x\\left(\\frac{1+x}{a-x}-\\frac{1-x}{a+x}\\right)\\\\\n&=\\frac{2(1+a)}{a^2-x^2}.\n\\end{aligned}\n\\]\nThe right-hand side equals\n\\[\n-\\frac{(x+1)(x-6)}{a^2-x^2}.\n\\]\nBecause \\(a^2-x^2\\ne0\\), the equation is therefore equivalent to\n\\[\n2(1+a)=-(x+1)(x-6),\n\\]\nthat is,\n\\[\nx^2-5x+2a-4=0. \\tag{*}\n\\]\nSuppose (*) has two distinct natural-number roots \\(r,s\\). Then\n\\[\nr+s=5,\n\\qquad rs=2a-4.\n\\]\nThe positive integer pairs summing to 5 are \\((1,4)\\) and \\((2,3)\\). The first gives \\(a=4\\), but then the root 4 makes the original denominators zero. The second gives \\(a=5\\), and neither 2 nor 3 equals 0, 5, or \\(-5\\). Hence both are genuine roots of the original equation.\n\nThus the unique parameter is\n\\[\n\\boxed{a=5},\n\\]\nand the roots are \\(x=2,3\\).",
+      "reason": "Internal checking confirms the reduction is reversible only on the explicitly stated domain; the excluded candidate \\(a=4\\) is correctly removed."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "Assume the original equation is defined. Then \\(x\\ne0\\) and \\(x\\ne\\pm a\\), and\n\\[\n\\frac{1+x}{ax-x^2}-\\frac{1-x}{ax+x^2}\n=\\frac1x\\left(\\frac{1+x}{a-x}-\\frac{1-x}{a+x}\\right)\n=\\frac{2(1+a)}{a^2-x^2}.\n\\]\nSince\n\\[\n\\frac{(x+1)(x-6)}{x^2-a^2}\n=-\\frac{(x+1)(x-6)}{a^2-x^2},\n\\]\nthe equation is equivalent for admissible x to\n\\[\n2(1+a)=-(x+1)(x-6),\n\\]\nwhich simplifies to\n\\[\nx^2-5x+2a-4=0. \\tag{1}\n\\]\nIf the two roots are natural numbers, say m and n, then (1) gives\n\\[\nm+n=5,\n\\qquad mn=2a-4.\n\\]\nThus \\(\\{m,n\\}=\\{1,4\\}\\) or \\(\\{2,3\\}\\).\n\nThe pair \\(\\{1,4\\}\\) yields \\(a=4\\), but x=4 is forbidden because \\(x=a\\). The pair \\(\\{2,3\\}\\) yields \\(a=5\\). For \\(a=5\\), both 2 and 3 avoid \\(0,\\pm5\\), so the original equation is defined at both roots, and equation (1) verifies them.\n\nTherefore the answer is\n\\[\n\\boxed{a=5}.\n\\]",
+      "reason": "A critic-style domain audit finds no cancellation error or extraneous admissible solution; the only rejected pair fails the original domain."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let\n\\[\nD(x,a)=x(a-x)(a+x)(x^2-a^2).\n\\]\nThe original equation is meaningful exactly when \\(x\\ne0\\) and \\(x\\ne\\pm a\\). On this domain,\n\\[\n\\begin{aligned}\n\\frac{1+x}{ax-x^2}-\\frac{1-x}{ax+x^2}\n&=\\frac1x\\left(\\frac{1+x}{a-x}-\\frac{1-x}{a+x}\\right)\\\\\n&=\\frac{2(1+a)}{a^2-x^2},\n\newline\n\\frac{(x+1)(x-6)}{x^2-a^2}\n&=-\\frac{(x+1)(x-6)}{a^2-x^2}.\n\\end{aligned}\n\\]\nSince \\(a^2-x^2\\ne0\\), multiplying by this nonzero factor is reversible and gives\n\\[\n2(1+a)=-(x+1)(x-6),\n\\]\nso every admissible root, and only every admissible root, satisfies\n\\[\nx^2-5x+2a-4=0. \\tag{1}\n\\]\n\nLet the two distinct natural roots be m and n. From (1),\n\\[\nm+n=5,\n\\qquad mn=2a-4.\n\\]\nThe only positive integer pairs are \\(\\{1,4\\}\\) and \\(\\{2,3\\}\\). The first forces \\(a=4\\), but x=4 is then excluded by the original denominator \\(a-x\\). The second forces \\(a=5\\). At \\(a=5\\), x=2 and x=3 satisfy \\(x\\ne0,\\pm5\\), so descendant domain checks confirm both are genuine roots.\n\nHence the complete solution set is\n\\[\n\\boxed{a=5},\n\\]\nwith natural-number roots 2 and 3.",
+      "reason": "Dependency and domain checks preserve reversibility at each algebraic step; independent revalidation confirms both surviving roots and excludes the singular candidate."
+    }
+  ]
+}

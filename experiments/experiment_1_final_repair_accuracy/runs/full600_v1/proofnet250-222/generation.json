@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-222",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nIf $a=0$, the conclusion holds. Otherwise, $a\\neq 0$, so since $\\mathbf F$ is a field, $a$ has a multiplicative inverse $a^{-1}$. From $av=0$, multiplying by $a^{-1}$ gives\n\\[\nv=a^{-1}(av)=a^{-1}0=0.\n\\]\nThus $a=0$ or $v=0$.\n\\end{proof}",
+      "reason": "The argument is valid; it only needed the field property stated for arbitrary $\\mathbf F$, rather than specifically real or complex numbers."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf $a=0$, then the desired disjunction is immediate. Suppose instead that $a\\neq 0$. Because $\\mathbf F$ is a field, $a^{-1}\\in\\mathbf F$ exists. Applying scalar multiplication by $a^{-1}$ to $av=0$ yields\n\\[\na^{-1}(av)=a^{-1}0.\n\\]\nBy associativity and the scalar identities,\n\\[\n(a^{-1}a)v=0,\n\\]\nso $1v=0$, and hence $v=0$. Therefore $a=0$ or $v=0$.\n\\end{proof}",
+      "reason": "Internal checking confirmed the proof, while refining the scalar-action justification and removing the unnecessary restriction to real or complex scalars."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume $av=0$. If $a=0$, then the conclusion follows. If $a\\neq0$, the field axiom gives an inverse $a^{-1}$. Scalar-multiplying the equation by $a^{-1}$, we obtain\n\\[\nv=(a^{-1}a)v=a^{-1}(av)=a^{-1}0=0.\n\\]\nThus, in all cases, $a=0$ or $v=0$.\n\\end{proof}",
+      "reason": "The critic found the generator’s core argument sound and retained it with a precise case split and field-valid notation."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $a\\in\\mathbf F$, $v\\in V$, and suppose $av=0$. The target is the disjunction $a=0\\lor v=0$. If $a=0$, this is immediate. For the remaining branch, assume $a\\neq0$. Since $\\mathbf F$ is a field, there is $a^{-1}\\in\\mathbf F$ with $a^{-1}a=1$. Applying the scalar action of $a^{-1}$ to $av=0$ gives\n\\[\na^{-1}(av)=a^{-1}0.\n\\]\nUsing associativity, the identity scalar, and preservation of the zero vector under scalar multiplication, we get\n\\[\nv=(a^{-1}a)v=1v=0.\n\\]\nHence $a=0$ or $v=0$.\n\\end{proof}",
+      "reason": "Dependency review verified the field inverse, scalar associativity, identity action, and zero preservation; the local repair was rechecked against the final disjunction and has no affected descendants."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-058",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $g$ generate $G_1$ and let $h$ generate $G_2$. Then $|G_1\\times G_2|=mn$. If $\\gcd(m,n)=1$, the element $(g,h)$ has order\n\\[\n\\operatorname{lcm}(m,n)=mn,\n\\]\nso it generates $G_1\\times G_2$, which is therefore cyclic.\n\nConversely, suppose that $G_1\\times G_2$ is cyclic. A cyclic group of order $mn$ has an element of order $mn$. For every $(g^i,h^j)\\in G_1\\times G_2$, its order divides $\\operatorname{lcm}(m,n)$. Hence $mn$ divides $\\operatorname{lcm}(m,n)$. Since the least common multiple divides the product, we have $\\operatorname{lcm}(m,n)=mn$, which is equivalent to $\\gcd(m,n)=1$.\n\\end{proof}",
+      "reason": "Corrected malformed notation and supplied the missing converse argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nChoose generators $g$ of $G_1$ and $h$ of $G_2$. The direct product has order $mn$. The order of $(g,h)$ is\n\\[\n|(g,h)|=\\operatorname{lcm}(|g|,|h|)=\\operatorname{lcm}(m,n).\n\\]\nIf $\\gcd(m,n)=1$, then $\\operatorname{lcm}(m,n)=mn$, so $(g,h)$ has order $|G_1\\times G_2|$ and generates the product. Thus $G_1\\times G_2$ is cyclic.\n\nFor the converse, assume that $G_1\\times G_2$ is cyclic. Then it contains an element of order $mn$. But the order of every element $(g^i,h^j)$ divides\n\\[\n\\operatorname{lcm}(|g^i|,|h^j|)\\mid \\operatorname{lcm}(m,n).\n\\]\nTherefore $mn\\leq \\operatorname{lcm}(m,n)$. Since $\\operatorname{lcm}(m,n)\\mid mn$, equality holds. Hence $\\operatorname{lcm}(m,n)=mn$, and consequently $\\gcd(m,n)=1$.\n\\end{proof}",
+      "reason": "Internal checking fixed the generator-order claim and made both implications explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $g$ and $h$ be generators of $G_1$ and $G_2$, respectively. For any $(x,y)\\in G_1\\times G_2$, the order of $(x,y)$ is the least common multiple of the orders of $x$ and $y$.\n\nAssume first that $\\gcd(m,n)=1$. Then $|g|=m$, $|h|=n$, and\n\\[\n|(g,h)|=\\operatorname{lcm}(m,n)=mn.\n\\]\nBecause $|G_1\\times G_2|=mn$, the element $(g,h)$ generates the product. Thus $G_1\\times G_2$ is cyclic.\n\nConversely, assume that $G_1\\times G_2$ is cyclic. It must then have an element of order $mn$. However, for every $(x,y)\\in G_1\\times G_2$, we have $|x|\\mid m$ and $|y|\\mid n$, so\n\\[\n|(x,y)|=\\operatorname{lcm}(|x|,|y|)\\mid \\operatorname{lcm}(m,n).\n\\]\nThus $mn\\mid \\operatorname{lcm}(m,n)$. Since $\\operatorname{lcm}(m,n)\\mid mn$, the two numbers are equal. Therefore $\\gcd(m,n)=1$.\n\\end{proof}",
+      "reason": "A critic check identified that the converse must bound every element’s order, not only powers of fixed generators."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $g$ generate $G_1$ and $h$ generate $G_2$. Since $|G_1|=m$ and $|G_2|=n$, we have $|G_1\\times G_2|=mn$.\n\nIf $\\gcd(m,n)=1$, then\n\\[\n|(g,h)|=\\operatorname{lcm}(m,n)=mn.\n\\]\nHence $(g,h)$ has order equal to the order of the whole group and generates $G_1\\times G_2$. Thus the product is cyclic.\n\nConversely, suppose that $G_1\\times G_2$ is cyclic. Then some element $(x,y)$ has order $mn$. Since $x\\in G_1$ and $y\\in G_2$, their orders divide $m$ and $n$, respectively. Therefore\n\\[\n|(x,y)|=\\operatorname{lcm}(|x|,|y|)\\mid \\operatorname{lcm}(m,n).\n\\]\nIt follows that $mn\\leq \\operatorname{lcm}(m,n)$. On the other hand, $\\operatorname{lcm}(m,n)\\mid mn$, so equality holds. The identity\n\\[\n\\operatorname{lcm}(m,n)=\\frac{mn}{\\gcd(m,n)}\n\\]\nthen gives $\\gcd(m,n)=1$.\n\nTherefore $G_1\\times G_2$ is cyclic if and only if $m$ and $n$ are relatively prime.\n\\end{proof}",
+      "reason": "Dependency checks isolated the order-of-a-product lemma and revalidated both directions after the local repair."
+    }
+  ]
+}

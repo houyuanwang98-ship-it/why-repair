@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-247",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSince $|x|=n$, we have $x^n=1$. Hence\n\\[\nx\\cdot x^{n-1}=x^n=1.\n\\]\nTherefore, by uniqueness of inverses, $x^{n-1}=x^{-1}$, so $x^{-1}=x^{n-1}$.\n\\end{proof}",
+      "reason": "The original proof correctly uses the definition of order and uniqueness of inverses."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nThe condition $|x|=n$ means that $n$ is the order of $x$, and thus $x^n=1$. Since\n\\[\nx\\,x^{n-1}=x^n=1,\n\\]\n$x^{n-1}$ is a right inverse of $x$. In a group, inverses are unique, so $x^{n-1}=x^{-1}$.\n\\end{proof}",
+      "reason": "A check confirms that the argument is complete and valid in any group."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nBecause $|x|=n$, the element $x$ satisfies $x^n=1$. Using the laws of integer powers,\n\\[\nx\\cdot x^{n-1}=x^n=1.\n\\]\nThus $x^{n-1}$ is an inverse of $x$. By uniqueness of the inverse in a group,\n\\[\nx^{-1}=x^{n-1}.\n\\]\n\\end{proof}",
+      "reason": "The critic finds no defect: the hypothesis directly supplies $x^n=1$, and the inverse conclusion follows."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nThe hypothesis $|x|=n$ implies $x^n=1$. Consequently,\n\\[\nx\\,x^{n-1}=x^n=1.\n\\]\nHence $x^{n-1}$ is a right inverse of $x$. Since $x$ lies in a group, every right inverse equals the unique two-sided inverse; therefore\n\\[\nx^{-1}=x^{n-1}.\n\\]\n\\end{proof}",
+      "reason": "Dependency checking and independent review confirm the proof and its only descendant claim remain valid without repair."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-096",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine\n\\[\np(x)=C_0x+\\frac{C_1}{2}x^2+\\cdots+\\frac{C_n}{n+1}x^{n+1}.\n\\]\nThen\n\\[\np'(x)=C_0+C_1x+\\cdots+C_nx^n.\n\\]\nAlso, $p(0)=0$, while the hypothesis gives $p(1)=0$. Thus, by Rolle's theorem, there exists $c\\in(0,1)$ such that $p'(c)=0$. Hence\n\\[\nC_0+C_1c+\\cdots+C_nc^n=0,\n\\]\nso the given equation has a real root between $0$ and $1$.\n\\end{proof}",
+      "reason": "The original argument is valid; it was rewritten compactly and explicitly identifies the root."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor $n\\ge 1$, let\n\\[\np(x)=\\sum_{k=0}^{n}\\frac{C_k}{k+1}x^{k+1}.\n\\]\nThis polynomial is continuous on $[0,1]$ and differentiable on $(0,1)$, with\n\\[\np'(x)=\\sum_{k=0}^{n}C_kx^k.\n\\]\nSince $p(0)=0$ and\n\\[\np(1)=\\sum_{k=0}^{n}\\frac{C_k}{k+1}=0\n\\]\nby hypothesis, Rolle's theorem yields some $c\\in(0,1)$ for which $p'(c)=0$. Therefore\n\\[\nC_0+C_1c+\\cdots+C_nc^n=0.\n\\]\nThus the equation has a real root between $0$ and $1$. If $n=0$, the hypothesis gives $C_0=0$, and the equation is identically zero, so every point of $(0,1)$ is a root.\n\\end{proof}",
+      "reason": "The proof was checked for endpoint conditions and the degenerate case $n=0$ was handled explicitly."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet\n\\[\nP(x)=C_0x+\\frac{C_1}{2}x^2+\\cdots+\\frac{C_n}{n+1}x^{n+1}.\n\\]\nThen $P$ is a polynomial and\n\\[\nP'(x)=C_0+C_1x+\\cdots+C_nx^n.\n\\]\nMoreover, $P(0)=0$, and the assumed relation implies\n\\[\nP(1)=C_0+\\frac{C_1}{2}+\\cdots+\\frac{C_n}{n+1}=0.\n\\]\nFor $n\\ge1$, Rolle's theorem applied on $[0,1]$ gives a point $c\\in(0,1)$ such that $P'(c)=0$. Consequently, $c$ is a real root of the stated equation. For $n=0$, the hypothesis says $C_0=0$, so the equation is identically zero and has roots throughout $(0,1)$.\n\\end{proof}",
+      "reason": "A critic check confirms that the constructed antiderivative has the required endpoint values and that Rolle's theorem produces a root in the open interval."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine the antiderivative polynomial\n\\[\nP(x)=\\sum_{k=0}^{n}\\frac{C_k}{k+1}x^{k+1}.\n\\]\nThen $P$ is continuous on $[0,1]$, differentiable on $(0,1)$, and\n\\[\nP'(x)=\\sum_{k=0}^{n}C_kx^k=C_0+C_1x+\\cdots+C_nx^n.\n\\]\nThe endpoint values are equal because\n\\[\nP(0)=0,\n\\qquad\nP(1)=\\sum_{k=0}^{n}\\frac{C_k}{k+1}=0\n\\]\nby the given assumption. Hence, for $n\\ge1$, Rolle's theorem supplies $c\\in(0,1)$ with $P'(c)=0$. Thus $c$ is a real root of the required equation. When $n=0$, the assumption gives $C_0=0$, and every $c\\in(0,1)$ is a root.\n\\end{proof}",
+      "reason": "The dependency check verifies differentiability, endpoint equality, and the derivative-to-root implication; the only local repair is explicit treatment of $n=0$, after which all proof dependencies revalidate."
+    }
+  ]
+}

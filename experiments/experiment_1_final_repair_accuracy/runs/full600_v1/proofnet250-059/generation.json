@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-059",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "irreparable",
+      "final_proof": "\\begin{proof}\nThe theorem is false as stated because an open set need not be connected. Let\n\\[\n\\Omega=\\{z:|z|<1\\}\\cup\\{z:|z-3|<1\\},\n\\]\nand define\n\\[\nf(z)=\\begin{cases}0,&|z|<1,\\\\1,&|z-3|<1.\n\\end{cases}\n\\]\nThen $f$ is holomorphic on the open set $\\Omega$, and $|f|$ is constant on $\\Omega$ only if the constant is interpreted componentwise; in this example $|f|$ is not globally constant, so use instead\n\\[\nf(z)=\\begin{cases}1,&|z|<1,\\\\-1,&|z-3|<1.\n\\end{cases}\n\\]\nHere $f$ is holomorphic and $|f|\\equiv1$, but $f$ is not constant. Thus the claimed conclusion cannot be proved without assuming that $\\Omega$ is connected.",
+      "reason": "The missing connectedness assumption makes the theorem false."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "irreparable",
+      "final_proof": "\\begin{proof}\nNo proof exists under the stated assumptions. Take the disconnected open set\n\\[\n\\Omega=D(0,1)\\cup D(3,1)\n\\]\nand define $f\\equiv1$ on $D(0,1)$ and $f\\equiv-1$ on $D(3,1)$. The function is holomorphic on $\\Omega$, and $|f|\\equiv1$, but $f$ is not constant on $\\Omega$. Hence the theorem requires the additional assumption that $\\Omega$ is connected.",
+      "reason": "Internal checking exposes a counterexample caused by disconnectedness."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "irreparable",
+      "final_proof": "\\begin{proof}\nThe statement cannot be established as written. Let\n\\[\n\\Omega=D(0,1)\\cup D(3,1),\\qquad\nf(z)=\\begin{cases}1&z\\in D(0,1),\\\\-1&z\\in D(3,1).\n\\end{cases}\n\\]\nSince the two disks are disjoint, $f$ is holomorphic on $\\Omega$. Moreover, $|f(z)|=1$ for every $z\\in\\Omega$, while $f$ takes two distinct values. Therefore $|f|$ being constant does not imply that $f$ is constant unless $\\Omega$ is assumed connected.",
+      "reason": "A critic check rejects the intended proof because it silently uses connectedness."
+    },
+    {
+      "method": "full_system",
+      "outcome": "irreparable",
+      "final_proof": "\\begin{proof}\nA dependency-aware check finds that the desired conclusion is only local: on each connected component of $\\Omega$, a holomorphic function with constant modulus is constant. The stated global conclusion needs connectedness, which is absent.\n\nIndeed, let\n\\[\n\\Omega=D(0,1)\\cup D(3,1)\n\\]\nand define\n\\[\nf(z)=\\begin{cases}1,&z\\in D(0,1),\\\\-1,&z\\in D(3,1).\n\\end{cases}\n\\]\nThen $f$ is holomorphic on $\\Omega$ and $|f|\\equiv1$, but $f$ is not constant. Thus descendant revalidation fails, and no repaired proof preserving the theorem and assumptions exists.",
+      "reason": "Independent review and revalidation confirm the theorem is false without connectedness."
+    }
+  ]
+}

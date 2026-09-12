@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-059",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let S=x+y and P=xy. If x=0 or y=0, the equations force x=y=0, giving S=0.\n\nAssume xy≠0. Multiplying the equations gives\n(3-x)^2(3-y)^2=1,\nso (3-x)(3-y)=ε, where ε∈{1,-1}. Hence\nP-3S+9=ε, or P=3S-9+ε.\n\nAlso, subtracting the two original equations and factoring by x-y (using x≠y) gives\nx^2+y^2+xy-6x-6y+10=0.\nThus S^2-P-6S+10=0.\n\nFor ε=1, P=3S-8, so S^2-9S+18=0 and S=3 or 6. The value S=6 gives P=10 and a quadratic with no real roots; S=3 gives P=1 and real roots.\n\nFor ε=-1, P=3S-10, so S^2-9S+20=0 and S=4 or 5. Both give real roots: respectively P=2 and P=5.\n\nThe case x=y must also be included. Then x=x(3-x)^2, giving x=0,2,4 and S=0,4,8. Therefore\n\\boxed{S\\in\\{0,3,4,5,8\\}}.",
+      "reason": "The original proof’s stated auxiliary identity was correct but its derivation was omitted; this version supplies the missing factorization and handles zero products explicitly."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Write S=x+y and P=xy.\n\nFirst suppose x=y. Then x=x(3-x)^2, so either x=0 or (3-x)^2=1. Hence x=y∈{0,2,4}, yielding S∈{0,4,8}.\n\nNow suppose x≠y. If xy=0, the equations immediately imply x=y=0, contradicting x≠y; hence xy≠0. Multiplication gives\n(3-x)^2(3-y)^2=1.\nLet ε=(3-x)(3-y)∈{1,-1}. Then\nP-3S+9=ε. \n\nDividing the difference of the equations by x-y and factoring yields\nx^2+y^2+xy-6S+10=0,\nwhich is equivalent to S^2-P-6S+10=0.\n\nIf ε=1, then P=3S-8, and S satisfies S^2-9S+18=0. Thus S=3 or 6. For S=6, P=10, so x and y would be roots of t^2-6t+10, impossible over ℝ. For S=3, P=1, and t^2-3t+1 has real roots, so S=3 occurs.\n\nIf ε=-1, then P=3S-10, and S satisfies S^2-9S+20=0. Thus S=4 or 5. The corresponding quadratics t^2-4t+2 and t^2-5t+5 both have real roots, and substitution into the symmetric equations verifies these pairs.\n\nTherefore the possible values are\n\\boxed{0,3,4,5,8}.",
+      "reason": "Self-check exposed the need to separate x=y, xy=0, and x≠y cases and to verify real-root conditions before retaining sums."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Set S=x+y and P=xy. We determine all real solutions by separating the diagonal and off-diagonal cases.\n\nIf x=y, then x=x(3-x)^2. Therefore x=0, or (3-x)^2=1, giving x=0,2,4 and hence S=0,4,8.\n\nSuppose x≠y. The possibility xy=0 forces x=y=0 from the original equations, so xy≠0. Multiplying the equations gives\n[(3-x)(3-y)]^2=1.\nLet ε=(3-x)(3-y), so ε=±1. Since ε=9-3S+P,\nP=3S-9+ε. \n\nThe difference of the two equations factors, and because x≠y, it gives\nx^2+y^2+xy-6S+10=0.\nUsing x^2+y^2=S^2-2P, we obtain\nS^2-P-6S+10=0.\n\nFor ε=1, P=3S-8, so S^2-9S+18=0. The candidates are S=3,6. At S=6, P=10 and the discriminant of t^2-St+P is 36-40<0, so it is impossible. At S=3, P=1 and the discriminant is 5>0, so it is attainable.\n\nFor ε=-1, P=3S-10, so S^2-9S+20=0. The candidates are S=4,5. Their discriminants are 16-8=8 and 25-20=5, respectively, so both are attainable.\n\nCombining all cases,\n\\boxed{x+y\\in\\{0,3,4,5,8\\}}.",
+      "reason": "Critic review identified omitted zero-case handling and required discriminant checks; the repaired proof is exhaustive and retains only real attainable sums."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let S=x+y and P=xy.\n\nFor x=y, the system reduces to x=x(3-x)^2. Thus x=0,2,4, giving S=0,4,8.\n\nFor x≠y, first note that xy=0 would force x=y=0, impossible in this branch. Hence xy≠0. Multiplying the equations yields\n(3-x)^2(3-y)^2=1.\nConsequently ε:=(3-x)(3-y) is 1 or -1, and\nP-3S+9=ε. \n\nSubtracting the equations and factoring the resulting expression by x-y gives\nx^2+y^2+xy-6S+10=0.\nSince x^2+y^2=S^2-2P, this becomes\nS^2-P-6S+10=0.\n\nIf ε=1, then P=3S-8. Substitution gives\nS^2-9S+18=0,\nso S=3 or 6. For S=6, the required real numbers x,y would have sum 6 and product 10, but the discriminant 36-40 is negative. For S=3, the product is 1 and the discriminant 9-4 is positive; the resulting roots satisfy the original equations.\n\nIf ε=-1, then P=3S-10. Substitution gives\nS^2-9S+20=0,\nso S=4 or 5. The corresponding discriminants are 8 and 5, both positive, and the resulting root pairs satisfy the original equations.\n\nThus the complete set of possible values, after rechecking the diagonal and both off-diagonal branches, is\n\\boxed{\\{0,3,4,5,8\\}}.",
+      "reason": "Dependency-aware review preserves the theorem, repairs the missing branch justification, rejects the nonreal candidate, and revalidates every retained sum against the original system."
+    }
+  ]
+}

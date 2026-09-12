@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-126",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let\n\\[\nP(x,y):\\quad f(x)f(y)=f(x+y)+xy.\n\\]\nSetting \\(x=0\\) gives \\((f(0)-1)f(y)=0\\) for every \\(y\\). Since \\(f\\equiv0\\) is impossible in \\(P\\), we have \\(f(0)=1\\).\n\nCompute \\(f(x+y+z)\\) in two ways. Using \\(P(x+y,z)\\) and \\(P(x,y+z)\\), respectively, yields\n\\[\n(f(x)f(y)-xy)f(z)-(x+y)z\n=f(x)(f(y)f(z)-yz)-x(y+z).\n\\]\nAfter cancellation,\n\\[\ny\\bigl(x(1-f(z))+z(f(x)-1)\\bigr)=0.\n\\]\nThus, for all real \\(x,z\\),\n\\[\nx(1-f(z))=z(1-f(x)).\n\\]\nFor nonzero \\(x,z\\), this implies \\((f(x)-1)/x\\) is constant. Hence there is a real constant \\(c\\) such that\n\\[\nf(x)=1+cx\n\\]\nfor every real \\(x\\), including \\(x=0\\).\n\nSubstitution into the equation gives\n\\[\n(1+cx)(1+cy)=1+c(x+y)+xy,\n\\]\nso \\(c^2=1\\). Therefore \\(c=1\\) or \\(c=-1\\). Both resulting functions verify the equation directly. Hence\n\\[\n\\boxed{f(x)=1+x\\quad\\text{or}\\quad f(x)=1-x}.\n\\]",
+      "reason": "The original proof guessed linearity and left the exclusion of other functions unjustified; associativity supplies a complete classification."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Define \\(P(x,y)\\) by\n\\[\nf(x)f(y)=f(x+y)+xy.\n\\]\nFirst, \\(P(0,y)\\) gives\n\\[\n(f(0)-1)f(y)=0.\n\\]\nThe function cannot be identically zero, because then \\(0=xy\\) would hold for all \\(x,y\\). Consequently, \\(f(0)=1\\).\n\nNow evaluate \\(f(x+y+z)\\) in the two associative ways:\n\\[\n\\begin{aligned}\nf(x+y+z)&=f(x+y)f(z)-(x+y)z,\\\\\nf(x+y+z)&=f(x)f(y+z)-x(y+z).\n\\end{aligned}\n\\]\nReplacing \\(f(x+y)\\) and \\(f(y+z)\\) using the equation and simplifying gives\n\\[\ny\\left[x(1-f(z))+z(f(x)-1)\\right]=0.\n\\]\nTaking any nonzero \\(y\\), we obtain\n\\[\nx(f(z)-1)=z(f(x)-1).\n\\]\nIf \\(x,z\\neq0\\), division by \\(xz\\) shows that \\((f(t)-1)/t\\) has one fixed value, say \\(c\\). Therefore \\(f(t)=1+ct\\) for all \\(t\\neq0\\), and this also holds at zero because \\(f(0)=1\\).\n\nSubstitution yields\n\\[\n1+c(x+y)+c^2xy=1+c(x+y)+xy,\n\\]\nso \\(c^2=1\\). Thus \\(c=\\pm1\\), and both choices indeed satisfy the equation. The complete answer is\n\\[\n\\boxed{f(x)=1+x\\ \\text{or}\\ f(x)=1-x}.\n\\]",
+      "reason": "Internal checking closes the gap between finding candidate linear functions and proving that every solution is linear."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let \\(P(x,y)\\) denote the given equation. From \\(P(0,y)\\),\n\\[\nf(0)f(y)=f(y).\n\\]\nIf \\(f(y)=0\\) for every \\(y\\), the equation fails whenever \\(xy\\neq0\\). Hence \\(f(0)=1\\).\n\nA generator may suggest the affine candidates \\(1\\pm x\\), but these candidates alone do not prove uniqueness. To establish uniqueness, compare the two expansions of \\(f(x+y+z)\\):\n\\[\n\\begin{aligned}\nf(x+y+z)&=(f(x)f(y)-xy)f(z)-(x+y)z,\\\\\nf(x+y+z)&=f(x)(f(y)f(z)-yz)-x(y+z).\n\\end{aligned}\n\\]\nEquating and simplifying gives\n\\[\ny\\bigl(x(1-f(z))+z(f(x)-1)\\bigr)=0.\n\\]\nSince this holds for every \\(y\\), choose \\(y=1\\). Then\n\\[\nx(f(z)-1)=z(f(x)-1)\\qquad\\text{for all }x,z.\n\\]\nTaking nonzero \\(x,z\\), we conclude that \\((f(t)-1)/t=c\\) is independent of nonzero \\(t\\). Together with \\(f(0)=1\\), this gives\n\\[\nf(t)=1+ct\\qquad\\text{for all }t\\in\\mathbb R.\n\\]\nSubstitution into \\(P(x,y)\\) yields \\(c^2=1\\). Therefore \\(c=1\\) or \\(c=-1\\). Direct substitution confirms both possibilities, so\n\\[\n\\boxed{f(x)=1+x\\quad\text{and}\n f(x)=1-x}\n\\]\nare exactly the solutions.",
+      "reason": "The critic identified that the candidate proof did not establish uniqueness; the repaired proof derives the affine form from associativity before checking candidates."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "We prove the classification and verify the descendants (the candidate functions) independently.\n\nLet\n\\[\nP(x,y):\\quad f(x)f(y)=f(x+y)+xy.\n\\]\nPutting \\(x=0\\) gives \\((f(0)-1)f(y)=0\\) for all \\(y\\). The identically zero function does not satisfy \\(P\\), so \\(f(0)=1\\).\n\nThe equation must be compatible with associativity of addition. Expanding \\(f(x+y+z)\\) first as \\(f((x+y)+z)\\) and then as \\(f(x+(y+z))\\), we obtain\n\\[\n(f(x)f(y)-xy)f(z)-(x+y)z\n=f(x)(f(y)f(z)-yz)-x(y+z).\n\\]\nCancellation and rearrangement give\n\\[\ny\\left(x(1-f(z))+z(f(x)-1)\\right)=0.\n\\]\nTaking \\(y=1\\),\n\\[\nx(f(z)-1)=z(f(x)-1)\\qquad (x,z\\in\\mathbb R).\n\\]\nFor nonzero \\(x,z\\), this says\n\\[\n\\frac{f(x)-1}{x}=\\frac{f(z)-1}{z}.\n\\]\nThus this ratio is a constant \\(c\\), and since \\(f(0)=1\\),\n\\[\nf(x)=1+cx\\qquad (x\\in\\mathbb R).\n\\]\nSubstituting into \\(P(x,y)\\) gives\n\\[\n1+c(x+y)+c^2xy=1+c(x+y)+xy,\n\\]\nhence \\(c^2=1\\). Therefore \\(c=1\\) or \\(c=-1\\).\n\nIndependent verification:\n\\[\n(1+x)(1+y)=1+x+y+xy=f(x+y)+xy\n\\]\nwhen \\(f(t)=1+t\\), and\n\\[\n(1-x)(1-y)=1-x-y+xy=f(x+y)+xy\n\\]\nwhen \\(f(t)=1-t\\). Hence the exact solution set is\n\\[\n\\boxed{f(x)=1+x\\quad\\text{or}\\quad f(x)=1-x}.\n\\]",
+      "reason": "Dependency checking shows that associativity forces the affine form; both descendants are then independently revalidated by direct substitution."
+    }
+  ]
+}

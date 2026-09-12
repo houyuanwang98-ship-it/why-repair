@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-128",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let S=[0,K]^n and define f:S\\to\\mathbb Z/N\\mathbb Z by f(x_1,\\ldots,x_n)=\\sum_i x_i a_i\\pmod N. If f(x)=f(y) for distinct x,y, then m_i=x_i-y_i satisfy |m_i|\\le K, are not all zero, and N divides \\sum_i m_i a_i, contradicting the hypothesis. Thus f is injective, so (K+1)^n=|S|\\le N. Hence n\\le\\lfloor\\log_{K+1}N\\rfloor.\n\nPut t=\\lfloor\\log_{K+1}N\\rfloor and choose a_i=(K+1)^{i-1} for 1\\le i\\le t. These integers are distinct. For |m_i|\\le K, let T=\\sum_{i=1}^t m_i(K+1)^{i-1}. Then |T|\\le K\\sum_{i=0}^{t-1}(K+1)^i=(K+1)^t-1<N. If N divides T, then T=0. If some coefficient is nonzero, let j be maximal with m_j\\ne0. Then |T|\\ge |m_j|(K+1)^{j-1}-K\\sum_{i=0}^{j-2}(K+1)^i=(|m_j|-1)(K+1)^{j-1}+1\\ge1, contradiction. Therefore all m_i=0, so the construction satisfies the hypothesis. Thus the largest possible value is \\boxed{\\lfloor\\log_{K+1}N\\rfloor}.",
+      "reason": "The supplied proof is valid; the counting upper bound and positional-base construction establish equality."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "Define f:[0,K]^n\\to\\mathbb Z/N\\mathbb Z by f(x)=\\sum_{i=1}^n x_i a_i\\pmod N. Two distinct vectors x,y with f(x)=f(y) would give a nonzero vector m=x-y with |m_i|\\le K and N\\mid\\sum_i m_i a_i, contrary to the assumption. Hence f is injective, and therefore (K+1)^n\\le N. Consequently n\\le t:=\\lfloor\\log_{K+1}N\\rfloor.\n\nFor the reverse inequality, take t integers a_i=(K+1)^{i-1}. They are distinct. For any coefficients |m_i|\\le K, set T=\\sum_{i=1}^t m_i a_i. We have |T|\\le K((K+1)^t-1)/K=(K+1)^t-1<N. Thus N\\mid T implies T=0. If a coefficient is nonzero, choose the largest j with m_j\\ne0. The reverse triangle inequality gives\n|T|\\ge |m_j|(K+1)^{j-1}-K\\sum_{i=1}^{j-1}(K+1)^{i-1}=(|m_j|-1)(K+1)^{j-1}+1\\ge1,\nwhich contradicts T=0. Hence T=0 only when every m_i=0. The chosen integers satisfy the condition, so n=t is attainable. Therefore n_{\\max}=\\boxed{\\lfloor\\log_{K+1}N\\rfloor}.",
+      "reason": "Internal checking confirms every bound is strict where needed and the maximal nonzero digit argument is sound."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let A=[0,K]^n. The map f:A\\to\\mathbb Z/N\\mathbb Z, f(x)=\\sum_i x_i a_i\\pmod N, is injective: equality f(x)=f(y) for x\\ne y produces a nonzero coefficient vector x-y with every coordinate between -K and K, violating the hypothesis. Therefore (K+1)^n\\le N and n\\le t:=\\lfloor\\log_{K+1}N\\rfloor.\n\nTo attain t, choose a_i=(K+1)^{i-1}, i=1,\\ldots,t. For any |m_i|\\le K, write T=\\sum_i m_i(K+1)^{i-1}. Since\n|T|\\le K\\sum_{i=0}^{t-1}(K+1)^i=(K+1)^t-1<N,\nany divisibility N\\mid T forces T=0. If m_j is the highest-index nonzero coefficient, then\n|T|\\ge |m_j|(K+1)^{j-1}-K\\sum_{i=0}^{j-2}(K+1)^i=(|m_j|-1)(K+1)^{j-1}+1>0,\ncontradicting T=0. Hence no nonzero allowed coefficient vector yields a multiple of N. The construction is valid and gives n=t. Thus the largest possible value is \\boxed{\\lfloor\\log_{K+1}N\\rfloor}.",
+      "reason": "A generator-style proof was checked for injectivity, strict magnitude control, and the edge case of a highest nonzero coefficient; no defect was found."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "Set t=\\lfloor\\log_{K+1}N\\rfloor. First, for any admissible collection a_1,\\ldots,a_n, consider f:[0,K]^n\\to\\mathbb Z/N\\mathbb Z given by f(x)=\\sum_i x_i a_i\\pmod N. If f(x)=f(y) with x\\ne y, then m_i=x_i-y_i are integers, not all zero, with |m_i|\\le K, and N divides \\sum_i m_i a_i, contradicting the hypothesis. Thus f is injective. Since its codomain has N elements, (K+1)^n\\le N, so n\\le t.\n\nFor attainability, use a_i=(K+1)^{i-1} for i=1,\\ldots,t. They are distinct. For an allowed vector m, let T=\\sum_i m_i a_i. Then\n|T|\\le K\\sum_{i=0}^{t-1}(K+1)^i=(K+1)^t-1<N.\nIf N divides T, then T=0. Suppose m is nonzero and let j be its largest nonzero index. Then\n|T|\\ge |m_j|(K+1)^{j-1}-K\\sum_{i=0}^{j-2}(K+1)^i=(|m_j|-1)(K+1)^{j-1}+1\\ge1,\nwhich is impossible if T=0. Therefore divisibility occurs only for the zero vector, so the construction satisfies the original condition. The upper bound and construction agree, giving\n\\boxed{n_{\\max}=\\lfloor\\log_{K+1}N\\rfloor}.",
+      "reason": "Dependency-aware review found no invalid premise or descendant issue; the local inequalities and endpoint conditions revalidate the original conclusion."
+    }
+  ]
+}

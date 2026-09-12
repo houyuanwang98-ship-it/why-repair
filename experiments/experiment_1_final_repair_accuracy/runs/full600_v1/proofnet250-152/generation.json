@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-152",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor each $n\\in\\mathbb{N}$, the ball $B(n,1/2)$ in the usual metric on $\\mathbb{N}$ is $\\{n\\}$, so every singleton is open. Any subset $A\\subseteq\\mathbb{N}$ is the union $A=\\bigcup_{n\\in A}\\{n\\}$ and is therefore open. Applying the same argument to $\\mathbb{N}\\setminus A$ shows that the complement of $A$ is open. Hence $A$ is closed as well, so every subset of $\\mathbb{N}$ is clopen.\n\\end{proof}",
+      "reason": "Corrected the grammatical error and made the singleton and complement arguments explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $A\\subseteq\\mathbb{N}$. If $n\\in\\mathbb{N}$, then for every $m\\in\\mathbb{N}$, $d(m,n)<1/2$ implies $m=n$, because distinct natural numbers have distance at least $1$. Thus $\\{n\\}=B(n,1/2)$ is open. Consequently,\n\\[\nA=\\bigcup_{n\\in A}\\{n\\}\n\\]\nis open. Its complement is likewise a union of open singletons, so $\\mathbb{N}\\setminus A$ is open. Therefore $A$ is closed, and hence clopen.\n\\end{proof}",
+      "reason": "Checked the radius argument and explicitly justified why distinct natural numbers cannot lie within distance $1/2$."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFix any subset $A\\subseteq\\mathbb{N}$. In the usual metric, if $m,n\\in\\mathbb{N}$ and $m\\ne n$, then $d(m,n)=|m-n|\\ge 1$. Hence $B(n,1/2)=\\{n\\}$ for every $n\\in\\mathbb{N}$, so every singleton is open. Since $A$ is a union of these singletons, $A$ is open. The same reasoning applies to $\\mathbb{N}\\setminus A$, which is therefore open; consequently $A$ is closed. Thus $A$ is clopen.\n\\end{proof}",
+      "reason": "The critic check confirmed that openness of the complement follows by the same singleton decomposition and that the metric separation is sufficient."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $A\\subseteq\\mathbb{N}$. For each $n\\in\\mathbb{N}$, the usual metric satisfies $d(m,n)\\ge 1$ whenever $m\\ne n$. Therefore\n\\[\nB(n,1/2)=\\{n\\},\n\\]\nso every singleton of $\\mathbb{N}$ is open. It follows that\n\\[\nA=\\bigcup_{n\\in A}\\{n\\}\n\\]\nis open. Also,\n\\[\n\\mathbb{N}\\setminus A=\\bigcup_{n\\notin A}\\{n\\}\n\\]\nis open. Hence $A$ is closed, since its complement is open. Thus every subset of $\\mathbb{N}$ is clopen.\n\\end{proof}",
+      "reason": "Dependency and descendant checks pass: singleton openness supports both union decompositions, yielding openness and closedness with only local repairs."
+    }
+  ]
+}

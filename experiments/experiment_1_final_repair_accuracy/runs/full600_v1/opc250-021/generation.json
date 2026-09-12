@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-021",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Proof. A placement is final if no empty cell satisfies the move condition.\n\nPlace counters in every cell of the first row. This gives a final placement with n counters: each empty cell has 0 counters in its row and 1 in its column, so the relevant total is odd.\n\nNow let S be any final placement, with m counters. For row i, let d_i be its number of counters and let r_i=d_i mod 2. For column j, let c_j be its number of counters and let s_j=c_j mod 2. Put R_e={i:r_i=e} and C_e={j:s_j=e}, for e=0,1.\n\nIf (i,j) is empty, the number of counters in its row or column is d_i+c_j. Since S is final, d_i+c_j is odd; hence r_i≠s_j. Therefore every cell in R_0×C_0 and R_1×C_1 must be occupied. Writing a=|R_0| and b=|C_0|, we obtain\nm≥ab+(n-a)(n-b).\n\nIf a=0, every row has odd size and thus contains at least one counter, so m≥n. Similarly, b=0 implies m≥n. Otherwise 1≤a,b≤n−1. For fixed a, the expression f(a,b)=ab+(n-a)(n-b) is linear in b, so its minimum on 1≤b≤n−1 occurs at b=1 or b=n−1. By symmetry it is enough to consider b=1; then\nf(a,1)=a+(n-a)(n−1),\nwhose minimum for 1≤a≤n−1 is 2(n−1)≥n for n≥2. Thus m≥n. For n=1, the unique cell can be occupied once, so the minimum is also 1.\n\nHence the minimum possible number of moves is \\boxed{n}.",
+      "reason": "The original proof used a false corner lower bound for f(a,b); the bilinear expression is instead minimized on a boundary, yielding the required bound."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Proof. Place one counter in each cell of the first row. Every empty cell then has zero counters in its row and one in its column, so no further move is legal. Thus a final position with n counters exists.\n\nConversely, let S be final and let d_i and c_j denote the numbers of counters in row i and column j. Write r_i≡d_i (mod 2), s_j≡c_j (mod 2), with values in {0,1}. For an empty cell (i,j), finality says d_i+c_j is odd, so r_i≠s_j. Consequently, if r_i=s_j, the cell (i,j) cannot be empty and must contain a counter.\n\nLet a be the number of rows with r_i=0 and b the number of columns with s_j=0. Hence\n|S|≥ab+(n-a)(n-b).\nIf a=0 or b=0, respectively every row or every column contains an odd, hence positive, number of counters, giving |S|≥n.\n\nAssume 1≤a,b≤n−1 and n≥2. For fixed a, f(a,b)=ab+(n-a)(n-b) is linear in b, so its minimum over this interval occurs at b=1 or b=n−1. By replacing a with n−a and b with n−b if necessary, consider b=1. Then\nf(a,1)=a+(n-a)(n−1),\nwhich is minimized at a=n−1 and equals 2n−2≥n. Thus every final position has at least n counters. When n=1, one move fills the only cell.\n\nTherefore the minimum is \\boxed{M=n}.",
+      "reason": "Self-checking exposed the invalid claim that f is always bounded by its corner value; the boundary-minimum argument repairs it."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Proof. We prove both bounds. Filling the first row gives n counters. Any remaining cell has no counter in its row and exactly one in its column, so the number of counters in the other cells of its row or column is 1, which is odd. Hence this is final, and M≤n.\n\nFor the reverse inequality, consider any final placement S. Let d_i be the number of counters in row i and c_j the number in column j. Define r_i=d_i mod 2 and s_j=c_j mod 2. If an empty cell (i,j) existed with r_i=s_j, then d_i+c_j would be even, making that cell a legal move, contrary to finality. Thus every cell for which r_i=s_j is occupied.\n\nLet a be the number of rows with r_i=0 and b the number of columns with s_j=0. The occupied equal-parity cells give\n|S|≥f(a,b):=ab+(n-a)(n-b).\nIf a=0, every row has positive odd size, so |S|≥n; if b=0, the analogous column argument applies.\n\nSuppose now 1≤a,b≤n−1. For fixed a, f is affine in b, so its minimum on the integer interval [1,n−1] occurs at an endpoint. Since f(a,n−1)=f(n−a,1), it suffices to use b=1. Then\nf(a,1)=a+(n-a)(n−1)≥2(n−1)≥n\nfor n≥2, because the minimum occurs at a=n−1. Therefore |S|≥n. For n=1, the sole cell requires exactly one move.\n\nCombining both bounds, \\boxed{M=n}.",
+      "reason": "The critic rejected the submitted inequality f(a,b)≥(n−1)^2+1, which is false; the repaired proof uses the true endpoint-minimization argument."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Proof. Let S be a final placement.\n\nFirst, place counters in all n cells of one row. Every empty cell has zero counters in its row and one in its column, so its associated total is odd; therefore no further move is possible. Thus a final placement with n counters exists.\n\nWe show that every final placement has at least n counters. Let d_i and c_j be the row and column sums, and define r_i=d_i mod 2 and s_j=c_j mod 2. For every empty cell (i,j), finality implies d_i+c_j is odd, hence r_i≠s_j. Therefore all cells with r_i=s_j are occupied.\n\nLet a be the number of rows with r_i=0 and b the number of columns with s_j=0. Then\n|S|≥ab+(n-a)(n-b)=f(a,b).\nIf a=0, all rows have positive odd sums, so |S|≥n. If b=0, all columns do, with the same conclusion.\n\nOtherwise 1≤a,b≤n−1. For fixed a, f is linear in b, so its minimum occurs at b=1 or b=n−1. Since f(a,n−1)=f(n−a,1), it is enough to evaluate b=1:\n f(a,1)=a+(n-a)(n−1)≥2(n−1)≥n\nfor n≥2. Hence every final placement has at least n counters. The case n=1 is immediate: the single cell can be filled in exactly one move.\n\nTherefore the minimum number of moves before Bethan is stuck is \\boxed{M=n}.",
+      "reason": "Dependency-aware review found one local defect—the false lower bound on f—and revalidated the corrected endpoint argument and both size bounds."
+    }
+  ]
+}

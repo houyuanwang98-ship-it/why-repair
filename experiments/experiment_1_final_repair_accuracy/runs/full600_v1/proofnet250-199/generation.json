@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-199",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume, for contradiction, that an order makes $\\mathbb C$ an ordered field. Since $i\\neq 0$, exactly one of $i$ and $-i$ is positive. The square of every positive element is positive, so either $i>0$ or $-i>0$ implies\n\\[\n-1=i^2=(-i)^2>0.\n\\]\nTherefore $1=(-1)^2>0$ as well. Thus both $1$ and $-1$ are positive, contradicting the order-field property that exactly one of $x$ and $-x$ is positive for every nonzero $x$, applied to $x=1$. Hence no order on $\\mathbb C$ can make it an ordered field.\n\\end{proof}",
+      "reason": "The argument is valid after making the contradiction assumption and stating the positivity-of-squares and trichotomy properties explicitly."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose that $\\mathbb C$ admits an order making it an ordered field. For the nonzero element $i$, one of $i$ or $-i$ must be positive. In either case, its square is positive, and hence\n\\[\n-1=i^2=(-i)^2>0.\n\\]\nIt follows that\n\\[\n1=(-1)^2>0.\n\\]\nThis is impossible, because in an ordered field a nonzero element and its negative cannot both be positive; here both $1$ and $-1$ are positive. Therefore no such order exists on $\\mathbb C$.\n\\end{proof}",
+      "reason": "Internal checking confirms the core proof, while the revision removes ambiguity about which ordered-field axioms are being used."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume for contradiction that there is an order $<$ on $\\mathbb C$ for which $\\mathbb C$ is an ordered field. Since $i\\ne 0$, the ordered-field trichotomy property gives either $i>0$ or $-i>0$. In an ordered field, the square of a positive element is positive. Consequently, in either case,\n\\[\n-1=i^2=(-i)^2>0.\n\\]\nApplying the same fact to the positive element $-1$ gives\n\\[\n1=(-1)^2>0.\n\\]\nBut $1>0$ and $-1>0$ cannot both hold, since exactly one of a nonzero element and its additive inverse is positive. This contradiction proves that no order can turn $\\mathbb C$ into an ordered field.\n\\end{proof}",
+      "reason": "A critic check verifies that the disjunction is handled correctly and that the contradiction uses a standard ordered-field consequence without circularity."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose, toward a contradiction, that an order makes $\\mathbb C$ an ordered field. Because $i\\neq 0$, trichotomy implies that either $i>0$ or $-i>0$. The product of two positive elements is positive, so whichever of these two elements is positive has a positive square. Since\n\\[\ni^2=(-i)^2=-1,\n\\]\nwe obtain $-1>0$. Then $-1$ is positive, and therefore its square is positive:\n\\[\n1=(-1)^2>0.\n\\]\nThis contradicts trichotomy (or asymmetry) for the nonzero element $1$, because $1>0$ and $-1>0$ cannot both hold. Hence no order exists that makes the complex field an ordered field.\n\\end{proof}",
+      "reason": "Dependency checking confirms each inference: trichotomy gives a positive choice, closure of positive products gives $-1>0$, and the resulting positivity of both $1$ and $-1$ is independently contradictory; no descendant claims require repair."
+    }
+  ]
+}

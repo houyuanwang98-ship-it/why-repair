@@ -1,0 +1,29 @@
+{
+  "case_id": "m2-037",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "由 x、y 为偶整数，存在整数 m、n，使得 x=2m、y=2n。因此 x+y=2m+2n=2(m+n)。由于 m+n 为整数，故 x+y 为偶数，命题成立。",
+      "reason": "将循环断言改写为基于偶整数定义的直接证明。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "因为 x、y 是偶整数，故存在整数 m、n，使 x=2m、y=2n。于是\nx+y=2m+2n=2(m+n)。\n又 m+n 是整数，所以 x+y 是偶数。因此命题成立。",
+      "reason": "检查后补充了偶整数的定义及整数闭性，论证完整。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "设 x=2m、y=2n，其中 m、n 为整数（这是 x、y 为偶整数的定义）。则\nx+y=2m+2n=2(m+n)。\n由于 m+n 为整数，x+y 可表示为整数的两倍，故 x+y 为偶数，命题成立。",
+      "reason": "批评环节识别出原证明以待证结论作依据，改用定义和代数推导消除循环。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "依赖检查：结论“x+y 为偶数”应由假设“x、y 为偶整数”推出，而不能直接作为前提。由偶整数的定义，存在整数 m、n，使 x=2m、y=2n。于是\nx+y=2m+2n=2(m+n)。\n整数对加法封闭，所以 m+n 为整数；因此 x+y 是整数 2(m+n) 的两倍，即为偶数。该推导独立于结论本身，且结论在后续检查中保持成立。",
+      "reason": "完成依赖检查、最小局部修复、独立复核及结论再验证。"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-050",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $U$ be a connected open subset of $X$. Since $X$ is locally path connected, every path component of the open set $U$ is open in $X$, and hence open in $U$. The complement of any path component is the union of the other path components, so it is also open in $U$. Thus each path component is both open and closed in $U$. Because $U$ is connected, it has only one path component. Therefore, $U$ is path connected.\n\\end{proof}",
+      "reason": "Corrected the grammar and explicitly justified that path components are closed in $U$."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $U\\subseteq X$ be connected and open. For each $x\\in U$, local path connectedness of $X$ gives a path-connected open neighborhood of $x$ contained in $U$. Hence the path component of $x$ in $U$ is open in $U$. Since path components partition $U$, the complement of any path component is a union of the other path components and is therefore open in $U$. Consequently, every path component is clopen in $U$. Connectedness of $U$ implies that there is only one such component, so $U$ is path connected.\n\\end{proof}",
+      "reason": "The revised proof derives openness directly from local path connectedness and verifies the clopen argument."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $U$ be a connected open set in $X$. Fix $x\\in U$. Because $X$ is locally path connected, there is a path-connected open neighborhood $V$ of $x$ with $V\\subseteq U$. Thus $V$ lies in the path component $C_x$ of $x$ in $U$. Every point of $C_x$ has such a neighborhood contained in $C_x$, so $C_x$ is open in $U$. The path components form a partition of $U$, and therefore $U\\setminus C_x$ is a union of path components and is open in $U$. Hence $C_x$ is closed in $U$ as well. Since $U$ is connected and $C_x$ is nonempty and clopen, $C_x=U$. Thus $U$ is path connected.\n\\end{proof}",
+      "reason": "The critic check identified that closedness should be justified; the proof now supplies that justification and uses a fixed arbitrary point."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $U$ be a connected open subset of $X$. For each $x\\in U$, choose an open path-connected neighborhood $V_x$ of $x$ in $X$ such that $V_x\\subseteq U$, which is possible because $X$ is locally path connected and $U$ is open. Let $C_x$ denote the path component of $x$ in $U$. Since $V_x\\subseteq C_x$, and the same argument applies at every point of $C_x$, each $C_x$ is open in $U$. The path components partition $U$, so $U\\setminus C_x$ is a union of path components and is open in $U$. Thus $C_x$ is clopen in $U$. It is nonempty, and connectedness of $U$ forces $C_x=U$. Therefore every point lies in the same path component, and $U$ is path connected.\n\\end{proof}",
+      "reason": "Dependency checks confirm the needed chain: local path connectedness plus openness gives open path components; the partition gives closedness; connectedness yields one component."
+    }
+  ]
+}

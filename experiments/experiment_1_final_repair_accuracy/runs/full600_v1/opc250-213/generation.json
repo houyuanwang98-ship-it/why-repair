@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-213",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let A_n be the set of partitions of n, and let Q_n be the set of partitions of n whose parts are all strictly greater than 1. Partition A_n into those containing at least one 1 and those in Q_n. Thus\np(n)=|B_n|+|Q_n|,\nwhere B_n consists of the partitions containing a 1.\n\nThere is a bijection B_n\\to A_{n-1}: remove one part equal to 1. Its inverse appends one part equal to 1. Therefore |B_n|=p(n-1). Hence\np(n)=p(n-1)+|Q_n|,\nso\np(n)-p(n-1)=|Q_n|.\n\nFor n=1, Q_1 is empty and p(1)-p(0)=1-1=0, so the result also holds in that case. Thus, for every positive integer n, p(n)-p(n-1) is the number of expressions of n as a sum of integers each strictly greater than 1.",
+      "reason": "The supplied proof is valid; the one-pass rewrite preserves its partition decomposition and bijection."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "Interpret an expression as an integer partition, so order is irrelevant. Let Q(n) denote the number of partitions of n having no part equal to 1.\n\nEvery partition of n either contains at least one 1 or belongs to Q(n). The partitions containing at least one 1 are in bijection with all partitions of n-1: remove one occurrence of 1, with inverse obtained by adjoining one occurrence of 1. Consequently, the number of partitions of n containing a 1 is p(n-1).\n\nTherefore\np(n)=p(n-1)+Q(n),\nwhich gives\nQ(n)=p(n)-p(n-1).\n\nWhen n=1, Q(1)=0 and p(1)-p(0)=1-1=0, using the stipulated value p(0)=1. Hence the identity holds for every positive integer n.",
+      "reason": "Internal checking finds no gap: removing and adjoining exactly one 1 are inverse operations on integer partitions."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let P_n be the set of all partitions of n, and let R_n\\subseteq P_n consist of the partitions whose every part is greater than 1. Let S_n=P_n\\setminus R_n, so S_n is the set of partitions containing at least one 1.\n\nDefine f:S_n\\to P_{n-1} by deleting one occurrence of 1. This is well-defined because every element of S_n contains a 1. Define g:P_{n-1}\\to S_n by adjoining one occurrence of 1. Deleting the newly adjoined occurrence recovers the original partition, and adjoining a 1 after deleting one occurrence from a partition with 1 recovers the same multiset of parts. Thus f and g are inverse bijections.\n\nHence |S_n|=|P_{n-1}|=p(n-1). Since |P_n|=p(n),\np(n)=|S_n|+|R_n|=p(n-1)+|R_n|.\nTherefore |R_n|=p(n)-p(n-1), as required. For n=1, this says 0=p(1)-p(0)=1-1, so the boundary case is included.",
+      "reason": "A critic check confirms the only delicate point—the multiplicity of 1—is handled by inverse multiset operations."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "For each n\\ge 1, let P(n) be the set of integer partitions of n, and let R(n) be the set of partitions of n whose parts are all at least 2. Let S(n) be the remaining partitions, namely those containing at least one part equal to 1.\n\nThese sets form a disjoint decomposition P(n)=S(n)\\sqcup R(n). There is a bijection between S(n) and P(n-1): from a partition in S(n), delete one part equal to 1; conversely, from a partition of n-1, add one part equal to 1. These operations are inverse because partitions are multisets of parts. Thus\n|S(n)|=p(n-1).\n\nSince |P(n)|=p(n), the decomposition gives\np(n)=p(n-1)+|R(n)|.\nTherefore\np(n)-p(n-1)=|R(n)|,\nwhich is precisely the number of ways to express n as a sum of integers strictly greater than 1. For n=1, R(1) is empty and the equality is 1-1=0, using p(0)=1.",
+      "reason": "Dependency review confirms the decomposition, bijection, boundary case, and final identification all remain valid; no repair is needed."
+    }
+  ]
+}

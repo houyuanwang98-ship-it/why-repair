@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-009",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWrite $n=x^2+y^2$ with $x,y\\in\\mathbb Q$. Choose a positive integer $m$ such that $a=mx$ and $b=my$ are integers. Then\n\\[\nnm^2=a^2+b^2.\n\\]\nWe use the standard lemma that if an integer is a sum of two squares, then every prime $q\\equiv3\\pmod4$ occurs in its prime factorization with even exponent. Indeed, if $q$ divides $u^2+v^2$, then $q\\nmid v$ implies $(uv^{-1})^2\\equiv-1\\pmod q$, impossible because $-1$ is not a quadratic residue modulo such a prime; hence $q$ divides both $u$ and $v$, and descent gives an even valuation.\n\nLet $q\\equiv3\\pmod4$ have exponent $i$ in $n$. If $q$ has exponent $j$ in $m$, then its exponent in $nm^2=a^2+b^2$ is $i+2j$, which is even by the lemma. Thus $i$ is even. Therefore every prime congruent to $3$ modulo $4$ occurs to an even exponent in $n$. By the sum-of-two-squares theorem, $n$ is a sum of two integer squares. (The case $n=0$ is immediate.)\n\\end{proof}",
+      "reason": "Repairs the valuation argument by using the exponent $i+2j$ after clearing denominators and explicitly invoking the sum-of-two-squares criterion."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nThe assertion is immediate for $n=0$, so assume $n>0$. Write $n=x^2+y^2$ for rational numbers $x,y$, and choose $M\\in\\mathbb N$ so that $A=Mx$ and $B=My$ are integers. Hence\n\\[\nA^2+B^2=nM^2.\n\\]\nFor any prime $p\\equiv3\\pmod4$, if $p\\mid U^2+V^2$, then $p\\mid U$ and $p\\mid V$: otherwise, reducing modulo $p$ would produce a square congruent to $-1$, which is impossible for $p\\equiv3\\pmod4$. Repeating this observation shows that the exponent of $p$ in any sum of two integer squares is even.\n\nLet $e_p$ be the exponent of $p$ in $n$ and $f_p$ its exponent in $M$. Since $nM^2=A^2+B^2$, we have $e_p+2f_p$ even. Consequently $e_p$ is even for every $p\\equiv3\\pmod4$. The classical sum-of-two-squares theorem now implies that $n$ is a sum of two integer squares.\n\\end{proof}",
+      "reason": "An internal consistency check replaced the original unsupported divisibility claim with a precise valuation argument and handled the zero case."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nChoose $r,s\\in\\mathbb Q$ with $n=r^2+s^2$, and let $M$ be a common positive denominator of $r$ and $s$. Then $R=Mr$ and $S=Ms$ are integers and\n\\[\n nM^2=R^2+S^2.\n\\]\nWe claim that every prime $p\\equiv3\\pmod4$ occurs to an even power in any integer sum of two squares. If $p\\mid U^2+V^2$, then $p$ cannot divide exactly one of $U,V$, since this would make $-1$ a quadratic residue modulo $p$. Thus $p\\mid U,V$, so $p^2\\mid U^2+V^2$; dividing both $U,V$ by $p$ and iterating proves the claim.\n\nFix $p\\equiv3\\pmod4$. Let $e=v_p(n)$ and $f=v_p(M)$. The displayed identity and the claim give\n\\[\n e+2f=v_p(R^2+S^2)\\equiv0\\pmod2,\n\\]\nso $e$ is even. Hence every prime $p\\equiv3\\pmod4$ has even exponent in $n$. Since $n$ is a nonnegative integer, the sum-of-two-squares theorem yields integers $u,v$ such that $n=u^2+v^2$.\n\\end{proof}",
+      "reason": "The critic identifies the sign error and missing justification in the candidate; the repaired proof uses valuations and states the required prime-divisor lemma."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $n=x^2+y^2$ with $x,y\\in\\mathbb Q$. Then $n\\ge0$. If $n=0$, take $0^2+0^2$. Otherwise choose $M\\in\\mathbb N$ such that $X=Mx$ and $Y=My$ are integers. We obtain\n\\[\nX^2+Y^2=nM^2.\\tag{1}\n\\]\n\nFor a prime $p\\equiv3\\pmod4$, suppose $p\\mid U^2+V^2$. If $p\\nmid V$, then $(UV^{-1})^2\\equiv-1\\pmod p$, impossible because $-1$ is not a quadratic residue modulo $p$. Thus $p\\mid V$; similarly $p\\mid U$. Applying this repeatedly shows that $v_p(U^2+V^2)$ is even.\n\nNow fix such a prime $p$, and write $e=v_p(n)$ and $f=v_p(M)$. From (1),\n\\[\n e+2f=v_p(X^2+Y^2),\n\\]\nwhose right-hand side is even by the preceding argument. Therefore $e$ is even. This holds for every prime $p\\equiv3\\pmod4$.\n\nThe sum-of-two-squares theorem states that a nonnegative integer is a sum of two integer squares exactly when every prime congruent to $3$ modulo $4$ occurs with even exponent. Hence $n$ is a sum of two integer squares.\n\\end{proof}",
+      "reason": "Dependency review isolates the needed valuation lemma, performs the minimal local repair to the denominator argument, and rechecks the zero and nonnegative descendants."
+    }
+  ]
+}

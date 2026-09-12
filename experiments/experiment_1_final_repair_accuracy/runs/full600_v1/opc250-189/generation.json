@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-189",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let c=\\sqrt2+1. Since\n\\[\n\\cot\\frac\\pi8=\\sqrt2+1=c,\n\\]\nwrite \\(x_n=\\cot\\phi_n\\). Using\n\\[\n\\cot(A+B)=\\frac{\\cot A\\cot B-1}{\\cot A+\\cot B},\n\\]\nthe recurrence gives\n\\[\nx_{n+1}=\\cot\\left(\\phi_n+\\frac\\pi8\\right).\n\\]\nThus\n\\[\nx_n=\\cot\\left(\\phi_1+(n-1)\\frac\\pi8\\right),\\qquad \\cot\\phi_1=2014.\n\\]\nFor \\(n=2015\\),\n\\[\n2014\\frac\\pi8=\\frac{1007\\pi}4=251\\pi+\\frac{3\\pi}4.\n\\]\nBecause cotangent has period \\(\\pi\\),\n\\[\nx_{2015}=\\cot\\left(\\phi_1+\\frac{3\\pi}4\\right).\n\\]\nSince \\(\\cot(3\\pi/4)=-1\\),\n\\[\nx_{2015}=\\frac{2014(-1)-1}{2014-1}\n=-\\frac{2015}{2013}.\n\\]\nTherefore, \\(\\boxed{x_{2015}=-\\frac{2015}{2013}}\\).",
+      "reason": "The original conclusion is correct; this is a shorter valid cotangent derivation with the angle reduction made explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Set \\(c=\\sqrt2+1\\). The half-angle identities show\n\\[\n\\cot\\frac\\pi8=\\sqrt2+1=c.\n\\]\nChoose \\(\\phi_1\\) with \\(\\cot\\phi_1=2014\\). Inductively, if\n\\[\nx_n=\\cot\\left(\\phi_1+(n-1)\\frac\\pi8\\right),\n\\]\nthen the recurrence and the cotangent addition formula imply\n\\[\nx_{n+1}=\\cot\\left(\\phi_1+n\\frac\\pi8\\right).\n\\]\nHence this formula holds for every defined term. In particular,\n\\[\nx_{2015}=\\cot\\left(\\phi_1+\\frac{2014\\pi}{8}\\right)\n=\\cot\\left(\\phi_1+251\\pi+\\frac{3\\pi}{4}\\right)\n=\\cot\\left(\\phi_1+\\frac{3\\pi}{4}\\right).\n\\]\nApplying the addition formula once more,\n\\[\nx_{2015}=\\frac{\\cot\\phi_1\\cot(3\\pi/4)-1}{\\cot\\phi_1+\\cot(3\\pi/4)}\n=\\frac{2014(-1)-1}{2014-1}\n=-\\frac{2015}{2013}.\n\\]\nThus \\(\\boxed{x_{2015}=-\\frac{2015}{2013}}\\).",
+      "reason": "Internal checking confirms the cotangent parameterization and denominator are valid for the required iterate; the proof was tightened using induction."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Define the fractional-linear map\n\\[\nT(x)=\\frac{(\\sqrt2+1)x-1}{(\\sqrt2+1)+x}.\n\\]\nLet \\(c=\\sqrt2+1\\). Since \\(c=\\cot(\\pi/8)\\), the cotangent addition identity gives\n\\[\nT(\\cot\\theta)=\\cot\\left(\\theta+\\frac\\pi8\\right).\n\\]\nLet \\(\\phi\\) satisfy \\(\\cot\\phi=2014\\). Repeated application yields\n\\[\nx_n=T^{n-1}(2014)=\\cot\\left(\\phi+(n-1)\\frac\\pi8\\right).\n\\]\nTherefore,\n\\[\nx_{2015}=\\cot\\left(\\phi+\\frac{2014\\pi}{8}\\right)\n=\\cot\\left(\\phi+251\\pi+\\frac{3\\pi}{4}\\right)\n=\\cot\\left(\\phi+\\frac{3\\pi}{4}\\right).\n\\]\nNow \\(\\cot(3\\pi/4)=-1\\), so\n\\[\nx_{2015}=\\frac{2014(-1)-1}{2014+(-1)}\n=-\\frac{2015}{2013}.\n\\]\nHence \\(\\boxed{x_{2015}=-\\frac{2015}{2013}}\\).",
+      "reason": "The critic check removes unnecessary matrix machinery and verifies the key identity, index arithmetic, and nonzero final denominator."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let \\(c=\\sqrt2+1\\). From the half-angle formulas,\n\\[\n\\cot\\frac\\pi8\n=\\sqrt{\\frac{2+\\sqrt2}{2-\\sqrt2}}\n=\\sqrt2+1=c.\n\\]\nChoose \\(\\phi_1\\) such that \\(\\cot\\phi_1=2014\\). For every step where the recurrence is defined, the addition formula gives\n\\[\n\\frac{c\\cot\\phi_n-1}{c+\\cot\\phi_n}\n=\\frac{\\cot(\\pi/8)\\cot\\phi_n-1}{\\cot(\\pi/8)+\\cot\\phi_n}\n=\\cot\\left(\\phi_n+\\frac\\pi8\\right).\n\\]\nConsequently,\n\\[\nx_n=\\cot\\left(\\phi_1+(n-1)\\frac\\pi8\\right).\n\\]\nFor the requested index,\n\\[\nx_{2015}=\\cot\\left(\\phi_1+\\frac{2014\\pi}{8}\\right)\n=\\cot\\left(\\phi_1+251\\pi+\\frac{3\\pi}{4}\\right)\n=\\cot\\left(\\phi_1+\\frac{3\\pi}{4}\\right).\n\\]\nThe final denominator is nonzero because it equals \\(2014-1=2013\\). Thus\n\\[\nx_{2015}=\\frac{2014\\cot(3\\pi/4)-1}{2014+\\cot(3\\pi/4)}\n=\\frac{-2014-1}{2014-1}\n=-\\frac{2015}{2013}.\n\\]\nTherefore, \\(\\boxed{x_{2015}=-\\frac{2015}{2013}}\\).",
+      "reason": "Dependency review validates the parameterization, indexing, domain condition, and final computation; the local repair preserves the theorem and revalidates the needed descendant steps."
+    }
+  ]
+}
