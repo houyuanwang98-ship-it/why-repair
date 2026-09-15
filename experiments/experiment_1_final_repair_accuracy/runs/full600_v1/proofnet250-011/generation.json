@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-011",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor every integer k\\ge 0, let a=5\\cdot 2^k. Then 5 divides each nonleading coefficient of\n\\[\nf(x)=x^7+15x^2-30x+a,\n\\]\nincluding 15, -30, and a, while 25 does not divide a because 5 does not divide 2^k. Hence, by Eisenstein's criterion with p=5, f(x) is irreducible in \\mathbb{Q}[x]. The integers 5\\cdot 2^k are distinct for k\\ge0, so infinitely many such integers a exist.\n\\end{proof}",
+      "reason": "The original argument was valid but needed to explicitly verify all Eisenstein conditions and distinctness."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nConsider the infinite set of integers\n\\[\nA=\\{5\\cdot 2^k:k=0,1,2,\\ldots\\}.\n\\]\nFor any a\\in A, every coefficient of f(x)=x^7+15x^2-30x+a other than the leading coefficient is divisible by 5: the zero coefficients are divisible by 5, and 5 divides 15, -30, and a. Moreover, 25\\nmid a, since a=5\\cdot 2^k and 5\\nmid 2^k. Eisenstein's criterion therefore implies that f(x) is irreducible over \\mathbb{Q}. Since the elements of A are pairwise distinct, there are infinitely many such integers a.\n\\end{proof}",
+      "reason": "An internal check confirms that zero coefficients and the nondivisibility condition must be stated explicitly."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nChoose a=5m, where m ranges over the positive integers not divisible by 5; for instance, take m=2^k for k\\ge0. Then 5 divides the constant term a and the coefficients 15 and -30, and it also divides every zero coefficient of f(x) between degrees 6 and 3. On the other hand, 25 does not divide a because 5 does not divide m. Thus Eisenstein's criterion applied with the prime 5 shows that\n\\[\nx^7+15x^2-30x+a\n\\]\nis irreducible in \\mathbb{Q}[x]. The choices a=5\\cdot2^k are infinitely many and distinct, proving the claim.\n\\end{proof}",
+      "reason": "The critic check confirms the proposed family satisfies the exact prime-divisibility hypotheses, including omitted zero coefficients."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet k be any nonnegative integer and set a_k=5\\cdot2^k. The polynomials\n\\[\nf_k(x)=x^7+15x^2-30x+a_k\n\\]\nhave leading coefficient 1. Every other coefficient is divisible by 5: the coefficients of x^6,x^5,x^4,x^3 are zero, while 5 divides 15, -30, and a_k. Also, 25 does not divide a_k, since 5 does not divide 2^k. Therefore Eisenstein's criterion at the prime 5 proves that f_k(x) is irreducible over \\mathbb{Q}. Because the integers a_k are pairwise distinct as k varies, this gives infinitely many integers a with the required property.\n\\end{proof}",
+      "reason": "Dependency checks, local repair, independent review, and revalidation all pass: the Eisenstein hypotheses and infinitude are fully established."
+    }
+  ]
+}

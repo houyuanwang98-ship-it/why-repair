@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-012",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet\n\\[\nA=([-2,0]\\times[-2,0])\\cup([0,2]\\times[0,2])\\subset\\mathbb{R}^2.\n\\]\nThe two squares are connected and intersect at $(0,0)$, so $A$ is connected. However,\n\\[\n\\operatorname{int}(A)=((-2,0)\\times(-2,0))\\cup((0,2)\\times(0,2)).\n\\]\nDefine $f:\\mathbb{R}^2\\to\\mathbb{R}$ by $f(x,y)=x+y$. Every point of $\\operatorname{int}(A)$ has either $x<0,y<0$, or $x>0,y>0$. Hence\n\\[\n\\operatorname{int}(A)\\subset f^{-1}((-\u001einfty,0))\\cup f^{-1}((0,\\infty)),\n\\]\nand both intersections with these two open sets are nonempty. They are disjoint, relatively open subsets whose union is $\\operatorname{int}(A)$. Therefore $\\operatorname{int}(A)$ is disconnected. Thus, in general, the interior of a connected space need not be connected.\n\\end{proof}",
+      "reason": "Corrected the inverse-image notation and supplied a valid separation of the interior."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nConsider the subset\n\\[\nA=([-2,0]\\times[-2,0])\\cup([0,2]\\times[0,2])\n\\]\nof $\\mathbb{R}^2$. Each square is connected, and they meet at $(0,0)$; consequently, $A$ is connected. Its interior is\n\\[\n\\operatorname{int}(A)=((-2,0)\\times(-2,0))\\cup((0,2)\\times(0,2)).\n\\]\nSet\n\\[\nV=\\operatorname{int}(A)\\cap\\{(x,y):x+y>0\\},\\qquad W=\\operatorname{int}(A)\\cap\\{(x,y):x+y<0\\}.\n\\]\nSince the two sets defined by the strict inequalities are open in $\\mathbb{R}^2$, $V$ and $W$ are open in $\\operatorname{int}(A)$. Points in the positive square belong to $V$, and points in the negative square belong to $W$. Moreover, every point of $\\operatorname{int}(A)$ lies in exactly one of $V$ and $W$. Thus $V$ and $W$ form a separation of $\\operatorname{int}(A)$, so the interior is disconnected.\n\\end{proof}",
+      "reason": "Self-check confirmed that strict inequalities give disjoint, nonempty relatively open pieces covering the interior."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $X=\\mathbb{R}^2$ and let\n\\[\nS=([-2,0]\\times[-2,0])\\cup([0,2]\\times[0,2]).\n\\]\nThe two closed squares are connected and have the common point $(0,0)$, so their union $S$ is connected. On the other hand,\n\\[\n\\operatorname{int}(S)=((-2,0)\\times(-2,0))\\cup((0,2)\\times(0,2)).\n\\]\nDefine\n\\[\nP=\\operatorname{int}(S)\\cap\\{(x,y):x+y>0\\},\\qquad\nN=\\operatorname{int}(S)\\cap\\{(x,y):x+y<0\\}.\n\\]\nThe sets $P$ and $N$ are relatively open in $\\operatorname{int}(S)$ and are disjoint. They are both nonempty, since $(1,1)\\in P$ and $(-1,-1)\\in N$. Every point of the positive square has positive coordinate sum, and every point of the negative square has negative coordinate sum, so $P\\cup N=\\operatorname{int}(S)$. Hence $P$ and $N$ separate $\\operatorname{int}(S)$, proving that it is disconnected. Therefore, a connected space need not have connected interior.\n\\end{proof}",
+      "reason": "The repaired candidate was checked for connectedness of the union, the exact interior, and all separation conditions."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe give a counterexample in $X=\\mathbb{R}^2$. Let\n\\[\nS=([-2,0]\\times[-2,0])\\cup([0,2]\\times[0,2]).\n\\]\nEach square is connected, and their intersection is the nonempty set $\\{(0,0)\\}$, so $S$ is connected. Since the two squares meet only on their boundaries,\n\\[\n\\operatorname{int}(S)=((-2,0)\\times(-2,0))\\cup((0,2)\\times(0,2)).\n\\]\nLet\n\\[\nS_- =(-2,0)\\times(-2,0),\\qquad S_+=(0,2)\\times(0,2).\n\\]\nThese are disjoint, nonempty, and open in $\\mathbb{R}^2$, hence open in $\\operatorname{int}(S)$, and they cover $\\operatorname{int}(S)$. Thus they form a separation of $\\operatorname{int}(S)$, which is therefore disconnected. This proves that it is not true in general that the interior of a connected space is connected.\n\\end{proof}",
+      "reason": "Used the minimal local repair: explicitly identify the two open-square components and revalidate the separation and the claimed interior."
+    }
+  ]
+}

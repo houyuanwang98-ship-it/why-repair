@@ -1,0 +1,29 @@
+{
+  "case_id": "m2-011",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "由于 x、y 为奇整数，存在整数 m、n，使得 x=2m+1，y=2n+1。因此\nx+y=(2m+1)+(2n+1)=2(m+n+1)。\n因 m+n+1 为整数，故 x+y 为偶数。",
+      "reason": "补出了从奇数表示到偶数结论的代数推导。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "x、y 为奇整数，所以存在整数 m、n，使 x=2m+1，y=2n+1。于是\nx+y=2m+1+2n+1=2(m+n+1)。\n由于 m+n+1 是整数，x+y 可表示为一个整数的两倍，故 x+y 是偶数。",
+      "reason": "检查后明确验证了倍数中的系数为整数。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "由 x、y 为奇整数，存在整数 m、n 满足 x=2m+1、y=2n+1。相加得\nx+y=(2m+1)+(2n+1)=2(m+n+1)。\n其中 m+n+1 为整数，因此 x+y 是偶数。",
+      "reason": "批评检查发现原证明省略了关键等式，已补全并确认结论成立。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "根据假设，x、y 为奇整数，故存在整数 m、n，使 x=2m+1，y=2n+1。计算可得\nx+y=(2m+1)+(2n+1)=2m+2n+2=2(m+n+1)。\n因为 m+n+1∈ℤ，所以 x+y 是偶数。该表达式直接依赖于两个奇数的表示，且结论已由此重新验证。",
+      "reason": "依赖检查确认仅需修复省略的代数步骤；独立复核及结论重验证均通过。"
+    }
+  ]
+}

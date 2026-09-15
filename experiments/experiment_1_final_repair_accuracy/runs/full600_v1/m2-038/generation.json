@@ -1,0 +1,29 @@
+{
+  "case_id": "m2-038",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "设 x 为实数。若 x≥0，则 |x|=x，故 |x|≥x；若 x<0，则 |x|=-x>0>x，故 |x|≥x。因此，对任意实数 x，都有 |x|≥x。",
+      "reason": "补充了按 x 的符号分类，直接证明结论。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "设 x 为实数。根据绝对值的定义：当 x≥0 时，|x|=x，所以 |x|≥x；当 x<0 时，|x|=-x，而 -x>x，所以 |x|≥x。综上，对任意实数 x，都有 |x|≥x。",
+      "reason": "检查后发现原论证缺少从 x²≥0 到结论的必要推导，改用绝对值定义完成证明。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "设 x 为实数。由绝对值定义，|x|≥0。若 x≤0，则 |x|≥0≥x；若 x>0，则 |x|=x。因此无论 x≤0 还是 x>0，都有 |x|≥x。",
+      "reason": "批评环节指出“平方非负”不能单独推出目标不等式，生成了基于绝对值性质的有效证明。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "设 x 为实数。按 x 的符号讨论：若 x≥0，则 |x|=x，因而 |x|≥x；若 x<0，则 |x|=-x>0>x，因而 |x|≥x。两种情形覆盖所有实数 x，所以对任意实数 x，都有 |x|≥x。",
+      "reason": "依赖检查确认原证明缺少关键连接；采用最小局部修复，并复核了两种情形对所有后续结论的覆盖。"
+    }
+  ]
+}

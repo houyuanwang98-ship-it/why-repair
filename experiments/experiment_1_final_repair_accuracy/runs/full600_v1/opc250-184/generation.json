@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-184",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Proof. For n=1, take (a,b,c)=(1,1,1). For n=2, take (a,b,c)=(1,1,0). For n=3, take (a,b,c)=(1,1,-1). Thus solutions exist for n=1,2,3.\n\nFor n=4, every fourth power is 0 or 1 modulo 16. Hence a^4+b^4 is 0, 1, or 2 modulo 16, while c^4+4 is 4 or 5 modulo 16. These cannot be equal.\n\nFor n=5, fifth powers modulo 11 are 0, 1, or -1: this follows from Fermat's theorem, since x^10≡1 modulo 11 for 11∤x. Therefore a^5+b^5 is in {0,1,2,9,10} modulo 11, whereas c^5+5 is in {4,5,6}. These sets are disjoint.\n\nFor n=6, every sixth power is 0 or 1 modulo 9. Indeed, if 3∣x it is 0 modulo 9; otherwise x^2≡1 modulo 3, so x^2=1+3m and x^6=(1+3m)^3≡1 modulo 9. Thus a^6+b^6 is 0, 1, or 2 modulo 9, while c^6+6 is 6 or 7 modulo 9. These are disjoint.\n\nTherefore the equation has an integer solution exactly for n=1,2,3. Hence the answer is \\boxed{n=1,2,3}.",
+      "reason": "The supplied proof is logically valid, so a one-pass rewrite preserves it."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "Proof. We inspect n=1 through 6.\n\nFor n=1, (a,b,c)=(1,1,1) gives 1+1=1+1. For n=2, (a,b,c)=(1,1,0) gives 1+1=0+2. For n=3, (a,b,c)=(1,1,-1) gives 1+1=-1+3. Thus n=1,2,3 admit solutions.\n\nFor n=4, an integer fourth power is congruent to 0 or 1 modulo 16. Consequently a^4+b^4 is congruent to 0, 1, or 2 modulo 16, whereas c^4+4 is congruent to 4 or 5 modulo 16. Hence equality is impossible.\n\nFor n=5, modulo 11, every fifth power is 0, 1, or -1. If 11∤x, Fermat's theorem gives x^10≡1, so (x^5)^2≡1 and x^5≡±1; if 11∣x, x^5≡0. Therefore a^5+b^5 lies in {0,1,2,9,10} modulo 11, while c^5+5 lies in {4,5,6}. These sets do not intersect, so no solution exists.\n\nFor n=6, every sixth power is 0 or 1 modulo 9. If 3∣x this is immediate. If 3∤x, write x^2=1+3m; then x^6=(1+3m)^3≡1 modulo 9. Thus a^6+b^6 is 0, 1, or 2 modulo 9, but c^6+6 is 6 or 7 modulo 9, again impossible.\n\nThus precisely n=1,2,3 yield integer solutions. \\boxed{n=1,2,3}.",
+      "reason": "Internal checking confirms the examples and all three modular exclusions."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "Proof. We first construct solutions. For n=1, choose (a,b,c)=(1,1,1). For n=2, choose (1,1,0). For n=3, choose (1,1,-1). Each triple satisfies a^n+b^n=c^n+n.\n\nIt remains to exclude n=4,5,6.\n\nModulo 16, fourth powers are only 0 and 1. Hence a^4+b^4∈{0,1,2} modulo 16, while c^4+4∈{4,5} modulo 16. Thus n=4 is impossible.\n\nModulo 11, fifth powers are only 0, 1, and -1. For nonmultiples of 11 this follows from x^10≡1 and (x^5)^2≡1; multiples give 0. Therefore a^5+b^5∈{0,1,2,9,10} modulo 11, whereas c^5+5∈{4,5,6}. Thus n=5 is impossible.\n\nModulo 9, sixth powers are only 0 and 1. Multiples of 3 give 0; for 3∤x, x^2≡1 modulo 3, and cubing x^2=1+3m gives x^6≡1 modulo 9. Consequently a^6+b^6∈{0,1,2} modulo 9, while c^6+6∈{6,7}. Thus n=6 is impossible.\n\nTherefore the equation has an integer solution exactly when \\boxed{n=1,2,3}.",
+      "reason": "A critic-style check finds no counterexample or gap in the original modular arguments."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "Proof. We establish existence for n=1,2,3 and impossibility for n=4,5,6.\n\nFor n=1, the triple (1,1,1) works. For n=2, the triple (1,1,0) works. For n=3, the triple (1,1,-1) works.\n\nNow suppose n=4. Every integer x satisfies x^4≡0 or 1 modulo 16. Hence the left side is congruent to 0, 1, or 2 modulo 16, while the right side is congruent to 4 or 5. Contradiction.\n\nSuppose n=5. For every integer x, x^5≡0, 1, or -1 modulo 11: the zero case is immediate, and otherwise Fermat's theorem gives (x^5)^2=x^10≡1 modulo 11. Thus the left side is congruent to one of 0,1,2,9,10 modulo 11, while the right side is congruent to one of 4,5,6. Contradiction.\n\nFinally suppose n=6. If 3∣x, then x^6≡0 modulo 9. If 3∤x, then x^2=1+3m for some integer m, so x^6=(1+3m)^3≡1 modulo 9. Therefore the left side is congruent to 0,1, or 2 modulo 9, whereas the right side is congruent to 6 or 7. Contradiction.\n\nThe existence witnesses and modular obstructions cover every n in {1,2,3,4,5,6}. Therefore the exact set is \\boxed{\\{1,2,3\\}}.",
+      "reason": "Dependency and descendant checks validate every case and confirm that no repair is needed."
+    }
+  ]
+}

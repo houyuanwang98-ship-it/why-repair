@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-033",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "irreparable",
+      "final_proof": "The stated conclusion cannot be established from the supplied argument. In particular, the proposed upper-bound polynomial does not have total degree m=n/p. Its k-th summand has total degree 4k+m(p-k), since x_1\\cdots x_n has degree n=mp and e_m(x_1^{p-k},\\ldots,x_n^{p-k}) has degree m(p-k). For example, when n=4, p=2, m=2, the k=1 summand has degree 4, not 2. The lower-bound argument is also invalid: a monomial of total degree <m is not generally constant on the stated cosets, and the claimed averaging conclusion does not follow. Thus the submitted proof is irreparable as written; a valid proof of the theorem requires a different upper construction and lower-bound argument.",
+      "reason": "The proposed upper polynomial has the wrong total degree, and the lower-bound assertions are unsupported and false in the stated generality."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "irreparable",
+      "final_proof": "No complete proof preserving the supplied theorem can be obtained by repairing the displayed proof locally. For n=4, the asserted parameters are p=2 and m=2, but the proposed polynomial is\nP=e_2(x_1^2,x_2^2,x_3^2,x_4^2)+(x_1x_2x_3x_4)e_2(x_1,x_2,x_3,x_4),\nwhose second summand has total degree 6 and whose first has degree 4. Hence its total degree is not 2. Moreover, the lower-bound step claiming that every degree-less-than-m monomial is constant on the relevant permutation orbits is not true. Therefore the proof cannot be revised into a valid proof without replacing its central arguments.",
+      "reason": "Internal checking exposes a concrete degree mismatch and a false invariance claim."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "irreparable",
+      "final_proof": "The generator’s proposed result m=n/p is not certified by its construction. Taking n=4 gives p=2 and m=2. The proposed upper-bound expression contains\n(x_1x_2x_3x_4)e_2(x_1,x_2,x_3,x_4),\nwhich has total degree 6, so the claimed degree-2 upper bound is not proved. The critic also rejects the lower-bound step: low-degree monomials are not constant under the described coordinate permutations, and averaging does not imply that the averaged polynomial is zero or that P(b)=0. Consequently, the supplied proof is irreparable without a new construction and a new lower-bound proof.",
+      "reason": "A concrete n=4 instance refutes the claimed degree calculation, while the lower-bound mechanism has no valid implication."
+    },
+    {
+      "method": "full_system",
+      "outcome": "irreparable",
+      "final_proof": "Dependency-aware evaluation fails at the first essential certificate: the upper-bound certificate does not establish degree m. For n=4, m=2, its displayed polynomial has summands of degrees 4 and 6, not degree 2. The lower-bound certificate also fails independently, because the asserted constancy of degree-<m monomials on the permutation orbit is false and the averaging argument does not yield the required contradiction. Independent review therefore finds no valid local repair, and descendant revalidation cannot proceed. The submitted proof must be replaced by a different proof; it is not a complete proof of the claimed minimum.",
+      "reason": "Both essential dependencies—upper-bound degree and lower-bound separation—fail, so local repair and revalidation are impossible."
+    }
+  ]
+}

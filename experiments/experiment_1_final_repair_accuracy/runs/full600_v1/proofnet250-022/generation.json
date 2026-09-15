@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-022",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSuppose, for contradiction, that a rational number has square $12$. Write it in lowest terms as $m/n$, where $m,n\\in\\mathbb Z$, $n\\ne0$, and $\\gcd(m,n)=1$. Then\n\\[\nm^2=12n^2.\n\\]\nThus $m$ is even; write $m=2r$. Substitution gives $r^2=3n^2$, so $r$ and hence $m$ are odd/even as appropriate; in particular, $n$ must be odd, since otherwise $m$ and $n$ would both be even. Reducing $r^2=3n^2$ modulo $4$, with $n$ odd, gives $r^2\\equiv3\\pmod4$, which is impossible because a square modulo $4$ is only $0$ or $1$. Therefore no rational number has square $12$.\n\\end{proof}",
+      "reason": "The original proof is valid in substance; this one-pass rewrite makes the parity contradiction more direct."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nAssume for contradiction that $x\\in\\mathbb Q$ and $x^2=12$. Write $x=m/n$ in lowest terms, with $m,n\\in\\mathbb Z$, $n\\ne0$, and $\\gcd(m,n)=1$. Then\n\\[\nm^2=12n^2.\n\\]\nSince $m^2$ is divisible by $4$, $m$ is even; let $m=2r$. Then\n\\[\nr^2=3n^2.\n\\]\nIf $n$ were even, then $r$ would be even, contradicting $\\gcd(m,n)=1$. Hence $n$ is odd. But then reducing the last equation modulo $4$ yields\n\\[\nr^2\\equiv 3n^2\\equiv3\\pmod4,\n\\]\nwhich is impossible, since squares modulo $4$ are $0$ or $1$. Thus no such rational $x$ exists.\n\\end{proof}",
+      "reason": "Internal checking confirms the parity and lowest-terms steps; the revised proof uses a compact modulo-$4$ contradiction."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSuppose that $\\sqrt{12}=m/n$ for relatively prime integers $m,n$ with $n\\ne0$. Then\n\\[\nm^2=12n^2.\n\\]\nTherefore $m$ is even, so write $m=2r$. We obtain\n\\[\nr^2=3n^2.\n\\]\nIf $n$ were even, then the equation would imply that $r$ is even, and consequently $m$ and $n$ would have a common factor $2$, contrary to their being relatively prime. Hence $n$ is odd. Reducing $r^2=3n^2$ modulo $4$ gives $r^2\\equiv3\\pmod4$, because $n^2\\equiv1\\pmod4$. This is impossible, as an integer square is congruent only to $0$ or $1$ modulo $4$. Thus $\\sqrt{12}$ is irrational, so no rational number has square $12$.\n\\end{proof}",
+      "reason": "The generator proof was checked for hidden divisibility assumptions and retained after confirming every inference."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nAssume, toward a contradiction, that there is a rational number $x$ with $x^2=12$. Express $x=m/n$ in lowest terms, where $m,n\\in\\mathbb Z$, $n\\ne0$, and $\\gcd(m,n)=1$. Then\n\\[\nm^2=12n^2.\n\\]\nIt follows that $m$ is even; write $m=2r$. After substitution and cancellation of $4$, we get\n\\[\nr^2=3n^2.\n\\]\nIf $n$ were even, then $r^2$ would be divisible by $4$, so $r$ would be even, implying that both $m$ and $n$ are even, a contradiction. Thus $n$ is odd. Consequently, modulo $4$,\n\\[\nr^2=3n^2\\equiv3\\pmod4.\n\\]\nNo integer square is congruent to $3$ modulo $4$, giving a contradiction. Therefore there is no rational number whose square is $12$.\n\\end{proof}",
+      "reason": "Dependency checks validate lowest terms, parity propagation, cancellation, and the descendant modulo-$4$ conclusion; independent review found no remaining gap."
+    }
+  ]
+}

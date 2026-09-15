@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-044",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet\n\\[\nS=1+\\frac12+\\cdots+\\frac1{p-1}=\\frac ab.\n\\]\nSince \\((p-1)!\\) is not divisible by the prime \\(p\\), write\n\\[\nS=\\frac{N}{(p-1)!},\n\\qquad N=\\sum_{k=1}^{p-1}\\frac{(p-1)!}{k}.\n\\]\nModulo \\(p\\), pair the terms indexed by \\(k\na\\) and \\(p-k\"). For each \\(1\\le k\\le (p-1)/2\\),\n\\[\n\\frac1k+\\frac1{p-k}\\equiv \\frac1k-\\frac1k\\equiv0\\pmod p.\n\\]\nThus \\(S\\equiv0\\pmod p\\), so the numerator of \\(S\\) in lowest terms is divisible by \\(p\\), because its denominator is not divisible by \\(p\\). Since \\(a/b\\) is another integer representation of the same rational number, its numerator \\(a\\) is also divisible by \\(p\\). Hence \\(p\\mid a\\).\n\\end{proof}",
+      "reason": "The original polynomial argument contains an incorrect coefficient identification and an unjustified congruence; pairing reciprocal residues gives a direct valid repair."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet\n\\[\nS=\\sum_{k=1}^{p-1}\\frac1k=\\frac ab.\n\\]\nWe may first express this with denominator \\((p-1)!\\):\n\\[\nS=\\frac{N}{(p-1)!},\n\\quad N=\\sum_{k=1}^{p-1}\\frac{(p-1)!}{k}.\n\\]\nBecause \\(p\\nmid (p-1)!\\), it suffices to prove that \\(S\\equiv0\\pmod p\\). In the field \\(\\mathbb F_p\\), the terms can be paired as \\(k\\) and \\(p-k\\). Since \\(p-k\\equiv-k\\pmod p\\),\n\\[\n\\frac1k+\\frac1{p-k}\\equiv \\frac1k+\\frac1{-k}=0\\pmod p.\n\\]\nAll indices occur in such pairs because \\(p\\) is odd. Therefore \\(S\\equiv0\\pmod p\\). Reducing the fraction to lowest terms, its denominator remains coprime to \\(p\\), so its numerator is divisible by \\(p\\). Any other representation \\(a/b\\) has numerator equal to that reduced numerator times an integer; consequently \\(p\\mid a\\).\n\\end{proof}",
+      "reason": "After checking the denominator issue and the meaning of an arbitrary representation a/b, the reciprocal-pairing proof establishes the claim without relying on the flawed polynomial steps."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet\n\\[\nS=1+\\frac12+\\cdots+\\frac1{p-1}=\\frac ab.\n\\]\nFor each \\(k\\in\\{1,\\ldots,p-1\\}\\), consider its inverse modulo \\(p\\). Since \\(p\\) is odd, the indices \\(k\\) and \\(p-k\\) are distinct, and\n\\[\n\\frac{1}{p-k}\\equiv-\\frac1k\\pmod p.\n\\]\nHence every pair contributes zero modulo \\(p\\):\n\\[\n\\frac1k+\\frac1{p-k}\\equiv0\\pmod p.\n\\]\nThus\n\\[\nS\\equiv0\\pmod p.\n\\]\nWriting \\(S=N/(p-1)!\\), the denominator \\((p-1)!\\) is coprime to \\(p\\). Therefore the numerator of the reduced form of \\(S\\) is divisible by \\(p\\). If \\(S=A/B\\) in lowest terms, then \\(p\\mid A\\), and from \\(a/b=A/B\\) we have \\(a=At\\) for some integer \\(t\\). Consequently \\(p\\mid a\\).\n\\end{proof}",
+      "reason": "Critique identified that modular division requires a denominator coprime to p and that arbitrary a/b must be handled; both points are explicitly repaired."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet\n\\[\nS=\\sum_{k=1}^{p-1}\\frac1k=\\frac ab.\n\\]\nThe common denominator \\((p-1)!\\) is not divisible by \\(p\\), so write\n\\[\nS=\\frac{N}{(p-1)!}\n\\]\nfor some integer \\(N\\). In modulo \\(p\\), pair each index \\(k\\) with \\(p-k\\). Because \\(p\\) is odd, these are distinct and exhaust \\(1,\\ldots,p-1\\). Moreover,\n\\[\n\\frac1k+\\frac1{p-k}\n\\equiv \\frac1k+\\frac1{-k}\n\\equiv0\\pmod p.\n\\]\nTherefore \\(N\\equiv0\\pmod p\\), and hence \\(S\\equiv0\\pmod p\\). If \\(S=A/B\\) is in lowest terms, then \\(B\\mid(p-1)!\\), so \\(p\\nmid B\\). The congruence therefore implies \\(p\\mid A\\). Since \\(a/b=A/B\\) and both fractions represent the same rational number, there is an integer \\(t\\) such that \\(a=At\\). Thus \\(p\\mid a\\).\n\\end{proof}",
+      "reason": "Dependency review replaced the invalid polynomial inference, verified the modular denominator condition, and revalidated the conclusion for every integer representation a/b."
+    }
+  ]
+}

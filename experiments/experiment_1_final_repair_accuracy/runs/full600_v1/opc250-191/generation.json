@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-191",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let m=(p-1)/2 and S={1,...,m}. If p=5, then m=2 and the two permutations (1,2) and (2,1) both give the same sole product a_1a_2≡2 (mod 5). Hence the sequence cannot always be determined.\n\nNow suppose p≥7, so m≥3. For any index k, choose distinct u,v different from k. Since all entries are nonzero modulo p, the known residue a_ua_v is invertible, and\n\n a_k^2≡(a_ka_u)(a_ka_v)(a_ua_v)^{-1} (mod p).\n\nThus a_k^2 modulo p is determined. If x,y∈S and x^2≡y^2 (mod p), then p divides (x-y)(x+y). Hence x≡y or x≡-y (mod p). The latter is impossible because 2≤x+y≤p-1, so x=y. Therefore a_k is the unique element of S having the determined square. This holds for every k, so the entire sequence is determined.\n\nConsequently, for primes p>3, it is always possible exactly when p≥7. Thus the answer is \\boxed{p\\ge7}.",
+      "reason": "The original proof has the correct conclusion and core argument; this rewrite removes redundancy and states the uniqueness step directly."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Put m=(p-1)/2. For p=5, m=2, and the permutations (1,2) and (2,1) produce the same known product 2 modulo 5. Hence p=5 does not have the required property.\n\nAssume p≥7, so m≥3. Fix k. Choose u,v distinct from one another and from k. The given pairwise residues determine\n\n R_k=(a_ka_u)(a_ka_v)(a_ua_v)^{-1}≡a_k^2\\pmod p,\n\nbecause a_ua_v is nonzero modulo the prime p. It remains to show that this square identifies a_k. If x,y∈{1,...,(p-1)/2} satisfy x^2≡y^2 (mod p), then (x-y)(x+y)≡0 (mod p). Since 0<x+y<p, the second factor is not divisible by p; hence x=y.\n\nTherefore each a_k is uniquely recovered as the only element of {1,...,(p-1)/2} whose square is R_k modulo p. Recovering every position determines the sequence. Thus the required primes are precisely\n\n\\boxed{p\\ge7}.",
+      "reason": "After checking the exceptional case and the reconstruction formula, the proof is valid; the revised version makes the dependence on m≥3 and the square-root uniqueness explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let m=(p-1)/2 and let S={1,2,...,m}.\n\nFor p=5, S={1,2}. Both sequences (1,2) and (2,1) yield the same residue for the only pair: 1·2≡2 (mod 5). Thus the sequence is not always recoverable.\n\nFor p≥7, m≥3. Fix a position k and select two other positions u,v. From the known pairwise products we obtain\n\n (a_ka_u)(a_ka_v)(a_ua_v)^{-1}≡a_k^2\\pmod p.\n\nThe inverse exists because 1≤a_u,a_v≤m<p, so a_ua_v is nonzero modulo p. Suppose x,y∈S have the same square modulo p. Then p|(x-y)(x+y). Since x+y≤2m=p-1, p∤x+y; hence p|x-y. Also |x-y|<p, so x=y. Thus the square modulo p has exactly one root in S, namely a_k.\n\nApplying this independently to every k recovers all entries and therefore the ordered sequence. Hence the sequence can always be determined precisely for primes p≥7, and not for p=5. Therefore the answer is \\boxed{p\\ge7}.",
+      "reason": "The generator’s reconstruction idea is sound; critic-style checking confirms invertibility, the m≥3 index choice, and uniqueness within the prescribed domain."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Set m=(p-1)/2 and S={1,...,m}. The observable data are the labeled residues P_{ij}≡a_ia_j (mod p) for i≠j.\n\nIf p=5, then m=2. The two distinct permutations (1,2) and (2,1) have identical data, since in both cases P_{12}≡2 (mod 5). Thus recovery is not always possible.\n\nAssume p≥7, hence m≥3. For each k choose distinct u,v≠k. Since every entry lies in S and p is prime, P_{uv}=a_ua_v is invertible modulo p. Consequently the data determine\n\n Q_k=P_{ku}P_{kv}P_{uv}^{-1}≡(a_ka_u)(a_ka_v)(a_ua_v)^{-1}≡a_k^2\\pmod p.\n\nThere is at most one element of S with a given square modulo p: if x,y∈S and x^2≡y^2, then p|(x-y)(x+y); but 0<x+y≤p-1, so p∤x+y and x=y. Hence Q_k uniquely determines a_k within S. This holds at every labeled position k, so all entries and the entire sequence are uniquely determined.\n\nThus recovery holds for every prime p≥7 and fails for p=5. Therefore, under the stated assumptions, the answer is \\boxed{p\\ge7}.",
+      "reason": "Dependency checks validate the exceptional case, labeled-data interpretation, invertibility, local square recovery, and position-by-position revalidation; no further repair is needed."
+    }
+  ]
+}

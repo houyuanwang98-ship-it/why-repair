@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-206",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSince $d(f(x),f(y))=d(x,y)$, the map $f$ is distance-preserving and therefore injective and continuous. It remains to prove surjectivity.\n\nSuppose, toward a contradiction, that $f$ is not surjective. Choose $a\\in X\\setminus f(X)$. Since $X$ is compact and $f$ is continuous, $f(X)$ is compact; as $X$ is Hausdorff, $f(X)$ is closed. Hence there exists $\\varepsilon>0$ such that\n\\[\nB(a,\\varepsilon)\\cap f(X)=\\varnothing.\n\\]\nDefine $x_1=a$ and $x_{n+1}=f(x_n)$ for $n\\ge1$. If $n<m$, repeated use of distance preservation gives\n\\[\nd(x_n,x_m)=d(a,x_{m-n}).\n\\]\nSince $m-n\\ge1$, we have $x_{m-n}=f(x_{m-n-1})\\in f(X)$, so $d(a,x_{m-n})\\ge\\varepsilon$. Thus $d(x_n,x_m)\\ge\\varepsilon$ whenever $n\\ne m$.\n\nTherefore $(x_n)$ has no Cauchy subsequence, and hence no convergent subsequence. This contradicts compactness of the metric space $X$, which implies sequential compactness. Thus $f$ is surjective, and consequently bijective. Its inverse is also distance-preserving, since\n\\[\nd(f^{-1}(u),f^{-1}(v))=d(u,v),\n\\]\nso $f^{-1}$ is continuous. Hence $f$ is a homeomorphism.\n\\end{proof}",
+      "reason": "Repaired the incorrect choice $a\\in f(X)$ to $a\\notin f(X)$ and made the inverse-continuity argument explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor all $x,y\\in X$, $d(f(x),f(y))=d(x,y)$. Hence $f$ is injective and continuous. We prove that it is surjective.\n\nAssume that $f(X)\\ne X$. Choose $a\\in X\\setminus f(X)$. The set $f(X)$ is compact because $X$ is compact and $f$ is continuous, and it is therefore closed in the metric space $X$. Consequently, there is an $\\varepsilon>0$ such that $B(a,\\varepsilon)\\cap f(X)=\\varnothing$.\n\nSet $x_1=a$ and $x_{n+1}=f(x_n)$. For $n<m$, distance preservation yields, by iterating the equality,\n\\[\nd(x_n,x_m)=d(x_1,x_{m-n+1})=d(a,x_{m-n}).\n\\]\nHere $m-n\\ge1$, and $x_{m-n}=f(x_{m-n-1})$ when $m-n\\ge1$ (with the evident interpretation that $x_1=a$; in fact for $m-n=1$, $x_{m-n+1}=x_2=f(a)$). More directly, applying the equality only $n-1$ times gives\n\\[\nd(x_n,x_m)=d(a,x_{m-n+1}),\n\\]\nand $x_{m-n+1}\\in f(X)$. Thus $d(x_n,x_m)\\ge\\varepsilon$.\n\nSo $(x_n)$ is an $\\varepsilon$-separated sequence and has no convergent subsequence, contradicting sequential compactness of compact metric spaces. Therefore $f$ is surjective, hence bijective.\n\nFinally, for $u,v\\in X$,\n\\[\nd(f^{-1}(u),f^{-1}(v))=d(u,v),\n\\]\nso $f^{-1}$ is continuous. Thus $f$ is a homeomorphism.\n\\end{proof}",
+      "reason": "Self-check corrected the indexing in the orbit-distance calculation and retained the necessary closed-image argument."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nThe given equality implies that $f$ preserves distances. Therefore $f$ is injective, and it is continuous because\n\\[\nd(f(x),f(y))=d(x,y).\n\\]\nIt remains to establish surjectivity.\n\nSuppose that $f$ is not surjective. Choose $a\\in X\\setminus f(X)$. Since $X$ is compact and $f$ is continuous, $f(X)$ is compact and hence closed. Thus there exists $\\varepsilon>0$ such that\n\\[\nB(a,\\varepsilon)\\cap f(X)=\\emptyset.\n\\]\nLet $x_1=a$ and $x_{n+1}=f(x_n)$ for $n\\ge1$. If $n<m$, applying distance preservation $n-1$ times gives\n\\[\nd(x_n,x_m)=d(x_1,x_{m-n+1})=d(a,x_{m-n+1}).\n\\]\nBecause $m-n+1\\ge2$, the point $x_{m-n+1}$ belongs to $f(X)$. Hence $d(x_n,x_m)\\ge\\varepsilon$. Thus the sequence $(x_n)$ is uniformly separated: distinct terms are at least $\\varepsilon$ apart.\n\nNo subsequence of such a sequence can converge, since every convergent sequence is Cauchy. This contradicts the sequential compactness of the compact metric space $X$. Therefore $f$ is surjective. Combined with injectivity, $f$ is bijective.\n\nFor $u,v\\in X$, writing $x=f^{-1}(u)$ and $y=f^{-1}(v)$ gives\n\\[\nd(f^{-1}(u),f^{-1}(v))=d(x,y)=d(f(x),f(y))=d(u,v).\n\\]\nHence $f^{-1}$ is continuous. Therefore $f$ is a homeomorphism.\n\\end{proof}",
+      "reason": "The critic-checked repair fixes both the invalid point selection and the orbit indexing while preserving the theorem."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nBecause $d(f(x),f(y))=d(x,y)$ for all $x,y\\in X$, the map $f$ is injective and continuous. We show that it is surjective.\n\nAssume otherwise. Choose $a\\in X\\setminus f(X)$. Since $f$ is continuous and $X$ is compact, $f(X)$ is compact. A compact subset of the metric space $X$ is closed, so there is an $\\varepsilon>0$ such that\n\\[\nB(a,\\varepsilon)\\cap f(X)=\\varnothing.\n\\]\nDefine $x_1=a$ and $x_{n+1}=f(x_n)$ for $n\\ge1$. For any $n<m$, repeated application of distance preservation gives\n\\[\nd(x_n,x_m)=d(x_1,x_{m-n+1})=d(a,x_{m-n+1}).\n\\]\nSince $m-n+1\\ge2$, we have $x_{m-n+1}\\in f(X)$, and therefore $d(x_n,x_m)\\ge\\varepsilon$. Hence $(x_n)$ is an $\\varepsilon$-separated sequence.\n\nSuch a sequence has no convergent subsequence, because every convergent sequence in a metric space is Cauchy. This contradicts the fact that compact metric spaces are sequentially compact. Thus $f$ is surjective, and so it is bijective.\n\nIf $u,v\\in X$, then, using the distance-preserving property with $f^{-1}(u)$ and $f^{-1}(v)$,\n\\[\nd(f^{-1}(u),f^{-1}(v))=d(u,v).\n\\]\nThus $f^{-1}$ is continuous. Since $f$ is continuous and bijective with continuous inverse, it is a homeomorphism.\n\\end{proof}",
+      "reason": "Dependency review confirms continuity, closedness, separation, compactness contradiction, bijectivity, and inverse continuity; the local repair also revalidates the downstream conclusion."
+    }
+  ]
+}

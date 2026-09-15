@@ -1,0 +1,52 @@
+{
+  "case_id": "opc250-119",
+  "original": {
+    "verdict": "invalid",
+    "problem_preserved": true,
+    "rigorous": false,
+    "error_count": 1,
+    "reason": "Step 3 falsely claims floor((3/2)^n)=2^{k_n}: from (3/2)^n=2^{k_n}2^{theta_n} with 1≤2^{theta_n}<2, its floor is generally not 2^{k_n}. Thus the subsequent fractional-part and remainder formulae are unsupported."
+  },
+  "candidates": [
+    {
+      "candidate_id": "candidate-1",
+      "judgment": {
+        "verdict": "invalid",
+        "problem_preserved": true,
+        "rigorous": false,
+        "error_count": 1,
+        "reason": "From r_{n+1}≡3r_n (mod 2^n), one cannot conclude r_{n+1}=3r_n, since r_{n+1} is reduced modulo 2^{n+1}; it could equal 3r_n+2^n. The conclusion could be repaired because either possibility exceeds B, but the written proof has a material gap."
+      }
+    },
+    {
+      "candidate_id": "candidate-2",
+      "judgment": {
+        "verdict": "invalid",
+        "problem_preserved": true,
+        "rigorous": false,
+        "error_count": 1,
+        "reason": "The congruence modulo 2^n does not determine the remainder modulo 2^{n+1}. The asserted equality r_{n+1}=3r_n is unjustified; r_{n+1} may instead be 3r_n+2^n. A small repair would still yield the contradiction."
+      }
+    },
+    {
+      "candidate_id": "candidate-3",
+      "judgment": {
+        "verdict": "invalid",
+        "problem_preserved": true,
+        "rigorous": false,
+        "error_count": 1,
+        "reason": "It incorrectly identifies a residue modulo 2^n with r_{n+1}, which is defined modulo 2^{n+1}. The alternate value 3r_n+2^n is possible. Although both values are greater than B, that necessary argument is absent."
+      }
+    },
+    {
+      "candidate_id": "candidate-4",
+      "judgment": {
+        "verdict": "invalid",
+        "problem_preserved": true,
+        "rigorous": false,
+        "error_count": 1,
+        "reason": "The step asserting that the remainder r_{n+1} equals 3r_n confuses reduction modulo 2^n with reduction modulo 2^{n+1}. It may be 3r_n+2^n. The proof is readily repairable but not complete as written."
+      }
+    }
+  ]
+}

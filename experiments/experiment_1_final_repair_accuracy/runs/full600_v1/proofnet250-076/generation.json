@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-076",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSince\n\\[\n\\cos x=\\frac{e^{ix}+e^{-ix}}2,\n\\]\nand the denominator is even, the substitutions $x\\mapsto -x$ show that\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{e^{-ix}}{x^2+a^2}\\,dx\n=\\int_{-\\infty}^{\\infty}\\frac{e^{ix}}{x^2+a^2}\\,dx.\n\\]\nThus it suffices to evaluate the latter integral. Close the contour for\n$f(z)=e^{iz}/(z^2+a^2)$ in the upper half-plane. The semicircular contribution tends to zero by Jordan's lemma, and the only enclosed pole is the simple pole $z=ia$. Its residue is\n\\[\n\\operatorname{Res}_{z=ia}f(z)=\\lim_{z\\to ia}\\frac{e^{iz}}{z+ia}=\\frac{e^{-a}}{2ia}.\n\\]\nTherefore,\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{e^{ix}}{x^2+a^2}\\,dx\n=2\\pi i\\frac{e^{-a}}{2ia}=\\frac{\\pi e^{-a}}a.\n\\]\nTaking the real part, or using the equality of the two exponential integrals above, gives\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{\\cos x}{x^2+a^2}\\,dx=\\frac{\\pi e^{-a}}a.\n\\]\n\\end{proof}",
+      "reason": "The original argument had the right contour idea but needed explicit symmetry, contour-decay justification, and the final relation to the cosine integral."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet\n\\[\nI=\\int_{-\\infty}^{\\infty}\\frac{e^{ix}}{x^2+a^2}\\,dx.\n\\]\nBecause $a>0$, the function $f(z)=e^{iz}/(z^2+a^2)$ is meromorphic and has only one pole in the upper half-plane, namely the simple pole $z=ia$. Integrate $f$ over the contour consisting of $[-R,R]$ and the upper semicircle $|z|=R$. On the semicircle, $|e^{iz}|=e^{-\\operatorname{Im}z}$, so the arc integral tends to zero as $R\\to\\infty$ (Jordan's lemma). Hence the residue theorem gives\n\\[\nI=2\\pi i\\,\\operatorname{Res}_{z=ia}\\frac{e^{iz}}{z^2+a^2}\n=2\\pi i\\frac{e^{-a}}{2ia}=\\frac{\\pi e^{-a}}a.\n\\]\nNow\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{e^{-ix}}{x^2+a^2}\\,dx=I\n\\]\nby the substitution $x\\mapsto -x$, since $x^2+a^2$ is even. Consequently,\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{\\cos x}{x^2+a^2}\\,dx\n=\\frac12(I+I)=I=\\frac{\\pi e^{-a}}a.\n\\]\n\\end{proof}",
+      "reason": "The revised proof checks the pole, orientation, arc limit, symmetry, and the exact normalization linking the complex and real integrals."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine\n\\[\nF(z)=\\frac{e^{iz}}{z^2+a^2},\\qquad a>0.\n\\]\nFor $R>a$, integrate $F$ over the positively oriented upper semicircle contour. The poles inside the contour are determined by $z^2+a^2=0$, namely $z=ia$ and $z=-ia$; only $ia$ lies in the upper half-plane. Since $F$ decays on the upper semicircle, its arc integral vanishes as $R\\to\\infty$. The residue theorem therefore yields\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{e^{ix}}{x^2+a^2}\\,dx\n=2\\pi i\\operatorname{Res}_{z=ia}F(z).\n\\]\nBecause the pole is simple,\n\\[\n\\operatorname{Res}_{z=ia}F(z)\n=\\frac{e^{i(ia)}}{ia+ia}\n=\\frac{e^{-a}}{2ia},\n\\]\nso\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{e^{ix}}{x^2+a^2}\\,dx\n=\\frac{\\pi e^{-a}}a.\n\\]\nThe imaginary part of this integral is zero because $\\sin x/(x^2+a^2)$ is odd. Hence its real part equals the integral of the cosine term, and thus\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{\\cos x}{x^2+a^2}\\,dx\n=\\frac{\\pi e^{-a}}a.\n\\]\n\\end{proof}",
+      "reason": "A critic-level check corrected the need to state upper-half-plane orientation, identify both poles before selecting one, justify decay, and extract the real part."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor $a>0$, set\n\\[\nF(z)=\\frac{e^{iz}}{z^2+a^2}.\n\\]\nIntegrate $F$ over the positively oriented contour formed by the interval $[-R,R]$ and the upper semicircle $C_R$. The only singularity of $F$ inside this contour is the simple pole $z=ia$. Moreover, on $C_R$, $e^{iz}$ has modulus $e^{-\\operatorname{Im}z}$, and the standard Jordan-lemma estimate implies\n\\[\n\\lim_{R\\to\\infty}\\int_{C_R}F(z)\\,dz=0.\n\\]\nThe residue theorem consequently gives\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{e^{ix}}{x^2+a^2}\\,dx\n=2\\pi i\\operatorname{Res}_{z=ia}F(z).\n\\]\nThe residue is\n\\[\n\\operatorname{Res}_{z=ia}F(z)\n=\\lim_{z\\to ia}\\frac{e^{iz}}{z+ia}\n=\\frac{e^{-a}}{2ia}.\n\\]\nTherefore,\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{e^{ix}}{x^2+a^2}\\,dx\n=\\frac{\\pi e^{-a}}a.\n\\]\nSince $\\sin x/(x^2+a^2)$ is odd and integrable, the imaginary part of the left-hand side is zero. Taking real parts thus gives\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{\\cos x}{x^2+a^2}\\,dx\n=\\frac{\\pi e^{-a}}a.\n\\]\n\\end{proof}",
+      "reason": "Dependency checks confirm the theorem is preserved: pole selection depends on the upper contour, the arc limit enables the residue computation, and oddness validates the final real-part extraction."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-179",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose that $X=\\prod_\\beta X_\\beta$ is Hausdorff, and fix an index $\\alpha$. Since every $X_\\beta$ is nonempty, choose points $a_\\beta\\in X_\\beta$ for all $\\beta\\neq\\alpha$. Define\n\\[\nS=\\{z\\in X: z_\\beta=a_\\beta\\text{ for every }\\beta\\neq\\alpha\\}.\n\\]\nThen $S$ is a subspace of the Hausdorff space $X$, so $S$ is Hausdorff. The map $f:X_\\alpha\\to S$ given by\n\\[\nf(x)_\\alpha=x,\\qquad f(x)_\\beta=a_\\beta\\quad(\\beta\\neq\\alpha)\n\\]\nis a homeomorphism, with inverse the restriction of the projection $\\pi_\\alpha$ to $S$. Therefore $X_\\alpha$ is Hausdorff.\\end{proof}",
+      "reason": "Replaced the invalid claim that projections of disjoint sets remain disjoint with the standard fixed-coordinate subspace argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $X=\\prod_\\beta X_\\beta$ be Hausdorff and fix $\\alpha$. Choose $a_\\beta\\in X_\\beta$ for every $\\beta\\neq\\alpha$, which is possible because each factor is nonempty. For each $x\\in X_\\alpha$, let $s(x)\\in X$ be defined by\n\\[\ns(x)_\\alpha=x,\\qquad s(x)_\\beta=a_\\beta\\quad(\\beta\\neq\\alpha).\n\\]\nThe image $s(X_\\alpha)$ is a subspace of $X$, hence is Hausdorff. The map $s:X_\\alpha\\to s(X_\\alpha)$ is continuous because each coordinate map is continuous, and its inverse is $\\pi_\\alpha|_{s(X_\\alpha)}$, which is continuous. Thus $X_\\alpha$ is homeomorphic to a Hausdorff subspace of $X$, and is therefore Hausdorff.\\end{proof}",
+      "reason": "Internal checking identified the projection-disjointness gap and revised the proof using a continuous section and its Hausdorff image."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume $X=\\prod_\\beta X_\\beta$ is Hausdorff and fix $\\alpha$. For each $\\beta\\neq\\alpha$, select $a_\\beta\\in X_\\beta$. Consider the subset\n\\[\nS=\\bigcap_{\\beta\\neq\\alpha}\\pi_\\beta^{-1}(\\{a_\\beta\\})\n=\\{z\\in X:z_\\beta=a_\\beta\\text{ for all }\\beta\\neq\\alpha\\}.\n\\]\nWhether or not $S$ is open or closed is irrelevant: every subspace of a Hausdorff space is Hausdorff. Define $s:X_\\alpha\\to S$ by inserting the chosen points in all coordinates other than $\\alpha$. Then $s$ is a bijection, and $\\pi_\\alpha|_S$ is its continuous inverse. Hence $X_\\alpha$ is homeomorphic to $S$, so $X_\\alpha$ is Hausdorff.\\end{proof}",
+      "reason": "A critic check rejected the original projection argument and confirmed that the fiber subspace is sufficient; no closedness or openness of the fiber is needed."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose that $X=\\prod_\\beta X_\\beta$ is Hausdorff, and let $\\alpha$ be any index. Choose $a_\\beta\\in X_\\beta$ for each $\\beta\\neq\\alpha$. Define the section\n\\[\ns:X_\\alpha\\longrightarrow X,\n\\qquad s(x)_\\alpha=x,\\quad s(x)_\\beta=a_\\beta\\ (\\beta\\neq\\alpha).\n\\]\nLet $S=s(X_\\alpha)$. Since $S$ is a subspace of the Hausdorff space $X$, it is Hausdorff. The section $s:X_\\alpha\\to S$ is continuous, and the restriction $\\pi_\\alpha|_S:S\\to X_\\alpha$ is continuous. They are inverse maps. Therefore $X_\\alpha$ is homeomorphic to the Hausdorff space $S$, and consequently $X_\\alpha$ is Hausdorff.\\end{proof}",
+      "reason": "Dependency-aware review isolated the projection-overlap error, applied the minimal local replacement by a coordinate fiber, and revalidated the homeomorphism and Hausdorff conclusion."
+    }
+  ]
+}

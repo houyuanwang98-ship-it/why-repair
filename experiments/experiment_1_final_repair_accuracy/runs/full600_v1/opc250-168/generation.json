@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-168",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let\n\\[\nS=(1+x+y)^2+(1+y+z)^2+(1+z+x)^2,\n\\quad p=x+y+z,\n\\quad q=xy+yz+zx.\n\\]\n\n(a) By AM–GM,\n\\[\n1+x+y\\ge 3(xy)^{1/3},\n\\]\nand cyclically. Hence\n\\[\nS\\ge 9\\bigl((xy)^{2/3}+(yz)^{2/3}+(zx)^{2/3}\\bigr).\n\\]\nSince\n\\[\n(xy)^{2/3}(yz)^{2/3}(zx)^{2/3}=(xyz)^{4/3}\\ge1,\n\\]\nAM–GM gives\n\\[\n(xy)^{2/3}+(yz)^{2/3}+(zx)^{2/3}\\ge3.\n\\]\nTherefore \\(S\\ge27\\). Equality requires equality in each initial AM–GM inequality, so \\(1=x=y\\), and cyclically \\(x=y=z=1\\). Conversely, \\(x=y=z=1\\) gives equality.\n\n(b) Expanding,\n\\[\nS=3+2(x^2+y^2+z^2)+2q+4p.\n\\]\nBecause \\(x^2+y^2+z^2=p^2-2q\\),\n\\[\n3p^2-S=p^2+2q-4p-3.\n\\]\nNow AM–GM and \\(xyz\\ge1\\) imply \\(p\\ge3\\) and \\(q\\ge3\\). Thus\n\\[\n3p^2-S\\ge p^2+6-4p-3=(p-1)(p-3)\\ge0.\n\\]\nHence \\(S\\le3p^2=3(x+y+z)^2\\). Equality forces \\(p=3\\) and \\(q=3\\), hence equality in AM–GM and therefore \\(x=y=z=1\\). This value indeed gives equality.",
+      "reason": "The original proof had an incorrect expansion of S in terms of p and q. Replacing it with the correct identity repairs part (b) while preserving the theorem."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Set\n\\[\nS=(1+x+y)^2+(1+y+z)^2+(1+z+x)^2.\n\\]\n\nFor (a), AM–GM gives\n\\[\n(1+x+y)^2\\ge9(xy)^{2/3},\n\\]\nwith the two cyclic analogues. Since the product of the three quantities \\((xy)^{2/3},(yz)^{2/3},(zx)^{2/3}\\) is \\((xyz)^{4/3}\\ge1\\), another application of AM–GM yields\n\\[\nS\\ge9\\cdot3=27.\n\\]\nEquality throughout requires \\(1=x=y\\), \\(1=y=z\\), and \\(1=z=x\\), so \\(x=y=z=1\\). The converse is immediate.\n\nFor (b), write \\(p=x+y+z\\) and \\(q=xy+yz+zx\\). Direct expansion gives\n\\[\nS=3+2(x^2+y^2+z^2)+2q+4p\n  =3+2p^2-2q+4p.\n\\]\nConsequently,\n\\[\n3p^2-S=p^2+2q-4p-3.\n\\]\nThe hypotheses imply, by AM–GM,\n\\[\np\\ge3\\sqrt[3]{xyz}\\ge3,\n\\qquad q\\ge3\\sqrt[3]{(xy)(yz)(zx)}=3(xyz)^{2/3}\\ge3.\n\\]\nTherefore\n\\[\n3p^2-S\\ge p^2+6-4p-3=(p-1)(p-3)\\ge0,\n\\]\nso \\(S\\le3p^2\\). Equality requires \\(p=3\\) and \\(q=3\\); in particular, AM–GM equality in \\(p\\ge3\\) gives \\(x=y=z=1\\). Conversely, this triple gives equality.",
+      "reason": "After checking the algebra, the faulty p,q identity was corrected and the equality conditions were tightened."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let\n\\[\nS=\\sum_{\\rm cyc}(1+x+y)^2.\n\\]\n\nFor part (a), cyclic AM–GM gives\n\\[\nS\\ge9\\sum_{\\rm cyc}(xy)^{2/3}.\n\\]\nMoreover,\n\\[\n\\prod_{\\rm cyc}(xy)^{2/3}=(xyz)^{4/3}\\ge1,\n\\]\nso \\(\\sum_{\\rm cyc}(xy)^{2/3}\\ge3\\). Hence \\(S\\ge27\\). Equality in the first set of AM–GM inequalities requires \\(1=x=y\\), \\(1=y=z\\), and \\(1=z=x\\); hence it occurs exactly at \\(x=y=z=1\\).\n\nFor part (b), put \\(p=x+y+z\\) and \\(q=xy+yz+zx\\). Then\n\\[\nS=3+2(x^2+y^2+z^2)+2q+4p\n =3+2p^2-2q+4p,\n\\]\nso\n\\[\n3p^2-S=p^2+2q-4p-3.\n\\]\nSince \\(xyz\\ge1\\), AM–GM gives\n\\[\np\\ge3,\n\\qquad q\\ge3.\n\\]\nThus\n\\[\n3p^2-S\\ge p^2+6-4p-3=(p-1)(p-3)\\ge0.\n\\]\nTherefore \\(S\\le3(x+y+z)^2\\). If equality holds, then both inequalities used above must be equalities, so \\(p=3\\) and hence \\(x=y=z=1\\) by AM–GM. Conversely, \\(x=y=z=1\\) gives equality in both parts.",
+      "reason": "The critic identifies the original algebraic reduction as invalid; the proof is repaired using the correct expansion and a nonnegative factorization."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Define \\(S=(1+x+y)^2+(1+y+z)^2+(1+z+x)^2\\), \\(p=x+y+z\\), and \\(q=xy+yz+zx\\).\n\n(a) For each cyclic term, AM–GM gives\n\\[\n1+x+y\\ge3(xy)^{1/3}.\n\\]\nThus\n\\[\nS\\ge9\\bigl((xy)^{2/3}+(yz)^{2/3}+(zx)^{2/3}\\bigr).\n\\]\nThe product of the three terms in parentheses is \\((xyz)^{4/3}\\ge1\\), so AM–GM gives that their sum is at least \\(3\\). Therefore \\(S\\ge27\\).\n\nEquality requires equality in all three first AM–GM inequalities, which gives \\(1=x=y\\), \\(1=y=z\\), and \\(1=z=x\\). Hence equality holds exactly when \\(x=y=z=1\\).\n\n(b) Expansion and the identity \\(x^2+y^2+z^2=p^2-2q\\) give\n\\[\nS=3+2(x^2+y^2+z^2)+2q+4p\n =3+2p^2-2q+4p,\n\\]\nso\n\\[\n3p^2-S=p^2+2q-4p-3.\n\\]\nThe hypothesis implies\n\\[\np\\ge3\\sqrt[3]{xyz}\\\\ge3,\n\\qquad\nq\\ge3\\sqrt[3]{(xy)(yz)(zx)}=3(xyz)^{2/3}\\ge3.\n\\]\nConsequently,\n\\[\n3p^2-S\\ge p^2+6-4p-3=(p-1)(p-3)\\ge0,\n\\]\nwhich proves \\(S\\le3p^2=3(x+y+z)^2\\).\n\nIf equality holds, then \\(p=3\\) and equality holds in AM–GM for \\(p\\), forcing \\(x=y=z=1\\). Conversely, that triple gives equality. Thus both stated inequalities have equality if and only if \\(x=y=z=1\\).",
+      "reason": "Dependency review found one local algebra error in the original proof; correcting that identity preserves all downstream claims, and equality was revalidated independently."
+    }
+  ]
+}

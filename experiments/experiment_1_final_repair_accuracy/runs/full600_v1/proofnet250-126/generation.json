@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-126",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $p$ be prime. If $p\\mid a$, then $a\\equiv 0\\pmod p$, so $a^p\\equiv a\\pmod p$. Otherwise, the residue class $[a]$ belongs to the multiplicative group $(\\mathbb Z/p\\mathbb Z)^\\times$, whose order is $p-1$. By Lagrange's Theorem, the order of $[a]$ divides $p-1$, and hence $[a]^{p-1}=[1]$. Multiplying by $[a]$ gives $[a]^p=[a]$, so $a^p\\equiv a\\pmod p$.\n\\end{proof}",
+      "reason": "Adds the necessary case $p\\mid a$ and correctly applies Lagrange's Theorem to the order of the residue class."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume $p$ is prime and let $a\\in\\mathbb Z$. If $a\\equiv0\\pmod p$, then immediately $a^p\\equiv a\\pmod p$. If $a\\not\\equiv0\\pmod p$, then $[a]\\in(\\mathbb Z/p\\mathbb Z)^\\times$. This group has $p-1$ elements. By Lagrange's Theorem, the order of $[a]$ divides $p-1$, so $[a]^{p-1}=[1]$. Therefore\n\\[\n[a]^p=[a][a]^{p-1}=[a],\n\\]\nwhich is equivalent to $a^p\\equiv a\\pmod p$. Thus the congruence holds for every integer $a$.\n\\end{proof}",
+      "reason": "The proof was checked for the domain gap: Lagrange applies only to nonzero residue classes, while the zero class is handled separately."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $a\\in\\mathbb Z$. If $p\\mid a$, then both $a$ and $a^p$ are congruent to $0$ modulo $p$. Suppose instead that $p\\nmid a$. Then $[a]$ is an element of $(\\mathbb Z/p\\mathbb Z)^\\times$. Since $p$ is prime, this group has order $p-1$. Lagrange's Theorem implies that the order of $[a]$ divides $p-1$, and consequently $[a]^{p-1}=[1]$. Hence\n\\[\n[a]^p=[a]\\,[a]^{p-1}=[a],\n\\]\nso $a^p\\equiv a\\pmod p$. The two cases prove the result for all $a\\in\\mathbb Z$.\n\\end{proof}",
+      "reason": "The critic identified that the generated argument needed a separate divisible-by-$p$ case and replacement of the invalid notation $|a|$ by the order of $[a]$."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $p$ be prime and let $a\\in\\mathbb Z$. Consider first the case $p\\mid a$. Then $a\\equiv0\\pmod p$, and therefore $a^p\\equiv0\\equiv a\\pmod p$.\n\nNow suppose $p\\nmid a$. The residue class $[a]$ is then in $(\\mathbb Z/p\\mathbb Z)^\\times$. This group has order $p-1$. By Lagrange's Theorem, the order of $[a]$ divides $p-1$, so $[a]^{p-1}=[1]$. Multiplying by $[a]$ yields\n\\[\n[a]^p=[a][a]^{p-1}=[a].\n\\]\nThus $a^p\\equiv a\\pmod p$. Since both cases cover every integer $a$, Fermat's Little Theorem follows.\n\\end{proof}",
+      "reason": "Dependency and descendant checks confirm that the repaired group argument supplies the nonzero case and the explicitly added zero case preserves the stated universal domain."
+    }
+  ]
+}

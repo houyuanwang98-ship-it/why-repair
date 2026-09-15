@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-188",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let \\(a+b+c=1\\). Expanding gives\n\\[\n(1-a)(1-b)(1-c)=1-(a+b+c)+(ab+bc+ca)-abc=ab+bc+ca-abc.\n\\]\nTherefore,\n\\[\n\\begin{aligned}\na^3+b^3+c^3+3(1-a)(1-b)(1-c)\n&=a^3+b^3+c^3-3abc+3(ab+bc+ca)\\\\\n&=(a+b+c)(a^2+b^2+c^2-ab-bc-ca)+3(ab+bc+ca)\\\\\n&=a^2+b^2+c^2+2ab+2bc+2ca\\\\\n&=(a+b+c)^2=1.\n\\end{aligned}\n\\]\nHence the stated identity holds. \\(\\qed\\)",
+      "reason": "The supplied proof is algebraically valid; the product expansion and sum-of-cubes identity are applied correctly."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "Using \\(a+b+c=1\\), we have\n\\[\n(1-a)(1-b)(1-c)=1-(a+b+c)+(ab+bc+ca)-abc=ab+bc+ca-abc.\n\\]\nThus\n\\[\n\\begin{aligned}\na^3+b^3+c^3+3(1-a)(1-b)(1-c)\n&=a^3+b^3+c^3-3abc+3(ab+bc+ca)\\\\\n&=(a+b+c)(a^2+b^2+c^2-ab-bc-ca)+3(ab+bc+ca)\\\\\n&=a^2+b^2+c^2+2ab+2bc+2ca\\\\\n&=(a+b+c)^2=1.\n\\end{aligned}\n\\]\nTherefore,\n\\[\na^3+b^3+c^3+3(1-a)(1-b)(1-c)=1.\n\\]\n\\(\\qed\\)",
+      "reason": "A consistency check confirms every substitution preserves the assumption and reaches the required equality."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "Set \\(s=a+b+c=1\\). The elementary symmetric expansion yields\n\\[\n(1-a)(1-b)(1-c)=1-s+(ab+bc+ca)-abc=ab+bc+ca-abc.\n\\]\nConsequently,\n\\[\n\\begin{aligned}\na^3+b^3+c^3+3(1-a)(1-b)(1-c)\n&=a^3+b^3+c^3-3abc+3(ab+bc+ca)\\\\\n&=s(a^2+b^2+c^2-ab-bc-ca)+3(ab+bc+ca)\\\\\n&=a^2+b^2+c^2+2ab+2bc+2ca\\\\\n&=s^2=1.\n\\end{aligned}\n\\]\nHence the identity is proved. \\(\\qed\\)",
+      "reason": "The generated derivation passes an independent algebraic check, with no unsupported step or domain change."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "Because \\(a+b+c=1\\),\n\\[\n1-a=b+c,\\qquad 1-b=c+a,\u0000qquad 1-c=a+b.\n\\]\nHence\n\\[\n3(1-a)(1-b)(1-c)=3(a+b)(b+c)(c+a).\n\\]\nAlternatively, expanding the original product directly gives\n\\[\n(1-a)(1-b)(1-c)=ab+bc+ca-abc.\n\\]\nTherefore,\n\\[\n\\begin{aligned}\na^3+b^3+c^3+3(1-a)(1-b)(1-c)\n&=a^3+b^3+c^3-3abc+3(ab+bc+ca)\\\\\n&=(a+b+c)(a^2+b^2+c^2-ab-bc-ca)+3(ab+bc+ca)\\\\\n&=(a+b+c)^2\\\\\n&=1.\n\\end{aligned}\n\\]\nThus the theorem holds for all real \\(a,b,c\\) satisfying the stated assumption. \\(\\qed\\)",
+      "reason": "Dependency checks validate the expansion, factorization, and final use of the sole assumption; no descendants require repair."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-247",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let S be such a finite set, and write its least and greatest elements as m and M. Applying the condition to (M,m) gives m^2/(M-m)∈S, so this number is at least m. Hence M-m≤m, and therefore M≤2m.\n\nSuppose |S|≥3, and let B<M be the second-largest element. Since B≥m and M≤2m, we have M-B≤m≤B. Thus B^2/(M-B)≥B. As this number belongs to S and B is the second-largest element, it must equal M (it cannot equal B, because that would imply M-B=B and hence M=2B; combined with M≤2m≤2B gives M=2B=2m, forcing B=m, contrary to |S|≥3). Therefore\nB^2=M(M-B),\nso M^2-MB-B^2=0. Dividing by B^2 gives (M/B)^2-(M/B)-1=0, whose positive root is (1+√5)/2, irrational. This is impossible because M/B is rational. Hence |S|=2.\n\nLet S={x,y} with x<y. The condition gives x^2/(y-x)∈{x,y}. If it equals x, then y-x=x, so y=2x. If it equals y, then x^2+y x-y^2=0, implying x/y=(-1+√5)/2, impossible for positive integers. Conversely, for S={x,2x}, the only relevant value is x^2/x=x. Thus all solutions are\n\\boxed{S=\\{x,2x\\}\\quad(x\\in\\mathbb Z_{>0})}.",
+      "reason": "The original proof’s conclusion was correct, but its exclusion of larger sets was only asserted. The repaired argument uses the two largest elements and an irrationality contradiction."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Let m=min S and M=max S. From the pair (M,m), the number m^2/(M-m) lies in S and is therefore at least m. Consequently M-m≤m, so M≤2m.\n\nAssume that S has at least three elements, and let B be its second-largest element. Then B>m. Since M≤2m≤2B, we have M-B≤B, and hence\n\\[\n\\frac{B^2}{M-B}\\ge B.\n\\]\nThis value belongs to S. Because B is the second-largest element, it is either B or M. Equality with B would give M=2B. But then M≤2m and B>m imply 2B>2m, a contradiction. Hence the value equals M, so\n\\[\n\\frac{B^2}{M-B}=M,\n\\qquad\text{or equivalently}\n\\qquad M^2-MB-B^2=0.\n\\]\nThus M/B is the positive root of t^2-t-1=0, namely (1+√5)/2, impossible since M/B is rational. Therefore S has exactly two elements.\n\nWrite S={x,y}, where x<y. Then x^2/(y-x) is either x or y. In the first case y=2x. In the second case x^2+xy-y^2=0, so x/y=(√5-1)/2, impossible for positive integers. Conversely, {x,2x} satisfies the condition because x^2/(2x-x)=x.\n\nTherefore the complete answer is\n\\[\n\\boxed{S=\\{x,2x\\}\\text{ for any positive integer }x}.\n\\]",
+      "reason": "Internal checking replaced the unsupported claim about all larger sets with a rigorous second-largest-element argument and verified the converse."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "We prove that the required sets are exactly \\(\\{x,2x\\}\\).\n\nLet \\(m\\) and \\(M\\) denote the minimum and maximum of \\(S\\). Since \\(m^2/(M-m)\\in S\\), it is at least \\(m\\). Hence \\(M-m\\le m\\), so \\(M\\le2m\\).\n\nNow suppose \\(|S|\\ge3\\), and let \\(B\\) be the second-largest element. Then \\(B>m\\), and \\(M-B\\le m\\le B\\). Therefore\n\\[\n\\frac{B^2}{M-B}\\ge B.\n\\]\nThe displayed number belongs to \\(S\\), so it is either \\(B\\) or \\(M\\). It cannot equal \\(B\\): that would imply \\(M=2B\\), while \\(M\\le2m<2B\\). Thus it equals \\(M\\). We obtain\n\\[\nB^2=M(M-B),\n\\]\nwhich is equivalent to \\((M/B)^2-M/B-1=0\\). Hence \\(M/B=(1+\\sqrt5)/2\\), contradicting the rationality of \\(M/B\\). Thus \\(|S|=2\\).\n\nIf \\(S=\\{x,y\\}\\) with \\(x<y\\), then \\(x^2/(y-x)\\) must equal \\(x\\) or \\(y\\). Equality to \\(x\\) gives \\(y=2x\\). Equality to \\(y\\) gives \\(x^2+xy-y^2=0\\), so \\(x/y=(\\sqrt5-1)/2\\), impossible. Finally, \\(\\{x,2x\\}\\) works since the required value is \\(x^2/x=x\\).\n\nTherefore\n\\[\n\\boxed{S=\\{x,2x\\}\\quad\\text{for every }x\\in\\mathbb Z_{>0}}.\n\\]",
+      "reason": "Critique identified that the source did not prove the no-three-element claim. The corrected proof isolates the second-largest element and derives the impossible golden-ratio equation."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let \\(S\\) be a finite set of positive integers satisfying the condition, with \\(|S|\\ge2\\). Put \\(m=\\min S\\) and \\(M=\\max S\\). Applying the condition to \\(M>m\\), we get\n\\[\n\\frac{m^2}{M-m}\\in S.\n\\]\nSince every element of \\(S\\) is at least \\(m\\), this implies \\(M-m\\le m\\), hence \\(M\\le2m\\).\n\nAssume toward a contradiction that \\(|S|\\ge3\\), and let \\(B\\) be the second-largest element. Then \\(B>m\\). Since \\(M\\le2m<2B\\), we have \\(M-B<B\\). Consequently\n\\[\n\\frac{B^2}{M-B}>B.\n\\]\nThis number belongs to \\(S\\), and since \\(M\\) is the largest element, it must equal \\(M\\). Therefore\n\\[\n\\frac{B^2}{M-B}=M,\n\\]\nso \\(M^2-MB-B^2=0\\). Dividing by \\(B^2\\), the rational number \\(M/B\\) satisfies \\(t^2-t-1=0\\), whose positive root is \\((1+\\sqrt5)/2\\), irrational. This contradiction proves \\(|S|=2\\).\n\nWrite the two elements as \\(x<y\\). Then\n\\[\n\\frac{x^2}{y-x}\\in\\{x,y\\}.\n\\]\nIf it equals \\(x\\), then \\(y-x=x\\), giving \\(y=2x\\). If it equals \\(y\\), then \\(x^2+xy-y^2=0\\), so \\(x/y=(\\sqrt5-1)/2\\), impossible because \\(x/y\\) is rational. Conversely, for every positive integer \\(x\\), the set \\(\\{x,2x\\}\\) satisfies the condition, since \\(x^2/(2x-x)=x\\).\n\nThus the complete classification is\n\\[\n\\boxed{S=\\{x,2x\\}\\text{ for some }x\\in\\mathbb Z_{>0}}.\n\\]",
+      "reason": "Dependency-aware checking verified the extremal bound, the second-largest contradiction, the two-element classification, and the converse independently; no descendant claim remains unsupported."
+    }
+  ]
+}

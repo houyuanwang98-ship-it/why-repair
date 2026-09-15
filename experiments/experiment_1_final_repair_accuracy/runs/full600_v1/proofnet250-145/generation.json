@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-145",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $X=\\prod_\\beta X_\\beta$ be normal, and fix an index $\\alpha$. Since $X$ is normal, it is $T_1$, so every singleton in $X_\\beta$ is closed. Choose points $x_\\beta\\in X_\\beta$ for each $\\beta\\ne\\alpha$, which is possible because each $X_\\beta$ is nonempty. Define\n\\[\nY=\\{x\\in X:x_\\beta=x_\\beta^0\\text{ for every }\\beta\\ne\\alpha\\},\n\\]\nwhere $x_\\beta^0$ is the chosen point. Then $Y$ is closed in $X$, and the projection $\\pi_\\alpha\\colon Y\\to X_\\alpha$ is a homeomorphism. Indeed, its inverse sends $a\\in X_\\alpha$ to the point whose $\\alpha$-coordinate is $a$ and whose other coordinates are $x_\\beta^0$.\n\nThus $X_\\alpha$ is homeomorphic to the closed subspace $Y$ of the normal space $X$. Closed subspaces of normal spaces are normal, so $X_\\alpha$ is normal.\n\\end{proof}",
+      "reason": "The original proof incorrectly claimed that projections of disjoint open sets are disjoint; a closed-coordinate slice instead gives a homeomorphic closed copy of the factor."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFix $\\alpha$ and write $X=\\prod_\\beta X_\\beta$. Choose $a_\\beta\\in X_\\beta$ for every $\\beta\\ne\\alpha$. Let\n\\[\nS=\\prod_\\beta Y_\\beta,\\qquad Y_\\alpha=X_\\alpha,\\quad Y_\\beta=\\{a_\\beta\\}\\ (\\beta\\ne\\alpha).\n\\]\nBecause a normal space is $T_1$, each singleton $\\{a_\\beta\\}$ is closed in $X_\\beta$. Hence\n\\[\nS=\\bigcap_{\\beta\\ne\\alpha}\\pi_\\beta^{-1}(\\{a_\\beta\\})\n\\]\nis closed in $X$. The map $\\pi_\\alpha|_S:S\\to X_\\alpha$ is a homeomorphism, with inverse given by inserting the fixed coordinates $a_\\beta$. Since $S$ is a closed subspace of the normal space $X$, it is normal. Therefore $X_\\alpha$ is normal.\n\\end{proof}",
+      "reason": "The proof was revised to use the standard closed-slice argument and explicitly justify both closedness and the homeomorphism."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $X=\\prod_\\beta X_\\beta$ be normal. Fix $\\alpha$. For every $\\beta\\ne\\alpha$, choose $a_\\beta\\in X_\\beta$, using nonemptiness, and consider the slice\n\\[\nS=\\{x\\in X:x_\\beta=a_\\beta\\text{ for all }\\beta\\ne\\alpha\\}.\n\\]\nA normal space is $T_1$, so each singleton $\\{a_\\beta\\}$ is closed in $X_\\beta$. Since the coordinate projections are continuous, $S$ is closed in $X$ as an intersection of closed sets.\n\nThe restriction $\\pi_\\alpha|_S$ is a homeomorphism from $S$ onto $X_\\alpha$: it is bijective, and its inverse is the continuous map that inserts the fixed coordinates $a_\\beta$. Hence $X_\\alpha$ is homeomorphic to a closed subspace of $X$. Normality is hereditary to closed subspaces, so $X_\\alpha$ is normal.\n\\end{proof}",
+      "reason": "The critic rejects the projection argument because projections need not preserve disjointness, and validates the closed slice as a complete repair."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFix an arbitrary index $\\alpha$. For each $\\beta\\ne\\alpha$, choose $a_\\beta\\in X_\\beta$, which is possible by the nonemptiness assumption. Define the coordinate-fixing embedding\n\\[\ni_\\alpha:X_\\alpha\\longrightarrow X,\\qquad i_\\alpha(t)_\\alpha=t,\n\\quad i_\\alpha(t)_\\beta=a_\\beta\\text{ for }\\beta\\ne\\alpha.\n\\]\nIts image is\n\\[\nS=\\bigcap_{\\beta\\ne\\alpha}\\pi_\\beta^{-1}(\\{a_\\beta\\}).\n\\]\nBecause $X$ is normal, it is $T_1$; therefore each singleton $\\{a_\\beta\\}$ is closed, and continuity of the projections implies that $S$ is closed in $X$. The map $i_\\alpha$ is a homeomorphism of $X_\\alpha$ onto $S$, with inverse $\\pi_\\alpha|_S$.\n\nSince closed subspaces of normal spaces are normal, $S$ is normal. Homeomorphism invariance of normality now gives that $X_\\alpha$ is normal. As $\\alpha$ was arbitrary, every factor $X_\\alpha$ is normal.\n\\end{proof}",
+      "reason": "Dependency checks establish nonemptiness for the slice, $T_1$ for singleton closedness, and closed-subspace heredity; the invalid projection-disjointness claim is locally replaced and the conclusion revalidates."
+    }
+  ]
+}

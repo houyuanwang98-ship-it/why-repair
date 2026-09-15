@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-002",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Set\n\\[\nS(m,n)=\\frac{m+1}{n}+\\frac{n+1}{m},\\qquad m,n\\in\\mathbb Z_{>0}.\n\\]\nIt suffices to construct infinitely many pairs with \\(S(m,n)=4\\). This equation is equivalent to\n\\[\nm^2+n^2+m+n-4mn=0.\n\\]\nConsidering it as a quadratic in \\(m\\), its discriminant must be a square:\n\\[\nt^2=12n^2-12n+1.\n\\]\nWriting \\(y=2n-1\\), this becomes\n\\[\nt^2-3y^2=-2.\n\\]\nSince \\(1^2-3\\cdot1^2=-2\\) and \\(2^2-3\\cdot1^2=1\\), define\n\\[\nt_k+y_k\\sqrt3=(1+\\sqrt3)(2+\\sqrt3)^k\\qquad(k\\ge0).\n\\]\nThen \\(t_k^2-3y_k^2=-2\\), and the recurrence\n\\[\nt_{k+1}=2t_k+3y_k,\\qquad y_{k+1}=t_k+2y_k\n\\]\nshows that \\(t_k,y_k\\) are positive odd integers. Set \\(n_k=(y_k+1)/2\\). The quadratic in \\(m\\) therefore has the integral roots\n\\[\nm=\\frac{4n_k-1\\pm t_k}{2}.\n\\]\nBoth are positive because \\((2y_k+1)^2-t_k^2=(y_k+1)(y_k+3)>0\\). Taking the larger root gives a positive integer \\(m_k\\) satisfying \\(S(m_k,n_k)=4\\). The sequence grows strictly, so these pairs are distinct. Hence infinitely many positive integer pairs satisfy the theorem.",
+      "reason": "The supplied Pell construction is valid; only a concise one-pass presentation was needed."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "We prove the claim by producing infinitely many solutions with value \\(4\\). The equation \\(S(m,n)=4\\) is\n\\[\nm^2+n^2+m+n-4mn=0.\n\\]\nAs a quadratic in \\(m\\), this has discriminant\n\\[\n\\Delta=(1-4n)^2-4(n^2+n)=12n^2-12n+1.\n\\]\nPut \\(y=2n-1\\). Then \\(\\Delta=t^2\\) is equivalent to\n\\[\nt^2-3y^2=-2.\n\\]\nFor every \\(k\\ge0\\), let\n\\[\nt_k+y_k\\sqrt3=(1+\\sqrt3)(2+\\sqrt3)^k.\n\\]\nThe norm is \\(-2\\), so \\(t_k^2-3y_k^2=-2\\). Also, from\n\\[\nt_{k+1}=2t_k+3y_k,\n\\qquad y_{k+1}=t_k+2y_k,\n\\]\nstarting with \\((t_0,y_0)=(1,1)\\), both sequences consist of positive odd integers. Thus \\(n_k=(y_k+1)/2\\) is a positive integer, and the corresponding roots are\n\\[\nm_k=\\frac{4n_k-1+t_k}{2},\n\\qquad m'_k=\\frac{4n_k-1-t_k}{2}.\n\\]\nThey are integers since both \\(4n_k-1\\) and \\(t_k\\) are odd. They are positive because\n\\[\n(4n_k-1)^2-t_k^2=(2y_k+1)^2-t_k^2=(y_k+1)(y_k+3)>0.\n\\]\nTherefore \\((m_k,n_k)\\) consists of positive integers and satisfies the quadratic equation, hence \\(S(m_k,n_k)=4\\). Since \\(y_k\\) strictly increases, the pairs are distinct. There are consequently infinitely many such pairs.",
+      "reason": "Internal checking confirms the discriminant transformation, parity, positivity, and distinctness arguments."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "Choose the fixed integral value \\(S(m,n)=4\\). Clearing denominators gives\n\\[\nm^2+n^2+m+n-4mn=0. \\tag{1}\n\\]\nFor fixed \\(n\\), equation (1) is quadratic in \\(m\\), with discriminant\n\\[\n\\Delta=12n^2-12n+1.\n\\]\nLet \\(y=2n-1\\). Then \\(\\Delta=t^2\\) precisely when\n\\[\nt^2-3y^2=-2. \\tag{2}\n\\]\nThe element \\(1+\\sqrt3\\) has norm \\(-2\\), while \\(2+\\sqrt3\\) has norm \\(1\\). Hence, for every \\(k\\ge0\\),\n\\[\nt_k+y_k\\sqrt3=(1+\\sqrt3)(2+\\sqrt3)^k\n\\]\nsolves (2). Its recurrence is\n\\[\nt_{k+1}=2t_k+3y_k,\n\\qquad y_{k+1}=t_k+2y_k,\n\\]\nso \\(t_k,y_k\\) remain positive and odd. Define\n\\[\nn_k=\\frac{y_k+1}{2}.\n\\]\nThe roots of (1), viewed as a quadratic in \\(m\\), are\n\\[\nm_k^{\\pm}=\\frac{4n_k-1\\pm t_k}{2}.\n\\]\nThey are integers because \\(4n_k-1=2y_k+1\\) and \\(t_k\\) are odd. Moreover,\n\\[\n(2y_k+1)^2-t_k^2=(y_k+1)(y_k+3)>0,\n\\]\nso both roots are positive. Taking \\(m_k=m_k^+\\), equation (1) holds and therefore\n\\[\n\\frac{m_k+1}{n_k}+\\frac{n_k+1}{m_k}=4\\in\\mathbb Z.\n\\]\nThe values \\(y_k\\), and hence the pairs \\((m_k,n_k)\\), increase strictly. Thus the construction yields infinitely many pairs of positive integers.",
+      "reason": "A critic-style check finds no substantive defect: the Pell norm, parity, positivity, and infinitude steps all verify."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let\n\\[\nS(m,n)=\\frac{m+1}{n}+\\frac{n+1}{m},\\qquad m,n\\in\\mathbb Z_{>0}.\n\\]\nWe construct infinitely many pairs for which \\(S(m,n)=4\\). Clearing denominators gives\n\\[\nm^2+n^2+m+n-4mn=0. \\tag{1}\n\\]\nRegarding (1) as a quadratic in \\(m\\), its discriminant is\n\\[\n12n^2-12n+1.\n\\]\nWith \\(y=2n-1\\), requiring this discriminant to equal \\(t^2\\) becomes\n\\[\nt^2-3y^2=-2. \\tag{2}\n\\]\nFor each \\(k\\ge0\\), define\n\\[\nt_k+y_k\\sqrt3=(1+\\sqrt3)(2+\\sqrt3)^k.\n\\]\nBecause the norms of \\(1+\\sqrt3\\) and \\(2+\\sqrt3\\) are respectively \\(-2\\) and \\(1\\), equation (2) holds. The recurrence\n\\[\nt_{k+1}=2t_k+3y_k,\n\\qquad y_{k+1}=t_k+2y_k,\n\\qquad (t_0,y_0)=(1,1),\n\\]\nshows that \\(t_k,y_k\\) are positive odd integers and strictly increase. Set\n\\[\nn_k=\\frac{y_k+1}{2}\\in\\mathbb Z_{>0}.\n\\]\nThe two roots of (1) in \\(m\\) are\n\\[\nm_k^{\\pm}=\\frac{4n_k-1\\pm t_k}{2}.\n\\]\nThey are integral since both numerator terms are odd. They are positive because\n\\[\n(4n_k-1)^2-t_k^2=(2y_k+1)^2-t_k^2=(y_k+1)(y_k+3)>0.\n\\]\nThus \\(m_k=m_k^+\\) is a positive integer, and (1) implies \\(S(m_k,n_k)=4\\). Strict increase of \\(y_k\\) makes the pairs distinct, yielding infinitely many pairs of positive integers with integral \\(S(m,n)\\).",
+      "reason": "Dependency-aware review confirms the original proof preserves the theorem and domain, with all downstream claims revalidated; no repair is required."
+    }
+  ]
+}

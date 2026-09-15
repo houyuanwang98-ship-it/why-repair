@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-162",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let the line through O be y=mx. Its intersections with y=x(x-1)(x+2)=x^3+x^2-2x satisfy\nx^3+x^2-(m+2)x=0,\nso besides x=0, the x-coordinates x_1,x_2 of A,B are the roots of\nx^2+x-(m+2)=0.\n\nSince O lies between A and B, x_1x_2=-(m+2)<0, hence m>-2. By the quadratic formula,\n(x_1-x_2)^2=1+4(m+2)=4m+9.\nTherefore\n|AB|^2=(1+m^2)(x_1-x_2)^2=(1+m^2)(4m+9).\nNow\n(1+m^2)(4m+9)-5=4m^3+9m^2+4m+4=(m+2)(4m^2+m+2).\nFor m>-2, the first factor is positive, and\n4m^2+m+2>0\nbecause its discriminant is 1-32<0 and its leading coefficient is positive. Thus |AB|^2>5, so |AB|>\\sqrt5.\\quad\\Box",
+      "reason": "The original argument is valid after explicitly factoring the key polynomial; the factorization supplies the missing justification for positivity."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Write the line through O as y=mx. Intersections with the cubic are given by\nmx=x(x-1)(x+2),\nso\nx\\bigl(x^2+x-(m+2)\\bigr)=0.\nLet x_1,x_2 be the nonzero roots corresponding to A and B. Since O lies between A and B on the line, these roots have opposite signs; hence\nx_1x_2=-(m+2)<0,\nso m>-2.\nAlso x_1+x_2=-1, and therefore\n(x_1-x_2)^2=(x_1+x_2)^2-4x_1x_2=1+4(m+2)=4m+9.\nBecause A and B lie on y=mx,\n|AB|^2=(1+m^2)(x_1-x_2)^2=(1+m^2)(4m+9).\nSubtracting 5 gives\n|AB|^2-5=(m+2)(4m^2+m+2).\nHere m+2>0, while 4m^2+m+2>0 for every real m since its discriminant is negative. Consequently |AB|^2>5, and hence |AB|>\\sqrt5.\\quad\\Box",
+      "reason": "The proof was checked for the sign condition implied by O lying between A and B and revised to make that condition explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Take the line through O to be y=mx. Substitution into the cubic yields\nx^3+x^2-(m+2)x=0.\nThus the other two intersections have x-coordinates x_1,x_2 satisfying\nx_1+x_2=-1,\\qquad x_1x_2=-(m+2).\n\nThe condition that O lies between A and B means x_1 and x_2 have opposite signs, so m>-2. The squared horizontal separation is\n(x_1-x_2)^2=(x_1+x_2)^2-4x_1x_2=4m+9.\nSince both points lie on a line of slope m,\n|AB|^2=(1+m^2)(4m+9).\n\nA direct factorization gives\n|AB|^2-5=4m^3+9m^2+4m+4=(m+2)(4m^2+m+2).\nThe first factor is positive because m>-2. The second is positive for all real m: its leading coefficient is positive and its discriminant is 1-4\\cdot4\\cdot2=-31<0. Hence |AB|^2-5>0, proving |AB|>\\sqrt5.\\quad\\Box",
+      "reason": "The critic check confirms the geometry, root-sign condition, distance formula, and strict positivity; the final proof repairs the only potentially underjustified positivity step."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let the line be y=mx. Intersecting it with\n y=x(x-1)(x+2)\n gives\nx\\bigl(x^2+x-(m+2)\\bigr)=0.\nLet x_1 and x_2 be the roots associated with A and B. Since O=(0,0) lies between A and B on this line, x_1 and x_2 have opposite signs. Hence\nx_1x_2=-(m+2)<0,\nso m>-2.\n\nVieta's formulas give x_1+x_2=-1. Thus\n(x_1-x_2)^2=(x_1+x_2)^2-4x_1x_2=1+4(m+2)=4m+9.\nThe points have coordinates (x_i,mx_i), so\n|AB|^2=(1+m^2)(x_1-x_2)^2=(1+m^2)(4m+9).\n\nNow compute\n|AB|^2-5=(1+m^2)(4m+9)-5\n=(m+2)(4m^2+m+2).\nFor m>-2, m+2>0. Moreover, 4m^2+m+2 is always positive because its discriminant is -31<0 and its leading coefficient is positive. Therefore |AB|^2>5, and consequently\n\\boxed{|AB|>\\sqrt5}.\n\\quad\\Box",
+      "reason": "Dependency checks validate the parameter domain, root correspondence, distance computation, and strict inequality; local factorization repair is sufficient, and all downstream claims remain valid."
+    }
+  ]
+}

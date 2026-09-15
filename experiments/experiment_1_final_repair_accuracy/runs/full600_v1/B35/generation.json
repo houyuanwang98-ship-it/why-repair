@@ -1,0 +1,29 @@
+{
+  "case_id": "B35",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "由 a|b，存在整数 k，使 b=ak。于是 b^2=(ak)^2=a(ak^2)。由于 a、k 为整数，ak^2 为整数，因此 a|b^2。",
+      "reason": "修正了平方展开中的代数错误。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "因为 a|b，存在整数 k 使得 b=ak。两边平方得 b^2=a^2k^2=a(ak^2)。又因 a、k 为整数，ak^2 为整数，所以根据整除定义，a|b^2。",
+      "reason": "复核了平方展开及整除定义，补全了整数性说明。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "由假设 a|b，存在 k∈Z 使 b=ak。故 b^2=(ak)^2=a^2k^2=a(ak^2)。由于 ak^2∈Z，存在整数 ak^2 使 b^2=a(ak^2)，因此 a|b^2。",
+      "reason": "批评环节发现原证明将 (ak)^2 错写为 ak^2，已局部修复。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "依整除定义，由 a|b 可知存在 k∈Z，使 b=ak。代入并平方：b^2=(ak)^2=a^2k^2=a(ak^2)。由于 a、k∈Z，故 ak^2∈Z。于是存在整数 ak^2 使 b^2=a(ak^2)，从而 a|b^2。该结论与原定理一致。",
+      "reason": "依赖检查定位到平方展开节点，进行最小局部修复后，整除结论及其后续依赖均通过独立复核。"
+    }
+  ]
+}

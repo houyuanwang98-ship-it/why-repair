@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-012",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let\n\\[\nF(x)=\\sum_{n\\ge0}f(n)x^n.\n\\]\nSince each summand may be any power of 2, ordered compositions give\n\\[\nF(x)=\\frac1{1-(x+x^2+x^4+x^8+\\cdots)}.\n\\]\nWork modulo 2, and write \\(G(x)=F(x)\\pmod2\\). Set \\(A=x+x^2+x^4+\\cdots\\). Over \\(\\mathbb F_2\\),\n\\[\nA^2=x^2+x^4+\\cdots=A+x.\n\\]\nIf \\(Y=1+A\\), then \\(Y^2+Y=x\\). Since \\(G=1/Y\\), this yields\n\\[\n1+G=xG^2,\n\\qquad\\text{so}\\qquad G=1+xG^2.\n\\]\nComparing coefficients gives \\(g(0)=1\\), and for \\(n\\ge1\\),\n\\[\ng(n)=\\begin{cases}g((n-1)/2),&n\\text{ odd},\\\\0,&n\\text{ even},\\end{cases}\n\\]\nwhere \\(g(n)=f(n)\\pmod2\\). Thus \\(g(n)=1\\) exactly when the repeated map \\(n\\mapsto(n-1)/2\\) reaches 0, which happens exactly for \\(n=2^m-1\\). The smallest such integer exceeding 2013 is\n\\[\n2^{11}-1=2047.\n\\]\nTherefore, \\(\\boxed{2047}\\) is the answer.",
+      "reason": "The original conclusion is correct, but its claimed recurrence justification was incomplete. The generating-function argument proves the parity characterization rigorously."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Define \\(g(n)=f(n)\\bmod2\\) and\n\\[\nG(x)=\\sum_{n\\ge0}g(n)x^n.\n\\]\nThe allowed parts are \\(1,2,4,\\ldots\\), so the composition generating function is\n\\[\nG(x)=\\frac{1}{1+A(x)}\\quad\\text{over }\\mathbb F_2,\n\\qquad A(x)=x+x^2+x^4+\\cdots.\n\\]\nBecause squaring is the Frobenius map in characteristic 2,\n\\[\nA(x)^2=x^2+x^4+\\cdots=A(x)+x.\n\\]\nHence, for \\(Y=1+A(x)\\), we have \\(Y^2+Y=x\\). Substituting \\(G=Y^{-1}\\) gives\n\\[\n1+G=xG^2,\n\\]\nor \\(G=1+xG^2\\). Therefore\n\\[\ng(0)=1,\n\\quad g(2r)=0,\n\\quad g(2r+1)=g(r).\n\\]\nInductively, \\(g(n)=1\\) precisely when every binary digit of \\(n\\) is 1; equivalently, \\(n=2^m-1\\) for some \\(m\\ge0\\). Since\n\\[\n2^{10}-1=1023<2013<2047=2^{11}-1,\n\\]\nthe smallest required value is \\(\\boxed{2047}\\).",
+      "reason": "A self-check exposed that the informal “one nonzero term” claim needed replacement by an exact coefficient recurrence; the revised proof supplies it."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let \\(F(x)=\\sum_{n\\ge0}f(n)x^n\\). An ordered composition is a sequence of parts from \\(\\{1,2,4,\\ldots\\}\\), so modulo 2,\n\\[\nF(x)=\\frac1{1-A(x)},\n\\qquad A(x)=x+x^2+x^4+\\cdots.\n\\]\nIn \\(\\mathbb F_2[[x]]\\), subtraction equals addition, hence \\(F=(1+A)^{-1}\\). Also\n\\[\nA^2=A+x.\n\\]\nWriting \\(Y=1+A\\), we obtain \\(Y^2+Y=x\\). Multiplication by \\(F^2=Y^{-2}\\) gives\n\\[\n1+F=xF^2,\n\\]\nso \\(F=1+xF^2\\) modulo 2. If \\(g(n)=[x^n]F\\), then\n\\[\ng(0)=1,\n\\qquad g(2r)=0,\n\\qquad g(2r+1)=g(r).\n\\]\nThus parity 1 propagates exactly along \\(0\\to1\\to3\\to7\\to\\cdots\\), and the odd values are exactly \\(2^m-1\\). The least one greater than 2013 is \\(2^{11}-1=2047\\). Hence \\(\\boxed{2047}\\).",
+      "reason": "The critic corrected the source proof’s unsupported recurrence explanation and verified the generating-function identity and boundary cases."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Work in the formal power-series ring \\(\\mathbb F_2[[x]]\\). Let\n\\[\nF(x)=\\sum_{n\\ge0}f(n)x^n,\n\\qquad A(x)=\\sum_{k\\ge0}x^{2^k}.\n\\]\nBecause order matters, sequences of allowed parts have generating function\n\\[\nF(x)=1+A+A^2+\\cdots=(1+A)^{-1}.\n\\]\nNow\n\\[\nA^2=\\sum_{k\\ge0}x^{2^{k+1}}=A+x.\n\\]\nSet \\(Y=1+A\\). Then \\(Y^2+Y=x\\). Since \\(F=Y^{-1}\\), multiplying this relation by \\(F^2\\) yields\n\\[\n1+F=xF^2,\n\\]\nand hence \\(F=1+xF^2\\). If \\(g(n)=f(n)\\bmod2\\), coefficient comparison gives\n\\[\ng(0)=1,\n\\qquad g(2r)=0,\n\\qquad g(2r+1)=g(r).\n\\]\nRepeatedly applying this relation shows that \\(g(n)=1\\) exactly when \\(n\\) has binary expansion consisting entirely of 1s, namely \\(n=2^m-1\\). Since \\(2^{10}-1=1023\\) and \\(2^{11}-1=2047>2013\\), the smallest valid integer is\n\\[\n\\boxed{2047}.\n\\]",
+      "reason": "Dependency checking identified the unsupported parity claim as the only substantive weakness; a local generating-function repair was independently revalidated through coefficient extraction and the final bound."
+    }
+  ]
+}

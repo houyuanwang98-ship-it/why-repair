@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-209",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSince\n\\[\n\\left(\\sqrt{a_n}-\\frac1n\\right)^2\\ge 0,\n\\]\nwe have\n\\[\n\\frac{\\sqrt{a_n}}{n}\\le \\frac12\\left(a_n+\\frac1{n^2}\\right).\n\\]\nBecause \\(\\sum a_n\\) converges by hypothesis and \\(\\sum 1/n^2\\) converges, the comparison test implies that\n\\[\n\\sum \\frac{\\sqrt{a_n}}{n}\n\\]\nconverges.\n\\end{proof}",
+      "reason": "Corrected the algebraic error: the square yields \\(a_n\\), not \\(a_n^2\\)."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor every \\(n\\), the nonnegativity of\n\\[\n\\left(\\sqrt{a_n}-\\frac1n\\right)^2\n\\]\n gives\n\\[\na_n-\\frac{2\\sqrt{a_n}}{n}+\\frac1{n^2}\\ge 0,\n\\]\nand therefore\n\\[\n0\\le \\frac{\\sqrt{a_n}}{n}\\le \\frac12\\left(a_n+\\frac1{n^2}\\right).\n\\]\nThe series \\(\\sum a_n\\) converges by assumption, and \\(\\sum 1/n^2\\) is convergent. Hence \\(\\sum \\frac12(a_n+1/n^2)\\) converges, so the comparison test proves that \\(\\sum \\frac{\\sqrt{a_n}}{n}\\) converges.\n\\end{proof}",
+      "reason": "An internal check replaced the invalid \\(a_n^2\\) comparison with the exact inequality obtained by expansion."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nUsing the elementary inequality \\(2xy\\le x^2+y^2\\) with \\(x=\\sqrt{a_n}\\) and \\(y=1/n\\), we obtain\n\\[\n\\frac{\\sqrt{a_n}}{n}\\le \\frac12\\left(a_n+\\frac1{n^2}\\right).\n\\]\nBoth \\(\\sum a_n\\) and \\(\\sum 1/n^2\\) converge: the first by hypothesis and the second because it is a \\(p\\)-series with \\(p=2\\). Thus the nonnegative series \\(\\sum \\frac{\\sqrt{a_n}}{n}\\) is dominated termwise by a convergent series, and consequently it converges.\n\\end{proof}",
+      "reason": "The critic detected that the proposed bound with \\(a_n^2\\) does not follow; the generator was repaired using \\(2xy\\le x^2+y^2\\)."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor each \\(n\\), since \\(a_n\\ge 0\\), applying \\(2xy\\le x^2+y^2\\) to \\(x=\\sqrt{a_n}\\) and \\(y=1/n\\) gives\n\\[\n0\\le \\frac{\\sqrt{a_n}}{n}\\le \\frac{a_n+1/n^2}{2}.\n\\]\nThe right-hand side is the term of a convergent series, because \\(\\sum a_n\\) converges by hypothesis and \\(\\sum 1/n^2\\) converges. Therefore, by the comparison test,\n\\[\n\\sum_{n=1}^{\\infty}\\frac{\\sqrt{a_n}}{n}\n\\]\nconverges.\n\\end{proof}",
+      "reason": "Dependency checking isolated the faulty inequality and made the minimal local repair; the corrected bound validates the conclusion and all downstream steps."
+    }
+  ]
+}

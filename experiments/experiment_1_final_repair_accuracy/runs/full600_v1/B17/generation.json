@@ -1,0 +1,29 @@
+{
+  "case_id": "B17",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "由 a^2=b^2，得 a^2-b^2=0，即 (a-b)(a+b)=0。由于 a,b 为正实数，a+b>0，故 a+b\\ne0。因此只能有 a-b=0，即 a=b。",
+      "reason": "补充了因正性而得出的 a+b\\ne0，完成因式分解后的必要论证。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "因为 a^2=b^2，所以 a^2-b^2=0，从而 (a-b)(a+b)=0。又因 a,b 是正实数，故 a+b>0，不可能为零。因此 a-b=0，故 a=b。",
+      "reason": "检查后确认原证明缺少排除 a+b=0 的说明，已补全。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "由已知 a^2=b^2，有\n(a-b)(a+b)=a^2-b^2=0。\n实数乘积为零时，a-b=0 或 a+b=0。由于 a,b>0，a+b>0，故 a+b=0 不成立，只能有 a-b=0。因此 a=b。",
+      "reason": "批评检查识别出需明确使用正实数条件排除另一因子为零的情形。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "已知 a,b 为正实数且 a^2=b^2。将等式移项并因式分解，得\n0=a^2-b^2=(a-b)(a+b)。\n因 a>0、b>0，所以 a+b>0。由零乘积性质，必有 a-b=0，进而 a=b。",
+      "reason": "依赖检查、局部修复及独立复核均确认：只需补充 a+b>0，即可在后续结论中使用零乘积性质。"
+    }
+  ]
+}

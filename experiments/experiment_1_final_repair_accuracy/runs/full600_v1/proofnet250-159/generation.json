@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-159",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet the three consecutive integers be $n,n+1,n+2$. For every $x,y\\in G$, the hypothesis gives\n\\[\n(xy)^n=x^ny^n\\quad\\text{and}\\quad (xy)^{n+1}=x^{n+1}y^{n+1}.\n\\]\nSince $(xy)^{n+1}=(xy)^n(xy)$, we obtain\n\\[\nx^ny^nxy=x^{n+1}y^{n+1}.\n\\]\nCancelling $x^n$ on the left and $y$ on the right yields\n\\[\ny^nx=xy^n.\n\\]\nApplying the same argument to the identities for $n+1$ and $n+2$ gives\n\\[\ny^{n+1}x=xy^{n+1}.\n\\]\nThus $x$ commutes with both $y^n$ and $y^{n+1}$, and hence with\n\\[\ny=y^{n+1}(y^n)^{-1}.\n\\]\nTherefore $xy=yx$ for all $x,y\\in G$, so $G$ is abelian.\n\\end{proof}",
+      "reason": "The original proof contained invalid intermediate rearrangements; the repaired proof derives commutation with two consecutive powers and then with the generator itself."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFix arbitrary $a,b\\in G$, and let the three consecutive integers in the hypothesis be $n,n+1,n+2$. From\n\\[\n(ab)^{n+1}=(ab)^n(ab)\n\\]\nand the assumed identities, we have\n\\[\na^{n+1}b^{n+1}=a^nb^nab.\n\\]\nCancelling $a^n$ on the left and $b$ on the right gives\n\\[\nb^na=ab^n.\\tag{1}\n\\]\nUsing instead the identities for $n+1$ and $n+2$ gives\n\\[\nb^{n+1}a=ab^{n+1}.\\tag{2}\n\\]\nEquation (1) says that $a$ commutes with $b^n$, and (2) says that it commutes with $b^{n+1}$. Consequently it commutes with their quotient:\n\\[\na\\,b^{n+1}(b^n)^{-1}=b^{n+1}(b^n)^{-1}a.\n\\]\nThe middle element is $b$, so $ab=ba$. Since $a,b$ were arbitrary, $G$ is abelian.\n\\end{proof}",
+      "reason": "Internal checking confirms the cancellations and the final quotient identity are valid for arbitrary integer $n$, including negative values."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nChoose an integer $n$ such that the hypothesis holds for $n,n+1,n+2$. Let $a,b\\in G$ be arbitrary. Comparing the formulas for $n$ and $n+1$ gives\n\\[\na^nb^nab=(ab)^n(ab)=(ab)^{n+1}=a^{n+1}b^{n+1}.\n\\]\nAfter cancelling $a^n$ on the left and $b$ on the right, we get\n\\[\nb^na=ab^n.\n\\]\nLikewise,\n\\[\na^{n+1}b^{n+1}ab=(ab)^{n+1}(ab)=(ab)^{n+2}=a^{n+2}b^{n+2},\n\\]\nso cancellation yields\n\\[\nb^{n+1}a=ab^{n+1}.\n\\]\nTherefore $a$ commutes with $b^n$ and $b^{n+1}$. Since\n\\[\nb=b^{n+1}(b^n)^{-1},\n\\]\nwe conclude that $a$ commutes with $b$. As $a$ and $b$ were arbitrary, $G$ is abelian.\n\\end{proof}",
+      "reason": "The critic check identifies the key sufficient invariant: two adjacent assumed identities force commutation with adjacent powers, whose quotient is $b$."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet the consecutive integers be $n,n+1,n+2$, and take arbitrary $a,b\\in G$. We use the first two identities:\n\\[\n(ab)^n=a^nb^n,\\qquad (ab)^{n+1}=a^{n+1}b^{n+1}.\n\\]\nBecause $(ab)^{n+1}=(ab)^n(ab)$,\n\\[\na^nb^nab=a^{n+1}b^{n+1}.\n\\]\nLeft-cancellation of $a^n$ and right-cancellation of $b$ give\n\\[\nb^na=ab^n.\\tag{1}\n\\]\nApplying the same argument to the second and third identities gives\n\\[\nb^{n+1}a=ab^{n+1}.\\tag{2}\n\\]\nFrom (1) and (2), $a$ commutes with $b^n$ and $b^{n+1}$, hence with their product\n\\[\nb^{n+1}(b^n)^{-1}=b.\n\\]\nThus $ab=ba$. Since $a,b$ were arbitrary elements of $G$, every pair of elements commutes, and therefore $G$ is abelian.\n\\end{proof}",
+      "reason": "Dependency and descendant checks pass: each cancellation is group-valid, the proof uses only the stated three consecutive identities, and the conclusion holds for arbitrary elements."
+    }
+  ]
+}

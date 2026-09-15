@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-144",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Proof. Suppose, for contradiction, that positive integers c,d satisfy n∣2^c+3^d. No prime divisor of n is 2, since 2^c+3^d is odd, and no prime divisor is 3, since 2^c+3^d≡2^c≠0 (mod 3). Thus gcd(n,6)=1.\n\nBy Euler’s theorem, 3^{φ(n)}≡1 (mod n). Write d=kφ(n)+r with 0≤r<φ(n), and set b=φ(n)−r. Then b>0 and b+d=(k+1)φ(n), so 3^{b+d}≡1 (mod n). Multiplying 2^c+3^d≡0 (mod n) by 3^b gives\n2^c3^b+3^{b+d}≡0 (mod n),\nthus 2^c3^b+1≡0 (mod n). Setting a=c, we obtain positive integers a,b such that n∣2^a3^b+1, contradicting the hypothesis. Therefore n does not divide 2^c+3^d for any positive integers c,d. ∎",
+      "reason": "The supplied contrapositive argument is valid; the proof only needs minor presentational compression."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "Proof. Assume that n∣2^c+3^d for some positive integers c,d. If 2∣n, then divisibility by n would imply divisibility by 2, but 2^c+3^d is odd. If 3∣n, then divisibility by n would imply divisibility by 3, whereas 2^c+3^d≡2^c≠0 (mod 3). Hence gcd(n,3)=1.\n\nEuler’s theorem yields 3^{φ(n)}≡1 (mod n). Choose the unique integers k,r with d=kφ(n)+r and 0≤r<φ(n), and put b=φ(n)−r. Then b is positive and b+d=(k+1)φ(n), so 3^{b+d}≡1 (mod n). Multiplication of the assumed congruence by 3^b gives\n2^c3^b+3^{b+d}≡0 (mod n),\nso n∣2^c3^b+1. Taking a=c contradicts the assumption that n divides no number of the form 2^a3^b+1 with a,b positive. Therefore n∤2^c+3^d for all positive c,d. ∎",
+      "reason": "Internal checking confirms the prime-divisor reduction, Euler step, and positivity of b, so no substantive repair is needed."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "Proof. We argue by contraposition. Suppose there are positive integers c,d such that n∣2^c+3^d. Then 2∤n, because 2^c+3^d is odd. Also 3∤n, because modulo 3 we have 2^c+3^d≡2^c≡±1. Consequently gcd(n,3)=1.\n\nLet m=φ(n). Euler’s theorem gives 3^m≡1 (mod n). Write d=km+r, where 0≤r<m, and define b=m−r. Since b≥1 and b+d=(k+1)m, we have 3^{b+d}≡1 (mod n). Multiplying the congruence 2^c+3^d≡0 by 3^b yields\n2^c3^b+3^{b+d}≡0 (mod n).\nTherefore n∣2^c3^b+1. With a=c, this contradicts the hypothesis. Hence no positive c,d satisfy n∣2^c+3^d. ∎",
+      "reason": "A critic-style check finds no logical gap: all exponent choices are positive and Euler’s theorem is applied under the established coprimality condition."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "Proof. Assume toward a contradiction that n∣2^c+3^d for positive integers c,d. Any prime divisor of n would then divide 2^c+3^d. It cannot be 2, since this sum is odd, and it cannot be 3, since 2^c+3^d≡2^c≠0 (mod 3). Thus gcd(n,3)=1.\n\nLet m=φ(n). Since 3 is coprime to n, Euler’s theorem gives 3^m≡1 (mod n). Write d=km+r with 0≤r<m and set b=m−r. Then b is a positive integer and b+d=(k+1)m. Hence 3^{b+d}≡1 (mod n).\n\nNow multiply the assumed congruence by 3^b:\n2^c3^b+3^{b+d}≡0 (mod n).\nUsing 3^{b+d}≡1 (mod n), we obtain n∣2^c3^b+1. Taking a=c produces positive integers a,b for which n∣2^a3^b+1, contradicting the hypothesis. Therefore n does not divide 2^c+3^d for any positive integers c,d. ∎",
+      "reason": "Dependency and descendant checks preserve the original theorem and assumptions; the minimal repair is only a clearer justification of the prime-divisor and positivity steps."
+    }
+  ]
+}

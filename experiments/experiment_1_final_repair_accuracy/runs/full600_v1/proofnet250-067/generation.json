@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-067",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nApply Eisenstein's criterion with the prime $p=3$. The leading coefficient of $x^3+6x+12$ is $1$, which is not divisible by $3$; every other coefficient, namely $0$, $6$, and $12$, is divisible by $3$; and the constant term $12$ is not divisible by $3^2=9$. Therefore, $x^3+6x+12$ is irreducible in $\\mathbb{Q}$.\n\\end{proof}",
+      "reason": "The proposed Eisenstein argument is valid once all coefficient conditions are stated."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $f(x)=x^3+6x+12$. Eisenstein's criterion applies with $p=3$: $3$ divides each nonleading coefficient ($0$, $6$, and $12$), $3$ does not divide the leading coefficient $1$, and $9$ does not divide the constant term $12$. Hence $f(x)$ is irreducible over $\\mathbb{Q}$.\n\\end{proof}",
+      "reason": "Internal checking confirms that $p=3$ satisfies every hypothesis of Eisenstein's criterion."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor $f(x)=x^3+6x+12$, choose the prime $p=3$. The coefficient of $x^2$ is $0$, and $3$ divides $0$, $6$, and $12$. The leading coefficient is $1$, so it is not divisible by $3$, while the constant term $12$ is not divisible by $9$. Eisenstein's criterion therefore shows that $f(x)$ is irreducible in $\\mathbb{Q}$.\n\\end{proof}",
+      "reason": "The critic verifies the omitted zero coefficient and the required nondivisibility of the constant term by $9$."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWrite\n\\[\nf(x)=x^3+0x^2+6x+12.\n\\]\nWith the prime $p=3$, every nonleading coefficient is divisible by $3$: $3\\mid 0$, $3\\mid 6$, and $3\\mid 12$. The leading coefficient $1$ is not divisible by $3$, and $9\\nmid 12$. Thus all hypotheses of Eisenstein's criterion hold, so $f(x)$ is irreducible over $\\mathbb{Q}$.\n\\end{proof}",
+      "reason": "The dependency check confirms all Eisenstein conditions, and independent review finds no remaining gap."
+    }
+  ]
+}

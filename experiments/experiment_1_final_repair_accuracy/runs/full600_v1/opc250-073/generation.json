@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-073",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "For fixed x, the map R_x(t)=t*x is injective, because if a*x=b*x, then applying R_x again and using (b) gives a=b.\n\nBy (a), x*(x*y)=y. Applying (b) with the variables y and x gives (y*x)*x=y. Also, applying (b) to x*y and x gives (x*y)*x=y, since (a) yields x*(x*y)=y and hence, equivalently, the left translation by x is its own inverse. More directly, applying (a) with first variable x and second variable y gives x*(x*y)=y, and then applying (b) with first variable x*y and second variable x gives (x*y)*x=y. Thus both x*y and y*x are mapped by R_x to y. Since R_x is injective, x*y=y*x. Therefore (C1) follows.\n\nAssociativity does not follow. Fix any integer c and define x*y=c-x-y. Then\nx*(x*y)=c-x-(c-x-y)=y,\nand\n(x*y)*y=c-(c-x-y)-y=x,\nso both axioms hold. However,\n(x*y)*z=x+y-z,\nwhile\nx*(y*z)=y+z-x.\nFor example, with (x,y,z)=(0,1,2), these are -1 and 3. Hence (C2) is false. Only commutativity follows.",
+      "reason": "The original commutativity argument incorrectly identified (y*x)*y with x. The repaired proof uses injectivity of the right translation and correctly establishes both required equalities."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Let R_x(t)=t*x. Axiom (b) implies R_x(R_x(t))=t, so R_x is an involution and therefore injective.\n\nWe show commutativity. By axiom (b), with variables y and x,\n(y*x)*x=y.\nOn the other hand, axiom (a) gives x*(x*y)=y. Applying axiom (b) with first argument x*y and second argument x gives\n(x*y)*x=y.\nThus R_x(y*x)=R_x(x*y)=y. Injectivity of R_x yields y*x=x*y. Hence (C1) follows.\n\nFor (C2), take any fixed c in Z and define\nx*y=c-x-y.\nThen\nx*(x*y)=c-x-(c-x-y)=y,\nand\n(x*y)*y=c-(c-x-y)-y=x,\nso the axioms hold. But\n(x*y)*z=x+y-z,\nwhereas\nx*(y*z)=y+z-x.\nAt (x,y,z)=(0,1,2), these values are -1 and 3, so associativity fails. Therefore (C1) follows from the axioms, while (C2) does not.",
+      "reason": "After checking each use of the axioms, the proof was revised to use the involutive right translation R_x; the counterexample independently verifies failure of associativity."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Define R_x(t)=t*x. From (b),\nR_x(R_x(t))=(t*x)*x=t,\nso R_x is bijective.\n\nFor arbitrary x,y, axiom (b), applied to y and x, gives\nR_x(y*x)=(y*x)*x=y.\nAlso, (a) gives x*(x*y)=y; then applying (b) to x*y and x gives\nR_x(x*y)=(x*y)*x=x*(x*y)=y.\nSince R_x is injective, y*x=x*y. Thus the operation is commutative, proving (C1).\n\nAssociativity is not forced. On Z define\nx*y=c-x-y\nfor a fixed c in Z. This operation satisfies\nx*(x*y)=c-x-(c-x-y)=y\nand\n(x*y)*y=c-(c-x-y)-y=x.\nBut\n(x*y)*z=x+y-z,\nwhile\nx*(y*z)=y+z-x.\nTaking x=0,y=1,z=2 gives -1 versus 3. Thus the operation is not associative, so (C2) does not follow. Exactly (C1) is justified.",
+      "reason": "The critic detected the invalid equality in the supplied commutativity proof and replaced it with a valid injectivity argument; the affine counterexample was retained after direct verification."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "For each x in Z, define R_x:Z→Z by R_x(t)=t*x. Axiom (b) says R_x^2=id, so R_x is injective.\n\nFix x,y. Using (b) with first argument y and second argument x,\nR_x(y*x)=(y*x)*x=y.\nUsing (a), x*(x*y)=y. Then (b), applied with first argument x*y and second argument x, gives\nR_x(x*y)=(x*y)*x=x*(x*y)=y.\nTherefore R_x(y*x)=R_x(x*y), and injectivity implies y*x=x*y. Hence (C1) follows.\n\nTo test (C2), fix c∈Z and define x*y=c-x-y. This is an integer-valued operation on Z. Its axioms are verified by\nx*(x*y)=c-x-(c-x-y)=y\nand\n(x*y)*y=c-(c-x-y)-y=x.\nHowever,\n(x*y)*z=x+y-z,\nwhile\nx*(y*z)=y+z-x.\nFor x=0,y=1,z=2, the two sides are -1 and 3, respectively. Thus associativity fails. Consequently, commutativity follows from (a) and (b), but associativity does not.",
+      "reason": "Dependency checking isolated the invalid step in the original proof, local repair established commutativity via right-translation injectivity, and the explicit counterexample revalidated the non-associativity conclusion."
+    }
+  ]
+}

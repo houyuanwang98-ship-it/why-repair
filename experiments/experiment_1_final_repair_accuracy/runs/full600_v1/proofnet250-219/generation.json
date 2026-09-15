@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-219",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf n=1, then (n-1)!=0!=1\\equiv0\\pmod 1. Now suppose n>1 is not prime. If n is not a square of a prime, write n=uv with 2\\le u<v\\le n-1. Then both u and v occur among the factors of (n-1)!, so n=uv divides (n-1)!.\n\nIt remains to consider n=p^2 for a prime p. If p=2, then n=4 and 3!=6 is not divisible by 4. If p>2, both p and 2p occur among the factors of (p^2-1)!, and they are distinct; hence p^2 divides (p^2-1)!=(n-1)!.\n\nTherefore (n-1)!\\equiv0\\pmod n for every nonprime n, except n=4.\n\\end{proof}",
+      "reason": "The factorization argument was repaired by separating the prime-square case and explicitly handling n=1."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor n=1, the assertion holds since 0!=1\\equiv0\\pmod1. Assume henceforth that n>1 is composite. Choose a factorization n=ab with 2\\le a\\le b. If a<b, then a and b are distinct integers in \\{2,\\ldots,n-1\\}, so both occur in (n-1)!, giving n=ab\\mid(n-1)!.\n\nIf a=b, then n=a^2. If a is composite, write a=rs with 2\\le r<s\\le a-1. Then n=a^2=r(as), and r and as are distinct integers between 2 and n-1. Thus n\\mid(n-1)!.\n\nConsequently, the only remaining case is n=p^2 with p prime. For p=2, n=4 and 3!=6 is not divisible by 4. For p>2, the distinct factors p and 2p occur in (p^2-1)!, so p^2\\mid(p^2-1)!.\n\nThus (n-1)!\\equiv0\\pmod n, except when n=4.\n\\end{proof}",
+      "reason": "After checking boundary and repeated-factor cases, the proof was revised to ensure every claimed factor lies in the factorial and the exceptional case is exact."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf n=1, then 0!=1\\equiv0\\pmod1. Let n>1 be composite. If n is not the square of a prime, choose a proper factorization n=ab with 2\\le a<b\\le n-1. Since a and b are distinct factors of (n-1)!, we have n=ab\\mid(n-1)!.\n\nSuppose instead that n is a square. If n=a^2 with a composite, write a=rs with 2\\le r<s\\le a-1. Then n=r(as), where 2\\le r<as\\le n-1; hence the two distinct factors r and as both occur in (n-1)!, and n divides (n-1)!.\n\nThe only case left is n=p^2 for a prime p. When p=2, n=4 and 3!=6, so 4\\nmid3!. When p>2, p and 2p are distinct integers less than p^2, and their product is 2p^2. Since (p^2-1)! contains both factors, it contains p^2 as a divisor. Therefore p^2\\mid(p^2-1)!.\n\nHence (n-1)!\\equiv0\\pmod n for every composite n except n=4.\n\\end{proof}",
+      "reason": "The critic check removed the unsafe coprimality claim and verified the bounds and divisibility in each case."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor n=1, we have 0!=1\\equiv0\\pmod1. Assume n>1 is composite. Choose a proper divisor d of n and put e=n/d, with 2\\le d\\le e\\le n-1.\n\nIf d<e, then d and e are distinct factors among 2,3,\\ldots,n-1, so n=de divides (n-1)!.\n\nIf d=e, then n=d^2. If d is composite, write d=rs with 2\\le r<s\\le d-1. Then n=r(ds), and 2\\le r<ds\\le d^2-1=n-1. Thus r and ds are distinct factors of (n-1)!, so n divides (n-1)!.\n\nIt remains that n=p^2 for a prime p. For p=2, n=4 and 3!=6, so 4 does not divide 3!. For p>2, the factors p and 2p are distinct and satisfy p,2p<p^2; therefore both occur in (p^2-1)!, and their product 2p^2 shows that p^2 divides (p^2-1)!.\n\nThus (n-1)!\\equiv0\\pmod n for every nonprime n, with the sole exception n=4.\n\\end{proof}",
+      "reason": "Dependency checks confirmed the boundary case, proper-factor bounds, and prime-square branch; the local repair also received an independent consistency check."
+    }
+  ]
+}

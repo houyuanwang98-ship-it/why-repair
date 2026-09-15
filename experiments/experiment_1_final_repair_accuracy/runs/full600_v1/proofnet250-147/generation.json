@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-147",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nEvery subgroup of the cyclic group $G=\\langle x\\rangle$ has the form $\\langle x^d\\rangle$ for a divisor $d$ of $n$, and\n\\[\n\\langle x^a\\rangle\\subseteq\\langle x^b\\rangle\\quad\\Longleftrightarrow\\quad b\\mid a.\n\\]\nSuppose first that $H$ is maximal. Write $H=\\langle x^d\\rangle$ with $d\\mid n$. Since $H$ is proper, $d>1$. If $d$ were composite, choose a proper divisor $e$ of $d$ with $1<e<d$. Then\n\\[\nH=\\langle x^d\\rangle\\subsetneq\\langle x^e\\rangle\\subsetneq G,\n\\]\ncontradicting maximality. Hence $d=p$ is prime, and $p\\mid n$. Thus $H=\\langle x^p\\rangle$.\n\nConversely, let $p$ be prime with $p\\mid n$ and let $H=\\langle x^p\\rangle$. If $H<K<G$ for a subgroup $K$, write $K=\\langle x^e\\rangle$ with $e\\mid n$. The inclusion $H\\subseteq K$ implies $e\\mid p$, so $e=1$ or $e=p$. The first gives $K=G$, and the second gives $K=H$. Therefore no proper subgroup lies strictly between $H$ and $G$, so $H$ is maximal.\\end{proof}",
+      "reason": "Replaced the invalid claim that the exponent must equal a chosen prime factor with the standard divisor description of subgroups of a finite cyclic group."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf $n=1$, then $G$ has no proper subgroups and there is no prime dividing $n$, so the statement is vacuous. Assume $n>1$.\n\nFor each divisor $d$ of $n$, the subgroup $\\langle x^d\\rangle$ is a subgroup of $G$, and every subgroup has this form. Moreover, $\\langle x^a\\rangle\\subseteq\\langle x^b\\rangle$ exactly when $b\\mid a$.\n\nLet $H$ be maximal. Write $H=\\langle x^d\\rangle$, where $d\\mid n$ and $d>1$. If $d$ is not prime, choose a divisor $e$ satisfying $1<e<d$. Then\n\\[\n\\langle x^d\\rangle\\subsetneq\\langle x^e\\rangle\\subsetneq\\langle x\\rangle,\n\\]\nwhich contradicts maximality. Consequently $d=p$ for a prime $p$ dividing $n$, and $H=\\langle x^p\\rangle$.\n\nNow suppose $H=\\langle x^p\\rangle$ for a prime $p\\mid n$. If $H<K<G$, write $K=\\langle x^e\\rangle$ with $e\\mid n$. Since $H\\subseteq K$, we have $e\\mid p$. Thus $e=1$ or $e=p$. In the first case $K=G$, and in the second case $K=H$, both impossible. Hence $H$ is maximal.\\end{proof}",
+      "reason": "The proof was checked for edge cases and strict inclusions; the $n=1$ case is explicitly addressed."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nUse the subgroup classification for finite cyclic groups: if $L\\leq G=\\langle x\\rangle$, then $L=\\langle x^d\\rangle$ for a unique divisor $d\\mid n$, and\n\\[\n\\langle x^a\\rangle\\leq\\langle x^b\\rangle\\iff b\\mid a.\n\\]\n\nSuppose $H$ is maximal, and write $H=\\langle x^d\\rangle$. Since $H\\neq G$, we have $d>1$. If $d$ were composite, select a proper divisor $e$ of $d$ with $1<e<d$. Then $e\\mid d$, so\n\\[\nH=\\langle x^d\\rangle<\\langle x^e\\rangle<G,\n\\]\ncontradicting maximality. Hence $d$ is prime; call it $p$. Since $d\\mid n$, we obtain $H=\\langle x^p\\rangle$ with $p\\mid n$.\n\nConversely, suppose $H=\\langle x^p\\rangle$ where $p$ is prime and $p\\mid n$. Let $K$ be a subgroup with $H\\leq K\\leq G$. Write $K=\\langle x^e\\rangle$ for some $e\\mid n$. The inclusion $H\\leq K$ gives $e\\mid p$. Therefore $e=1$ or $e=p$. If $e=1$, then $K=G$; if $e=p$, then $K=H$. Thus there is no subgroup strictly between $H$ and $G$, so $H$ is maximal.\\end{proof}",
+      "reason": "A critic-style check removes the unsupported existence step and verifies both subgroup inclusions through divisor relations."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe use the following standard facts about $G=\\langle x\\rangle$ of order $n$: every subgroup is $\\langle x^d\\rangle$ for a divisor $d$ of $n$, and for divisors $a,b$ of $n$,\n\\[\n\\langle x^a\\rangle\\leq\\langle x^b\\rangle\\quad\\text{if and only if}\\quad b\\mid a.\n\\]\n\nSuppose that $H$ is maximal. Then $H=\\langle x^d\\rangle$ for some divisor $d\\mid n$. Because a maximal subgroup is proper, $d>1$. If $d$ were composite, it would have a divisor $e$ with $1<e<d$. The divisor relation would then yield\n\\[\nH=\\langle x^d\\rangle<\\langle x^e\\rangle<G,\n\\]\ncontradicting maximality. Hence $d=p$ is prime, and $p\\mid n$. Thus $H=\\langle x^p\\rangle$.\n\nConversely, let $H=\\langle x^p\\rangle$ for a prime $p$ dividing $n$. For any subgroup $K$ satisfying $H\\leq K\\leq G$, write $K=\\langle x^e\\rangle$ with $e\\mid n$. Then $e\\mid p$, so $e=1$ or $e=p$. Consequently $K=G$ or $K=H$. Therefore $H$ is a maximal proper subgroup of $G$.\n\nWhen $n=1$, both sides assert the existence of no such subgroup or prime, so the statement remains valid.\\end{proof}",
+      "reason": "Dependency and descendant checks confirm the repaired argument uses only subgroup classification and divisor inclusion, with the boundary case $n=1$ preserved."
+    }
+  ]
+}

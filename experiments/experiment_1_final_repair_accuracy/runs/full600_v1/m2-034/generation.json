@@ -1,0 +1,29 @@
+{
+  "case_id": "m2-034",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "设 a 为任意实数。由于 a^2≥0，平方根的定义给出 sqrt(a^2)=|a|。",
+      "reason": "将错误的“sqrt(a^2)=a”改为平方根的定义性结论。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "设 a∈R。若 a≥0，则 |a|=a，且 sqrt(a^2)=a=|a|；若 a<0，则 |a|=-a>0，且 sqrt(a^2)=-a=|a|。因此，对任意实数 a，都有 sqrt(a^2)=|a|。",
+      "reason": "检查原证明发现其错误地把平方与开平方视为恒等抵消，并补充分情况论证。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "由绝对值的定义，|a|≥0，且 |a|^2=a^2。平方根 sqrt(a^2) 是满足 x≥0 且 x^2=a^2 的唯一实数；而 |a| 正满足这两个条件。因此 sqrt(a^2)=|a|。",
+      "reason": "批评环节识别出原证明忽略了平方根的非负性；修复后用唯一性完成证明。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "设 a 为任意实数。令 x=|a|。根据绝对值的性质，x≥0 且 x^2=a^2。按照算术平方根的定义，sqrt(a^2) 是满足 y≥0 且 y^2=a^2 的唯一实数。由于 x 具有这些性质，故 sqrt(a^2)=x=|a|。",
+      "reason": "依赖检查确认关键条件是平方根的非负性；完成局部修复后，独立复核并验证了结论对所有实数 a 均成立。"
+    }
+  ]
+}

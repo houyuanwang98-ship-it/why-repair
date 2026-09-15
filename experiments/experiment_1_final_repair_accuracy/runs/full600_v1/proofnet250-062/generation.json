@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-062",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSince\n\\[\nX\\setminus(U\\setminus A)=(X\\setminus U)\\cup A\n\\quad\\text{and}\\quad\nX\\setminus(A\\setminus U)=(X\\setminus A)\\cup U,\n\\]\nand since $X\\setminus U$ and $A$ are closed, $X\\setminus(U\\setminus A)$ is closed. Thus $U\\setminus A$ is open. Also, $X\\setminus A$ and $U$ are open, so $X\\setminus(A\\setminus U)$ is open. Thus $A\\setminus U$ is closed.\n\\end{proof}",
+      "reason": "The original proof is valid; this version makes the complement arguments explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nBecause $U$ is open, $X\\setminus U$ is closed. Since $A$ is closed, the union\n\\[\nX\\setminus(U\\setminus A)=(X\\setminus U)\\cup A\n\\]\nis closed. Therefore $U\\setminus A$ is open.\n\nBecause $A$ is closed, $X\\setminus A$ is open. Since $U$ is open, the union\n\\[\nX\\setminus(A\\setminus U)=(X\\setminus A)\\cup U\n\\]\nis open. Therefore $A\\setminus U$ is closed.\n\\end{proof}",
+      "reason": "Internal verification confirms both De Morgan identities and the required open/closed closure properties."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nUse the identities\n\\[\nX\\setminus(U\\setminus A)=(X\\setminus U)\\cup A,\n\\qquad\nX\\setminus(A\\setminus U)=(X\\setminus A)\\cup U.\n\\]\nSince $U$ is open, $X\\setminus U$ is closed; hence $(X\\setminus U)\\cup A$ is closed because $A$ is closed. Consequently, $U\\setminus A$ is open.\n\nSince $A$ is closed, $X\\setminus A$ is open; hence $(X\\setminus A)\\cup U$ is open because $U$ is open. Consequently, $A\\setminus U$ is closed.\n\\end{proof}",
+      "reason": "The critic finds no logical gap: each conclusion follows from the appropriate complement characterization."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nFor the first claim,\n\\[\nX\\setminus(U\\setminus A)=(X\\setminus U)\\cup A.\n\\]\nThe set $X\\setminus U$ is closed because $U$ is open, and $A$ is closed by assumption. Thus the right-hand side is closed, so $U\\setminus A$ is open.\n\nFor the second claim,\n\\[\nX\\setminus(A\\setminus U)=(X\\setminus A)\\cup U.\n\\]\nThe set $X\\setminus A$ is open because $A$ is closed, and $U$ is open by assumption. Thus the right-hand side is open, so $A\\setminus U$ is closed.\n\\end{proof}",
+      "reason": "Dependency checks, local verification, and descendant revalidation all confirm the proof is valid without repair."
+    }
+  ]
+}

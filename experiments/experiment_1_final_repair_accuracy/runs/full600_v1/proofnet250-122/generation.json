@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-122",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSince $I,J$ are ideals, every product of an element of $I$ with an element of $J$ lies in both $I$ and $J$. Hence $IJ\\subseteq I\\cap J$.\n\nBecause $I+J=R$, there exist $i\\in I$ and $j\\in J$ such that $i+j=1$. Let $k\\in I\\cap J$. Then\n\\[\nk=k(i+j)=ki+kj.\n\\]\nSince $k\\in I$ and $j\\in J$, we have $kj\\in IJ$; since $i\\in I$ and $k\\in J$, we have $ki\\in IJ$. Thus $k\\in IJ$, proving $I\\cap J\\subseteq IJ$.\nTherefore $IJ=I\\cap J$.\n\\end{proof}",
+      "reason": "The original argument is valid; this is a concise one-pass rewrite preserving the theorem and assumptions."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nWe first show that $IJ\\subseteq I\\cap J$. Each element of $IJ$ is a finite sum of products $ab$ with $a\\in I$ and $b\\in J$. Because $I$ and $J$ are ideals, each such product belongs to both $I$ and $J$, so $IJ\\subseteq I\\cap J$.\n\nNow let $k\\in I\\cap J$. From $I+J=R$, there are $i\\in I$ and $j\\in J$ with $i+j=1$. Consequently,\n\\[\nk=k(i+j)=ki+kj.\n\\]\nHere $ki\\in IJ$ because $i\\in I$ and $k\\in J$, while $kj\\in IJ$ because $k\\in I$ and $j\\in J$. Hence $k\\in IJ$. Thus $I\\cap J\\subseteq IJ$, and therefore $IJ=I\\cap J$.\n\\end{proof}",
+      "reason": "Internal checking confirms both inclusions and the ideal-membership assignments; the revised proof makes the product-ideal justification explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $x\\in IJ$. By definition, $x$ is a finite sum of terms $ab$ with $a\\in I$ and $b\\in J$. Each term lies in $I$ because $I$ is an ideal, and in $J$ because $J$ is an ideal. Hence $IJ\\subseteq I\\cap J$.\n\nConversely, choose $i\\in I$ and $j\\in J$ such that $i+j=1$, which is possible because $I+J=R$. For any $k\\in I\\cap J$, multiplying by $k$ gives\n\\[\nk=k(i+j)=ki+kj.\n\\]\nSince $k\\in J$ and $i\\in I$, $ki\\in IJ$; since $k\\in I$ and $j\\in J$, $kj\\in IJ$. Therefore $k\\in IJ$, so $I\\cap J\\subseteq IJ$. Thus $IJ=I\\cap J$.\n\\end{proof}",
+      "reason": "The critic finds no substantive flaw and retains the proof after clarifying the definition of $IJ$ and checking both product terms."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nWe prove the two inclusions. Since $IJ$ consists of finite sums of products of elements of $I$ and $J$, and ideals are closed under multiplication by ring elements, every element of $IJ$ belongs to both $I$ and $J$. Thus\n\\[\nIJ\\subseteq I\\cap J.\n\\]\n\nBecause $I+J=R$, we have $1\\in I+J$, so there exist $i\\in I$ and $j\\in J$ with $i+j=1$. If $k\\in I\\cap J$, then\n\\[\nk=k\\cdot1=k(i+j)=ki+kj.\n\\]\nThe term $ki$ belongs to $IJ$ because $i\\in I$ and $k\\in J$, and $kj$ belongs to $IJ$ because $k\\in I$ and $j\\in J$. Hence $k\\in IJ$, proving\n\\[\nI\\cap J\\subseteq IJ.\n\\]\nCombining the inclusions yields $IJ=I\\cap J$.\n\\end{proof}",
+      "reason": "Dependency and descendant checks validate the original proof: the identity decomposition supplies both required product terms, so no repair is needed."
+    }
+  ]
+}

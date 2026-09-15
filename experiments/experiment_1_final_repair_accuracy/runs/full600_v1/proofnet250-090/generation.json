@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-090",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSince $M_1\\equiv M^d\\pmod N$, raising both sides to the integer power $d'$ gives\n\\[\nM_1^{d'}\\equiv M^{dd'}\\pmod N.\n\\]\nBecause $dd'\\equiv1\\pmod{\\varphi(N)}$, there is an integer $k$ such that $dd'=1+k\\varphi(N)$. Since $\\gcd(M,N)=1$, Euler's theorem gives $M^{\\varphi(N)}\\equiv1\\pmod N$, and hence\n\\[\nM^{dd'}=M\\bigl(M^{\\varphi(N)}\\bigr)^k\\equiv M\\pmod N.\n\\]\nTherefore $M_1^{d'}\\equiv M\\pmod N$, or equivalently $M\\equiv M_1^{d'}\\pmod N$.\n\\end{proof}",
+      "reason": "Explicitly transfers the original congruence through exponentiation before applying Euler's theorem."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nThe congruence $M_1\\equiv M^d\\pmod N$ remains valid after raising both sides to the integer power $d'$, so\n\\[\nM_1^{d'}\\equiv (M^d)^{d'}=M^{dd'}\\pmod N.\n\\]\nWrite $dd'=1+k\\varphi(N)$ for some $k\\in\\mathbb Z$. As $M$ is relatively prime to $N$, Euler's theorem yields $M^{\\varphi(N)}\\equiv1\\pmod N$. Thus\n\\[\nM^{dd'}=M^{1+k\\varphi(N)}\\equiv M\\pmod N.\n\\]\nConsequently, $M_1^{d'}\\equiv M\\pmod N$, which proves the desired result.\n\\end{proof}",
+      "reason": "The revised proof includes the missing first congruence step and verifies the exponent relation."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nBecause congruences can be raised to integer powers, the hypothesis implies\n\\[\nM_1^{d'}\\equiv (M^d)^{d'}=M^{dd'}\\pmod N.\n\\]\nThere exists $k\\in\\mathbb Z$ with $dd'=1+k\\varphi(N)$. The condition $\\gcd(M,N)=1$ permits Euler's theorem, so $M^{\\varphi(N)}\\equiv1\\pmod N$. Therefore\n\\[\nM^{dd'}=M\\left(M^{\\varphi(N)}\\right)^k\\equiv M\\pmod N.\n\\]\nCombining the two congruences gives $M_1^{d'}\\equiv M\\pmod N$, and hence $M\\equiv M_1^{d'}\\pmod N$.\n\\end{proof}",
+      "reason": "The repaired argument passes the critical checks: hypothesis use, exponent inversion, and coprimality for Euler's theorem are all explicit."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nThe hypothesis $M_1\\equiv M^d\\pmod N$ implies, after raising both sides to the integer power $d'$, that\n\\[\nM_1^{d'}\\equiv M^{dd'}\\pmod N.\n\\]\nSince $d'$ is an inverse of $d$ modulo $\\varphi(N)$, there is an integer $k$ such that\n\\[\ndd'=1+k\\varphi(N).\n\\]\nNow $\\gcd(M,N)=1$, so Euler's theorem gives $M^{\\varphi(N)}\\equiv1\\pmod N$. Hence\n\\[\nM^{dd'}=M^{1+k\\varphi(N)}\\equiv M\\pmod N.\n\\]\nThus $M_1^{d'}\\equiv M\\pmod N$, which is equivalent to\n\\[\nM\\equiv M_1^{d'}\\pmod N.\n\\]\n\\end{proof}",
+      "reason": "Dependency checks confirm that the local repair is sufficient; the final implication and its descendant conclusion revalidate independently."
+    }
+  ]
+}

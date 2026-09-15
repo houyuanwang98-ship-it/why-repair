@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-235",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G=\\{e,a,b,ab\\}$ be the Klein four group, so $G$ is abelian and every nonidentity element has order $2$. Let $H=\\{e,a\\}$. Since $G$ is abelian, $H$ is normal in $G$. Define $\\sigma:G\\to G$ by\n\\[\n\\sigma(e)=e,\\qquad \\sigma(a)=b,\\qquad \\sigma(b)=a,\\qquad \\sigma(ab)=ab.\n\\]\nThis permutation preserves the group operation, so $\\sigma$ is an automorphism of $G$. Since $\\sigma(a)=b\\notin H$, we have $\\sigma(H)\\ne H$. Thus $H$ is normal in $G$ but is not characteristic.\n\\end{proof}",
+      "reason": "Repaired the spelling and explicitly verified that the map is an automorphism."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nTake $G=C_2\\times C_2=\\{e,a,b,ab\\}$, where $a^2=b^2=e$ and $ab=ba$. Let $H=\\{e,a\\}$. Because $G$ is abelian, every subgroup is normal, so $H\\trianglelefteq G$.\n\nDefine $\\sigma:G\\to G$ by $\\sigma(e)=e$, $\\sigma(a)=b$, $\\sigma(b)=a$, and $\\sigma(ab)=ab$. The images of the generators $a$ and $b$ again satisfy the defining relations of $C_2\\times C_2$, hence $\\sigma$ is an automorphism. But $\\sigma(H)=\\{e,b\\}\\ne H$. Therefore $H$ is not characteristic in $G$, while it is normal in $G$.\n\\end{proof}",
+      "reason": "Checked the candidate automorphism and made its action on the subgroup explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G=C_2\\times C_2=\\{e,a,b,ab\\}$, with $a^2=b^2=e$ and $ab=ba$, and let $H=\\langle a\\rangle=\\{e,a\\}$. The group $G$ is abelian, so $H$ is normal in $G$.\n\nConsider the map $\\sigma$ determined by $\\sigma(a)=b$ and $\\sigma(b)=a$. It fixes $e$ and sends $ab$ to $\\sigma(a)\\sigma(b)=ba=ab$, so it is a bijective homomorphism and hence an automorphism of $G$. However,\n\\[\n\\sigma(H)=\\{\\sigma(e),\\sigma(a)\\}=\\{e,b\\}\\ne\\{e,a\\}=H.\n\\]\nThus $H$ is normal but not characteristic, proving the claim.\n\\end{proof}",
+      "reason": "The critic check confirms normality, homomorphism, bijectivity, and failure of invariance."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nChoose the Klein four group\n\\[\nG=C_2\\times C_2=\\{e,a,b,ab\\},\n\\]\nwhere $a^2=b^2=e$ and $ab=ba$. Let\n\\[\nH=\\{e,a\\}=\\langle a\\rangle.\n\\]\nSince $G$ is abelian, $H$ is normal in $G$.\n\nDefine $\\sigma:G\\to G$ by $\\sigma(e)=e$, $\\sigma(a)=b$, $\\sigma(b)=a$, and $\\sigma(ab)=ab$. For $x,y\\in G$, this map is induced by interchanging the two coordinates of $C_2\\times C_2$; consequently it is an automorphism. In particular,\n\\[\n\\sigma(H)=\\{e,b\\}\\ne H.\n\\]\nTherefore $H$ is not fixed by every automorphism of $G$, so $H$ is not characteristic. Hence there exists a normal subgroup that is not characteristic.\n\\end{proof}",
+      "reason": "The dependency check and independent review verify the group choice, subgroup normality, automorphism, and descendant conclusion."
+    }
+  ]
+}

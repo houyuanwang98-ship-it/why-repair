@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-107",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "irreparable",
+      "final_proof": "\\begin{proof}\nThe theorem cannot be proved under the stated assumptions, because no hypothesis says that $p$ is an odd prime. For example, take $p=9$. The quadratic residues among $1,\\ldots,8$ modulo $9$ are $1,4,7$, so there are only $3$, whereas $(p-1)/2=4$. Thus the theorem is false as stated.\n\\end{proof}",
+      "reason": "The missing assumption that $p$ is an odd prime is essential; $p=9$ is a counterexample."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "irreparable",
+      "final_proof": "\\begin{proof}\nA proof is impossible with the given assumptions. Indeed, let $p=9$. The nonzero squares modulo $9$ are\n\\[\n1^2\\equiv1,\\quad 2^2\\equiv4,\\quad 4^2\\equiv7,\\quad 5^2\\equiv7,\\quad 7^2\\equiv4,\\quad 8^2\\equiv1\\pmod 9,\n\\]\nso the quadratic residues in $\\{1,\\ldots,8\\}$ are exactly $\\{1,4,7\\}$. Their number is $3$, not $(9-1)/2=4$. Hence the theorem cannot be preserved without adding that $p$ is an odd prime.\n\\end{proof}",
+      "reason": "Internal checking exposes a concrete counterexample because the assumptions are empty."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "irreparable",
+      "final_proof": "\\begin{proof}\nThe proposed claim is false under the stated assumptions. Choose $p=9$. Then\n\\[\n\\{x^2\\bmod 9:1\\le x\\le8\\}\\cap\\{1,\\ldots,8\\}=\\{1,4,7\\}.\n\\]\nTherefore there are $3$ quadratic residues and $5$ quadratic nonresidues among $1,\\ldots,8$, while the claim requires $4$ of each. Consequently no valid proof exists unless the hypothesis that $p$ is an odd prime is supplied.\n\\end{proof}",
+      "reason": "A critic check finds that the claimed two-solutions property fails for composite moduli; $p=9$ refutes the theorem."
+    },
+    {
+      "method": "full_system",
+      "outcome": "irreparable",
+      "final_proof": "\\begin{proof}\nThe theorem cannot be established with the supplied assumptions. The intended argument requires $p$ to be an odd prime: only then does every nonzero square have exactly two square roots modulo $p$. Since that assumption is absent, take $p=9$. The quadratic residues among $1,\\ldots,8$ are $1,4,7$, hence there are $3$ residues and $5$ nonresidues, not $4$ and $4$. Thus the theorem is false on its stated domain, so no local proof repair or descendant revalidation can preserve it.\n\\end{proof}",
+      "reason": "Dependency analysis identifies the absent odd-prime hypothesis as essential, and the independent check confirms the counterexample $p=9$."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-050",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Yes. Choose an integer g that is a primitive root modulo p^{n+1}. Let a_k be the least positive residue of g^{k-1} modulo p^n, for 1≤k≤N, where N=φ(p^n)=p^{n-1}(p-1). Since g is primitive modulo p^n, these a_k are precisely the elements of U, so they form a permutation.\n\nModulo p^n, with a_{N+1}=a_1,\nS=∑_{k=1}^N a_ka_{k+1}≡∑_{k=1}^N g^{2k-1}=g∑_{j=0}^{N-1}(g^2)^j=g(g^{2N}-1)/(g^2-1).\n\nBecause g is primitive modulo p^{n+1}, v_p(g^N-1)=n. Since p is odd, v_p(g^N+1)=0, hence v_p(g^{2N}-1)=n. Also g is primitive modulo p^2, so g^2≠1 mod p^2 and therefore v_p(g^2-1)=1. Thus the displayed quotient has p-adic valuation n-1. Consequently S≡0 mod p^{n-1} but S≢0 mod p^n. Therefore the required permutation exists.",
+      "reason": "Repairs the invalid claim about an arbitrary primitive root modulo p^n by choosing one primitive modulo p^{n+1}, and explicitly handles least-residue representatives."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Yes. Let N=φ(p^n)=p^{n-1}(p-1), and choose a primitive root g modulo p^{n+1}. Define a_k to be the least positive residue of g^{k-1} modulo p^n. The powers g^0,…,g^{N-1} represent every unit modulo p^n exactly once, so (a_1,…,a_N) is a permutation of U.\n\nWriting a_{N+1}=a_1 and reducing modulo p^n gives\nS=∑_{k=1}^N a_ka_{k+1}≡g∑_{j=0}^{N-1}(g^2)^j=g(g^{2N}-1)/(g^2-1).\n\nPrimitivity modulo p^{n+1} implies v_p(g^N-1)=n. As p is odd, g^N≡1 mod p, so v_p(g^N+1)=0; hence v_p(g^{2N}-1)=n. Moreover, g is primitive modulo p^2, so g^2≠1 mod p^2, giving v_p(g^2-1)=1. Since p∤g,\n\nv_p\\left(g(g^{2N}-1)/(g^2-1)\\right)=n-1.\n\nThus p^{n-1} divides S while p^n does not. Hence such a permutation exists.",
+      "reason": "Internal checking identifies the lift-to-p^{n+1} condition as necessary and yields a valid revised proof."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Yes. Set N=φ(p^n). Select a primitive root g modulo p^{n+1}, and let a_k be the least positive representative of g^{k-1} modulo p^n. These representatives are exactly all positive integers below p^n not divisible by p, so they give a permutation of U.\n\nFor the cyclic sum S, reduction modulo p^n yields\nS≡∑_{k=1}^N g^{k-1}g^k=g(g^{2N}-1)/(g^2-1) mod p^n.\n\nNow g has order N modulo p^n and order pN modulo p^{n+1}. Therefore g^N≡1 mod p^n but g^N≢1 mod p^{n+1}, so v_p(g^N-1)=n. Since p is odd, g^N+1 is a p-adic unit, and v_p(g^{2N}-1)=n. Also g is primitive modulo p^2, so g^2−1 is divisible by p but not p^2; hence v_p(g^2−1)=1. The quotient therefore has valuation n−1. Thus S is divisible by p^{n−1} and not by p^n, proving the assertion.",
+      "reason": "The critic catches the original proof's unsupported lifting assertion and the literal-versus-residue issue; both are repaired."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Yes. Let N=p^{n-1}(p-1), and choose g primitive modulo p^{n+1}. For each k=1,…,N, let a_k be the unique integer in {1,…,p^n−1} congruent to g^{k-1} modulo p^n. Since the reduction of g generates the unit group modulo p^n, the a_k form a permutation of U.\n\nLet a_{N+1}=a_1 and S=∑_{k=1}^N a_ka_{k+1}. Because each a_k is congruent to g^{k-1} modulo p^n,\nS≡g∑_{j=0}^{N-1}(g^2)^j=g(g^{2N}−1)/(g^2−1) mod p^n.\n\nThe choice of g modulo p^{n+1} gives g^N≡1 mod p^n but not modulo p^{n+1}; hence v_p(g^N−1)=n. Since p is odd, g^N+1≡2 mod p, so v_p(g^{2N}−1)=n. Primitivity modulo p^2 implies g^2≢1 mod p^2, while g^2≡1 mod p, so v_p(g^2−1)=1. Therefore the quotient has valuation n−1. Its congruence to S modulo p^n implies S is divisible by p^{n−1} and not by p^n. This proves existence.",
+      "reason": "Dependency-aware checking validates the corrected lift, residue mapping, geometric sum, and valuation transfer modulo p^n; no further repair is needed."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-005",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf $V=\\{0\\}$, then $T=0$, so $T$ is a scalar multiple of the identity. Suppose $V$ contains a nonzero vector. For each nonzero $v\\in V$, there is a unique scalar $a_v\\in F$ such that $Tv=a_vv$.\n\nLet $v,w\\in V$ be nonzero. If $v$ and $w$ are linearly dependent, write $w=bv$ for some nonzero $b\\in F$. Then\n\\[\na_ww=Tw=T(bv)=bTv=ba_vv=a_vw,\n\\]\nso $a_w=a_v$. If $v$ and $w$ are linearly independent, then, for some $a_{v+w}\\in F$,\n\\[\na_{v+w}(v+w)=T(v+w)=Tv+Tw=a_vv+a_ww.\n\\]\nThus\n\\[\n(a_{v+w}-a_v)v+(a_{v+w}-a_w)w=0.\n\\]\nLinear independence gives $a_{v+w}=a_v=a_w$. Hence all nonzero vectors have the same eigenvalue, say $a$.\n\nTherefore $Tv=av$ for every nonzero $v$, and also $T0=0=a0$. Thus $T=aI_V$.\n\\end{proof}",
+      "reason": "Repaired the zero-vector and dependent-vector cases and established a common eigenvalue for all nonzero vectors."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf $V=\\{0\\}$, the conclusion is immediate. Otherwise choose $u\\ne0$. Since every vector is an eigenvector of $T$, there is a scalar $a\\in F$ with $Tu=au$.\n\nWe claim that $Tv=av$ for every $v\\in V$. This is clear for $v=0$. Let $v\\ne0$. If $v$ is a scalar multiple of $u$, say $v=bu$ with $b\\ne0$, then\n\\[\nTv=T(bu)=bTu=bau=av.\n\\]\nIf $u$ and $v$ are linearly independent, let $c\\in F$ satisfy $T(u+v)=c(u+v)$. On the other hand,\n\\[\nT(u+v)=Tu+Tv=au+Tv.\n\\]\nWriting $Tv=dv$ for the eigenvalue $d$ associated with $v$, we obtain\n\\[\ncu+cv=au+dv.\n\\]\nSince $u,v$ are linearly independent, $c=a$ and $c=d$, so $d=a$ and consequently $Tv=av$.\n\nThus $Tv=av$ for every $v\\in V$, which means $T=aI_V$.\n\\end{proof}",
+      "reason": "The revised proof uses one fixed nonzero vector and checks separately scalar multiples, independent vectors, and zero."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWhen $V=\\{0\\}$, $T=0$, and the assertion holds. Assume henceforth that $V\\ne\\{0\\}$ and choose $u\\in V\\setminus\\{0\\}$. Let $\\lambda\\in F$ be defined by $Tu=\\lambda u$.\n\nFor any $v\\in V\\setminus\\{0\\}$, write $Tv=\\mu v$ for some $\\mu\\in F$. If $v$ and $u$ are linearly dependent, then $v=cu$ for some $c\\ne0$, and\n\\[\nTv=cTu=c\\lambda u=\\lambda v,\n\\]\nso $\\mu=\\lambda$.\n\nIf $u$ and $v$ are linearly independent, then $u+v\\ne0$, and for some $\\nu\\in F$ we have\n\\[\nT(u+v)=\\nu(u+v).\n\\]\nBy linearity,\n\\[\n\\lambda u+\\mu v=Tu+Tv=T(u+v)=\\nu u+\\nu v.\n\\]\nTherefore $(\\lambda-\\nu)u+(\\mu-\\nu)v=0$. Independence implies $\\lambda=\\nu=\\mu$. Hence $Tv=\\lambda v$ for every nonzero $v$; the same identity holds for $v=0$ because $T0=0$.\n\nThus $T=\\lambda I_V$.\n\\end{proof}",
+      "reason": "A critic-style check removes the invalid use of nonunique eigenvalues at zero and ensures the scalar in the dependent case is nonzero."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf $V=\\{0\\}$, then $T=0$, so the result holds. Otherwise select $u\\ne0$ and let $\\lambda\\in F$ satisfy $Tu=\\lambda u$.\n\nWe prove that $Tv=\\lambda v$ for every $v\\in V$. The assertion is true for $v=0$. Let $v\\ne0$. By hypothesis, choose $\\mu\\in F$ such that $Tv=\\mu v$.\n\nIf $u$ and $v$ are linearly dependent, then $v=cu$ for some $c\\ne0$, and linearity gives\n\\[\nTv=cTu=c\\lambda u=\\lambda v.\n\\]\nThus $\\mu=\\lambda$ by uniqueness, since $v\\ne0$.\n\nOtherwise $u$ and $v$ are linearly independent. The vector $u+v$ is nonzero, so choose $\\nu\\in F$ with $T(u+v)=\\nu(u+v)$. Then\n\\[\n\\lambda u+\\mu v=Tu+Tv=T(u+v)=\\nu u+\\nu v.\n\\]\nHence\n\\[\n(\\lambda-\\nu)u+(\\mu-\\nu)v=0.\n\\]\nIndependence of $u$ and $v$ implies $\\lambda=\\nu$ and $\\mu=\\nu$, so $\\mu=\\lambda$.\n\nTherefore $Tv=\\lambda v$ for all $v\\in V$, and consequently $T=\\lambda I_V$.\n\\end{proof}",
+      "reason": "Dependency-aware verification handles the zero space, fixes eigenvalue uniqueness conditions, and rechecks both dependent and independent branches."
+    }
+  ]
+}

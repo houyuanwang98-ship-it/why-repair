@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-015",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nIf $x^2+1$ were reducible over $\\mathbb{F}_7$, then, since it has degree $2$, it would have a linear factor and hence a root in $\\mathbb{F}_7$. The squares in $\\mathbb{F}_7$ are $0,1,2,4$, so $x^2$ can never equal $-1=6$ in $\\mathbb{F}_7$. Thus $x^2+1$ has no root in $\\mathbb{F}_7$ and is irreducible.\n\\end{proof}",
+      "reason": "The original argument is valid; the rewrite makes the square-class check explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nA quadratic polynomial over a field is reducible if and only if it has a root in that field. For $a\\in\\mathbb{F}_7$, the possible values of $a^2$ are $0,1,2,4$. Since $-1\\equiv 6\\pmod 7$ is not among these values, $a^2+1\\ne 0$ for every $a\\in\\mathbb{F}_7$. Therefore $x^2+1$ has no root in $\\mathbb{F}_7$, and hence it is irreducible in $\\mathbb{F}_7[x]$.\n\\end{proof}",
+      "reason": "Internal checking confirms the root criterion and the complete list of quadratic residues modulo $7$."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSuppose that $x^2+1$ is reducible in $\\mathbb{F}_7[x]$. Because it is monic of degree $2$, it must then factor into two linear polynomials, so it must have a root $a\\in\\mathbb{F}_7$. This would give $a^2=-1=6$ in $\\mathbb{F}_7$. However,\n\\[\n0^2,1^2,2^2,3^2,4^2,5^2,6^2\\equiv 0,1,4,2,2,4,1\\pmod 7,\n\\]\nso $6$ is not a square modulo $7$. This contradiction proves that $x^2+1$ is irreducible over $\\mathbb{F}_7$.\n\\end{proof}",
+      "reason": "The generated proof passes criticism: the degree-two reduction criterion and residue computation are both correct."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $f(x)=x^2+1\\in\\mathbb{F}_7[x]$. A degree-two polynomial over a field is reducible exactly when it has a root in the field. For every $a\\in\\mathbb{F}_7$, the quadratic residues are\n\\[\na^2\\in\\{0,1,2,4\\}.\n\\]\nBut $-1=6$ in $\\mathbb{F}_7$, and $6\\notin\\{0,1,2,4\\}$. Hence $a^2+1\\ne0$ for every $a\\in\\mathbb{F}_7$. Thus $f$ has no root in $\\mathbb{F}_7$, so it is irreducible in $\\mathbb{F}_7[x]$.\n\\end{proof}",
+      "reason": "Dependency checks, local validation, independent review, and descendant revalidation all confirm the original proof is complete and correct."
+    }
+  ]
+}

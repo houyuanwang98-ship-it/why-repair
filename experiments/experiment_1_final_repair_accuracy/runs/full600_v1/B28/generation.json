@@ -1,0 +1,29 @@
+{
+  "case_id": "B28",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "由 0<a<b 且 a,b 为实数，得 b-a>0，且 a+b>0。于是\nb^2-a^2=(b-a)(a+b)>0，\n因此 a^2<b^2。",
+      "reason": "补充平方差分解及两个正因子的符号判断，修正了原证明中由同为正数直接推出大小关系的错误。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "因为 0<a<b，所以 b-a>0；又因 a>0 且 b>0，所以 a+b>0。故\nb^2-a^2=(b-a)(a+b)>0。\n因此 b^2>a^2，即 a^2<b^2。",
+      "reason": "检查后确认原论证缺少从 a<b 到平方大小关系的依据，并加入平方差恒等式完成证明。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "由 a<b 且 a,b 为实数，平方差可写为\nb^2-a^2=(b-a)(b+a)。\n由于 b-a>0，且 b+a>0（因为 0<a<b），所以 b^2-a^2>0。因此 a^2<b^2。",
+      "reason": "批评环节识别出“两个数均为正”不足以单独证明其大小关系；生成证明改用正因子乘积严格论证。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "依赖 0<a<b。由此得到 b-a>0，并且 a+b>0。应用平方差恒等式：\nb^2-a^2=(b-a)(a+b)>0。\n于是 b^2>a^2，故 a^2<b^2。该结论直接由给定假设推出，且不存在未验证的后续依赖。",
+      "reason": "依赖检查定位到原证明缺失平方单调性的关键论证；进行最小局部修复后，独立复核并重新验证结论成立。"
+    }
+  ]
+}

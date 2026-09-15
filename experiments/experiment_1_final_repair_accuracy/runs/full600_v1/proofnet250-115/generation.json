@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-115",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor all $t,x\\in\\mathbb R$, we have\n\\[\n|f(t)-f(x)|\\le |t-x|^2.\n\\]\nFix $x\\in\\mathbb R$. For $t\\ne x$,\n\\[\n\\left|\\frac{f(t)-f(x)}{t-x}\\right|\\le |t-x|.\n\\]\nAs $t\\to x$, the right-hand side tends to $0$, so\n\\[\n\\lim_{t\\to x}\\frac{f(t)-f(x)}{t-x}=0.\n\\]\nThus $f$ is differentiable at every $x\\in\\mathbb R$ and $f'(x)=0$ for all $x$. By the mean value theorem, for any $a<b$ there exists $c\\in(a,b)$ such that\n\\[\nf(b)-f(a)=f'(c)(b-a)=0.\n\\]\nHence $f(a)=f(b)$ for all $a,b\\in\\mathbb R$, so $f$ is constant.\n\\end{proof}",
+      "reason": "Replaced the informal appeal to class with an explicit mean-value-theorem argument and stated the derivative limit correctly."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $x\\in\\mathbb R$ be arbitrary. For every $t\\ne x$, the hypothesis gives\n\\[\n\\left|\\frac{f(t)-f(x)}{t-x}\\right|\n=\\frac{|f(t)-f(x)|}{|t-x|}\n\\le |t-x|.\n\\]\nTherefore, by squeezing,\n\\[\n\\lim_{t\\to x}\\frac{f(t)-f(x)}{t-x}=0.\n\\]\nThus $f'(x)=0$. Since $x$ was arbitrary, $f'(x)=0$ on all of $\\mathbb R$. Given any $a<b$, the mean value theorem yields some $c\\in(a,b)$ with\n\\[\nf(b)-f(a)=f'(c)(b-a)=0.\n\\]\nConsequently $f(a)=f(b)$ for every $a,b\\in\\mathbb R$, and $f$ is constant.\n\\end{proof}",
+      "reason": "Internal checking confirmed the quotient estimate and repaired the proof by explicitly justifying the limit and the final implication."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nTake arbitrary $a,b\\in\\mathbb R$. If $a=b$, then $f(a)=f(b)$. Suppose $a\\ne b$, and divide the interval $[a,b]$ into $n$ equal subintervals. Set\n\\[\nx_k=a+\\frac{k}{n}(b-a),\\qquad k=0,1,\\dots,n.\n\\]\nBy the triangle inequality and the hypothesis,\n\\[\n|f(b)-f(a)|\n\\le \\sum_{k=1}^n |f(x_k)-f(x_{k-1})|\n\\le n\\left|\\frac{b-a}{n}\\right|^2\n=\\frac{|b-a|^2}{n}.\n\\]\nThis holds for every positive integer $n$. Letting $n\\to\\infty$ gives $|f(b)-f(a)|=0$, hence $f(b)=f(a)$. Since $a,b$ were arbitrary, $f$ is constant.\n\\end{proof}",
+      "reason": "The critic identified that the original conclusion relied on an unstated theorem; the repaired proof uses only the hypothesis, the triangle inequality, and a limiting subdivision argument."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe prove directly that any two values of $f$ agree. Let $a,b\\in\\mathbb R$ and let $n\\ge1$. Define\n\\[\nx_k=a+\\frac{k}{n}(b-a)\\quad (k=0,1,\\ldots,n).\n\\]\nThen $x_0=a$, $x_n=b$, and $|x_k-x_{k-1}|=|b-a|/n$. Hence\n\\[\n\\begin{aligned}\n|f(b)-f(a)|\n&\\le \\sum_{k=1}^n |f(x_k)-f(x_{k-1})|\\\\\n&\\le \\sum_{k=1}^n |x_k-x_{k-1}|^2\\\\\n&=n\\left(\\frac{|b-a|}{n}\\right)^2\n=\\frac{|b-a|^2}{n}.\n\\end{aligned}\n\\]\nBecause this bound holds for every $n$, letting $n\\to\\infty$ yields $|f(b)-f(a)|=0$. Thus $f(b)=f(a)$. Since $a$ and $b$ are arbitrary, $f$ is constant.\n\\end{proof}",
+      "reason": "Dependency-aware review found the direct subdivision proof self-contained, robust, and independent of differentiability; descendant checks preserve the unchanged theorem and assumptions."
+    }
+  ]
+}

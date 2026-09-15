@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-138",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be a group of order $462=2\\cdot3\\cdot7\\cdot11=11\\cdot42$. By Sylow's theorems, the number $n_{11}$ of Sylow $11$-subgroups satisfies\n\\[\nn_{11}\\equiv 1\\pmod{11}\\qquad\\text{and}\\qquad n_{11}\\mid 42.\n\\]\nThe positive divisors of $42$ are $1,2,3,6,7,14,21,42$, and the only one congruent to $1$ modulo $11$ is $1$. Thus $n_{11}=1$. Therefore the unique Sylow $11$-subgroup is normal in $G$. It has order $11$, so it is a nontrivial proper normal subgroup of $G$. Hence $G$ is not simple.\n\\end{proof}",
+      "reason": "The argument is valid after explicitly showing that the normal Sylow subgroup is proper and nontrivial."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSince $|G|=462=11\\cdot42$, Sylow's theorems guarantee a Sylow $11$-subgroup $P\\le G$ with $|P|=11$. If $n_{11}$ denotes the number of Sylow $11$-subgroups, then\n\\[\nn_{11}\\mid 42\\quad\\text{and}\\quad n_{11}\\equiv1\\pmod{11}.\n\\]\nAmong the divisors of $42$, namely $1,2,3,6,7,14,21,42$, only $1$ is congruent to $1$ modulo $11$. Consequently $n_{11}=1$, so $P$ is characteristic under conjugation and therefore normal in $G$. Because $1<|P|=11<462=|G|$, $P$ is a nontrivial proper normal subgroup. Thus $G$ is not simple.\n\\end{proof}",
+      "reason": "Internal checking confirms the Sylow count and adds the necessary properness and nontriviality checks."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWrite $|G|=462=11\\cdot42$. Let $n_{11}$ be the number of Sylow $11$-subgroups of $G$. Sylow's theorems give\n\\[\nn_{11}\\equiv1\\pmod{11},\\qquad n_{11}\\mid42.\n\\]\nChecking the divisors of $42$ shows that none of $2,3,6,7,14,21,42$ is congruent to $1$ modulo $11$; hence $n_{11}=1$. The unique Sylow $11$-subgroup $P$ is consequently normal in $G$. Since $|P|=11$, while $1<11<462$, $P$ is a nonidentity proper normal subgroup of $G$. Therefore $G$ is not simple.\n\\end{proof}",
+      "reason": "The critic check finds no mathematical gap after verifying the divisor congruences and the subgroup’s properness."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be a group with $|G|=462=11\\cdot42$. By the Sylow theorems, a Sylow $11$-subgroup $P$ exists and has order $11$. If $n_{11}$ is the number of Sylow $11$-subgroups, then\n\\[\nn_{11}\\mid42\\quad\text{and}\n\\quad n_{11}\\equiv1\\pmod{11}.\n\\]\nThe divisors of $42$ are $1,2,3,6,7,14,21,42$, and only $1$ is congruent to $1$ modulo $11$. Thus $n_{11}=1$. Hence $P$ is the unique Sylow $11$-subgroup and is normal in $G$. Since $P$ has order $11$, it is neither trivial nor equal to $G$ because $1<11<462$. Therefore $G$ has a nontrivial proper normal subgroup, so $G$ is not simple.\n\\end{proof}",
+      "reason": "Dependency checks validate existence, order, Sylow counting, normality, and the final simplicity criterion; independent review found no remaining gap."
+    }
+  ]
+}

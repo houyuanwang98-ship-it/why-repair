@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-105",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nConsider the set of subgroups of $G$ that contain $H$ but are not equal to $G$. This set is nonempty because it contains $H$. Since $G$ is finite, it has finitely many subgroups, so this set is finite. Choose a subgroup $M$ in this set maximal under inclusion. Then $M\\neq G$ and $H\\le M$. If $M<L\\le G$ for some subgroup $L$ of $G$, then $L$ contains $H$. By the maximality of $M$ among the proper subgroups containing $H$, we must have $L=G$. Thus the only subgroups of $G$ containing $M$ are $M$ and $G$, so $M$ is a maximal subgroup of $G$ containing $H$.\n\\end{proof}",
+      "reason": "Replaced the informal repetition with a finite maximality argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $\\mathcal S=\\{K\\le G:H\\le K<G\\}$. Since $H<G$, the set $\\mathcal S$ is nonempty. Because $G$ is finite, it has finitely many subgroups, and hence $\\mathcal S$ has a member $M$ maximal under inclusion. We claim that $M$ is maximal in $G$. Indeed, if $M\\le L\\le G$ and $L$ is a subgroup, then $H\\le L$. If $L\\neq M$, the maximality of $M$ in $\\mathcal S$ forces $L\\not<G$, so $L=G$. Therefore the only subgroups of $G$ containing $M$ are $M$ and $G$. Also $M\\neq G$, so $M$ is a maximal subgroup of $G$, and it contains $H$.\n\\end{proof}",
+      "reason": "Checked the containment and properness conditions explicitly and tightened the argument."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAmong all proper subgroups of $G$ containing $H$, choose one, say $M$, of largest order. Such a subgroup exists because $H$ itself is proper and $G$ is finite. Clearly $H\\le M<G$. Suppose that a subgroup $L$ of $G$ contains $M$. If $M<L<G$, then $|M|<|L|$, while $L$ is a proper subgroup containing $H$, contradicting the choice of $M$. Hence every subgroup containing $M$ is either $M$ or $G$. Thus $M$ is a maximal subgroup of $G$ containing $H$.\n\\end{proof}",
+      "reason": "The critic identified that finiteness should justify termination or maximal selection; choosing largest order supplies that justification."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $\\mathcal P$ be the collection of proper subgroups $K$ of $G$ satisfying $H\\le K$. The collection is nonempty since $H\\in\\mathcal P$. Since $G$ is finite, it has finitely many subgroups; therefore $\\mathcal P$ is finite. Select $M\\in\\mathcal P$ maximal under inclusion. Then $M\\neq G$ and $H\\le M$. For any subgroup $L$ of $G$ with $M\\le L$, we have $H\\le L$. If $L$ were proper and strictly larger than $M$, then $L\\in\\mathcal P$, contradicting the maximality of $M$. Consequently, $L=M$ or $L=G$. Hence $M$ is a maximal subgroup of $G$ containing $H$.\n\\end{proof}",
+      "reason": "Dependency checks confirm existence, finiteness, maximal selection, and the descendant containment claim; the local repair is independently valid."
+    }
+  ]
+}

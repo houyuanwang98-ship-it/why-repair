@@ -1,0 +1,29 @@
+{
+  "case_id": "m2-035",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "由 a<b 且 c<0，实数不等式两边同乘负数 c 时不等号方向改变，因此直接得到 ac>bc。故 ac>bc。",
+      "reason": "删除了错误的中间结论 ac<bc，并保留定理与假设。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "已知 a<b，且 c<0。由于 c 为负数，将不等式 a<b 两边同乘 c 时不等号必须反向，故 ac>bc。因此结论成立。",
+      "reason": "复核了乘以负数时不等号反向的规则，修正了原证明中的方向错误。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "生成证明：由 a<b 且 c<0，两边同乘 c 后不等号反向，得到 ac>bc。\n批评检查：原证明先写出 ac<bc，该步与“乘以负数不等号反向”的规则矛盾，应予删除。修正后，由 a<b 且 c<0 直接推出 ac>bc，故命题成立。",
+      "reason": "批评环节识别并移除了矛盾的中间不等式，生成证明经修正后有效。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "依赖检查：结论 ac>bc 依赖于 a<b 以及 c<0；关键规则是实数不等式两边同乘负数时不等号方向反向。局部修复：将原证明中的“ac<bc”改为“ac>bc”，并删除随后重复的反向操作。\n独立复核：因为 a<b 且 c<0，所以 ac>bc；该推导未改变假设或定义。后代结论复验：最终结论仍为 ac>bc，成立。",
+      "reason": "完成了依赖定位、最小局部修复、独立复核及最终结论复验。"
+    }
+  ]
+}

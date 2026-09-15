@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-143",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let v₂ denote the 2-adic valuation. We seek v₂(n^{n−1}−1)=2015.\n\nIf n is even, then n^{n−1}−1 is odd, so n must be odd. Put r=n−1, which is even. For odd n, the 2-adic LTE formula gives\nv₂(n^r−1)=v₂(n−1)+v₂(n+1)+v₂(r)−1.\n\nIf n≡1 (mod 4), then v₂(n+1)=1 and v₂(r)=v₂(n−1), so\nv₂(n^{n−1}−1)=2v₂(n−1),\nwhich is even and therefore cannot equal 2015.\n\nIf n≡3 (mod 4), then v₂(n−1)=1 and v₂(r)=1, so\nv₂(n^{n−1}−1)=v₂(n+1)+1.\nThus the required valuation is 2015 exactly when v₂(n+1)=2014, equivalently\nn+1=2^{2014}m\nfor some positive odd integer m. Hence\nn=2^{2014}m−1,\nwhere m is positive and odd. Equivalently, writing m=2k+1,\n\nn=2^{2015}k+2^{2014}−1,  k≥0.\n\nTherefore the complete answer is\n\\boxed{n≡2^{2014}−1\\pmod{2^{2015}}}.",
+      "reason": "The original conclusion is correct, but the stated LTE formula was incomplete; the corrected formula is used."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "We require v₂(n^{n−1}−1)=2015. Even n give an odd number n^{n−1}−1, so n is odd. The case n=1 gives 0 and does not satisfy the divisibility condition, so assume n>1.\n\nFor odd n and even r=n−1, LTE yields\nv₂(n^r−1)=v₂(n−1)+v₂(n+1)+v₂(r)−1.\n\nWhen n≡1 (mod 4), v₂(n+1)=1 and v₂(r)=v₂(n−1), hence the valuation is 2v₂(n−1), which cannot be 2015.\n\nWhen n≡3 (mod 4), v₂(n−1)=1 and v₂(r)=1. Therefore\nv₂(n^{n−1}−1)=v₂(n+1)+1.\nThis equals 2015 precisely when v₂(n+1)=2014. Thus n+1 is divisible by 2^{2014} but not by 2^{2015}, so\nn=2^{2014}m−1\nfor a positive odd integer m. Conversely, every such n has valuation 2015 by the same formula.\n\nHence all solutions are\n\\boxed{n=2^{2014}m−1\\text{ for positive odd }m},\n\nor equivalently\n\\boxed{n≡2^{2014}−1\\pmod{2^{2015}}}.",
+      "reason": "A check adds the excluded n=1 edge case and verifies the converse explicitly."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Set r=n−1. The condition is exactly v₂(n^r−1)=2015.\n\nIf n is even, n^r−1 is odd, so no even n works. For odd n>1, r is even and the LTE identity\nv₂(n^r−1)=v₂(n−1)+v₂(n+1)+v₂(r)−1\napplies.\n\nFor n≡1 (mod 4), we have v₂(n+1)=1 and v₂(r)=v₂(n−1), giving\nv₂(n^r−1)=2v₂(n−1),\nwhich is even, so this case contributes no solutions.\n\nFor n≡3 (mod 4), we have v₂(n−1)=1 and v₂(r)=1, giving\nv₂(n^r−1)=v₂(n+1)+1.\nConsequently, the valuation is 2015 if and only if v₂(n+1)=2014. This is equivalent to n+1=2^{2014}m with m odd and positive. Therefore\nn=2^{2014}m−1,\nwhere m is any positive odd integer. Conversely, these n satisfy n≡3 (mod 4), and substitution into LTE gives valuation 2015, so they all work.\n\nThus\n\\boxed{n≡2^{2014}−1\\pmod{2^{2015}}}.",
+      "reason": "The critic check confirms the two congruence cases, the exact valuation, and the converse; only the LTE statement needed correction."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "We determine all positive integers n such that v₂(n^{n−1}−1)=2015.\n\nIf n is even, then n^{n−1}−1 is odd, so n must be odd. The value n=1 gives n^{n−1}−1=0, which is divisible by 2^{2016}, so it is not a solution. Hence n>1 and r=n−1 is a positive even integer.\n\nFor odd n, LTE gives\nv₂(n^r−1)=v₂(n−1)+v₂(n+1)+v₂(r)−1.\n\nIf n≡1 (mod 4), then v₂(n+1)=1 and v₂(r)=v₂(n−1). Hence\nv₂(n^{n−1}−1)=2v₂(n−1),\nwhich is even and cannot equal 2015.\n\nIf n≡3 (mod 4), then v₂(n−1)=1 and v₂(r)=1. Hence\nv₂(n^{n−1}−1)=v₂(n+1)+1.\nTherefore the required condition holds exactly when\nv₂(n+1)=2014.\n\nThus n+1=2^{2014}m for some positive odd integer m, and so\nn=2^{2014}m−1.\nConversely, every such n is 3 modulo 4 and the displayed LTE formula gives valuation 2015, proving both divisibility by 2^{2015} and nondivisibility by 2^{2016}.\n\nTherefore the complete solution set is\n\\boxed{n=2^{2014}m−1\\ (m\\text{ positive odd})},\n\nor equivalently\n\\boxed{n≡2^{2014}−1\\pmod{2^{2015}}}.",
+      "reason": "Dependency checks preserve the theorem and domain, repair the LTE statement, handle n=1, and revalidate the converse."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-131",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let c=f(1) and d=f(c)-1≥0. Taking n=1 gives f(m+1)≥f(m)+d, hence f(m)≥c+(m-1)d. Setting m=c yields d+1≥c+(c-1)d, or (2-c)d≥c-1. Since c≥1 and d≥0, this forces c=1. Thus f(1)=1 and f is nondecreasing.\n\nSuppose f(k)≥k+1 for some k, and choose the least such k. Then f(k-1)≤k-1. Using m=1,n=k-1 gives f(k)≥f(f(k-1)). Since f(k-1)≤k-1 and f is nondecreasing, f(f(k-1))≤f(k-1)≤k-1, contradicting f(k)≥k+1. Therefore f(n)≤n for every n, so 1≤f(2007)≤2007.\n\nFor r≥0 define f_r(n)=1 if n≤r+1, and f_r(n)=n-r if n≥r+2. This function is nondecreasing. If n≤2r+1, then f_r(f_r(n))=1, so f_r(m+n)≥f_r(m)=f_r(m)+f_r(f_r(n))-1. If n≥2r+2, then f_r(f_r(n))=n-2r and f_r(m+n)=m+n-r. If m≤r+1, the difference between the two sides is m+r≥1; if m≥r+2, it is 2r+1≥1. Hence every f_r satisfies the required inequality.\n\nFinally, f_r(2007)=2007-r for 0≤r≤2006, while f_r(2007)=1 for r≥2006. Thus every integer from 1 through 2007 occurs, and no other value can occur. Therefore the possible values are exactly {1,2,…,2007}.",
+      "reason": "The supplied proof is valid; its induction, upper-bound argument, and construction all check out."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let c=f(1) and d=f(c)-1. From the hypothesis with n=1,\n f(m+1)≥f(m)+d.\nSince d≥0, induction gives f(m)≥c+(m-1)d. Taking m=c gives\n d+1=f(c)≥c+(c-1)d,\nso (2-c)d≥c-1. This is possible only when c=1. Consequently f(1)=1, and the original inequality with n=1 implies f(m+1)≥f(m); hence f is nondecreasing.\n\nAssume that f(k)≥k+1 for some k, choosing the least such k. Then f(k-1)≤k-1. Applying the hypothesis with (m,n)=(1,k-1),\n f(k)≥f(f(k-1)).\nBecause f(k-1)≤k-1 and f is nondecreasing,\n f(f(k-1))≤f(k-1)≤k-1,\nwhich contradicts f(k)≥k+1. Hence f(n)≤n for all n, and therefore f(2007) lies between 1 and 2007.\n\nFor each r≥0 define\n f_r(n)=1 (n≤r+1), and f_r(n)=n-r (n≥r+2).\nFix m,n. If n≤2r+1, then f_r(f_r(n))=1, and monotonicity gives f_r(m+n)≥f_r(m), exactly the required inequality. If n≥2r+2, then f_r(f_r(n))=n-2r and f_r(m+n)=m+n-r. For m≤r+1, the excess of the left side over the required right side is m+r; for m≥r+2, it is 2r+1. Both are positive. Thus f_r is admissible.\n\nFor 0≤r≤2006, f_r(2007)=2007-r, producing every value 2007,2006,…,1. Hence the complete answer is 1,2,…,2007.",
+      "reason": "After checking boundary cases n≤2r+1 and n≥2r+2, the draft remains correct without substantive repair."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "We prove both necessity and sufficiency.\n\nPut c=f(1) and d=f(c)-1≥0. The case n=1 gives f(m+1)≥f(m)+d, so f(m)≥c+(m-1)d. At m=c this implies (2-c)d≥c-1. Since c,d are nonnegative integers with c≥1, this forces c=1. Thus f(1)=1 and f is nondecreasing.\n\nIf f(k)≥k+1 for some k, take the least such k. Then f(k-1)≤k-1, while the case (m,n)=(1,k-1) gives\n f(k)≥f(f(k-1)).\nMonotonicity yields f(f(k-1))≤f(k-1)≤k-1, a contradiction. Hence f(k)≤k for every k, in particular f(2007)≤2007; positivity gives f(2007)≥1.\n\nIt remains to realize all values. For r≥0, let\n f_r(n)=\\begin{cases}1,&n≤r+1,\\\\ n-r,&n≥r+2.\\end{cases}\nIf n≤2r+1, then f_r(f_r(n))=1 and monotonicity gives f_r(m+n)≥f_r(m). If n≥2r+2, then f_r(f_r(n))=n-2r and f_r(m+n)=m+n-r. When m≤r+1, the difference between the left side and the required right side is m+r; when m≥r+2, it is 2r+1. Thus the inequality holds in all cases.\n\nFor r=0,1,…,2006, the value at 2007 is 2007-r, so the set of attained values is exactly {1,…,2007}.",
+      "reason": "The critic finds no invalid inference or missed boundary case; the original argument is sound."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let f satisfy the stated inequality. Write c=f(1) and d=f(c)-1≥0. Substituting n=1 gives\n f(m+1)≥f(m)+d.\nInduction yields f(m)≥c+(m-1)d. With m=c,\n d+1≥c+(c-1)d,\nso (2-c)d≥c-1. Because c≥1 and d≥0, necessarily c=1. Therefore f(1)=1, and the same substitution shows that f is nondecreasing.\n\nSuppose, toward a contradiction, that f(k)≥k+1, with k minimal. Then f(k-1)≤k-1. The inequality for m=1,n=k-1 gives\n f(k)≥f(f(k-1)).\nSince f is nondecreasing and f(k-1)≤k-1,\n f(f(k-1))≤f(k-1)≤k-1,\ncontradicting f(k)≥k+1. Thus f(n)≤n for every n, so necessarily 1≤f(2007)≤2007.\n\nFor sufficiency, fix r≥0 and define\n f_r(n)=\\begin{cases}1,&n≤r+1,\\\\ n-r,&n≥r+2.\\end{cases}\nThis is nondecreasing. If n≤2r+1, then f_r(f_r(n))=1, and f_r(m+n)≥f_r(m), so the required inequality holds. If n≥2r+2, then f_r(f_r(n))=n-2r and f_r(m+n)=m+n-r. For m≤r+1, the difference from the required right side is m+r≥1; for m≥r+2, it is 2r+1≥1. Hence every f_r is admissible.\n\nFor 0≤r≤2006, f_r(2007)=2007-r, which ranges over all integers from 2007 down to 1. Therefore every integer in [1,2007] is attainable, and the preceding bound excludes all others. The answer is exactly {1,2,…,2007}.",
+      "reason": "Dependency checks confirm the upper bound is independent of the construction, and the construction revalidates all threshold cases; no repair is needed."
+    }
+  ]
+}

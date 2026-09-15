@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-181",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Represent the 30 members by the vertices of a directed graph, drawing an edge from each sender to the recipient. Every vertex has out-degree 1, and there are no loops because each member sent the hat to a different member.\n\nForm an undirected graph G by replacing each directed edge with an undirected edge and deleting duplicates. Then G has at most 30 edges, so its degree sum is at most 60. Hence\n\nΣ(d(v)+1) ≤ 30+60 = 90.\n\nBy the Cauchy–Schwarz inequality,\n\n(Σ(d(v)+1))(Σ 1/(d(v)+1)) ≥ 30²,\n\nso\n\nΣ 1/(d(v)+1) ≥ 900/90 = 10.\n\nThe Caro–Wei bound gives α(G) ≥ Σ 1/(d(v)+1) ≥ 10. Therefore G contains an independent set of 10 vertices. For the corresponding 10 members, no two are joined by an edge, so no member of the group received a hat from another member of the group. Thus the required group exists.",
+      "reason": "The original argument is valid after replacing the claimed degree sum equality by the correct upper bound."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Let G be the undirected graph whose vertices are the 30 members, with two vertices adjacent whenever one sent a hat to the other. There are at most 30 edges, since the 30 directed deliveries can create no more than 30 distinct undirected edges. Consequently,\n\nΣ_{v∈V(G)} d(v) ≤ 60.\n\nThus Σ(d(v)+1) ≤ 90. Cauchy–Schwarz yields\n\nΣ_{v∈V(G)} 1/(d(v)+1) ≥ 30² / Σ(d(v)+1) ≥ 900/90 = 10.\n\nBy the Caro–Wei theorem,\n\nα(G) ≥ Σ_{v∈V(G)} 1/(d(v)+1) ≥ 10.\n\nTherefore G has an independent set of at least 10 vertices; choosing any 10 of them gives 10 members such that no one received a hat from another member of the group.",
+      "reason": "A checked revision preserves the theorem and corrects the only delicate inequality."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Construct an undirected graph G on the 30 members by joining two members if one sent a hat to the other. The original process produces exactly 30 directed edges, so G has at most 30 undirected edges. Therefore\n\nΣ_{v∈V(G)} d(v)=2|E(G)|≤60.\n\nIt follows that\n\nΣ_{v∈V(G)}(d(v)+1)≤90.\n\nCauchy–Schwarz gives\n\nΣ_{v∈V(G)} 1/(d(v)+1) ≥ \\frac{30^2}{Σ_{v∈V(G)}(d(v)+1)} ≥ \\frac{900}{90}=10.\n\nThe Caro–Wei inequality states that α(G)≥Σ_v 1/(d(v)+1). Hence α(G)≥10. An independent set of 10 vertices is therefore present. By the definition of G, no two corresponding members have a hat delivery between them, which is exactly the required condition.",
+      "reason": "The critic check confirms the graph translation and repairs the generator’s potential misuse of equality by using ≤ throughout."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let G be the undirected graph with one vertex for each of the 30 members. Join two vertices precisely when one of the corresponding members sent a hat to the other. A group satisfying the conclusion is exactly an independent set of size 10 in G.\n\nThere are 30 hat deliveries. Each delivery contributes at most one edge to G, so |E(G)|≤30 and\n\nΣ_{v∈V(G)} d(v)=2|E(G)|≤60.\n\nConsequently,\n\nΣ_{v∈V(G)}(d(v)+1)≤90.\n\nApplying Cauchy–Schwarz,\n\nΣ_{v∈V(G)}\\frac1{d(v)+1}\n≥\\frac{30^2}{Σ_{v∈V(G)}(d(v)+1)}\n≥\\frac{900}{90}=10.\n\nBy the Caro–Wei bound,\n\nα(G)≥Σ_{v∈V(G)}\\frac1{d(v)+1}≥10.\n\nThus G contains an independent set of 10 vertices. The associated 10 members have no hat-delivery edge between any pair, so no one in the group received a hat from another member of the group. This proves the claim.",
+      "reason": "Dependency checks validate the corrected edge-count bound, and the conclusion remains valid under independent review."
+    }
+  ]
+}

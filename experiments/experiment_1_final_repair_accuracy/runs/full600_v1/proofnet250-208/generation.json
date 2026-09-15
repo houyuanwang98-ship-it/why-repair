@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-208",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nConsider the singularity of $f$ at infinity, equivalently the singularity at $0$ of $g(z)=f(1/z)$. If this singularity were essential, then by the Great Picard theorem, in every punctured neighborhood of $0$, $g$ would take every complex value, with at most one exception, infinitely often. Hence $f$ would take some value infinitely often, contradicting injectivity. Thus the singularity at infinity is removable or a pole.\n\nIf it is removable, then $f$ is bounded outside a sufficiently large disk and, being continuous on the remaining compact disk, is bounded on all of $\\mathbb C$. Liouville's theorem would imply that $f$ is constant, contradicting injectivity. Therefore infinity is a pole, so $f$ is a polynomial.\n\nWrite $f(z)=a_nz^n+\\cdots+a_0$ with $a_n\\ne0$. If $n\\ge2$, then for any $w$ that is not a critical value, the polynomial $f(z)-w$ has $n$ distinct roots by the fundamental theorem of algebra, contradicting injectivity. Hence $n=1$, and therefore $f(z)=az+b$ with $a\\ne0$.\n\\end{proof}",
+      "reason": "Replaces the invalid density argument with Picard, then uses Liouville and the polynomial degree argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $g(\\zeta)=f(1/\\zeta)$ on $\\mathbb C\\setminus\\{0\\}$. Suppose that $g$ has an essential singularity at $0$. By the Casorati--Weierstrass theorem, $g$ has dense image in every punctured neighborhood of $0$. Choose $z_0\\ne0$. Since $f$ is nonconstant and holomorphic, the open mapping theorem gives a neighborhood $U$ of $z_0$ such that $f(U)$ is open. Density of $g$ implies that, for a value $w\\in f(U)$, there are points $\\zeta$ arbitrarily close to $0$ with $g(\\zeta)=w$. These yield points $1/\\zeta$ outside $U$ with the same image as a point of $U$, contradicting injectivity. Thus $g$ is not essential at $0$.\n\nIf the singularity is removable, then $f$ is bounded near infinity. Since $f$ is bounded on every closed disk, it is bounded on $\\mathbb C$, so Liouville's theorem makes it constant, impossible for an injective function. Consequently $g$ has a pole at $0$, and $f$ is a polynomial.\n\nIf $f$ has degree $n\\ge2$, then $f'$ is nonconstant and has a zero $c$ by the fundamental theorem of algebra. Choose a small disk centered at $c$ containing no other zero of $f'$. By the local behavior of a holomorphic map at a critical point, $f$ is not one-to-one on that disk, contradicting injectivity. Hence $\\deg f=1$, so $f(z)=az+b$ with $a\\ne0$.\n\\end{proof}",
+      "reason": "The internal check removes the flawed use of density and supplies a valid local critical-point argument."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe prove first that $f$ is a polynomial. If infinity were an essential singularity of $f$, then $g(\\zeta)=f(1/\\zeta)$ would have an essential singularity at $0$. By the Great Picard theorem, some complex value would be assumed by $g$ infinitely many times in every punctured neighborhood of $0$. Equivalently, $f$ would assume that value at infinitely many distinct points of $\\mathbb C$, contradicting injectivity.\n\nThus infinity is removable or a pole. In the removable case, $f$ is bounded near infinity; together with boundedness on a sufficiently large closed disk, this makes $f$ bounded on $\\mathbb C$. Liouville's theorem then says that $f$ is constant, again a contradiction. Hence infinity is a pole, and therefore $f$ is a polynomial.\n\nLet $n=\\deg f$. If $n\\ge2$, choose $w$ so that $f(z)-w$ has no repeated root; such a $w$ exists because the repeated-root values are among the finitely many values $f(c)$ with $f'(c)=0$. The fundamental theorem of algebra then gives $n\\ge2$ distinct solutions of $f(z)=w$, contradicting injectivity. Therefore $n=1$, and $f(z)=az+b$ for some $a,b\\in\\mathbb C$, with $a\\ne0$.\n\\end{proof}",
+      "reason": "The critic validates each implication and uses a finite critical-value argument to rule out degree at least two."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nRegard $f$ as a holomorphic function at infinity via $g(\\zeta)=f(1/\\zeta)$. The singularity of $g$ at $0$ cannot be essential: if it were, the Great Picard theorem would imply that some value is taken infinitely often near $0$, so $f$ would take that value at infinitely many distinct points, contrary to injectivity.\n\nIt also cannot be removable. Indeed, removability would make $f$ bounded outside a disk. Since $f$ is continuous, it is bounded on the disk as well, and hence bounded on all of $\\mathbb C$. Liouville's theorem would then make $f$ constant, contradicting injectivity. Therefore $g$ has a pole at $0$, which means that $f$ is a polynomial.\n\nLet $n=\\deg f$. If $n\\ge2$, then $f'$ has a zero, and the finite set of critical values $f(\\{z:f'(z)=0\\})$ cannot equal all of $\\mathbb C$. Choose $w$ outside this set. Every root of $f(z)-w$ is then simple. By the fundamental theorem of algebra, $f(z)-w$ has exactly $n$ roots counted with multiplicity, hence at least two distinct roots. This contradicts injectivity. Thus $n=1$.\n\nConsequently $f(z)=az+b$ with $a,b\\in\\mathbb C$ and $a\\ne0$.\n\\end{proof}",
+      "reason": "Dependency checks establish: nonessential infinity, nonremovable infinity, polynomiality, then degree one; all repaired claims are independently revalidated."
+    }
+  ]
+}

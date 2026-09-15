@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-232",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let\n\\[\nS=x^{2}+4xy+4y^{2}+2z^{2},\\qquad x,y,z>0,\n\\]\nwith \\(xyz=32\\). Since\n\\[\nx^{2}+4y^{2}\\ge 4xy,\n\\]\nwe obtain\n\\[\nS\\ge 8xy+2z^{2}.\n\\]\nSet \\(t=xy>0\\). From \\(xyz=32\\), \\(z=32/t\\), so\n\\[\nS\\ge 8t+\\frac{2048}{t^{2}}=:f(t).\n\\]\nNow\n\\[\nf'(t)=8-\\frac{4096}{t^{3}},\n\\]\nwhich vanishes at \\(t=8\\), and \\(f''(t)=12288/t^{4}>0\\). Hence\n\\[\nS\\ge f(8)=64+32=96.\n\\]\nEquality requires \\(x=2y\\) and \\(xy=8\\), giving \\(x=4,y=2\\). The constraint then gives \\(z=4\\). At \\((x,y,z)=(4,2,4)\\), \\(S=96\\). Therefore the minimum value is\n\\[\n\\boxed{96}.\n\\]",
+      "reason": "The supplied proof is valid; the one-pass rewrite preserves its argument and equality case."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "Define\n\\[\nS=x^{2}+4xy+4y^{2}+2z^{2}=(x+2y)^{2}+2z^{2}.\n\\]\nBecause \\(x^{2}+4y^{2}\\ge4xy\\),\n\\[\nS\\ge 8xy+2z^{2}.\n\\]\nUsing \\(xyz=32\\) and writing \\(t=xy>0\\), we have \\(z=32/t\\), hence\n\\[\nS\\ge 8t+\\frac{2048}{t^{2}}.\n\\]\nThe derivative is \\(8-4096/t^{3}\\), so the unique positive critical point is \\(t=8\\); the function tends to infinity at both endpoints and is minimized there. Thus\n\\[\nS\\ge 8(8)+\\frac{2048}{8^{2}}=96.\n\\]\nEquality in the quadratic inequality requires \\(x=2y\\), while \\(xy=8\\). Consequently \\(x=4\\), \\(y=2\\), and then \\(z=4\\). These values satisfy the constraint and yield \\(S=96\\). Therefore\n\\[\n\\boxed{S_{\\min}=96},\n\\]\nattained at \\((4,2,4)\\).",
+      "reason": "Internal checking confirms the lower bound, minimization, endpoint behavior, and equality conditions are consistent."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let \\(t=xy>0\\). By AM–GM,\n\\[\nx^{2}+4y^{2}\\ge 2\\sqrt{x^{2}\\cdot4y^{2}}=4xy,\n\\]\nso\n\\[\nS=x^{2}+4xy+4y^{2}+2z^{2}\\ge 8t+2z^{2}.\n\\]\nSince \\(xyz=32\\), \\(z=32/t\\), and therefore\n\\[\nS\\ge g(t):=8t+\\frac{2048}{t^{2}}.\n\\]\nFor \\(t>0\\),\n\\[\ng'(t)=8-\\frac{4096}{t^{3}}.\n\\]\nThus \\(g'(t)=0\\) exactly when \\(t^{3}=512\\), i.e. \\(t=8\\). Moreover, \\(g'(t)<0\\) for \\(t<8\\) and \\(g'(t)>0\\) for \\(t>8\\), so \\(g\\) has global minimum\n\\[\ng(8)=64+32=96.\n\\]\nEquality in AM–GM requires \\(x=2y\\), and equality in the one-variable bound requires \\(xy=8\\). Hence \\(y=2\\), \\(x=4\\), and \\(z=32/(xy)=4\\). Direct substitution gives \\(S=96\\). Therefore the minimum is \\(\\boxed{96}\\), attained at \\((4,2,4)\\).",
+      "reason": "A generator-style proof was checked for the only possible issues: the AM–GM equality condition and global, rather than merely local, minimization."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "For positive \\(x,y,z\\) with \\(xyz=32\\), set \\(t=xy>0\\). The quadratic part satisfies\n\\[\nx^{2}+4y^{2}\\ge4xy,\n\\]\nwith equality exactly when \\(x=2y\\). Consequently,\n\\[\nS=x^{2}+4xy+4y^{2}+2z^{2}\\ge8t+2z^{2}.\n\\]\nThe constraint determines \\(z=32/t\\), so every admissible triple satisfies\n\\[\nS\\ge h(t):=8t+\\frac{2048}{t^{2}}.\n\\]\nSince\n\\[\nh'(t)=8-\\frac{4096}{t^{3}},\n\\]\n\\(h\\) decreases on \\((0,8)\\) and increases on \\((8,\\infty)\\). Thus its global minimum is at \\(t=8\\), with\n\\[\nh(8)=8\\cdot8+\\frac{2048}{8^{2}}=96.\n\\]\nThe equality dependencies are compatible: \\(xy=8\\) and \\(x=2y\\) give \\((x,y)=(4,2)\\), and the constraint gives \\(z=4\\). This triple is positive, satisfies \\(xyz=32\\), and produces\n\\[\n16+32+16+32=96.\n\\]\nHence the minimum value is\n\\[\n\\boxed{96},\n\\]\nattained at \\((x,y,z)=(4,2,4)\\).",
+      "reason": "Dependency and equality checks validate the repaired certificate and its sole descendant conclusion: the stated minimum and attaining triple."
+    }
+  ]
+}

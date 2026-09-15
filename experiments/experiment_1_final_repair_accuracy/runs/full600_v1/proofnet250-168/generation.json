@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-168",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume that none of the points of $U$ are limits of its complement. We prove that $U$ is open. Suppose, to the contrary, that $U$ is not open. Then there exists $p\\in U$ such that for every $r>0$ there is $q\\in U^c$ with $d(p,q)<r$. Taking $r=1/n$, choose $q_n\\in U^c$ with $d(p,q_n)<1/n$. Thus $q_n\\to p$, so $p\\in U$ is a limit of points of $U^c$, a contradiction.\n\nConversely, assume that $U$ is open. If some $p\\in U$ were a limit of points $p_n\\in U^c$ with $p_n\\to p$, then there would be $r>0$ such that $d(p,x)<r$ implies $x\\in U$. Since $p_n\\to p$, for all sufficiently large $n$ we would have $d(p_n,p)<r$, hence $p_n\\in U$, contradicting $p_n\\in U^c$.\n\\end{proof}",
+      "reason": "Added the necessary condition $p\\in U$ in the non-openness argument, making the contradiction valid."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose first that no point of $U$ is a limit of $U^c$. If $U$ were not open, then some $p\\in U$ would satisfy: for every $r>0$, there exists $q\\in U^c$ with $d(p,q)<r$. For each $n\\ge1$, choose $q_n\\in U^c$ such that $d(p,q_n)<1/n$. Then $q_n\\to p$, so $p$ is a limit of $U^c$, contradicting the hypothesis. Therefore $U$ is open.\n\nNow suppose that $U$ is open. Let $p\\in U$. There exists $r>0$ such that $B(p,r)\\subset U$. If a sequence $(p_n)$ in $U^c$ converged to $p$, then eventually $p_n\\in B(p,r)\\subset U$, contradicting $p_n\\in U^c$. Hence no point of $U$ is a limit of its complement.\n\\end{proof}",
+      "reason": "The revised proof explicitly ties non-openness to a point of $U$ and states the neighborhood argument directly."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume that no point of $U$ is a limit point of $U^c$. If $U$ were not open, by the definition of openness there would exist $p\\in U$ such that every ball centered at $p$ meets $U^c$. Hence, for every $n\\in\\mathbb N$, we can choose $q_n\\in U^c$ with $d(q_n,p)<1/n$. Thus $q_n\\to p$, showing that $p$ is a limit of points of $U^c$, a contradiction. Therefore $U$ is open.\n\nConversely, let $U$ be open and let $p\\in U$. Choose $r>0$ with $B(p,r)\\subset U$. If $p$ were a limit of $U^c$, there would be a sequence $(p_n)$ in $U^c$ converging to $p$. For sufficiently large $n$, $d(p_n,p)<r$, so $p_n\\in B(p,r)\\subset U$, contradicting $p_n\\in U^c$. Thus no point of $U$ is a limit of its complement.\n\\end{proof}",
+      "reason": "A critic check identified the missing membership $p\\in U$ and verified both implications after inserting it."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe prove both implications.\n\nSuppose first that no point of $U$ is a limit of $U^c$. If $U$ is not open, then there exists $p\\in U$ such that every $r>0$ admits some $q\\in U^c$ with $d(p,q)<r$. For each $n\\ge1$, choose $q_n\\in U^c$ with $d(p,q_n)<1/n$. Then $q_n\\to p$, so $p$ is a limit of $U^c$, contradicting the assumption. Hence $U$ is open.\n\nConversely, suppose that $U$ is open. For any $p\\in U$, there exists $r>0$ such that $B(p,r)\\subset U$. If $p$ were a limit of $U^c$, then there would be points $p_n\\in U^c$ with $p_n\\to p$. Eventually $d(p_n,p)<r$, which would imply $p_n\\in B(p,r)\\subset U$, contradicting $p_n\\in U^c$. Therefore no point of $U$ is a limit of its complement.\n\\end{proof}",
+      "reason": "Dependency-aware checking found one local gap—the witness from non-openness must lie in $U$—and descendant revalidation confirms the repaired two-way proof."
+    }
+  ]
+}

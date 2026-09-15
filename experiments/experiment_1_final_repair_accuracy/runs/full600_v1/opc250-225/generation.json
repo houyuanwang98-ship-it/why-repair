@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-225",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let\n\\[\nP(x,y):\\quad f(x^2y)=f(xy)+y f(f(x)+y).\n\\]\nTaking \\(x=1\\), we obtain\n\\[\nf(y)=f(y)+y f(f(1)+y),\n\\]\nso \\(f(f(1)+y)=0\\) for every \\(y\\ne0\\). Put \\(c=f(1)\\). Then\n\\[\nf(t)=0\\qquad(t\\ne c).\n\\]\n\nIf \\(f\\not\\equiv0\\), necessarily \\(f(c)=k\\ne0\\). Since \\(f(1)=c\\), if \\(c\\ne1\\) then \\(f(1)=0\\), forcing \\(c=0\\). Thus either \\(c=0\\) or \\(c=1\\).\n\nIf \\(c=0\\), then \\(f(0)=k\\ne0\\). Taking \\(x=0\\) gives\n\\[\ny f(k+y)=0.\n\\]\nChoosing \\(y=-k\\ne0\\) yields \\(f(0)=0\\), contradicting \\(k\\ne0\\).\n\nIf \\(c=1\\), then \\(f(1)=1\\) and \\(f(t)=0\\) for \\(t\\ne1\\). Taking \\((x,y)=(2,1)\\) gives\n\\[\nf(4)=f(2)+f(f(2)+1)=0+f(1)=1,\n\\]\ncontradicting \\(f(4)=0\\). Hence \\(f\\equiv0\\).\n\nConversely, \\(f(x)=0\\) satisfies the equation, since both sides equal \\(0\\). Therefore\n\\[\n\\boxed{f(x)=0\\text{ for all }x\\in\\mathbb R}.\n\\]",
+      "reason": "The original argument reaches the correct result; this version removes redundant case discussion and makes the contradiction in the nonzero case explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Set \\(c=f(1)\\). Substituting \\(x=1\\) into the equation gives\n\\[\nf(y)=f(y)+y f(c+y),\n\\]\nhence \\(f(c+y)=0\\) whenever \\(y\\ne0\\). Equivalently,\n\\[\nf(t)=0\\quad\\text{for every }t\\ne c. \\tag{1}\n\\]\n\nIf \\(f\\equiv0\\), the equation is plainly satisfied. Suppose instead that \\(f\\not\\equiv0\\). By (1), \\(f(c)=k\\ne0\\).\n\nBecause \\(c=f(1)\\), if \\(c\\ne1\\), then (1) implies \\(f(1)=0\\), so \\(c=0\\). In this case, substitute \\(x=0\\):\n\\[\nf(0)=f(0)+y f(f(0)+y),\n\\]\nso \\(y f(k+y)=0\\) for all \\(y\\). Taking \\(y=-k\\ne0\\) gives \\(f(0)=0\\), contrary to \\(f(0)=k\\ne0\\).\n\nTherefore \\(c=1\\). Then \\(f(1)=1\\), while (1) says \\(f(t)=0\\) for \\(t\\ne1\\). Substituting \\((x,y)=(2,1)\\),\n\\[\nf(4)=f(2)+f(f(2)+1)=0+f(1)=1,\n\\]\nwhereas \\(f(4)=0\\), a contradiction.\n\nThus the nonzero case is impossible, and the unique solution is\n\\[\n\\boxed{f\\equiv0}.\n\\]",
+      "reason": "After checking the exceptional-point argument, the proof is valid; the revised version states the dichotomy and both contradictions more cleanly."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Assume \\(f:\\mathbb R\\to\\mathbb R\\) satisfies\n\\[\nf(x^2y)=f(xy)+y f(f(x)+y) \\qquad (x,y\\in\\mathbb R). \\tag{E}\n\\]\nTaking \\(x=1\\) in (E), and writing \\(c=f(1)\\), yields\n\\[\nyf(c+y)=0.\n\\]\nHence\n\\[\nf(u)=0\\quad\text{for all }u\\ne c. \\tag{1}\n\\]\n\nIf \\(f\\) is identically zero, it satisfies (E). Assume that it is not. Then (1) implies \\(f(c)=k\\ne0\\).\n\nIf \\(c\\ne1\\), then \\(f(1)=0\\) by (1), but \\(f(1)=c\\); consequently \\(c=0\\). Now (E) with \\(x=0\\) gives\n\\[\nyf(f(0)+y)=0.\n\\]\nSince \\(f(0)=k\\), taking \\(y=-k\\) gives \\(f(0)=0\\), contradicting \\(k\\ne0\\).\n\nThus \\(c=1\\). Since \\(f(1)=c\\), we have \\(f(1)=1\\), and (1) gives \\(f(t)=0\\) for \\(t\\ne1\\). But (E) with \\(x=2,y=1\\) gives\n\\[\nf(4)=f(2)+f(f(2)+1)=0+f(1)=1,\n\\]\ncontradicting \\(f(4)=0\\).\n\nTherefore the assumption \\(f\\not\\equiv0\\) is impossible. Conversely, direct substitution verifies that \\(f\\equiv0\\) satisfies (E). Hence\n\\[\n\\boxed{f(x)=0\\ \\,\\forall x\\in\\mathbb R}.\n\\]",
+      "reason": "Critic checking confirms the key exceptional-point deduction and verifies both nonzero branches; the repaired proof is complete."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let \\(P(x,y)\\) denote the given identity and put \\(c=f(1)\\). From \\(P(1,y)\\),\n\\[\nf(y)=f(y)+y f(c+y),\n\\]\nso\n\\[\nf(t)=0\\quad\text{for every }t\\ne c. \\tag{1}\n\\]\nThis dependency is used below.\n\nThe zero function satisfies the identity. Suppose that \\(f\\) is not zero. Then (1) implies \\(f(c)=k\\ne0\\).\n\nIf \\(c\\ne1\\), then \\(1\\ne c\\), so (1) gives \\(f(1)=0\\). Since \\(f(1)=c\\), this forces \\(c=0\\). Applying \\(P(0,y)\\),\n\\[\nf(0)=f(0)+y f(f(0)+y),\n\\]\nwe get \\(y f(k+y)=0\\) for every \\(y\\). With \\(y=-k\\ne0\\), this gives \\(f(0)=0\\), contradicting \\(f(0)=k\\ne0\\).\n\nConsequently \\(c=1\\). Then \\(f(1)=1\\), and (1) gives \\(f(t)=0\\) for all \\(t\\ne1\\). Revalidate this candidate using \\(P(2,1)\\):\n\\[\nf(4)=f(2)+f(f(2)+1)=0+f(1)=1,\n\\]\nwhile (1) gives \\(f(4)=0\\), again a contradiction.\n\nThus no nonzero solution exists. Since \\(f\\equiv0\\) satisfies the equation identically, the complete solution set is\n\\[\n\\boxed{f\\equiv0}.\n\\]",
+      "reason": "Dependency-aware checking confirms every branch uses only established claims, and the candidate is independently refuted at \\((2,1)\\); the descendant conclusion remains valid."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-009",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let M=\\max_{x\\in[0,1]}|f(x)|. Since f(x)=x^2+px+q, direct calculation gives\n\\[\nf(0)-2f\\left(\\tfrac12\\right)+f(1)=\\tfrac12.\n\\]\nTherefore, by the triangle inequality,\n\\[\n\\tfrac12\\le |f(0)|+2\\left|f\\left(\\tfrac12\\right)\\right|+|f(1)|\\le 4M,\n\\]\nso M\\ge\\tfrac18.\n\nFor equality, every term in the last inequality must equal M, and equality in the triangle inequality requires\n\\[\nf(0)=f(1)=\\tfrac18,\\qquad f\\left(\\tfrac12\\right)=-\\tfrac18.\n\\]\nThese conditions give q=1/8 and 1+p+q=1/8, hence p=-1. Thus\n\\[\nf(x)=x^2-x+\\tfrac18.\n\\]\nIts vertex value is f(1/2)=-1/8, while f(0)=f(1)=1/8, so its maximum absolute value is 1/8. Hence equality holds exactly for f(x)=x^2-x+1/8.",
+      "reason": "The original lower-bound argument had a gap; a three-point finite-difference identity supplies a complete proof and the equality conditions."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Define\n\\[\nM=\\max_{0\\le x\\le1}|x^2+px+q|.\n\\]\nEvaluating f at 0, 1/2, and 1 yields\n\\[\nf(0)=q,\\quad f\\left(\\tfrac12\\right)=\\tfrac14+\\tfrac p2+q,\\quad f(1)=1+p+q.\n\\]\nConsequently,\n\\[\nf(0)-2f\\left(\\tfrac12\\right)+f(1)=\\tfrac12.\n\\]\nTaking absolute values gives\n\\[\n\\tfrac12\\le |f(0)|+2|f(1/2)|+|f(1)|\\le 4M,\n\\]\nand therefore M\\ge1/8.\n\nIf M=1/8, both inequalities must be equalities. Hence |f(0)|=|f(1/2)|=|f(1)|=1/8, and the three quantities f(0), -f(1/2), and f(1) must have the same positive sign because their sum is 1/2. Thus\n\\[\nf(0)=f(1)=\\tfrac18,\\qquad f(1/2)=-\\tfrac18.\n\\]\nFrom f(0)=1/8 we get q=1/8; from f(1)=1/8 we get p=-1. The resulting polynomial is f(x)=x^2-x+1/8, which indeed has values 1/8 at 0 and 1 and -1/8 at 1/2, and its convexity shows no larger absolute value occurs on the interval. Therefore equality holds exactly for this polynomial.",
+      "reason": "After checking the equality implications, the proof was revised to justify both the bound and uniqueness of the equality case."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "For any real p,q, let f(x)=x^2+px+q and set M=\\max_{x\\in[0,1]}|f(x)|. The second finite difference at equally spaced points is fixed by the leading coefficient:\n\\[\nf(0)-2f\\left(\\tfrac12\\right)+f(1)=\\tfrac12.\n\\]\nThus\n\\[\n\\tfrac12\\le |f(0)|+2\\left|f\\left(\\tfrac12\\right)\\right|+|f(1)|\\le M+2M+M=4M,\n\\]\nwhich proves M\\ge1/8.\n\nThe polynomial f(x)=x^2-x+1/8 satisfies\n\\[\nf(0)=f(1)=\\tfrac18,\n\\qquad f\\left(\\tfrac12\\right)=-\\tfrac18.\n\\]\nSince its vertex is at 1/2 and the endpoints have value 1/8, its values on [0,1] lie between -1/8 and 1/8. Hence M=1/8.\n\nSuppose conversely that M=1/8. Equality must hold in both estimates above. In particular, |f(0)|=|f(1/2)|=|f(1)|=1/8, and equality in the triangle inequality for\n\\[\nf(0)-2f(1/2)+f(1)=1/2\n\\]\nforces f(0)=f(1)=1/8 and f(1/2)=-1/8. Therefore q=1/8 and 1+p+q=1/8, so p=-1. Thus the equality case is unique.",
+      "reason": "A critic check identified that the candidate proof asserted the contradiction without deriving it; the repaired proof uses the fixed finite difference and explicitly verifies equality."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let\n\\[\nM:=\\max_{x\\in[0,1]}|f(x)|,\n\\qquad f(x)=x^2+px+q.\n\\]\nThe relevant dependency is the fixed second difference at the three admissible points 0, 1/2, and 1:\n\\[\nf(0)-2f\\left(\\tfrac12\\right)+f(1)=q-2\\left(\\tfrac14+\\tfrac p2+q\\right)+(1+p+q)=\\tfrac12.\n\\]\nHence\n\\[\n\\tfrac12\\le |f(0)|+2\\left|f\\left(\\tfrac12\\right)\\right|+|f(1)|\\le4M,\n\\]\nso M\\ge1/8.\n\nNow take f_*(x)=x^2-x+1/8. Its vertex is at x=1/2, with f_*(1/2)=-1/8, and f_*(0)=f_*(1)=1/8. Because f_* is convex, its maximum on [0,1] is 1/8 and its minimum is -1/8; therefore \\max_{[0,1]}|f_*|=1/8.\n\nFor descendant equality validation, assume M=1/8. The chain above must be sharp, so all three sampled absolute values equal 1/8. Since the signed sum is the positive number 1/2, the signs must satisfy\n\\[\nf(0)=f(1)=\\tfrac18,\n\\qquad f(1/2)=-\\tfrac18.\n\\]\nThe first equality gives q=1/8, and the second endpoint equality gives 1+p+q=1/8, hence p=-1. Thus every equality case is exactly\n\\[\n\\boxed{f(x)=x^2-x+\\tfrac18},\n\\]\nand the minimum possible maximum absolute value is \\boxed{1/8}.",
+      "reason": "Dependency and equality checks confirm that the local repair is sufficient and that the unique equality polynomial revalidates the claimed bound."
+    }
+  ]
+}

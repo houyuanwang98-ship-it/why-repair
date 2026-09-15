@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-013",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let N=100!. For every pair of integers\n\\[\n0\\le z<\\left\\lfloor\\frac N{12}\\right\\rfloor,\n\\qquad\n0\\le y<\\left\\lfloor\\frac N4\\right\\rfloor,\n\\]\ndefine\n\\[\nx=N-6z-2y.\n\\]\nSince $6z<N/2$ and $2y<N/2$, we have $x>0$. Thus\n\\[\nN=x\\cdot1!+y\\cdot2!+z\\cdot3!\n\\]\nis a partition of $N$ using only allowed summands. Different pairs $(y,z)$ give different multisets of summands, so these partitions are distinct.\n\nBecause $N=100!\\ge192$,\n\\[\n\\left\\lfloor\\frac N{12}\\right\\rfloor\\ge\\frac N{24},\n\\qquad\n\\left\\lfloor\\frac N4\\right\\rfloor\\ge\\frac N8.\n\\]\nHence the number of constructed partitions is at least\n\\[\n\\frac N{24}\\cdot\\frac N8=\\frac{N^2}{192}\\ge N=100!.\n\\]\nTherefore there are at least $100!$ such partitions.\\qed",
+      "reason": "The original recursive construction does not define valid partitions; a direct two-parameter family using only $1!,2!,3!$ repairs it."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Write $N=100!$. Choose integers $z$ and $y$ independently in the ranges\n\\[\n0\\le z<\\left\\lfloor N/12\\right\\rfloor,\n\\qquad\n0\\le y<\\left\\lfloor N/4\\right\\rfloor.\n\\]\nSet $x=N-6z-2y$. Then $6z<N/2$ and $2y<N/2$, so $x$ is a positive integer. Consequently,\n\\[\nN=x\\cdot1!+y\\cdot2!+z\\cdot3!,\n\\]\nwhich is an allowed partition.\n\nThe multiplicities of $2!$ and $3!$ are exactly $y$ and $z$, so distinct pairs yield distinct partitions. Thus there are at least\n\\[\n\\left\\lfloor N/12\\right\\rfloor\\left\\lfloor N/4\\right\\rfloor\n\\]\npartitions. Since $N=100!\\ge192$,\n\\[\n\\left\\lfloor N/12\\right\\rfloor\\left\\lfloor N/4\\right\\rfloor\n\\ge (N/24)(N/8)=N^2/192\\ge N.\n\\]\nTherefore the number of partitions is at least $N=100!$.\\qed",
+      "reason": "Internal checking confirms positivity, injectivity, and the numerical lower bound; the repaired proof is complete."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let $N=100!$. We generate partitions by selecting multiplicities $y,z$ for $2!$ and $3!$ and filling the remainder with $1!$s.\n\nTake\n\\[\n0\\le y<\\left\\lfloor N/4\\right\\rfloor,\n\\qquad\n0\\le z<\\left\\lfloor N/12\\right\\rfloor,\n\\]\nand put $x=N-2y-6z$. The chosen bounds imply $2y<N/2$ and $6z<N/2$, hence $x>0$. Therefore\n\\[\nN=x\\cdot1!+y\\cdot2!+z\\cdot3!\n\\]\nis a valid partition using summands from the required set.\n\nA critic check shows that no two choices produce the same partition: the numbers of $2!$s and $3!$s recover $y$ and $z$, respectively. The number generated is\n\\[\n\\left\\lfloor N/4\\right\\rfloor\\left\\lfloor N/12\\right\\rfloor.\n\\]\nFor $N\\ge192$, this is at least\n\\[\n(N/8)(N/24)=N^2/192\\ge N.\n\\]\nSince $100!\\ge192$, at least $N=100!$ distinct partitions exist.\\qed",
+      "reason": "The generator’s family was retained after checking the critic’s key obligations: valid summands, nonnegative remainder, distinctness, and cardinality."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Set $N=100!$. Consider the dependency chain: choose the multiplicities of $3!$ and $2!$, then determine the multiplicity of $1!$ by the sum constraint.\n\nFor every\n\\[\n(z,y)\\in\\{0,1,\\ldots,\\lfloor N/12\\rfloor-1\\}\n\\times\\{0,1,\\ldots,\\lfloor N/4\\rfloor-1\\},\n\\]\ndefine\n\\[\nx=N-6z-2y.\n\\]\nBecause $z<N/12$ and $y<N/4$, we have $6z<N/2$ and $2y<N/2$, so $x>0$. Hence\n\\[\nN=x\\cdot1!+y\\cdot2!+z\\cdot3!\n\\]\nis a valid partition from the permitted set.\n\nIndependent review: the map $(y,z)\\mapsto(x,y,z)$ is injective because the multiplicities of $2!$ and $3!$ are visible in the resulting multiset. Descendant revalidation: every generated partition still sums to $N$, uses only $1!,2!,3!$, and remains distinct after forgetting order.\n\nFinally, since $N=100!\\ge192$,\n\\[\n\\left\\lfloor N/12\\right\\rfloor\\left\\lfloor N/4\\right\\rfloor\n\\ge\\frac N{24}\\frac N8\n=\\frac{N^2}{192}\n\\ge N.\n\\]\nThus there are at least $N=100!$ partitions.\\qed",
+      "reason": "A dependency-aware repair replaces the invalid sequence recursion with a locally checkable parameterization whose validity and distinctness revalidate directly."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-210",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nA reducible cubic over a field has a linear factor, hence a root in $\\mathbb{F}_{31}$. If $x^3-9=0$, then $x^3=9$. By Fermat's criterion, every cube $y^3$ in $\\mathbb{F}_{31}^{\\times}$ satisfies $(y^3)^{10}=1$, since $y^{30}=1$. However,\n\\[\n9^{10}=5\\not\\equiv 1\\pmod{31}\n\\]\n(as $9^2\\equiv19$, $9^4\\equiv20$, and $9^{10}\\equiv20\\cdot25\\equiv5$). Thus $9$ is not a cube in $\\mathbb{F}_{31}$, so $x^3-9$ has no root. Therefore it is irreducible in $\\mathbb{F}_{31}$.\n\\end{proof}",
+      "reason": "Replaced the unsupported brute-force assertion with a finite-field power test proving that 9 is not a cube."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSince $x^3-9$ has degree $3$, it is reducible over $\\mathbb{F}_{31}$ if and only if it has a root. Suppose that $a^3=9$ for some $a\\in\\mathbb{F}_{31}$. Then $a\\ne0$, so Fermat's theorem gives $a^{30}=1$. Consequently,\n\\[\n9^{10}=(a^3)^{10}=a^{30}=1.\n\\]\nBut direct modular computation yields\n\\[\n9^{10}\\equiv5\\pmod{31},\n\\]\nwhich is not $1$. This contradiction shows that $x^3-9$ has no root in $\\mathbb{F}_{31}$. Hence it is irreducible.\n\\end{proof}",
+      "reason": "The revised proof checks the cubic criterion and verifies the modular computation needed for the contradiction."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nA polynomial of degree $3$ over a field is reducible precisely when it has a linear factor, equivalently a root. We show that $x^3-9$ has no root in $\\mathbb{F}_{31}$. If $a^3=9$ with $a\\in\\mathbb{F}_{31}$, then $a\\ne0$ and\n\\[\n9^{10}=a^{30}=1\n\\]\nby Fermat's theorem. On the other hand,\n\\[\n9^2\\equiv19,\n\\qquad 9^4\\equiv19^2\\equiv20,\n\\qquad 9^5\\equiv20\\cdot9\\equiv25,\n\\]\nso\n\\[\n9^{10}\\equiv25^2\\equiv5\\not\\equiv1\\pmod{31}.\n\\]\nTherefore $9$ is not a cube in $\\mathbb{F}_{31}$, and $x^3-9$ has no root. Thus $x^3-9$ is irreducible in $\\mathbb{F}_{31}$.\n\\end{proof}",
+      "reason": "The critic-checked version makes the root-to-power implication explicit and supplies the modular arithmetic rather than asserting brute-force verification."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $f(x)=x^3-9\\in\\mathbb{F}_{31}[x]$. Because $\\deg f=3$, reducibility would imply that $f$ has a root in $\\mathbb{F}_{31}$. Suppose $f(a)=0$. Then $a^3=9$, and $a\\ne0$. Raising to the tenth power and using $a^{30}=1$ gives\n\\[\n9^{10}=a^{30}=1.\n\\]\nYet\n\\[\n9^2\\equiv19,\\qquad 9^4\\equiv20,\\qquad 9^5\\equiv25,\n\\qquad 9^{10}\\equiv25^2\\equiv5\\pmod{31},\n\\]\nso $9^{10}\\ne1$. This contradiction proves that $f$ has no root in $\\mathbb{F}_{31}$. Hence $f$ is irreducible in $\\mathbb{F}_{31}$.\n\\end{proof}",
+      "reason": "The dependency chain—cubic reducibility, root existence, Fermat's theorem, and modular computation—was checked, and the local gap was repaired with explicit arithmetic."
+    }
+  ]
+}

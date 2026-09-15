@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-060",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Proof. If n+1 is not a perfect square, then ⌊√n⌋=⌊√(n+1)⌋, so the equation implies P(n)=P(n+1). This is impossible because gcd(n,n+1)=1, so they cannot have the same prime divisor.\n\nThus n+1=k² for some k≥2, and n=k²−1. Hence ⌊√n⌋=k−1 and ⌊√(n+1)⌋=k, so\nP(k²−1)=P(k²)+1=P(k)+1.\nLet p=P(k). Since P(k²−1) is prime, p+1 is prime. The only consecutive primes of the form p,p+1 are 2,3; hence p=2. Therefore k=2^t for some t≥1, and P(2^{2t}−1)=3.\n\nNow 2^{2t}−1=(2^t−1)(2^t+1), and every prime divisor is at most 3. Since both factors are odd, each is a power of 3. Write 2^t−1=3^a and 2^t+1=3^b with b>a≥0. Their difference gives 2=3^a(3^{b−a}−1), so a=0; then 3^b=3, hence b=1 and 2^t=2. Thus t=1, k=2, and n=3.\n\nIndeed, P(3)+⌊√3⌋=3+1=4=P(4)+⌊√4⌋=2+2. Therefore the unique solution is \\boxed{n=3}.",
+      "reason": "The supplied proof is valid; only minor wording was streamlined."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "Proof. Suppose first that n+1 is not a square. Then no integer square lies between n and n+1, so ⌊√n⌋=⌊√(n+1)⌋. The required equality would give P(n)=P(n+1), contradicting gcd(n,n+1)=1.\n\nTherefore n+1=k² with k≥2. Then n=k²−1, ⌊√n⌋=k−1, and ⌊√(n+1)⌋=k. The equation becomes\nP(k²−1)=P(k²)+1=P(k)+1.\nSet p=P(k). Since P(k²−1) is prime, p+1 must be prime. Because p is prime, this forces p=2: if p>2, then p is odd and p+1 is even and greater than 2. Thus every prime divisor of k is 2, so k=2^t for some t≥1, and P(2^{2t}−1)=3.\n\nBoth 2^t−1 and 2^t+1 are odd, and all their prime divisors are at most 3. Hence they are powers of 3: 2^t−1=3^a and 2^t+1=3^b, where b>a≥0. Subtracting yields 2=3^a(3^{b−a}−1), so a=0. Consequently 3^b−1=2, giving b=1 and 2^t=2. Hence t=1, k=2, and n=3.\n\nVerification: P(3)+⌊√3⌋=3+1=4, while P(4)+⌊√4⌋=2+2=4. Thus the sole solution is \\boxed{n=3}.",
+      "reason": "Internal checking confirms the case split and the prime-factor argument; no repair is needed."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "Proof. Let\nP(n)+⌊√n⌋=P(n+1)+⌊√(n+1)⌋.\n\nIf n+1 is not a square, then ⌊√n⌋=⌊√(n+1)⌋, so P(n)=P(n+1). This cannot happen, since equality of the greatest prime divisors would give a common prime divisor of n and n+1, contrary to gcd(n,n+1)=1.\n\nHence n+1=k² for some k≥2. Then n=k²−1 and the equality reduces to\nP(k²−1)=P(k²)+1=P(k)+1. \nLet p=P(k). Since the left side is prime, p+1 is prime. For p>2, p is odd, so p+1 is an even integer greater than 2 and cannot be prime. Therefore p=2. Thus k=2^t for some t≥1, and P(2^{2t}−1)=3.\n\nIt follows that all prime divisors of (2^t−1)(2^t+1) are at most 3. The two factors are odd, so each is a power of 3. Thus\n2^t−1=3^a,\n2^t+1=3^b\nfor integers b>a≥0. Subtracting gives 2=3^a(3^{b−a}−1), forcing a=0. Then 3^b=3, so b=1 and 2^t=2. Therefore t=1, k=2, and n=3.\n\nFinally, n=3 works because 3+1=2+2=4. Hence all solutions are \\boxed{n=3}.",
+      "reason": "A generator-style derivation followed by a consistency check finds no logical gap or missing case."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "Proof. Define the two sides by F(n)=P(n)+⌊√n⌋ and G(n)=P(n+1)+⌊√(n+1)⌋. We determine all n≥2 with F(n)=G(n).\n\nIf n+1 is not a perfect square, then ⌊√(n+1)⌋=⌊√n⌋. Equality therefore implies P(n)=P(n+1), impossible because consecutive integers are coprime and hence have no common prime divisor.\n\nThe only remaining possibility is n+1=k² with k≥2. Then n=k²−1, and the floor terms are k−1 and k. Thus\nP(k²−1)+(k−1)=P(k²)+k,\nso P(k²−1)=P(k)+1.\nLet p=P(k). Since P(k²−1) is prime, p+1 is prime. If p>2, then p+1 is an even integer greater than 2, impossible; hence p=2. Consequently k=2^t for some t≥1, and P(2^{2t}−1)=3.\n\nSince\n2^{2t}−1=(2^t−1)(2^t+1),\nand both factors are odd, the condition that their greatest prime divisor is 3 implies that each factor is a power of 3. Hence 2^t−1=3^a and 2^t+1=3^b for b>a≥0. Subtraction gives\n2=3^a(3^{b−a}−1).\nThus a=0, and then 3^b−1=2, so b=1. Therefore 2^t=2, t=1, k=2, and n=3.\n\nDirect substitution gives P(3)+⌊√3⌋=3+1=4 and P(4)+⌊√4⌋=2+2=4. Descendant verification is therefore satisfied, and the unique solution is \\boxed{n=3}.",
+      "reason": "Dependency-aware checking validates both branches, the reduction to consecutive primes, and the final factorization; no local repair is required."
+    }
+  ]
+}

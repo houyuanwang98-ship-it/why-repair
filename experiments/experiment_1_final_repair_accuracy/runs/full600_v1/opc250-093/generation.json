@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-093",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let\n\\[\nf:(0,\\infty)\\to\\mathbb R,\u001b[0m\\qquad g:(0,\\infty)\\to\\mathbb R\n\\]\nsatisfy\n\\[\nf(x^2+y^2)=g(xy)\\qquad(x,y>0).\n\\]\nPutting \\(x=y\\) gives\n\\[\nf(2x^2)=g(x^2).\n\\]\nThus, for every \\(t>0\\),\n\\[\ng(t)=f(2t).\n\\]\nSubstitution yields\n\\[\nf(x^2+y^2)=f(2xy)\\qquad(x,y>0). \\tag{1}\n\\]\nNow let \\(a>b>0\\). Set\n\\[\nS=\\sqrt{a+b},\\qquad P=\\frac b2,\n\\]\nand let \\(x,y\\) be the roots of \\(T^2-ST+P=0\\). Its discriminant is\n\\[\nS^2-4P=a-b>0,\n\\]\nand since \\(0<\\sqrt{a-b}<\\sqrt{a+b}=S\\), both roots are positive. They satisfy\n\\[\nx^2+y^2=S^2-2P=a,\n\\qquad 2xy=2P=b.\n\\]\nTherefore (1) gives \\(f(a)=f(b)\\). Hence \\(f\\) is constant on \\((0,\\infty)\\), say \\(f\\equiv c\\). Then \\(g(t)=f(2t)=c\\) for all \\(t>0\\).\n\nConversely, every pair\n\\[\nf(x)=c,\\qquad g(x)=c\\qquad(c\\in\\mathbb R)\n\\]\nsatisfies the equation. Thus these are exactly all solutions. ∼",
+      "reason": "The supplied proof is valid; the one-pass rewrite preserves the theorem, domain, and conclusion."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "Assume\n\\[\nf(x^2+y^2)=g(xy)\\qquad\\text{for all }x,y>0,\n\\]\nwhere \\(f,g:(0,\\infty)\\to\\mathbb R\\).\n\nTaking \\(x=y\\), we obtain\n\\[\nf(2x^2)=g(x^2).\n\\]\nSince every \\(t>0\\) has the form \\(t=x^2\\), this is equivalent to\n\\[\ng(t)=f(2t)\\qquad(t>0). \\tag{1}\n\\]\nConsequently,\n\\[\nf(x^2+y^2)=f(2xy)\\qquad(x,y>0). \\tag{2}\n\\]\n\nWe prove that \\(f\\) is constant. Let \\(a>b>0\\), and define\n\\[\nx=\\frac{\\sqrt{a+b}+\\sqrt{a-b}}2,\n\\qquad\ny=\\frac{\\sqrt{a+b}-\\sqrt{a-b}}2.\n\\]\nBoth numbers are positive. Direct calculation gives\n\\[\nx^2+y^2=a,\n\\qquad 2xy=b.\n\\]\nApplying (2), we get \\(f(a)=f(b)\\). Since any two positive numbers are comparable, \\(f\\) is constant: \\(f\\equiv c\\) for some \\(c\\in\\mathbb R\\). Equation (1) then gives \\(g\\equiv c\\).\n\nConversely, if \\(f\\equiv c\\) and \\(g\\equiv c\\), then both sides of the original equation equal \\(c\\) for every positive \\(x,y\\). Hence all solutions are\n\\[\n\\boxed{f(x)=g(x)=c\\quad(x>0),\\ c\\in\\mathbb R.}\n\\]\n∎",
+      "reason": "Internal checking confirms the variable substitution, positivity argument, and converse verification; no repair is needed."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let \\(f,g:(0,\\infty)\\to\\mathbb R\\) satisfy\n\\[\nf(x^2+y^2)=g(xy) \\tag{1}\n\\]\nfor all \\(x,y>0\\).\n\nFirst put \\(x=y\\). Then\n\\[\nf(2x^2)=g(x^2).\n\\]\nWriting \\(t=x^2\\), we obtain\n\\[\ng(t)=f(2t)\\qquad(t>0). \\tag{2}\n\\]\nUsing (2) in (1),\n\\[\nf(x^2+y^2)=f(2xy)\\qquad(x,y>0). \\tag{3}\n\\]\n\nFix arbitrary \\(a>b>0\\). Choose\n\\[\nx=\\frac{\\sqrt{a+b}+\\sqrt{a-b}}2,\n\\qquad y=\\frac{\\sqrt{a+b}-\\sqrt{a-b}}2.\n\\]\nBecause \\(a>b>0\\), we have \\(x,y>0\\). Moreover,\n\\[\nx+y=\\sqrt{a+b},\\qquad xy=\\frac b2,\n\\]\nso\n\\[\nx^2+y^2=(x+y)^2-2xy=a,\n\\qquad 2xy=b.\n\\]\nEquation (3) therefore implies \\(f(a)=f(b)\\). Thus \\(f\\) has the same value at every pair of positive arguments, and hence \\(f\\equiv c\\) for some \\(c\\in\\mathbb R\\). By (2), \\(g\\equiv c\\) as well.\n\nConversely, constant functions \\(f\\equiv g\\equiv c\\) satisfy (1). Therefore the complete solution set is\n\\[\n\\boxed{f(x)=c,\\quad g(x)=c\\quad\\text{for all }x>0,\text{ where }c\\in\\mathbb R.}\n\\]\n∎",
+      "reason": "The generator proof passes critic checks: all constructed variables remain positive, the range is respected, and the converse is included."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "We seek all \\(f,g:(0,\\infty)\\to\\mathbb R\\) such that\n\\[\nf(x^2+y^2)=g(xy)\\qquad\\forall x,y>0. \\tag{1}\n\\]\n\nSet \\(x=y\\) in (1). For every \\(x>0\\),\n\\[\nf(2x^2)=g(x^2).\n\\]\nSince the map \\(x\\mapsto x^2\\) is onto \\((0,\\infty)\\),\n\\[\ng(t)=f(2t)\\qquad\\forall t>0. \\tag{2}\n\\]\nSubstituting (2) into (1) gives the descendant identity\n\\[\nf(x^2+y^2)=f(2xy)\\qquad\\forall x,y>0. \\tag{3}\n\\]\n\nFor arbitrary \\(a>b>0\\), define\n\\[\nx=\\frac{\\sqrt{a+b}+\\sqrt{a-b}}2,\n\\qquad y=\\frac{\\sqrt{a+b}-\\sqrt{a-b}}2.\n\\]\nThe inequalities \\(a>b>0\\) imply \\(x>y>0\\). Also,\n\\[\nx+y=\\sqrt{a+b},\\qquad xy=\\frac b2,\n\\]\nso\n\\[\nx^2+y^2=a,\n\\qquad 2xy=b.\n\\]\nApplying (3) yields \\(f(a)=f(b)\\). Hence \\(f\\) is constant on \\((0,\\infty)\\); write \\(f(t)=c\\). Equation (2) then forces \\(g(t)=c\\) for every \\(t>0\\).\n\nIndependent verification: for any \\(c\\in\\mathbb R\\), the pair \\(f(t)=c\\), \\(g(t)=c\\) has both sides of (1) equal to \\(c\\), so it is valid. Therefore\n\\[\n\\boxed{(f,g)=(c,c)\\text{ on }(0,\\infty),\\quad c\\in\\mathbb R.}\n\\]\n∎",
+      "reason": "Dependency checks validate the reduction to (3), the positivity of the witness pair, and the final converse; no local repair or descendant change is required."
+    }
+  ]
+}

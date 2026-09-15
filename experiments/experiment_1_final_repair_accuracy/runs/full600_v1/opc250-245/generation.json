@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-245",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Model the cities and directed roads as a directed graph G. Decompose G into strongly connected components and contract each component to obtain its condensation H, which is a DAG.\n\nFor any two components X and Y, choose cities x∈X and y∈Y. By hypothesis, either x reaches y or y reaches x; hence either X reaches Y or Y reaches X in H. Thus every two vertices of H are comparable by reachability. Since H is acyclic, its components can therefore be ordered C₁,…,C_k so that C_i reaches C_j whenever i<j.\n\nIf k=1, G is already strongly connected, so no road is needed. If k≥2, add one road from any city u∈C_k to any city v∈C₁. Given cities p∈C_i and q∈C_j, if i≤j then p reaches q already. Conversely, q reaches C_k, then reaches u within C_k, uses the new road to reach v∈C₁, and then reaches p through C₁,…,C_i. Hence every city reaches every other city.\n\nThus one additional road always suffices when n≥2. It is sometimes necessary: with two cities and only the road 1→2, the hypothesis holds but the graph is not strongly connected, so at least one road must be added. For n=1, no road is needed. Therefore the answer is 0 for n=1 and 1 for n≥2.",
+      "reason": "The original argument had the right conclusion but underexplained the linear-order property and omitted intra-component paths when routing through chosen endpoints."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Represent the road system by a directed graph G. Let C₁,…,C_k be the strongly connected components of G, and let H be the condensation graph. H is acyclic.\n\nFor distinct components X,Y, choose x∈X and y∈Y. The assumption gives a directed path from x to y or from y to x, so H contains a path from X to Y or from Y to X. Consequently, the reachability relation on the vertices of H is total. A finite acyclic digraph whose vertices are totally ordered by reachability has an ordering C₁,…,C_k with C_i reaching C_j for every i<j.\n\nIf k=1, G is strongly connected. Otherwise choose u∈C_k and v∈C₁ and add the road u→v. For any p∈C_i and q∈C_j, the forward route p→q exists when i≤j. For the opposite direction, q reaches some city in C_k, then reaches u because C_k is strongly connected; the new road takes it to v, and the ordered component paths, together with strong connectivity inside each component, take it to p. Thus the augmented graph is strongly connected.\n\nOne road is necessary in some cases: the two-city graph containing only 1→2 satisfies the hypothesis but is not strongly connected. Hence the minimum guaranteed number is 0 when n=1 and 1 when n≥2.",
+      "reason": "After checking the condensation argument and endpoint routing, the proof was tightened to make both uses of strong connectivity explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let G be the directed graph of the cities and roads. Contract each strongly connected component to one vertex, obtaining the condensation DAG H.\n\nFor any two vertices X,Y of H, select cities x∈X and y∈Y. The given condition says that x reaches y or y reaches x, so X reaches Y or Y reaches X. Thus all vertices of H are comparable under reachability. Because H is acyclic, this comparability orders its vertices as C₁,…,C_k, with C_i reaching C_j exactly when i<j.\n\nWhen k=1, the original graph is already strongly connected. When k≥2, add a road from a city u in C_k to a city v in C₁. To connect arbitrary p∈C_i and q∈C_j, if i≤j use the existing route through the ordered components. For q to p, first follow the existing component routes from C_j to C_k, move within C_k to u, take the new road to v, move within C₁ as needed, and follow the routes from C₁ to C_i, finally moving within C_i to p. Hence the resulting graph is strongly connected.\n\nThe bound cannot be reduced for all networks: two cities joined only by 1→2 satisfy the hypothesis but require an additional road to become strongly connected. Therefore the required number is 0 for n=1 and 1 for n≥2.",
+      "reason": "A critic check confirms the construction works for arbitrary vertices, provided the internal paths within the first, last, and target components are stated explicitly."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Form the directed graph G whose vertices are the n cities. Let H be its condensation graph: each vertex of H is a strongly connected component of G. The graph H is a DAG.\n\nFor any two distinct components X,Y, choose x∈X and y∈Y. By the hypothesis, either x reaches y or y reaches x. Therefore either X reaches Y or Y reaches X in H. Hence every pair of vertices of H is comparable by reachability. Since H is acyclic, its vertices admit an ordering C₁,…,C_k such that C_i reaches C_j whenever i<j.\n\nIf k=1, G is already strongly connected and the required number is zero. Suppose k≥2. Add one directed road from a city u∈C_k to a city v∈C₁. For any p∈C_i and q∈C_j, a route from p to q exists if i≤j. In the other direction, q reaches C_k, then reaches u inside C_k, uses the new road to reach v, and proceeds through C₁,…,C_i, finally reaching p inside C_i. Thus every ordered pair of cities is connected by a directed path, so the augmented graph is strongly connected.\n\nOne road is genuinely necessary in general: for n=2 with the sole road 1→2, the hypothesis holds, but no strong connectivity exists without adding a road. Therefore the minimum number that guarantees mutual reachability is 0 for n=1 and 1 for n≥2.",
+      "reason": "Dependency-aware review found no theorem change was needed; the local repair makes the condensation ordering and internal-component routing explicit, and the lower-bound example revalidates the conclusion."
+    }
+  ]
+}

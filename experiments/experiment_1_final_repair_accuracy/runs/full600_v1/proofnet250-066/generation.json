@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-066",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be solvable and let $H\\leq G$. Choose a subnormal series\n\\[\n1=G_0\\unlhd G_1\\unlhd\\cdots\\unlhd G_n=G\n\\]\nwhose factors $G_{i+1}/G_i$ are abelian. Define $H_i=H\\cap G_i$ for $0\\leq i\\leq n$. Then\n\\[\n1=H_0\\leq H_1\\leq\\cdots\\leq H_n=H.\n\\]\nFor $h\\in H_{i+1}$ and $x\\in H_i$, we have $h\\in G_{i+1}$ and $x\\in G_i$, so $hxh^{-1}\\in G_i$ because $G_i\\unlhd G_{i+1}$. Since $h,x\\in H$, also $hxh^{-1}\\in H$, and hence $hxh^{-1}\\in H_i$. Thus $H_i\\unlhd H_{i+1}$.\n\nMoreover, $H_i=H_{i+1}\\cap G_i$. The Second Isomorphism Theorem gives\n\\[\nH_{i+1}/H_i\\cong H_{i+1}G_i/G_i\\leq G_{i+1}/G_i.\n\\]\nTherefore each factor $H_{i+1}/H_i$ is abelian. Hence the displayed series is a subnormal series for $H$ with abelian factors, so $H$ is solvable.\n\\end{proof}",
+      "reason": "Corrected and retained the intersection-series argument, with the normality and isomorphism steps stated precisely."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be a solvable group and let $H\\leq G$. There is a finite series\n\\[\n1=G_0\\unlhd G_1\\unlhd\\cdots\\unlhd G_n=G\n\\]\nsuch that every quotient $G_{i+1}/G_i$ is abelian. Set $H_i=H\\cap G_i$. Then $H_0=1$, $H_n=H$, and $H_i\\leq H_{i+1}$.\n\nIf $h\\in H_{i+1}$ and $x\\in H_i$, then $h\\in G_{i+1}$ and $x\\in G_i$. Since $G_i\\unlhd G_{i+1}$, we have $hxh^{-1}\\in G_i$; since $H$ is a subgroup and $h,x\\in H$, we also have $hxh^{-1}\\in H$. Thus $hxh^{-1}\\in H_i$, proving $H_i\\unlhd H_{i+1}$.\n\nBecause $H_i=H_{i+1}\\cap G_i$, the Second Isomorphism Theorem yields\n\\[\nH_{i+1}/H_i\\cong H_{i+1}G_i/G_i.\n\\]\nThe group $H_{i+1}G_i/G_i$ is a subgroup of $G_{i+1}/G_i$, since $H_{i+1}\\leq G_{i+1}$. It is therefore abelian. Hence all factors in the series\n\\[\n1=H_0\\unlhd H_1\\unlhd\\cdots\\unlhd H_n=H\n\\]\nare abelian, and $H$ is solvable.\n\\end{proof}",
+      "reason": "Internal checking confirmed the proof; the revised version explicitly verifies endpoints, normality, and the subgroup inclusion needed for the quotient argument."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be solvable and $H\\leq G$. Take a subnormal series with abelian factors,\n\\[\n1=G_0\\unlhd G_1\\unlhd\\cdots\\unlhd G_n=G,\n\\qquad G_{i+1}/G_i\\text{ abelian}.\n\\]\nFor each $i$, let $H_i=H\\cap G_i$. Then $H_0=1$ and $H_n=H$, and clearly $H_i\\leq H_{i+1}$.\n\nFor $h\\in H_{i+1}$ and $x\\in H_i$, normality of $G_i$ in $G_{i+1}$ implies $hxh^{-1}\\in G_i$. Also $hxh^{-1}\\in H$, so $hxh^{-1}\\in H_i$. Consequently $H_i\\unlhd H_{i+1}$.\n\nSince $H_i=H_{i+1}\\cap G_i$ and $H_{i+1}\\leq G_{i+1}$, the Second Isomorphism Theorem gives\n\\[\nH_{i+1}/H_i\\cong H_{i+1}G_i/G_i\\leq G_{i+1}/G_i.\n\\]\nThus each $H_{i+1}/H_i$ is abelian. Therefore\n\\[\n1=H_0\\unlhd H_1\\unlhd\\cdots\\unlhd H_n=H\n\\]\nis a finite subnormal series with abelian factors, proving that $H$ is solvable.\n\\end{proof}",
+      "reason": "The critic’s checks identify no remaining gap after making the quotient inclusion and the endpoint identities explicit."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be solvable and let $H\\leq G$. Choose a finite subnormal series\n\\[\n1=G_0\\unlhd G_1\\unlhd\\cdots\\unlhd G_n=G\n\\]\nwith each factor $G_{i+1}/G_i$ abelian. Define\n\\[\nH_i=H\\cap G_i\\qquad(0\\leq i\\leq n).\n\\]\nThen $H_0=1$, $H_n=H$, and $H_i\\leq H_{i+1}$.\n\nFor each $i<n$, let $h\\in H_{i+1}$ and $x\\in H_i$. Since $h\\in G_{i+1}$, $x\\in G_i$, and $G_i\\unlhd G_{i+1}$, we have $hxh^{-1}\\in G_i$. Since $h,x\\in H$, we also have $hxh^{-1}\\in H$. Hence $hxh^{-1}\\in H_i$, so $H_i\\unlhd H_{i+1}$.\n\nFurthermore,\n\\[\nH_i=H\\cap G_i=H_{i+1}\\cap G_i.\n\\]\nApplying the Second Isomorphism Theorem to $H_{i+1}$ and $G_i$ gives\n\\[\nH_{i+1}/H_i\\cong H_{i+1}G_i/G_i.\n\\]\nBecause $H_{i+1}\\leq G_{i+1}$, the latter quotient is a subgroup of $G_{i+1}/G_i$. It is therefore abelian. Thus every factor in\n\\[\n1=H_0\\unlhd H_1\\unlhd\\cdots\\unlhd H_n=H\n\\]\nis abelian, and this is a subnormal series witnessing that $H$ is solvable.\n\\end{proof}",
+      "reason": "Dependency checks validate the induced series, its normality relations, and each abelian factor; independent review found no descendant issue."
+    }
+  ]
+}

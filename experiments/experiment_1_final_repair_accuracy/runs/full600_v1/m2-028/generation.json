@@ -1,0 +1,29 @@
+{
+  "case_id": "m2-028",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "因为 n 为整数，故 n 与 n-1 为相邻整数，必有 n≤0 或 n≥1。若 n≤0，则 n^2≥0≥n；若 n≥1，则 n^2=n·n≥n·1=n。因此任意整数 n 都满足 n^2≥n。",
+      "reason": "将错误的“非负”推理改为按整数范围分类证明。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "由 n 为整数，有 n(n-1)≥0：当 n≤0 时，n≤0 且 n-1<0，故两因子乘积非负；当 n≥1 时，两因子均非负。于是 n^2-n=n(n-1)≥0，从而 n^2≥n。",
+      "reason": "自检发现原论证不足，改用可直接验证的因式分解。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "注意：仅由 n^2≥0 不能推出 n^2≥n，例如 n=2 时需要额外论证。由于 n 为整数，若 n≤0，则 n^2≥0≥n；若 n≥1，则 n^2=n·n≥n·1=n。因此对任意整数 n，均有 n^2≥n。",
+      "reason": "批评环节指出原推理缺少对 n>0 情形的比较，随后补充分情况论证。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "目标等价于证明 n^2-n≥0。分解得 n^2-n=n(n-1)。因 n 为整数，n≤0 或 n≥1：在 n≤0 时，n≤0 且 n-1<0，故 n(n-1)≥0；在 n≥1 时，n≥0 且 n-1≥0，故 n(n-1)≥0。于是 n^2-n≥0，即 n^2≥n。",
+      "reason": "依赖检查定位缺失的整数序关系，完成局部修复并复核结论覆盖全部整数情形。"
+    }
+  ]
+}

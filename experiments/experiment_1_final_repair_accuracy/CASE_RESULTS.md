@@ -1,5 +1,7 @@
 # 逐题结果
 
+本文件为历史21题附表。全量600题见dataset.jsonl和gold_index.jsonl；2400项方法对照见comparison_results.jsonl。
+
 | Proof ID | 原始 Gold 状态 | Gold 错误类型 | 双 Agent 整篇终态 |
 |---|---|---|---|
 | m2-012 | valid_with_gap | proof_gap | repaired |

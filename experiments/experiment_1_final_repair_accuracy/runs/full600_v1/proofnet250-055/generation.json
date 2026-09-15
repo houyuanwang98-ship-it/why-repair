@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-055",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFirst, let $f(x)\\in(2x)$. Then $f(x)=2xg(x)$ for some $g(x)\\in\\mathbb{Z}[x]$. Hence $f(x)=2(xg(x))\\in(2)$ and $f(x)=x(2g(x))\\in(x)$, so $(2x)\\subseteq(2)\\cap(x)$.\n\nConversely, let $p(x)\\in(2)\\cap(x)$. Since $p(x)\\in(2)$, write $p(x)=2h(x)$ for some $h(x)\\in\\mathbb{Z}[x]$. Since $p(x)\\in(x)$, we have $p(0)=0$, and therefore $2h(0)=0$. As $\\mathbb{Z}$ has no zero divisors, $h(0)=0$. Thus $x$ divides $h(x)$ in $\\mathbb{Z}[x]$, so $h(x)=xq(x)$ for some $q(x)\\in\\mathbb{Z}[x]$. Consequently, $p(x)=2xq(x)\\in(2x)$.\n\nTherefore, $(2)\\cap(x)=(2x)$.\n\\end{proof}",
+      "reason": "Corrected the coefficient-ring typo and supplied the missing justification that $h(0)=0$ implies $x\\mid h(x)$."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe prove both inclusions. If $f(x)\\in(2x)$, then $f(x)=2xg(x)$ for some $g(x)\\in\\mathbb{Z}[x]$. Writing this as $2(xg(x))$ and as $x(2g(x))$ shows that $f(x)\\in(2)$ and $f(x)\\in(x)$. Hence $(2x)\\subseteq(2)\\cap(x)$.\n\nNow suppose $p(x)\\in(2)\\cap(x)$. There is an $h(x)\\in\\mathbb{Z}[x]$ such that $p(x)=2h(x)$. Because $p(x)\\in(x)$, its constant term is zero, so $p(0)=0$. Evaluating $p(x)=2h(x)$ at $x=0$ gives $2h(0)=0$, and hence $h(0)=0$ in $\\mathbb{Z}$. A polynomial over $\\mathbb{Z}$ with zero constant term is divisible by $x$, so $h(x)=xq(x)$ for some $q(x)\\in\\mathbb{Z}[x]$. Therefore $p(x)=2xq(x)\\in(2x)$, proving $(2)\\cap(x)\\subseteq(2x)$.\n\nThus $(2)\\cap(x)=(2x)$.\n\\end{proof}",
+      "reason": "Internal checking confirmed both inclusions and made the evaluation and divisibility steps explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $f(x)\\in(2x)$. By definition, $f(x)=2xg(x)$ for some $g(x)\\in\\mathbb{Z}[x]$. Then $f(x)=2(xg(x))\\in(2)$ and $f(x)=x(2g(x))\\in(x)$, so $(2x)\\subseteq(2)\\cap(x)$.\n\nFor the reverse inclusion, take $p(x)\\in(2)\\cap(x)$. Since $p(x)\\in(2)$, there is $h(x)\\in\\mathbb{Z}[x]$ with $p(x)=2h(x)$. Since $p(x)\\in(x)$, the constant term of $p(x)$ is zero. Taking constant terms in the equation $p(x)=2h(x)$ yields $0=2h(0)$, so $h(0)=0$. Therefore $h(x)$ has zero constant term and can be written as $h(x)=xq(x)$ for some $q(x)\\in\\mathbb{Z}[x]$. It follows that $p(x)=2xq(x)\\in(2x)$. Hence $(2)\\cap(x)\\subseteq(2x)$.\n\nCombining the two inclusions gives $(2)\\cap(x)=(2x)$.\n\\end{proof}",
+      "reason": "The critic check identified and fixed the original false statement that a multiplier lies in $\\mathbb{Z}$ rather than $\\mathbb{Z}[x]$, while preserving the argument."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe establish the equality by proving the two inclusions.\n\nIf $f(x)\\in(2x)$, then $f(x)=2xg(x)$ for some $g(x)\\in\\mathbb{Z}[x]$. Thus\n\\[\nf(x)=2(xg(x))=x(2g(x)),\n\\]\nso $f(x)\\in(2)$ and $f(x)\\in(x)$. Therefore $(2x)\\subseteq(2)\\cap(x)$.\n\nConversely, let $p(x)\\in(2)\\cap(x)$. Write $p(x)=2h(x)$ with $h(x)\\in\\mathbb{Z}[x]$. Since $p(x)\\in(x)$, its constant coefficient is zero. Comparing constant coefficients in $p(x)=2h(x)$ gives $2h(0)=0$, hence $h(0)=0$ because $\\mathbb{Z}$ is an integral domain. Consequently, $h(x)=xq(x)$ for some $q(x)\\in\\mathbb{Z}[x]$. Therefore\n\\[\np(x)=2h(x)=2xq(x)\\in(2x),\n\\]\nso $(2)\\cap(x)\\subseteq(2x)$.\n\nThe two inclusions imply $(2)\\cap(x)=(2x)$.\n\\end{proof}",
+      "reason": "Dependency checks validated the ideal-membership steps, the constant-term argument, and the final inclusion; the only local repair was changing the multiplier domain to $\\mathbb{Z}[x]$."
+    }
+  ]
+}

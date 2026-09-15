@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-036",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $f,g\\in\\mathbb{Q}[x]$ and suppose $fg\\in\\mathbb{Z}[x]$. For each prime $p$, let $v_p$ denote the $p$-adic valuation, and define the content valuation of a nonzero polynomial by\n\\[\nw_p(h)=\\min_i v_p(h_i),\n\\]\nwhere the $h_i$ are its coefficients. Gauss' lemma gives\n\\[\nw_p(fg)=w_p(f)+w_p(g).\n\\]\nSince $fg\\in\\mathbb{Z}[x]$, we have $w_p(fg)\\ge 0$ for every prime $p$. Hence\n\\[\nw_p(f)+w_p(g)\\ge 0.\n\\]\nFor any coefficients $f_i$ of $f$ and $g_j$ of $g$, we have $v_p(f_i)\\ge w_p(f)$ and $v_p(g_j)\\ge w_p(g)$, so\n\\[\nv_p(f_i g_j)\\ge w_p(f)+w_p(g)\\ge 0.\n\\]\nThus $f_i g_j$ has nonnegative $p$-adic valuation for every prime $p$. Since $f_i g_j\\in\\mathbb{Q}$, it follows that $f_i g_j\\in\\mathbb{Z}$.\n\\end{proof}",
+      "reason": "The original scaling argument incorrectly asserted that the two scaling factors are reciprocals while also making both scaled polynomials integral. The valuation form of Gauss' lemma supplies the needed coefficientwise conclusion."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWrite\n\\[\nf(x)=\\sum_i f_i x^i,\\qquad g(x)=\\sum_j g_jx^j,\n\\]\nwith all coefficients rational. Fix a prime $p$, and let $v_p$ be the $p$-adic valuation. Set\n\\[\na=\\min_i v_p(f_i),\\qquad b=\\min_j v_p(g_j).\n\\]\nBy Gauss' lemma, the minimum valuation of the coefficients of $f(x)g(x)$ equals $a+b$. Because every coefficient of $f(x)g(x)$ is an integer, this minimum is nonnegative. Therefore $a+b\\ge0$.\n\nFor arbitrary coefficients $f_i$ and $g_j$,\n\\[\nv_p(f_i g_j)=v_p(f_i)+v_p(g_j)\\ge a+b\\ge0.\n\\]\nThis holds for every prime $p$. A rational number whose $p$-adic valuation is nonnegative for every prime is an integer. Consequently $f_i g_j\\in\\mathbb Z$ for every pair of coefficients $f_i,g_j$.\n\\end{proof}",
+      "reason": "After checking the coefficient-content step, the proof was revised to state explicitly why integrality of the product forces nonnegative valuation at every prime."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $f_i$ and $g_j$ be arbitrary coefficients of $f$ and $g$. Choose positive integers $A,B$ such that\n\\[\nF=Af\\in\\mathbb Z[x],\\qquad G=Bg\\in\\mathbb Z[x],\n\\]\nand choose $A,B$ minimally in the sense that $F$ and $G$ are primitive after removing any common integer factor. By Gauss' lemma, $FG=AB\\,fg$ and the content of $FG$ is the product of the contents of $F$ and $G$. Equivalently, for each prime $p$, if\n\\[\na=\\min_k v_p(f_k),\\qquad b=\\min_\\ell v_p(g_\\ell),\n\\]\nthen\n\\[\n\\min_m v_p((fg)_m)=a+b.\n\\]\nSince $fg\\in\\mathbb Z[x]$, the left-hand side is nonnegative. Hence $a+b\\ge0$.\n\nNow $v_p(f_i)\\ge a$ and $v_p(g_j)\\ge b$, so\n\\[\nv_p(f_i g_j)\\ge a+b\\ge0\n\\]\nfor every prime $p$. Therefore the rational number $f_i g_j$ has no prime in its denominator, and so belongs to $\\mathbb Z$. Since $i,j$ were arbitrary, the product of any coefficient of $f$ with any coefficient of $g$ is an integer.\n\\end{proof}",
+      "reason": "The critic rejects the reciprocal-scaling step and replaces it with the precise content/valuation consequence of Gauss' lemma."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $f(x)=\\sum_i f_i x^i$ and $g(x)=\\sum_j g_jx^j$, and fix a prime $p$. Define\n\\[\n\\alpha_p=\\min_i v_p(f_i),\\qquad \\beta_p=\\min_j v_p(g_j),\n\\]\nwhere $v_p$ is the $p$-adic valuation on $\\mathbb Q$.\n\nGauss' lemma, applied over the discrete valuation ring $\\mathbb Z_{(p)}$, states that the minimum valuation of the coefficients of a product is additive. Thus\n\\[\n\\min_k v_p((fg)_k)=\\alpha_p+\\beta_p.\n\\]\nBecause $fg\\in\\mathbb Z[x]$, every coefficient $(fg)_k$ has nonnegative $p$-adic valuation. Hence\n\\[\n\\alpha_p+\\beta_p\\ge0.\n\\]\n\nFor arbitrary $i$ and $j$, we have $v_p(f_i)\\ge\\alpha_p$ and $v_p(g_j)\\ge\\beta_p$, so\n\\[\nv_p(f_i g_j)=v_p(f_i)+v_p(g_j)\\ge\\alpha_p+\\beta_p\\ge0.\n\\]\nThis holds for every prime $p$. Therefore $f_i g_j$ is a rational number with nonnegative valuation at every prime, which implies $f_i g_j\\in\\mathbb Z$. Since $i$ and $j$ were arbitrary, the desired conclusion follows.\n\\end{proof}",
+      "reason": "Dependency checking identifies the only needed fact as multiplicativity of polynomial content valuations; the repaired proof states and applies it locally, with an independent prime-by-prime verification."
+    }
+  ]
+}

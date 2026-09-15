@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-111",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let m=2018 and let N_0>2017 be Mary's initial integer. Define M(x)=2017x+2 and P(x)=x+2019. Modulo m, M(x)≡-x+2 and P(x)≡x+1.\n\nThus the successive residues are\nN_1≡-N_0+2,\nN_2≡-N_0+3,\nN_3≡N_0-1,\nN_4≡N_0,\nN_5≡-N_0+2,\nmodulo 2018. Hence the residue sequence from N_1 onward has period 4.\n\nPat wins exactly when one of these four residues is 0. Therefore Mary succeeds precisely when\nN_0\\not\\equiv0,1,2,3\\pmod{2018}.\n\nThe integers 2018, 2019, 2020, and 2021 have residues 0, 1, 2, and 3, respectively, so Pat wins for each of them. The next integer, 2022, has residue 4, giving the four residues\n2016,2017,3,4,\nall nonzero modulo 2018. By periodicity, no later number is divisible by 2018. Therefore the smallest possible initial integer is \\boxed{2022}.",
+      "reason": "The original modular-period argument is valid; this rewrite removes redundancy and states the criterion directly."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Set m=2018 and write the initial choice as N_0>2017. After each move, reduce modulo m. Since 2017≡-1 and 2019≡1 (mod m), Mary's move is x↦-x+2 and Pat's move is x↦x+1.\n\nStarting with N_0, we obtain\nN_1≡-N_0+2,\nN_2≡-N_0+3,\nN_3≡-(-N_0+3)+2≡N_0-1,\nN_4≡N_0.\nThe next two residues repeat N_1 and N_2, so the entire sequence N_1,N_2,\\ldots is periodic with period 4.\n\nConsequently, Pat wins if and only if at least one of\n-N_0+2, -N_0+3, N_0-1, N_0\nis congruent to 0 modulo 2018. This occurs exactly when N_0≡2,3,1, or 0 modulo 2018. Thus Mary must choose an N_0 whose residue is not 0,1,2, or 3.\n\nAmong integers greater than 2017, the first four are 2018, 2019, 2020, and 2021, with precisely those forbidden residues. For N_0=2022, the residue is 4, and the repeating residues are 2016,2017,3,4, none of which is 0 modulo 2018. Hence Pat never wins. Therefore the smallest valid choice is \\boxed{2022}.",
+      "reason": "The proof was checked for indexing, residue transitions, periodicity, and minimality; all four are now explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let N_0 be Mary's initial integer, with N_0>2017, and let N_1,N_2,\\ldots denote the numbers produced by the successive moves. Work modulo 2018. We have\n2017≡-1, 2019≡1\\pmod{2018},\nso Mary's move sends x to -x+2 and Pat's move sends x to x+1.\n\nTherefore\nN_1≡-N_0+2,\nN_2≡-N_0+3,\nN_3≡N_0-1,\nN_4≡N_0,\nN_5≡-N_0+2.\nThus the residues repeat every four produced numbers.\n\nA produced number is divisible by 2018 exactly when its residue is 0. The four possible residues are zero precisely in the following cases:\nN_1≡0 iff N_0≡2;\nN_2≡0 iff N_0≡3;\nN_3≡0 iff N_0≡1;\nN_4≡0 iff N_0≡0.\nHence Mary wins exactly when N_0 is not congruent to 0,1,2, or 3 modulo 2018.\n\nThe candidates 2018, 2019, 2020, and 2021 have forbidden residues 0,1,2,3, so Pat wins for each. The candidate 2022 has residue 4, and its repeating produced residues are 2016,2017,3,4, all nonzero. Therefore Pat never obtains a multiple of 2018, and the smallest successful initial choice is \\boxed{2022}.",
+      "reason": "A critic check confirms the generated proof handles every produced term, proves repetition, and verifies the four smaller candidates."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let m=2018 and let N_0>2017 be Mary's initial integer. Define the two moves by M(x)=2017x+2 and P(x)=x+2019. Modulo m,\nM(x)≡-x+2,\nP(x)≡x+1.\n\nFor the produced sequence, beginning with Mary's first move,\nN_1=M(N_0)≡-N_0+2,\nN_2=P(N_1)≡-N_0+3,\nN_3=M(N_2)≡N_0-1,\nN_4=P(N_3)≡N_0.\nApplying the same two-move transformation to N_4 reproduces N_1, so N_{k+4}≡N_k for every k≥1. Thus it suffices to inspect N_1 through N_4.\n\nThese four residues include 0 exactly when N_0 is congruent modulo 2018 to one of 2,3,1,0, respectively. Therefore Mary can prevent Pat's win exactly for residues N_0\\not\\equiv0,1,2,3 (mod 2018).\n\nSince N_0>2017, the first candidates are 2018, 2019, 2020, 2021, and 2022. The first four have residues 0,1,2,3 and therefore cause Pat to obtain a multiple of 2018. For N_0=2022, the four produced residues are 2016,2017,3,4, all nonzero; periodicity proves that every later produced number is also nonzero modulo 2018. Hence Mary succeeds, and no smaller allowed integer does. The minimum is \\boxed{2022}.",
+      "reason": "The dependency check validates the recurrence and descendant revalidation; the minimal local repair makes periodicity and minimality explicit."
+    }
+  ]
+}

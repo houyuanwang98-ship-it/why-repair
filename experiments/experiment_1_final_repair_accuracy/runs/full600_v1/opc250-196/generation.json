@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-196",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Choose unit direction vectors u_i for the lines t_i, and let π_i denote orthogonal projection onto t_i. Define F=π_1∘π_k∘⋯∘π_2 restricted to t_1. For P,Q∈t_1, successive projection differences give\n\n‖F(P)−F(Q)‖=c‖P−Q‖,\n\nwhere c=∏_{i=1}^k |⟨u_i,u_{i+1}⟩| and u_{k+1}=u_1. If not all lines are parallel, at least one factor is strictly less than 1, so c<1. Thus F is a contraction of the complete line t_1, and Banach’s fixed-point theorem yields P_1∈t_1 with F(P_1)=P_1. Set P_{i+1}=π_{i+1}(P_i) for i=1,…,k−1. Then π_1(P_k)=P_1, giving the required cyclic sequence.\n\nIf all lines are parallel, choose a common unit direction u and, on each line t_i, choose the unique point B_i whose coordinate in a fixed affine coordinate system along u is 0. For any s∈ℝ, let P_i=B_i+su. Orthogonal projection between parallel lines preserves the u-coordinate, so π_{i+1}(P_i)=P_{i+1}, including π_1(P_k)=P_1. Hence the required points exist in all cases. ∎",
+      "reason": "Corrected the parallel-line construction and retained the contraction argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Let π_i be orthogonal projection onto t_i, and choose unit direction vectors u_i parallel to t_i. Put u_{k+1}=u_1 and define\n\nF=π_1∘π_k∘⋯∘π_2:t_1→t_1.\n\nFor P,Q∈t_1, the difference after projection onto a line with direction u is multiplied in norm by the absolute inner product with that direction. Therefore\n\n‖F(P)−F(Q)‖=\\left(∏_{i=1}^k |⟨u_i,u_{i+1}⟩|\\right)‖P−Q‖.\n\nIf the lines are not all parallel, some adjacent pair has nonparallel directions, so the product c is less than 1. Hence F is a contraction on the complete metric space t_1. It has a fixed point P_1. Defining P_{i+1}=π_{i+1}(P_i) gives P_i∈t_i and π_1(P_k)=F(P_1)=P_1.\n\nIf all t_i are parallel, fix a common direction u and choose on every t_i a point B_i with the same origin for the affine coordinate in direction u. Then P_i=B_i+su, for any fixed s, satisfies π_{i+1}(P_i)=P_{i+1} cyclically, because orthogonal projection between parallel lines preserves the coordinate along u. Thus the assertion follows. ∎",
+      "reason": "Self-check identified that arbitrary base points do not support the original parallel-case formula; the bases were normalized."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "For each i, let π_i be orthogonal projection onto t_i and let u_i be a unit direction vector of t_i. Consider the return map\n\nF=π_1∘π_k∘⋯∘π_2:t_1→t_1.\n\nIf P,Q∈t_1, then P−Q is parallel to u_1. After projection onto t_2, the difference is parallel to u_2 and has norm multiplied by |⟨u_1,u_2⟩|; continuing in this way yields\n\n‖F(P)−F(Q)‖=c‖P−Q‖,\n\nwith c=∏_{i=1}^k |⟨u_i,u_{i+1}⟩| and u_{k+1}=u_1. When the lines are not all parallel, some consecutive directions are nonparallel, hence c<1. The map F is then a contraction of the complete line t_1, so it has a fixed point P_1. Set P_{i+1}=π_{i+1}(P_i) for i<k. The fixed-point equation gives π_1(P_k)=P_1.\n\nIt remains to treat parallel lines. Choose a common direction u and identify each line t_i with ℝ by the affine coordinate s in the direction u, using compatible origins B_i (for example, choose B_i in a common plane perpendicular to u). Projection from one parallel line to another preserves s. Therefore, for any s, the points P_i=B_i+su satisfy all the required projection relations, including the final one. ∎",
+      "reason": "The critic check found and repaired the only substantive gap: the original parallel case used incompatible arbitrary origins."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let π_i:ℝ^3→t_i be orthogonal projection, and choose unit vectors u_i parallel to t_i. Define the cyclic return map F=t_1→t_1 by\n\nF=π_1∘π_k∘⋯∘π_2.\n\nFor P,Q∈t_1, successive differences remain parallel to the direction of the line reached. Consequently,\n\n‖F(P)−F(Q)‖=\\left(\\prod_{i=1}^k |⟨u_i,u_{i+1}⟩|\\right)‖P−Q‖,\n\nwhere u_{k+1}=u_1. If the lines are not all parallel, at least one consecutive pair has nonparallel directions, so the displayed product c satisfies c<1. Thus F is a contraction on the complete metric space t_1 and has a fixed point P_1. Define P_{i+1}=π_{i+1}(P_i) for i=1,…,k−1. Then P_i∈t_i and\n\nπ_1(P_k)=F(P_1)=P_1,\n\nso all required relations hold.\n\nIf all lines are parallel, choose a common unit direction u and choose points B_i∈t_i lying in one fixed plane perpendicular to u. For any s∈ℝ set P_i=B_i+su. Orthogonal projection between parallel lines preserves the coordinate s, hence π_{i+1}(P_i)=P_{i+1} for i=1,…,k−1 and π_1(P_k)=P_1. Therefore the required points exist. ∎",
+      "reason": "Dependency review isolated the parallel-case origin error; the local repair was made and both branches were revalidated."
+    }
+  ]
+}

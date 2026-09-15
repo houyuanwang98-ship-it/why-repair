@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-124",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet\n\\[\nI=\\int_{-\\infty}^{\\infty}\\frac{x\\sin x}{x^2+a^2}\\,dx,\n\\qquad a>0.\n\\]\nSince the integrand is even,\n\\[\nI=2\\int_0^\\infty\\frac{x\\sin x}{x^2+a^2}\\,dx.\n\\]\nConsider\n\\[\nf(z)=\\frac{z e^{iz}}{z^2+a^2}\n\\]\non the upper-half-plane semicircle. The arc contribution tends to zero by Jordan's lemma, and the only enclosed pole is at $z=ia$, with residue\n\\[\n\\operatorname{Res}(f,ia)=\\frac{ia\\,e^{-a}}{2ia}=\\frac{e^{-a}}2.\n\\]\nThus\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{x e^{ix}}{x^2+a^2}\\,dx=2\\pi i\\cdot\\frac{e^{-a}}2=\\pi i e^{-a}.\n\\]\nTaking imaginary parts gives\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{x\\sin x}{x^2+a^2}\\,dx=\\pi e^{-a}.\n\\]\n\\end{proof}",
+      "reason": "The original residue computation was incomplete and contained an algebraic truncation; a standard upper-half-plane contour supplies the missing argument and correct residue."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFix $a>0$ and define\n\\[\nf(z)=\\frac{z e^{iz}}{z^2+a^2}.\n\\]\nIntegrate $f$ over the contour consisting of $[-R,R]$ and the upper semicircle. The factor $e^{iz}$ decays exponentially in the upper half-plane, so the semicircular contribution tends to $0$ as $R\\to\\infty$ (Jordan's lemma). The sole pole inside is the simple pole $z=ia$, and\n\\[\n\\operatorname{Res}_{z=ia}f(z)=\\lim_{z\\to ia}\\frac{z e^{iz}}{z+ia}=\\frac{ia e^{-a}}{2ia}=\\frac{e^{-a}}2.\n\\]\nThe residue theorem therefore yields\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{x e^{ix}}{x^2+a^2}\\,dx=\\pi i e^{-a}.\n\\]\nTaking imaginary parts, and using $\\operatorname{Im}(x e^{ix})=x\\sin x$, proves\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{x\\sin x}{x^2+a^2}\\,dx=\\pi e^{-a}.\n\\]\n\\end{proof}",
+      "reason": "The revised proof checks pole location, residue, contour orientation, arc decay, and the final imaginary-part extraction."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor $a>0$, let\n\\[\nf(z)=\\frac{z e^{iz}}{(z-ia)(z+ia)}.\n\\]\nClose the real axis by a large semicircle in the upper half-plane. On that semicircle, $e^{iz}=e^{i\\operatorname{Re}z-\\operatorname{Im}z}$, and Jordan's lemma implies that the arc integral tends to zero. The only enclosed singularity is $z=ia$, whose residue is\n\\[\n\\operatorname{Res}_{z=ia}f(z)=\\frac{ia e^{i(ia)}}{ia+ia}=\\frac{e^{-a}}2.\n\\]\nHence, by the residue theorem,\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{x e^{ix}}{x^2+a^2}\\,dx\n=2\\pi i\\frac{e^{-a}}2=\\pi i e^{-a}.\n\\]\nSince the imaginary part of the integrand is $x\\sin x/(x^2+a^2)$, taking imaginary parts gives\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{x\\sin x}{x^2+a^2}\\,dx=\\pi e^{-a}.\n\\]\n\\end{proof}",
+      "reason": "A critic-style check confirms the selected contour, enclosed pole, residue, vanishing arc, and identification of the desired integral."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $a>0$ and set\n\\[\nf(z)=\\frac{z e^{iz}}{z^2+a^2}.\n\\]\nFor $R>a$, integrate over the positively oriented contour formed by the interval $[-R,R]$ and the upper semicircle $C_R$. The only pole in the upper half-plane is the simple pole $z=ia$. Its residue is\n\\[\n\\operatorname{Res}(f,ia)=\\frac{ia e^{iia}}{2ia}=\\frac{e^{-a}}2.\n\\]\nBy Jordan's lemma, since the rational factor is $O(R^{-1})$ on $C_R$, we have\n\\[\n\\lim_{R\\to\\infty}\\int_{C_R}f(z)\\,dz=0.\n\\]\nTherefore the residue theorem gives\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{x e^{ix}}{x^2+a^2}\\,dx\n=2\\pi i\\operatorname{Res}(f,ia)=\\pi i e^{-a}.\n\\]\nThe integral is absolutely convergent because its integrand is $O(|x|^{-1})$ only conditionally after oscillation, and the contour identity is understood as the limit of finite real integrals. Taking imaginary parts termwise on each finite interval and then passing to the limit yields\n\\[\n\\int_{-\\infty}^{\\infty}\\frac{x\\sin x}{x^2+a^2}\\,dx=\\pi e^{-a}.\n\\]\n\\end{proof}",
+      "reason": "The dependency-aware check repairs the factorization/residue gap and revalidates contour decay and the final descendant identity."
+    }
+  ]
+}

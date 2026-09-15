@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-175",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $p=4t+1$, so $p-1=4t$. Suppose that $a$ is a primitive root modulo $p$, hence $a$ has order $4t$. If $(-a)^n\\equiv1\\pmod p$, then\n\\[\na^n\\equiv(-1)^n\\pmod p.\n\\]\nThus $a^{2n}\\equiv1\\pmod p$, and since $a$ has order $4t$, we have $4t\\mid2n$, so $2t\\mid n$. In particular, $n$ is even, and therefore $a^n\\equiv1\\pmod p$. Consequently, $4t\\mid n$. Hence the order of $-a$ is $4t=p-1$, so $-a$ is a primitive root modulo $p$.\n\nConversely, if $-a$ is a primitive root modulo $p$, applying the result just proved to $-a$ gives that $-(-a)=a$ is a primitive root modulo $p$.\n\\end{proof}",
+      "reason": "The original argument is valid in outline but was repaired for clarity and precise order-divisibility statements."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWrite $p-1=4t$. Assume first that $a$ is a primitive root modulo $p$, so $\\operatorname{ord}_p(a)=4t$. Let $n\\ge1$ satisfy $(-a)^n\\equiv1\\pmod p$. Squaring gives\n\\[\na^{2n}=(-a)^{2n}\\equiv1\\pmod p.\n\\]\nTherefore $4t\\mid2n$, and hence $2t\\mid n$. Since $2t$ is even, $n$ is even. It follows that\n\\[\na^n\\equiv(-1)^n\\equiv1\\pmod p.\n\\]\nAgain using $\\operatorname{ord}_p(a)=4t$, we obtain $4t\\mid n$. Thus every positive exponent producing $(-a)^n\\equiv1$ is divisible by $4t$. Also $(-a)^{4t}\\equiv1\\pmod p$, so $\\operatorname{ord}_p(-a)=4t=p-1$; hence $-a$ is a primitive root.\n\nThe converse follows by applying the same implication to $-a$: if $-a$ is primitive, then $-(-a)=a$ is primitive.\n\\end{proof}",
+      "reason": "Internal checking confirmed the key implication $4t\\mid2n\\Rightarrow2t\\mid n$ and the needed evenness of $n$."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSince $p=4t+1$, we have $p-1=4t$. Suppose that $a$ is a primitive root modulo $p$. Then $\\operatorname{ord}_p(a)=4t$. For any $n\\ge1$ with $(-a)^n\\equiv1\\pmod p$, we have\n\\[\na^{2n}=(-a)^{2n}\\equiv1\\pmod p.\n\\]\nThus $4t\\mid2n$, so $2t\\mid n$. Because $2t$ is even, $n$ is even. Hence $a^n\\equiv(-1)^n\\equiv1\\pmod p$, which implies $4t\\mid n$. Therefore the least positive such $n$ is $4t$, and $-a$ has order $p-1$; it is primitive.\n\nIf $-a$ is primitive, apply the implication above with $-a$ in place of $a$. This yields that $-(-a)=a$ is primitive.\n\\end{proof}",
+      "reason": "A critic check identified that the proof should explicitly establish existence and minimality of the order of $-a$; those details are included."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $p=4t+1$, so $p-1=4t$. Assume that $a$ is a primitive root modulo $p$. Then $\\operatorname{ord}_p(a)=4t$, and in particular $a^{4t}\\equiv1\\pmod p$. Since $4t$ is even,\n\\[\n(-a)^{4t}=a^{4t}\\equiv1\\pmod p.\n\\]\nNow let $n\\ge1$ satisfy $(-a)^n\\equiv1\\pmod p$. Then\n\\[\na^{2n}=(-a)^{2n}\\equiv1\\pmod p,\n\\]\nso $4t\\mid2n$, hence $2t\\mid n$. Therefore $n$ is even, and $a^n\\equiv(-1)^n\\equiv1\\pmod p$. Since $a$ has order $4t$, this gives $4t\\mid n$. Thus every positive exponent annihilating $-a$ is a multiple of $4t$, while $4t$ itself does so. Consequently $\\operatorname{ord}_p(-a)=4t=p-1$, and $-a$ is a primitive root modulo $p$.\n\nConversely, apply the established implication to the primitive root $-a$. It follows that $-(-a)=a$ is a primitive root modulo $p$.\n\\end{proof}",
+      "reason": "Dependency and descendant checks found no theorem change was needed; the minimal repair makes the order existence and minimality explicit."
+    }
+  ]
+}

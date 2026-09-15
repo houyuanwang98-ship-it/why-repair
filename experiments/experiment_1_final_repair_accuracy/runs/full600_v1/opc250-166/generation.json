@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-166",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "undetermined",
+      "final_proof": "The supplied proof is incomplete and cannot be accepted as a proof of the theorem. In Case II.2, it asserts that for every prime p and 0≤r≤p−1, the congruence r!≡1 (mod p) occurs only for r=0,1. This is false: for p=5 and r=3, we have 3!=6≡1 (mod 5). Thus the argument does not exclude b=p+r=8 when p=5. A complete proof would need an additional argument treating all such r. The theorem itself is not disproved by this gap, so the outcome is undetermined.",
+      "reason": "The one-pass rewrite exposes a false factorial-congruence claim; no valid complete proof follows without a substantial new argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "undetermined",
+      "final_proof": "The proposed classification cannot be certified from the supplied proof. The critical claim in Subcase B—that r!≡1 (mod p) only for r=0 or r=1—is false, since 3!≡1 (mod 5). Consequently, the deduction that only b=p and b=p+1 need be considered is invalid, and all later casework is incomplete. No counterexample to the stated theorem is established here, but the theorem cannot be proved by the given reasoning without additional analysis of every r satisfying r!≡1 (mod p).",
+      "reason": "Internal checking finds a concrete counterexample to a key lemma, so revision cannot honestly certify the theorem from the supplied proof."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "undetermined",
+      "final_proof": "Assume a^p=b!+p with a,b positive and p prime. The supplied proof correctly rules out b≥2p by p-adic valuation, but its remaining classification is not established. It relies on the assertion that r!≡1 (mod p), for 0≤r≤p−1, implies r∈{0,1}. This assertion fails for p=5,r=3, because 3!≡1 (mod 5). Therefore b=8 is not excluded by the argument, and the claimed list of solutions has not been proved. Since this identifies a proof failure rather than a counterexample to the theorem, the result is undetermined.",
+      "reason": "Critic review detects an explicit false lemma and an unvalidated omission of cases."
+    },
+    {
+      "method": "full_system",
+      "outcome": "undetermined",
+      "final_proof": "The dependency-aware check fails at the step asserting that r!≡1 (mod p) has only the solutions r=0,1 for 0≤r≤p−1. The counterexample p=5,r=3 gives 3!=6≡1 (mod 5). This invalidates the dependent restriction b∈{p,p+1}, so the subsequent valuation and size arguments do not revalidate the omitted descendants. The displayed triples may still be the true solutions, but the supplied proof does not establish that fact, and no theorem-level counterexample is available from the identified defect.",
+      "reason": "The certificate fails, and the minimal local repair is impossible because omitted branches require new global arguments; descendant revalidation therefore fails."
+    }
+  ]
+}

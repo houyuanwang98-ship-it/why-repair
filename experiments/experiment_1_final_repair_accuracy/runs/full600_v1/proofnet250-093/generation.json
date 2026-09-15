@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-093",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $S_n=\\sum_{k=1}^n a_k$, with $S_0=0$. Since $\\sum a_n$ converges, $S_n\\to S$ for some $S$. Since $(b_n)$ is monotonic and bounded, it converges to some $b$.\n\nChoose $M\\ge 1$ such that $|S_n|\\le M$ for every $n$. Given $\\varepsilon>0$, choose $N$ so that for all $r\\ge N$,\n\\[\n|b_rS_r-bS|<\\frac{\\varepsilon}{3},\n\\]\nand so that $|b_m-b_n|<\\varepsilon/(3M)$ whenever $m,n\\ge N$. If $n>m\\ge N$, summation by parts gives\n\\[\n\\sum_{k=m+1}^n a_kb_k=b_nS_n-b_mS_m+\\sum_{k=m}^{n-1}(b_k-b_{k+1})S_k.\n\\]\nTherefore,\n\\[\n\\left|\\sum_{k=m+1}^n a_kb_k\\right|\n\\le |b_nS_n-bS|+|b_mS_m-bS|+M\\sum_{k=m}^{n-1}|b_k-b_{k+1}|.\n\\]\nMonotonicity implies\n\\[\n\\sum_{k=m}^{n-1}|b_k-b_{k+1}|=|b_m-b_n|,\n\\]\nso the right-hand side is less than $\\varepsilon$. Thus the partial sums of $\\sum a_nb_n$ are Cauchy, and hence the series converges.\n\\end{proof}",
+      "reason": "Corrected the index typo, supplied the needed convergence and boundedness details, and made the Cauchy estimate valid."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine $S_n=\\sum_{k=1}^n a_k$ and $S_0=0$. The convergence of $\\sum a_n$ gives $S_n\\to S$. A bounded monotonic sequence has a finite limit, so $b_n\\to b$.\n\nBecause $(S_n)$ is bounded, choose $M\\ge1$ with $|S_n|\\le M$ for all $n$. For $n>m$, Abel summation yields\n\\[\n\\sum_{k=m+1}^{n}a_kb_k\n=b_nS_n-b_mS_m+\\sum_{k=m}^{n-1}(b_k-b_{k+1})S_k.\n\\]\nGiven $\\varepsilon>0$, choose $N$ such that, for every $r\\ge N$,\n\\[\n|b_rS_r-bS|<\\frac{\\varepsilon}{3},\n\\]\nand such that $|b_m-b_n|<\\varepsilon/(3M)$ whenever $m,n\\ge N$. Then, for $n>m\\ge N$,\n\\[\n\\begin{aligned}\n\\left|\\sum_{k=m+1}^{n}a_kb_k\\right|\n&\\le |b_nS_n-bS|+|b_mS_m-bS|\\\n&\\quad+M\\sum_{k=m}^{n-1}|b_k-b_{k+1}|\\\\\n&=|b_nS_n-bS|+|b_mS_m-bS|+M|b_m-b_n|\\\\\n&<\\varepsilon,\n\\end{aligned}\n\\]\nwhere the equality uses monotonicity of $(b_n)$. Hence the partial sums are Cauchy, so $\\sum a_nb_n$ converges.\n\\end{proof}",
+      "reason": "The revised proof was checked for endpoint indices, the monotone-variation identity, and the case where the bound used in the denominator could otherwise be zero."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $S_n=\\sum_{k=1}^n a_k$ and $S_0=0$. Since $\\sum a_n$ converges, $S_n\\to S$ and $(S_n)$ is bounded. Since $(b_n)$ is monotonic and bounded, $b_n\\to b$.\n\nFix $\\varepsilon>0$. Choose $M\\ge1$ with $|S_n|\\le M$ for all $n$. Since $b_nS_n\\to bS$, choose $N_1$ such that\n\\[\n|b_rS_r-bS|<\\frac{\\varepsilon}{3}\n\\quad(r\\ge N_1).\n\\]\nSince $b_n\\to b$, choose $N_2$ such that\n\\[\n|b_m-b_n|<\\frac{\\varepsilon}{3M}\n\\quad(m,n\\ge N_2).\n\\]\nSet $N=\\max\\{N_1,N_2\\}$. For $n>m\\ge N$, summation by parts gives\n\\[\n\\sum_{k=m+1}^{n}a_kb_k\n=b_nS_n-b_mS_m+\\sum_{k=m}^{n-1}(b_k-b_{k+1})S_k.\n\\]\nThus\n\\[\n\\left|\\sum_{k=m+1}^{n}a_kb_k\\right|\n\\le \\frac{2\\varepsilon}{3}+M\\sum_{k=m}^{n-1}|b_k-b_{k+1}|.\n\\]\nBecause $(b_n)$ is monotonic,\n\\[\n\\sum_{k=m}^{n-1}|b_k-b_{k+1}|=|b_m-b_n|<\\frac{\\varepsilon}{3M}.\n\\]\nConsequently,\n\\[\n\\left|\\sum_{k=m+1}^{n}a_kb_k\\right|<\\varepsilon.\n\\]\nThe partial sums are therefore Cauchy, and $\\sum a_nb_n$ converges.\n\\end{proof}",
+      "reason": "A critic check identified and repaired the original summand-index error and ensured all limits and constants used in the estimate were justified."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nPut $S_n=\\sum_{k=1}^n a_k$ and $S_0=0$. The hypothesis that $\\sum a_n$ converges implies $S_n\\to S$ and $(S_n)$ is bounded. The monotonicity and boundedness of $(b_n)$ imply that $b_n\\to b$.\n\nChoose $M\\ge1$ such that $|S_n|\\le M$ for all $n$. Given $\\varepsilon>0$, choose $N$ such that for every $r\\ge N$,\n\\[\n|b_rS_r-bS|<\\frac{\\varepsilon}{3},\n\\]\nand such that $|b_m-b_n|<\\varepsilon/(3M)$ for all $m,n\\ge N$. For $n>m\\ge N$, Abel's summation formula gives\n\\[\n\\sum_{k=m+1}^{n}a_kb_k\n=b_nS_n-b_mS_m+\\sum_{k=m}^{n-1}(b_k-b_{k+1})S_k.\n\\]\nHence\n\\[\n\\begin{aligned}\n\\left|\\sum_{k=m+1}^{n}a_kb_k\\right|\n&\\le |b_nS_n-bS|+|b_mS_m-bS|\n +M\\sum_{k=m}^{n-1}|b_k-b_{k+1}|\\\\\n&=|b_nS_n-bS|+|b_mS_m-bS|+M|b_m-b_n|\\\\\n&<\\varepsilon.\n\\end{aligned}\n\\]\nThe equality follows from the fact that a monotonic sequence has total variation on $[m,n]$ equal to $|b_m-b_n|$. Thus the partial sums of $\\sum a_nb_n$ form a Cauchy sequence. Therefore $\\sum a_nb_n$ converges.\n\\end{proof}",
+      "reason": "Dependency and descendant checks confirmed that the repaired Abel identity, limit facts, and variation bound support the final Cauchy conclusion without altering the theorem or assumptions."
+    }
+  ]
+}

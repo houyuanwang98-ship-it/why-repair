@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-217",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose, toward a contradiction, that $X=U\\cup V$ is a separation, where $U$ and $V$ are disjoint nonempty open subsets of $X$. For any $y\\in Y$, the fiber $p^{-1}(\\{y\\})$ is connected. Its intersections with $U$ and $V$ are disjoint relatively open subsets whose union is the fiber. Hence the fiber is contained entirely in $U$ or entirely in $V$.\n\nIt follows that $p(U)$ and $p(V)$ are disjoint, nonempty, and cover $Y$. Moreover, since $U=p^{-1}(p(U))$ and $V=p^{-1}(p(V))$, the quotient-map property implies that $p(U)$ and $p(V)$ are open in $Y$. Thus $p(U)$ and $p(V)$ form a separation of $Y$, contradicting the connectedness of $Y$. Therefore $X$ is connected.\n\\end{proof}",
+      "reason": "Repairs the missing justification that a connected fiber meeting one side of the separation lies entirely in that side."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume that $X$ is disconnected, and let $U,V$ be a separation of $X$. Fix $y\\in Y$. Since $p^{-1}(\\{y\\})$ is connected and\n\\[\np^{-1}(\\{y\\})=(p^{-1}(\\{y\\})\\cap U)\\cup(p^{-1}(\\{y\\})\\cap V),\n\\]\nwhere the two sets are disjoint and relatively open in the fiber, at most one of these intersections is nonempty. Consequently, each fiber is contained in $U$ or in $V$.\n\nTherefore $U$ and $V$ are saturated: $U=p^{-1}(p(U))$ and $V=p^{-1}(p(V))$. Since $U$ and $V$ are nonempty, so are $p(U)$ and $p(V)$; they are disjoint and, because a quotient map is surjective, their union is $Y$. By the definition of the quotient topology, the saturation equalities and openness of $U,V$ imply that $p(U)$ and $p(V)$ are open in $Y$. This separates $Y$, contradicting its connectedness. Hence $X$ is connected.\n\\end{proof}",
+      "reason": "Internal checking identifies and fixes the erroneous direct inference from fiber connectedness to containment."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose that $X$ has a separation $X=U\\sqcup V$, with $U,V$ nonempty and open. For every $y\\in Y$, the connected fiber $F_y=p^{-1}(\\{y\\})$ cannot meet both $U$ and $V$: otherwise $F_y\\cap U$ and $F_y\\cap V$ would be a separation of $F_y$, since $U$ and $V$ are disjoint open subsets of $X$. Thus every fiber is contained in exactly one of $U$ and $V$.\n\nHence $U$ and $V$ are saturated. In particular,\n\\[\nU=p^{-1}(p(U)),\\qquad V=p^{-1}(p(V)).\n\\]\nBecause $p$ is a quotient map, $p(U)$ and $p(V)$ are open in $Y$. They are nonempty, disjoint, and their union is $Y$ by surjectivity of $p$. This gives a separation of $Y$, contradicting that $Y$ is connected. Therefore $X$ is connected.\n\\end{proof}",
+      "reason": "The critic-required correction is the relative-open separation argument inside each fiber; the remainder then follows from saturation and the quotient topology."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume for contradiction that $X$ is disconnected. Choose disjoint nonempty open sets $U,V\\subseteq X$ with $X=U\\cup V$. For each $y\\in Y$, let $F_y=p^{-1}(\\{y\\})$. The sets $F_y\\cap U$ and $F_y\\cap V$ are disjoint and relatively open in $F_y$, and their union is $F_y$. Since $F_y$ is connected, one of them is empty. Thus $F_y\\subseteq U$ or $F_y\\subseteq V$.\n\nIt follows that both $U$ and $V$ are saturated. Therefore\n\\[\nU=p^{-1}(p(U))\\quad\\text{and}\\quad V=p^{-1}(p(V)).\n\\]\nSince $U$ and $V$ are open and $p$ is a quotient map, $p(U)$ and $p(V)$ are open in $Y$. They are nonempty, disjoint, and cover $Y$: nonemptiness follows from that of $U,V$, disjointness from the fact that no fiber meets both sets, and coverage from $X=U\\cup V$ together with surjectivity of $p$. Hence $p(U),p(V)$ form a separation of $Y$, contradicting its connectedness. Therefore $X$ is connected.\n\\end{proof}",
+      "reason": "Dependency checks validate the local fiber argument, saturation identities, quotient-openness, and the final separation of $Y$; descendant claims remain valid."
+    }
+  ]
+}

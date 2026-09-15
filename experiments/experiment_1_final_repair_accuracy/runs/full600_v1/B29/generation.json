@@ -1,0 +1,29 @@
+{
+  "case_id": "B29",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "由假设，10|n，所以存在整数 k，使得 n=10k=5(2k)。因 2k 为整数，故 5|n。",
+      "reason": "将错误的大小关系论证改为整除定义的直接证明。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "因为 10|n，存在整数 k 使 n=10k。于是 n=5(2k)，且 2k 为整数。因此 5|n。",
+      "reason": "检查了倍数表示和整数性，确认结论成立。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "由 10|n，设 n=10k，其中 k∈ℤ。则 n=10k=5(2k)，而 2k∈ℤ，所以 5|n。",
+      "reason": "批评并修正了原证明中“10>5”不能推出“5|n”的逻辑错误。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "依赖假设 10|n。按整除定义，存在 k∈ℤ 使 n=10k。由于 10=5·2，故 n=5·(2k)，且 2k∈ℤ。因此 5|n。独立复核：该证明仅使用给定假设和整数运算，结论 5|n 得到验证。",
+      "reason": "定位了唯一失效步骤并作最小局部修复；复核后确认无后代依赖被破坏。"
+    }
+  ]
+}

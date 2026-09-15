@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-081",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "irreparable",
+      "final_proof": "The theorem cannot be proved as stated. Take any completely regular space, for example $X=\\{x\\}$, and let $A=\\varnothing$ and $B=\\varnothing$. These are disjoint closed subsets and $A$ is compact. However, for every function $f:X\\to[0,1]$, one has $f(A)=\\varnothing\\ne\\{0\\}$ and $f(B)=\\varnothing\\ne\\{1\\}$. Thus the conclusion is false without assuming that $A$ and $B$ are nonempty.",
+      "reason": "The original proof implicitly requires nonempty sets; image equalities to singleton sets fail when either closed set is empty."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "irreparable",
+      "final_proof": "The theorem is false under the stated assumptions. Let $X=\\{x\\}$, with its unique topology, and let $A=B=\\varnothing$. Then $X$ is completely regular, $A$ and $B$ are disjoint closed subsets, and $A$ is compact. For every continuous $f:X\\to[0,1]$, however, $f(A)=f(B)=\\varnothing$, so neither $f(A)=\\{0\\}$ nor $f(B)=\\{1\\}$ holds. Hence no proof preserving the theorem and assumptions exists.",
+      "reason": "Internal checking exposes the empty-set counterexample, so the theorem cannot be repaired without changing its assumptions or conclusion."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "irreparable",
+      "final_proof": "A valid proof cannot be generated because the statement admits a counterexample. Choose the completely regular one-point space $X=\\{x\\}$ and take $A=B=\\varnothing$. Both sets are closed and disjoint, and $A$ is compact. Every map $f:X\\to[0,1]$ satisfies $f(A)=f(B)=\\varnothing$, whereas the claimed conclusion requires $f(A)=\\{0\\}$ and $f(B)=\\{1\\}$. Therefore the theorem is false as written.",
+      "reason": "The critic identifies a decisive counterexample: the required singleton images are impossible for empty subsets."
+    },
+    {
+      "method": "full_system",
+      "outcome": "irreparable",
+      "final_proof": "Dependency-aware verification finds that the conclusion depends on $A$ and $B$ being nonempty, but this is not among the assumptions. Let $X=\\{x\\}$ be the one-point completely regular space and set $A=B=\\varnothing$. The hypotheses hold: $A$ and $B$ are disjoint closed subsets and $A$ is compact. Yet for every continuous $f:X\\to[0,1]$, $f(A)=f(B)=\\varnothing$, not the required singleton sets. Thus descendant revalidation fails, and the theorem cannot be preserved without adding nonemptiness assumptions.",
+      "reason": "The missing nonemptiness dependency makes the statement false; no local proof repair can resolve it while keeping the theorem unchanged."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-248",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose first that $U_1\\cup U_2$ is a subspace of $V$. We prove that one of $U_1,U_2$ is contained in the other. If neither containment holds, choose $v\\in U_1\\setminus U_2$ and $u\\in U_2\\setminus U_1$. Since $U_1\\cup U_2$ is a subspace, $v+u\\in U_1\\cup U_2$.\n\nIf $v+u\\in U_1$, then, because $-v\\in U_1$, we have $(v+u)+(-v)=u\\in U_1$, contradicting $u\\notin U_1$. If $v+u\\in U_2$, then, because $-u\\in U_2$, we have $(v+u)+(-u)=v\\in U_2$, contradicting $v\\notin U_2$. Thus one of $U_1\\subseteq U_2$ or $U_2\\subseteq U_1$ must hold.\n\nConversely, suppose $U_1\\subseteq U_2$ or $U_2\\subseteq U_1$. If $U_1\\subseteq U_2$, then $U_1\\cup U_2=U_2$, which is a subspace of $V$. The other case is analogous. Therefore, $U_1\\cup U_2$ is a subspace of $V$ if and only if one of the subspaces is contained in the other.\n\\end{proof}",
+      "reason": "The argument is valid after making the contradiction step explicit and proving both directions."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume that $U_1\\cup U_2$ is a subspace of $V$. If $U_1\\nsubseteq U_2$ and $U_2\\nsubseteq U_1$, choose\n\\[\nv\\in U_1\\setminus U_2\\qquad\\text{and}\\qquad u\\in U_2\\setminus U_1.\n\\]\nBecause $U_1\\cup U_2$ is closed under addition, $v+u\\in U_1\\cup U_2$. If $v+u\\in U_1$, then $-v\\in U_1$ and hence $u=(v+u)-v\\in U_1$, a contradiction. If $v+u\\in U_2$, then $-u\\in U_2$ and hence $v=(v+u)-u\\in U_2$, also a contradiction. Therefore, the two noncontainments cannot both hold, so $U_1\\subseteq U_2$ or $U_2\\subseteq U_1$.\n\nConversely, if $U_1\\subseteq U_2$, then $U_1\\cup U_2=U_2$, a subspace of $V$. If $U_2\\subseteq U_1$, then $U_1\\cup U_2=U_1$, also a subspace of $V$. Hence $U_1\\cup U_2$ is a subspace of $V$ exactly when one of $U_1$ and $U_2$ is contained in the other.\n\\end{proof}",
+      "reason": "Internal checking confirms that closure under addition and additive inverses suffices for the contradiction, and the converse handles both containment cases."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe prove both implications.\n\nFirst, suppose that $U_1\\cup U_2$ is a subspace of $V$. Assume toward a contradiction that neither subspace contains the other. Then there exist vectors $v\\in U_1\\setminus U_2$ and $u\\in U_2\\setminus U_1$. Since $v,u\\in U_1\\cup U_2$ and this union is a subspace, $v+u\\in U_1\\cup U_2$.\n\nIf $v+u\\in U_1$, then $-v\\in U_1$, so $u=(v+u)+(-v)\\in U_1$, contradicting the choice of $u$. If $v+u\\in U_2$, then $-u\\in U_2$, so $v=(v+u)+(-u)\\in U_2$, contradicting the choice of $v$. Thus neither noncontainment is possible, and therefore $U_1\\subseteq U_2$ or $U_2\\subseteq U_1$.\n\nConversely, if $U_1\\subseteq U_2$, then $U_1\\cup U_2=U_2$, which is a subspace. If $U_2\\subseteq U_1$, then $U_1\\cup U_2=U_1$, which is a subspace. Consequently, the union is a subspace if and only if one of the two subspaces is contained in the other.\n\\end{proof}",
+      "reason": "The repaired proof passes a validity check: the selected vectors exist under the assumed noncontainments, and each union-membership case yields the required contradiction."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $U_1$ and $U_2$ be subspaces of $V$.\n\nAssume that $U_1\\cup U_2$ is a subspace of $V$. We claim that $U_1\\subseteq U_2$ or $U_2\\subseteq U_1$. Otherwise, choose $v\\in U_1\\setminus U_2$ and $u\\in U_2\\setminus U_1$. Since both vectors belong to $U_1\\cup U_2$ and the union is a subspace, their sum belongs to the union:\n\\[\nv+u\\in U_1\\cup U_2.\n\\]\nIf $v+u\\in U_1$, then $-v\\in U_1$ and closure under addition gives\n\\[\nu=(v+u)+(-v)\\in U_1,\n\\]\ncontradicting $u\\notin U_1$. If $v+u\\in U_2$, then $-u\\in U_2$ and closure under addition gives\n\\[\nv=(v+u)+(-u)\\in U_2,\n\\]\ncontradicting $v\\notin U_2$. Hence the claim follows.\n\nConversely, suppose $U_1\\subseteq U_2$. Then $U_1\\cup U_2=U_2$, so the union is a subspace of $V$. Likewise, if $U_2\\subseteq U_1$, then $U_1\\cup U_2=U_1$, so the union is a subspace. Therefore, $U_1\\cup U_2$ is a subspace of $V$ if and only if one of the subspaces is contained in the other.\n\\end{proof}",
+      "reason": "Dependency and descendant checks confirm the minimal repair: explicitly use that both chosen vectors lie in the union, then verify each possible union branch and the converse."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-160",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $X$ be locally compact Hausdorff. If $X$ is compact, then $X$ is compact Hausdorff and hence normal, so by the Urysohn lemma it is completely regular. If $X$ is noncompact, let $Y=X\\cup\\{\\infty\\}$ be its one-point compactification. Since $X$ is locally compact Hausdorff, $Y$ is compact Hausdorff and therefore normal. By the Urysohn lemma, $Y$ is completely regular. Complete regularity is hereditary to subspaces, and $X$ is a subspace of $Y$. Hence $X$ is completely regular.\n\\end{proof}",
+      "reason": "Adds the compact case and states the required hereditary-subspace step."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe verify the compact and noncompact cases separately. If $X$ is compact, then compact Hausdorff spaces are normal; the Urysohn lemma implies that $X$ is completely regular. Otherwise, form the one-point compactification $Y=X\\cup\\{\\infty\\}$. Local compactness and the Hausdorff assumption ensure that $Y$ is compact Hausdorff. Thus $Y$ is normal, and the Urysohn lemma gives that $Y$ is completely regular. Since complete regularity passes to subspaces and $X\\subseteq Y$, $X$ is completely regular.\n\\end{proof}",
+      "reason": "Checks the existence conditions for the one-point compactification and handles the omitted compact case."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $F$ be a closed subset of $X$ and let $x\\in X\\setminus F$. We show that there is a continuous function $f:X\\to[0,1]$ such that $f(x)=1$ and $f(F)=\\{0\\}$. If $X$ is compact, then $X$ is normal, so the Urysohn lemma supplies such an $f$. If $X$ is noncompact, let $Y$ be the one-point compactification of $X$. Then $Y$ is compact Hausdorff, hence normal. The sets $F$ and $\\{x\\}$ are disjoint closed subsets of $Y$ (because they lie in $X$), so Urysohn's lemma gives a continuous $g:Y\\to[0,1]$ with $g|_F=0$ and $g(x)=1$. The restriction $f=g|_X$ has the required properties. Therefore $X$ is completely regular.\n\\end{proof}",
+      "reason": "The critic-level check replaces the loose inheritance claim with the defining separation argument and verifies closedness in the compactification."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFix a closed set $F\\subseteq X$ and a point $x\\in X\\setminus F$. We construct a continuous $f:X\\to[0,1]$ with $f(F)=\\{0\\}$ and $f(x)=1$. If $X$ is compact, then $X$ is compact Hausdorff and hence normal. By Urysohn's lemma, such an $f$ exists. Suppose now that $X$ is noncompact. Its one-point compactification $Y=X\\cup\\{\\infty\\}$ is compact Hausdorff because $X$ is locally compact Hausdorff. Consequently, $Y$ is normal. The subset $F$ is closed in $Y$: since $F$ is closed in $X$ and does not contain $\\infty$, its complement $(X\\setminus F)\\cup\\{\\infty\\}$ is open in $Y$. Also, $\\{x\\}$ is closed in $Y$. Hence $F$ and $\\{x\\}$ are disjoint closed subsets of $Y$. Urysohn's lemma yields a continuous $g:Y\\to[0,1]$ with $g|_F=0$ and $g(x)=1$. Restricting $g$ to $X$ gives the desired $f$. Thus $X$ is completely regular.\n\\end{proof}",
+      "reason": "Performs dependency checks, makes the minimal local repair, explicitly verifies closedness in the compactification, and revalidates the separation conclusion."
+    }
+  ]
+}

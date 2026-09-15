@@ -1,0 +1,29 @@
+{
+  "case_id": "B10",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "由 a|b 且 c|d，存在整数 m,n，使得 b=am、d=cn。于是 bd=(am)(cn)=ac(mn)。由于 mn 为整数，故 ac|bd。",
+      "reason": "原证明逻辑完整，直接整理后仍成立。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "因为 a|b，所以存在整数 m 使 b=am；因为 c|d，所以存在整数 n 使 d=cn。于是\nbd=(am)(cn)=ac(mn)。\n又因 m,n 为整数，mn 为整数，因此 ac|bd。",
+      "reason": "检查了整除定义、代数变形及整数闭性，均无误。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "由整除的定义，存在 m,n∈ℤ，使 b=am，d=cn。于是\nbd=(am)(cn)=ac(mn)。\n因 m,n∈ℤ，故 mn∈ℤ，从而 ac|bd。",
+      "reason": "生成证明并核查了关键见证元 mn 确属整数，结论有效。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "已知 a,b,c,d 为整数，且 a|b、c|d。由整除定义，存在 m,n∈ℤ，使 b=am、d=cn。计算得\nbd=(am)(cn)=ac(mn)。\n由于整数对乘法封闭，mn∈ℤ，因此存在整数 mn 使 bd=ac(mn)，故 ac|bd。",
+      "reason": "依赖关系、局部推导和结论均通过独立检查；无须修复，相关后继结论保持有效。"
+    }
+  ]
+}

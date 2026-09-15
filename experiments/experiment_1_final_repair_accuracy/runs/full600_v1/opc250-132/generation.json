@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-132",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "undetermined",
+      "final_proof": "The proposed proof is not valid. From g(p) | A(p) for each prime p, it does not follow that g(p) divides gcd_r A(r), because g(p) depends on p. Consequently the conclusion that g is constant is unsupported. No complete proof of the stated classification follows from this argument.",
+      "reason": "Fatal quantifier error in Step 3."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "undetermined",
+      "final_proof": "The reduction to δ,ε≤1 is plausible, but the central argument fails: the hypothesis gives g(p) | A_{δ,ε}(p) separately for each p, not g(p) | A_{δ,ε}(r) for every r. Therefore one cannot conclude g(p) divides the gcd of the entire sequence or that g is constant. The classification remains unproved.",
+      "reason": "Internal checking detects the same invalid gcd inference."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "undetermined",
+      "final_proof": "A valid completion cannot be certified. The claimed gcd computations, even if correct, concern the sequence A(r), whereas the available divisibility is only g(p) | A(p). Since the polynomial value changes with the prime, the passage to a fixed gcd is logically invalid. Thus the supplied proof does not establish that g is constant, and no repaired complete proof is available without a new argument.",
+      "reason": "Critic rejects the generator’s unsupported cross-prime divisibility step."
+    },
+    {
+      "method": "full_system",
+      "outcome": "undetermined",
+      "final_proof": "Dependency review identifies an unresolved dependency at Step 3. Step 2 establishes only\n\\[g(p)\\mid A_{\\delta,\\varepsilon}(p)\\quad\\text{for each odd prime }p.\\]\nIt does not establish\n\\[g(p)\\mid A_{\\delta,\\varepsilon}(r)\\quad\\text{for all odd primes }r.\\]\nHence the asserted divisibility by the sequence gcd, and therefore the conclusion that g is constant, do not follow. All subsequent classification and verification depend on this missing statement. The theorem is not shown false, but the proof cannot be certified or locally repaired.",
+      "reason": "Dependency-aware review finds a fatal cross-instance quantifier mismatch; descendant conclusions are invalid."
+    }
+  ]
+}

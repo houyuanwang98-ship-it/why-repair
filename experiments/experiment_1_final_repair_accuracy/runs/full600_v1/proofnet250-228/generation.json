@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-228",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $d=n-m>0$ and set $x=a^{2^m}$. Then\n\\[\na^{2^n}+1=x^{2^d}+1,\\qquad a^{2^m}+1=x+1.\n\\]\nIf $g=(x^{2^d}+1,x+1)$, then $x\\equiv -1\\pmod g$. Since $2^d$ is even,\n\\[\nx^{2^d}+1\\equiv (-1)^{2^d}+1=2\\pmod g,\n\\]\nso $g\\mid 2$. If $a$ is even, both $x^{2^d}+1$ and $x+1$ are odd, hence $g=1$. If $a$ is odd, both are even, hence $g=2$.",
+      "reason": "The supplied proof concerns prime-factor valuations of $n!$ and does not address the stated gcd; it was replaced by the direct congruence argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nPut $x=a^{2^m}$ and $r=2^{n-m}$. Because $n>m$, $r$ is an even positive integer. Let\n\\[\ng=(a^{2^n}+1,a^{2^m}+1)=(x^r+1,x+1).\n\\]\nModulo $g$, we have $x\\equiv -1$, and therefore\n\\[\n0\\equiv x^r+1\\equiv (-1)^r+1=2\\pmod g.\n\\]\nThus $g$ divides $2$. When $a$ is even, both terms are odd, so their gcd is odd and must equal $1$. When $a$ is odd, both terms are even, so their gcd is at least $2$ and therefore equals $2$.",
+      "reason": "An internal check confirms that the key exponent $2^{n-m}$ is even and that parity determines whether the divisor $2$ is attained."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $g=\\left(a^{2^n}+1,a^{2^m}+1\\right)$ and write $x=a^{2^m}$. Since $n-m\\ge1$,\n\\[\na^{2^n}+1=x^{2^{n-m}}+1.\n\\]\nThe relation $g\\mid x+1$ gives $x\\equiv-1\\pmod g$. Hence\n\\[\nx^{2^{n-m}}+1\\equiv(-1)^{2^{n-m}}+1=2\\pmod g,\n\\]\nso $g\\mid2$. If $a$ is even, the two numbers are odd, so $g=1$. If $a$ is odd, the two numbers are even, so $2\\mid g$; combined with $g\\mid2$, this yields $g=2$.",
+      "reason": "The generator’s candidate was checked for the exponent, divisibility, and parity cases; the concise repaired proof passes all three checks."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine $x=a^{2^m}$ and $e=2^{n-m}$. The assumption $n>m$ implies that $e$ is even, and\n\\[\n\\left(a^{2^n}+1,a^{2^m}+1\\right)=(x^e+1,x+1).\n\\]\nLet this gcd be $g$. Since $g\\mid x+1$, we have $x\\equiv-1\\pmod g$. Consequently,\n\\[\nx^e+1\\equiv(-1)^e+1=2\\pmod g,\n\\]\nwhich proves $g\\mid2$. If $a$ is even, then $x$ is even and both $x^e+1$ and $x+1$ are odd, so $g=1$. If $a$ is odd, then $x$ is odd and both terms are even, so $2\\mid g$; hence $g=2$.",
+      "reason": "Dependency checks establish the reduction, the even-exponent congruence, and both parity descendants; independent review finds no remaining gap."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-011",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let x=A-3a and y=B-3b. Since |x|≤1-a and |y|≤1-b, we have a,b≤1; together with positivity, 0<a,b≤1. Moreover,\n\\[\n\\frac{AB}{3}-3ab=ay+bx+\\frac{xy}{3}.\n\\]\nTherefore,\n\\[\n\\left|\\frac{AB}{3}-3ab\\right|\\le a(1-b)+b(1-a)+\\frac{(1-a)(1-b)}3\n=\\frac{1+2a+2b-5ab}{3}.\n\\]\nNow\n\\[\n1+2ab-\\frac{1+2a+2b-5ab}{3}\n=\\frac{2(1-a)(1-b)+9ab}{3}\\ge0.\n\\]\nThus \\(\\left|\\frac{AB}{3}-3ab\\right|\\le1+2ab\\), and subtracting \\(3ab\\) gives\n\\[\n\\left|\\frac{AB}{3}-3ab\\right|-3ab\\le1-ab.\n\\]",
+      "reason": "The supplied proof is correct; the argument was compressed without changing its substance."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "Set \\(x=A-3a\\) and \\(y=B-3b\\). The hypotheses give \\(|x|\\le1-a\\) and \\(|y|\\le1-b\\), so necessarily \\(0<a,b\\le1\\). Expanding,\n\\[\n\\frac{AB}{3}-3ab=\\frac{(3a+x)(3b+y)}3-3ab=ay+bx+\\frac{xy}{3}.\n\\]\nHence, by the triangle inequality,\n\\[\n\\left|\\frac{AB}{3}-3ab\\right|\n\\le a|y|+b|x|+\\frac{|x||y|}{3}\n\\le a(1-b)+b(1-a)+\\frac{(1-a)(1-b)}3.\n\\]\nThe final expression is \\((1+2a+2b-5ab)/3\\), and\n\\[\n1+2ab-\\frac{1+2a+2b-5ab}{3}\n=\\frac{2(1-a)(1-b)+9ab}{3}\\ge0,\n\\]\nbecause \\(0<a,b\\le1\\). Consequently,\n\\(\\left|AB/3-3ab\\right|\\le1+2ab\\). Subtracting \\(3ab\\) proves\n\\[\n\\left|\\frac{AB}{3}-3ab\\right|-3ab\\le1-ab.\n\\]",
+      "reason": "Internal checking confirms the domain restriction, expansion, bound, and final rearrangement are all valid."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "From \\(|A-3a|\\le1-a\\) and \\(|B-3b|\\le1-b\\), the right sides are nonnegative. Thus \\(0<a,b\\le1\\). Write \\(A=3a+x\\), \\(B=3b+y\\), where \\(|x|\\le1-a\\) and \\(|y|\\le1-b\\). Then\n\\[\n\\frac{AB}{3}-3ab=ay+bx+\\frac{xy}{3},\n\\]\nso\n\\[\n\\left|\\frac{AB}{3}-3ab\\right|\n\\le a(1-b)+b(1-a)+\\frac{(1-a)(1-b)}3.\n\\]\nIt remains to compare this with \\(1+2ab\\). Their difference equals\n\\[\n1+2ab-a(1-b)-b(1-a)-\\frac{(1-a)(1-b)}3\n=\\frac{2(1-a)(1-b)+9ab}{3}\\ge0.\n\\]\nTherefore \\(\\left|AB/3-3ab\\right|\\le1+2ab\\), and hence\n\\[\n\\left|\\frac{AB}{3}-3ab\\right|-3ab\\le1-ab.\n\\]",
+      "reason": "A critic check found no gap: nonnegativity of the hypothesis bounds yields the needed domain, and the comparison identity is correct."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "The assumptions first imply \\(1-a\\ge0\\) and \\(1-b\\ge0\\), hence \\(0<a,b\\le1\\). Define\n\\[\nx=A-3a,\\qquad y=B-3b.\n\\]\nThen \\(|x|\\le1-a\\), \\(|y|\\le1-b\\), and\n\\[\n\\frac{AB}{3}-3ab=ay+bx+\\frac{xy}{3}.\n\\]\nUsing \\(a,b>0\\), the triangle inequality gives\n\\[\n\\left|\\frac{AB}{3}-3ab\\right|\n\\le a|y|+b|x|+\\frac{|x||y|}{3}\n\\le a(1-b)+b(1-a)+\\frac{(1-a)(1-b)}3.\n\\]\nA direct calculation shows\n\\[\n1+2ab-\\left(a(1-b)+b(1-a)+\\frac{(1-a)(1-b)}3\\right)\n=\\frac{2(1-a)(1-b)+9ab}{3}\\ge0.\n\\]\nThus \\(\\left|AB/3-3ab\\right|\\le1+2ab\\). Subtracting \\(3ab\\) from both sides yields exactly\n\\[\n\\boxed{\\left|\\frac{AB}{3}-3ab\\right|-3ab\\le1-ab}.\n\\]\nAll dependencies are preserved, and the conclusion remains valid under the original hypotheses.",
+      "reason": "Dependency-aware review verifies every bound and the descendant conclusion; no repair was necessary."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-178",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Since a is not a shadow point, f(y)≤f(a) for every y>a; in particular, f(b)≤f(a).\n\nTo prove (a), suppose for contradiction that some c∈(a,b) satisfies f(c)>f(b). By continuity, f attains a maximum M on [c,b]. Since f(c)>f(b), a maximizer t satisfies t<b. Because t∈(a,b), it is a shadow point, so there exists y>t with f(y)>f(t)=M. If y≤b, this contradicts maximality on [c,b] (and if y<c, then y>t≥c is impossible). If y>b, then b not being a shadow point gives f(y)≤f(b)<M, also a contradiction. Hence f(x)≤f(b) for every a<x<b.\n\nFinally, let x→a^+ in this inequality. Continuity gives f(a)≤f(b). Together with f(b)≤f(a), we obtain f(a)=f(b).",
+      "reason": "The original iterative-sequence argument had an unsupported bound at its limit; replacing it with a maximum-on-[c,b] argument repairs both claims."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Because a is not a shadow point, no point to its right has value greater than f(a). Thus f(b)≤f(a).\n\nAssume that there is c∈(a,b) with f(c)>f(b). The continuous function f has a maximum on [c,b]; denote the maximum by f(t). Since f(c)>f(b), we have f(t)≥f(c)>f(b), so t≠b and therefore t∈(a,b). The point t is shadow, hence some y>t satisfies f(y)>f(t).\n\nIf y≤b, then y∈[c,b] because t≥c, contradicting the maximality of f(t) on [c,b]. If y>b, then b not being shadow implies f(y)≤f(b)<f(t), again a contradiction. Therefore no such c exists, proving f(x)≤f(b) for every x∈(a,b).\n\nBy continuity, taking x→a^+ yields f(a)≤f(b). Since already f(b)≤f(a), we conclude f(a)=f(b).",
+      "reason": "After checking the draft, the maximum argument cleanly handles both possible locations of the shadow witness y and avoids any limit-sequence gap."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "First, since a is not a shadow point, for every y>a we have f(y)≤f(a). In particular,\n\\[\nf(b)\\le f(a).\\tag{1}\n\\]\n\nWe prove (a) by contradiction. Suppose that c∈(a,b) and f(c)>f(b). By continuity, f attains its maximum on the compact interval [c,b], say at t. Because f(t)≥f(c)>f(b), the maximizer cannot be b; hence t∈[c,b)⊂(a,b). Thus t is a shadow point, so there is y>t with f(y)>f(t).\n\nIf y≤b, then y∈[c,b], contradicting the choice of t as a maximizer. If y>b, then, because b is not a shadow point, f(y)≤f(b), contradicting f(y)>f(t)≥f(c)>f(b). Both cases are impossible. Therefore f(x)≤f(b) for all a<x<b.\n\nLetting x approach a from the right and using continuity gives f(a)≤f(b). Combining this with (1) proves f(a)=f(b).",
+      "reason": "A critic check identifies the necessary compact-interval maximum and verifies the case split y≤b or y>b; the repaired proof is complete."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let x>a. Since a is not a shadow point, every point y>a satisfies f(y)≤f(a); hence\n\\[\nf(b)\\le f(a).\\tag{1}\n\\]\n\nWe establish (a). Suppose, toward a contradiction, that c∈(a,b) and f(c)>f(b). Consider f on [c,b]. By continuity, it has a maximizer t∈[c,b]. Since f(t)≥f(c)>f(b), t cannot equal b, so t∈(a,b). By the hypothesis, t is a shadow point. Therefore there exists y>t such that f(y)>f(t).\n\nIf y≤b, then y∈[c,b], contradicting maximality of t. If y>b, then b not being a shadow point implies f(y)≤f(b), whereas\n\\[\nf(y)>f(t)\\ge f(c)>f(b),\n\\]\nwhich is again a contradiction. Thus the supposition was false, and f(x)≤f(b) for every a<x<b.\n\nNow choose any sequence x_n∈(a,b) with x_n→a^+. Part (a) gives f(x_n)≤f(b) for every n, and continuity gives f(a)=\\lim_n f(x_n)≤f(b). Together with (1), this yields f(a)=f(b).",
+      "reason": "The dependency check confirms that (b) uses (a) only after it is established; the local maximum repair survives independent review and the limiting step revalidates the descendant conclusion."
+    }
+  ]
+}

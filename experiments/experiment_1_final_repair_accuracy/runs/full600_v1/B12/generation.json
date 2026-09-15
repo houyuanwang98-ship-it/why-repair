@@ -1,0 +1,29 @@
+{
+  "case_id": "B12",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "由 x>3，得 x-3>0，且 x+3>0。由于\nx^2-9=(x-3)(x+3)，\n故 x^2-9>0，从而 x^2>9。",
+      "reason": "补充因式分解及正因子 x+3>0，修复原证明中的跳步。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "因为 x>3>0，所以 x>0。由正数不等式两边平方可得 x^2>3^2=9。因此 x^2>9。",
+      "reason": "复核后改用平方函数在正数区间上严格递增的直接论证。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "由 x>3，且 x+3>0。于是\nx^2-9=(x-3)(x+3)>0，\n所以 x^2>9。",
+      "reason": "批评检查确认原证明缺少 x^2-9 的推导，加入正确的因式分解。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "已知 x 为实数且 x>3。则 x-3>0，并且 x+3>6>0。又\nx^2-9=(x-3)(x+3)。\n正数之积为正，故 x^2-9>0，进而 x^2>9。该论证依赖的唯一局部修复是补出因式分解和第二因子的正性；复核后结论及其后续推导均成立。",
+      "reason": "依赖检查定位到缺失的因式分解与因子正性，完成最小修复并复核后续结论。"
+    }
+  ]
+}

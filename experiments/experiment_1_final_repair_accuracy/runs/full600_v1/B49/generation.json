@@ -1,0 +1,29 @@
+{
+  "case_id": "B49",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "因 a,b≥0，故 √a、√b 有意义。两边均非负，且\n(√a+√b)^2=a+b+2√(ab)≥a+b=(√(a+b))^2。\n由平方根函数在非负数上的单调性，得 √(a+b)≤√a+√b。",
+      "reason": "将错误的“根式加法公式”改为平方比较，直接证明不等式。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "由 a,b≥0，√a、√b、√(a+b) 均有定义。注意一般不存在 √(a+b)=√a+√b。由于 √a+√b≥0，且\n(√a+√b)^2=a+b+2√a√b≥a+b，\n而 (√(a+b))^2=a+b，因此由非负数平方的单调性可得\n√(a+b)≤√a+√b。",
+      "reason": "检查并纠正了根式不能直接相加的错误，补足了定义域与单调性依据。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "设 a,b 为非负实数。令 x=√a，y=√b，则 x,y≥0，且 a+b=x^2+y^2。于是\n(x+y)^2=x^2+y^2+2xy≥x^2+y^2=a+b。\n又 x+y≥0、√(a+b)≥0，所以由平方函数在非负数上的单调性，√(a+b)≤x+y，即\n√(a+b)≤√a+√b。",
+      "reason": "生成证明后核查发现原等式主张错误，改用代换与平方比较完成有效证明。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "由假设 a,b≥0，先得 ab≥0，从而 √a、√b 有定义且 √a√b=√(ab)≥0。计算得\n(√a+√b)^2=a+b+2√a√b≥a+b=(√(a+b))^2。\n由于 √a+√b 与 √(a+b) 都是非负数，平方比较可推出\n√(a+b)≤√a+√b。\n因此命题成立。",
+      "reason": "定位到唯一关键依赖“根式加法公式”不成立；作最小局部修复后，经独立平方比较检查，结论及其定义域均保持有效。"
+    }
+  ]
+}

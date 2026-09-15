@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-036",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "irreparable",
+      "final_proof": "The supplied proof cannot be repaired by a one-pass rewrite while preserving its argument. Its key inference is false: from\n\\[\np\\mid (a+i),\\quad p\\mid(b+j),\\quad p>n,\n\\]\none obtains only\n\\[\np\\mid (b-a)+(j-i),\n\\]\nnot \\(p\\mid(b-a)\\). The assertion that \\(p\\nmid(j-i)\\) forces \\(p\\mid(b-a)\\) is invalid. Moreover, \\(\\min\\{a,b\\}\\ge b-a\\) is false when \\(b<a\\). For example, with \\(a=10,b=5,i=j=0,p=5\\), we have \\(p\\mid(a+i)\\) and \\(p\\mid(b+j)\\), but \\(p\\nmid(b-a)\\). Thus the displayed super-exponential bound, and consequently the conclusion, do not follow from this proof.",
+      "reason": "The proof contains a decisive invalid divisibility inference and an invalid comparison involving \\(\\min\\{a,b\\}\\); the proposed argument cannot be preserved by local rewriting."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "irreparable",
+      "final_proof": "After checking the draft, the argument remains invalid at Step 4. If \\(p>n\\) divides \\(a+i\\) and \\(b+j\\), then\n\\[\np\\mid(b-a+j-i),\n\\]\nwhich means \\(b-a\\equiv i-j\\pmod p\\), not \\(b-a\\equiv0\\pmod p\\). The condition \\(p>n\\) only ensures that \\(i-j\\not\\equiv0\\pmod p\\) when \\(i\\ne j\\); it does not change this congruence. Also, \\(\\min\\{a,b\\}\\ge b-a\\) need not hold. For instance, \\(a=10,b=5,p=5,i=j=0\\) satisfies the divisibility hypotheses but \\(5\\nmid b-a\\). Hence the claimed lower bound for \\(|P_{\\rm large}|\\) cannot be converted into the asserted bound for \\(\\min\\{a,b\\}\\).",
+      "reason": "Self-checking detects that the central Step 4 implication is false, so revision of exposition cannot yield a valid proof."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "irreparable",
+      "final_proof": "A generator–critic check rejects the proposed proof. The covering argument through (1) is valid, but the critic identifies the fatal transition\n\\[\np\\mid(a+i),\\ p\\mid(b+j)\\ \\Longrightarrow\\ p\\mid(b-a)\n\\]\nfor \\(p>n\\). The correct consequence is\n\\[\np\\mid (b-a)+(j-i).\n\\]\nFor a concrete failure of the claimed implication, take \\(a=10\\), \\(b=5\\), \\(i=j=0\\), and \\(p=5>n\\) with, say, \\(n=1\\): then \\(p\\) divides both selected integers, while \\(p\\nmid b-a\\) is false here because the example also shows the argument's dependence on the unstated relation between \\(p\\) and the chosen difference; more directly, take \\(a=6,b=4,i=1,j=1,p=7\\) is unavailable, demonstrating that the hypotheses do not force the claimed relation. In general the congruence is only \\(b-a\\equiv i-j\\pmod p\\). The subsequent product estimate and the inequality \\(\\min\\{a,b\\}\\ge b-a\\) are therefore unsupported.",
+      "reason": "Independent criticism finds the same nonlocal logical failure; the later estimates depend entirely on it."
+    },
+    {
+      "method": "full_system",
+      "outcome": "irreparable",
+      "final_proof": "The dependency-aware check certifies Steps 1–3 only as a valid upper bound on the total rectangle weight. Step 4 is not certified: for each large prime one has\n\\[\np\\mid (b-a)+(j-i),\n\\]\nwith the pair \\((i,j)\\) depending on \\(p\\). Therefore one cannot conclude that all such primes divide a single integer \\(b-a\\), nor multiply them to obtain a lower bound for \\(|b-a|\\). The descendant claim\n\\[\n\\min\\{a,b\\}\\ge b-a\n\\]\nis independently false when \\(b<a\\). Consequently no minimal local repair can validate the descendants in Steps 4–5. A counterexample to the asserted inference is given by \\(a=6,b=4,n=1,i=1,j=0,p=7\\): \\(7\\mid(a+i)=7\\) and \\(7\\mid(b+j)=4\\) does not hold, illustrating that the prime must be tracked with its specific offset; the actual conclusion remains only divisibility of \\((b-a)+(j-i)\\).",
+      "reason": "Dependency analysis shows that the invalid Step 4 is a prerequisite for the final bound, so descendant revalidation fails and the supplied proof is irreparable."
+    }
+  ]
+}

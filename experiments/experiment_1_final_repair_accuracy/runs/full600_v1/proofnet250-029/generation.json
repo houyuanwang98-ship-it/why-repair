@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-029",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ act on the set of left cosets of $H$ and $K$. Since $H\\leq K\\leq G$, each left coset of $H$ is contained in a unique left coset of $K$. Define\n\\[\n\\phi:G/H\\longrightarrow G/K,\\qquad gH\\longmapsto gK.\n\\]\nThis map is well defined and surjective. For any $gK\\in G/K$, its fiber is\n\\[\n\\phi^{-1}(gK)=\\{gkH:k\\in K\\},\n\\]\nwhich has cardinality $|K:H|$, since left multiplication by $g$ gives a bijection between the left cosets of $H$ in $K$ and this fiber. Thus $G/H$ is partitioned into $|G:K|$ fibers, each of cardinality $|K:H|$. Therefore\n\\[\n|G:H|=|G:K|\\,|K:H|.\n\\]\nThis cardinal multiplication is valid whether or not $G$ is finite.\n\\end{proof}",
+      "reason": "Replaced the unrelated normal-subgroup argument with the standard coset-fiber bijection."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G/H$ and $G/K$ denote the sets of left cosets. Define\n\\[\n\\phi:G/H\\to G/K,\n\\qquad \\phi(gH)=gK.\n\\]\nIf $gH=g'H$, then $g^{-1}g'\\in H\\subseteq K$, so $gK=g'K$; hence $\\\\phi$ is well defined. It is surjective because every coset $gK$ is the image of $gH$.\n\nFix $gK\\in G/K$. The map\n\\[\nK/H\\to \\phi^{-1}(gK),\n\\qquad kH\\mapsto gkH,\n\\]\nis a bijection. Indeed, $gkH$ lies in the fiber, and equality $gk_1H=gk_2H$ is equivalent to $k_1H=k_2H$. Consequently every fiber has cardinality $|K:H|$. Since the fibers partition $G/H$ and are indexed by $G/K$, cardinal arithmetic gives\n\\[\n|G:H|=|G:K|\\cdot |K:H|.\n\\]\nThe argument does not require finiteness.\n\\end{proof}",
+      "reason": "Checked well-definedness, surjectivity, fiber cardinality, and applicability to infinite cardinalities."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nConsider the natural map\n\\[\n\\phi:G/H\\longrightarrow G/K,\n\\qquad gH\\longmapsto gK.\n\\]\nBecause $H\\leq K$, this map is well defined: if $gH=g'H$, then $g^{-1}g'\\in H\\leq K$, and hence $gK=g'K$. It is onto, since $gK=\\phi(gH)$ for every $g\\in G$.\n\nFor a fixed $gK\\in G/K$, define\n\\[\n\\psi:K/H\\longrightarrow \\phi^{-1}(gK),\n\\qquad kH\\longmapsto gkH.\n\\]\nThis is well defined and bijective. Its image lies in the fiber because $gkK=gK$. Conversely, if $xH$ belongs to the fiber, then $xK=gK$, so $x=gk$ for some $k\\in K$, and therefore $xH=gkH$. Finally, $gk_1H=gk_2H$ holds exactly when $k_1H=k_2H$.\n\nThus every fiber of $\\phi$ has cardinality $|K:H|$, while the set of fibers has cardinality $|G:K|$. Hence\n\\[\n|G:H|=|G:K|\\cdot|K:H|,\n\\]\nwith cardinal multiplication covering the infinite case as well.\n\\end{proof}",
+      "reason": "A critic-style check confirms the map and fiber bijection are valid without finiteness or hidden normality assumptions."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWrite $G/H$ and $G/K$ for the sets of left cosets. The inclusion $H\\leq K$ induces a well-defined map\n\\[\n\\phi:G/H\\to G/K,\n\\qquad \\phi(gH)=gK.\n\\]\nIt is well defined because $gH=g'H$ implies $g^{-1}g'\\in H\\leq K$, and it is surjective because $\\phi(gH)=gK$.\n\nFor each $gK\\in G/K$, left multiplication by $g$ induces a bijection\n\\[\nK/H\\xrightarrow{\\ \\cong\\ }\\phi^{-1}(gK),\n\\qquad kH\\mapsto gkH.\n\\]\nTherefore every fiber of $\\phi$ has cardinality $|K:H|$. The fibers are pairwise disjoint and their union is $G/H$, and they are indexed by the elements of $G/K$. Consequently, by the multiplication rule for cardinalities,\n\\[\n|G:H|=|G:K|\\cdot|K:H|.\n\\]\nNo finiteness assumption on $G$ is used.\n\\end{proof}",
+      "reason": "Dependency and descendant checks isolate the needed inclusion, coset map, fiber bijection, and cardinal-product step; independent review finds no gap."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-133",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAt $z=1$, the series becomes $\\sum_{n=1}^\\infty 1/n$, which diverges. Now suppose $|z|=1$ and $z\\ne 1$. Then $z=e^{2\\pi i t}$ for some $t\\in(0,1)$. Set $a_n=1/n$ and $b_n=z^n=e^{2\\pi i nt}$. The sequence $a_n$ decreases to $0$. Moreover, for every $N$,\n\\[\n\\sum_{n=1}^N b_n=\\frac{z-z^{N+1}}{1-z},\n\\qquad\n\\left|\\sum_{n=1}^N b_n\\right|\\le \\frac{2}{|1-z|}.\n\\]\nThus the partial sums of $(b_n)$ are bounded. By Dirichlet's test, $\\sum_{n=1}^\\infty a_nb_n=\\sum_{n=1}^\\infty z^n/n$ converges. Hence the power series converges at every point of the unit circle except $z=1$.\n\\end{proof}",
+      "reason": "Corrected the malformed series notation and explicitly verified the bounded geometric partial sums."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $|z|=1$. If $z=1$, then\n\\[\n\\sum_{n=1}^\\infty \\frac{z^n}{n}=\\sum_{n=1}^\\infty\\frac1n,\n\\]\nwhich diverges. If $z\\ne1$, write $z=e^{2\\pi it}$ with $t\\in(0,1)$. Define $a_n=1/n$ and $b_n=z^n$. Then $a_n$ is decreasing and tends to $0$. The geometric-sum formula gives\n\\[\n\\sum_{n=1}^N b_n=\\frac{z(1-z^N)}{1-z},\n\\]\nso\n\\[\n\\left|\\sum_{n=1}^N b_n\\right|\\le\\frac{2}{|1-z|}\n\\]\nfor every $N$. Therefore the partial sums of $b_n$ are bounded, and Dirichlet's test implies that\n\\[\n\\sum_{n=1}^\\infty a_nb_n=\\sum_{n=1}^\\infty\\frac{z^n}{n}\n\\]\nconverges. Thus convergence holds at every point of the unit circle other than $z=1$.\n\\end{proof}",
+      "reason": "Rechecked the boundary cases and geometric-sum identity, then returned a streamlined valid proof."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor $z=1$, the series is the harmonic series $\\sum_{n=1}^\\infty 1/n$, so it diverges. Let $|z|=1$ with $z\\ne1$. Choose $t\\in(0,1)$ such that $z=e^{2\\pi it}$. Put $a_n=1/n$ and $b_n=z^n$. We have $a_{n+1}\\le a_n$ and $a_n\\to0$. Also,\n\\[\n\\sum_{n=1}^N b_n=z\\frac{1-z^N}{1-z},\n\\]\nand hence\n\\[\n\\left|\\sum_{n=1}^N b_n\\right|\\le\\frac{2}{|1-z|},\n\\]\nwhich is independent of $N$. Dirichlet's test now yields convergence of\n\\[\n\\sum_{n=1}^\\infty a_nb_n=\\sum_{n=1}^\\infty\\frac{z^n}{n}.\n\\]\nTherefore the series converges at every point of the unit circle except $z=1$.\n\\end{proof}",
+      "reason": "The critic-repaired version preserves the theorem while making the summation index, boundary exception, and test hypotheses explicit."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nConsider $\\sum_{n=1}^\\infty z^n/n$ with $|z|=1$. At the excluded point $z=1$, it equals $\\sum_{n=1}^\\infty1/n$, which diverges. For any other point, $z\\ne1$, write $z=e^{2\\pi it}$ for some $t\\in(0,1)$. Let $a_n=1/n$ and $b_n=z^n$. Then $a_n$ is nonincreasing and $a_n\\to0$. For each $N\\ge1$,\n\\[\n\\sum_{n=1}^N b_n=\\frac{z(1-z^N)}{1-z},\n\\]\nso\n\\[\n\\left|\\sum_{n=1}^N b_n\\right|\\le\\frac{2}{|1-z|}.\n\\]\nThus the partial sums of $b_n$ are uniformly bounded. Dirichlet's test applies and proves that\n\\[\n\\sum_{n=1}^\\infty a_nb_n=\\sum_{n=1}^\\infty\\frac{z^n}{n}\n\\]\nconverges. This verifies the claim for every unit-circle point other than $z=1$.\n\\end{proof}",
+      "reason": "Dependency checks confirm the only needed repair is the series notation; the local fix satisfies Dirichlet's hypotheses and leaves the conclusion valid."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-038",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet \\(\\varphi\\in\\operatorname{Aut}(G)\\). Since automorphisms preserve subgroup order, \\(|\\varphi(H)|=|H|=p\\). Moreover, \\(\\varphi(H)\\) is normal in \\(G\\). If \\(\\varphi(H)\\ne H\\), then, because both groups have prime order, \\(H\\cap\\varphi(H)=\\{e\\}\\). Since \\(H\\) is normal, \\(H\\varphi(H)\\) is a subgroup of \\(G\\), and\n\\[\n|H\\varphi(H)|=\\frac{|H|\\,|\\varphi(H)|}{|H\\cap\\varphi(H)|}=p^2.\n\\]\nBy Lagrange's theorem, \\(p^2\\mid |G|=pm\\), so \\(p\\mid m\\), contradicting the hypothesis. Hence \\(\\varphi(H)=H\\). Therefore, \\(H\\) is characteristic in \\(G\\).\n\\end{proof}",
+      "reason": "The original argument is valid after correcting terminology and making the automorphism and product-order steps explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nTake any automorphism \\(\\varphi\\) of \\(G\\). Then \\(\\varphi(H)\\) is a subgroup of \\(G\\) of order \\(p\\). If \\(\\varphi(H)\\ne H\\), their intersection is a proper subgroup of the group \\(H\\) of prime order, hence \\(H\\cap\\varphi(H)=\\{e\\}\\). Because \\(H\\trianglelefteq G\\), the product \\(H\\varphi(H)\\) is a subgroup of \\(G\\). Thus\n\\[\n|H\\varphi(H)|=\\frac{|H|\\,|\\varphi(H)|}{|H\\cap\\varphi(H)|}=p^2.\n\\]\nThis implies \\(p^2\\mid |G|=pm\\), and therefore \\(p\\mid m\\), contrary to \\(p\\nmid m\\). Consequently \\(\\varphi(H)=H\\) for every \\(\\varphi\\in\\operatorname{Aut}(G)\\), so \\(H\\) is characteristic in \\(G\\).\n\\end{proof}",
+      "reason": "Internal checking confirms the intersection, product-subgroup, and divisibility claims; the revised proof states each justification cleanly."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet \\(\\alpha\\in\\operatorname{Aut}(G)\\). The subgroup \\(\\alpha(H)\\) has order \\(p\\). Assume for contradiction that \\(\\alpha(H)\\ne H\\). Since \\(H\\) has prime order, \\(H\\cap\\alpha(H)\\) is either \\(H\\) or \\(\\{e\\}\\); the former would force \\(H=\\alpha(H)\\). Hence \\(H\\cap\\alpha(H)=\\{e\\}\\).\n\nAs \\(H\\) is normal in \\(G\\), \\(H\\alpha(H)\\) is a subgroup of \\(G\\). Therefore,\n\\[\n|H\\alpha(H)|=\\frac{|H|\\,|\\alpha(H)|}{|H\\cap\\alpha(H)|}=p^2.\n\\]\nLagrange's theorem gives \\(p^2\\mid pm\\), which forces \\(p\\mid m\\), contradicting \\(p\\nmid m\\). Thus \\(\\alpha(H)=H\\). Since \\(\\alpha\\) was arbitrary, \\(H\\) is characteristic in \\(G\\).\n\\end{proof}",
+      "reason": "A critic check verifies that distinct order-\u001ep\u001f subgroups have trivial intersection and that normality makes the product a subgroup; no substantive gap remains."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor every \\(\\varphi\\in\\operatorname{Aut}(G)\\), the image \\(\\varphi(H)\\) is a subgroup of \\(G\\) with order \\(p\\). Suppose that \\(\\varphi(H)\\ne H\\). Since \\(H\\cap\\varphi(H)\\) is a subgroup of \\(H\\), whose order is prime, and it is not all of \\(H\\), we have\n\\[\nH\\cap\\varphi(H)=\\{e\\}.\n\\]\nThe normality of \\(H\\) implies that \\(H\\varphi(H)\\) is a subgroup of \\(G\\). Consequently,\n\\[\n|H\\varphi(H)|=\\frac{|H|\\,|\\varphi(H)|}{|H\\cap\\varphi(H)|}=p^2.\n\\]\nBy Lagrange's theorem, \\(p^2\\) divides \\(|G|=pm\\), so \\(p\\) divides \\(m\\), contradicting \\(p\\nmid m\\). Therefore \\(\\varphi(H)=H\\) for every automorphism \\(\\varphi\\) of \\(G\\). Hence \\(H\\) is characteristic in \\(G\\).\n\\end{proof}",
+      "reason": "Dependency and review checks validate order preservation, intersection control, product closure, and the contradiction; the local repair preserves the theorem and assumptions."
+    }
+  ]
+}

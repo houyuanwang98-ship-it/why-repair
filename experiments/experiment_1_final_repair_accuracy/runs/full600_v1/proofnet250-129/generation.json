@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-129",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "irreparable",
+      "final_proof": "The theorem cannot be proved under the stated assumptions, because no primality assumption on p is given. For the counterexample p=4 and k=1, we have p-1=3\n\nand 3 does not divide 1, but\n\n1^1+2^1+3^1=6\\equiv 2\\pmod 4,\n\nrather than 0 modulo 4. Thus the theorem is false as stated and the proof cannot be repaired without adding assumptions, such as that p is prime.",
+      "reason": "The original proof assumes a primitive root modulo p, which requires p to be prime here; the theorem is false for unrestricted p."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "irreparable",
+      "final_proof": "A valid proof cannot be given with the theorem and assumptions unchanged. Take p=4 and k=1. Since p-1=3 does not divide k=1, the theorem claims\n\n1^1+2^1+3^1\\equiv 0\\pmod 4.\n\nHowever,\n\n1+2+3=6\\equiv 2\\pmod 4.\n\nThis contradiction shows that the theorem is false under the stated empty assumptions. Therefore no proof repair is possible unless a condition such as “p is prime” is added.",
+      "reason": "Checking the theorem independently reveals a composite-modulus counterexample, so revision cannot preserve the stated assumptions."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "irreparable",
+      "final_proof": "The proposed argument would be valid for a prime p, because the nonzero residue classes modulo p form a cyclic group. But that hypothesis is absent. Indeed, let p=4 and k=1. Then p-1=3\\nmid 1, while\n\n1^1+2^1+3^1=6\\equiv 2\\pmod 4,\n\nnot 0 modulo 4. Hence the theorem is false as stated. A generator-critic check therefore rejects the proof: introducing a primitive root would add an unstated assumption. No proof preserving the given theorem and assumptions exists.",
+      "reason": "The missing primality condition is essential; the critic’s counterexample invalidates the theorem in its stated domain."
+    },
+    {
+      "method": "full_system",
+      "outcome": "irreparable",
+      "final_proof": "Dependency-aware verification identifies an essential missing dependency: the argument requires that the unit group modulo p be cyclic of order p-1, which is guaranteed when p is prime. With the assumptions unchanged, the theorem fails. Specifically, choose p=4 and k=1. Since 3=p-1 does not divide 1, the first claimed case predicts\n\n1^1+2^1+3^1\\equiv 0\\pmod 4.\n\nBut 1+2+3=6\\equiv 2\\pmod 4. Thus a minimal local repair cannot establish the theorem without changing its assumptions; independent review and descendant revalidation both fail. The theorem is therefore irreparable as stated.",
+      "reason": "The proof depends on primality, and the explicit p=4 counterexample prevents any assumption-preserving repair."
+    }
+  ]
+}

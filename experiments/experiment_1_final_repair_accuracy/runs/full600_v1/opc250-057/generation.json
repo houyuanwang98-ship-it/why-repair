@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-057",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Write f(x)=\\sum_{i\\ge0}a_i x^i, where a_i\\in\\mathbb Z_{\u001b[?]0}. Since f(1)=8, the coefficients sum to 8. Thus f(2)=2012 expresses 2012 as a sum of exactly eight powers of 2, with 2^i occurring a_i times.\n\nThe binary expansion is\n2012=2^{10}+2^9+2^8+2^7+2^6+2^4+2^3+2^2.\nIt has exactly eight powers of 2. Any representation of an integer as powers of 2 that is not this binary representation contains two equal powers, which can be replaced by one power twice as large. This strictly decreases the number of summands; after repeatedly doing so, one obtains the binary representation. Therefore any nonbinary representation has more than eight summands, so the representation with exactly eight summands is unique.\n\nHence a_i=1 for i\\in\\{2,3,4,6,7,8,9,10\\} and a_i=0 otherwise. Therefore\n\\boxed{f(x)=x^{10}+x^9+x^8+x^7+x^6+x^4+x^3+x^2}.\nIndeed, its coefficients sum to 8 and its value at 2 is 2012.",
+      "reason": "Replaced the unsupported exhaustive case claims and corrected the handling of the constant coefficient using uniqueness of the binary expansion."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Let f(x)=\\sum_{i\\ge0}a_i x^i with a_i nonnegative integers. The equation f(1)=8 gives \\sum_i a_i=8. Consequently, f(2)=2012 is a sum of exactly eight powers of 2.\n\nNow\n2012=1024+512+256+128+64+16+8+4\n=2^{10}+2^9+2^8+2^7+2^6+2^4+2^3+2^2.\nThis is the binary expansion and contains eight summands.\n\nTo prove uniqueness, take any representation of 2012 as powers of 2 and repeatedly replace every pair 2^j+2^j by 2^{j+1}. The process ends at the binary expansion. Each replacement reduces the number of summands by one. Since the binary expansion already has eight summands, any representation with exactly eight summands must involve no replacements and hence must equal the displayed binary expansion.\n\nThus the only possible nonzero coefficients are a_2,a_3,a_4,a_6,a_7,a_8,a_9,a_{10}, each equal to 1. Therefore the unique polynomial is\n\\boxed{f(x)=x^{10}+x^9+x^8+x^7+x^6+x^4+x^3+x^2}.\nIt satisfies f(1)=8 and f(2)=2012.",
+      "reason": "Internal checking identified that the original proof's coefficient-difference argument mishandled a_0 and did not establish the claimed case results; the revised proof gives a complete uniqueness argument."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Suppose f(x)=\\sum_{i\\ge0}a_i x^i, with each a_i\\ge0 an integer. From f(1)=8 we have \\sum_i a_i=8. Hence f(2)=2012 is a sum of exactly eight powers of 2, counting multiplicity:\n2012=\\sum_i a_i2^i.\n\nThe binary expansion of 2012 is\n2012=2^{10}+2^9+2^8+2^7+2^6+2^4+2^3+2^2.\nThere are eight terms here.\n\nA standard carrying operation replaces two occurrences of 2^j by one occurrence of 2^{j+1}. Repeated carrying transforms every powers-of-two representation into the unique binary expansion. If the original representation differed from the binary one, at least one carrying operation would occur, so it would initially have strictly more than eight terms. Since our representation has exactly eight terms, no carrying is possible. Therefore it is exactly the binary expansion above.\n\nThus\n(a_0,a_1,a_2,\\ldots)=(0,0,1,1,1,0,1,1,1,1,1,0,\\ldots),\nand\n\\boxed{f(x)=x^{10}+x^9+x^8+x^7+x^6+x^4+x^3+x^2}.\nThe displayed polynomial has eight coefficients equal to 1, so f(1)=8, and its value at 2 is the stated binary sum 2012.",
+      "reason": "The critic check rejected the original unsupported assertions about subcases and its incorrect statement that the a_0 term is zero; the repaired proof uses carrying and verifies existence and uniqueness."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let f(x)=\\sum_{i=0}^{n}a_i x^i, where every a_i is a nonnegative integer. The condition f(1)=8 implies\n\\sum_{i=0}^{n}a_i=8.\nTherefore f(2)=2012 is a representation of 2012 as exactly eight powers of 2, with multiplicity.\n\nThe binary expansion is\n2012=2^{10}+2^9+2^8+2^7+2^6+2^4+2^3+2^2.\nIt has eight summands.\n\nFor any representation as powers of 2, repeatedly perform the local repair 2^j+2^j\\mapsto2^{j+1} whenever two equal summands occur. This preserves the total and reduces the number of summands. The terminal representation has at most one copy of each power and is therefore the binary expansion. Since the terminal expansion has eight summands, an initial representation with eight summands cannot have undergone even one repair: every repair would reduce its count below eight. Hence the initial representation is already the binary expansion.\n\nIt follows that a_i=1 exactly for i=2,3,4,6,7,8,9,10, and a_i=0 otherwise. Thus\n\\boxed{f(x)=x^{10}+x^9+x^8+x^7+x^6+x^4+x^3+x^2}.\nDirect substitution gives f(1)=8 and f(2)=2012, completing both existence and uniqueness.",
+      "reason": "Dependency-aware review found the original proof's key gaps: the a_0 term was mishandled and the claimed exhaustive cases were not shown. A local carrying repair yields a complete certificate, with the final polynomial revalidated against both conditions."
+    }
+  ]
+}

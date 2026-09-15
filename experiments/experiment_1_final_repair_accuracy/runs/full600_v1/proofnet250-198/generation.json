@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-198",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $(g_1,g_2)\\in G\\times H$. It lies in $Z(G\\times H)$ if and only if, for every $(h_1,h_2)\\in G\\times H$,\n\\[\n(g_1,g_2)(h_1,h_2)=(h_1,h_2)(g_1,g_2).\n\\]\nThis is equivalent to $g_1h_1=h_1g_1$ and $g_2h_2=h_2g_2$ for all $h_1\\in G$ and $h_2\\in H$, which is equivalent to $g_1\\in Z(G)$ and $g_2\\in Z(H)$. Hence\n\\[\nZ(G\\times H)=Z(G)\\times Z(H).\n\\]\n\\end{proof}",
+      "reason": "The original proof established the commuting criterion but did not quantify over all elements or state the resulting equality."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAn element $(g_1,g_2)\\in G\\times H$ is central precisely when it commutes with every $(h_1,h_2)\\in G\\times H$. Since multiplication is componentwise,\n\\[\n(g_1,g_2)(h_1,h_2)=(h_1,h_2)(g_1,g_2)\n\\]\nif and only if\n\\[\ng_1h_1=h_1g_1\\quad\\text{and}\\quad g_2h_2=h_2g_2.\n\\]\nRequiring this for every $h_1$ and $h_2$ says exactly that $g_1\\in Z(G)$ and $g_2\\in Z(H)$. Therefore the central elements of $G\\times H$ are exactly the elements of $Z(G)\\times Z(H)$, so\n\\[\nZ(G\\times H)=Z(G)\\times Z(H).\n\\]\n\\end{proof}",
+      "reason": "The proof was revised to make the universal quantification and the equivalence with membership in each center explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe prove both inclusions. If $(g_1,g_2)\\in Z(G\\times H)$, then for every $h_1\\in G$ and $h_2\\in H$,\n\\[\n(g_1,g_2)(h_1,h_2)=(h_1,h_2)(g_1,g_2).\n\\]\nComparing coordinates gives $g_1h_1=h_1g_1$ and $g_2h_2=h_2g_2$. Thus $g_1\\in Z(G)$ and $g_2\\in Z(H)$, so $(g_1,g_2)\\in Z(G)\\times Z(H)$.\n\nConversely, if $(g_1,g_2)\\in Z(G)\\times Z(H)$, then $g_1$ commutes with every $h_1\\in G$ and $g_2$ commutes with every $h_2\\in H$. Hence\n\\[\n(g_1,g_2)(h_1,h_2)=(g_1h_1,g_2h_2)=(h_1g_1,h_2g_2)=(h_1,h_2)(g_1,g_2),\n\\]\nso $(g_1,g_2)\\in Z(G\\times H)$. Therefore\n\\[\nZ(G\\times H)=Z(G)\\times Z(H).\n\\]\n\\end{proof}",
+      "reason": "A critic-style check identified that both inclusions should be shown; the repaired proof supplies them directly."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ and $H$ be groups. For $(g_1,g_2)\\in G\\times H$, the definition of the center gives\n\\[\n(g_1,g_2)\\in Z(G\\times H)\n\\iff \\forall(h_1,h_2)\\in G\\times H,\\ (g_1,g_2)(h_1,h_2)=(h_1,h_2)(g_1,g_2).\n\\]\nUsing componentwise multiplication, this is equivalent to\n\\[\n\\forall h_1\\in G,\\ g_1h_1=h_1g_1\n\\quad\\text{and}\\quad\n\\forall h_2\\in H,\\ g_2h_2=h_2g_2,\n\\]\nwhich is equivalent to $g_1\\in Z(G)$ and $g_2\\in Z(H)$. Thus\n\\[\n(g_1,g_2)\\in Z(G\\times H)\\iff (g_1,g_2)\\in Z(G)\\times Z(H).\n\\]\nSince the two sets have exactly the same elements,\n\\[\nZ(G\\times H)=Z(G)\\times Z(H).\n\\]\n\\end{proof}",
+      "reason": "The dependency chain—center definition, componentwise multiplication, coordinatewise commutation, and set equality—is complete and locally repaired; the resulting equivalence independently revalidates the conclusion."
+    }
+  ]
+}

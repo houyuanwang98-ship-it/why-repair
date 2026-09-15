@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-162",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $r\\in\\varphi(Z(R))$. Then $r=\\varphi(z)$ for some $z\\in Z(R)$. For any $x\\in S$, surjectivity gives $x=\\varphi(y)$ for some $y\\in R$. Hence\n\\[\nxr=\\varphi(y)\\varphi(z)=\\varphi(yz)=\\varphi(zy)=\\varphi(z)\\varphi(y)=rx.\n\\]\nTherefore $r\\in Z(S)$, so $\\varphi(Z(R))\\subseteq Z(S)$.\n\\end{proof}",
+      "reason": "The supplied proof is valid; only notation and presentation were streamlined."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nTake any $r\\in\\varphi(Z(R))$. There exists $z\\in Z(R)$ such that $r=\\varphi(z)$. Let $x\\in S$. Since $\\varphi$ is surjective, choose $y\\in R$ with $x=\\varphi(y)$. Because $z$ is central in $R$, $yz=zy$, and therefore\n\\[\nxr=\\varphi(y)\\varphi(z)=\\varphi(yz)=\\varphi(zy)=\\varphi(z)\\varphi(y)=rx.\n\\]\nThus $r$ commutes with every element of $S$, so $r\\in Z(S)$. Hence $\\varphi(Z(R))\\subseteq Z(S)$.\n\\end{proof}",
+      "reason": "Internal checking confirms that surjectivity and centrality are used correctly."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $s\\in\\varphi(Z(R))$. Write $s=\\varphi(z)$ with $z\\in Z(R)$. For arbitrary $t\\in S$, surjectivity provides $y\\in R$ such that $t=\\varphi(y)$. Since $z$ lies in the center of $R$, $yz=zy$. Applying the homomorphism gives\n\\[\nts=\\varphi(y)\\varphi(z)=\\varphi(yz)=\\varphi(zy)=\\varphi(z)\\varphi(y)=st.\n\\]\nAs $t$ was arbitrary, $s\\in Z(S)$. Consequently, $\\varphi(Z(R))\\subseteq Z(S)$.\n\\end{proof}",
+      "reason": "A critic check finds no logical gap: every element of $S$ has a preimage and centrality transfers through the homomorphism."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nWe prove that every element of $\\varphi(Z(R))$ is central in $S$. Let $s\\in\\varphi(Z(R))$, so $s=\\varphi(z)$ for some $z\\in Z(R)$. Let $t\\in S$ be arbitrary. By surjectivity, there is $y\\in R$ with $t=\\varphi(y)$. The relation $zy=yz$ in $R$ then yields\n\\[\nst=\\varphi(z)\\varphi(y)=\\varphi(zy)=\\varphi(yz)=\\varphi(y)\\varphi(z)=ts.\n\\]\nThus $s$ commutes with every $t\\in S$, and hence $s\\in Z(S)$. Therefore $\\varphi(Z(R))\\subseteq Z(S)$.\n\\end{proof}",
+      "reason": "Dependency and descendant checks validate the same local argument: image representation, surjective lifting, and preservation of commutation."
+    }
+  ]
+}

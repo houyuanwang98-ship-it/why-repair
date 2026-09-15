@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-103",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume first that there is a nonzero $b\\in R$ with $bp(x)=0$. Viewing $b$ as a nonzero constant polynomial, $p(x)$ is a zero divisor.\n\nConversely, suppose $p(x)q(x)=0$ for some nonzero polynomial $q(x)=\\sum_{j=0}^m b_jx^j$, chosen with minimal degree among all such annihilating polynomials. Since $q\\ne0$, take $b_m\\ne0$.\n\nWe prove by descending induction on $t$ that $a_tq(x)=0$ for every $0\\le t\\le n$. The coefficient of $x^{m+n}$ in $p q=0$ gives $a_nb_m=0$. Hence $a_nq$ annihilates $p$ and has degree less than $m$ unless it is zero; minimality therefore gives $a_nq=0$.\n\nSuppose $a_iq=0$ for all $t<i\\le n$. The coefficient of $x^{m+t}$ in $pq=0$ is\n\\[\n\\sum_{i+j=m+t}a_ib_j=0.\n\\]\nEvery term with $i>t$ vanishes by induction. If $i<t$, then $j=m+t-i>m$, so $b_j=0$. Thus $a_tb_m=0$. As before, $a_tq$ annihilates $p$ and has degree less than $m$ unless it is zero, so minimality implies $a_tq=0$.\n\nTherefore $a_iq=0$ for all $i$, and in particular $a_ib_m=0$ for every $i$. Consequently\n\\[\nb_mp(x)=\\sum_i b_ma_ix^i=0.\n\\]\nSince $b_m\\ne0$, the required nonzero annihilator exists.\n\\end{proof}",
+      "reason": "The minimal-degree argument is repaired and the coefficient induction is stated correctly."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nIf $bp(x)=0$ for some nonzero $b\\in R$, then $p(x)$ is a zero divisor, since $b$ is a nonzero constant polynomial.\n\nFor the converse, let $q(x)=\\sum_{j=0}^m b_jx^j\\ne0$ satisfy $p(x)q(x)=0$, and choose such a $q$ of minimal degree. Let $b_m\\ne0$ be its leading coefficient. We show, descending on $t$, that $a_tq(x)=0$.\n\nFor $t=n$, the coefficient of $x^{m+n}$ in $pq=0$ is $a_nb_m=0$. Thus $a_nq$ also annihilates $p$. Its coefficient of degree $m$ is zero, so it has degree below $m$ if nonzero. Minimality of $q$ forces $a_nq=0$.\n\nNow assume $a_iq=0$ for $t<i\\le n$. The coefficient of $x^{m+t}$ in $pq=0$ yields\n\\[\n0=\\sum_{i+j=m+t}a_ib_j.\n\\]\nTerms with $i>t$ vanish by the induction hypothesis, while terms with $i<t$ would require $j>m$ and hence vanish. Therefore $a_tb_m=0$. Again $a_tq$ annihilates $p$ and has degree less than $m$ unless zero, so minimality gives $a_tq=0$.\n\nThus $a_iq=0$ for every $i$, and hence $a_ib_m=0$ for every $i$. Since coefficients commute in $R$, $b_mp(x)=0$. The coefficient $b_m$ is nonzero, completing the proof.\n\\end{proof}",
+      "reason": "Self-check confirms the proof needs explicit use of the leading coefficient and commutativity when forming $b_mp(x)$."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nThe forward implication is immediate: if $bp(x)=0$ with $b\\ne0$, then the nonzero constant polynomial $b$ annihilates $p(x)$.\n\nFor the reverse implication, choose a nonzero $q(x)=\\sum_{j=0}^m b_jx^j$ with $p(x)q(x)=0$ and with degree minimal among all such polynomials. Choose $m$ so that $b_m\\ne0$.\n\nWe claim that $a_tq(x)=0$ for $t=n,n-1,\\ldots,0$. For $t=n$, the top coefficient of $pq$ gives $a_nb_m=0$. Hence $a_nq$ annihilates $p$ and has no $x^m$ term. If it were nonzero, it would contradict the minimality of $q$; therefore $a_nq=0$.\n\nAssume the claim holds for all indices greater than $t$. Looking at the coefficient of $x^{m+t}$ in $pq=0$, we obtain\n\\[\n0=\\sum_{i+j=m+t}a_ib_j.\n\\]\nFor $i>t$, the corresponding term is zero because $a_iq=0$. For $i<t$, one has $j=m+t-i>m$, so the term is zero. The only remaining term is $a_tb_m$, hence $a_tb_m=0$. Therefore $a_tq$ annihilates $p$ and has degree below $m$ unless it is zero. Minimality again gives $a_tq=0$.\n\nThe claim follows for every $t$. In particular, $a_ib_m=0$ for all $i$, and thus\n\\[\nb_mp(x)=0.\n\\]\nBecause $b_m\\ne0$, this is the required nonzero constant annihilator.\n\\end{proof}",
+      "reason": "The critic-checked version preserves the theorem while closing the only substantive gap: justified degree reduction and induction."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose first that $bp(x)=0$ for a nonzero $b\\in R$. The constant polynomial $b$ is nonzero, so $p(x)$ is a zero divisor.\n\nConversely, suppose $p(x)$ is a zero divisor. Choose a nonzero polynomial\n\\[\nq(x)=b_0+b_1x+\\cdots+b_mx^m\n\\]\nwith $p(x)q(x)=0$ and minimal degree, and choose $b_m\\ne0$.\n\nWe prove by descending induction that $a_tq(x)=0$ for every $t$. For $t=n$, the coefficient of $x^{m+n}$ in $pq=0$ is $a_nb_m=0$. Since $R$ is commutative, $a_nq(x)$ also annihilates $p(x)$. Its leading coefficient is zero, so if it is nonzero its degree is smaller than $m$, contradicting the choice of $q$. Hence $a_nq=0$.\n\nAssume now that $a_iq=0$ for every $i$ with $t<i\\le n$. The coefficient of $x^{m+t}$ in $pq=0$ gives\n\\[\n0=\\sum_{i+j=m+t}a_ib_j.\n\\]\nIf $i>t$, then $a_ib_j=0$ by the induction hypothesis. If $i<t$, then $j=m+t-i>m$, so $b_j=0$. Thus the sole possible nonzero term is $a_tb_m$, and $a_tb_m=0$. As above, $a_tq$ annihilates $p$ and has smaller degree than $q$ unless it is zero; minimality forces $a_tq=0$.\n\nInduction gives $a_iq=0$ for all $i$. Taking the coefficient of $x^m$ in these equalities yields $a_ib_m=0$ for every $i$. Therefore\n\\[\nb_mp(x)=\\sum_{i=0}^n b_ma_ix^i=0.\n\\]\nSince $b_m\\ne0$, $p(x)$ has a nonzero annihilating constant coefficient, as required.\n\\end{proof}",
+      "reason": "Dependency-aware review verifies minimality, coefficient indexing, commutativity, and the final descendant implication."
+    }
+  ]
+}

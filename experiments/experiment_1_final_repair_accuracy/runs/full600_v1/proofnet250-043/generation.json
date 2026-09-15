@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-043",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor all $a,b\\in G$, expanding the first hypothesis gives\n\\[\na(ba)^2b=a(a^2b^2)b,\n\\]\nso cancellation yields\n\\[\n(ba)^2=a^2b^2. \\tag{1}\n\\]\nSimilarly, the second hypothesis gives\n\\[\na(ba)^4b=a(a^4b^4)b,\n\\]\nand hence\n\\[\n(ba)^4=a^4b^4. \\tag{2}\n\\]\nUsing (1) in (2),\n\\[\n(a^2b^2)^2=a^4b^4=a^2(a^2b^2)b^2.\n\\]\nCancelling $a^2$ on the left and $b^2$ on the right gives\n\\[\nb^2a^2=a^2b^2=(ba)^2=b(ab)a.\n\\]\nThus\n\\[\nb(ba)a=b(ab)a.\n\\]\nCancelling $b$ on the left and $a$ on the right yields $ba=ab$. Since $a,b$ were arbitrary, $G$ is abelian.\n\\end{proof}",
+      "reason": "The original proof is valid in substance but contains an unclear equality chain; the repaired version makes the shared intermediate expression explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $a,b\\in G$. From $(ab)^3=a^3b^3$, we have\n\\[\na(ba)^2b=a(a^2b^2)b,\n\\]\nso, by cancellation,\n\\[\n(ba)^2=a^2b^2. \\tag{1}\n\\]\nFrom $(ab)^5=a^5b^5$, similarly,\n\\[\na(ba)^4b=a(a^4b^4)b,\n\\]\nwhence\n\\[\n(ba)^4=a^4b^4. \\tag{2}\n\\]\nNow (1) and (2) imply\n\\[\n(a^2b^2)^2=a^4b^4=a^2(a^2b^2)b^2.\n\\]\nSince $(a^2b^2)^2=a^2b^2a^2b^2$, cancellation gives\n\\[\nb^2a^2=a^2b^2.\n\\]\nTogether with (1), this yields\n\\[\nb(ba)a=b^2a^2=(ba)^2=b(ab)a.\n\\]\nCancelling $b$ and $a$ gives $ba=ab$. Therefore every pair of elements of $G$ commutes, and $G$ is abelian.\n\\end{proof}",
+      "reason": "Internal checking confirms the theorem follows from the two power identities; the revised proof explicitly justifies each cancellation and avoids circular-looking notation."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFix arbitrary $a,b\\in G$. Reassociating the cube identity,\n\\[\n(ab)^3=a(ba)^2b=a^3b^3=a(a^2b^2)b,\n\\]\nso\n\\[\n(ba)^2=a^2b^2. \\tag{1}\n\\]\nReassociating the fifth-power identity in the same way gives\n\\[\n(ab)^5=a(ba)^4b=a^5b^5=a(a^4b^4)b,\n\\]\nthus\n\\[\n(ba)^4=a^4b^4. \\tag{2}\n\\]\nBy (1) and (2),\n\\[\n(a^2b^2)^2=(ba)^4=a^4b^4.\n\\]\nTherefore\n\\[\na^2b^2a^2b^2=a^4b^4,\n\\]\nand cancellation of $a^2$ on the left and $b^2$ on the right gives\n\\[\nb^2a^2=a^2b^2.\n\\]\nUsing (1),\n\\[\nb(ba)a=b^2a^2=a^2b^2=(ba)^2=b(ab)a.\n\\]\nCanceling $b$ on the left and $a$ on the right yields $ba=ab$. Hence $G$ is abelian.\n\\end{proof}",
+      "reason": "A critic check identifies the only presentation risk as the transition from equal squares to commutativity; the proof now displays the common product before cancellation."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nTake arbitrary $a,b\\in G$. The identity $(ab)^3=a^3b^3$ can be written as\n\\[\na(ba)^2b=a(a^2b^2)b.\n\\]\nLeft- and right-cancellation give\n\\[\n(ba)^2=a^2b^2. \\tag{1}\n\\]\nLikewise, $(ab)^5=a^5b^5$ gives\n\\[\na(ba)^4b=a(a^4b^4)b,\n\\]\nso\n\\[\n(ba)^4=a^4b^4. \\tag{2}\n\\]\nSubstituting (1) into the left side of (2),\n\\[\na^2b^2a^2b^2=a^4b^4.\n\\]\nCanceling $a^2$ from the left and $b^2$ from the right yields\n\\[\nb^2a^2=a^2b^2. \\tag{3}\n\\]\nBy (1) and (3),\n\\[\nb(ba)a=b^2a^2=a^2b^2=(ba)^2=b(ab)a.\n\\]\nCanceling the outer factors gives $ba=ab$. This holds for every $a,b\\in G$, so $G$ is abelian.\n\\end{proof}",
+      "reason": "Dependency review validates the cube-to-square and fifth-to-fourth reductions, the cancellation step, and the final descendant implication; only clarity was repaired."
+    }
+  ]
+}

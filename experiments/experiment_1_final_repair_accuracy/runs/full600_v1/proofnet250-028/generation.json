@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-028",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nRecall that\n\\[\nC(a)=\\{g\\in G:ga=ag\\}.\n\\]\nFor any \\(p\\in G\\),\n\\[\np\\in C(x^{-1}ax)\n\\iff p(x^{-1}ax)=(x^{-1}ax)p.\n\\]\nMultiplying on the left by \\(x\\) and on the right by \\(x^{-1}\\) gives\n\\[\n(xpx^{-1})a=a(xpx^{-1}),\n\\]\nso \\(xpx^{-1}\\in C(a)\\), equivalently \\(p\\in x^{-1}C(a)x\\). Thus\n\\[\nC(x^{-1}ax)\\subseteq x^{-1}C(a)x.\n\\]\nConversely, if \\(p=x^{-1}yx\\) for some \\(y\\in C(a)\\), then \\(ya=ay\\), and hence\n\\[\np(x^{-1}ax)=x^{-1}yax=x^{-1}ayx=(x^{-1}ax)p.\n\\]\nTherefore \\(p\\in C(x^{-1}ax)\\), proving the reverse inclusion. Consequently,\n\\[\nC(x^{-1}ax)=x^{-1}C(a)x.\n\\]\n\\end{proof}",
+      "reason": "The original reverse-inclusion computation repeated an expression and did not use \\(ya=ay\\) correctly; the conjugation equivalence repairs both inclusions."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet \\(g\\in G\\). Then\n\\[\n\\begin{aligned}\ng\\in C(x^{-1}ax)\n&\\iff g(x^{-1}ax)=(x^{-1}ax)g\\\\\n&\\iff xg x^{-1}a=a xg x^{-1}\\\\\n&\\iff xg x^{-1}\\in C(a)\\\\\n&\\iff g\\in x^{-1}C(a)x.\n\\end{aligned}\n\\]\nSince this equivalence holds for every \\(g\\in G\\), we obtain\n\\[\nC(x^{-1}ax)=x^{-1}C(a)x.\n\\]\n\\end{proof}",
+      "reason": "After checking each multiplication step, the proof is reduced to a valid elementwise equivalence, avoiding the invalid duplicated equality in the supplied proof."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe prove the two inclusions. Suppose \\(p\\in C(x^{-1}ax)\\). Thus\n\\[\np x^{-1}ax=x^{-1}axp.\n\\]\nMultiplying on the left by \\(x\\) and on the right by \\(x^{-1}\\), we get\n\\[\n(xpx^{-1})a=a(xpx^{-1}),\n\\]\nso \\(xpx^{-1}\\in C(a)\\). Hence \\(p\\in x^{-1}C(a)x\\), and therefore\n\\[\nC(x^{-1}ax)\\subseteq x^{-1}C(a)x.\n\\]\nNow suppose \\(q\\in x^{-1}C(a)x\\). Then \\(q=x^{-1}yx\\) for some \\(y\\in C(a)\\). Since \\(ya=ay\\),\n\\[\nq(x^{-1}ax)=x^{-1}yax=x^{-1}ayx=(x^{-1}ax)q.\n\\]\nThus \\(q\\in C(x^{-1}ax)\\), proving the reverse inclusion. Therefore\n\\[\nC(x^{-1}ax)=x^{-1}C(a)x.\n\\]\n\\end{proof}",
+      "reason": "Critic review identified the sole substantive issue as the incorrect reverse-inclusion algebra; replacing it with the direct calculation using \\(ya=ay\\) yields a complete proof."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor every \\(g\\in G\\), conjugation by \\(x\\) gives\n\\[\n\\begin{aligned}\ng\\in C(x^{-1}ax)\n&\\iff g(x^{-1}ax)=(x^{-1}ax)g\\\\\n&\\iff xg x^{-1}a=a xg x^{-1}\\\\\n&\\iff xg x^{-1}\\in C(a)\\\\\n&\\iff g\\in x^{-1}C(a)x.\n\\end{aligned}\n\\]\nThe second equivalence follows by multiplying the equality on the left by \\(x\\) and on the right by \\(x^{-1}\\), and the final equivalence follows by conjugating the membership condition. Hence the same elements of \\(G\\) belong to both sets, so\n\\[\nC(x^{-1}ax)=x^{-1}C(a)x.\n\\]\n\\end{proof}",
+      "reason": "The dependency check confirms that the theorem needs only the definition of centralizer and invertibility of \\(x\\); the local repair replaces the flawed reverse inclusion, and the elementwise equivalence independently validates the result."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-169",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume that $A$ and $B$ are groups, with the usual componentwise operation on $A\\times B$.\n\n$(\\Rightarrow)$ Suppose $A\\times B$ is abelian. For any $a_1,a_2\\in A$ and $b_1,b_2\\in B$, we have\n\\[\n(a_1a_2,b_1b_2)=(a_1,b_1)(a_2,b_2)=(a_2,b_2)(a_1,b_1)=(a_2a_1,b_2b_1).\n\\]\nEquality of ordered pairs gives $a_1a_2=a_2a_1$ and $b_1b_2=b_2b_1$. Thus both $A$ and $B$ are abelian.\n\n$(\\Leftarrow)$ Conversely, suppose $A$ and $B$ are abelian. For any $(a_1,b_1),(a_2,b_2)\\in A\\times B$,\n\\[\n(a_1,b_1)(a_2,b_2)=(a_1a_2,b_1b_2)=(a_2a_1,b_2b_1)=(a_2,b_2)(a_1,b_1).\n\\]\nTherefore $A\\times B$ is abelian.\n\\end{proof}",
+      "reason": "The argument is valid once the implicit premise that $A$ and $B$ are groups is stated."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $A$ and $B$ be groups, and equip $A\\times B$ with componentwise multiplication.\n\nIf $A\\times B$ is abelian, take arbitrary $a,a'\\in A$ and $b,b'\\in B$. Then\n\\[\n(a,b)(a',b')=(a',b')(a,b),\n\\]\nso\n\\[\n(aa',bb')=(a'a,b'b).\n\\]\nHence $aa'=a'a$ and $bb'=b'b$. Since the elements were arbitrary, $A$ and $B$ are abelian.\n\nConversely, if $A$ and $B$ are abelian, then for arbitrary $(a,b),(a',b')\\in A\\times B$,\n\\[\n(a,b)(a',b')=(aa',bb')=(a'a,b'b)=(a',b')(a,b).\n\\]\nThus $A\\times B$ is abelian.\n\\end{proof}",
+      "reason": "The proof was checked for both directions and uses arbitrary elements explicitly."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume $A$ and $B$ are groups and give $A\\times B$ the componentwise group operation.\n\nFor the forward implication, suppose $A\\times B$ is abelian. Given arbitrary $a_1,a_2\\in A$, choose any $b_1,b_2\\in B$. Commutativity in the product yields\n\\[\n(a_1,b_1)(a_2,b_2)=(a_2,b_2)(a_1,b_1),\n\\]\nand therefore\n\\[\n(a_1a_2,b_1b_2)=(a_2a_1,b_2b_1).\n\\]\nEquality of coordinates implies $a_1a_2=a_2a_1$. Similarly, choosing arbitrary $b_1,b_2\\in B$ (and any $a_1,a_2\\in A$) gives $b_1b_2=b_2b_1$. Thus $A$ and $B$ are abelian.\n\nFor the reverse implication, suppose $A$ and $B$ are abelian. For any $(a_1,b_1),(a_2,b_2)\\in A\\times B$,\n\\[\n(a_1,b_1)(a_2,b_2)=(a_1a_2,b_1b_2)=(a_2a_1,b_2b_1)=(a_2,b_2)(a_1,b_1).\n\\]\nHence $A\\times B$ is abelian.\n\\end{proof}",
+      "reason": "The critic check confirms that coordinate commutativity is derived separately and that both implications are complete."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $A$ and $B$ be groups, and define multiplication on $A\\times B$ componentwise.\n\nSuppose first that $A\\times B$ is an abelian group. For arbitrary $a_1,a_2\\in A$, fix any $b_1,b_2\\in B$. Since the product is abelian,\n\\[\n(a_1,b_1)(a_2,b_2)=(a_2,b_2)(a_1,b_1).\n\\]\nUsing componentwise multiplication gives\n\\[\n(a_1a_2,b_1b_2)=(a_2a_1,b_2b_1),\n\\]\nso $a_1a_2=a_2a_1$. Thus $A$ is abelian. The same coordinate comparison, with arbitrary $b_1,b_2\\in B$, shows that $B$ is abelian.\n\nConversely, suppose both $A$ and $B$ are abelian. For arbitrary elements of the product,\n\\[\n(a_1,b_1)(a_2,b_2)=(a_1a_2,b_1b_2)=(a_2a_1,b_2b_1)=(a_2,b_2)(a_1,b_1).\n\\]\nThus multiplication in $A\\times B$ is commutative. Since the direct product of groups is already a group, $A\\times B$ is an abelian group.\n\\end{proof}",
+      "reason": "The certificate preserves the theorem, verifies the group and commutativity dependencies, and rechecks both coordinates and the product-group conclusion."
+    }
+  ]
+}

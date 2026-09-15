@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-216",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe prove the identity by induction on n. For n=1, it is immediate:\n\\[\n(a_1)^{-1}=a_1^{-1}.\n\\]\nFor n=2, the standard inverse-of-a-product identity gives\n\\[\n(a_1a_2)^{-1}=a_2^{-1}a_1^{-1}.\n\\]\nNow assume for some n\\ge 2 that\n\\[\n(a_1a_2\\cdots a_n)^{-1}=a_n^{-1}a_{n-1}^{-1}\\cdots a_1^{-1}.\n\\]\nThen, using the inverse-of-a-product identity and the induction hypothesis,\n\\[\n\\begin{aligned}\n(a_1a_2\\cdots a_na_{n+1})^{-1}\n&=((a_1a_2\\cdots a_n)a_{n+1})^{-1}\\\\\n&=a_{n+1}^{-1}(a_1a_2\\cdots a_n)^{-1}\\\\\n&=a_{n+1}^{-1}a_n^{-1}a_{n-1}^{-1}\\cdots a_1^{-1}.\n\\end{aligned}\n\\]\nThus the statement holds for all n\\ge1.\n\\end{proof}",
+      "reason": "The original argument is valid in substance; this rewrite makes the induction and product-inverse step explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe use induction on n. The case n=1 is immediate. For n=2, let x=a_2^{-1}a_1^{-1}. By associativity,\n\\[\n(a_1a_2)x=a_1(a_2a_2^{-1})a_1^{-1}=a_1a_1^{-1}=1,\n\\]\nand similarly\n\\[\nx(a_1a_2)=a_2^{-1}(a_1^{-1}a_1)a_2=a_2^{-1}a_2=1.\n\\]\nHence x=(a_1a_2)^{-1}.\n\nAssume now that for some n\\ge2,\n\\[\n(a_1a_2\\cdots a_n)^{-1}=a_n^{-1}a_{n-1}^{-1}\\cdots a_1^{-1}.\n\\]\nFor any a_{n+1}\\in G, the n=2 case applied to \\(a_1a_2\\cdots a_n\\) and \\(a_{n+1}\\) yields\n\\[\n\\begin{aligned}\n(a_1a_2\\cdots a_na_{n+1})^{-1}\n&=a_{n+1}^{-1}(a_1a_2\\cdots a_n)^{-1}\\\\\n&=a_{n+1}^{-1}a_n^{-1}a_{n-1}^{-1}\\cdots a_1^{-1}.\n\\end{aligned}\n\\]\nTherefore the identity holds for every n\\ge1.\n\\end{proof}",
+      "reason": "A check of the base case confirms both inverse identities, and the induction is then fully justified."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe first establish that for all x,y\\in G,\n\\[\n(xy)^{-1}=y^{-1}x^{-1}.\n\\]\nIndeed, associativity gives\n\\[\n(xy)(y^{-1}x^{-1})=x(yy^{-1})x^{-1}=1\n\\]\nand\n\\[\n(y^{-1}x^{-1})(xy)=y^{-1}(x^{-1}x)y=1.\n\\]\nThus, by induction on n, the desired formula follows. For n=1 it is immediate. If\n\\[\n(a_1\\cdots a_n)^{-1}=a_n^{-1}\\cdots a_1^{-1},\n\\]\nthen applying the established two-factor identity with x=a_1\\cdots a_n and y=a_{n+1} gives\n\\[\n\\begin{aligned}\n(a_1\\cdots a_na_{n+1})^{-1}\n&=a_{n+1}^{-1}(a_1\\cdots a_n)^{-1}\\\\\n&=a_{n+1}^{-1}a_n^{-1}\\cdots a_1^{-1}.\n\\end{aligned}\n\\]\nHence\n\\[\n(a_1a_2\\cdots a_n)^{-1}=a_n^{-1}a_{n-1}^{-1}\\cdots a_1^{-1}\n\\]\nfor all n and all a_1,\\ldots,a_n\\in G.\n\\end{proof}",
+      "reason": "The critic identified that the two-factor inverse rule should be proved once and then used as the induction step; the repaired proof does so."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor any x,y\\in G, the element y^{-1}x^{-1} is the inverse of xy, since\n\\[\n(xy)(y^{-1}x^{-1})=x(yy^{-1})x^{-1}=1\n\\]\nand\n\\[\n(y^{-1}x^{-1})(xy)=y^{-1}(x^{-1}x)y=1.\n\\]\nConsequently,\n\\[\n(xy)^{-1}=y^{-1}x^{-1}. \\tag{1}\n\\]\nWe now prove the claim by induction on n. When n=1,\n\\[\n(a_1)^{-1}=a_1^{-1},\n\\]\nso the claim holds. Suppose it holds for n, so that\n\\[\n(a_1a_2\\cdots a_n)^{-1}=a_n^{-1}a_{n-1}^{-1}\\cdots a_1^{-1}.\n\\]\nApplying (1) to x=a_1a_2\\cdots a_n and y=a_{n+1}, and then using the induction hypothesis, we obtain\n\\[\n\\begin{aligned}\n(a_1a_2\\cdots a_na_{n+1})^{-1}\n&=a_{n+1}^{-1}(a_1a_2\\cdots a_n)^{-1}\\\\\n&=a_{n+1}^{-1}a_n^{-1}a_{n-1}^{-1}\\cdots a_1^{-1}.\n\\end{aligned}\n\\]\nThus the formula holds for n+1. By induction, it holds for all n\\ge1 and all a_1,a_2,\\ldots,a_n\\in G.\n\\end{proof}",
+      "reason": "Dependency checking isolates the two-factor inverse law, repairs its justification, and confirms that the induction preserves the theorem for every descendant n."
+    }
+  ]
+}

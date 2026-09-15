@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-091",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume, toward a contradiction, that no point of $\\mathbb R$ is a condensation point of $E$. Thus, for every $p\\in\\mathbb R$, there is an open interval $I_p$ containing $p$ such that $I_p\\cap E$ is countable. The intervals $\\{I_p:p\\in\\mathbb R\\}$ form an open cover of $\\mathbb R$.\n\nSince $\\mathbb R$ is second countable, every open cover of $\\mathbb R$ has a countable subcover. Hence there are intervals $I_1,I_2,\\ldots$ such that\n\\[\n\\mathbb R=\\bigcup_{n=1}^{\\infty} I_n.\n\\]\nTherefore\n\\[\nE=E\\cap\\mathbb R=\\bigcup_{n=1}^{\\infty}(E\\cap I_n).\n\\]\nEach $E\\cap I_n$ is countable, so $E$ is a countable union of countable sets and is consequently countable. This contradicts the assumption that $E$ is uncountable. Hence there exists a point $p\\in\\mathbb R$ at which $E$ condenses.\n\\end{proof}",
+      "reason": "Replaced the invalid enumeration argument with the standard second-countability contradiction."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose, for contradiction, that $E$ has no condensation point. By definition, for each $x\\in\\mathbb R$ there is an open neighborhood $U_x$ of $x$ such that $U_x\\cap E$ is countable. The family $\\{U_x:x\\in\\mathbb R\\}$ covers $\\mathbb R$.\n\nLet $\\mathcal B$ be the countable base of open intervals with rational endpoints. For each $x$, choose $B_x\\in\\mathcal B$ such that\n\\[\nx\\in B_x\\subseteq U_x.\n\\]\nThe collection of all such $B_x$ is a subcollection of the countable family $\\mathcal B$, and it still covers $\\mathbb R$. Enumerate it as $B_1,B_2,\\ldots$. Then\n\\[\nE=\\bigcup_{n=1}^{\\infty}(E\\cap B_n).\n\\]\nBecause $B_n\\subseteq U_x$ for some $x$, each $E\\cap B_n$ is countable. Thus $E$ is countable, contradicting the hypothesis that $E$ is uncountable. Therefore some $p\\in\\mathbb R$ is a condensation point of $E$.\n\\end{proof}",
+      "reason": "Internal checking corrected the need to justify a countable subcover by explicitly using the rational-interval base."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume that no point of $\\mathbb R$ is a condensation point of $E$. Then for every $x\\in\\mathbb R$ there exists an open interval $U_x$ containing $x$ for which $E\\cap U_x$ is countable.\n\nConsider the countable collection $\\mathcal B$ of all open intervals with rational endpoints. For each $x$, choose a basis interval $B_x\\in\\mathcal B$ satisfying\n\\[\nx\\in B_x\\subseteq U_x.\n\\]\nThe selected basis intervals cover $\\mathbb R$. Since $\\mathcal B$ is countable, the distinct selected intervals can be listed as $B_1,B_2,\\ldots$. For each $n$, choose $x_n$ with $B_n\\subseteq U_{x_n}$. Consequently, $E\\cap B_n$ is countable.\n\nSince the $B_n$ cover $\\mathbb R$, they cover $E$, and hence\n\\[\nE=\\bigcup_{n=1}^{\\infty}(E\\cap B_n).\n\\]\nThis makes $E$ countable, being a countable union of countable sets, contradicting the hypothesis. Therefore there exists $p\\in\\mathbb R$ at which $E$ condenses.\n\\end{proof}",
+      "reason": "The critic check verified the cover, countability transfer, and contradiction, while removing the unsupported nearest-point construction."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose, to the contrary, that $E$ has no condensation point in $\\mathbb R$. For each $x\\in\\mathbb R$, the failure of $x$ to be a condensation point means that there is an open interval $U_x$ containing $x$ such that $U_x\\cap E$ is countable.\n\nLet $\\mathcal B=\\{(a,b):a,b\\in\\mathbb Q,\u0003ca<b\\}$, a countable base for the topology of $\\mathbb R$. For each $x$, choose $B_x\\in\\mathcal B$ with\n\\[\nx\\in B_x\\subseteq U_x.\n\\]\nThe family of distinct intervals among the $B_x$ is a countable cover of $\\mathbb R$; write it as $(B_n)_{n\\ge1}$. For every $n$, the interval $B_n$ is contained in some $U_x$, so $E\\cap B_n$ is countable. Therefore\n\\[\nE=\\bigcup_{n\\ge1}(E\\cap B_n)\n\\]\nis countable, since it is a countable union of countable sets. This contradicts the assumption that $E$ is uncountable. Hence there is a point $p\\in\\mathbb R$ at which $E$ condenses.\n\\end{proof}",
+      "reason": "Dependency checks confirmed the local repair preserves the theorem and assumptions; independent review found no gap, and the countability conclusion revalidates the contradiction."
+    }
+  ]
+}

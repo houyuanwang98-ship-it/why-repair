@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-034",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSuppose, for contradiction, that $r+x$ is rational. Since $r$ is rational, the difference\n\\[\n(r+x)-r=x\n\\]\nis rational. This contradicts the assumption that $x$ is irrational. Therefore, $r+x$ is irrational.\n\\end{proof}",
+      "reason": "The original argument is valid; it is presented with the contradiction made explicit."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nAssume that $r+x$ is rational. Because $r$ is rational and the difference of two rational numbers is rational, we have\n\\[\nx=(r+x)-r\\in\\mathbb{Q}.\n\\]\nThis contradicts the fact that $x$ is irrational. Hence $r+x$ is irrational.\n\\end{proof}",
+      "reason": "Internal checking confirms that subtracting the rational number $r$ from a rational sum would force $x$ to be rational."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nWe argue by contradiction. Suppose $r+x$ is rational. The hypothesis gives $r\\in\\mathbb{Q}$, so, by closure of $\\mathbb{Q}$ under subtraction,\n\\[\nx=(r+x)-r\\in\\mathbb{Q}.\n\\]\nThis contradicts the hypothesis that $x$ is irrational. Therefore, $r+x$ must be irrational.\n\\end{proof}",
+      "reason": "The proof passes the validity check: the only required closure property is rationality under subtraction."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nAssume for contradiction that $r+x\\in\\mathbb{Q}$. Since $r\\in\\mathbb{Q}$, closure of the rationals under subtraction implies\n\\[\n(r+x)-r\\in\\mathbb{Q}.\n\\]\nBut $(r+x)-r=x$, so $x$ would be rational, contradicting the assumption that $x$ is irrational. Thus $r+x\\notin\\mathbb{Q}$, and therefore $r+x$ is irrational.\n\\end{proof}",
+      "reason": "Dependency and descendant checks confirm that the local contradiction step establishes the theorem; the condition $r\\neq0$ is unused but preserved."
+    }
+  ]
+}

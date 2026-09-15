@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-167",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $x,y\\in X$ with $x\\neq y$. Since $X$ is regular, there is an open neighborhood $U$ of $x$ such that $y\\notin\\overline U$. Hence $y\\in X\\setminus\\overline U$, an open set. By regularity, there is an open neighborhood $V$ of $y$ such that\n\\[\n\\overline V\\subseteq X\\setminus\\overline U.\n\\]\nTherefore $\\overline U\\cap\\overline V=\\varnothing$, so $U$ and $V$ are neighborhoods of $x$ and $y$ whose closures are disjoint.\n\\end{proof}",
+      "reason": "Replaced the invalid separation step with the standard nested-neighborhood consequence of regularity."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nTake distinct points $x,y\\in X$. By regularity, there is an open set $U$ containing $x$ such that $y\\notin\\overline U$. Thus $X\\setminus\\overline U$ is an open neighborhood of $y$. Applying regularity again, choose an open neighborhood $V$ of $y$ satisfying\n\\[\n\\overline V\\subseteq X\\setminus\\overline U.\n\\]\nConsequently, $\\overline U$ and $\\overline V$ are disjoint. Hence $U$ and $V$ are neighborhoods of $x$ and $y$ with disjoint closures.\n\\end{proof}",
+      "reason": "The revised proof checks both uses of regularity and explicitly establishes the required closure inclusion."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $x\\neq y$ be points of $X$. Regularity gives an open neighborhood $U$ of $x$ for which $y\\notin\\overline U$. The complement $X\\setminus\\overline U$ is therefore an open neighborhood of $y$. A second application of regularity yields an open neighborhood $V$ of $y$ with\n\\[\n\\overline V\\subseteq X\\setminus\\overline U.\n\\]\nIt follows immediately that $\\overline U\\cap\\overline V=\\varnothing$. Thus $U$ and $V$ are the required neighborhoods.\n\\end{proof}",
+      "reason": "The critic identified that the original argument incorrectly inferred closure separation from disjoint open sets; the generator was repaired using two nested applications of regularity."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $x,y\\in X$ with $x\\neq y$. By regularity, choose an open neighborhood $U$ of $x$ such that $y\\notin\\overline U$. Then $X\\setminus\\overline U$ is an open neighborhood of $y$. Applying regularity to the point $y$ and the closed set $\\overline U$, choose an open neighborhood $V$ of $y$ such that\n\\[\n\\overline V\\subseteq X\\setminus\\overline U.\n\\]\nThus $\\overline V\\cap\\overline U=\\varnothing$. Therefore $U$ and $V$ are neighborhoods of $x$ and $y$ whose closures are disjoint.\n\\end{proof}",
+      "reason": "Dependency checking found the original proof's closure-intersection contradiction unsupported; local repair and descendant revalidation yield the standard valid argument."
+    }
+  ]
+}

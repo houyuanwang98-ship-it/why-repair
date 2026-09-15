@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-064",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let \\(s_1=a+b+c+d=2\\) and \\(s_2=ab+ac+ad+bc+bd+cd=0\\). Then\n\\[\na^2+b^2+c^2+d^2=s_1^2-2s_2=4.\n\\]\nThus the feasible set is compact, so \\(P=abcd\\) attains both extrema. At any extremum, Lagrange multipliers give\n\\[\n\\frac1a=\\lambda+\\mu a\n\\]\nfor every nonzero variable, so all nonzero variables take at most two distinct values. If a variable is zero, then \\(P=0\\), which cannot be smaller than the attained value \\(-1\\) or larger than the attained value \\(1/4\\).\n\nIf three variables equal \\(x\\) and the fourth equals \\(y\\), then\n\\[\n3x+y=2,\\qquad 3x^2+y^2=4.\n\\]\nHence \\((x,y)=(1,-1)\\) or \\((0,2)\\), giving products \\(-1\\) and \\(0\\).\n\nIf two variables equal \\(x\\) and two equal \\(y\\), then\n\\[\nx+y=1,\\qquad x^2+y^2=2,\n\\]\nso \\(xy=-\\tfrac12\\), and therefore \\(P=x^2y^2=\\tfrac14\\). These values are attained, respectively, at \\((1,1,1,-1)\\) and \\(\\bigl(\\frac{1+\\sqrt3}{2},\\frac{1+\\sqrt3}{2},\\frac{1-\\sqrt3}{2},\\frac{1-\\sqrt3}{2}\\bigr)\\). Therefore\n\\[\n\\boxed{\\min abcd=-1,\\qquad \\max abcd=\\frac14}.\n\\]",
+      "reason": "The original proof identified valid equality cases but did not rigorously exclude all other configurations; the Lagrange-multiplier classification supplies that missing step."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "The constraints imply\n\\[\n(a+b+c+d)^2=a^2+b^2+c^2+d^2+2(ab+ac+ad+bc+bd+cd),\n\\]\nso \\(a^2+b^2+c^2+d^2=4\\). Hence the feasible set is a compact sphere intersection, and the continuous function \\(abcd\\) has global extrema.\n\nAt an extremum with all variables nonzero, apply Lagrange multipliers to \\(abcd\\) subject to the two constraints. Dividing the resulting equations by \\(abcd\\) shows that every variable satisfies the same quadratic equation\n\\[\n\\mu t^2+\\lambda t-1=0.\n\\]\nConsequently there are at most two distinct variable values. If some variable is zero, the product is \\(0\\).\n\nFor a pattern \\((x,x,x,y)\\), the constraints are \\(3x+y=2\\) and \\(3x^2+y^2=4\\). Solving gives \\((x,y)=(1,-1)\\) or \\((0,2)\\), with products \\(-1\\) and \\(0\\).\n\nFor a pattern \\((x,x,y,y)\\), the constraints give \\(x+y=1\\) and \\(x^2+y^2=2\\). Thus \\(2xy=(x+y)^2-(x^2+y^2)=-1\\), so \\(x^2y^2=1/4\\).\n\nTherefore every extremal value is among \\(-1,0,1/4\\), and all three occur. Thus\n\\[\n\\boxed{\\min abcd=-1,\\qquad \\max abcd=\\frac14}.\n\\]",
+      "reason": "Self-checking exposed that compactness and examples alone do not prove optimality; the revised proof classifies all extrema."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Set \\(P=abcd\\). From the hypotheses,\n\\[\na^2+b^2+c^2+d^2=(a+b+c+d)^2-2(ab+ac+ad+bc+bd+cd)=4.\n\\]\nThus the constraint set is compact, and \\(P\\) has a minimum and maximum.\n\nA critical point with no zero coordinate satisfies, for suitable constants \\(\\lambda,\\mu\\),\n\\[\nbcd=\\lambda+\\mu a,\\quad acd=\\lambda+\\mu b,\\quad abd=\\lambda+\\mu c,\\quad abc=\\lambda+\\mu d.\n\\]\nAfter division by \\(abcd\\), each of \\(a,b,c,d\\) is a root of \\(\\mu t^2+\\lambda t-1=0\\). Hence there are at most two distinct values. If a coordinate is zero, then \\(P=0\\).\n\nIf the multiplicities are \\(3+1\\), write the values as \\(x,x,x,y\\). Then\n\\[\n3x+y=2,\\qquad 3x^2+y^2=4,\n\\]\nwhich yields \\((x,y)=(1,-1)\\) or \\((0,2)\\), with \\(P=-1\\) or \\(0\\).\n\nIf the multiplicities are \\(2+2\\), write the values as \\(x,x,y,y\\). Then \\(x+y=1\\) and \\(x^2+y^2=2\\), so \\(xy=-1/2\\) and \\(P=1/4\\).\n\nThe configurations \\((1,1,1,-1)\\) and \\(\\bigl(\\frac{1+\\sqrt3}{2},\\frac{1+\\sqrt3}{2},\\frac{1-\\sqrt3}{2},\\frac{1-\\sqrt3}{2}\\bigr)\\) satisfy the hypotheses and attain \\(-1\\) and \\(1/4\\). Therefore\n\\[\n\\boxed{\\min abcd=-1,\\qquad \\max abcd=\\frac14}.\n\\]",
+      "reason": "Critique found the unsupported assertion that tested configurations exhaust all possibilities; it was repaired by a complete stationary-point argument."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "The hypotheses are equivalent to\n\\[\na+b+c+d=2,\\qquad a^2+b^2+c^2+d^2=4,\n\\]\nbecause the sum of pairwise products is zero. The feasible set is compact, so \\(P=abcd\\) attains global extrema.\n\nIf \\(P=0\\), its value lies between the two values exhibited below. Otherwise, at a constrained extremum, Lagrange multipliers applied to \\(P\\) give\n\\[\n\\frac1a=\\lambda+\\mu a,\n\\quad \\frac1b=\\lambda+\\mu b,\n\\quad \\frac1c=\\lambda+\\mu c,\n\\quad \\frac1d=\\lambda+\\mu d.\n\\]\nThus all four variables are roots of one quadratic, so there are at most two distinct values.\n\nFor multiplicities \\(3+1\\), let the values be \\(x,x,x,y\\). The equations\n\\[\n3x+y=2,\\qquad 3x^2+y^2=4\n\\]\nproduce \\((x,y)=(1,-1)\\) or \\((0,2)\\), giving \\(P=-1\\) or \\(0\\).\n\nFor multiplicities \\(2+2\\), let the values be \\(x,x,y,y\\). Then\n\\[\nx+y=1,\\qquad x^2+y^2=2,\n\\]\nso \\(xy=-1/2\\), and hence \\(P=x^2y^2=1/4\\).\n\nThe value \\(-1\\) is attained at \\((1,1,1,-1)\\), while \\(1/4\\) is attained at\n\\[\n\\left(\\frac{1+\\sqrt3}{2},\\frac{1+\\sqrt3}{2},\\frac{1-\\sqrt3}{2},\\frac{1-\\sqrt3}{2}\\right).\n\\]\nAll candidate extrema have therefore been revalidated, and\n\\[\n\\boxed{\\min abcd=-1,\\qquad \\max abcd=\\frac14}.\n\\]",
+      "reason": "Dependency-aware review repaired the missing global-extremum justification and rechecked the equality cases and all multiplicity patterns."
+    }
+  ]
+}

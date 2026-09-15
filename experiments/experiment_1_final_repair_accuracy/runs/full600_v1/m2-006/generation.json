@@ -1,0 +1,29 @@
+{
+  "case_id": "m2-006",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "由 a|b 且 a|c，存在整数 m,n，使得 b=am 且 c=an。于是 b+c=am+an=a(m+n)。由于 m+n 为整数，故 a|b+c。",
+      "reason": "原证明逻辑完整，仅补充了 m+n 为整数这一细节。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "根据整除定义，由 a|b，存在整数 m 使 b=am；由 a|c，存在整数 n 使 c=an。于是\nb+c=am+an=a(m+n)。因 m,n∈ℤ，故 m+n∈ℤ，所以 a|b+c。",
+      "reason": "检查后确认假设、整除定义和结论衔接正确。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "由假设 a,b,c∈ℤ，且 a|b、a|c，存在 m,n∈ℤ，使 b=am、c=an。因此\nb+c=am+an=a(m+n)。又 m+n∈ℤ，故按照整除定义，a|b+c。",
+      "reason": "生成证明经检查无循环论证或域外假设，结论直接成立。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "依赖关系为：a|b 与 a|c 分别给出整数 m,n，使 b=am、c=an；两式相加得到\nb+c=am+an=a(m+n)。由于整数对加法封闭，m+n∈ℤ，因此存在整数 m+n 使 b+c=a(m+n)。根据整除定义，a|b+c。独立复核确认该结论仅依赖给定整数假设，且无后续推论需重新验证。",
+      "reason": "依赖检查、局部证明复核及结论验证均通过；无需修复。"
+    }
+  ]
+}

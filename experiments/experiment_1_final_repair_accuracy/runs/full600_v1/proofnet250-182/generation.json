@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-182",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSince $u$ is a unit, there exists $v\\in R$ such that $uv=vu=1$. Then\n\\[\n(-v)(-u)=vu=1\n\\quad\\text{and}\\quad\n(-u)(-v)=uv=1.\n\\]\nTherefore, $-u$ is a unit.\n\\end{proof}",
+      "reason": "The given proof is valid: $-v$ is a two-sided inverse of $-u$."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nBecause $u$ is a unit, choose $v\\in R$ with $uv=vu=1$. Using distributivity and additive inverses,\n\\[\n(-u)(-v)=uv=1,\n\\qquad\n(-v)(-u)=vu=1.\n\\]\nThus $-v$ is a two-sided inverse of $-u$, so $-u$ is a unit.\n\\end{proof}",
+      "reason": "Internal checking confirms both required inverse identities."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nLet $v\\in R$ satisfy $uv=vu=1$, which exists because $u$ is a unit. Since the product of two negatives equals the product of the original elements,\n\\[\n(-u)(-v)=uv=1\n\\quad\\text{and}\\quad\n(-v)(-u)=vu=1.\n\\]\nHence $-v$ is a two-sided inverse for $-u$, and therefore $-u$ is a unit.\n\\end{proof}",
+      "reason": "Critic verification found no gap or incorrect algebraic step."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSince $u$ is a unit, there is an element $v\\in R$ with $uv=vu=1$. The candidate inverse for $-u$ is $-v$. Indeed,\n\\[\n(-u)(-v)=uv=1,\n\\qquad\n(-v)(-u)=vu=1.\n\\]\nTherefore $-v$ is a two-sided inverse of $-u$, so $-u$ is a unit.\n\\end{proof}",
+      "reason": "The dependency check, local verification, independent review, and descendant revalidation all preserve the valid proof."
+    }
+  ]
+}

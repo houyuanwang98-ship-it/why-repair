@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-061",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose that $H$ is a subgroup of $G$ with $|H|=n-1$, where $n=|G|>2$. By Lagrange's theorem, $|H|$ divides $|G|$, so $n-1$ divides $n$. Hence $n-1$ divides $n-(n-1)=1$, which implies $n-1=1$ and therefore $n=2$, contradicting $n>2$. Thus $G$ cannot have such a subgroup.\n\\end{proof}",
+      "reason": "Replaced the invalid product argument with Lagrange's theorem and the divisibility contradiction."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume, for contradiction, that $H\\leq G$ and $|H|=n-1$, where $n=|G|>2$. Lagrange's theorem gives $|H|\\mid |G|$, so $n-1\\mid n$. Since $n-(n-1)=1$, it follows that $n-1\\mid 1$. Thus $n-1=1$, yielding $n=2$, contrary to the hypothesis $n>2$. Therefore no such subgroup $H$ exists.\n\\end{proof}",
+      "reason": "The revised proof checks the subgroup-order divisibility requirement explicitly and closes the contradiction rigorously."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose that a subgroup $H\\leq G$ satisfies $|H|=n-1$, with $n=|G|>2$. By Lagrange's theorem, the order of every subgroup divides the order of the group; hence $n-1$ divides $n$. Therefore $n-1$ divides their difference, $n-(n-1)=1$. The only positive divisor of $1$ is $1$, so $n-1=1$ and $n=2$, contradicting $n>2$. Consequently, $G$ has no subgroup of order $n-1$.\n\\end{proof}",
+      "reason": "The critic identifies the original case split as invalid, since $xy\\notin H$ does not imply $xy=y$, and substitutes the standard Lagrange argument."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume that $H$ is a subgroup of $G$ with $|H|=n-1$, where $n=|G|>2$. Lagrange's theorem implies that $|H|$ divides $|G|$, so $n-1\\mid n$. Subtracting the divisible quantities gives $n-1\\mid n-(n-1)=1$. Since $n>2$, we have $n-1>1$, which cannot divide $1$. This contradiction proves that $G$ cannot have a subgroup $H$ of order $n-1$.\n\\end{proof}",
+      "reason": "Dependency-aware checking confirms the only needed fact is Lagrange's theorem; the local repair is self-contained and its contradiction revalidates the conclusion."
+    }
+  ]
+}

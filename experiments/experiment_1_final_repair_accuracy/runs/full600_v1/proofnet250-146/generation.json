@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-146",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor \\(s>0\\), define\n\\[\nI(s)=\\int_0^\\infty e^{-sx}\\frac{\\sin x}{x}\\,dx.\n\\]\nDifferentiation under the integral sign is justified by dominated convergence, and\n\\[\nI'(s)=-\\int_0^\\infty e^{-sx}\\sin x\\,dx=-\\frac{1}{1+s^2}.\n\\]\nSince \\(I(s)\\to0\\) as \\(s\\to\\infty\\), integration gives\n\\[\nI(s)=\\int_s^\\infty\\frac{dt}{1+t^2}=\\frac\\pi2-\\arctan s.\n\\]\nAs \\(s\\downarrow0\\), Abel's theorem for the Dirichlet integral yields\n\\[\n\\int_0^\\infty\\frac{\\sin x}{x}\\,dx=\\lim_{s\\downarrow0}I(s)=\\frac\\pi2.\n\\]\n\\end{proof}",
+      "reason": "The original contour argument has malformed algebra and unjustified contour estimates; Abel regularization gives a concise rigorous repair."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet\n\\[\nI_R=\\int_0^R\\frac{\\sin x}{x}\\,dx.\n\\]\nFor \\(s>0\\), set\n\\[\nI(s)=\\int_0^\\infty e^{-sx}\\frac{\\sin x}{x}\\,dx.\n\\]\nThe integral is absolutely convergent. Differentiating under the integral sign gives\n\\[\nI'(s)=-\\int_0^\\infty e^{-sx}\\sin x\\,dx=-\\frac1{1+s^2}.\n\\]\nMoreover \\(I(s)\\to0\\) as \\(s\\to\\infty\\), so\n\\[\nI(s)=\\int_s^\\infty\\frac{du}{1+u^2}=\\frac\\pi2-\\arctan s.\n\\]\nThe function \\(\\sin x/x\\) has a convergent improper integral by Dirichlet's test. Abel's limit theorem therefore implies\n\\[\n\\lim_{R\\to\\infty}I_R=\\lim_{s\\downarrow0}I(s)=\\frac\\pi2.\n\\]\nHence \\(\\int_0^\\infty\\frac{\\sin x}{x}\\,dx=\\frac\\pi2\\).\n\\end{proof}",
+      "reason": "A checked revision replaces the defective principal-value contour manipulation with an absolutely convergent Laplace transform and a justified Abel limit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor \\(a>0\\), introduce the absolutely convergent integral\n\\[\nF(a)=\\int_0^\\infty e^{-ax}\\frac{\\sin x}{x}\\,dx.\n\\]\nBy dominated convergence,\n\\[\nF'(a)=-\\int_0^\\infty e^{-ax}\\sin x\\,dx=-\\operatorname{Im}\\frac1{a-i}=-\\frac1{1+a^2}.\n\\]\nAlso \\(F(a)\\to0\\) as \\(a\\to\\infty\\). Consequently,\n\\[\nF(a)=\\int_a^\\infty\\frac{dt}{1+t^2}=\\frac\\pi2-\\arctan a.\n\\]\nThe improper integral of \\(\\sin x/x\\) converges by Dirichlet's test, and Abel's theorem identifies it with the limit of its Laplace transforms. Thus\n\\[\n\\int_0^\\infty\\frac{\\sin x}{x}\\,dx\n=\\lim_{a\\downarrow0}F(a)\n=\\frac\\pi2.\n\\]\n\\end{proof}",
+      "reason": "Critical checking catches the source proof's sign, parenthesis, and small/large arc issues; the repaired proof uses standard convergence and transform identities."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine, for \\(a>0\\),\n\\[\nF(a)=\\int_0^\\infty e^{-ax}\\frac{\\sin x}{x}\\,dx.\n\\]\nNear zero the integrand is bounded, and at infinity it is absolutely integrable, so differentiation under the integral sign is valid. We obtain\n\\[\nF'(a)=-\\int_0^\\infty e^{-ax}\\sin x\\,dx=-\\frac{1}{1+a^2}.\n\\]\nFurthermore \\(F(a)\\to0\\) as \\(a\\to\\infty\\). Hence\n\\[\nF(a)=\\int_a^\\infty\\frac{dt}{1+t^2}=\\frac\\pi2-\\arctan a.\n\\]\nNow \\(\\sin x/x\\) has a convergent improper integral: it is bounded near zero, while convergence on \\([1,\\infty)\\) follows from Dirichlet's test. Abel's theorem for convergent improper integrals therefore gives\n\\[\n\\int_0^\\infty\\frac{\\sin x}{x}\\,dx=\\lim_{a\\downarrow0}F(a)=\\frac\\pi2.\n\\]\n\\end{proof}",
+      "reason": "Dependency-aware checking verifies local integrability, differentiation, the transform evaluation, and descendant convergence before applying Abel's theorem."
+    }
+  ]
+}

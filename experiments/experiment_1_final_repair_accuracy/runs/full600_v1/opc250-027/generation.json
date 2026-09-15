@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-027",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let \\(v=10001\\), and for each club \\(C\\), write \\(|C|=2m(C)+1\\). By (iii), \\(C\\) belongs to exactly \\(m(C)=(|C|-1)/2\\) societies.\n\nBy (i), the clubs partition the unordered pairs of distinct students, so\n\\[\n\\sum_C \\binom{|C|}{2}=\\binom{v}{2}=\\frac{v(v-1)}2.\n\\]\n\nCount student–society incidences. There are \\(vk\\) such incidences. A club \\(C\\) contributes \\(|C|m(C)=|C|(|C|-1)/2=\\binom{|C|}{2}\\), because each student in \\(C\\) belongs to that club in each society containing \\(C\\), and (ii) ensures these are exactly the required incidences. Hence\n\\[\nvk=\\sum_C\\binom{|C|}{2}=\\frac{v(v-1)}2,\n\\]\nso \\(k=(v-1)/2=5000\\).\n\nThis value is attainable: take one club containing all 10001 students and place it in 5000 societies. Then (i)–(iii) hold. Therefore the only possible value is \\(\\boxed{5000}\\).",
+      "reason": "Adds the missing attainability construction while preserving the counting argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "For every club \\(C\\), write \\(|C|=2m_C+1\\). Condition (iii) says that \\(C\\) lies in exactly \\(m_C=(|C|-1)/2\\) societies.\n\nCondition (i) gives\n\\[\n\\sum_C\\binom{|C|}{2}=\\binom{10001}{2}.\n\\tag{1}\n\\]\nNow count pairs \\((x,S)\\), where \\(x\\) is a student and \\(S\\) is a society. There are \\(10001k\\) such pairs. Club \\(C\\) contributes \\(|C|m_C\\) pairs, since it has \\(|C|\\) students and belongs to \\(m_C\\) societies. By (ii), every student–society pair is counted exactly once. Therefore\n\\[\n10001k=\\sum_C |C|m_C=\\sum_C\\frac{|C|(|C|-1)}2=\\sum_C\\binom{|C|}{2}.\n\\]\nUsing (1),\n\\[\n10001k=\\binom{10001}{2}=\\frac{10001\\cdot10000}{2},\n\\]\nso \\(k=5000\\).\n\nIt is possible: use a single club containing all 10001 students and let it belong to 5000 societies. Every condition is satisfied. Thus \\(\\boxed{k=5000}\\).",
+      "reason": "Internal check confirms both incidence uniqueness and existence are required; the revised proof includes both."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Write each club size as \\(|C|=2m_C+1\\). By (iii), it belongs to exactly \\(m_C\\) societies.\n\nFrom (i), every unordered pair of students occurs in exactly one club. Consequently,\n\\[\n\\sum_C\\binom{|C|}{2}=\\binom{10001}{2}.\n\\tag{1}\n\\]\nCount all student–society pairs in two ways. Directly there are \\(10001k\\). On the club side, club \\(C\\) contributes \\(|C|m_C\\). Condition (ii) guarantees that these contributions neither omit nor duplicate any student–society pair. Hence\n\\[\n10001k=\\sum_C |C|m_C\n=\\sum_C\\frac{|C|(|C|-1)}2\n=\\sum_C\\binom{|C|}{2}.\n\\]\nApplying (1) gives\n\\[\n10001k=\\binom{10001}{2},\\qquad k=\\frac{10000}{2}=5000.\n\\]\n\nConversely, let all students form one club, and let that club belong to 5000 societies. Its size is \\(2(5000)+1\\), so (iii) holds; (i) and (ii) are immediate. Therefore all and only possible values are \\(\\boxed{5000}\\).",
+      "reason": "The critic-checked version corrects the original omission of a converse construction."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let \\(\\mathcal C\\) be the clubs. For \\(C\\in\\mathcal C\\), write \\(|C|=2m_C+1\\). By (iii), \\(C\\) belongs to exactly \\(m_C\\) societies.\n\nCondition (i) yields the global pair count\n\\[\n\\sum_{C\\in\\mathcal C}\\binom{|C|}{2}=\\binom{10001}{2}.\n\\tag{1}\n\\]\nConsider the set of all pairs \\((x,S)\\) with \\(x\\) a student and \\(S\\) a society. Its cardinality is \\(10001k\\). For a fixed club \\(C\\), each of its \\(|C|\\) students contributes one such pair for each of the \\(m_C\\) societies containing \\(C\\), so its contribution is \\(|C|m_C\\). By (ii), these contributions partition all student–society pairs. Thus\n\\[\n10001k=\\sum_C |C|m_C\n=\\sum_C |C|\\frac{|C|-1}{2}\n=\\sum_C\\binom{|C|}{2}.\n\\]\nUsing (1),\n\\[\n10001k=\\binom{10001}{2}=10001\\cdot5000,\n\\]\nso \\(k=5000\\).\n\nFor descendant/existence validation, choose one club containing all 10001 students and put it in exactly 5000 societies. Its size is \\(2\\cdot5000+1\\), and all three conditions hold. Hence the forced value is attainable, and the complete answer is \\(\\boxed{5000}\\).",
+      "reason": "Dependency-aware review verifies the two counts, the role of (ii), and the required existence witness."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "m2-020",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "由假设 0<x<1，且 x>0。将不等式 x<1 的两边同乘以正数 x，不改变不等号方向，得 x^2<x。因此命题成立。",
+      "reason": "原证明步骤正确；补充了同乘正数不改变不等号方向的依据。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "因为 0<x<1，所以 x 为正数。由不等式乘法的保序性，将 x<1 两边同乘以 x，得到 x\\cdot x<x\\cdot 1，即 x^2<x。因此命题成立。",
+      "reason": "检查后确认假设足以保证乘法保序，证明有效。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "由 0<x<1 可知 x>0。由于乘以正数 x 会保持不等号方向，对 x<1 两边同乘 x，得到 x^2<x。因此命题成立。",
+      "reason": "生成证明并核验了关键条件 x>0；未发现逻辑缺陷。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "假设 x 为实数且 0<x<1。该假设推出 x>0；结合实数乘法的保序性，将 x<1 两边乘以正数 x，得 x^2<x。故原命题成立。",
+      "reason": "依赖关系为“0<x 推出乘法保序条件，再由 x<1 得结论”；局部补充依据后复核无误。"
+    }
+  ]
+}

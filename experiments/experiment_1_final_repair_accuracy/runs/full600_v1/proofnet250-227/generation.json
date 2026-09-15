@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-227",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $V=\\mathbb Z_2^2$. Every matrix in $T$ is an invertible linear transformation of $V$, so $T=\\operatorname{GL}(2,\\mathbb Z_2)$ acts faithfully on the three nonzero vectors of $V$:\n\\[\n(1,0),\\quad (0,1),\\quad (1,1).\n\\]\nThis action defines a homomorphism\n\\[\n\\varphi:T\\longrightarrow S_3.\n\\]\nIt is injective because a linear transformation is determined by its values on the basis vectors $(1,0)$ and $(0,1)$, and these values are determined by its action on the three nonzero vectors.\n\nThere are exactly six invertible $2\\times2$ matrices over $\\mathbb Z_2$: the first column can be any of the three nonzero vectors, and the second column can be any vector not in the span of the first, giving $3\\cdot2=6$. Hence $|T|=6=|S_3|$. Since $\\varphi$ is an injective homomorphism between finite groups of equal order, it is an isomorphism. Therefore $T\\cong S_3$.\n\\end{proof}",
+      "reason": "Replaces the unsupported generator calculation with the faithful natural action on the three nonzero vectors."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWrite $V=\\mathbb Z_2^2$. The group $T$ is precisely the group of invertible linear maps $V\\to V$. Since $V$ has exactly three nonzero vectors, namely\n\\[\nv_1=(1,0),\\qquad v_2=(0,1),\\qquad v_3=(1,1),\n\\]\neach element of $T$ permutes $\\{v_1,v_2,v_3\\}$. Thus we obtain a homomorphism\n\\[\n\\varphi:T\\to S_3.\n\\]\n\nThe homomorphism is injective: if an element of $T$ fixes all three nonzero vectors, then in particular it fixes the basis vectors $v_1$ and $v_2$, and therefore it is the identity matrix.\n\nTo count $T$, choose the first column of an invertible matrix in any of the three nonzero ways. The second column must be outside the one-dimensional subspace spanned by the first column, leaving exactly two choices. Consequently,\n\\[\n|T|=3\\cdot2=6.\n\\]\nSince $|S_3|=6$ and $\\varphi$ is injective, $\\varphi$ is bijective. Hence $T$ is isomorphic to $S_3$.\n\\end{proof}",
+      "reason": "Internal checking confirms that the action is a homomorphism, faithful, and size-compatible; the proof is revised accordingly."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $V=\\mathbb Z_2^2$ and let $X=V\\setminus\\{0\\}$. Then\n\\[\nX=\\{(1,0),(0,1),(1,1)\\},\n\\]\nso $|X|=3$. Every $A\\in T$ is an invertible linear transformation of $V$, hence restricts to a permutation of $X$. Define\n\\[\n\\varphi:T\\to\\operatorname{Sym}(X)\\cong S_3,\n\\qquad \\varphi(A)(v)=Av.\n\\]\nBecause matrix multiplication is composition of linear transformations, $\\varphi$ is a group homomorphism.\n\nIf $\\varphi(A)$ is the identity, then $A(1,0)=(1,0)$ and $A(0,1)=(0,1)$. Since these vectors form a basis of $V$, $A$ is the identity matrix. Thus $\\varphi$ is injective.\n\nFinally, an invertible matrix is obtained by choosing a nonzero first column in $3$ ways and then a second column outside its span in $2$ ways. Therefore $|T|=6$. Also $|S_3|=6$. The injective homomorphism $\\varphi$ is consequently surjective, and hence an isomorphism. Thus $T\\cong S_3$.\n\\end{proof}",
+      "reason": "The critic check removes the invalid appeal to an unspecified problem and verifies homomorphism, faithfulness, and cardinality independently."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet $V=\\mathbb Z_2^2$ and let $X=V\\setminus\\{0\\}$. There are three elements of $X$. For each $A\\in T$, invertibility implies $Av\\ne0$ whenever $v\\ne0$, so $A$ induces a permutation of $X$. After identifying $X$ with $\\{1,2,3\\}$, this gives a map\n\\[\n\\varphi:T\\longrightarrow S_3,\\qquad \\varphi(A)(v)=Av.\n\\]\nFor $A,B\\in T$ and $v\\in X$,\n\\[\n\\varphi(AB)(v)=ABv=\\varphi(A)(\\varphi(B)(v)),\n\\]\nso $\\varphi$ is a homomorphism.\n\nIts kernel is trivial. Indeed, if $A$ fixes every element of $X$, then it fixes $(1,0)$ and $(0,1)$, which form a basis of $V$; hence $A=I$. Thus $\\varphi$ is injective.\n\nThere are $3$ choices for the first column of an invertible matrix, since it must be nonzero. Once that column is chosen, there are $2$ choices for the second column, since it must not lie in its span. Hence\n\\[\n|T|=3\\cdot2=6=|S_3|.\n\\]\nTherefore the injective homomorphism $\\varphi$ is an isomorphism, and $T\\cong S_3$.\n\\end{proof}",
+      "reason": "Dependency checks validate the action, kernel argument, and order count; the local repair is the faithful-action proof, with all conclusions revalidated."
+    }
+  ]
+}

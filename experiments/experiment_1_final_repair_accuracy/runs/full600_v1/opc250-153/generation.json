@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-153",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Fix d>1. For every integer k>=2, let n=k(k+1), c=n^2, a=n^2+k^2, and b=n^2+(k+1)^2. These are distinct integers. Since\nab=(n^2+k^2)(n^2+(k+1)^2),\nwe have\nab/c=c+k^2+(k+1)^2+[k^2(k+1)^2]/n^2=c+k^2+(k+1)^2+1,\nbecause n^2=k^2(k+1)^2. Hence c divides ab.\n\nIt remains to place the three integers in the interval. Their offsets from n^2 are 0, k^2, and (k+1)^2. The first two are at most n+d√n for all k. For the third, it suffices that\n(k+1)^2 <= k(k+1)+d√(k(k+1)),\nwhich is equivalent to\nk+1 <= d√(k(k+1)).\nAfter division by √(k(k+1)), the left-hand ratio tends to 1, so this inequality holds for all sufficiently large k because d>1. Thus, for every sufficiently large k, all three integers lie in the required interval. The values n=k(k+1) are infinitely many, proving the theorem.",
+      "reason": "The construction is valid; the interval estimate is stated with the correct asymptotic justification."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Let d>1 be fixed. Choose any sufficiently large integer k and put n=k(k+1). Define\nc=n^2,\\qquad a=n^2+k^2,\\qquad b=n^2+(k+1)^2.\nThey are distinct integers. Moreover,\n\\begin{aligned}\nab&=(n^2+k^2)(n^2+(k+1)^2)\\\\\n&=n^4+n^2\\bigl(k^2+(k+1)^2\\bigr)+k^2(k+1)^2.\n\\end{aligned}\nSince n^2=k^2(k+1)^2, division by c=n^2 gives\n\\[\n\\frac{ab}{c}=n^2+k^2+(k+1)^2+1\\in\\mathbb Z.\n\\]\nTherefore c|ab.\n\nThe offsets of c,a,b from n^2 are respectively 0,k^2,(k+1)^2. Clearly k^2<n+d\\sqrt n. Also,\n\\[\n(k+1)^2\\le n+d\\sqrt n\n\\iff k+1\\le d\\sqrt{k(k+1)}.\n\\]\nBut\n\\[\n\\frac{k+1}{\\sqrt{k(k+1)}}=\\sqrt{1+\\frac1k}\\longrightarrow1<d,\n\\]\nso the last inequality holds for all sufficiently large k. Consequently c,a,b all belong to [n^2,n^2+n+d\\sqrt n]. Since infinitely many sufficiently large k give distinct n=k(k+1), the assertion follows.",
+      "reason": "Internal checking confirms divisibility and repairs the only delicate point by expressing the endpoint condition as a limit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Fix d>1. Consider the infinite family n=k(k+1), where k is a positive integer. Set\n\\[\nc=n^2,\\qquad a=n^2+k^2,\\qquad b=n^2+(k+1)^2.\n\\]\nThe numbers are distinct. Since n^2=k^2(k+1)^2,\n\\[\n\\begin{aligned}\nab&=n^4+n^2\\bigl(k^2+(k+1)^2\\bigr)+k^2(k+1)^2\\\\\n&=n^2\\left(n^2+k^2+(k+1)^2+1\\right).\n\\end{aligned}\n\\]\nThus c=n^2 divides ab.\n\nFor membership in the interval, c is its left endpoint, while a and b have offsets k^2 and (k+1)^2. We have k^2<n=k(k+1), so a is always in the interval. For b, observe that\n\\[\n(k+1)^2\\le n+d\\sqrt n\n\\iff \n\\sqrt{1+1/k}\\\\le d.\n\\]\nThe left side tends to 1, and d>1; hence this holds for every sufficiently large k. Therefore, for all sufficiently large k, the interval contains the three distinct integers a,b,c with c|ab. The corresponding n=k(k+1) are infinitely many.",
+      "reason": "The generated construction survives criticism; the endpoint inequality is corrected to the exact equivalent form."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Fix a real number d>1. For each integer k>=1, define\n\\[\nn=k(k+1),\\qquad c=n^2,\\qquad a=n^2+k^2,\\qquad b=n^2+(k+1)^2.\n\\]\nThen a,b,c are distinct integers. Since n^2=k^2(k+1)^2,\n\\[\n\\begin{aligned}\nab&=(n^2+k^2)(n^2+(k+1)^2)\\\\\n&=n^4+n^2(k^2+(k+1)^2)+n^2\\\\\n&=n^2\\bigl(n^2+k^2+(k+1)^2+1\\bigr).\n\\end{aligned}\n\\]\nHence c=n^2 divides ab.\n\nIt remains to verify the interval condition. The offsets from n^2 are 0,k^2,(k+1)^2. Since k^2<n=k(k+1), the integer a lies in the interval. For b, we need\n\\[\n(k+1)^2\\le k(k+1)+d\\sqrt{k(k+1)}.\n\\]\nSubtracting k(k+1) and dividing by the positive number \\(\\sqrt{k(k+1)}\\), this is equivalent to\n\\[\n\\sqrt{1+\\frac1k}\\le d.\n\\]\nBecause the left-hand side decreases to 1 and d>1, the inequality holds for all sufficiently large k. Thus, for every sufficiently large k, all of a,b,c lie in \\([n^2,n^2+n+d\\sqrt n]\\), and c|ab. Finally, n=k(k+1) assumes infinitely many distinct natural-number values as k tends to infinity. Therefore the theorem holds.",
+      "reason": "Dependency checks confirm the divisibility identity, exact interval equivalence, distinctness, and infinitude; no further repair is needed."
+    }
+  ]
+}

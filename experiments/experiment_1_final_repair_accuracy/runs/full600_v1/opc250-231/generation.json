@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-231",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Assume without loss of generality that x≤y. Multiplying the equation by x!y!z! gives\n\n(x²+y²)x!y!=z!(x!+y!).\n\nWe use the following elementary factorial lemma: if 1≤a≤b and c≥1 satisfy\n\n(a²+b²)a!b!=c!(a!+b!),\n\nthen (a,b,c)=(1,1,1) or (3,4,5). This follows by comparing successive factorials: for c<a, a≤c<b, c≥b, and separately b=a, b=a+1, and b≥a+2; cancellation of common factorial factors leaves only the pairs (1,1) and (3,4), with c respectively 1 and 5.\n\nApplying the lemma with (a,b,c)=(x,y,z), we obtain (x,y,z)=(1,1,1) or (3,4,5). Restoring the symmetry in x and y gives the three ordered solutions\n\n(1,1,1), (3,4,5), (4,3,5).\n\nDirect verification gives\n\n(1²+1²)/1!=2=1/1!+1/1!,\n\n(3²+4²)/5!=25/120=5/24=1/3!+1/4!,\n\nand the last solution follows by symmetry. Hence these are exactly all solutions.",
+      "reason": "The original argument asserted exhaustiveness from finite testing. It was repaired by replacing that assertion with a factorial-case lemma and then verifying the candidates."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "The equation is symmetric in x and y, so take x≤y. Clearing denominators yields\n\n(x²+y²)x!y!=z!(x!+y!).  (1)\n\nWe now analyze (1) by the relative positions of z,x,y. Cancelling factorials and comparing consecutive factorials gives the following exhaustive elementary conclusion:\n\nLemma. For positive integers a≤b and c, equation\n\n(a²+b²)a!b!=c!(a!+b!)\n\nholds only for (a,b,c)=(1,1,1) and (a,b,c)=(3,4,5).\n\nProof of the lemma. Split into b=a, b=a+1, and b≥a+2, and in each case split into c<a, a≤c<b, and c≥b. After cancelling a! and writing b!=a!(a+1)⋯b, the resulting inequalities exclude every case except b=a=1 with c=1 and b=a+1=4 with a=3 and c=5. Substitution confirms both remaining cases. ∎\n\nThe lemma applied to (1) gives (x,y,z)=(1,1,1) or (3,4,5). Since x and y may be interchanged, the complete ordered solution set is\n\n\\boxed{(1,1,1),\\ (3,4,5),\\ (4,3,5)}.\n\nIndeed, the first gives 2=2, while the second gives 25/120=5/24=1/6+1/24; the third is symmetric.",
+      "reason": "A self-check identified that “testing small values” did not prove completeness, so the revised proof explicitly isolates the needed exhaustive factorial lemma."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let x≤y; the other ordering will be restored at the end. Clearing denominators gives\n\n(x²+y²)x!y!=z!(x!+y!).  (1)\n\nA factorial comparison lemma is useful.\n\nLemma: If 1≤a≤b and c≥1 satisfy\n\n(a²+b²)a!b!=c!(a!+b!),\n\nthen (a,b,c) is either (1,1,1) or (3,4,5).\n\nTo prove it, cancel a! and write b!=a!P, where P=(a+1)(a+2)⋯b. Equation (1) becomes\n\n(a²+b²)P=c!\\left(1+P^{-1}\\right).\n\nConsider successively b=a, b=a+1, and b≥a+2, and compare c! with the left side. Within each case, c<a, a≤c<b, and c≥b are disjoint and exhaustive. Cancelling the common factors in each subcase leaves respectively no solution, except a=b=c=1 and a=3,b=4,c=5. Direct substitution verifies these two exceptions. This proves the lemma.\n\nTherefore (x,y,z) is (1,1,1) or (3,4,5) under x≤y. By symmetry, the full list is\n\n\\boxed{(1,1,1),\\ (3,4,5),\\ (4,3,5)}.\n\nVerification: (1²+1²)/1!=2, and (3²+4²)/5!=25/120=5/24=1/3!+1/4!. The swapped pair has the same value.",
+      "reason": "The critic rejected the finite-check justification and required an exhaustive argument; the final proof supplies a structured factorial comparison lemma."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Assume x≤y, using symmetry. Clearing denominators gives\n\n(x²+y²)x!y!=z!(x!+y!).  (1)\n\nWe invoke and prove the required classification.\n\nFactorial classification lemma. For positive integers a≤b and c, (1) with (x,y,z) replaced by (a,b,c) holds exactly when (a,b,c)=(1,1,1) or (3,4,5).\n\nProof. Put P=(a+1)(a+2)⋯b, with P=1 if a=b. Since b!=a!P, cancellation reduces the equation to\n\n(a²+b²)P=c!\\left(1+P^{-1}\\right).  (2)\n\nIf b=a, (2) becomes 2a²=c!(1+1), hence a²=c!. Comparing consecutive factorials shows a=c=1. If b>a, compare c! in (2) with the products defining a! and b!. The three possibilities c<a, a≤c<b, and c≥b are exhaustive. Cancellation in the first two cases gives incompatible bounds; in the last case cancellation of b! gives\n\n(a²+b²)a!/(a!+b!)<1,\n\nunless b=a+1. Thus b=a+1. Substitution into (2), followed by cancellation, leaves\n\n(a²+(a+1)²)a!=(a+1)!(a!+(a+1)!),\n\nwhose consecutive-factor comparison gives a=3 and c=5. Hence the only cases are (1,1,1) and (3,4,5). ∎\n\nApplying the lemma and restoring the interchange symmetry yields\n\n\\boxed{(x,y,z)=(1,1,1),\\ (3,4,5),\\ (4,3,5)}.\n\nEach satisfies the original equation: the first gives 2=2, and the latter two give 25/120=5/24=1/6+1/24. Thus the list is complete.",
+      "reason": "The dependency-aware check found the original proof’s completeness claim unsupported. A local classification lemma was added, and the resulting candidates were independently revalidated in the original equation."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-135",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nBecause $G$ is finite, the infinite sequence $a,a^2,a^3,\\ldots$ can take only finitely many values. Hence there exist positive integers $i\\neq j$ such that $a^i=a^j$. Relabeling if necessary, assume $i>j$. Multiplying both sides by $(a^j)^{-1}=a^{-j}$ gives\n\\[\na^i a^{-j}=a^{i-j}=e.\n\\]\nSince $i-j$ is positive, taking $n=i-j$ proves the claim.\n\\end{proof}",
+      "reason": "The original argument is valid; only its wording was streamlined."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nConsider the sequence of powers $a,a^2,a^3,\\ldots$ in the finite group $G$. By the pigeonhole principle, there are positive integers $i<j$ such that $a^i=a^j$. Multiplying on the left by $a^{-i}$ yields\n\\[\na^{-i}a^i=a^{-i}a^j,\n\\]\nso $e=a^{j-i}$. Since $j-i>0$, the positive integer $n=j-i$ satisfies $a^n=e$.\n\\end{proof}",
+      "reason": "An internal check confirms the theorem and proof; the revised version makes the pigeonhole step and positivity explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nThe powers $a,a^2,a^3,\\ldots$ are all elements of the finite set $G$. Therefore, two of them coincide: there exist integers $1\\leq i<j$ such that $a^i=a^j$. Multiplying by $a^{-i}$ gives\n\\[\ne=a^{-i}a^j=a^{j-i}.\n\\]\nThus $n=j-i$ is a positive integer, depending on $a$, for which $a^n=e$.\n\\end{proof}",
+      "reason": "The critic finds no mathematical defect; the generator proof is retained in a concise corrected form."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSince $G$ is finite, the sequence of elements $a,a^2,a^3,\\ldots$ must repeat. Thus there exist positive integers $i<j$ with $a^i=a^j$. Multiplying by $a^{-i}$ gives\n\\[\ne=a^{-i}a^j=a^{j-i}.\n\\]\nThe integer $n=j-i$ is positive and depends on $a$, so $a^n=e$.\n\\end{proof}",
+      "reason": "Dependency and descendant checks confirm that the original proof preserves all assumptions and the conclusion; only a minimal local clarification was needed."
+    }
+  ]
+}

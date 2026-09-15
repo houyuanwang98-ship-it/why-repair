@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-026",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\n$(\\Rightarrow)$ Suppose $x^2=1$. By the division algorithm, write $2=q|x|+r$ with $0\\le r<|x|$. Since $x^2=1$ and $x^{|x|}=1$, we have $x^r=1$. By minimality of $|x|$, $r=0$. Thus $|x|$ divides $2$, so $|x|$ is either $1$ or $2$.\n\n$(\\Leftarrow)$ If $|x|=1$, then $x=1$, and hence $x^2=1$. If $|x|=2$, then $x^2=1$ by the definition of order. Therefore, if $|x|$ is either $1$ or $2$, then $x^2=1$.\n\\end{proof}",
+      "reason": "Repaired the missing justification that the order divides 2."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\n$(\\Rightarrow)$ Assume $x^2=1$. The order $|x|$ is the least positive integer $n$ such that $x^n=1$. Since $x^2=1$, the order of $x$ divides $2$. Hence $|x|=1$ or $|x|=2$.\n\n$(\\Leftarrow)$ If $|x|=1$, then $x=1$, so $x^2=1$. If $|x|=2$, then $x^2=1$ by the definition of order. Thus $x^2=1$ if and only if $|x|$ is either $1$ or $2$.\n\\end{proof}",
+      "reason": "Checking both directions showed that the original forward implication needed the standard divisibility property of element orders."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\n$(\\Rightarrow)$ Suppose $x^2=1$. Let $n=|x|$. Since $x^2=1$, the exponent $2$ is a multiple of the order $n$; equivalently, $n\\mid 2$. Therefore $n=1$ or $n=2$.\n\n$(\\Leftarrow)$ Conversely, if $|x|=1$, then $x=1$, and therefore $x^2=1$. If $|x|=2$, then $x^2=1$ directly from the definition of order. Hence $x^2=1$ exactly when $|x|$ is either $1$ or $2$.\n\\end{proof}",
+      "reason": "The critic identified the unsupported inference from $x^2=1$ to $|x|\\le2$ and replaced it with the order-divisibility fact."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $n=|x|$. The order property states that $x^m=1$ if and only if $n$ divides $m$. Thus, if $x^2=1$, then $n\\mid2$, and consequently $n\\in\\{1,2\\}$. Conversely, if $n=1$, then $x=1$ and $x^2=1$; if $n=2$, then $x^2=1$ by the definition of order. Therefore $x^2=1$ if and only if $|x|$ is either $1$ or $2$.\n\\end{proof}",
+      "reason": "Dependency checking isolated the order-divisibility lemma; the local repair was independently consistent in both directions and preserves the theorem."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-189",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be an abelian group of order $pq$, where $p$ and $q$ are distinct primes. By Cauchy's theorem, there exist elements $a,b\\in G$ with $|a|=p$ and $|b|=q$. Since $G$ is abelian and $p$ and $q$ are coprime, the commuting-elements order formula gives\n\\[\n|ab|=\\operatorname{lcm}(|a|,|b|)=\\operatorname{lcm}(p,q)=pq.\n\\]\nThus $G$ contains an element of order $|G|=pq$, so $G$ is cyclic.\n\\end{proof}",
+      "reason": "Corrected the wording and stated the commuting-elements order formula precisely."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be an abelian group of order $pq$, with $p$ and $q$ distinct primes. Cauchy's theorem yields elements $a,b\\in G$ such that $|a|=p$ and $|b|=q$. Because $G$ is abelian, $a$ and $b$ commute. If $(ab)^n=e$, then $a^n=b^{-n}$. The left side lies in $\\langle a\\rangle$ and the right side lies in $\\langle b\\rangle$. These subgroups have coprime orders, so their intersection is trivial; hence $a^n=b^n=e$. Therefore $p\\mid n$ and $q\\mid n$, so $pq\\mid n$. Consequently, $|ab|=pq$. Since $ab$ has order $|G|$, it generates $G$, and $G$ is cyclic.\n\\end{proof}",
+      "reason": "The proof was checked by explicitly verifying that no smaller positive exponent annihilates $ab$."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be an abelian group of order $pq$, where $p$ and $q$ are distinct primes. By Cauchy's theorem, choose $a,b\\in G$ with $|a|=p$ and $|b|=q$. Since $G$ is abelian, $a$ and $b$ commute. For commuting elements of coprime orders, the order of their product is the product of their orders; hence\n\\[\n|ab|=|a||b|=pq.\n\\]\nThus $ab$ has the same order as $G$. The cyclic subgroup $\\langle ab\\rangle$ therefore has $pq$ elements and equals $G$. Hence $G$ is cyclic.\n\\end{proof}",
+      "reason": "The critic confirmed that the needed hypotheses—commutativity and coprime orders—are explicitly present."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be an abelian group of order $pq$, where $p$ and $q$ are distinct primes. By Cauchy's theorem, there are elements $a,b\\in G$ of orders $p$ and $q$, respectively. Set $c=ab$. Since $G$ is abelian, $a$ and $b$ commute. If $c^n=e$, then $a^n=b^{-n}$. This element belongs to both $\\langle a\\rangle$ and $\\langle b\\rangle$. Because these subgroups have coprime orders, their intersection is $\\{e\\}$, so $a^n=b^n=e$. Thus $p\\mid n$ and $q\\mid n$, and since $p\\ne q$ are primes, $pq\\mid n$. It follows that $|c|=pq$. Therefore $\\langle c\\rangle$ is a subgroup of $G$ with $pq=|G|$ elements, so $\\langle c\\rangle=G$. Hence $G$ is cyclic.\n\\end{proof}",
+      "reason": "The dependency check and independent review found the original argument valid after making the order justification explicit; the repaired proof was revalidated through the conclusion."
+    }
+  ]
+}

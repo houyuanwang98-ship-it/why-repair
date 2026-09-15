@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-211",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let each positive integer be written uniquely as x=2^k3^my, where k,m≥0 and gcd(y,6)=1. If two selected numbers have ratio 2 or 3, their y-values are equal. Thus the good-pair graph is a disjoint union of induced subgraphs of the square grid, one for each fixed y, with n_y vertices and total \u0000sum_y n_y=100.\n\nFor any finite set A of n vertices in the square grid, let e(A) be its induced-edge count and p(A) the number of grid edges having exactly one endpoint in A. Since every vertex has degree 4,\n4n=2e(A)+p(A).\nThe grid edge-isoperimetric inequality gives p(A)≥4√n. Hence\n e(A)≤2n−2√n.\nFor the components, therefore,\n g≤\u0000sum_y(2n_y−2√n_y)=200−2\u0000sum_y√n_y≤200−2√100=180,\nwhere the last inequality uses \u0000sum_y√n_y≥√(\u0000sum_y n_y)=10.\n\nEquality is attained by taking\nS={2^k3^m:0≤k,m≤9}.\nThese are 100 distinct positive integers. Their good pairs correspond exactly to horizontal or vertical adjacencies in a 10×10 grid: there are 10·9 horizontal and 10·9 vertical edges, totaling 180. Therefore the maximum is\n\n\\boxed{180}.",
+      "reason": "Repaired the unsupported grid claim by invoking and applying the standard grid edge-isoperimetric inequality, then gave an attaining construction."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Write every selected integer uniquely as 2^k3^my with gcd(y,6)=1. Multiplication or division by 2 or 3 does not change y, so good pairs occur only among numbers with the same y. For each y, identify 2^k3^my with (k,m); its good-pair graph is an induced subgraph A_y of the square lattice. Put n_y=|A_y|, so \u0000sum n_y=100.\n\nIf A is a finite n-vertex subset of the square lattice, and p is its edge boundary, then counting the four incident lattice edges at every vertex gives 4n=2e+p. The edge-isoperimetric inequality for the square lattice says p≥4√n, so e≤2n−2√n. Consequently,\n g≤\u0000sum_y(2n_y−2√n_y)\n =200−2\u0000sum_y√n_y\n ≤200−2√(\u0000sum_y n_y)\n =180.\n\nNow choose all 100 numbers from one base:\nS={2^k3^m:0≤k,m≤9}.\nUnique factorization makes them distinct, and two are good exactly when their exponent pairs differ by one in one coordinate. The 10×10 grid has 10·9 horizontal edges and 10·9 vertical edges, hence 180 good pairs. Thus g=\\boxed{180}.",
+      "reason": "Self-check identified that the original proof needed a real upper-bound argument for grid subsets; the revised proof supplies the boundary inequality and verifies equality."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Factor each selected positive integer as x=2^k3^my with gcd(y,6)=1. If x/x' is 2 or 3 (in either direction), unique factorization forces the same y. Therefore, fixing y, the numbers correspond injectively to lattice points (k,m)∈Z_{\u0000≥0}^2, and good pairs are exactly nearest-neighbor edges. If n_y points have base y, then \u0000sum_y n_y=100.\n\nFor a finite n-point subset A of the square lattice, let e be its induced-edge count and p its edge boundary. Since each point has four lattice neighbors,\n4n=2e+p.\nThe square-lattice edge-isoperimetric inequality p≥4√n yields e≤2n−2√n. Hence\n g≤\u0000sum_y(2n_y−2√n_y)\n ≤200−2√(\u0000sum_y n_y)\n =180,\nusing \u0000sum_y√n_y≥√(\u0000sum_y n_y).\n\nTake S={2^k3^m:0≤k,m≤9}. It has 100 distinct elements, and its good-pair graph is the 10×10 grid. Its edge count is\n10(10−1)+10(10−1)=180.\nThus the maximum number of good pairs is \\boxed{180}.",
+      "reason": "The critic rejected the original appeal to an unproved 'square-like' maximizer; the repaired proof uses the precise boundary inequality needed for the upper bound."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "For every selected integer x, write uniquely\nx=2^k3^my,\\qquad k,m≥0,\\quad gcd(y,6)=1.\nIf two selected integers form a good pair, one is twice or three times the other. Unique factorization then shows that their y-values coincide, while their exponent pairs differ by (1,0) or (0,1), up to order. Hence the good-pair graph decomposes by y into induced subgraphs A_y of the square lattice, with n_y=|A_y| and \u0000sum_y n_y=100.\n\nFor a finite n-vertex lattice subset A, let e(A) be its internal edges and p(A) its edge boundary. Degree counting gives 4n=2e(A)+p(A). The edge-isoperimetric inequality for the square lattice states p(A)≥4√n; therefore e(A)≤2n−2√n. Applying this to every A_y gives\n g≤\u0000sum_y(2n_y−2√n_y)\n =200−2\u0000sum_y√n_y\n ≤200−2√(\u0000sum_y n_y)\n =180.\n\nFor attainability, let\nS={2^k3^m:0≤k,m≤9}.\nThese 100 numbers are distinct, and their good pairs are precisely the nearest-neighbor edges of a 10×10 lattice square. The count is 10·9+10·9=180. Therefore\n\\boxed{g=180}.",
+      "reason": "Dependency checking isolates the only missing dependency—the grid isoperimetric bound—and the local repair is independently sufficient; the construction and all descendant conclusions revalidate."
+    }
+  ]
+}

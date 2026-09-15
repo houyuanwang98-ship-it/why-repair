@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-035",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $\\{H_i\\mid i\\in I\\}$ be a nonempty collection of normal subgroups of $G$, and set $K=\\bigcap_{i\\in I}H_i$.\nSince each $H_i$ contains the identity, $e\\in K$. If $x,y\\in K$, then $x,y\\in H_i$ for every $i\\in I$, so $xy^{-1}\\in H_i$ for every $i\\in I$. Hence $xy^{-1}\\in K$, and the subgroup criterion shows that $K$ is a subgroup of $G$.\nFor any $a\\in K$ and $g\\in G$, we have $a\\in H_i$ for every $i\\in I$. Because each $H_i$ is normal in $G$, $gag^{-1}\\in H_i$ for every $i\\in I$. Thus $gag^{-1}\\in K$, so $K\\trianglelefteq G$.\n\\end{proof}",
+      "reason": "The original proof had an index typo and did not establish that the intersection is a subgroup."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $\\{H_i\\mid i\\in I\\}$ be an arbitrary nonempty collection of normal subgroups of $G$, and write $K=\\bigcap_{i\\in I}H_i$.\nFor every $i\\in I$, $e\\in H_i$, hence $e\\in K$. If $x,y\\in K$, then $x,y\\in H_i$ for all $i\\in I$. Since every $H_i$ is a subgroup, $xy^{-1}\\in H_i$ for all $i\\in I$, and therefore $xy^{-1}\\in K$. Thus $K$ is a subgroup of $G$.\nNow let $a\\in K$ and $g\\in G$. For every $i\\in I$, $a\\in H_i$ and $H_i\\trianglelefteq G$, so $gag^{-1}\\in H_i$. Consequently $gag^{-1}\\in K$. Hence $K$ is normal in $G$.\n\\end{proof}",
+      "reason": "After checking closure, identity, and conjugation separately, the missing subgroup argument and the incorrect index were repaired."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $\\{H_i\\mid i\\in I\\}$ be a nonempty collection of normal subgroups of $G$, and define\n\\[\nK=\\bigcap_{i\\in I}H_i.\n\\]\nFor each $i\\in I$, the identity $e$ belongs to $H_i$, so $e\\in K$. If $x,y\\in K$, then $x,y\\in H_i$ for every $i\\in I$. Since $H_i$ is a subgroup, $xy^{-1}\\in H_i$ for every $i\\in I$, and hence $xy^{-1}\\in K$. Therefore $K\\leq G$.\nLet $a\\in K$ and $g\\in G$. For each $i\\in I$, we have $a\\in H_i$ and, by normality of $H_i$, $gag^{-1}\\in H_i$. It follows that $gag^{-1}\\in K$. Thus $gKg^{-1}\\subseteq K$ for every $g\\in G$, and therefore $K\\trianglelefteq G$.\n\\end{proof}",
+      "reason": "The critic check identified two requirements: prove subgroup closure and quantify the normality argument over every $i\\in I$; both are included."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $\\{H_i\\mid i\\in I\\}$ be an arbitrary nonempty collection of normal subgroups of $G$, and let\n\\[\nK:=\\bigcap_{i\\in I}H_i.\n\\]\nWe first verify that $K$ is a subgroup. Since $e\\in H_i$ for every $i\\in I$, we have $e\\in K$. If $x,y\\in K$, then $x,y\\in H_i$ for every $i\\in I$. As each $H_i$ is a subgroup, $xy^{-1}\\in H_i$ for every $i\\in I$, so $xy^{-1}\\in K$. Hence $K\\leq G$.\n\nTo verify normality, take arbitrary $g\\in G$ and $a\\in K$. By the definition of intersection, $a\\in H_i$ for every $i\\in I$. Since every $H_i$ is normal in $G$, this implies $gag^{-1}\\in H_i$ for every $i\\in I$. Therefore $gag^{-1}\\in K$. Thus $gKg^{-1}\\subseteq K$ for every $g\\in G$; replacing $g$ by $g^{-1}$ gives equality, so $gKg^{-1}=K$. Consequently $K\\trianglelefteq G$.\n\\end{proof}",
+      "reason": "The dependency check confirms subgrouphood before normality, the local index typo is removed, and the conjugation inclusion is strengthened to equality via $g^{-1}$."
+    }
+  ]
+}

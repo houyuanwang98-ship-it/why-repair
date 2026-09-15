@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-136",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $f(x)=x^4-4x^3+6$. By Eisenstein's criterion with the prime $p=2$, the leading coefficient $1$ is not divisible by $2$, every other coefficient is divisible by $2$, and the constant coefficient $6$ is not divisible by $2^2=4$. Therefore, $f(x)$ is irreducible in $\\mathbb{Z}[x]$.\n\\end{proof}",
+      "reason": "Corrected the misstated leading-coefficient condition and applied Eisenstein's criterion accurately."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet $f(x)=x^4-4x^3+0x^2+0x+6$. For $p=2$, the leading coefficient $1$ is not divisible by $2$, while each nonleading coefficient, namely $-4$, $0$, $0$, and $6$, is divisible by $2$. Moreover, $4\\nmid 6$. Hence Eisenstein's criterion implies that $f(x)$ is irreducible in $\\mathbb{Z}[x]$.\n\\end{proof}",
+      "reason": "Internally checked all coefficient conditions, including the zero coefficients and the constant term."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nConsider $f(x)=x^4-4x^3+6\\in\\mathbb{Z}[x]$. The prime $2$ satisfies Eisenstein's conditions: $2$ does not divide the leading coefficient $1$; $2$ divides each of the remaining coefficients $-4,0,0,6$; and $2^2=4$ does not divide the constant coefficient $6$. Thus, by Eisenstein's criterion, $f(x)$ is irreducible over $\\mathbb{Z}$.\n\\end{proof}",
+      "reason": "The critic identified the source proof's reversed/unclear leading-coefficient statement and confirmed the corrected argument."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWrite\n\\[\nf(x)=x^4-4x^3+0x^2+0x+6.\n\\]\nUsing the prime $2$, we have $2\\nmid 1$, while $2$ divides every nonleading coefficient $-4,0,0,6$. Also, $4\\nmid 6$. Therefore all hypotheses of Eisenstein's criterion are satisfied, so $f(x)$ is irreducible in $\\mathbb{Z}[x]$.\n\\end{proof}",
+      "reason": "Dependency checks, local repair, independent review, and revalidation all confirm the same valid Eisenstein proof."
+    }
+  ]
+}

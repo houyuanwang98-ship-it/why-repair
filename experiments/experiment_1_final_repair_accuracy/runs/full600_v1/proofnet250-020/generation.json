@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-020",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be a group of order $312=2^3\\cdot3\\cdot13$. If $n_{13}$ denotes the number of Sylow $13$-subgroups of $G$, then Sylow's theorems give\n\\[\nn_{13}\\mid \\frac{312}{13}=24\\qquad\\text{and}\\qquad n_{13}\\equiv1\\pmod{13}.\n\\]\nThe only divisor of $24$ congruent to $1$ modulo $13$ is $1$. Hence $n_{13}=1$, so the Sylow $13$-subgroup is unique and therefore normal in $G$.\n\\end{proof}",
+      "reason": "Corrected the order factorization and applied both Sylow conditions to the $13$-Sylow count."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSince $|G|=312=2^3\\cdot3\\cdot13$, a Sylow $13$-subgroup has order $13$. Let $n_{13}$ be the number of Sylow $13$-subgroups. By Sylow's theorems, $n_{13}$ divides $24$ and satisfies $n_{13}\\equiv1\\pmod{13}$. Among the divisors of $24$, only $1$ is congruent to $1$ modulo $13$ (the next possibility, $14$, does not divide $24$). Thus $n_{13}=1$. Therefore the Sylow $13$-subgroup is unique, and every unique Sylow subgroup is normal. Hence $G$ has a normal Sylow subgroup.\n\\end{proof}",
+      "reason": "Rechecked the corrected arithmetic and explicitly justified the uniqueness condition."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWrite $|G|=312=2^3\\cdot3\\cdot13$. Let $P$ be a Sylow $13$-subgroup and let $n_{13}$ denote the number of its conjugates. Sylow's theorem implies\n\\[\n|P|=13,\n\\qquad n_{13}\\mid24,\n\\qquad n_{13}=1+13k\n\\]\nfor some integer $k\\ge0$. Since $n_{13}$ divides $24$, we have $n_{13}\\le24$. The values of the form $1+13k$ not exceeding $24$ are $1$ and $14$, but $14\\nmid24$. Consequently $n_{13}=1$. Thus $P$ is unique and hence invariant under conjugation, so $P\\trianglelefteq G$.\n\\end{proof}",
+      "reason": "The critic check caught the original mismatch $351\\ne312$ and replaced the invalid subgroup count with the correct divisor and congruence argument."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $G$ be a group with $|G|=312=2^3\\cdot3\\cdot13$. Consider a Sylow $13$-subgroup $P$. The number $n_{13}$ of Sylow $13$-subgroups satisfies the dependency certificate\n\\[\n n_{13}\\mid [G:P]=24,\n \\qquad n_{13}\\equiv1\\pmod{13}.\n\\]\nThe divisors of $24$ are $1,2,3,4,6,8,12,24$; among them, only $1$ is congruent to $1$ modulo $13$. Therefore $n_{13}=1$. Hence $P$ is the unique Sylow $13$-subgroup, so it is fixed by conjugation by every element of $G$ and is normal. Thus $G$ has a normal Sylow subgroup.\n\\end{proof}",
+      "reason": "Performed a local repair of the order error, verified the complete Sylow dependency conditions, and revalidated the conclusion that uniqueness implies normality."
+    }
+  ]
+}

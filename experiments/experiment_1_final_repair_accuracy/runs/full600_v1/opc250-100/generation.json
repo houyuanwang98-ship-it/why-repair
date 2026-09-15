@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-100",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let\n\\[\nM=\\max_{1\\le j\\le n}2x_jx_{j+1}.\n\\]\nSuppose, for contradiction, that\n\\[\nx_i^2+x_{i+1}^2>M\\qquad(1\\le i\\le n).\n\\]\nFirst, \\(M>0\\): if \\(M=0\\), then every adjacent product is zero. Since \\(n\\) is odd, some adjacent pair must both be zero, giving \\(x_i^2+x_{i+1}^2=0\\), a contradiction.\n\nBy homogeneity, scale all variables so that \\(M=1\\). Then for every \\(i\\),\n\\[\nx_i^2+x_{i+1}^2>1,\n\\qquad 2x_ix_{i+1}\\le1.\n\\]\nPut \\(t=1/\\sqrt2\\). The first inequality shows that at least one of \\(x_i,x_{i+1}\\) is greater than \\(t\\), since otherwise their squared sum is at most \\(1\\). The second shows that they cannot both be greater than \\(t\\), since then \\(2x_ix_{i+1}>1\\). Thus exactly one of each adjacent pair is greater than \\(t\\).\n\nConsequently, the numbers alternate between being greater than \\(t\\) and being at most \\(t\\). Such an alternating cyclic pattern is impossible when \\(n\\) is odd. This contradiction proves\n\\[\n\\min_{1\\le i\\le n}(x_i^2+x_{i+1}^2)\\le M\n=\\max_{1\\le j\\le n}(2x_jx_{j+1}).\n\\]\n",
+      "reason": "Repaired the omitted justification that the normalization constant is positive and retained the valid odd-cycle argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Define\n\\[\nM=\\max_{1\\le j\\le n}2x_jx_{j+1}.\n\\]\nAssume that \\(x_i^2+x_{i+1}^2>M\\) for every \\(i\\). We show this is impossible.\n\nIf \\(M=0\\), then every adjacent product is zero. The vertices with positive values would therefore form an independent set in the odd cycle, so two consecutive values must be zero. This gives \\(x_i^2+x_{i+1}^2=0\\), contradicting the assumption. Hence \\(M>0\\).\n\nScale the variables by \\(1/\\sqrt M\\), so that \\(M=1\\). For every adjacent pair we then have\n\\[\nx_i^2+x_{i+1}^2>1,\n\\qquad 2x_ix_{i+1}\\le1.\n\\]\nLet \\(t=1/\\sqrt2\\). If both entries were at most \\(t\\), their squared sum would be at most \\(1\\). Therefore at least one is greater than \\(t\\). If both were greater than \\(t\\), their product would satisfy \\(2x_ix_{i+1}>1\\). Therefore exactly one entry in every adjacent pair is greater than \\(t\\).\n\nHence the cyclic sequence must alternate between entries greater than \\(t\\) and entries at most \\(t\\). An odd cycle cannot be 2-colored in this way, yielding a contradiction. Therefore\n\\[\n\\min_{1\\le i\\le n}(x_i^2+x_{i+1}^2)\n\\le \\max_{1\\le j\\le n}(2x_jx_{j+1}).\n\\]\n",
+      "reason": "The revised proof checks the zero-maximum case before scaling and verifies both threshold implications explicitly."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Set\n\\[\nA=\\min_{1\\le i\\le n}(x_i^2+x_{i+1}^2),\n\\qquad B=\\max_{1\\le j\\le n}(2x_jx_{j+1}).\n\\]\nSuppose that \\(A>B\\). Then \\(x_i^2+x_{i+1}^2>B\\) for every \\(i\\).\n\nWe claim that \\(B>0\\). Indeed, if \\(B=0\\), then every adjacent product is zero. Since an odd cycle is not bipartite, it is impossible for every edge to have at least one endpoint positive unless some edge has two zero endpoints. For that edge, \\(x_i^2+x_{i+1}^2=0\\), contradicting \\(A>B=0\\).\n\nNow divide every \\(x_i\\) by \\(\\sqrt B\\). The inequalities become\n\\[\nx_i^2+x_{i+1}^2>1,\n\\qquad 2x_ix_{i+1}\\le1.\n\\]\nLet \\(t=1/\\sqrt2\\). The first inequality implies that at least one of the two numbers is greater than \\(t\\). The second implies that they cannot both be greater than \\(t\\). Thus every edge joins one number greater than \\(t\\) to one number at most \\(t\\).\n\nTherefore the cyclic vertices are forced to alternate between these two classes. This would make the cycle bipartite, contrary to the fact that its length \\(n\\) is odd. Hence \\(A\\le B\\), which is exactly\n\\[\n\\min \\left(x_i^2+x_{i+1}^2\\right)\\leq\\max \\left(2x_jx_{j+1}\\right).\n\\]\n",
+      "reason": "A critic check identified the need to handle \\(B=0\\) before normalization; the repaired proof does so and preserves all strict inequalities."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let\n\\[\nA=\\min_{1\\le i\\le n}(x_i^2+x_{i+1}^2),\n\\qquad B=\\max_{1\\le j\\le n}(2x_jx_{j+1}).\n\\]\nAssume toward a contradiction that \\(A>B\\).\n\nIf \\(B=0\\), every adjacent product is zero. If every edge had a positive endpoint, the positive vertices would form a vertex cover of the odd cycle; but an odd cycle requires at least one edge outside any such alternating choice, so some adjacent pair would be \\((0,0)\\). This would imply \\(A=0\\), contradicting \\(A>B=0\\). Thus \\(B>0\\).\n\nNormalize by replacing each \\(x_i\\) with \\(x_i/\\sqrt B\\). The assumptions are preserved in equivalent form and give, for every \\(i\\),\n\\[\nx_i^2+x_{i+1}^2>1,\n\\qquad 2x_ix_{i+1}\\le1.\n\\]\nClassify an index as high if \\(x_i>1/\\sqrt2\\), and low otherwise. Every adjacent pair contains a high index, because two low values have squared sum at most \\(1\\). No adjacent pair contains two high indices, because two high values have product satisfying \\(2x_ix_{i+1}>1\\). Thus every edge has exactly one high endpoint.\n\nThis supplies a 2-coloring of the cycle in which colors alternate around every edge. Returning to the starting vertex after the odd number \\(n\\) of edges reverses its color, an impossibility. Therefore the assumption \\(A>B\\) is false, and\n\\[\n\\min_{1\\le i\\le n}(x_i^2+x_{i+1}^2)\n\\le\n\\max_{1\\le j\\le n}(2x_jx_{j+1}).\n\\]\n",
+      "reason": "Dependency review repaired the only normalization gap, then independently checked the threshold classification and propagated the contradiction through the odd cycle."
+    }
+  ]
+}

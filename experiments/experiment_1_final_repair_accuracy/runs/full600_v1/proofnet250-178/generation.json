@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-178",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nA cubic over a field is irreducible if and only if it has no root in that field. The cubes in $\\mathbb Z_7$ are\n\\[\n0^3=0,\\quad 1^3=2^3=4^3=1,\\quad 3^3=5^3=6^3=6.\n\\]\nSince $2$ is not a cube modulo $7$, $p(x)=x^3-2$ has no root in $\\mathbb Z_7$. Since $-2=5$ is also not a cube modulo $7$, $q(x)=x^3+2=x^3-5$ has no root. Thus both polynomials are irreducible.\n\nDefine\n\\[\n\\tau:F[x]/(p)\\longrightarrow F[x]/(q),\\qquad \\tau(f(x)+(p))=f(-x)+(q).\n\\]\nThis is well-defined because\n\\[\np(-x)=(-x)^3-2=-(x^3+2)=-q(x),\n\\]\nso $(p(-x))=(q(x))$. The map is a ring homomorphism, with inverse given by the same substitution $x\\mapsto -x$. Therefore the quotient fields are isomorphic:\n\\[\nF[x]/(p(x))\\cong F[x]/(q(x)).\n\\]\n\\end{proof}",
+      "reason": "The original argument is valid in substance, but the root check for $q$ was omitted and the quotient map is more cleanly justified by substitution $x\\mapsto -x$."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nFor a cubic polynomial over a field, irreducibility is equivalent to having no root in the field. The cubes in $F=\\mathbb Z_7$ are $0,1,1,6,1,6,6$. Neither $2$ nor $5=-2$ occurs among these values. Hence neither $x^3-2$ nor $x^3+2=x^3-5$ has a root in $F$, so both $p$ and $q$ are irreducible.\n\nConsider the substitution homomorphism $\\sigma:F[x]\\to F[x]$ defined by $\\sigma(f(x))=f(-x)$. Since\n\\[\n\\sigma(p(x))=p(-x)=-x^3-2=-(x^3+2)=-q(x),\n\\]\nwe have $\\sigma((p))=(q)$. Consequently, $\\sigma$ induces a well-defined homomorphism\n\\[\n\\overline\\sigma:F[x]/(p)\\to F[x]/(q),\\qquad f(x)+(p)\\mapsto f(-x)+(q).\n\\]\nBecause $\\sigma^2$ is the identity, $\\overline\\sigma$ is its own inverse. Thus it is an isomorphism, and\n\\[\nF[x]/(p(x))\\cong F[x]/(q(x)).\n\\]\n\\end{proof}",
+      "reason": "A check confirms both root tests and verifies well-definedness and invertibility of the induced substitution map."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nThe set of cubes in $\\mathbb Z_7$ is\n\\[\n\\{0^3,1^3,2^3,3^3,4^3,5^3,6^3\\}=\\{0,1,6\\}.\n\\]\nNeither $2$ nor $-2=5$ belongs to this set. Therefore $p(x)=x^3-2$ and $q(x)=x^3+2=x^3-5$ have no roots in $F$. Since each has degree $3$, each is irreducible over $F$.\n\nLet\n\\[\n\\tau:F[x]/(p(x))\\to F[x]/(q(x)),\\qquad \\tau(f(x)+(p(x)))=f(-x)+(q(x)).\n\\]\nIf $f-g\\in(p)$, then $f-g=p h$ for some $h\\in F[x]$, and hence\n\\[\nf(-x)-g(-x)=p(-x)h(-x)=-q(x)h(-x)\\in(q).\n\\]\nThus $\\tau$ is well-defined. It preserves addition and multiplication because substitution $x\\mapsto -x$ does so. Moreover, applying it twice gives the identity. Hence $\\tau$ is an isomorphism, proving\n\\[\nF[x]/(p(x))\\cong F[x]/(q(x)).\n\\]\n\\end{proof}",
+      "reason": "The critic-supported repair replaces the incomplete coordinate verification with a direct ideal-respecting substitution and explicitly checks well-definedness."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $F=\\mathbb Z_7$. The cubes of elements of $F$ are $0,1,$ and $6$. Since $2$ and $-2=5$ are not cubes in $F$, the polynomials\n\\[\np(x)=x^3-2\\qquad\\text{and}\\qquad q(x)=x^3+2=x^3-5\n\\]\nhave no roots in $F$. A degree-three polynomial over a field is reducible only if it has a linear factor, equivalently a root. Therefore both $p$ and $q$ are irreducible.\n\nDefine $\\sigma:F[x]\\to F[x]$ by $\\sigma(f(x))=f(-x)$. We have\n\\[\n\\sigma(p)=p(-x)=-x^3-2=-(x^3+2)=-q.\n\\]\nThus $\\sigma((p))=(q)$, and $\\sigma$ induces a map\n\\[\n\\overline\\sigma:F[x]/(p)\\to F[x]/(q),\n\\qquad f+(p)\\mapsto f(-x)+(q).\n\\]\nThis map is well-defined, additive, and multiplicative. Since applying $x\\mapsto -x$ twice returns $x$, the induced map satisfies $\\overline\\sigma^2=\\mathrm{id}$. Hence it is bijective and is a field isomorphism. Therefore\n\\[\nF[x]/(p(x))\\cong F[x]/(q(x)).\n\\]\n\\end{proof}",
+      "reason": "Dependency review confirms the root criterion, ideal correspondence, induced-map validity, and inverse; descendant quotient-field claims then follow."
+    }
+  ]
+}

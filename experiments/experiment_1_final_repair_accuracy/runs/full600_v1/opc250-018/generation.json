@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-018",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "Let f(x)=x(x-1)/2. If every term is an odd integer, then a_1 is an odd integer. The value a_1=3 works because f(3)=3.\n\nNow suppose a_1>3 is odd, and write s=ν₂(a_1-3)≥1. For any odd integer x>3, put y=x-3. Since y is even,\n\\[\nf(x)-3=\\frac{x(x-1)}2-3=\\frac{(x-3)(x+2)}2=\\frac{y(5+y)}2.\n\\]\nHere 5+y is odd, so\n\\[\nν₂(f(x)-3)=ν₂(x-3)-1.\n\\]\nAs long as the terms remain odd, this gives\n\\[\nν₂(a_{j+1}-3)=s-j\n\\]\nfor j=1,\\ldots,s. Thus ν₂(a_{s+1}-3)=0, so a_{s+1}-3 is odd. Since 3 is odd, a_{s+1} is even, a contradiction.\n\nTherefore the only possible initial value is\n\\[\n\\boxed{a_1=3}.\n\\]",
+      "reason": "The supplied argument is valid; the valuation descent correctly forces an even term for every odd integer a_1>3."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Set f(x)=x(x-1)/2. If all terms are odd integers, then in particular a_1 is an odd integer.\n\nThe value a_1=3 produces the constant sequence 3,3,3,\\ldots, since f(3)=3, so it satisfies the condition.\n\nIt remains to exclude every odd integer a_1>3. Let s=ν₂(a_1-3), so s≥1. For any odd integer x>3, with y=x-3, we have\n\\[\nf(x)-3=\\frac{x^2-x-6}{2}=\\frac{(x-3)(x+2)}2=\\frac{y(y+5)}2.\n\\]\nBecause y is even and y+5 is odd,\n\\[\nν₂(f(x)-3)=ν₂(x-3)-1.\n\\]\nInductively, provided the preceding terms are odd,\n\\[\nν₂(a_{j}-3)=s-(j-1),\\qquad 1\\le j\\le s+1.\n\\]\nIn particular, ν₂(a_{s+1}-3)=0. Hence a_{s+1}-3 is odd, and therefore a_{s+1} is even, contradicting the hypothesis that every term is odd.\n\nThus no odd integer greater than 3 works, and non-integer or even choices cannot yield all terms odd integers. Consequently,\n\\[\n\\boxed{a_1=3}.\n\\]",
+      "reason": "The proof was checked for domain coverage and explicitly handles the necessary integrality and parity of a_1."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Let the sequence satisfy a_{n+1}=f(a_n), where f(x)=x(x-1)/2. We seek exactly those a_1>2 for which every a_n is an odd integer.\n\nNecessarily a_1 itself is an odd integer. First, a_1=3 is a solution because f(3)=3.\n\nFor the converse, let a_1 be an odd integer with a_1>3. Define s=ν₂(a_1-3)≥1. For every odd x>3,\n\\[\nf(x)-3=\\frac{x(x-1)-6}{2}=\\frac{(x-3)(x+2)}2.\n\\]\nSince x-3 is even and x+2 is odd,\n\\[\nν₂(f(x)-3)=ν₂(x-3)-1. \\tag{*}\n\\]\nAssume, toward contradiction, that all terms are odd. Applying (*) repeatedly yields\n\\[\nν₂(a_{s+1}-3)=ν₂(a_1-3)-s=0.\n\\]\nThus a_{s+1}-3 is odd. Since 3 is odd, a_{s+1} is even, contradicting the assumption.\n\nTherefore the only admissible initial value is\n\\[\n\\boxed{a_1=3}.\n\\]",
+      "reason": "A critic check confirms the descent is applicable under the assumed all-odd condition and that the conclusion covers all real a_1 through the necessary condition that a_1 itself be an odd integer."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Suppose all terms are odd integers. Then a_1 is an odd integer. The candidate a_1=3 works, since\n\\[\nf(3)=\\frac{3\\cdot2}{2}=3,\n\\]\nso every term equals 3.\n\nWe prove no other value works. Since a_1 is an odd integer greater than 2, either a_1=3 or a_1>3. In the latter case let\n\\[\ns=ν_2(a_1-3)\\ge1.\n\\]\nFor any odd integer x>3,\n\\[\nf(x)-3=\\frac{x(x-1)}2-3\n=\\frac{(x-3)(x+2)}2.\n\\]\nThe factor x+2 is odd, while x-3 is even; consequently,\n\\[\nν_2(f(x)-3)=ν_2(x-3)-1. \\tag{1}\n\\]\nUnder the hypothesis that all terms are odd, (1) can be applied successively through the first s transitions. It gives\n\\[\nν_2(a_{s+1}-3)=s-s=0.\n\\]\nTherefore a_{s+1}-3 is odd. Since 3 is odd, a_{s+1} is even, contradicting the hypothesis.\n\nHence the unique value is\n\\[\n\\boxed{a_1=3}.\n\\]",
+      "reason": "Dependency review verifies the necessary integrality condition, the valuation identity, its induction range, and the final parity contradiction; no descendant claim requires repair."
+    }
+  ]
+}

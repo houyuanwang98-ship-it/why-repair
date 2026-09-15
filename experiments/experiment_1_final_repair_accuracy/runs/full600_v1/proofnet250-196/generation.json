@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-196",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose $H$ and $K$ are normal subgroups of $G$. Since the intersection of two subgroups is a subgroup, $H\\cap K$ is a subgroup of $G$. Let $g\\in G$ and $x\\in H\\cap K$. Then $x\\in H$ and $x\\in K$. Normality of $H$ and $K$ gives $gxg^{-1}\\in H$ and $gxg^{-1}\\in K$, so $gxg^{-1}\\in H\\cap K$. Thus $g(H\\cap K)g^{-1}\\subseteq H\\cap K$. Applying the same inclusion with $g^{-1}$ in place of $g$ yields the reverse inclusion, so $g(H\\cap K)g^{-1}=H\\cap K$ for every $g\\in G$. Therefore $H\\cap K\\unlhd G$.\n\\end{proof}",
+      "reason": "Replaced the unsupported external theorem citation with a direct conjugation-equality argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSuppose $H$ and $K$ are normal subgroups of $G$. Since the intersection of two subgroups is a subgroup, $H\\cap K$ is a subgroup of $G$. For any $g\\in G$ and $x\\in H\\cap K$, we have $x\\in H$ and $x\\in K$. Because $H$ and $K$ are normal in $G$, it follows that $gxg^{-1}\\in H$ and $gxg^{-1}\\in K$. Hence $gxg^{-1}\\in H\\cap K$, and therefore\n\na) $g(H\\cap K)g^{-1}\\subseteq H\\cap K$.\n\nReplacing $g$ by $g^{-1}$ in this inclusion and conjugating by $g$ gives $H\\cap K\\subseteq g(H\\cap K)g^{-1}$. Thus equality holds for every $g\\in G$, so $H\\cap K\\unlhd G$.\n\\end{proof}",
+      "reason": "The argument is valid after making the reverse inclusion explicit; the only refinement is the standard $g^{-1}$ step."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $L=H\\cap K$. Because $H$ and $K$ are subgroups of $G$, $L$ is a subgroup of $G$. For every $g\\in G$, normality gives $gHg^{-1}=H$ and $gKg^{-1}=K$. Consequently,\n\\[\ngLg^{-1}=g(H\\cap K)g^{-1}=(gHg^{-1})\\cap(gKg^{-1})=H\\cap K=L.\n\\]\nThus $gLg^{-1}=L$ for every $g\\in G$, which proves that $L=H\\cap K$ is normal in $G$.\n\\end{proof}",
+      "reason": "A critic check identified that the original relied on an unnecessary unproved theorem; the repaired proof uses conjugation preserving intersections and establishes normality directly."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet $L=H\\cap K$. Since $H$ and $K$ are subgroups of $G$, $L$ is a subgroup of $G$. Let $g\\in G$. Conjugation by $g$ is a bijection on $G$, and hence it preserves intersections. Therefore\n\\[\ngLg^{-1}=g(H\\cap K)g^{-1}=(gHg^{-1})\\cap(gKg^{-1}).\n\\]\nSince $H\\unlhd G$ and $K\\unlhd G$, we have $gHg^{-1}=H$ and $gKg^{-1}=K$. Thus\n\\[\ngLg^{-1}=H\\cap K=L.\n\\]\nAs this holds for every $g\\in G$, $L\\unlhd G$. Hence $H\\cap K\\unlhd G$.\n\\end{proof}",
+      "reason": "Dependency review removed the unproved theorem reference, repaired the local normality step, and independently revalidated subgroup closure and conjugation invariance."
+    }
+  ]
+}

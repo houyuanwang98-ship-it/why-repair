@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-177",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $U=\\{x\\in X\\mid g(x)<f(x)\\}$. We show that $U$ is open. Take $a\\in U$, so $g(a)<f(a)$.\n\nIf there exists $c\\in Y$ with $g(a)<c<f(a)$, then\n\\[\na\\in g^{-1}((-\u000einfty,c))\\cap f^{-1}((c,+\u000einfty)),\n\\]\nand this is an open neighborhood of $a$ contained in $U$.\n\nIf there is no element strictly between $g(a)$ and $f(a)$, then\n\\[\na\\in g^{-1}((-\u000einfty,f(a)))\\cap f^{-1}((g(a),+\u000einfty)).\n\\]\nThis is open and is contained in $U$: indeed, for any $x$ in this intersection, $g(x)<f(a)$ and $g(a)<f(x)$; since no element lies strictly between $g(a)$ and $f(a)$, it follows that $g(x)<f(x)$.\n\nThus $U$ is open. Therefore\n\\[\nX\\setminus U=\\{x\\in X\\mid f(x)\\le g(x)\\}\n\\]\nis closed in $X$.\n\\end{proof}",
+      "reason": "The original proof had malformed preimages and an incorrect indexing expression; these were replaced by valid open neighborhoods and a local containment argument."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet $U=\\{x\\in X:f(x)>g(x)\\}$. For $a\\in U$, write $g(a)<f(a)$.\n\nSuppose first that some $c\\in Y$ satisfies $g(a)<c<f(a)$. By continuity,\n\\[\ng^{-1}((-\u000einfty,c))\\cap f^{-1}((c,+\u000einfty))\n\\]\nis an open neighborhood of $a$, and every point in it belongs to $U$.\n\nOtherwise, there is no element of $Y$ strictly between $g(a)$ and $f(a)$. The set\n\\[\nN=g^{-1}((-\u000einfty,f(a)))\\cap f^{-1}((g(a),+\u000einfty))\n\\]\nis an open neighborhood of $a$. If $x\\in N$, then $g(x)<f(a)$ and $g(a)<f(x)$. The absence of an element strictly between $g(a)$ and $f(a)$ implies $g(x)<f(x)$; hence $N\\subseteq U$.\n\nEvery point of $U$ therefore has an open neighborhood contained in $U$, so $U$ is open. Consequently, its complement\n\\[\n\\{x\\in X:f(x)\\le g(x)\\}=X\\setminus U\n\\]\nis closed in $X$.\n\\end{proof}",
+      "reason": "After checking openness, endpoint cases, and the required set containment, the proof was revised to handle both the interpolating and adjacent-value cases."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe prove that the complement of the desired set is open. Let\n\\[\nU=\\{x\\in X\\mid g(x)<f(x)\\}.\n\\]\nTake $a\\in U$.\n\nIf there is $c\\in Y$ with $g(a)<c<f(a)$, continuity gives the open neighborhood\n\\[\nN=g^{-1}((-\u000einfty,c))\\cap f^{-1}((c,+\u000einfty))\n\\]\nof $a$. For every $x\\in N$, we have $g(x)<c<f(x)$, so $N\\subseteq U$.\n\nIf no such $c$ exists, let\n\\[\nN=g^{-1}((-\u000einfty,f(a)))\\cap f^{-1}((g(a),+\u000einfty)).\n\\]\nThis is an open neighborhood of $a$. For $x\\in N$, we have $g(x)<f(a)$ and $g(a)<f(x)$. Since no element lies strictly between $g(a)$ and $f(a)$, these inequalities force $g(x)<f(x)$, so again $N\\subseteq U$.\n\nThus $U$ is open. Hence its complement, $\\{x\\in X\\mid f(x)\\le g(x)\\}$, is closed in $X$.\n\\end{proof}",
+      "reason": "A critic check identified the need to justify the adjacent-value case explicitly; the repaired proof supplies that implication and verifies every neighborhood is open."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet\n\\[\nU=\\{x\\in X\\mid f(x)>g(x)\\}.\n\\]\nIt suffices to show that $U$ is open. Fix $a\\in U$, so $g(a)<f(a)$.\n\nIf there exists $c\\in Y$ such that $g(a)<c<f(a)$, define\n\\[\nN=g^{-1}((-\u000einfty,c))\\cap f^{-1}((c,+\u000einfty)).\n\\]\nThe rays involved are open in the order topology, so $N$ is open by continuity of $f$ and $g$. Moreover, $a\\in N$, and $g(x)<c<f(x)$ for every $x\\in N$; hence $N\\subseteq U$.\n\nIf no such $c$ exists, define\n\\[\nN=g^{-1}((-\u000einfty,f(a)))\\cap f^{-1}((g(a),+\u000einfty)).\n\\]\nAgain $N$ is open and contains $a$. For $x\\in N$, we have\n\\[\ng(x)<f(a)\\quad\\text{and}\\quad g(a)<f(x).\n\\]\nBecause there is no element strictly between $g(a)$ and $f(a)$, these inequalities imply $g(x)<f(x)$. Thus $N\\subseteq U$.\n\nTherefore every point of $U$ has an open neighborhood contained in $U$, so $U$ is open. Its complement is consequently closed:\n\\[\nX\\setminus U=\\{x\\in X\\mid f(x)\\le g(x)\\}.\n\\]\n\\end{proof}",
+      "reason": "Dependency and descendant checks confirm that the only needed repair is local: valid ray preimages plus the missing adjacent-order containment argument."
+    }
+  ]
+}

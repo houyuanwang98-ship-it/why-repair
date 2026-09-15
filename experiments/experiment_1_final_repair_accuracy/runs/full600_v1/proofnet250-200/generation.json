@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-200",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet\n\\[\nA=\\{x\\in G:\\varphi(x)=x^{-1}\\}.\n\\]\nBy hypothesis, $|A|>3|G|/4$. Fix $b\\in A$. Since left multiplication by $b^{-1}$ preserves cardinality, $|b^{-1}A|=|A|$, and hence\n\\[\n|A\\cap b^{-1}A|\\ge |A|+|b^{-1}A|-|G|>\\frac{|G|}{2}.\n\\]\nIf $x\\in A\\cap b^{-1}A$, then $x\\in A$ and $xb\\in A$. Therefore\n\\[\nx^{-1}b^{-1}=\\varphi(x)\\varphi(b)=\\varphi(xb)=(xb)^{-1}=b^{-1}x^{-1},\n\\]\nso $xb=bx$. Thus $A\\cap b^{-1}A\\subseteq C_G(b)$, and $|C_G(b)|>|G|/2$. A subgroup of a finite group having more than half its elements is the whole group, so $C_G(b)=G$. Hence every $b\\in A$ lies in $Z(G)$, and therefore $|Z(G)|\\ge |A|>3|G|/4>|G|/2$. Again, $Z(G)=G$, so $G$ is abelian.\n\nSince $G$ is abelian, if $p,q\\in A$, then\n\\[\n\\varphi(pq)=\\varphi(p)\\varphi(q)=p^{-1}q^{-1}=(pq)^{-1},\n\\]\nso $A$ is a subgroup of $G$. As $|A|>|G|/2$, it follows that $A=G$. Thus $\\varphi(y)=y^{-1}$ for every $y\\in G$.\n\\end{proof}",
+      "reason": "The argument is valid after defining A and correcting the cardinality and subgroup steps."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet $A=\\{x\\in G\\mid \\varphi(x)=x^{-1}\\}$. Then $|A|>3|G|/4$. Let $b\\in A$. The set $b^{-1}A$ has the same size as $A$, so\n\\[\n|A\\cap b^{-1}A|\\ge 2|A|-|G|>|G|/2.\n\\]\nFor $x\\in A\\cap b^{-1}A$, we have $x\\in A$ and $xb\\in A$. Consequently,\n\\[\n\\varphi(xb)=\\varphi(x)\\varphi(b)=x^{-1}b^{-1},\n\\]\nwhile $xb\\in A$ gives $\\varphi(xb)=(xb)^{-1}=b^{-1}x^{-1}$. Hence $xb=bx$, and so $A\\cap b^{-1}A\\subseteq C_G(b)$. Thus $|C_G(b)|>|G|/2$. By Lagrange's theorem, a subgroup of $G$ with more than half of $G$'s elements equals $G$; hence $C_G(b)=G$.\n\nTherefore every element of $A$ is central, so $A\\subseteq Z(G)$. Since $|Z(G)|\\ge |A|>3|G|/4$, the same subgroup-size argument gives $Z(G)=G$. Thus $G$ is abelian.\n\nFor $p,q\\in A$, commutativity yields\n\\[\n\\varphi(pq)=p^{-1}q^{-1}=(pq)^{-1},\n\\]\nso $A$ is a subgroup. Since $|A|>|G|/2$, again $A=G$. Therefore $\\varphi(y)=y^{-1}$ for all $y\\in G$.\n\\end{proof}",
+      "reason": "Internal checking confirms the repaired proof defines all notation and justifies each use of the half-size subgroup lemma."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine\n\\[\nA=\\{g\\in G:\\varphi(g)=g^{-1}\\}.\n\\]\nThe hypothesis says $|A|>3|G|/4$. Choose $b\\in A$. Because translation is a bijection, $|b^{-1}A|=|A|$, and inclusion-exclusion gives\n\\[\n|A\\cap b^{-1}A|\\ge |A|+|b^{-1}A|-|G|=2|A|-|G|>|G|/2.\n\\]\nIf $x\\in A\\cap b^{-1}A$, then $x,xb\\in A$. Hence\n\\[\nx^{-1}b^{-1}=\\varphi(x)\\varphi(b)=\\varphi(xb)=(xb)^{-1}=b^{-1}x^{-1}.\n\\]\nIt follows that $xb=bx$, so $x\\in C_G(b)$. Thus $|C_G(b)|>|G|/2$, and Lagrange's theorem implies $C_G(b)=G$. This holds for every $b\\in A$, so $A\\subseteq Z(G)$.\n\nNow $|Z(G)|\\ge |A|>3|G|/4>|G|/2$. Since $Z(G)$ is a subgroup, Lagrange's theorem again implies $Z(G)=G$. Therefore $G$ is abelian.\n\nFor $p,q\\in A$, we then have\n\\[\n\\varphi(pq)=\\varphi(p)\\varphi(q)=p^{-1}q^{-1}=(pq)^{-1},\n\\]\nso $A$ is a subgroup of $G$. Its size is greater than $|G|/2$, hence $A=G$. Therefore $\\varphi(y)=y^{-1}$ for every $y\\in G$.\n\\end{proof}",
+      "reason": "The critic-checked version removes the undefined set, fixes equality under translation, and validates both applications of Lagrange's theorem."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $A=\\{g\\in G\\mid \\varphi(g)=g^{-1}\\}$. By assumption, $|A|>3|G|/4$. We prove successively that $A\\subseteq Z(G)$, then $Z(G)=G$, and finally $A=G$.\n\nFix $b\\in A$. Left multiplication by $b^{-1}$ is a bijection, so $|b^{-1}A|=|A|$. Therefore\n\\[\n|A\\cap b^{-1}A|\\ge 2|A|-|G|>|G|/2.\n\\]\nFor any $x$ in this intersection, $x\\in A$ and $x=b^{-1}a$ for some $a\\in A$, hence $xb=a\\in A$. Applying $\\varphi$ in two ways gives\n\\[\nx^{-1}b^{-1}=\\varphi(x)\\varphi(b)=\\varphi(xb)=(xb)^{-1}=b^{-1}x^{-1}.\n\\]\nThus $xb=bx$, so $A\\cap b^{-1}A\\subseteq C_G(b)$. Consequently $|C_G(b)|>|G|/2$. Since $C_G(b)$ is a subgroup, Lagrange's theorem forces $C_G(b)=G$. Hence $b\\in Z(G)$, and as $b$ was arbitrary, $A\\subseteq Z(G)$.\n\nIt follows that\n\\[\n|Z(G)|\\ge |A|>3|G|/4>|G|/2.\n\\]\nAgain by Lagrange's theorem, $Z(G)=G$, so $G$ is abelian. In an abelian group, for $p,q\\in A$,\n\\[\n\\varphi(pq)=p^{-1}q^{-1}=(pq)^{-1},\n\\]\nwhich shows that $A$ is a subgroup. Since $|A|>|G|/2$, Lagrange's theorem gives $A=G$. Thus $\\varphi(y)=y^{-1}$ for every $y\\in G$.\n\\end{proof}",
+      "reason": "Dependency-aware review confirms the set definition, intersection bound, centralizer implication, center argument, and final subgroup closure are all locally justified; the repaired dependencies revalidate to the theorem."
+    }
+  ]
+}

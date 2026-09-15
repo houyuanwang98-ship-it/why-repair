@@ -1,0 +1,29 @@
+{
+  "case_id": "B50",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "因 a<b，故 b-a>0。又有\nb^3-a^3=(b-a)(a^2+ab+b^2)。\n其中 a^2+ab+b^2=(a+b/2)^2+3b^2/4>0（当 a,b 不同时不妨直接由二次式判别式知其仅在 a=b=0 时为零，而 a<b 排除了该情形）。因此 b^3-a^3>0，即 a^3<b^3。",
+      "reason": "将错误的“平方保持大小”改为立方差因式分解，并证明另一因子为正。"
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "由 a<b 得 b-a>0。利用恒等式\nb^3-a^3=(b-a)(a^2+ab+b^2)。\n对任意不全为零的实数 a,b，有 a^2+ab+b^2>0；而 a<b 蕴含 a,b 不可能同时为零。因此 b^3-a^3>0，从而 a^3<b^3。故立方函数在实数上严格递增。",
+      "reason": "复核后发现原证明中 a^2<b^2 不成立，改用恒等式完成严谨证明。"
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "设 a,b∈R 且 a<b。则\nb^3-a^3=(b-a)(a^2+ab+b^2)。\n第一因子 b-a>0；第二因子满足\n4(a^2+ab+b^2)=(2a+b)^2+3b^2≥0，且若其为零则 b=0 且 a=0，这与 a<b 矛盾，故 a^2+ab+b^2>0。于是 b^3-a^3>0，即 a^3<b^3。",
+      "reason": "批评检查指出原步骤“a<b推出a²<b²”是错误的；采用差分解并逐项验证符号后修复。"
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "目标是证明 b^3-a^3>0。依赖恒等式\nb^3-a^3=(b-a)(a^2+ab+b^2)。\n由假设 a<b，得到 b-a>0。另一方面，\n4(a^2+ab+b^2)=(2a+b)^2+3b^2≥0。\n若 a^2+ab+b^2=0，则 2a+b=0 且 b=0，进而 a=0，与 a<b 矛盾。因此 a^2+ab+b^2>0。两因子均为正，故 b^3-a^3>0，即 a^3<b^3；所以立方函数严格递增。",
+      "reason": "完成依赖检查、局部替换和独立复核；仅修复错误平方不等式，结论及假设保持不变。"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-224",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $f:K\\to L$ be a homomorphism of fields. Suppose $f(a)=f(b)$. Then\n$f(a-b)=f(a)-f(b)=0=f(0)$. If $a-b\\neq 0$, then $a-b$ has an inverse, and\n\\[\n1=f(1)=f((a-b)(a-b)^{-1})=f(a-b)f((a-b)^{-1})=0,\n\\]\na contradiction. Hence $a-b=0$, so $a=b$. Therefore $f$ is injective.\n\\end{proof}",
+      "reason": "The original argument is valid after explicitly identifying the fields and stating the homomorphism’s preservation of products and $1$."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $f:K\\to L$ be a field homomorphism. To prove injectivity, take $a,b\\in K$ with $f(a)=f(b)$. Since field homomorphisms preserve subtraction,\n\\[\nf(a-b)=f(a)-f(b)=0.\n\\]\nIf $a-b\\ne 0$, then $(a-b)^{-1}$ exists in $K$, and multiplicativity together with preservation of $1$ gives\n\\[\n1=f(1)=f\\bigl((a-b)(a-b)^{-1}\\bigr)=f(a-b)f\\bigl((a-b)^{-1}\\bigr)=0,\n\\]\nwhich is impossible. Thus $a-b=0$, and consequently $a=b$. Hence $f$ is injective.\n\\end{proof}",
+      "reason": "The proof was checked for the needed inverse, multiplicativity, and unit-preservation steps, then made explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $f:K\\to L$ be a homomorphism of fields. Its kernel is\n\\[\n\\ker f=\\{x\\in K:f(x)=0\\}.\n\\]\nIf $x\\in\\ker f$ and $x\\ne0$, then $x^{-1}$ exists and\n\\[\n1=f(1)=f(xx^{-1})=f(x)f(x^{-1})=0,\n\\]\na contradiction. Therefore $\\ker f=\\{0\\}$. If $f(a)=f(b)$, then\n$f(a-b)=f(a)-f(b)=0$, so $a-b\\in\\ker f$ and hence $a-b=0$. Thus $a=b$, proving that $f$ is injective.\n\\end{proof}",
+      "reason": "A kernel-based generator proof was retained after checking that a field homomorphism has trivial kernel."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $f:K\\to L$ be a homomorphism of fields. We first verify that its kernel is trivial. If $x\\in K$ satisfies $f(x)=0$ and $x\\ne0$, then $x^{-1}\\in K$ and\n\\[\n1_L=f(1_K)=f(xx^{-1})=f(x)f(x^{-1})=0_L,\n\\]\nwhich is impossible. Hence $\\ker(f)=\\{0\\}$.\n\nNow let $a,b\\in K$ satisfy $f(a)=f(b)$. Then\n\\[\nf(a-b)=f(a)-f(b)=0,\n\\]\nso $a-b\\in\\ker(f)$. Therefore $a-b=0$, and $a=b$. Thus $f$ is injective.\n\\end{proof}",
+      "reason": "Dependency checks confirm trivial kernel implies injectivity; the local repair preserves the theorem and all stated assumptions."
+    }
+  ]
+}

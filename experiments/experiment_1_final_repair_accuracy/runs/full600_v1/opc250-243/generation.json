@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-243",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Rewrite the equation as\n\\[\nx^2y-x^2-2xy-2x-y+1=0.\n\\]\nWith \\(z=y-1\\), so that \\(y+1=z+2\\), this becomes\n\\[\nz(x^2-2x-1)=4x.\n\\]\nLet \\(d=x^2-2x-1\\). Since \\(d\\mid 4x\\), we also have\n\\[\nd\\mid 4d-4x(x-2)=-4.\n\\]\nThus \\(d\\in\\{\\pm1,\\pm2,\\pm4\\}\\). Checking these values in \\(x^2-2x-1=d\\) gives the integer possibilities\n\\[\n(x,d)= (0,-1),(2,-1),(1,-2),(-1,2),(3,2).\n\\]\nUsing \\(z=4x/d\\) and \\(y=z+1\\), we obtain\n\\[\n\\boxed{(x,y)=(-1,-1),(0,1),(1,-1),(2,-7),(3,7)}.\n\\]",
+      "reason": "Repaired the unsupported exhaustiveness claim by proving the denominator divides \\(-4\\)."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "Set \\(z=y-1\\). Substituting \\(y=z+1\\) into the given equation and simplifying yields\n\\[\n(x^2-2x-1)z=4x.\n\\]\nFor an integer solution, \\(d=x^2-2x-1\\) divides \\(4x\\). Since \\(d=x(x-2)-1\\),\n\\[\n4d-4x(x-2)=-4,\n\\]\nso \\(d\\mid4\\). Therefore \\(d\\in\\{-4,-2,-1,1,2,4\\}\\). Solving \\(x^2-2x-1=d\\) over the integers leaves only\n\\[\n(x,d)=(-1,2),(3,2),(1,-2),(0,-1),(2,-1).\n\\]\nThen \\(z=4x/d\\), hence respectively \\(y=-1,7,-1,1,-7\\). Direct substitution verifies every pair. Consequently,\n\\[\n\\boxed{(-1,-1),(0,1),(1,-1),(2,-7),(3,7)}.\n\\]",
+      "reason": "Self-check identified that finite testing required a rigorous divisibility bound; the revised proof supplies it and verifies the candidates."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Starting from the equation, move all terms to one side and introduce \\(z=y-1\\). The resulting equation is\n\\[\n(x^2-2x-1)z=4x. \\tag{1}\n\\]\nThe denominator \\(d=x^2-2x-1\\) is nonzero for every integer \\(x\\), because its roots are \\(1\\pm\\sqrt2\\). Equation (1) implies \\(d\\mid4x\\). Also,\n\\[\n4d-4x(x-2)=-4,\n\\]\nand since \\(d=x(x-2)-1\\), this shows \\(d\\mid4\\). We therefore solve\n\\[\nx^2-2x-1\\in\\{-4,-2,-1,1,2,4\\}.\n\\]\nThe only integral solutions are\n\\[\n(x,d)=(-1,2),(3,2),(1,-2),(0,-1),(2,-1).\n\\]\nEquation (1) then gives \\(z=4x/d\\), and therefore the corresponding \\(y=z+1\\) values are \\(-1,7,-1,1,-7\\). Hence all solutions are\n\\[\n\\boxed{(-1,-1),(0,1),(1,-1),(2,-7),(3,7)}.\n\\]",
+      "reason": "The critic’s issue was the original proof’s unjustified assertion that only small \\(x\\) need checking; divisibility reduces the problem rigorously to six cases."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "Let \\(z=y-1\\), so \\(y=z+1\\). Substitution into\n\\[\n1+x^2y=x^2+2xy+2x+y\n\\]\nand simplification gives\n\\[\n(x^2-2x-1)z=4x. \\tag{1}\n\\]\nPut \\(d=x^2-2x-1\\). For integer \\(x\\), \\(d\\ne0\\), since \\(x=1\\pm\\sqrt2\\) are not integers. From (1), \\(d\\mid4x\\). Moreover,\n\\[\n4d-4x(x-2)=4(x^2-2x-1)-4x(x-2)=-4,\n\\]\nso \\(d\\mid4\\). Thus it is necessary and sufficient to examine \\(d=\\pm1,\\pm2,\\pm4\\). Solving \\(x^2-2x-1=d\\) gives exactly\n\\[\n(x,d)=(-1,2),(3,2),(1,-2),(0,-1),(2,-1).\n\\]\nFor each, (1) yields \\(z=4x/d\\), hence the pairs are\n\\[\n(-1,-1),\\ (3,7),\\ (1,-1),\\ (0,1),\\ (2,-7).\n\\]\nSubstitution into the original equation confirms all five, so the complete solution set is\n\\[\n\\boxed{\\{(-1,-1),(0,1),(1,-1),(2,-7),(3,7)\\}}.\n\\]",
+      "reason": "Dependency-aware checking repaired the sole gap, then independently revalidated the derivation and all descendants (candidate pairs) in the original equation."
+    }
+  ]
+}

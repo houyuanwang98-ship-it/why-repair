@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-071",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWe first prove by induction that \\(\\sqrt2\\le s_n<2\\) for every \\(n\\). This is true for \\(n=1\\). If \\(\\sqrt2\\le s_n<2\\), then\n\\[\ns_{n+1}=\\sqrt{2+\\sqrt{s_n}}<\\sqrt{2+\\sqrt2}<2,\n\\]\nand clearly \\(s_{n+1}>\\sqrt2\\). Thus the claim follows.\n\nFor \\(\\sqrt2\\le x<2\\), we have \\(x^2<2+\\sqrt{x}\\), since \\(x^2-2<2\\) and, more directly, the function \\(g(x)=2+\\sqrt{x}-x^2\\) is positive on \\([\\sqrt2,2)\\): it decreases there and \\(g(2)=0\\). Hence\n\\[\ns_{n+1}^2=2+\\sqrt{s_n}>s_n^2,\n\\]\nso \\(s_{n+1}>s_n\\). Therefore \\(\\{s_n\\}\\) is increasing and bounded above by \\(2\\), and hence converges.\n\nLet \\(s_n\\to L\\). By continuity of \\(x\\mapsto\\sqrt{2+\\sqrt{x}}\\),\n\\[\nL=\\sqrt{2+\\sqrt L}.\n\\]\nSince \\(L\\le2\\), squaring gives \\(L^2=2+\\sqrt L\\). The only solution in \\([\\sqrt2,2]\\) is \\(L=2\\): indeed, \\(L<2\\) would imply \\(L^2<2+\\sqrt L\\), a contradiction. Thus \\(L=2\\), and in particular \\(s_n<2\\) for every \\(n\\).\\n\\end{proof}",
+      "reason": "Corrects the invalid identity relating consecutive terms and proves monotonicity directly from the recurrence."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine \\(f(x)=\\sqrt{2+\\sqrt{x}}\\). Since \\(s_1=\\sqrt2<2\\), and since \\(x<2\\) implies\n\\[\nf(x)<\\sqrt{2+\\sqrt2}<2,\n\\]\ninduction gives \\(s_n<2\\) for all \\(n\\). Also \\(s_n\\ge\\sqrt2\\) for all \\(n\\), because \\(f(x)\\ge\\sqrt2\\).\n\nFor \\(x\\in[\\sqrt2,2)\\), let \\(h(x)=2+\\sqrt{x}-x^2\\). We have \\(h(2)=0\\), and\n\\[\nh'(x)=\\frac1{2\\sqrt{x}}-2x<0.\n\\]\nThus \\(h(x)>0\\) whenever \\(x<2\\). Applying this to \\(x=s_n\\),\n\\[\ns_{n+1}^2=2+\\sqrt{s_n}>s_n^2,\n\\]\nso \\(s_{n+1}>s_n\\). Hence \\(\\{s_n\\}\\) is increasing and bounded above by \\(2\\), so it converges.\n\nIf \\(s_n\\to L\\), continuity yields \\(L=\\sqrt{2+\\sqrt L}\\). Since \\(L\\le2\\), if \\(L<2\\) then the inequality just proved gives \\(2+\\sqrt L>L^2\\), contradicting \\(L^2=2+\\sqrt L\\). Therefore \\(L=2\\).\\n\\end{proof}",
+      "reason": "Internal checking replaces the unsupported limit equation and supplies a rigorous monotonicity argument."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet \\(f(x)=\\sqrt{2+\\sqrt{x}}\\). We have \\(s_1=\\sqrt2<2\\). If \\(s_n<2\\), then\n\\[\ns_{n+1}=f(s_n)<f(2)=\\sqrt{2+\\sqrt2}<2.\n\\]\nThus \\(s_n<2\\) for all \\(n\\), and also \\(s_n\\ge\\sqrt2\\) for all \\(n\\).\n\nWe next show that the sequence is increasing. For \\(x\\in[\\sqrt2,2)\\),\n\\[\n2+\\sqrt{x}-x^2>0.\n\\]\nIndeed, the function on the left has derivative \\(1/(2\\sqrt{x})-2x<0\\) and vanishes at \\(x=2\\). Therefore\n\\[\ns_{n+1}^2=2+\\sqrt{s_n}>s_n^2,\n\\]\nwhich implies \\(s_{n+1}>s_n\\). Consequently, \\(\\{s_n\\}\\) is increasing and bounded above by \\(2\\), so it converges.\n\nWriting its limit as \\(L\\), continuity gives\n\\[\nL=\\sqrt{2+\\sqrt L},\n\\qquad\text{hence}\\\\qquad L^2=2+\\sqrt L.\n\\]\nIf \\(L<2\\), the inequality above applied to \\(L\\) would give \\(2+\\sqrt L>L^2\\), impossible. Since \\(L\\le2\\), we conclude \\(L=2\\).\\n\\end{proof}",
+      "reason": "A critic catches the source proof's false relation \\(s_n^2-2=s_{n-1}\\) and verifies the corrected induction, monotonicity, and limit steps."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSet \\(f(x)=\\sqrt{2+\\sqrt{x}}\\), so that \\(s_{n+1}=f(s_n)\\). We claim that\n\\[\n\\sqrt2\\le s_n<2\\qquad(n\\ge1).\n\\]\nThis holds for \\(n=1\\). If it holds for \\(n\\), then\n\\[\n\\sqrt2\\le s_{n+1}=\\sqrt{2+\\sqrt{s_n}}<\\sqrt{2+\\sqrt2}<2,\n\\]\nso the claim follows by induction.\n\nFor \\(x\\in[\\sqrt2,2)\\), define \\(q(x)=2+\\sqrt{x}-x^2\\). Since\n\\[\nq'(x)=\\frac1{2\\sqrt{x}}-2x<0\n\\]\nand \\(q(2)=0\\), we have \\(q(x)>0\\) on this interval. Therefore, for every \\(n\\),\n\\[\ns_{n+1}^2=2+\\sqrt{s_n}>s_n^2,\n\\]\nand hence \\(s_{n+1}>s_n\\). Thus \\(\\{s_n\\}\\) is increasing and bounded above by \\(2\\); it consequently converges to some \\(L\\le2\\).\n\nPassing to the limit in the recurrence gives\n\\[\nL=\\sqrt{2+\\sqrt L},\n\\quad\text{so}\\quad L^2=2+\\sqrt L.\n\\]\nIf \\(L<2\\), then \\(q(L)>0\\), contradicting this equality. Hence \\(L=2\\). The induction already established \\(s_n<2\\) for every \\(n\\).\\n\\end{proof}",
+      "reason": "Dependency-aware checking repairs the predecessor identity, revalidates the bounds and monotonicity dependencies, and confirms the limit argument independently."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-139",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine\n\\[\nf(x)=\\begin{cases}1,&x\\in\\mathbb Z,\\\\0,&x\\notin\\mathbb Z.\\end{cases}\n\\]\nIf $x\\in\\mathbb Z$, then for every $h$ we have $x+h\\in\\mathbb Z$ if and only if $x-h\\in\\mathbb Z$, so $f(x+h)=f(x-h)$ and hence $f(x+h)-f(x-h)=0$.\nIf $x\\notin\\mathbb Z$, let $d=\\operatorname{dist}(x,\\mathbb Z)>0$. For $|h|<d$, neither $x+h$ nor $x-h$ is an integer, so again $f(x+h)-f(x-h)=0$. Thus\n\\[\n\\lim_{h\\to0}\\bigl(f(x+h)-f(x-h)\\bigr)=0\n\\]\nfor every $x\\in\\mathbb R$.\nHowever, $f$ is not continuous at any integer $n$: $f(n)=1$, while for the sequence $x_k=n+1/(k+\\sqrt2)$, which consists of nonintegers and converges to $n$, we have $f(x_k)=0$. Therefore $f$ need not be continuous.\n\\end{proof}",
+      "reason": "The proposed example is valid; the proof was repaired by explicitly justifying the integer case, the positive distance in the noninteger case, and discontinuity."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nConsider the function\n\\[\nf(x)=\\begin{cases}1,&x\\text{ is an integer},\\\\0,&x\\text{ is not an integer}.\n\\end{cases}\n\\]\nFor an integer $x$, the numbers $x+h$ and $x-h$ are integers simultaneously: this occurs exactly when $h\\in\\mathbb Z$. Hence $f(x+h)=f(x-h)$ for every $h$.\n\nFor a noninteger $x$, there is a nearest integer at a positive distance from $x$. Let $d=\\operatorname{dist}(x,\\mathbb Z)>0$. If $|h|<d$, both $x+h$ and $x-h$ remain nonintegers. Therefore $f(x+h)=f(x-h)=0$ for all sufficiently small $h$.\n\nConsequently, for every $x\\in\\mathbb R$,\n\\[\n\\lim_{h\\to0}\\bigl(f(x+h)-f(x-h)\\bigr)=0.\n\\]\nNevertheless, $f$ is discontinuous at every integer $n$, since $f(n)=1$ but $f(y)=0$ for every noninteger $y$ arbitrarily close to $n$. Thus the stated condition does not imply continuity.\n\\end{proof}",
+      "reason": "Internal checking confirms the example satisfies the limit at every point and is discontinuous at integers; the revised proof makes both cases explicit."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $f:\\mathbb R\\to\\mathbb R$ be given by\n\\[\nf(x)=\\mathbf 1_{\\mathbb Z}(x)=\\begin{cases}1,&x\\in\\mathbb Z,\\\\0,&x\\notin\\mathbb Z.\\end{cases}\n\\]\nWe verify the required condition. If $x\\in\\mathbb Z$, then $x+h$ and $x-h$ have the same integrality status, because their difference is $2h$ and, more directly, $x+h\\in\\mathbb Z$ exactly when $h\\in\\mathbb Z$, which is also exactly when $x-h\\in\\mathbb Z$. Thus $f(x+h)-f(x-h)=0$ for every $h$.\n\nIf $x\\notin\\mathbb Z$, choose $\\delta=\\operatorname{dist}(x,\\mathbb Z)>0$. For $|h|<\\delta$, both $x+h$ and $x-h$ lie between the two adjacent integers surrounding $x$, so neither is an integer. Hence $f(x+h)-f(x-h)=0$. Therefore in both cases\n\\[\n\\lim_{h\\to0}\\bigl(f(x+h)-f(x-h)\\bigr)=0.\n\\]\n\nFinally, $f$ is not continuous at $0$ (and likewise at every integer): $f(0)=1$, whereas $f(1/n)=0$ for every positive integer $n$, even though $1/n\\to0$. Hence $f$ need not be continuous.\n\\end{proof}",
+      "reason": "The critic check confirms the integrality equivalence and the local noninteger argument; the repaired proof also supplies a concrete sequence witnessing discontinuity."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nDefine\n\\[\nf(x)=\\begin{cases}1,&x\\in\\mathbb Z,\\\\0,&x\\notin\\mathbb Z.\\end{cases}\n\\]\nWe first establish the symmetric-difference condition. If $x\\in\\mathbb Z$, then for every real $h$, $x+h$ is an integer if and only if $h$ is an integer, and the same is true of $x-h$. Consequently, $f(x+h)=f(x-h)$ for every $h$.\n\nNow suppose $x\\notin\\mathbb Z$. Since $\\mathbb Z$ is closed and $x\\notin\\mathbb Z$, the number\n\\[\n\\delta=\\operatorname{dist}(x,\\mathbb Z)>0.\n\\]\nFor $|h|<\\delta$, neither $x+h$ nor $x-h$ belongs to $\\mathbb Z$. Hence $f(x+h)=f(x-h)=0$. Thus, for every $x\\in\\mathbb R$, the expression $f(x+h)-f(x-h)$ is identically zero either for all $h$ or for all sufficiently small $h$, and therefore\n\\[\n\\lim_{h\\to0}\\bigl(f(x+h)-f(x-h)\\bigr)=0.\n\\]\n\nTo revalidate the conclusion, at $x=0$ we have $f(0)=1$, while $f(1/n)=0$ for every $n\\ge1$ and $1/n\\to0$. Therefore $f$ is not continuous at $0$. This supplies a function satisfying the hypothesis but not continuous, so continuity is not necessary.\n\\end{proof}",
+      "reason": "Dependency checks pass: the example is defined on all of $\\mathbb R$, the limit is verified pointwise, and the independent discontinuity witness at $0$ revalidates the conclusion."
+    }
+  ]
+}

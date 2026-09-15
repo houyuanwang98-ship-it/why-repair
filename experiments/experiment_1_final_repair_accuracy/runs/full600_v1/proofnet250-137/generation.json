@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-137",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nSince $a^2$ is algebraic over $F$, there exists a nonzero polynomial $f(x)\\in F[x]$ such that $f(a^2)=0$. Define $g(x)=f(x^2)$. Then $g(x)\\in F[x]$, and $g(a)=f(a^2)=0$. Thus $a$ is algebraic over $F$.\n\\end{proof}",
+      "reason": "The supplied proof is already valid; the composition polynomial directly establishes algebraicity."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nBy assumption, $a^2$ is algebraic over $F$. Hence there is a nonzero polynomial\n\\[\nf(x)=c_0+c_1x+\\cdots+c_nx^n\\in F[x]\n\\]\nwith $f(a^2)=0$. Set\n\\[\ng(x)=f(x^2)=c_0+c_1x^2+\\cdots+c_nx^{2n}\\in F[x].\n\\]\nBecause $f\\neq 0$, we also have $g\\neq 0$. Moreover, $g(a)=f(a^2)=0$. Therefore $a$ is algebraic over $F$.\n\\end{proof}",
+      "reason": "Internal checking confirms that substitution preserves nonzeroness and yields a polynomial over $F$ vanishing at $a$."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nThere exists a nonzero polynomial $f\\in F[x]$ such that $f(a^2)=0$, since $a^2$ is algebraic over $F$. Let $g\\in F[x]$ be given by $g(x)=f(x^2)$. The polynomial $g$ is nonzero: if $f(x)=\\sum_{i=0}^n c_i x^i$ with $c_n\\neq 0$, then $g(x)=\\sum_{i=0}^n c_i x^{2i}$ has nonzero leading coefficient $c_n$. Finally,\n\\[\ng(a)=f(a^2)=0.\n\\]\nThus $a$ satisfies a nonzero polynomial with coefficients in $F$, so $a$ is algebraic over $F$.\n\\end{proof}",
+      "reason": "The critic finds no gap; the proof explicitly verifies the only potential issue, that $g$ remains nonzero."
+    },
+    {
+      "method": "full_system",
+      "outcome": "unchanged_valid",
+      "final_proof": "\\begin{proof}\nBecause $a^2$ is algebraic over $F$, choose a nonzero polynomial $f(x)\\in F[x]$ satisfying $f(a^2)=0$. Polynomial substitution defines\n\\[\ng(x):=f(x^2)\\in F[x].\n\\]\nIf $f(x)=c_0+c_1x+\\cdots+c_nx^n$ with $c_n\\neq 0$, then\n\\[\ng(x)=c_0+c_1x^2+\\cdots+c_nx^{2n},\n\\]\nso $g\\neq 0$. Evaluating at $a$ gives\n\\[\ng(a)=f(a^2)=0.\n\\]\nHence $a$ is a root of a nonzero polynomial in $F[x]$, and therefore is algebraic over $F$.\n\\end{proof}",
+      "reason": "Dependency and descendant checks validate the original argument; only a local explicit nonzeroness check was added."
+    }
+  ]
+}

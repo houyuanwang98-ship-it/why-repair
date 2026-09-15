@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-014",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $\\varepsilon>0$. Since $p_n\\to L$, there exists $N\\in\\mathbb N$ such that $d(p_m,L)<\\varepsilon$ whenever $m>N$. Define\n\\[\nS=\\{k\\in\\mathbb N:f(k)\\le N\\}.\n\\]\nBecause $f$ is injective, each value in $\\{1,\\dots,N\\}$ has at most one preimage, so $S$ is finite. Hence there exists $k_0\\in\\mathbb N$ such that every $k>k_0$ lies outside $S$ (take $k_0=\\max S$ if $S\\ne\\varnothing$, and $k_0=0$ otherwise). Thus $k>k_0$ implies $f(k)>N$, and therefore\n\\[\nd(q_k,L)=d(p_{f(k)},L)<\\varepsilon.\n\\]\nConsequently, $q_k\\to L$, so the limit is unaffected by the rearrangement.\n\\end{proof}",
+      "reason": "Repairs the undefined maximum when the exceptional set is empty and explicitly proves finiteness using injectivity."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $\\varepsilon>0$. Choose $N\\in\\mathbb N$ such that $d(p_m,L)<\\varepsilon$ for every $m>N$. There are only finitely many indices $k$ for which $f(k)\\le N$: indeed, injectivity implies that the preimages under $f$ of the finitely many values $1,\\ldots,N$ are distinct and hence form a finite set. Let $K$ exceed all such indices, taking $K=0$ if there are none. Then for every $k>K$ we have $f(k)>N$, and so\n\\[\nd(q_k,L)=d(p_{f(k)},L)<\\varepsilon.\n\\]\nTherefore $q_k\\to L$. Hence an injective rearrangement leaves the limit unchanged.\n\\end{proof}",
+      "reason": "An internal check removes the empty-set gap and states the convergence quantifiers directly."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nAssume $p_n\\to L$, and let $\\varepsilon>0$. By convergence, there is $N$ such that\n\\[\nm>N\\implies d(p_m,L)<\\varepsilon.\n\\]\nConsider the exceptional index set\n\\[\nE=\\{k\\in\\mathbb N:f(k)\\le N\\}.\n\\]\nThe critic observes that injectivity does not guarantee a largest element of $E$ unless $E$ is nonempty; however, it does guarantee that $E$ is finite, since $f$ has at most one preimage for each of the finitely many integers at most $N$. Choose $K\\in\\mathbb N$ larger than every element of $E$ (or choose any $K$ if $E=\\varnothing$). For $k>K$, $k\\notin E$, so $f(k)>N$. Therefore\n\\[\nd(q_k,L)=d(p_{f(k)},L)<\\varepsilon.\n\\]\nSince this holds for every $\\varepsilon>0$, $q_k\\to L$. Thus the limit is unaffected by the rearrangement.\n\\end{proof}",
+      "reason": "The critic catches the original proof's unjustified largest-element step and verifies the finite-exception argument."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nSuppose that $p_n\\to L$. Let $\\varepsilon>0$. There exists $N\\in\\mathbb N$ such that\n\\[\n\\forall m>N,\\qquad d(p_m,L)<\\varepsilon.\n\\]\nLet\n\\[\nE=f^{-1}(\\{1,2,\\ldots,N\\})=\\{k\\in\\mathbb N:f(k)\\le N\\}.\n\\]\nSince $f$ is injective, the restriction of $f$ to $E$ is an injection from $E$ into the finite set $\\{1,\\ldots,N\\}$; hence $E$ is finite. Choose $K\\in\\mathbb N$ with $k\\le K$ for every $k\\in E$; if $E=\\varnothing$, choose any $K$. Then, for every $k>K$, we have $k\\notin E$, so $f(k)>N$. Consequently,\n\\[\nd(q_k,L)=d(p_{f(k)},L)<\\varepsilon.\n\\]\nThus, by the definition of convergence, $q_k\\to L$. Therefore an injective rearrangement does not change the limit.\n\\end{proof}",
+      "reason": "The dependency check identifies the only defect—handling the finite exceptional preimage—and the repaired argument passes independent quantifier and descendant-convergence checks."
+    }
+  ]
+}

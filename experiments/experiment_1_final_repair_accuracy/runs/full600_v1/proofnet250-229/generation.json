@@ -1,0 +1,29 @@
+{
+  "case_id": "proofnet250-229",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nEvery element of $\\mathbb{Z}[i]/(q)$ is represented by some $a+bi$ with $0\\le a,b<q$, by reducing both integer coefficients modulo $q$. If two such representatives determine the same coset, then $q$ divides both coefficient differences, so $a_1=a_2$ and $b_1=b_2$. Thus the quotient has exactly $q^2$ elements.\n\nSince $q\\equiv3\\pmod4$, $q$ is irreducible in $\\mathbb{Z}[i]$, hence prime because $\\mathbb{Z}[i]$ is a Euclidean domain. Therefore $(q)$ is a prime ideal, and the quotient $\\mathbb{Z}[i]/(q)$ is an integral domain. Every finite integral domain is a field: for any nonzero element, multiplication by it is injective and therefore surjective, so it has a multiplicative inverse. Hence $\\mathbb{Z}[i]/(q)$ is a field with $q^2$ elements.\n\\end{proof}",
+      "reason": "Added the necessary finite-integral-domain argument to justify that the quotient is a field."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nWrite elements of $\\mathbb{Z}[i]$ as $a+bi$ with $a,b\\in\\mathbb{Z}$. Reducing $a$ and $b$ modulo $q$ shows that every coset modulo $(q)$ has a representative $a+bi$ with $0\\le a,b<q$. Such representatives are distinct: if\n\\[\n(a_1+b_1i)-(a_2+b_2i)\\in(q),\n\\]\nthen $q$ divides both $a_1-a_2$ and $b_1-b_2$, forcing $a_1=a_2$ and $b_1=b_2$. Hence $|\\mathbb{Z}[i]/(q)|=q^2$.\n\nBecause $q\\equiv3\\pmod4$, $q$ is irreducible in the Euclidean domain $\\mathbb{Z}[i]$, and therefore it is prime. Thus $(q)$ is a prime ideal, so $R=\\mathbb{Z}[i]/(q)$ is an integral domain. Since $R$ is finite, for every nonzero $x\\in R$, the map $R\\to R$ given by $y\\mapsto xy$ is injective and hence surjective. Therefore $1=xy$ for some $y\\in R$, so every nonzero element is invertible. Thus $R$ is a field with $q^2$ elements.\n\\end{proof}",
+      "reason": "Internal checking identified the missing implication from integral domain to field and supplied it using finiteness."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nThe quotient map reduces each coefficient modulo $q$, so every class in $\\mathbb{Z}[i]/(q)$ has a representative $a+bi$ with $a,b\\in\\{0,1,\\dots,q-1\\}$. If two such representatives have the same class, then\n\\[\n(a_1-a_2)+(b_1-b_2)i\\in(q).\n\\]\nThus both coefficient differences are divisible by $q$. Since each difference lies between $-(q-1)$ and $q-1$, both differences are zero. Consequently these $q^2$ representatives are distinct, and the quotient has $q^2$ elements.\n\nFor $q\\equiv3\\pmod4$, the prime integer $q$ remains irreducible in $\\mathbb{Z}[i]$: if $q=\\alpha\\beta$, then taking norms gives $q^2=N(\\alpha)N(\\beta)$, and a nontrivial factorization would yield an element of norm $q$, which would require a solution to $x^2+y^2=q$, impossible since a sum of two squares cannot be congruent to $3$ modulo $4$. Since $\\mathbb{Z}[i]$ is a Euclidean domain, irreducible elements are prime. Hence $(q)$ is prime and the quotient is an integral domain.\n\nA finite integral domain is a field, because multiplication by any nonzero element is an injective self-map and therefore is surjective. Thus $\\mathbb{Z}[i]/(q)$ is a field with $q^2$ elements.\n\\end{proof}",
+      "reason": "The critic checked both cardinality and the field claim, repairing the omitted finite-domain-to-field step and making irreducibility explicit."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "\\begin{proof}\nLet $R=\\mathbb{Z}[i]/(q)$. Every element of $R$ is represented by $a+bi$ with $0\\le a,b<q$, since the coefficients may be reduced modulo $q$. If\n\\[\na_1+b_1i+(q)=a_2+b_2i+(q),\n\\]\nthen $q$ divides $(a_1-a_2)+(b_1-b_2)i$ in $\\mathbb{Z}[i]$. Hence $q$ divides both integer coefficients, and the chosen ranges imply $a_1=a_2$ and $b_1=b_2$. Therefore $R$ has exactly $q^2$ elements.\n\nWe next show that $R$ is a field. If $q$ factored nontrivially in $\\mathbb{Z}[i]$, taking norms would produce a Gaussian integer of norm $q$. This is impossible, because $N(x+yi)=x^2+y^2$ cannot be congruent to $3$ modulo $4$, whereas $q\\equiv3\\pmod4$. Thus $q$ is irreducible. Since $\\mathbb{Z}[i]$ is Euclidean, it is a PID, so irreducible elements are prime; consequently $(q)$ is a prime ideal and $R$ is an integral domain.\n\nFinally, let $0\\ne x\\in R$. Multiplication by $x$ is an injective map $R\\to R$, because $R$ has no zero divisors. Since $R$ is finite, this map is surjective, so $xy=1$ for some $y\\in R$. Thus every nonzero element of $R$ is invertible. Hence $R$ is a field with $q^2$ elements.\n\\end{proof}",
+      "reason": "Dependency checking preserved the counting and primality steps, repaired the missing finiteness implication, and revalidated the final field conclusion."
+    }
+  ]
+}

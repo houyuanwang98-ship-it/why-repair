@@ -1,0 +1,29 @@
+{
+  "case_id": "opc250-017",
+  "outputs": [
+    {
+      "method": "direct_rewrite",
+      "outcome": "repaired",
+      "final_proof": "Let u=(1,2,\\ldots,n)^T and \\mathbf{1}=(1,1,\\ldots,1)^T. Since A_{ij}=i+j, we have\n\\[\nA=u\\mathbf{1}^T+\\mathbf{1}u^T.\n\\]\nThus \\operatorname{rank}(A)\\le 2. If n\\ge2, the first two rows are not scalar multiples, since they are (2,3,\\ldots,n+1) and (3,4,\\ldots,n+2). Hence \\operatorname{rank}(A)\\ge2, so \\operatorname{rank}(A)=2. If n=1, then A=[2], whose rank is 1. Therefore,\n\\[\n\\boxed{\\operatorname{rank}(A)=\\begin{cases}1,&n=1,\\\\2,&n\\ge2.\\end{cases}}\n\\]",
+      "reason": "The original conclusion is correct; the proof is streamlined and the lower bound is stated directly."
+    },
+    {
+      "method": "self_refine",
+      "outcome": "repaired",
+      "final_proof": "For every row i,\n\\[\nR_i=(i+1,i+2,\\ldots,i+n)=R_1+(i-1)(1,1,\\ldots,1).\n\\]\nTherefore all rows lie in the span of R_1 and \\mathbf{1}, so the rank is at most 2. When n\\ge2, R_1=(2,3,\\ldots,n+1) is not a scalar multiple of \\mathbf{1}; hence these two vectors are linearly independent and the rank is exactly 2. When n=1, A=[2], so the rank is 1. Consequently,\n\\[\n\\boxed{\\operatorname{rank}(A)=1\\text{ if }n=1,\\quad \\operatorname{rank}(A)=2\\text{ if }n\\ge2.}\n\\]",
+      "reason": "The row-space argument was checked for both dimensions, including the exceptional case n=1."
+    },
+    {
+      "method": "generator_critic",
+      "outcome": "repaired",
+      "final_proof": "Write\n\\[\nA=\\begin{bmatrix}1\\\\2\\\\\\vdots\\\\n\\end{bmatrix}(1,1,\\ldots,1)+ (1,1,\\ldots,1)^T\\begin{bmatrix}1&2&\\cdots&n\\end{bmatrix}.\n\\]\nThis expresses A as a sum of two rank-one matrices, so \\operatorname{rank}(A)\\le2. For n\\ge2, consider the 2\\times2 submatrix formed by the first two rows and columns:\n\\[\n\\begin{bmatrix}2&3\\\\3&4\\end{bmatrix},\n\\qquad \\det\\begin{bmatrix}2&3\\\\3&4\\end{bmatrix}=8-9=-1\\ne0.\n\\]\nThus \\operatorname{rank}(A)\\ge2, and therefore \\operatorname{rank}(A)=2. For n=1, A=[2], so \\operatorname{rank}(A)=1. Hence\n\\[\n\\boxed{\\operatorname{rank}(A)=\\begin{cases}1,&n=1,\\\\2,&n\\ge2.\\end{cases}}\n\\]",
+      "reason": "A minor-based critic check confirms the required rank-2 lower bound without relying on an incomplete independence claim."
+    },
+    {
+      "method": "full_system",
+      "outcome": "repaired",
+      "final_proof": "The entries satisfy\n\\[\nA_{ij}=i+j=u_i+u_j,\n\\quad\text{where }u=(1,2,\\ldots,n)^T.\n\\]\nWith \\mathbf{1}=(1,\\ldots,1)^T,\n\\[\nA=u\\mathbf{1}^T+\\mathbf{1}u^T,\n\\]\nso every column, and hence the entire image of A, lies in \\operatorname{span}\\{u,\\mathbf{1}\\}. Therefore \\operatorname{rank}(A)\\le2. If n\\ge2, the vectors u and \\mathbf{1} are linearly independent, and the leading 2\\times2 principal submatrix has determinant\n\\[\n\\det\\begin{bmatrix}2&3\\\\3&4\\end{bmatrix}=-1\\ne0,\n\\]\nso \\operatorname{rank}(A)\\ge2. Thus \\operatorname{rank}(A)=2 for n\\ge2. For n=1, A=[2], whose rank is 1. Therefore,\n\\[\n\\boxed{\\operatorname{rank}(A)=\\begin{cases}1,&n=1,\\\\2,&n\\ge2.\\end{cases}}\n\\]",
+      "reason": "Dependency checks validate the factorization, the dimension-one boundary case, and an independent rank lower bound."
+    }
+  ]
+}
