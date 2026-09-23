@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-23 — Evidence-bound iterative first-error localization
+
+- Added opt-in prefix review and a separate candidate Gold audit without changing frozen M3 results.
+- Bound local inference conditions and bridge steps to versioned source evidence; distinguish confirmed first errors from later candidates behind an unresolved prefix.
+- Added `IterativeRepairSession`: M5-reviewed patches trigger whole-proof rescans, including independent branches, and require final theorem-target coverage before completion.
+- Added bounded rational-arithmetic checks, unchanged-context review reuse, budgets, failure retention, and multi-error regression/demo coverage.
+- Full local regression: 487 tests passed. Fixtures are engineering evidence, not a measured model-accuracy improvement.
+
 ## 2026-08-29 — Person B Step 3 human-review execution recorded
 
 - Recorded the repository owner's confirmation that Person B completed human review of all 600 assigned Step 3 cases across M2 Pilot, M2 B50, OPC-250 v0.2, and ProofNet-250 v0.1.

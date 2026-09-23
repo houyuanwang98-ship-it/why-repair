@@ -545,7 +545,15 @@ def build_result(
     node_cache=None,
     cache_context=None,
     cache_stats=None,
+    localization_reviews=None,
+    localization_reviewer=None,
+    max_local_reviews=8,
 ):
+    if localization_reviewer is not None and localization_reviews is None:
+        localization_reviews = {}
+    if type(max_local_reviews) is not int or max_local_reviews < 0:
+        raise ValueError("max_local_reviews must be a nonnegative integer")
+    local_review_budget = {"remaining": max_local_reviews}
     proof_steps = (
         split_proof_into_nodes(raw_proof)
         if raw_proof
@@ -576,7 +584,7 @@ def build_result(
         diagnosis_adjudicator,
         graph_builder,
     )
-    cache_enabled = node_cache is not None and (
+    cache_enabled = localization_reviews is None and node_cache is not None and (
         not any(adjudicator is not None for adjudicator in runtime_adjudicators)
         or (cache_context is not None and "adjudicator_key" in cache_context)
     )
@@ -687,6 +695,10 @@ def build_result(
                     "node": copy.deepcopy(node),
                 }
 
+        if localization_reviews is not None:
+            from .localization import apply_local_review
+            node = apply_local_review(item, node, graph, localization_reviews,
+                                      localization_reviewer, local_review_budget)
         graph.append(node)
         _update_problem_summary(index, node, summary)
         if node["status"] in ACCEPTED_STATUSES:
@@ -698,7 +710,7 @@ def build_result(
             "nodes": current_cache_nodes,
         }
 
-    return {
+    result = {
         "id": item.get("id", ""),
         "parent_id": item.get("parent_id"),
         "subquestion_label": item.get("subquestion_label"),
@@ -717,3 +729,7 @@ def build_result(
         "summary_diagnosis": summary["diagnosis"],
         "summary_repair": summary["repair"],
     }
+    if localization_reviews is not None:
+        from .localization import first_error_summary
+        result.update(first_error_summary(graph))
+    return result
