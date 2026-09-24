@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-24 — Evidence-bound contract review protocol
+
+- Added per-obligation semantic review requests/responses with exact provenance, reviewer role checks, exhaustive coverage, and derived revision/undetermined outcomes.
+- Added an opt-in single-node generator-input gate intersecting contract review with the live v2 confirmed-first-error authorization; downstream targets remain separate from admissible premises.
+- No automatic semantic proof checking, contract weakening, search loop, or changed legacy acceptance behavior. Added 15 fixture tests; full regression passed 516 tests. No production model evaluation.
+
 ## 2026-09-24 — Draft two-sided repair boundaries
 
 - Added an opt-in draft contract builder and independent JSON Schema over v2 snapshots, binding upstream premises, all declared downstream consumers, and the original goal to versioned proof context.
