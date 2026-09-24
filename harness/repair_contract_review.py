@@ -58,6 +58,16 @@ def review_request(contract, snapshot):
 def validate_review(response, contract, snapshot, *, evaluator_ids, generator_id):
     """Return derived status; malformed/stale/untrusted responses raise."""
     request = review_request(contract, snapshot)
+    return validate_response(response, request, evaluator_ids=evaluator_ids, generator_id=generator_id)
+
+
+def validate_response(response, request, *, evaluator_ids, generator_id):
+    """Validate the shared envelope against an internally rebuilt review request.
+
+    Callers must not trust arbitrary model-provided requests: reconstruct the
+    request from current state before calling this low-level helper.
+    """
+    _require(request["input_digest"] == canonical_digest(request["input"]), "corrupt request")
     _require(isinstance(response, dict) and set(response) == {
         "schema_version", "input_digest", "reviewer_id", "checks"}, "malformed review")
     _require(response["schema_version"] == "repair-contract-review-v1" and

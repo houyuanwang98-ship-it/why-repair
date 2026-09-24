@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-24 — Reviewed interface revision and bounded candidate search
+
+- Added reviewed per-consumer output proposals, budgeted single-node candidate staging, exact candidate-boundary review, rejection preservation, and apply-then-rescan semantics.
+- Added bounded rational point counterexample replay; unsupported input abstains, and a refuted current interface blocks further candidates without declaring the original theorem false.
+- Added consumer-expansion and whole-rewrite drafts with explicit human-routing handoff, not automatic multi-node edits or uncalibrated cost decisions.
+- Added 21 tests and a disclosed no-model demo; full regression passed 537 tests. No production model calls or measured accuracy/token-savings claims.
+
 ## 2026-09-24 — Evidence-bound contract review protocol
 
 - Added per-obligation semantic review requests/responses with exact provenance, reviewer role checks, exhaustive coverage, and derived revision/undetermined outcomes.
