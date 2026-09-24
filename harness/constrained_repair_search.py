@@ -10,7 +10,7 @@ from .m5_person_a_review import canonical_digest
 from .m5_repair import patch_fingerprint
 from .repair_contract import build_contract, validate_contract
 from .repair_contract_review import review_request, validate_response, _require, _text
-from .repair_counterexample import replay_counterexample
+from .repair_search_ledger import search_ledger, charge, interface_refuted, remember_counterexample
 
 
 def interface_proposal(contract, snapshot, statements):
@@ -59,20 +59,30 @@ class ConstrainedRepairSearch:
     Independent interface review + M5 patch review + staged boundary review are
     required. Old APIs remain unchanged. Scope changes create drafts, not edits.
     """
-    def __init__(self, session, contract, proposal, interface_review, *, max_attempts=4):
-        _require(type(max_attempts) is int and max_attempts > 0, "positive attempt budget required")
+    def __init__(self, session, contract, proposal, interface_review, *, max_attempts=None):
         self._session = session
         self._contract = deepcopy(contract)
         self._proposal = deepcopy(proposal)
         self._review = deepcopy(interface_review)
-        self._limit = max_attempts
-        self._attempts = 0
-        self._seen = set()
+        self._authorization = canonical_digest(session.snapshot()["report"]["certificate"])
         self._pending = {}
         self._events = []
         self._closed = False
         self._refuted = False
         self._validate()
+        self._ledger = search_ledger(session, attempts=max_attempts)
+        self._limit = self._ledger["limits"]["attempts"]
+        charge(self._ledger, "feedback")
+        self._ledger["events"].append({"event": "interface_review", "response": deepcopy(interface_review),
+                                      "status": "accepted"})
+
+    @property
+    def _attempts(self):
+        return self._ledger["used"]["attempts"]
+
+    def _check_refutation(self):
+        self._refuted = interface_refuted(self._ledger, self._contract, self._proposal)
+        return self._refuted
 
     def _validate(self):
         _require(not self._closed, "episode closed; rescan and start a new episode")
@@ -81,13 +91,15 @@ class ConstrainedRepairSearch:
                                    generator_id=self._session.generator_id)
         _require(status == "accepted", "interface not accepted")
         data = self._session.generator_input()
+        _require(self._authorization == canonical_digest(self._session.snapshot()["report"]["certificate"]),
+                 "localization authorization changed")
         _require(self._contract["region"] == [ref(data["target_node"])],
                  "live search supports the confirmed single-node region only")
         return data
 
     def generator_input(self):
         data = deepcopy(self._validate())
-        _require(not self._refuted, "current interface refuted; revise scope or obligations")
+        _require(not self._check_refutation(), "current interface refuted; revise scope or obligations")
         _require(self._attempts < self._limit, "search budget exhausted")
         data["contract_outputs_only"] = deepcopy(self._proposal["outputs"])
         data["contract_digest"] = self._proposal["proposal_digest"]
@@ -98,6 +110,7 @@ class ConstrainedRepairSearch:
         return deepcopy({"attempts": self._attempts, "max_attempts": self._limit,
                          "closed": self._closed, "pending": list(self._pending), "events": self._events,
                          "interface_refuted": self._refuted,
+                         "ledger": self._ledger,
                          "production_model_calls": 0,
                          "provider_cost": None, "provider_tokens": None})
 
@@ -108,6 +121,16 @@ class ConstrainedRepairSearch:
         before = staged.snapshot()
         after = staged.apply_patch(deepcopy(patch), deepcopy(context), deepcopy(patch_review))
         _require(after["revision"] > before["revision"], "patch was not applied")
+        selected = {r["node_id"] for r in self._contract["region"]}
+        updated = {n["node_id"]: n for n in after["nodes"]}
+        for old in before["nodes"]:
+            if old["node_id"] in selected:
+                continue
+            new = updated.get(old["node_id"])
+            _require(new is not None and all(new[k] == old[k] for k in
+                     ("claim", "self_contained_claim", "node_type")) and
+                     [d["node_id"] for d in new["depends_on"]] == [d["node_id"] for d in old["depends_on"]],
+                     "substantive outside-region consumer change; use an explicit expanded region")
         # Candidate output validation is about the actual edited proof, not prose rationale.
         sources = [{"source_id": "before", "role": "audit_material", "content": before["nodes"]},
                    {"source_id": "after", "role": "audit_material", "content": after["nodes"]},
@@ -138,16 +161,16 @@ class ConstrainedRepairSearch:
 
     def prepare(self, patch, context, patch_review):
         self._validate()
-        _require(not self._refuted, "current interface refuted")
-        _require(self._attempts < self._limit, "search budget exhausted")
-        self._attempts += 1
+        _require(not self._check_refutation(), "current interface refuted")
+        charge(self._ledger, "attempts")
         event = {"event": "candidate_attempt", "attempt": self._attempts,
                  "patch": deepcopy(patch), "m5_context": deepcopy(context), "m5_review": deepcopy(patch_review)}
         self._events.append(event)
+        self._ledger["events"].append(event)
         try:
-            fingerprint = patch_fingerprint(patch)
-            _require(fingerprint not in self._seen, "duplicate candidate")
-            self._seen.add(fingerprint)
+            fingerprint = canonical_digest({"interface": self._proposal, "patch": patch_fingerprint(patch)})
+            _require(fingerprint not in self._ledger["seen_candidates"], "duplicate candidate")
+            self._ledger["seen_candidates"].append(fingerprint)
             request = self._stage(patch, context, patch_review)
             key = request["input_digest"]
             self._pending[key] = deepcopy((patch, context, patch_review))
@@ -159,13 +182,15 @@ class ConstrainedRepairSearch:
 
     def decide(self, request_digest, boundary_review):
         self._validate()
-        _require(not self._refuted, "current interface refuted")
+        _require(not self._check_refutation(), "current interface refuted")
         _require(request_digest in self._pending, "unknown or consumed candidate")
+        charge(self._ledger, "feedback")
         patch, context, review = self._pending.pop(request_digest)
         # Consume even malformed replies: repeated acceptance fishing needs a new budgeted attempt.
         event = {"event": "boundary_review", "request_digest": request_digest,
                  "response": deepcopy(boundary_review)}
         self._events.append(event)
+        self._ledger["events"].append(event)
         try:
             request = self._stage(patch, context, review)
             _require(request["input_digest"] == request_digest, "candidate context changed")
@@ -194,7 +219,7 @@ class ConstrainedRepairSearch:
 
     def record_counterexample(self, witness):
         self._validate()
-        record = replay_counterexample(self._contract, self._proposal, witness)
+        record = remember_counterexample(self._ledger, self._contract, self._proposal, witness)
         self._events.append({"event": "counterexample_replay", "record": deepcopy(record)})
         if record["status"] == "refuted":
             self._refuted = True
@@ -204,6 +229,7 @@ class ConstrainedRepairSearch:
     def route_options(self):
         """Expose reviewable choices, not an uncalibrated automatic cost policy."""
         self._validate()
+        self._check_refutation()
         snapshot = self._session.snapshot()
         affected = {r["node_id"] for r in self._contract["region"]}
         for node in snapshot["nodes"]:

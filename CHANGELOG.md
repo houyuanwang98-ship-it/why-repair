@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-25 — Cross-entry repair search audit
+
+- Reproduced seven constraint failures before fixing shared budgets, exact feedback memory, localization binding, and undeclared consumer reconnection.
+- Added bounded witness parsing and noncontiguous-region regressions; 561 full-suite tests passed with no production model calls.
+- Recorded findings and remaining semantic limits in `docs/repair_search_audit_20260925.md`.
+
 ## 2026-09-24 — Explicit multi-node transactions
 
 - Added opt-in structure-preserving region body replacement with explicit consumer expansion and whole-proof routing, reviewed interfaces, full candidate reviews, atomic application, and mandatory rescans.

@@ -4,6 +4,7 @@ No natural-language translation, eval, solver search, or inference from failure.
 Unsupported syntax / undefined expressions return undetermined, never refuted.
 """
 import ast
+import re
 from fractions import Fraction
 from copy import deepcopy
 
@@ -66,6 +67,10 @@ def replay_counterexample(contract, proposal, witness):
         for key, value in witness.items():
             if not isinstance(key, str) or not key.isidentifier() or not isinstance(value, str) or len(value) > 64:
                 raise ValueError("witness requires small rational strings")
+            # Bound parsing before Fraction: scientific notation can allocate an
+            # enormous integer even when the input itself is only a few bytes.
+            if re.fullmatch(r"[+-]?[0-9]+(?:/[0-9]+)?", value) is None:
+                raise ValueError("witness requires integer or numerator/denominator notation")
             parsed = Fraction(value)
             if max(abs(parsed.numerator).bit_length(), parsed.denominator.bit_length()) > 128:
                 raise ValueError("witness too large")

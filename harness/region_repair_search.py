@@ -10,28 +10,20 @@ from .local_inference_v2 import ref
 from .m5_person_a_review import canonical_digest
 from .repair_contract import build_contract
 from .repair_contract_review import _require, review_request, validate_response
-from .repair_counterexample import replay_counterexample
+from .repair_search_ledger import search_ledger, charge, interface_refuted, remember_counterexample
 
 
 class RegionRepairSearch:
-    def __init__(self, session, *, max_attempts=8, max_routes=4, max_feedback=20):
-        for limit in (max_attempts, max_routes, max_feedback):
-            _require(type(limit) is int and limit > 0, "positive budgets required")
+    def __init__(self, session, *, max_attempts=None, max_routes=None, max_feedback=None):
         data = session.generator_input()  # confirmed first error and current prefix
         self._session = session
         self._base = session.snapshot()
-        limits = {"attempts": max_attempts, "routes": max_routes, "feedback": max_feedback}
-        # Deliberately owned by the live session: restarting an episode cannot reset it.
-        if not hasattr(session, "_region_search_ledger"):
-            session._region_search_ledger = {"limits": limits, "used": dict.fromkeys(limits, 0), "events": [], "refuted_interfaces": []}
-        _require(session._region_search_ledger["limits"] == limits, "cannot reset session search budgets")
-        self._ledger = session._region_search_ledger
+        self._ledger = search_ledger(session, attempts=max_attempts, routes=max_routes, feedback=max_feedback)
         self._region = [ref(data["target_node"])]
         self._mode = "local"
         self._proposal = None
         self._interface_review = None
         self._pending = {}
-        self._seen = set()
         self._refuted = False
         self._closed = False
 
@@ -43,8 +35,7 @@ class RegionRepairSearch:
                  canonical_digest(self._base["report"]["certificate"]), "localization authorization changed")
 
     def _charge(self, kind):
-        _require(self._ledger["used"][kind] < self._ledger["limits"][kind], f"{kind} budget exhausted")
-        self._ledger["used"][kind] += 1
+        charge(self._ledger, kind)
 
     def snapshot(self):
         return deepcopy({"mode": self._mode, "region": self._region, "closed": self._closed,
@@ -95,7 +86,7 @@ class RegionRepairSearch:
                 proposal = request["input"]["proposed_interface"]
                 # Cannot clear a refutation by re-approving the identical interface.
                 self._proposal, self._interface_review = deepcopy(proposal), deepcopy(response)
-                self._refuted = proposal["proposal_digest"] in self._ledger["refuted_interfaces"]
+                self._refuted = interface_refuted(self._ledger, self.contract(), proposal)
             return status
         except Exception as exc:
             event.update(status="rejected", reason=str(exc))
@@ -107,9 +98,10 @@ class RegionRepairSearch:
 
     def _ready(self):
         self._current()
-        _require(self._proposal is not None and self._interface_review is not None and not self._refuted,
+        _require(self._proposal is not None and self._interface_review is not None,
                  "interface unreviewed or refuted")
-        _require(self._proposal["proposal_digest"] not in self._ledger["refuted_interfaces"],
+        self._refuted = interface_refuted(self._ledger, self.contract(), self._proposal)
+        _require(not self._refuted,
                  "interface refuted by another episode")
         request = interface_request(self.contract(), self._base, self._proposal)
         _require(self._review(self._interface_review, request) == "accepted", "interface not accepted")
@@ -218,8 +210,8 @@ class RegionRepairSearch:
         self._ledger["events"].append(event)
         try:
             fingerprint = canonical_digest({"interface": self._proposal, "patch": patch})
-            _require(fingerprint not in self._seen, "duplicate candidate")
-            self._seen.add(fingerprint)
+            _require(fingerprint not in self._ledger["seen_candidates"], "duplicate candidate")
+            self._ledger["seen_candidates"].append(fingerprint)
             request, _ = self._candidate_request(patch)
             self._pending[request["input_digest"]] = deepcopy(patch)
             event.update(status="awaiting_review", request_digest=request["input_digest"])
@@ -264,11 +256,8 @@ class RegionRepairSearch:
 
     def record_counterexample(self, witness):
         self._ready()
-        self._charge("feedback")
-        record = replay_counterexample(self.contract(), self._proposal, witness)
-        self._ledger["events"].append({"event": "counterexample", "record": deepcopy(record)})
+        record = remember_counterexample(self._ledger, self.contract(), self._proposal, witness)
         if record["status"] == "refuted":
             self._refuted = True
-            self._ledger["refuted_interfaces"].append(self._proposal["proposal_digest"])
             self._pending.clear()
         return record
