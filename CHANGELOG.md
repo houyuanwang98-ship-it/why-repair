@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-25 — Explicit topology transactions
+
+- Added a new opt-in topology schema, bounded insertion with non-reusable IDs, explicit deletion obligation transfers, and consumer reconnection only inside a declared contiguous region.
+- Rebuild candidate boundaries, archive prior/deleted nodes, require per-deletion and final-goal reviews, and preserve atomic application plus whole-proof rescanning.
+- Added 15 topology tests and a disclosed fixture replay; 576 full-suite tests passed. Semantic scope/dependency review remains external; no production model evaluations.
+
 ## 2026-09-25 — Cross-entry repair search audit
 
 - Reproduced seven constraint failures before fixing shared budgets, exact feedback memory, localization binding, and undeclared consumer reconnection.

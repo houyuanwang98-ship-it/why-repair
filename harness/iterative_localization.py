@@ -36,6 +36,7 @@ class IterativeRepairSession:
         require(generator_id not in self.evaluator_ids, "generator cannot be Evaluator")
         self.generator_id = generator_id
         self._nodes = self._validate_graph(deepcopy(nodes))
+        self._used_node_ids = {n["node_id"] for n in self._nodes}
         self.revision = 1
         self.max_patch_attempts = max_patch_attempts
         self.max_total_review_calls = max_total_review_calls
@@ -288,6 +289,9 @@ class IterativeRepairSession:
                 node["depends_on"] = dependencies
                 node["lifecycle_state"] = "pending_evaluation"
             updated = self._validate_graph(updated)
+            previous_ids = {n["node_id"] for n in self._nodes}
+            require(not any(n["node_id"] in self._used_node_ids and n["node_id"] not in previous_ids
+                            for n in updated), "Node IDs cannot be recycled")
             semantic = self._semantic_digest(updated)
             require(semantic not in self._seen_proofs, "Equivalent proof loop")
         except Exception as exc:
@@ -295,6 +299,7 @@ class IterativeRepairSession:
             raise
         previous = self._proof_digest()
         self._nodes = updated
+        self._used_node_ids.update(n["node_id"] for n in updated)
         self._seen_proofs.add(semantic)
         self.revision += 1
         self._report = None

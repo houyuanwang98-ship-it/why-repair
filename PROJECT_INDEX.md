@@ -16,6 +16,8 @@
 
 | 文档 | 用途 | 状态 |
 |---|---|---|
+| [Explicit topology transactions v2](docs/region_topology_v2.md) | Insertion, deletion obligation transfers, declared consumer reconnection, rebuilt boundaries | Engineering tests and fixture replay; semantic review remains external |
+| [Repair search audit 2026-09-25](docs/repair_search_audit_20260925.md) | Cross-entry budgets, scoped feedback replay, authorization and locality fixes | Seven reproduced failures fixed; no model evaluation |
 | [多节点事务与显式扩区 v1](docs/region_repair_search_v1.md) | 同节点槽位替换、显式扩区/全篇重写、共享预算、原子提交与重扫 | 无模型回放通过；不支持增删节点或自动路由 |
 | [受约束候选搜索 v1](docs/constrained_repair_search_v1.md) | 契约修订、M5 副本暂存、真实补丁边界审核、预算和精确反例阻断 | 固定单节点可执行；扩区/重写为待审草案，未评测 |
 | [下一步数学与策略审阅单](docs/constrained_repair_review_checklist.md) | 消费者保留语义、x=0 例子、扩区与重写顺序 | 待用户/数学审核者确认 |

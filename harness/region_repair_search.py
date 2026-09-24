@@ -11,6 +11,7 @@ from .m5_person_a_review import canonical_digest
 from .repair_contract import build_contract
 from .repair_contract_review import _require, review_request, validate_response
 from .repair_search_ledger import search_ledger, charge, interface_refuted, remember_counterexample
+from .region_topology import POLICY as TOPOLOGY_POLICY, stage_topology
 
 
 class RegionRepairSearch:
@@ -106,19 +107,27 @@ class RegionRepairSearch:
         request = interface_request(self.contract(), self._base, self._proposal)
         _require(self._review(self._interface_review, request) == "accepted", "interface not accepted")
 
-    def generator_input(self):
+    def generator_input(self, *, policy="region-body-replacement-v1"):
         self._ready()
+        _require(policy in {"region-body-replacement-v1", TOPOLOGY_POLICY}, "unknown patch policy")
         _require(self._ledger["used"]["attempts"] < self._ledger["limits"]["attempts"], "attempts budget exhausted")
         contract = self.contract()
         ids = {r["node_id"] for r in self._region}
         upstream = {p["source"]["node_id"] for p in contract["upstream_premises"]}
-        return deepcopy({"proof_context": self._base["proof"], "mode": self._mode,
+        data = {"proof_context": self._base["proof"], "mode": self._mode,
+                         "patch_policy": policy,
                          "editable_nodes": [n for n in self._base["nodes"] if n["node_id"] in ids],
                          "premise_nodes": [n for n in self._base["nodes"] if n["node_id"] in upstream],
                          "outputs_only": self._proposal["outputs"],
-                         "instructions": "Replace exactly these node bodies; preserve IDs/order. The theorem and outputs are targets, not premises. No external node text changes."})
+                         "instructions": "Replace exactly these node bodies; preserve IDs/order. The theorem and outputs are targets, not premises. No external node text changes."}
+        if policy == TOPOLOGY_POLICY:
+            data.update(new_node_id_prefix=f"repair-r{self._base['revision'] + 1}-n", max_new_nodes=3,
+                        instructions="Replace a contiguous declared region. Preserve retained IDs and relative order; new IDs use the supplied prefix followed by a positive integer. Each deletion needs its old exact reference, nonempty live replacement_ids and a discharge reason for independent review. Include consumers inside the region before reconnecting dependencies. Never assume outputs or the theorem as premises.")
+        return deepcopy(data)
 
     def _stage(self, patch):
+        if isinstance(patch, dict) and patch.get("policy") == TOPOLOGY_POLICY:
+            return stage_topology(self, patch)
         _require(isinstance(patch, dict) and set(patch) == {"policy", "base_digest", "generator_id", "replacements"}, "invalid region patch")
         _require(patch["policy"] == "region-body-replacement-v1" and patch["base_digest"] == self._base["proof_digest"]
                  and patch["generator_id"] == self._session.generator_id, "wrong patch context")
@@ -170,14 +179,22 @@ class RegionRepairSearch:
         old = {n["node_id"]: n for n in self._base["nodes"]}
         substantive, mechanical = [], []
         for node in nodes:
-            prior = old[node["node_id"]]
+            prior = old.get(node["node_id"])
+            if prior is None:
+                substantive.append(node["node_id"])
+                continue
             text_changed = any(node[k] != prior[k] for k in ("claim", "self_contained_claim", "node_type"))
             deps_changed = [d["node_id"] for d in node["depends_on"]] != [d["node_id"] for d in prior["depends_on"]]
             if text_changed or deps_changed:
                 substantive.append(node["node_id"])
-            if node["version"] != prior["version"] or node["depends_on"] != prior["depends_on"]:
+            if any(node[k] != prior[k] for k in ("version", "depends_on", "order_key")):
                 mechanical.append(node["node_id"])
+        new_ids = {n["node_id"] for n in nodes}
+        deleted = [n for n in self._base["nodes"] if n["node_id"] not in new_ids]
+        substantive.extend(n["node_id"] for n in deleted)
         material["edit_accounting"] = {"substantive_nodes": substantive,
+                                       "inserted_nodes": [n["node_id"] for n in nodes if n["node_id"] not in old],
+                                       "deleted_nodes": [n["node_id"] for n in deleted],
                                        "version_or_reference_updated_nodes": mechanical,
                                        "note": "Text changes counted conservatively; sets can overlap. All affected evidence needs revalidation."}
         for sid, content in (("before", self._base["nodes"]), ("after", nodes),
@@ -191,12 +208,30 @@ class RegionRepairSearch:
             "original_problem": "Verify unchanged original assumptions and theorem. This is not final whole-proof acceptance.",
             "minimality": "Is every substantive change justified by this repair, rather than unrelated edits?",
         }
+        if patch["policy"] == TOPOLOGY_POLICY:
+            material["policy"] = "region-topology-candidate-review-v2"
+            after = {"proof": deepcopy(self._base["proof"]), "nodes": deepcopy(nodes),
+                     "revision": self._base["revision"] + 1}
+            after["proof_digest"] = canonical_digest(after)
+            region_ids = {body["node_id"] for body in patch["replacements"]}
+            rebuilt = build_contract(after, [ref(n) for n in nodes if n["node_id"] in region_ids])
+            material["sources"].append({"source_id": "rebuilt_boundary", "role": "audit_material_not_premise",
+                                        "content": rebuilt, "digest": canonical_digest(rebuilt)})
+            questions["topology_boundary"] = "Check the rebuilt boundary, all retained branches, and explicit reconnections. No obligation may vanish through deletion."
+            for i, declaration in enumerate(patch["deletions"]):
+                questions[f"deletion:{i}"] = (
+                    f"Audit deletion of {declaration['target']['node_id']} and its explicit replacement_ids. "
+                    "Identify which needed obligations, variable definitions and witnesses move to those nodes. "
+                    "Check every former consumer and independent branch. A reason or mapping alone is not evidence. "
+                    "Do not require proving the old faulty claim, but reject removal that evades a needed obligation.")
+            if self._base["nodes"][-1]["node_id"] not in new_ids:
+                questions["deleted_final_goal"] = "The old final node was deleted. Does the new submitted final conclusion establish the complete original target? Do not supply a missing proof."
         for i, _ in enumerate(self._proposal["outputs"]):
             questions[f"output:{i}"] = f"Verify actual edited proof establishes output {i}, and retained consumer remains valid with its other premises."
         if self._mode == "rewrite":
             questions["rewrite_goal"] = "Verify the entire rewritten proof actually derives the original theorem without hidden assumptions. Final independent rescan still required."
         material["checks"] = [{"check_id": key, "question": question,
-                               "required_sources": ["before", "after", "context", "outputs"]}
+                               "required_sources": [s["source_id"] for s in material["sources"]]}
                               for key, question in questions.items()]
         schema = review_request(self.contract(), self._base)["response_schema"]
         return {"input": material, "input_digest": canonical_digest(material),
@@ -238,6 +273,7 @@ class RegionRepairSearch:
             _require(session._patch_attempts < session.max_patch_attempts, "session patch budget exhausted")
             # All checks finished before mutating live proof. Serial in-process use only.
             session._nodes = deepcopy(nodes)
+            session._used_node_ids.update(n["node_id"] for n in nodes)
             session._seen_proofs.add(session._semantic_digest(nodes))
             session._patch_attempts += 1
             session.revision += 1
@@ -245,6 +281,10 @@ class RegionRepairSearch:
             session._events.append({"event": "region_applied_rescan_required", "patch": deepcopy(patch),
                                     "region": deepcopy(self._region), "review": deepcopy(response),
                                     "interface_review": deepcopy(self._interface_review),
+                                    "previous_nodes": deepcopy(self._base["nodes"]),
+                                    "deleted_nodes": [deepcopy(n) for n in self._base["nodes"]
+                                                      if n["node_id"] not in {r["node_id"] for r in nodes}],
+                                    "edit_accounting": deepcopy(request["input"]["edit_accounting"]),
                                     "previous_proof_digest": self._base["proof_digest"]})
             self._closed = True
             self._pending.clear()
