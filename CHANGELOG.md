@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-24 — Draft two-sided repair boundaries
+
+- Added an opt-in draft contract builder and independent JSON Schema over v2 snapshots, binding upstream premises, all declared downstream consumers, and the original goal to versioned proof context.
+- Added current-state reconstruction checks that reject stale or altered drafts. Drafts remain unreviewed and cannot authorize patches; semantic boundary review and search integration remain future work.
+- Recorded remote-branch keyword inventory and implementation limits. Added 14 deterministic tests; full regression passed 501 tests. No model evaluation or accuracy/cost claim.
+
 ## 2026-09-24 — Constrained repair search planning
 
 - Recorded the owner-approved next-stage direction: two-sided contracts, joint patch/region search, and impact/cost-aware routing to whole-proof rewriting.

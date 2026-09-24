@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Repair contract draft v1 (not repair authorization)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "proof_digest", "revision", "context", "graph_digest", "region", "upstream_premises", "downstream_targets", "final_target", "review_requirements", "state", "repair_authorized", "contract_digest"],
+  "properties": {
+    "schema_version": {"const": "repair-contract-draft-v1"},
+    "proof_digest": {"$ref": "#/$defs/digest"},
+    "graph_digest": {"$ref": "#/$defs/digest"},
+    "contract_digest": {"$ref": "#/$defs/digest"},
+    "revision": {"type": "integer", "minimum": 1},
+    "context": {
+      "type": "object", "additionalProperties": false,
+      "required": ["proof_id", "assumptions", "domain", "theorem_target_only"],
+      "properties": {
+        "proof_id": {"$ref": "#/$defs/text"},
+        "assumptions": {"type": "array", "items": {"$ref": "#/$defs/text"}},
+        "domain": {"$ref": "#/$defs/text"},
+        "theorem_target_only": {"$ref": "#/$defs/text"}
+      }
+    },
+    "region": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/ref"}},
+    "upstream_premises": {"type": "array", "uniqueItems": true, "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source", "statement", "node_digest", "status"],
+      "properties": {
+        "source": {"$ref": "#/$defs/ref"}, "statement": {"$ref": "#/$defs/text"},
+        "node_digest": {"$ref": "#/$defs/digest"}, "status": {"const": "unreviewed"}
+      }
+    }},
+    "downstream_targets": {"type": "array", "uniqueItems": true, "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["producer", "consumer", "statement", "kind", "status"],
+      "properties": {
+        "producer": {"$ref": "#/$defs/ref"}, "consumer": {"$ref": "#/$defs/ref"},
+        "statement": {"$ref": "#/$defs/text"}, "kind": {"const": "conservative_full_claim"},
+        "status": {"const": "unreviewed"}
+      }
+    }},
+    "final_target": {
+      "type": "object", "additionalProperties": false, "required": ["statement", "status"],
+      "properties": {"statement": {"$ref": "#/$defs/text"}, "status": {"const": "unreviewed"}}
+    },
+    "review_requirements": {"const": ["dependency_completeness", "upstream_validity", "boundary_sufficiency_and_necessity", "variable_scope", "prefix_authorization", "final_target_coverage"]},
+    "state": {"const": "awaiting_semantic_review"},
+    "repair_authorized": {"const": false}
+  },
+  "$defs": {
+    "text": {"type": "string", "pattern": "\\S"},
+    "digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "ref": {
+      "type": "object", "additionalProperties": false, "required": ["proof_id", "node_id", "version"],
+      "properties": {
+        "proof_id": {"$ref": "#/$defs/text"}, "version": {"type": "integer", "minimum": 1},
+        "node_id": {"oneOf": [{"type": "integer", "minimum": 1}, {"$ref": "#/$defs/text"}]}
+      }
+    }
+  }
+}

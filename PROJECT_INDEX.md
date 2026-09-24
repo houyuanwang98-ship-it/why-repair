@@ -16,6 +16,7 @@
 
 | 文档 | 用途 | 状态 |
 |---|---|---|
+| [双侧契约草案接口 v1](docs/repair_contract_draft_v1.md) | 版本化图边界提取、独立 Schema、全分支目标保留与篡改检测 | 无模型结构实现；语义审核与补丁授权尚未接入 |
 | [约束修复搜索：下一阶段计划](docs/constrained_repair_search_plan.md) | 双侧契约、补丁与区域联合搜索、影响与成本驱动的重写路由、分阶段验收 | 2026-09-24 用户确认方向；仅计划，未实现、未评测 |
 | [首错定位与连续修复 v2](docs/localization_optimization_v2.md) | 证据绑定、整篇反复定位、M5 补丁重验与可重放示例 | 工程实现；真实模型对照待执行 |
 | [研究方案](docs/dual_agent_natural_language_proof_harness_proposal.docx) | 完整中文设计总结 | 草案完成 |
