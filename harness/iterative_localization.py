@@ -102,9 +102,22 @@ class IterativeRepairSession:
     def evaluate(self, reviewer=None, *, max_calls=8, responses=None):
         require(type(max_calls) is int and max_calls >= 0, "max_calls must be nonnegative")
         responses = responses or {}
+        require(isinstance(responses, dict), "responses must be an object")
+        imported_calls = 0
+        if hasattr(self, "_repair_search_ledger"):
+            admitted = {}
+            for key, response in responses.items():
+                allowed = imported_calls < max_calls and self._review_calls < self.max_total_review_calls
+                self._events.append({"event": "imported_review_attempt", "input_digest": key,
+                                     "admitted": allowed, "revision": self.revision})
+                if allowed:
+                    admitted[key] = response
+                    imported_calls += 1
+                    self._review_calls += 1
+            responses = admitted
         by_id = {n["node_id"]: n for n in self._nodes}
         results, decisions, requests = [], {}, []
-        calls = 0
+        calls = imported_calls
         for node in self._nodes:
             deps = [decisions[d["node_id"]] for d in node["depends_on"]]
             record = {"target": ref(node), "order_key": node["order_key"], "status": "undetermined"}
@@ -239,7 +252,9 @@ class IterativeRepairSession:
         result["domain"] = self._proof["domain"]
         return result
 
-    def apply_patch(self, patch, review_context, review):
+    def apply_patch(self, patch, review_context, review, *, _contract_search=False):
+        require(not hasattr(self, "_repair_search_ledger") or _contract_search,
+                "Active contract search requires staged search application; direct patch entry is disabled")
         controller = self._repair_controller()
         require(self._patch_attempts < self.max_patch_attempts, "Patch budget exhausted")
         self._patch_attempts += 1

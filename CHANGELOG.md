@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-25 — Unified explicit workflow and cost accounting
+
+- Added a callback-based entrypoint for diagnosis, contract/candidate review, generation, explicit routing, rescans and final goal review, without any provider client or automatic routing.
+- Charge failed generation before retries; share imported-review limits and disable direct legacy patch bypass once contract search is active. Preserve failure records and budget use across wrapper reconstruction.
+- Record measured usage/latency, unknown costs, currency subtotals and unmetered lower-level activity without substituting zero for missing measurements.
+- Added 17 further regression tests; the full suite passed 593 tests and all five disclosed fixture demos replayed. Prepared an experiment-readiness document; no production model evaluations or independent semantic approvals were performed.
+
 ## 2026-09-25 — Explicit topology transactions
 
 - Added a new opt-in topology schema, bounded insertion with non-reusable IDs, explicit deletion obligation transfers, and consumer reconnection only inside a declared contiguous region.

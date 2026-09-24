@@ -1,5 +1,11 @@
 # 多节点事务与显式扩区执行 v1
 
+Update, 2026-09-25: this document records the v1 milestone. The
+[unified entrypoint](unified_repair_search.md) now shares budgets with the older
+single-node search and meters callback attempts. The separate
+[topology v2 protocol](region_topology_v2.md) adds bounded insertion/deletion;
+the v1 body-replacement format below still preserves node slots.
+
 2026-09-24。新增 15 项无模型测试，完整回归 552 项通过；扩区和结构保持重写回放通过。
 不包含真实模型评测、token 节省数据、自动路由策略或专家签署。
 最终回归曾遇到既有 test_skill_installer 的临时备份目录重名 FileExistsError；

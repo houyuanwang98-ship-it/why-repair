@@ -1,7 +1,7 @@
 """Explicit, budgeted multi-node transactions over a live v2 session.
 
-First version preserves node identities/order and replaces region node bodies.
-All semantic judgments remain external; no automatic routing or model calls.
+V1 preserves node slots; opt-in v2 supports bounded topology replacement with
+explicit deletion obligations. All semantic judgments remain external.
 """
 from copy import deepcopy
 
@@ -99,6 +99,7 @@ class RegionRepairSearch:
 
     def _ready(self):
         self._current()
+        _require(self._session._patch_attempts < self._session.max_patch_attempts, "session patch budget exhausted")
         _require(self._proposal is not None and self._interface_review is not None,
                  "interface unreviewed or refuted")
         self._refuted = interface_refuted(self._ledger, self.contract(), self._proposal)
@@ -239,11 +240,25 @@ class RegionRepairSearch:
                 "instructions": "This is the new multi-node patch review, not an M5 review. Return explicit mathematical reasoning per check. Acceptance does not skip rescanning."}, nodes
 
     def prepare(self, patch):
+        return self._prepare_attempt(patch, self._begin_attempt())
+
+    def _begin_attempt(self):
+        """Reserve an attempt before a caller invokes candidate generation."""
         self._ready()
         self._charge("attempts")
-        event = {"event": "region_candidate", "patch": deepcopy(patch)}
+        event = {"event": "region_candidate", "status": "awaiting_generation",
+                 "interface_digest": self._proposal["proposal_digest"],
+                 "base_digest": self._base["proof_digest"]}
         self._ledger["events"].append(event)
+        return event
+
+    def _prepare_attempt(self, patch, event):
+        _require(event["status"] == "awaiting_generation", "candidate reservation consumed")
+        event["patch"] = deepcopy(patch)
         try:
+            self._ready()
+            _require(event["interface_digest"] == self._proposal["proposal_digest"] and
+                     event["base_digest"] == self._base["proof_digest"], "stale candidate reservation")
             fingerprint = canonical_digest({"interface": self._proposal, "patch": patch})
             _require(fingerprint not in self._ledger["seen_candidates"], "duplicate candidate")
             self._ledger["seen_candidates"].append(fingerprint)

@@ -16,6 +16,9 @@
 
 | 文档 | 用途 | 状态 |
 |---|---|---|
+| [September 25 continuation report](docs/continuation_20260925.md) | Current implementation, validation and remaining external decisions | 593 tests and five disclosed fixture replays; no real model evaluation |
+| [Unified explicit repair search](docs/unified_repair_search.md) | Shared entrance, budgets, callback failures and cost coverage | Implemented; explicit routes only |
+| [Experiment readiness proposal](docs/repair_experiment_readiness_20260925.md) | Cases/Gold, review provenance, six arms, metrics and authorization | Preparation only; independent review and run approval outstanding |
 | [Explicit topology transactions v2](docs/region_topology_v2.md) | Insertion, deletion obligation transfers, declared consumer reconnection, rebuilt boundaries | Engineering tests and fixture replay; semantic review remains external |
 | [Repair search audit 2026-09-25](docs/repair_search_audit_20260925.md) | Cross-entry budgets, scoped feedback replay, authorization and locality fixes | Seven reproduced failures fixed; no model evaluation |
 | [多节点事务与显式扩区 v1](docs/region_repair_search_v1.md) | 同节点槽位替换、显式扩区/全篇重写、共享预算、原子提交与重扫 | 无模型回放通过；不支持增删节点或自动路由 |

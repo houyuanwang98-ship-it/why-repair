@@ -2,6 +2,12 @@
 
 Dependency-guided diagnosis and minimal repair for natural-language mathematical proofs. The project converts proof steps into local obligations, retrieves relevant theorem-bank rules, distinguishes repairable gaps from invalid reasoning, and emits structured results.
 
+Current development continuation: [September 25 engineering report](docs/continuation_20260925.md),
+[unified explicit search](docs/unified_repair_search.md), and
+[topology transactions](docs/region_topology_v2.md). These opt-in protocols extend
+the historical role/operation descriptions below. Tests and demos use disclosed
+fixtures; real model evaluation and independent mathematical review remain pending.
+
 ## 项目简介
 
 本项目研究一个受约束的双 Agent 数学证明审计与修复系统。Person A / Evaluator 负责切分证明、建立依赖图、定位首个错误、生成 ErrorCertificate，并独立判断补丁的数学有效性；Person B / Repair Generator 只能依据冻结的局部上下文提出最小 PatchProposal；确定性 Controller 负责版本、权限、预算、后代失效、缓存清除、回滚、拓扑重验和运行审计。

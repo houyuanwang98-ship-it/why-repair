@@ -110,6 +110,16 @@ class SearchAuditTest(unittest.TestCase):
             record = replay_counterexample(search._contract, search._proposal, {"x": "1e999999999"})
         self.assertEqual("undetermined", record["status"])
 
+    def test_rejected_legacy_interface_reviews_consume_shared_feedback(self):
+        snapshot = self.session.snapshot()
+        contract = build_contract(snapshot, [ref(snapshot["nodes"][0])])
+        proposal = interface_proposal(contract, snapshot, ["2 == 2"])
+        for _ in range(20):
+            with self.assertRaises(ValueError):
+                ConstrainedRepairSearch(self.session, contract, proposal, {})
+        with self.assertRaisesRegex(ValueError, "feedback budget"):
+            self.local()
+
 
 if __name__ == "__main__":
     unittest.main()

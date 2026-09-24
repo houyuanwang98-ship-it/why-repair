@@ -1,5 +1,12 @@
 # 契约修订与受约束候选搜索 v1
 
+Update, 2026-09-25: the historical episode-only budgeting description below has
+been superseded by a session ledger shared with region search. Current search also
+binds localization authorization and rejects undeclared outside consumer changes.
+See the [audit](repair_search_audit_20260925.md) and
+[unified entrypoint](unified_repair_search.md). Direct v2 patch application is
+disabled once contract search is active; older sessions remain opt-in.
+
 2026-09-24。工程实现，未运行生产模型；537 项无模型回归通过。
 
 ## 已接通的闭环

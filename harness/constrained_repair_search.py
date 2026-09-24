@@ -57,24 +57,31 @@ class ConstrainedRepairSearch:
     """A fixed-region search episode, bound to one live v2 proof version.
 
     Independent interface review + M5 patch review + staged boundary review are
-    required. Old APIs remain unchanged. Scope changes create drafts, not edits.
+    required. Session budgets are shared with region search. Scope changes here
+    create drafts, not edits; region search performs explicit expanded edits.
     """
     def __init__(self, session, contract, proposal, interface_review, *, max_attempts=None):
         self._session = session
         self._contract = deepcopy(contract)
         self._proposal = deepcopy(proposal)
         self._review = deepcopy(interface_review)
+        session.generator_input()
         self._authorization = canonical_digest(session.snapshot()["report"]["certificate"])
         self._pending = {}
         self._events = []
         self._closed = False
         self._refuted = False
-        self._validate()
         self._ledger = search_ledger(session, attempts=max_attempts)
         self._limit = self._ledger["limits"]["attempts"]
         charge(self._ledger, "feedback")
-        self._ledger["events"].append({"event": "interface_review", "response": deepcopy(interface_review),
-                                      "status": "accepted"})
+        event = {"event": "interface_review", "response": deepcopy(interface_review)}
+        self._ledger["events"].append(event)
+        try:
+            self._validate()
+            event["status"] = "accepted"
+        except Exception as exc:
+            event.update(status="rejected", error_type=type(exc).__name__, reason=str(exc))
+            raise
 
     @property
     def _attempts(self):
@@ -119,7 +126,7 @@ class ConstrainedRepairSearch:
                  "M5 patch review must accept before boundary staging")
         staged = deepcopy(self._session)
         before = staged.snapshot()
-        after = staged.apply_patch(deepcopy(patch), deepcopy(context), deepcopy(patch_review))
+        after = staged.apply_patch(deepcopy(patch), deepcopy(context), deepcopy(patch_review), _contract_search=True)
         _require(after["revision"] > before["revision"], "patch was not applied")
         selected = {r["node_id"] for r in self._contract["region"]}
         updated = {n["node_id"]: n for n in after["nodes"]}
@@ -199,7 +206,7 @@ class ConstrainedRepairSearch:
             event["status"] = status
             if status != "accepted":
                 return {"state": "candidate_rejected" if status == "needs_revision" else "awaiting_evidence"}
-            self._session.apply_patch(patch, context, review)
+            self._session.apply_patch(patch, context, review, _contract_search=True)
             self._closed = True
             self._pending.clear()
             event["status"] = "applied_requires_rescan"
