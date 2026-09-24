@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-09-24 — Owner-confirmed locality definition
+
+- Recorded the owner's approval: all substantive argument changes belong in the edit region; checked mechanical changes are separately recorded and costed.
+- Preserved the conservative implementation and distinguished this approval from pending mathematical example review, routing policy, and model evaluation authorization. Documentation only.
+
 ## 2026-09-24 — Reviewed interface revision and bounded candidate search
 
 - Added reviewed per-consumer output proposals, budgeted single-node candidate staging, exact candidate-boundary review, rejection preservation, and apply-then-rescan semantics.
