@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-24 — Constrained repair search planning
+
+- Recorded the owner-approved next-stage direction: two-sided contracts, joint patch/region search, and impact/cost-aware routing to whole-proof rewriting.
+- Specified scoped feedback, contract recomputation, conservative evidence invalidation, cost accounting, implementation milestones, and regression acceptance cases.
+- Separated existing v2 functionality from proposed work and historical evidence from untested hypotheses. Documentation only; no algorithm changes or model evaluations.
+
 ## 2026-09-23 — Evidence-bound iterative first-error localization
 
 - Added opt-in prefix review and a separate candidate Gold audit without changing frozen M3 results.
