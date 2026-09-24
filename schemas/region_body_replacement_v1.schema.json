@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Structure-preserving multi-node body replacement",
+  "type": "object", "additionalProperties": false,
+  "required": ["policy", "base_digest", "generator_id", "replacements"],
+  "properties": {
+    "policy": {"const": "region-body-replacement-v1"},
+    "base_digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "generator_id": {"$ref": "#/$defs/text"},
+    "replacements": {"type": "array", "minItems": 1, "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["node_id", "claim", "self_contained_claim", "node_type", "depends_on"],
+      "properties": {
+        "node_id": {"$ref": "#/$defs/id"}, "claim": {"$ref": "#/$defs/text"},
+        "self_contained_claim": {"$ref": "#/$defs/text"}, "node_type": {"$ref": "#/$defs/text"},
+        "depends_on": {"type": "array", "uniqueItems": true, "items": {
+          "type": "object", "additionalProperties": false, "required": ["proof_id", "node_id", "version"],
+          "properties": {"proof_id": {"$ref": "#/$defs/text"}, "node_id": {"$ref": "#/$defs/id"},
+                         "version": {"type": "integer", "minimum": 1}}
+        }}
+      }
+    }}
+  },
+  "$defs": {
+    "text": {"type": "string", "pattern": "\\S"},
+    "id": {"oneOf": [{"type": "integer", "minimum": 1}, {"$ref": "#/$defs/text"}]}
+  }
+}

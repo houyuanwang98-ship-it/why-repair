@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-24 — Explicit multi-node transactions
+
+- Added opt-in structure-preserving region body replacement with explicit consumer expansion and whole-proof routing, reviewed interfaces, full candidate reviews, atomic application, and mandatory rescans.
+- Preserved outside mathematical text, separated substantive edits from mechanical version/reference changes, and shared attempt/route/feedback budgets and refutations across episodes on a live session.
+- Added 15 tests; full regression passed 552 tests plus explicit expansion/rewrite fixture replay. No automatic routing, node insertion/deletion, production evaluations, or token-savings claims.
+
 ## 2026-09-24 — Owner-confirmed locality definition
 
 - Recorded the owner's approval: all substantive argument changes belong in the edit region; checked mechanical changes are separately recorded and costed.
