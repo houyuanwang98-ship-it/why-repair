@@ -1,0 +1,201 @@
+{
+  "agent": {
+    "fresh_context_required": true,
+    "reasoning_effort": "high",
+    "requested_model": "gpt-5.6-sol",
+    "role": "generator"
+  },
+  "output_instructions": "Return only the raw JSON response object. Replace exactly these node bodies; preserve IDs/order. The theorem and outputs are targets, not premises. No external node text changes. Use policy region-body-replacement-v1, echo the exact request base_digest and generator_id, and replace every editable node exactly once. Preserve node IDs and order; dependencies may use only the exact editable-region or premise references authorized by the request.",
+  "phase": "candidate_generation",
+  "request": {
+    "base_digest": "sha256:80aed1a54ae700be5df23c7967bfedc8dba2857f9a0cbcb71f0ffae1bc61356a",
+    "editable_nodes": [
+      {
+        "claim": "Therefore ker(phi) is an ideal of R.",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "alg_003",
+            "version": 1
+          },
+          {
+            "node_id": 2,
+            "proof_id": "alg_003",
+            "version": 1
+          },
+          {
+            "node_id": 3,
+            "proof_id": "alg_003",
+            "version": 1
+          }
+        ],
+        "node_id": 4,
+        "node_type": "inference",
+        "order_key": 40,
+        "proof_id": "alg_003",
+        "self_contained_claim": "Therefore ker(phi) is an ideal of R.",
+        "version": 1
+      }
+    ],
+    "generator_id": "person-b",
+    "instructions": "Replace exactly these node bodies; preserve IDs/order. The theorem and outputs are targets, not premises. No external node text changes.",
+    "mode": "local",
+    "outputs_only": [],
+    "patch_policy": "region-body-replacement-v1",
+    "premise_nodes": [
+      {
+        "claim": "Let a and b be in ker(phi). Then phi(a) = 0 and phi(b) = 0.",
+        "depends_on": [],
+        "node_id": 1,
+        "node_type": "inference",
+        "order_key": 10,
+        "proof_id": "alg_003",
+        "self_contained_claim": "Let a and b be in ker(phi). Then phi(a) = 0 and phi(b) = 0.",
+        "version": 1
+      },
+      {
+        "claim": "We have phi(a - b) = phi(a) - phi(b) = 0, so a - b is in ker(phi).",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "alg_003",
+            "version": 1
+          }
+        ],
+        "node_id": 2,
+        "node_type": "inference",
+        "order_key": 20,
+        "proof_id": "alg_003",
+        "self_contained_claim": "We have phi(a - b) = phi(a) - phi(b) = 0, so a - b is in ker(phi).",
+        "version": 1
+      },
+      {
+        "claim": "Thus ker(phi) is closed under subtraction.",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "alg_003",
+            "version": 1
+          },
+          {
+            "node_id": 2,
+            "proof_id": "alg_003",
+            "version": 1
+          }
+        ],
+        "node_id": 3,
+        "node_type": "inference",
+        "order_key": 30,
+        "proof_id": "alg_003",
+        "self_contained_claim": "Thus ker(phi) is closed under subtraction.",
+        "version": 1
+      }
+    ],
+    "proof_context": {
+      "assumptions": [
+        "phi: R -> S is a ring homomorphism"
+      ],
+      "domain": "algebra",
+      "proof_id": "alg_003",
+      "theorem": "Let phi: R -> S be a ring homomorphism. Then ker(phi) is an ideal of R."
+    }
+  },
+  "request_digest": "sha256:738dac48fc61748cfdcddc9c45d89577d3f8ae690dea5d672e252020b1b65b3d",
+  "response_filename": "responses/738dac48fc61748cfdcddc9c45d89577d3f8ae690dea5d672e252020b1b65b3d.json",
+  "response_schema": {
+    "$defs": {
+      "id": {
+        "oneOf": [
+          {
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "$ref": "#/$defs/text"
+          }
+        ]
+      },
+      "text": {
+        "pattern": "\\S",
+        "type": "string"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "base_digest": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "generator_id": {
+        "$ref": "#/$defs/text"
+      },
+      "policy": {
+        "const": "region-body-replacement-v1"
+      },
+      "replacements": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "claim": {
+              "$ref": "#/$defs/text"
+            },
+            "depends_on": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "node_id": {
+                    "$ref": "#/$defs/id"
+                  },
+                  "proof_id": {
+                    "$ref": "#/$defs/text"
+                  },
+                  "version": {
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "proof_id",
+                  "node_id",
+                  "version"
+                ],
+                "type": "object"
+              },
+              "type": "array",
+              "uniqueItems": true
+            },
+            "node_id": {
+              "$ref": "#/$defs/id"
+            },
+            "node_type": {
+              "$ref": "#/$defs/text"
+            },
+            "self_contained_claim": {
+              "$ref": "#/$defs/text"
+            }
+          },
+          "required": [
+            "node_id",
+            "claim",
+            "self_contained_claim",
+            "node_type",
+            "depends_on"
+          ],
+          "type": "object"
+        },
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "policy",
+      "base_digest",
+      "generator_id",
+      "replacements"
+    ],
+    "title": "Structure-preserving multi-node body replacement",
+    "type": "object"
+  },
+  "schema_version": "interactive-repair-pilot-request-v1"
+}

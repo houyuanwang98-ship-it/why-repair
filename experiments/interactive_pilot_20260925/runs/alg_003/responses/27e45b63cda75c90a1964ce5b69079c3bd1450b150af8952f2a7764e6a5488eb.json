@@ -1,0 +1,72 @@
+{
+  "schema_version": "repair-contract-review-v1",
+  "input_digest": "sha256:27e45b63cda75c90a1964ce5b69079c3bd1450b150af8952f2a7764e6a5488eb",
+  "reviewer_id": "person-a",
+  "checks": [
+    {
+      "check_id": "dependencies",
+      "status": "accepted",
+      "reason": "The editable final node has the fixed homomorphism context and all three earlier kernel/additive-closure nodes available. Because the region contains the terminal node and has no unchanged downstream consumer, an empty output boundary is appropriate; no cross-boundary dependency is omitted.",
+      "source_refs": [
+        {"source_id": "context", "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5"},
+        {"source_id": "node:0", "digest": "sha256:8d21c734ff07f11ddfd09371123e313ba489a5135d723f1a7f77c714004d7c18"},
+        {"source_id": "node:1", "digest": "sha256:fe79b41fb7af37286bb87cf99d5d6cf0c5e28440f95b62c170981d6d9e4fe1ad"},
+        {"source_id": "node:2", "digest": "sha256:f04d0fef486c6696d763bd0a65f4767ed41b9e3b928f8e8a4839df4283d1bd18"},
+        {"source_id": "node:3", "digest": "sha256:14b576e3a70eb3a909b45461b45f125c62859f07c8bf94c9f16f8bb2fea83897"},
+        {"source_id": "proposed_interface", "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f"}
+      ]
+    },
+    {
+      "check_id": "scope",
+      "status": "accepted",
+      "reason": "The earlier a,b variables are confined to the arbitrary-element subtraction argument, which has already been summarized as closure under subtraction. A repair of the final node can introduce fresh arbitrary r and x locally; no variable or witness must cross an output boundary because there is no downstream consumer.",
+      "source_refs": [
+        {"source_id": "context", "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5"},
+        {"source_id": "node:0", "digest": "sha256:8d21c734ff07f11ddfd09371123e313ba489a5135d723f1a7f77c714004d7c18"},
+        {"source_id": "node:1", "digest": "sha256:fe79b41fb7af37286bb87cf99d5d6cf0c5e28440f95b62c170981d6d9e4fe1ad"},
+        {"source_id": "node:2", "digest": "sha256:f04d0fef486c6696d763bd0a65f4767ed41b9e3b928f8e8a4839df4283d1bd18"},
+        {"source_id": "node:3", "digest": "sha256:14b576e3a70eb3a909b45461b45f125c62859f07c8bf94c9f16f8bb2fea83897"},
+        {"source_id": "proposed_interface", "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f"}
+      ]
+    },
+    {
+      "check_id": "target_preservation",
+      "status": "accepted",
+      "reason": "The fixed context retains the original homomorphism assumption and the original ideal theorem as the final obligation. The empty proposed output set does not turn that theorem into a premise; it only reflects that the repaired region ends at the proof target.",
+      "source_refs": [
+        {"source_id": "context", "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5"},
+        {"source_id": "proposed_interface", "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f"}
+      ]
+    },
+    {
+      "check_id": "upstream:0",
+      "status": "accepted",
+      "reason": "For a ring homomorphism, membership of a and b in its kernel means phi(a)=0 and phi(b)=0 by definition. This premise is justified from the fixed context and does not rely on the editable final node.",
+      "source_refs": [
+        {"source_id": "context", "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5"},
+        {"source_id": "node:0", "digest": "sha256:8d21c734ff07f11ddfd09371123e313ba489a5135d723f1a7f77c714004d7c18"},
+        {"source_id": "proposed_interface", "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f"}
+      ]
+    },
+    {
+      "check_id": "upstream:1",
+      "status": "accepted",
+      "reason": "A ring homomorphism preserves subtraction, so for the arbitrary kernel elements already in scope phi(a-b)=phi(a)-phi(b)=0 and hence a-b is in the kernel. This uses admissible earlier setup, not the editable final node or a later conclusion.",
+      "source_refs": [
+        {"source_id": "context", "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5"},
+        {"source_id": "node:1", "digest": "sha256:fe79b41fb7af37286bb87cf99d5d6cf0c5e28440f95b62c170981d6d9e4fe1ad"},
+        {"source_id": "proposed_interface", "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f"}
+      ]
+    },
+    {
+      "check_id": "upstream:2",
+      "status": "accepted",
+      "reason": "Since the preceding subtraction computation applies to arbitrary a,b in the kernel, the stated closure under subtraction is justified before the editable region and does not depend on the ideal conclusion.",
+      "source_refs": [
+        {"source_id": "context", "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5"},
+        {"source_id": "node:2", "digest": "sha256:f04d0fef486c6696d763bd0a65f4767ed41b9e3b928f8e8a4839df4283d1bd18"},
+        {"source_id": "proposed_interface", "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f"}
+      ]
+    }
+  ]
+}

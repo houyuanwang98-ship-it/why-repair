@@ -1,0 +1,474 @@
+{
+  "agent": {
+    "fresh_context_required": true,
+    "reasoning_effort": "high",
+    "requested_model": "gpt-5.6-sol",
+    "role": "online_reviewer"
+  },
+  "output_instructions": "Return only the raw JSON response object. This is the new multi-node patch review, not an M5 review. Return explicit mathematical reasoning per check. Acceptance does not skip rescanning. Return exactly one row for every requested check_id. Each row must cite every required_sources entry using the exact source_id and digest from the request; do not add unknown or duplicate sources.",
+  "phase": "candidate_review",
+  "request": {
+    "input": {
+      "checks": [
+        {
+          "check_id": "patch_validity",
+          "question": "Check every modified inference against admissible premises, without target-as-premise reasoning. Missing proof or new errors => needs_revision.",
+          "required_sources": [
+            "before",
+            "after",
+            "context",
+            "outputs"
+          ]
+        },
+        {
+          "check_id": "scope",
+          "question": "Check variable bindings, definitions, witnesses and all dependency edges including omitted dependencies.",
+          "required_sources": [
+            "before",
+            "after",
+            "context",
+            "outputs"
+          ]
+        },
+        {
+          "check_id": "locality",
+          "question": "Verify no undeclared substantive changes outside the region; mechanical reference rebasing is not new mathematical evidence.",
+          "required_sources": [
+            "before",
+            "after",
+            "context",
+            "outputs"
+          ]
+        },
+        {
+          "check_id": "original_problem",
+          "question": "Verify unchanged original assumptions and theorem. This is not final whole-proof acceptance.",
+          "required_sources": [
+            "before",
+            "after",
+            "context",
+            "outputs"
+          ]
+        },
+        {
+          "check_id": "minimality",
+          "question": "Is every substantive change justified by this repair, rather than unrelated edits?",
+          "required_sources": [
+            "before",
+            "after",
+            "context",
+            "outputs"
+          ]
+        }
+      ],
+      "edit_accounting": {
+        "deleted_nodes": [],
+        "inserted_nodes": [],
+        "note": "Text changes counted conservatively; sets can overlap. All affected evidence needs revalidation.",
+        "substantive_nodes": [
+          4
+        ],
+        "version_or_reference_updated_nodes": [
+          4
+        ]
+      },
+      "interface": {
+        "base_contract_digest": "sha256:3eb10ee6f05d51bd349570a82034dd56c99faf2364228f7c022a63b45ae5cb97",
+        "outputs": [],
+        "policy": "repair-interface-proposal-v1",
+        "proposal_digest": "sha256:2571f7f4226d8fc0cd4650466f5d9aee3c11063ff02919b6b3388bb34ecab43c"
+      },
+      "patch": {
+        "base_digest": "sha256:80aed1a54ae700be5df23c7967bfedc8dba2857f9a0cbcb71f0ffae1bc61356a",
+        "generator_id": "person-b",
+        "policy": "region-body-replacement-v1",
+        "replacements": [
+          {
+            "claim": "Because phi(0_R) = 0_S, the kernel is nonempty; together with closure under subtraction, this makes ker(phi) an additive subgroup of R. If r is in R and x is in ker(phi), then phi(rx) = phi(r)phi(x) = 0 and phi(xr) = phi(x)phi(r) = 0, so rx and xr are in ker(phi). Therefore ker(phi) is a two-sided ideal of R.",
+            "depends_on": [
+              {
+                "node_id": 1,
+                "proof_id": "alg_003",
+                "version": 1
+              },
+              {
+                "node_id": 2,
+                "proof_id": "alg_003",
+                "version": 1
+              },
+              {
+                "node_id": 3,
+                "proof_id": "alg_003",
+                "version": 1
+              }
+            ],
+            "node_id": 4,
+            "node_type": "inference",
+            "self_contained_claim": "The kernel contains 0_R and is closed under subtraction, hence is an additive subgroup of R; moreover, for every r in R and x in ker(phi), phi(rx) = phi(r)phi(x) = 0 and phi(xr) = phi(x)phi(r) = 0, so rx,xr lie in ker(phi). Thus ker(phi) is a two-sided ideal of R."
+          }
+        ]
+      },
+      "policy": "region-candidate-review-v1",
+      "region": [
+        {
+          "node_id": 4,
+          "proof_id": "alg_003",
+          "version": 1
+        }
+      ],
+      "sources": [
+        {
+          "content": [
+            {
+              "claim": "Let a and b be in ker(phi). Then phi(a) = 0 and phi(b) = 0.",
+              "depends_on": [],
+              "node_id": 1,
+              "node_type": "inference",
+              "order_key": 10,
+              "proof_id": "alg_003",
+              "self_contained_claim": "Let a and b be in ker(phi). Then phi(a) = 0 and phi(b) = 0.",
+              "version": 1
+            },
+            {
+              "claim": "We have phi(a - b) = phi(a) - phi(b) = 0, so a - b is in ker(phi).",
+              "depends_on": [
+                {
+                  "node_id": 1,
+                  "proof_id": "alg_003",
+                  "version": 1
+                }
+              ],
+              "node_id": 2,
+              "node_type": "inference",
+              "order_key": 20,
+              "proof_id": "alg_003",
+              "self_contained_claim": "We have phi(a - b) = phi(a) - phi(b) = 0, so a - b is in ker(phi).",
+              "version": 1
+            },
+            {
+              "claim": "Thus ker(phi) is closed under subtraction.",
+              "depends_on": [
+                {
+                  "node_id": 1,
+                  "proof_id": "alg_003",
+                  "version": 1
+                },
+                {
+                  "node_id": 2,
+                  "proof_id": "alg_003",
+                  "version": 1
+                }
+              ],
+              "node_id": 3,
+              "node_type": "inference",
+              "order_key": 30,
+              "proof_id": "alg_003",
+              "self_contained_claim": "Thus ker(phi) is closed under subtraction.",
+              "version": 1
+            },
+            {
+              "claim": "Therefore ker(phi) is an ideal of R.",
+              "depends_on": [
+                {
+                  "node_id": 1,
+                  "proof_id": "alg_003",
+                  "version": 1
+                },
+                {
+                  "node_id": 2,
+                  "proof_id": "alg_003",
+                  "version": 1
+                },
+                {
+                  "node_id": 3,
+                  "proof_id": "alg_003",
+                  "version": 1
+                }
+              ],
+              "node_id": 4,
+              "node_type": "inference",
+              "order_key": 40,
+              "proof_id": "alg_003",
+              "self_contained_claim": "Therefore ker(phi) is an ideal of R.",
+              "version": 1
+            }
+          ],
+          "digest": "sha256:16a29fd046e7f2a87b4fc493fed46df379db30d8043e7f24f196e4e2a2946f36",
+          "role": "audit_material_not_premise",
+          "source_id": "before"
+        },
+        {
+          "content": [
+            {
+              "claim": "Let a and b be in ker(phi). Then phi(a) = 0 and phi(b) = 0.",
+              "depends_on": [],
+              "node_id": 1,
+              "node_type": "inference",
+              "order_key": 10,
+              "proof_id": "alg_003",
+              "self_contained_claim": "Let a and b be in ker(phi). Then phi(a) = 0 and phi(b) = 0.",
+              "version": 1
+            },
+            {
+              "claim": "We have phi(a - b) = phi(a) - phi(b) = 0, so a - b is in ker(phi).",
+              "depends_on": [
+                {
+                  "node_id": 1,
+                  "proof_id": "alg_003",
+                  "version": 1
+                }
+              ],
+              "node_id": 2,
+              "node_type": "inference",
+              "order_key": 20,
+              "proof_id": "alg_003",
+              "self_contained_claim": "We have phi(a - b) = phi(a) - phi(b) = 0, so a - b is in ker(phi).",
+              "version": 1
+            },
+            {
+              "claim": "Thus ker(phi) is closed under subtraction.",
+              "depends_on": [
+                {
+                  "node_id": 1,
+                  "proof_id": "alg_003",
+                  "version": 1
+                },
+                {
+                  "node_id": 2,
+                  "proof_id": "alg_003",
+                  "version": 1
+                }
+              ],
+              "node_id": 3,
+              "node_type": "inference",
+              "order_key": 30,
+              "proof_id": "alg_003",
+              "self_contained_claim": "Thus ker(phi) is closed under subtraction.",
+              "version": 1
+            },
+            {
+              "claim": "Because phi(0_R) = 0_S, the kernel is nonempty; together with closure under subtraction, this makes ker(phi) an additive subgroup of R. If r is in R and x is in ker(phi), then phi(rx) = phi(r)phi(x) = 0 and phi(xr) = phi(x)phi(r) = 0, so rx and xr are in ker(phi). Therefore ker(phi) is a two-sided ideal of R.",
+              "depends_on": [
+                {
+                  "node_id": 1,
+                  "proof_id": "alg_003",
+                  "version": 1
+                },
+                {
+                  "node_id": 2,
+                  "proof_id": "alg_003",
+                  "version": 1
+                },
+                {
+                  "node_id": 3,
+                  "proof_id": "alg_003",
+                  "version": 1
+                }
+              ],
+              "lifecycle_state": "pending_evaluation",
+              "node_id": 4,
+              "node_type": "inference",
+              "order_key": 40,
+              "proof_id": "alg_003",
+              "self_contained_claim": "The kernel contains 0_R and is closed under subtraction, hence is an additive subgroup of R; moreover, for every r in R and x in ker(phi), phi(rx) = phi(r)phi(x) = 0 and phi(xr) = phi(x)phi(r) = 0, so rx,xr lie in ker(phi). Thus ker(phi) is a two-sided ideal of R.",
+              "version": 2
+            }
+          ],
+          "digest": "sha256:c0747dee1a7779b8792e5b904439aef9ef300ac43d334f88b89fe3ed4cf1266a",
+          "role": "audit_material_not_premise",
+          "source_id": "after"
+        },
+        {
+          "content": {
+            "assumptions": [
+              "phi: R -> S is a ring homomorphism"
+            ],
+            "domain": "algebra",
+            "proof_id": "alg_003",
+            "theorem": "Let phi: R -> S be a ring homomorphism. Then ker(phi) is an ideal of R."
+          },
+          "digest": "sha256:35480bc17f96bf3493d84aea974b7af09bda1980e0817823df5884260d6fe1cc",
+          "role": "audit_material_not_premise",
+          "source_id": "context"
+        },
+        {
+          "content": [],
+          "digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "role": "audit_material_not_premise",
+          "source_id": "outputs"
+        }
+      ]
+    },
+    "input_digest": "sha256:4084560b61e59394bb41506ce3aa2c229641a217d4aeebe67b4183ea43444591",
+    "instructions": "This is the new multi-node patch review, not an M5 review. Return explicit mathematical reasoning per check. Acceptance does not skip rescanning.",
+    "response_schema": {
+      "$defs": {
+        "digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "text": {
+          "pattern": "\\S",
+          "type": "string"
+        }
+      },
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "checks": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "check_id": {
+                "$ref": "#/$defs/text"
+              },
+              "reason": {
+                "$ref": "#/$defs/text"
+              },
+              "source_refs": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "digest": {
+                      "$ref": "#/$defs/digest"
+                    },
+                    "source_id": {
+                      "$ref": "#/$defs/text"
+                    }
+                  },
+                  "required": [
+                    "source_id",
+                    "digest"
+                  ],
+                  "type": "object"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              },
+              "status": {
+                "enum": [
+                  "accepted",
+                  "needs_revision",
+                  "undetermined"
+                ]
+              }
+            },
+            "required": [
+              "check_id",
+              "status",
+              "reason",
+              "source_refs"
+            ],
+            "type": "object"
+          },
+          "minItems": 3,
+          "type": "array"
+        },
+        "input_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "reviewer_id": {
+          "$ref": "#/$defs/text"
+        },
+        "schema_version": {
+          "const": "repair-contract-review-v1"
+        }
+      },
+      "required": [
+        "schema_version",
+        "input_digest",
+        "reviewer_id",
+        "checks"
+      ],
+      "title": "Semantic contract review (judgments, not proof certificates)",
+      "type": "object"
+    }
+  },
+  "request_digest": "sha256:4084560b61e59394bb41506ce3aa2c229641a217d4aeebe67b4183ea43444591",
+  "response_filename": "responses/4084560b61e59394bb41506ce3aa2c229641a217d4aeebe67b4183ea43444591.json",
+  "response_schema": {
+    "$defs": {
+      "digest": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "text": {
+        "pattern": "\\S",
+        "type": "string"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "checks": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "check_id": {
+              "$ref": "#/$defs/text"
+            },
+            "reason": {
+              "$ref": "#/$defs/text"
+            },
+            "source_refs": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "digest": {
+                    "$ref": "#/$defs/digest"
+                  },
+                  "source_id": {
+                    "$ref": "#/$defs/text"
+                  }
+                },
+                "required": [
+                  "source_id",
+                  "digest"
+                ],
+                "type": "object"
+              },
+              "minItems": 1,
+              "type": "array",
+              "uniqueItems": true
+            },
+            "status": {
+              "enum": [
+                "accepted",
+                "needs_revision",
+                "undetermined"
+              ]
+            }
+          },
+          "required": [
+            "check_id",
+            "status",
+            "reason",
+            "source_refs"
+          ],
+          "type": "object"
+        },
+        "minItems": 3,
+        "type": "array"
+      },
+      "input_digest": {
+        "$ref": "#/$defs/digest"
+      },
+      "reviewer_id": {
+        "$ref": "#/$defs/text"
+      },
+      "schema_version": {
+        "const": "repair-contract-review-v1"
+      }
+    },
+    "required": [
+      "schema_version",
+      "input_digest",
+      "reviewer_id",
+      "checks"
+    ],
+    "title": "Semantic contract review (judgments, not proof certificates)",
+    "type": "object"
+  },
+  "schema_version": "interactive-repair-pilot-request-v1"
+}

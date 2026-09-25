@@ -84,11 +84,51 @@
       },
       {
         "event_id": 5,
-        "evidence_kind": "unreported",
+        "evidence_kind": "external",
         "fresh_model_call_by_controller": false,
         "latency_seconds": null,
         "phase": "contract_review",
         "request_digest": "sha256:ee283c2d95b04dc0ad65700acd555583345bab132815a5036ecb5496712b84a2",
+        "revision": 1,
+        "status": "returned",
+        "transport": "offline_file_replay",
+        "usage": {
+          "cached_input_tokens": null,
+          "cost": null,
+          "currency": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "reasoning_tokens": null,
+          "total_tokens": null
+        }
+      },
+      {
+        "event_id": 6,
+        "evidence_kind": "external",
+        "fresh_model_call_by_controller": false,
+        "latency_seconds": null,
+        "phase": "candidate_generation",
+        "request_digest": "sha256:738dac48fc61748cfdcddc9c45d89577d3f8ae690dea5d672e252020b1b65b3d",
+        "revision": 1,
+        "status": "returned",
+        "transport": "offline_file_replay",
+        "usage": {
+          "cached_input_tokens": null,
+          "cost": null,
+          "currency": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "reasoning_tokens": null,
+          "total_tokens": null
+        }
+      },
+      {
+        "event_id": 7,
+        "evidence_kind": "unreported",
+        "fresh_model_call_by_controller": false,
+        "latency_seconds": null,
+        "phase": "candidate_review",
+        "request_digest": "sha256:1a90fea78c103f970b25790c7ff35473817c3e4cd6d0abcf5cd2fc5dba214d4b",
         "revision": 1,
         "status": "awaiting_external_response",
         "transport": "offline_file_replay",
@@ -108,7 +148,193 @@
       "closed": false,
       "interface_refuted": false,
       "ledger": {
-        "events": [],
+        "events": [
+          {
+            "cost_event_id": 5,
+            "event": "interface_review",
+            "response": {
+              "checks": [
+                {
+                  "check_id": "dependencies",
+                  "reason": "The editable final node has the fixed homomorphism context and all three earlier kernel/additive-closure nodes available. Because the region contains the terminal node and has no unchanged downstream consumer, an empty output boundary is appropriate; no cross-boundary dependency is omitted.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5",
+                      "source_id": "context"
+                    },
+                    {
+                      "digest": "sha256:8d21c734ff07f11ddfd09371123e313ba489a5135d723f1a7f77c714004d7c18",
+                      "source_id": "node:0"
+                    },
+                    {
+                      "digest": "sha256:fe79b41fb7af37286bb87cf99d5d6cf0c5e28440f95b62c170981d6d9e4fe1ad",
+                      "source_id": "node:1"
+                    },
+                    {
+                      "digest": "sha256:f04d0fef486c6696d763bd0a65f4767ed41b9e3b928f8e8a4839df4283d1bd18",
+                      "source_id": "node:2"
+                    },
+                    {
+                      "digest": "sha256:14b576e3a70eb3a909b45461b45f125c62859f07c8bf94c9f16f8bb2fea83897",
+                      "source_id": "node:3"
+                    },
+                    {
+                      "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f",
+                      "source_id": "proposed_interface"
+                    }
+                  ],
+                  "status": "accepted"
+                },
+                {
+                  "check_id": "scope",
+                  "reason": "The earlier a,b variables are confined to the arbitrary-element subtraction argument, which has already been summarized as closure under subtraction. A repair of the final node can introduce fresh arbitrary r and x locally; no variable or witness must cross an output boundary because there is no downstream consumer.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5",
+                      "source_id": "context"
+                    },
+                    {
+                      "digest": "sha256:8d21c734ff07f11ddfd09371123e313ba489a5135d723f1a7f77c714004d7c18",
+                      "source_id": "node:0"
+                    },
+                    {
+                      "digest": "sha256:fe79b41fb7af37286bb87cf99d5d6cf0c5e28440f95b62c170981d6d9e4fe1ad",
+                      "source_id": "node:1"
+                    },
+                    {
+                      "digest": "sha256:f04d0fef486c6696d763bd0a65f4767ed41b9e3b928f8e8a4839df4283d1bd18",
+                      "source_id": "node:2"
+                    },
+                    {
+                      "digest": "sha256:14b576e3a70eb3a909b45461b45f125c62859f07c8bf94c9f16f8bb2fea83897",
+                      "source_id": "node:3"
+                    },
+                    {
+                      "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f",
+                      "source_id": "proposed_interface"
+                    }
+                  ],
+                  "status": "accepted"
+                },
+                {
+                  "check_id": "target_preservation",
+                  "reason": "The fixed context retains the original homomorphism assumption and the original ideal theorem as the final obligation. The empty proposed output set does not turn that theorem into a premise; it only reflects that the repaired region ends at the proof target.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5",
+                      "source_id": "context"
+                    },
+                    {
+                      "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f",
+                      "source_id": "proposed_interface"
+                    }
+                  ],
+                  "status": "accepted"
+                },
+                {
+                  "check_id": "upstream:0",
+                  "reason": "For a ring homomorphism, membership of a and b in its kernel means phi(a)=0 and phi(b)=0 by definition. This premise is justified from the fixed context and does not rely on the editable final node.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5",
+                      "source_id": "context"
+                    },
+                    {
+                      "digest": "sha256:8d21c734ff07f11ddfd09371123e313ba489a5135d723f1a7f77c714004d7c18",
+                      "source_id": "node:0"
+                    },
+                    {
+                      "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f",
+                      "source_id": "proposed_interface"
+                    }
+                  ],
+                  "status": "accepted"
+                },
+                {
+                  "check_id": "upstream:1",
+                  "reason": "A ring homomorphism preserves subtraction, so for the arbitrary kernel elements already in scope phi(a-b)=phi(a)-phi(b)=0 and hence a-b is in the kernel. This uses admissible earlier setup, not the editable final node or a later conclusion.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5",
+                      "source_id": "context"
+                    },
+                    {
+                      "digest": "sha256:fe79b41fb7af37286bb87cf99d5d6cf0c5e28440f95b62c170981d6d9e4fe1ad",
+                      "source_id": "node:1"
+                    },
+                    {
+                      "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f",
+                      "source_id": "proposed_interface"
+                    }
+                  ],
+                  "status": "accepted"
+                },
+                {
+                  "check_id": "upstream:2",
+                  "reason": "Since the preceding subtraction computation applies to arbitrary a,b in the kernel, the stated closure under subtraction is justified before the editable region and does not depend on the ideal conclusion.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5",
+                      "source_id": "context"
+                    },
+                    {
+                      "digest": "sha256:f04d0fef486c6696d763bd0a65f4767ed41b9e3b928f8e8a4839df4283d1bd18",
+                      "source_id": "node:2"
+                    },
+                    {
+                      "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f",
+                      "source_id": "proposed_interface"
+                    }
+                  ],
+                  "status": "accepted"
+                }
+              ],
+              "input_digest": "sha256:27e45b63cda75c90a1964ce5b69079c3bd1450b150af8952f2a7764e6a5488eb",
+              "reviewer_id": "person-a",
+              "schema_version": "repair-contract-review-v1"
+            },
+            "statements": [],
+            "status": "accepted"
+          },
+          {
+            "base_digest": "sha256:80aed1a54ae700be5df23c7967bfedc8dba2857f9a0cbcb71f0ffae1bc61356a",
+            "cost_event_id": 6,
+            "event": "region_candidate",
+            "interface_digest": "sha256:2571f7f4226d8fc0cd4650466f5d9aee3c11063ff02919b6b3388bb34ecab43c",
+            "patch": {
+              "base_digest": "sha256:80aed1a54ae700be5df23c7967bfedc8dba2857f9a0cbcb71f0ffae1bc61356a",
+              "generator_id": "person-b",
+              "policy": "region-body-replacement-v1",
+              "replacements": [
+                {
+                  "claim": "Because phi(0_R) = 0_S, the kernel is nonempty; together with closure under subtraction, this makes ker(phi) an additive subgroup of R. If r is in R and x is in ker(phi), then phi(rx) = phi(r)phi(x) = 0 and phi(xr) = phi(x)phi(r) = 0, so rx and xr are in ker(phi). Therefore ker(phi) is a two-sided ideal of R.",
+                  "depends_on": [
+                    {
+                      "node_id": 1,
+                      "proof_id": "alg_003",
+                      "version": 1
+                    },
+                    {
+                      "node_id": 2,
+                      "proof_id": "alg_003",
+                      "version": 1
+                    },
+                    {
+                      "node_id": 3,
+                      "proof_id": "alg_003",
+                      "version": 1
+                    }
+                  ],
+                  "node_id": 4,
+                  "node_type": "inference",
+                  "self_contained_claim": "The kernel contains 0_R and is closed under subtraction, hence is an additive subgroup of R; moreover, for every r in R and x in ker(phi), phi(rx) = phi(r)phi(x) = 0 and phi(xr) = phi(x)phi(r) = 0, so rx,xr lie in ker(phi). Thus ker(phi) is a two-sided ideal of R."
+                }
+              ]
+            },
+            "request_digest": "sha256:4084560b61e59394bb41506ce3aa2c229641a217d4aeebe67b4183ea43444591",
+            "status": "awaiting_review"
+          }
+        ],
         "limits": {
           "attempts": 8,
           "feedback": 40,
@@ -116,16 +342,20 @@
         },
         "refuted_interfaces": [],
         "replays": [],
-        "seen_candidates": [],
+        "seen_candidates": [
+          "sha256:26cf8ec76a15c51d79ab0a01c6574efd94843f41c357d84404b8de5efac701c9"
+        ],
         "used": {
-          "attempts": 0,
-          "feedback": 0,
+          "attempts": 1,
+          "feedback": 1,
           "routes": 0
         },
         "witnesses": []
       },
       "mode": "local",
-      "pending": [],
+      "pending": [
+        "sha256:4084560b61e59394bb41506ce3aa2c229641a217d4aeebe67b4183ea43444591"
+      ],
       "provider_cost": null,
       "provider_tokens": null,
       "region": [
@@ -149,7 +379,9 @@
       2,
       3,
       4,
-      5
+      5,
+      6,
+      7
     ],
     "proof": {
       "events": [
@@ -1774,7 +2006,193 @@
       "revision": 1
     },
     "search_ledger": {
-      "events": [],
+      "events": [
+        {
+          "cost_event_id": 5,
+          "event": "interface_review",
+          "response": {
+            "checks": [
+              {
+                "check_id": "dependencies",
+                "reason": "The editable final node has the fixed homomorphism context and all three earlier kernel/additive-closure nodes available. Because the region contains the terminal node and has no unchanged downstream consumer, an empty output boundary is appropriate; no cross-boundary dependency is omitted.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5",
+                    "source_id": "context"
+                  },
+                  {
+                    "digest": "sha256:8d21c734ff07f11ddfd09371123e313ba489a5135d723f1a7f77c714004d7c18",
+                    "source_id": "node:0"
+                  },
+                  {
+                    "digest": "sha256:fe79b41fb7af37286bb87cf99d5d6cf0c5e28440f95b62c170981d6d9e4fe1ad",
+                    "source_id": "node:1"
+                  },
+                  {
+                    "digest": "sha256:f04d0fef486c6696d763bd0a65f4767ed41b9e3b928f8e8a4839df4283d1bd18",
+                    "source_id": "node:2"
+                  },
+                  {
+                    "digest": "sha256:14b576e3a70eb3a909b45461b45f125c62859f07c8bf94c9f16f8bb2fea83897",
+                    "source_id": "node:3"
+                  },
+                  {
+                    "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f",
+                    "source_id": "proposed_interface"
+                  }
+                ],
+                "status": "accepted"
+              },
+              {
+                "check_id": "scope",
+                "reason": "The earlier a,b variables are confined to the arbitrary-element subtraction argument, which has already been summarized as closure under subtraction. A repair of the final node can introduce fresh arbitrary r and x locally; no variable or witness must cross an output boundary because there is no downstream consumer.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5",
+                    "source_id": "context"
+                  },
+                  {
+                    "digest": "sha256:8d21c734ff07f11ddfd09371123e313ba489a5135d723f1a7f77c714004d7c18",
+                    "source_id": "node:0"
+                  },
+                  {
+                    "digest": "sha256:fe79b41fb7af37286bb87cf99d5d6cf0c5e28440f95b62c170981d6d9e4fe1ad",
+                    "source_id": "node:1"
+                  },
+                  {
+                    "digest": "sha256:f04d0fef486c6696d763bd0a65f4767ed41b9e3b928f8e8a4839df4283d1bd18",
+                    "source_id": "node:2"
+                  },
+                  {
+                    "digest": "sha256:14b576e3a70eb3a909b45461b45f125c62859f07c8bf94c9f16f8bb2fea83897",
+                    "source_id": "node:3"
+                  },
+                  {
+                    "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f",
+                    "source_id": "proposed_interface"
+                  }
+                ],
+                "status": "accepted"
+              },
+              {
+                "check_id": "target_preservation",
+                "reason": "The fixed context retains the original homomorphism assumption and the original ideal theorem as the final obligation. The empty proposed output set does not turn that theorem into a premise; it only reflects that the repaired region ends at the proof target.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5",
+                    "source_id": "context"
+                  },
+                  {
+                    "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f",
+                    "source_id": "proposed_interface"
+                  }
+                ],
+                "status": "accepted"
+              },
+              {
+                "check_id": "upstream:0",
+                "reason": "For a ring homomorphism, membership of a and b in its kernel means phi(a)=0 and phi(b)=0 by definition. This premise is justified from the fixed context and does not rely on the editable final node.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5",
+                    "source_id": "context"
+                  },
+                  {
+                    "digest": "sha256:8d21c734ff07f11ddfd09371123e313ba489a5135d723f1a7f77c714004d7c18",
+                    "source_id": "node:0"
+                  },
+                  {
+                    "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f",
+                    "source_id": "proposed_interface"
+                  }
+                ],
+                "status": "accepted"
+              },
+              {
+                "check_id": "upstream:1",
+                "reason": "A ring homomorphism preserves subtraction, so for the arbitrary kernel elements already in scope phi(a-b)=phi(a)-phi(b)=0 and hence a-b is in the kernel. This uses admissible earlier setup, not the editable final node or a later conclusion.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5",
+                    "source_id": "context"
+                  },
+                  {
+                    "digest": "sha256:fe79b41fb7af37286bb87cf99d5d6cf0c5e28440f95b62c170981d6d9e4fe1ad",
+                    "source_id": "node:1"
+                  },
+                  {
+                    "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f",
+                    "source_id": "proposed_interface"
+                  }
+                ],
+                "status": "accepted"
+              },
+              {
+                "check_id": "upstream:2",
+                "reason": "Since the preceding subtraction computation applies to arbitrary a,b in the kernel, the stated closure under subtraction is justified before the editable region and does not depend on the ideal conclusion.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5",
+                    "source_id": "context"
+                  },
+                  {
+                    "digest": "sha256:f04d0fef486c6696d763bd0a65f4767ed41b9e3b928f8e8a4839df4283d1bd18",
+                    "source_id": "node:2"
+                  },
+                  {
+                    "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f",
+                    "source_id": "proposed_interface"
+                  }
+                ],
+                "status": "accepted"
+              }
+            ],
+            "input_digest": "sha256:27e45b63cda75c90a1964ce5b69079c3bd1450b150af8952f2a7764e6a5488eb",
+            "reviewer_id": "person-a",
+            "schema_version": "repair-contract-review-v1"
+          },
+          "statements": [],
+          "status": "accepted"
+        },
+        {
+          "base_digest": "sha256:80aed1a54ae700be5df23c7967bfedc8dba2857f9a0cbcb71f0ffae1bc61356a",
+          "cost_event_id": 6,
+          "event": "region_candidate",
+          "interface_digest": "sha256:2571f7f4226d8fc0cd4650466f5d9aee3c11063ff02919b6b3388bb34ecab43c",
+          "patch": {
+            "base_digest": "sha256:80aed1a54ae700be5df23c7967bfedc8dba2857f9a0cbcb71f0ffae1bc61356a",
+            "generator_id": "person-b",
+            "policy": "region-body-replacement-v1",
+            "replacements": [
+              {
+                "claim": "Because phi(0_R) = 0_S, the kernel is nonempty; together with closure under subtraction, this makes ker(phi) an additive subgroup of R. If r is in R and x is in ker(phi), then phi(rx) = phi(r)phi(x) = 0 and phi(xr) = phi(x)phi(r) = 0, so rx and xr are in ker(phi). Therefore ker(phi) is a two-sided ideal of R.",
+                "depends_on": [
+                  {
+                    "node_id": 1,
+                    "proof_id": "alg_003",
+                    "version": 1
+                  },
+                  {
+                    "node_id": 2,
+                    "proof_id": "alg_003",
+                    "version": 1
+                  },
+                  {
+                    "node_id": 3,
+                    "proof_id": "alg_003",
+                    "version": 1
+                  }
+                ],
+                "node_id": 4,
+                "node_type": "inference",
+                "self_contained_claim": "The kernel contains 0_R and is closed under subtraction, hence is an additive subgroup of R; moreover, for every r in R and x in ker(phi), phi(rx) = phi(r)phi(x) = 0 and phi(xr) = phi(x)phi(r) = 0, so rx,xr lie in ker(phi). Thus ker(phi) is a two-sided ideal of R."
+              }
+            ]
+          },
+          "request_digest": "sha256:4084560b61e59394bb41506ce3aa2c229641a217d4aeebe67b4183ea43444591",
+          "status": "awaiting_review"
+        }
+      ],
       "limits": {
         "attempts": 8,
         "feedback": 40,
@@ -1782,10 +2200,12 @@
       },
       "refuted_interfaces": [],
       "replays": [],
-      "seen_candidates": [],
+      "seen_candidates": [
+        "sha256:26cf8ec76a15c51d79ab0a01c6574efd94843f41c357d84404b8de5efac701c9"
+      ],
       "used": {
-        "attempts": 0,
-        "feedback": 0,
+        "attempts": 1,
+        "feedback": 1,
         "routes": 0
       },
       "witnesses": []
@@ -1882,7 +2302,31 @@
         "phase": "contract_review",
         "request_digest": "sha256:27e45b63cda75c90a1964ce5b69079c3bd1450b150af8952f2a7764e6a5488eb",
         "request_filename": "requests/27e45b63cda75c90a1964ce5b69079c3bd1450b150af8952f2a7764e6a5488eb.json",
+        "response_digest": "sha256:b2b9a63526966ef8ac2ed37104a72d39a1cdde1ae55744fa571f90593c83ed9f",
         "response_filename": "responses/27e45b63cda75c90a1964ce5b69079c3bd1450b150af8952f2a7764e6a5488eb.json",
+        "status": "supplied_external_response_replayed",
+        "transport": "offline_file_replay",
+        "usage": null
+      },
+      {
+        "cost": null,
+        "fresh_model_call_by_controller": false,
+        "phase": "candidate_generation",
+        "request_digest": "sha256:738dac48fc61748cfdcddc9c45d89577d3f8ae690dea5d672e252020b1b65b3d",
+        "request_filename": "requests/738dac48fc61748cfdcddc9c45d89577d3f8ae690dea5d672e252020b1b65b3d.json",
+        "response_digest": "sha256:578f284a512788f9ff8b53da10d6725867a95ff0b821ef26e0bde516e66404ab",
+        "response_filename": "responses/738dac48fc61748cfdcddc9c45d89577d3f8ae690dea5d672e252020b1b65b3d.json",
+        "status": "supplied_external_response_replayed",
+        "transport": "offline_file_replay",
+        "usage": null
+      },
+      {
+        "cost": null,
+        "fresh_model_call_by_controller": false,
+        "phase": "candidate_review",
+        "request_digest": "sha256:4084560b61e59394bb41506ce3aa2c229641a217d4aeebe67b4183ea43444591",
+        "request_filename": "requests/4084560b61e59394bb41506ce3aa2c229641a217d4aeebe67b4183ea43444591.json",
+        "response_filename": "responses/4084560b61e59394bb41506ce3aa2c229641a217d4aeebe67b4183ea43444591.json",
         "status": "awaiting_external_response",
         "transport": "offline_file_replay",
         "usage": null

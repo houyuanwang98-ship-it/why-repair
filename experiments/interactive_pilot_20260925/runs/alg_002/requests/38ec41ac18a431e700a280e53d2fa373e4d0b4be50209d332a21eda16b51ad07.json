@@ -1,0 +1,191 @@
+{
+  "agent": {
+    "fresh_context_required": true,
+    "reasoning_effort": "high",
+    "requested_model": "gpt-5.6-sol",
+    "role": "generator"
+  },
+  "output_instructions": "Return only the raw JSON response object. Replace exactly these node bodies; preserve IDs/order. The theorem and outputs are targets, not premises. No external node text changes. Use policy region-body-replacement-v1, echo the exact request base_digest and generator_id, and replace every editable node exactly once. Preserve node IDs and order; dependencies may use only the exact editable-region or premise references authorized by the request.",
+  "phase": "candidate_generation",
+  "request": {
+    "base_digest": "sha256:25a7e31ab39b735407bbb7efcf4f50849dd86deb03027f35dd30c870a09489c8",
+    "editable_nodes": [
+      {
+        "claim": "This operation is well-defined because N is a subgroup of G.",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "alg_002",
+            "version": 1
+          },
+          {
+            "node_id": 2,
+            "proof_id": "alg_002",
+            "version": 1
+          }
+        ],
+        "node_id": 3,
+        "node_type": "inference",
+        "order_key": 30,
+        "proof_id": "alg_002",
+        "self_contained_claim": "This operation is well-defined because N is a subgroup of G.",
+        "version": 1
+      }
+    ],
+    "generator_id": "person-b",
+    "instructions": "Replace exactly these node bodies; preserve IDs/order. The theorem and outputs are targets, not premises. No external node text changes.",
+    "mode": "local",
+    "outputs_only": [
+      {
+        "consumer": {
+          "node_id": 4,
+          "proof_id": "alg_002",
+          "version": 1
+        },
+        "producer": {
+          "node_id": 3,
+          "proof_id": "alg_002",
+          "version": 1
+        },
+        "statement": "For all a,a',b,b' in G, if aN = a'N and bN = b'N, then abN = a'b'N."
+      }
+    ],
+    "patch_policy": "region-body-replacement-v1",
+    "premise_nodes": [
+      {
+        "claim": "The elements of G/N are left cosets aN.",
+        "depends_on": [],
+        "node_id": 1,
+        "node_type": "inference",
+        "order_key": 10,
+        "proof_id": "alg_002",
+        "self_contained_claim": "The elements of G/N are left cosets aN.",
+        "version": 1
+      },
+      {
+        "claim": "Define multiplication by (aN)(bN) = abN.",
+        "depends_on": [
+          {
+            "node_id": 1,
+            "proof_id": "alg_002",
+            "version": 1
+          }
+        ],
+        "node_id": 2,
+        "node_type": "inference",
+        "order_key": 20,
+        "proof_id": "alg_002",
+        "self_contained_claim": "Define multiplication by (aN)(bN) = abN.",
+        "version": 1
+      }
+    ],
+    "proof_context": {
+      "assumptions": [
+        "G is a group",
+        "N is a subgroup of G",
+        "N is normal in G"
+      ],
+      "domain": "algebra",
+      "proof_id": "alg_002",
+      "theorem": "Let G be a group and N a subgroup of G. If N is normal in G, then G/N is a group under coset multiplication."
+    }
+  },
+  "request_digest": "sha256:38ec41ac18a431e700a280e53d2fa373e4d0b4be50209d332a21eda16b51ad07",
+  "response_filename": "responses/38ec41ac18a431e700a280e53d2fa373e4d0b4be50209d332a21eda16b51ad07.json",
+  "response_schema": {
+    "$defs": {
+      "id": {
+        "oneOf": [
+          {
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "$ref": "#/$defs/text"
+          }
+        ]
+      },
+      "text": {
+        "pattern": "\\S",
+        "type": "string"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "base_digest": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "generator_id": {
+        "$ref": "#/$defs/text"
+      },
+      "policy": {
+        "const": "region-body-replacement-v1"
+      },
+      "replacements": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "claim": {
+              "$ref": "#/$defs/text"
+            },
+            "depends_on": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "node_id": {
+                    "$ref": "#/$defs/id"
+                  },
+                  "proof_id": {
+                    "$ref": "#/$defs/text"
+                  },
+                  "version": {
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "proof_id",
+                  "node_id",
+                  "version"
+                ],
+                "type": "object"
+              },
+              "type": "array",
+              "uniqueItems": true
+            },
+            "node_id": {
+              "$ref": "#/$defs/id"
+            },
+            "node_type": {
+              "$ref": "#/$defs/text"
+            },
+            "self_contained_claim": {
+              "$ref": "#/$defs/text"
+            }
+          },
+          "required": [
+            "node_id",
+            "claim",
+            "self_contained_claim",
+            "node_type",
+            "depends_on"
+          ],
+          "type": "object"
+        },
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "policy",
+      "base_digest",
+      "generator_id",
+      "replacements"
+    ],
+    "title": "Structure-preserving multi-node body replacement",
+    "type": "object"
+  },
+  "schema_version": "interactive-repair-pilot-request-v1"
+}
