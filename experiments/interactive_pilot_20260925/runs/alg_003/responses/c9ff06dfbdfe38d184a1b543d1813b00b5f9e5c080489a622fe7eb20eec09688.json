@@ -1,0 +1,42 @@
+{
+  "input_digest": "sha256:c9ff06dfbdfe38d184a1b543d1813b00b5f9e5c080489a622fe7eb20eec09688",
+  "evaluator_id": "person-a",
+  "decision": "accepted",
+  "error_type": null,
+  "rule": "Two-sided ideal criterion for the kernel of a ring homomorphism",
+  "conditions": [
+    {
+      "condition": "ker(phi) is nonempty and closed under subtraction, hence an additive subgroup of R.",
+      "status": "supported",
+      "source_refs": [
+        {"source_id": "assumption:1", "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477"},
+        {"source_id": "premise:3", "digest": "sha256:b1aab849afc4aadb50ac1faaaae31e3624e9f647fca061d23f9f4eb994e0888f"}
+      ],
+      "justification": "A ring homomorphism sends 0_R to 0_S, while the prior node supplies subtraction closure; the nonempty subtraction test gives an additive subgroup."
+    },
+    {
+      "condition": "For every r in R and x in ker(phi), both rx and xr are in ker(phi).",
+      "status": "supported",
+      "source_refs": [{"source_id": "assumption:1", "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477"}],
+      "justification": "Multiplicativity and phi(x)=0 give phi(rx)=phi(r)phi(x)=0 and phi(xr)=phi(x)phi(r)=0."
+    }
+  ],
+  "circularity": {
+    "status": "clear",
+    "source_refs": [
+      {"source_id": "assumption:1", "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477"},
+      {"source_id": "premise:3", "digest": "sha256:b1aab849afc4aadb50ac1faaaae31e3624e9f647fca061d23f9f4eb994e0888f"}
+    ],
+    "justification": "The ideal conditions are verified directly from homomorphism properties and the established additive closure, not from the theorem target."
+  },
+  "conclusion": {
+    "statement": "Because phi(0_R) = 0_S, the kernel is nonempty; together with closure under subtraction, this makes ker(phi) an additive subgroup of R. If r is in R and x is in ker(phi), then phi(rx) = phi(r)phi(x) = 0 and phi(xr) = phi(x)phi(r) = 0, so rx and xr are in ker(phi). Therefore ker(phi) is a two-sided ideal of R.",
+    "source_refs": [
+      {"source_id": "assumption:1", "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477"},
+      {"source_id": "premise:3", "digest": "sha256:b1aab849afc4aadb50ac1faaaae31e3624e9f647fca061d23f9f4eb994e0888f"}
+    ],
+    "justification": "The nonempty additive subgroup condition together with absorption under multiplication on both sides is exactly the two-sided ideal criterion."
+  },
+  "bridge_steps": [],
+  "reason": "The repaired node supplies the previously missing two-sided absorption proof and correctly completes the ideal argument."
+}

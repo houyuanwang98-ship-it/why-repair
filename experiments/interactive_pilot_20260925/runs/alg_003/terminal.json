@@ -164,13 +164,13 @@
       },
       {
         "event_id": 9,
-        "evidence_kind": "unreported",
+        "evidence_kind": "external",
         "fresh_model_call_by_controller": false,
         "latency_seconds": null,
         "phase": "final_review",
         "request_digest": "sha256:c4353f71885499d5fc12af4d6510500f51e6605762206b9e368324417008e8d2",
         "revision": 2,
-        "status": "awaiting_external_response",
+        "status": "returned",
         "transport": "offline_file_replay",
         "usage": {
           "cached_input_tokens": null,
@@ -2435,6 +2435,300 @@
             "rule": "Two-sided ideal criterion for the kernel of a ring homomorphism"
           },
           "revision": 2
+        },
+        {
+          "event": "goal_review_recorded",
+          "request": {
+            "input": {
+              "claim": "Let phi: R -> S be a ring homomorphism. Then ker(phi) is an ideal of R.",
+              "domain": "algebra",
+              "policy": "local-inference-v2",
+              "self_contained_claim": "Let phi: R -> S be a ring homomorphism. Then ker(phi) is an ideal of R.",
+              "sources": [
+                {
+                  "digest": "sha256:dc9d8a4a73d41d667b862600cd59bb673998c8a06a1d93a828a3f6c60d6d81ad",
+                  "node_ref": null,
+                  "source_id": "domain",
+                  "statement": "algebra"
+                },
+                {
+                  "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                  "node_ref": null,
+                  "source_id": "assumption:1",
+                  "statement": "phi: R -> S is a ring homomorphism"
+                },
+                {
+                  "digest": "sha256:7804a39836b76026c6db63244d66ef7d0b0fbb0dbe4ada02fca5d5bca665a681",
+                  "node_ref": {
+                    "node_id": 4,
+                    "proof_id": "alg_003",
+                    "version": 2
+                  },
+                  "source_id": "premise:1",
+                  "statement": "Because phi(0_R) = 0_S, the kernel is nonempty; together with closure under subtraction, this makes ker(phi) an additive subgroup of R. If r is in R and x is in ker(phi), then phi(rx) = phi(r)phi(x) = 0 and phi(xr) = phi(x)phi(r) = 0, so rx and xr are in ker(phi). Therefore ker(phi) is a two-sided ideal of R."
+                }
+              ],
+              "target": {
+                "node_id": "__proof_goal__",
+                "proof_id": "alg_003",
+                "version": 2
+              },
+              "theorem_target_only": "Let phi: R -> S be a ring homomorphism. Then ker(phi) is an ideal of R."
+            },
+            "input_digest": "sha256:fc9513add5126c6a496f93ea9114350e5a1cea56a48fbc36948cda3c9e5ba7c9",
+            "instructions": "Review the submitted inference, not a substitute proof. The theorem is not a premise. Check circularity and every rule condition. Each condition needs explicit source_refs with source_id and digest from sources, or an explicit mathematical justification when no premise is needed. Missing or unknown conditions cannot support acceptance. For gap give 1-3 connected bridge steps ending at the exact claim. Never use future nodes. A local failure does not imply a false theorem. Report undetermined on insufficient evidence. This is a final target-coverage audit. Does the submitted final conclusion establish the original theorem? Do not supply a new proof. Cite premise:1 in the conclusion. If the submitted proof ends at the wrong target, use invalid/target_mismatch.",
+            "response_fields": [
+              "input_digest",
+              "evaluator_id",
+              "decision",
+              "error_type",
+              "rule",
+              "conditions",
+              "circularity",
+              "conclusion",
+              "bridge_steps",
+              "reason"
+            ],
+            "response_schema": {
+              "$defs": {
+                "sources": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "digest": {
+                        "pattern": "^sha256:[0-9a-f]{64}$",
+                        "type": "string"
+                      },
+                      "source_id": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "source_id",
+                      "digest"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "step": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "justification": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "source_refs": {
+                      "$ref": "#/$defs/sources"
+                    },
+                    "statement": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statement",
+                    "source_refs",
+                    "justification"
+                  ],
+                  "type": "object"
+                }
+              },
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "additionalProperties": false,
+              "properties": {
+                "bridge_steps": {
+                  "items": {
+                    "$ref": "#/$defs/step"
+                  },
+                  "maxItems": 3,
+                  "type": "array"
+                },
+                "circularity": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "justification": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "source_refs": {
+                      "$ref": "#/$defs/sources"
+                    },
+                    "status": {
+                      "enum": [
+                        "clear",
+                        "circular",
+                        "unknown"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "source_refs",
+                    "justification"
+                  ],
+                  "type": "object"
+                },
+                "conclusion": {
+                  "$ref": "#/$defs/step"
+                },
+                "conditions": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "condition": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "justification": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "source_refs": {
+                        "$ref": "#/$defs/sources"
+                      },
+                      "status": {
+                        "enum": [
+                          "supported",
+                          "missing",
+                          "unknown"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "condition",
+                      "status",
+                      "source_refs",
+                      "justification"
+                    ],
+                    "type": "object"
+                  },
+                  "minItems": 1,
+                  "type": "array"
+                },
+                "decision": {
+                  "enum": [
+                    "accepted",
+                    "invalid",
+                    "gap",
+                    "undetermined"
+                  ]
+                },
+                "error_type": {
+                  "enum": [
+                    null,
+                    "theorem_misuse",
+                    "algebraic_invalidity",
+                    "false_local_claim",
+                    "missing_assumption",
+                    "target_mismatch",
+                    "circular_reasoning"
+                  ]
+                },
+                "evaluator_id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "input_digest": {
+                  "pattern": "^sha256:[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                "reason": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "rule": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "input_digest",
+                "evaluator_id",
+                "decision",
+                "error_type",
+                "rule",
+                "conditions",
+                "circularity",
+                "conclusion",
+                "bridge_steps",
+                "reason"
+              ],
+              "title": "Local inference review v2",
+              "type": "object"
+            }
+          },
+          "response": {
+            "bridge_steps": [],
+            "circularity": {
+              "justification": "The audit relies on the submitted final calculation under the stated homomorphism assumption, not on the theorem target as a premise.",
+              "source_refs": [
+                {
+                  "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                  "source_id": "assumption:1"
+                },
+                {
+                  "digest": "sha256:7804a39836b76026c6db63244d66ef7d0b0fbb0dbe4ada02fca5d5bca665a681",
+                  "source_id": "premise:1"
+                }
+              ],
+              "status": "clear"
+            },
+            "conclusion": {
+              "justification": "Under the theorem's sole hypothesis, the submitted final node establishes exactly the required ideal conclusion in the two-sided sense.",
+              "source_refs": [
+                {
+                  "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                  "source_id": "assumption:1"
+                },
+                {
+                  "digest": "sha256:7804a39836b76026c6db63244d66ef7d0b0fbb0dbe4ada02fca5d5bca665a681",
+                  "source_id": "premise:1"
+                }
+              ],
+              "statement": "Let phi: R -> S be a ring homomorphism. Then ker(phi) is an ideal of R."
+            },
+            "conditions": [
+              {
+                "condition": "The theorem assumes phi: R -> S is a ring homomorphism.",
+                "justification": "This is exactly the original theorem hypothesis.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                    "source_id": "assumption:1"
+                  }
+                ],
+                "status": "supported"
+              },
+              {
+                "condition": "The submitted proof concludes that ker(phi) is a two-sided ideal of R.",
+                "justification": "The final submitted node explicitly verifies the additive-subgroup and both absorption conditions and states the required ideal conclusion.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:7804a39836b76026c6db63244d66ef7d0b0fbb0dbe4ada02fca5d5bca665a681",
+                    "source_id": "premise:1"
+                  }
+                ],
+                "status": "supported"
+              }
+            ],
+            "decision": "accepted",
+            "error_type": null,
+            "evaluator_id": "person-a",
+            "input_digest": "sha256:fc9513add5126c6a496f93ea9114350e5a1cea56a48fbc36948cda3c9e5ba7c9",
+            "reason": "The repaired submitted proof reaches and supports the original theorem target exactly.",
+            "rule": "Final target coverage by the submitted concluding inference"
+          },
+          "revision": 2
+        },
+        {
+          "event": "proof_scanned",
+          "first_error": null,
+          "proof_digest": "sha256:f9deb6e6b7e5023c35484ce73881652f551683437cf9a726abf94ff01dad4d8a",
+          "revision": 2,
+          "state": "complete"
         }
       ],
       "nodes": [
@@ -2523,7 +2817,359 @@
         "theorem": "Let phi: R -> S be a ring homomorphism. Then ker(phi) is an ideal of R."
       },
       "proof_digest": "sha256:f9deb6e6b7e5023c35484ce73881652f551683437cf9a726abf94ff01dad4d8a",
-      "report": null,
+      "report": {
+        "certificate": null,
+        "first_error": null,
+        "first_error_candidate": null,
+        "goal_review": {
+          "evidence": {
+            "bridge_steps": [],
+            "circularity": {
+              "justification": "The audit relies on the submitted final calculation under the stated homomorphism assumption, not on the theorem target as a premise.",
+              "source_refs": [
+                {
+                  "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                  "source_id": "assumption:1"
+                },
+                {
+                  "digest": "sha256:7804a39836b76026c6db63244d66ef7d0b0fbb0dbe4ada02fca5d5bca665a681",
+                  "source_id": "premise:1"
+                }
+              ],
+              "status": "clear"
+            },
+            "conclusion": {
+              "justification": "Under the theorem's sole hypothesis, the submitted final node establishes exactly the required ideal conclusion in the two-sided sense.",
+              "source_refs": [
+                {
+                  "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                  "source_id": "assumption:1"
+                },
+                {
+                  "digest": "sha256:7804a39836b76026c6db63244d66ef7d0b0fbb0dbe4ada02fca5d5bca665a681",
+                  "source_id": "premise:1"
+                }
+              ],
+              "statement": "Let phi: R -> S be a ring homomorphism. Then ker(phi) is an ideal of R."
+            },
+            "conditions": [
+              {
+                "condition": "The theorem assumes phi: R -> S is a ring homomorphism.",
+                "justification": "This is exactly the original theorem hypothesis.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                    "source_id": "assumption:1"
+                  }
+                ],
+                "status": "supported"
+              },
+              {
+                "condition": "The submitted proof concludes that ker(phi) is a two-sided ideal of R.",
+                "justification": "The final submitted node explicitly verifies the additive-subgroup and both absorption conditions and states the required ideal conclusion.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:7804a39836b76026c6db63244d66ef7d0b0fbb0dbe4ada02fca5d5bca665a681",
+                    "source_id": "premise:1"
+                  }
+                ],
+                "status": "supported"
+              }
+            ],
+            "decision": "accepted",
+            "error_type": null,
+            "evaluator_id": "person-a",
+            "input_digest": "sha256:fc9513add5126c6a496f93ea9114350e5a1cea56a48fbc36948cda3c9e5ba7c9",
+            "reason": "The repaired submitted proof reaches and supports the original theorem target exactly.",
+            "rule": "Final target coverage by the submitted concluding inference"
+          },
+          "input_digest": "sha256:fc9513add5126c6a496f93ea9114350e5a1cea56a48fbc36948cda3c9e5ba7c9",
+          "status": "accepted"
+        },
+        "nodes": [
+          {
+            "evidence": {
+              "bridge_steps": [],
+              "circularity": {
+                "justification": "The statement uses only the given homomorphism and the definition of its kernel, not the theorem target that the kernel is an ideal.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                    "source_id": "assumption:1"
+                  }
+                ],
+                "status": "clear"
+              },
+              "conclusion": {
+                "justification": "After a and b are chosen in ker(phi), each displayed equality follows immediately from membership in the kernel.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                    "source_id": "assumption:1"
+                  }
+                ],
+                "statement": "Let a and b be in ker(phi). Then phi(a) = 0 and phi(b) = 0."
+              },
+              "conditions": [
+                {
+                  "condition": "phi: R -> S is a ring homomorphism, so ker(phi) is defined as the set of x in R satisfying phi(x) = 0 in S.",
+                  "justification": "The homomorphism assumption supplies the map whose kernel is being used; the displayed characterization is the definition of that kernel.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                      "source_id": "assumption:1"
+                    }
+                  ],
+                  "status": "supported"
+                }
+              ],
+              "decision": "accepted",
+              "error_type": null,
+              "evaluator_id": "person-a",
+              "input_digest": "sha256:afd0d0f5a3fb2c72c0c204cf6d7071cc12484d8104f52c9e28d793ddf46f07c0",
+              "reason": "The inference correctly unpacks kernel membership for the two arbitrary elements and does not rely on any later ideal property.",
+              "rule": "Definition of the kernel of a ring homomorphism"
+            },
+            "evidence_source": "cached_evaluator",
+            "input_digest": "sha256:afd0d0f5a3fb2c72c0c204cf6d7071cc12484d8104f52c9e28d793ddf46f07c0",
+            "order_key": 10,
+            "status": "accepted",
+            "target": {
+              "node_id": 1,
+              "proof_id": "alg_003",
+              "version": 1
+            }
+          },
+          {
+            "evidence": {
+              "bridge_steps": [],
+              "circularity": {
+                "justification": "The calculation uses only homomorphism properties and the prior kernel-membership equalities.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:64e3511ca33283398af9a7e654babc60f86343fee0c823497c291c8c4df03be7",
+                    "source_id": "premise:1"
+                  }
+                ],
+                "status": "clear"
+              },
+              "conclusion": {
+                "justification": "Homomorphicity gives phi(a-b)=phi(a)-phi(b)=0-0=0, and the definition of the kernel then gives a-b in ker(phi).",
+                "source_refs": [
+                  {
+                    "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:64e3511ca33283398af9a7e654babc60f86343fee0c823497c291c8c4df03be7",
+                    "source_id": "premise:1"
+                  }
+                ],
+                "statement": "We have phi(a - b) = phi(a) - phi(b) = 0, so a - b is in ker(phi)."
+              },
+              "conditions": [
+                {
+                  "condition": "phi is a ring homomorphism.",
+                  "justification": "This is the explicit hypothesis and implies phi(a-b)=phi(a)-phi(b).",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                      "source_id": "assumption:1"
+                    }
+                  ],
+                  "status": "supported"
+                },
+                {
+                  "condition": "phi(a)=0 and phi(b)=0 for the chosen a,b in ker(phi).",
+                  "justification": "Both equalities were established in the preceding node from kernel membership.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:64e3511ca33283398af9a7e654babc60f86343fee0c823497c291c8c4df03be7",
+                      "source_id": "premise:1"
+                    }
+                  ],
+                  "status": "supported"
+                }
+              ],
+              "decision": "accepted",
+              "error_type": null,
+              "evaluator_id": "person-a",
+              "input_digest": "sha256:b158f3abeee93cd16337954bea74354d1c1b7a02dee85b8ab7c4b987bad60106",
+              "reason": "The subtraction calculation and its kernel conclusion are correct in arbitrary associative rings.",
+              "rule": "A ring homomorphism preserves subtraction, followed by the definition of its kernel"
+            },
+            "evidence_source": "cached_evaluator",
+            "input_digest": "sha256:b158f3abeee93cd16337954bea74354d1c1b7a02dee85b8ab7c4b987bad60106",
+            "order_key": 20,
+            "status": "accepted",
+            "target": {
+              "node_id": 2,
+              "proof_id": "alg_003",
+              "version": 1
+            }
+          },
+          {
+            "evidence": {
+              "bridge_steps": [],
+              "circularity": {
+                "justification": "The closure statement summarizes the arbitrary-element calculation already performed.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:64e3511ca33283398af9a7e654babc60f86343fee0c823497c291c8c4df03be7",
+                    "source_id": "premise:1"
+                  },
+                  {
+                    "digest": "sha256:679a5d40af7f151ef01c6327357caf52fce8d52d0dd4fe9fefac0766272502c9",
+                    "source_id": "premise:2"
+                  }
+                ],
+                "status": "clear"
+              },
+              "conclusion": {
+                "justification": "Since arbitrary a,b in the kernel have a-b in the kernel, the kernel is closed under subtraction.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:64e3511ca33283398af9a7e654babc60f86343fee0c823497c291c8c4df03be7",
+                    "source_id": "premise:1"
+                  },
+                  {
+                    "digest": "sha256:679a5d40af7f151ef01c6327357caf52fce8d52d0dd4fe9fefac0766272502c9",
+                    "source_id": "premise:2"
+                  }
+                ],
+                "statement": "Thus ker(phi) is closed under subtraction."
+              },
+              "conditions": [
+                {
+                  "condition": "a and b were arbitrary elements of ker(phi).",
+                  "justification": "The preceding setup introduces a and b in ker(phi) without any additional restrictions.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:64e3511ca33283398af9a7e654babc60f86343fee0c823497c291c8c4df03be7",
+                      "source_id": "premise:1"
+                    }
+                  ],
+                  "status": "supported"
+                },
+                {
+                  "condition": "For those arbitrary a and b, a-b lies in ker(phi).",
+                  "justification": "The preceding calculation establishes exactly this membership.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:679a5d40af7f151ef01c6327357caf52fce8d52d0dd4fe9fefac0766272502c9",
+                      "source_id": "premise:2"
+                    }
+                  ],
+                  "status": "supported"
+                }
+              ],
+              "decision": "accepted",
+              "error_type": null,
+              "evaluator_id": "person-a",
+              "input_digest": "sha256:abfd5e61d93145323945be1ea05909199b2c91854436f11e442dd4a4315150d0",
+              "reason": "The general closure conclusion follows correctly from the arbitrary-element computation.",
+              "rule": "Universal generalization from arbitrary kernel elements"
+            },
+            "evidence_source": "cached_evaluator",
+            "input_digest": "sha256:abfd5e61d93145323945be1ea05909199b2c91854436f11e442dd4a4315150d0",
+            "order_key": 30,
+            "status": "accepted",
+            "target": {
+              "node_id": 3,
+              "proof_id": "alg_003",
+              "version": 1
+            }
+          },
+          {
+            "evidence": {
+              "bridge_steps": [],
+              "circularity": {
+                "justification": "The ideal conditions are verified directly from homomorphism properties and the established additive closure, not from the theorem target.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:b1aab849afc4aadb50ac1faaaae31e3624e9f647fca061d23f9f4eb994e0888f",
+                    "source_id": "premise:3"
+                  }
+                ],
+                "status": "clear"
+              },
+              "conclusion": {
+                "justification": "The nonempty additive subgroup condition together with absorption under multiplication on both sides is exactly the two-sided ideal criterion.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:b1aab849afc4aadb50ac1faaaae31e3624e9f647fca061d23f9f4eb994e0888f",
+                    "source_id": "premise:3"
+                  }
+                ],
+                "statement": "Because phi(0_R) = 0_S, the kernel is nonempty; together with closure under subtraction, this makes ker(phi) an additive subgroup of R. If r is in R and x is in ker(phi), then phi(rx) = phi(r)phi(x) = 0 and phi(xr) = phi(x)phi(r) = 0, so rx and xr are in ker(phi). Therefore ker(phi) is a two-sided ideal of R."
+              },
+              "conditions": [
+                {
+                  "condition": "ker(phi) is nonempty and closed under subtraction, hence an additive subgroup of R.",
+                  "justification": "A ring homomorphism sends 0_R to 0_S, while the prior node supplies subtraction closure; the nonempty subtraction test gives an additive subgroup.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                      "source_id": "assumption:1"
+                    },
+                    {
+                      "digest": "sha256:b1aab849afc4aadb50ac1faaaae31e3624e9f647fca061d23f9f4eb994e0888f",
+                      "source_id": "premise:3"
+                    }
+                  ],
+                  "status": "supported"
+                },
+                {
+                  "condition": "For every r in R and x in ker(phi), both rx and xr are in ker(phi).",
+                  "justification": "Multiplicativity and phi(x)=0 give phi(rx)=phi(r)phi(x)=0 and phi(xr)=phi(x)phi(r)=0.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477",
+                      "source_id": "assumption:1"
+                    }
+                  ],
+                  "status": "supported"
+                }
+              ],
+              "decision": "accepted",
+              "error_type": null,
+              "evaluator_id": "person-a",
+              "input_digest": "sha256:c9ff06dfbdfe38d184a1b543d1813b00b5f9e5c080489a622fe7eb20eec09688",
+              "reason": "The repaired node supplies the previously missing two-sided absorption proof and correctly completes the ideal argument.",
+              "rule": "Two-sided ideal criterion for the kernel of a ring homomorphism"
+            },
+            "evidence_source": "evaluator",
+            "input_digest": "sha256:c9ff06dfbdfe38d184a1b543d1813b00b5f9e5c080489a622fe7eb20eec09688",
+            "order_key": 40,
+            "status": "accepted",
+            "target": {
+              "node_id": 4,
+              "proof_id": "alg_003",
+              "version": 2
+            }
+          }
+        ],
+        "pending_requests": [],
+        "policy": "iterative-first-error-v2",
+        "prefix_blockers": [],
+        "proof_digest": "sha256:f9deb6e6b7e5023c35484ce73881652f551683437cf9a726abf94ff01dad4d8a",
+        "review_calls_this_scan": 2,
+        "review_calls_total": 6,
+        "revision": 2,
+        "state": "complete"
+      },
       "review_calls": 6,
       "revision": 2
     },
@@ -2882,8 +3528,8 @@
   "proof_id": "alg_003",
   "repairs_applied": 1,
   "schema_version": "interactive-repair-pilot-run-v1",
-  "status": "pending",
-  "stop_reason": "awaiting_external_response",
+  "status": "complete",
+  "stop_reason": "completion_gate_accepted",
   "transport_accounting": {
     "events": [
       {
@@ -3000,8 +3646,9 @@
         "phase": "final_review",
         "request_digest": "sha256:fc9513add5126c6a496f93ea9114350e5a1cea56a48fbc36948cda3c9e5ba7c9",
         "request_filename": "requests/fc9513add5126c6a496f93ea9114350e5a1cea56a48fbc36948cda3c9e5ba7c9.json",
+        "response_digest": "sha256:464f69a55d5b6f3b769f47521d5d7cb717f2a863594130b58878d9450d710585",
         "response_filename": "responses/fc9513add5126c6a496f93ea9114350e5a1cea56a48fbc36948cda3c9e5ba7c9.json",
-        "status": "awaiting_external_response",
+        "status": "supplied_external_response_replayed",
         "transport": "offline_file_replay",
         "usage": null
       }

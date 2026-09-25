@@ -1,4 +1,11 @@
-# Live built-in GPT-5.6 pilot: checkpoint, not completed repair evaluation
+# Live built-in GPT-5.6 pilot: three-case exploratory run completed
+
+Current status: all three controller runs and all three context-isolated final
+model reviews are complete. Two one-node patches were applied; the first case
+needed no repair under the frozen rubric. See [RESULTS.md](RESULTS.md) and
+`summary.json` for outcomes and limitations. This is not a formal benchmark.
+
+## Historical checkpoint before the user reset quota
 
 The three assigned examples have real, newly authored model-subagent responses.
 These are not historical predictions projected onto new method arms and not fixture
@@ -17,6 +24,7 @@ Initial localization outcomes:
   Generator submitted the required empty interface list for this terminal region;
   absence of downstream consumers does not waive proving the original theorem.
 
+The following describes the earlier checkpoint, not the final result.
 See `summary.json` and each run's `pending.json`/`terminal.json` for newer state.
 No successful repair, cost saving, or general accuracy result is claimed at this
 checkpoint. A separate proof-only final review packet has been issued for alg_001;
@@ -29,9 +37,9 @@ continuation. The controller did not redeem a credit. Budget percentages cannot
 be converted into per-case token usage. No further cases should be added until the
 two unfinished repair paths are completed or recorded as terminal failures.
 
-## Resume exactly, without regenerating prior judgments
+## Replay exactly, without regenerating prior judgments
 
-For each unfinished case run:
+All three cases are now terminal. To replay a case run:
 
 ```powershell
 python -X utf8 scripts/run_interactive_repair_pilot.py experiments/interactive_pilot_20260925/cases/alg_002.json experiments/interactive_pilot_20260925/runs/alg_002
@@ -48,6 +56,6 @@ After a terminal state, export proof-only final-review packets with
 `scripts/build_pilot_final_review.py`, get fresh-context model review, and regenerate
 `summary.json` using `scripts/summarize_interactive_pilot.py`.
 
-Validation during this continuation: full suite 598 passed before the four reporting
-tests were added; afterward all nine transport/reporting tests passed. The prior
-installer timestamp-collision error did not recur, but was not fixed.
+Final validation: full suite 605 passed; three terminal artifacts were byte-identical
+after replay; all 24 controller request/response pairs passed integrity checks.
+The prior installer timestamp-collision error did not recur, but was not fixed.

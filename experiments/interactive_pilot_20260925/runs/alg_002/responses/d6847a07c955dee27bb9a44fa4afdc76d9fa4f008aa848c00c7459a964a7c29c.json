@@ -1,0 +1,58 @@
+{
+  "input_digest": "sha256:d6847a07c955dee27bb9a44fa4afdc76d9fa4f008aa848c00c7459a964a7c29c",
+  "evaluator_id": "person-a",
+  "decision": "accepted",
+  "error_type": null,
+  "rule": "Representative independence of coset multiplication using normality",
+  "conditions": [
+    {
+      "condition": "For left cosets, aN=a'N and bN=b'N imply a^{-1}a' and b^{-1}b' lie in N.",
+      "status": "supported",
+      "source_refs": [
+        {"source_id": "assumption:2", "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1"},
+        {"source_id": "premise:1", "digest": "sha256:4da2b4a23d389238077b46686862d175c57b7006590426c9495bee8fd1792e76"}
+      ],
+      "justification": "This is the standard equality criterion for left cosets of a subgroup."
+    },
+    {
+      "condition": "Normality implies b^{-1}(a^{-1}a')b belongs to N.",
+      "status": "supported",
+      "source_refs": [{"source_id": "assumption:3", "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb"}],
+      "justification": "A normal subgroup is closed under conjugation by every element of G."
+    },
+    {
+      "condition": "The product b^{-1}(a^{-1}a')b(b^{-1}b') lies in N and equals (ab)^{-1}(a'b').",
+      "status": "supported",
+      "source_refs": [
+        {"source_id": "assumption:1", "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161"},
+        {"source_id": "assumption:2", "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1"},
+        {"source_id": "assumption:3", "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb"}
+      ],
+      "justification": "Subgroup closure gives membership of the product, while cancellation in G gives b^{-1}(a^{-1}a')b(b^{-1}b')=b^{-1}a^{-1}a'b'=(ab)^{-1}(a'b')."
+    }
+  ],
+  "circularity": {
+    "status": "clear",
+    "source_refs": [
+      {"source_id": "assumption:1", "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161"},
+      {"source_id": "assumption:2", "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1"},
+      {"source_id": "assumption:3", "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb"},
+      {"source_id": "premise:1", "digest": "sha256:4da2b4a23d389238077b46686862d175c57b7006590426c9495bee8fd1792e76"},
+      {"source_id": "premise:2", "digest": "sha256:03882a180cfb8b85dcd9bc80614b775236c85e2d82d16c0c7e0a03a39502be68"}
+    ],
+    "justification": "The argument proves independence from representatives directly from normality and group algebra, without assuming that the quotient operation is already well-defined."
+  },
+  "conclusion": {
+    "statement": "Suppose aN = a'N and bN = b'N. Then a^{-1}a' and b^{-1}b' lie in N. Since N is normal, b^{-1}(a^{-1}a')b lies in N; multiplying it by b^{-1}b' shows that (ab)^{-1}(a'b') = b^{-1}(a^{-1}a')b(b^{-1}b') lies in N. Hence abN = a'b'N, so coset multiplication is well-defined.",
+    "source_refs": [
+      {"source_id": "assumption:1", "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161"},
+      {"source_id": "assumption:2", "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1"},
+      {"source_id": "assumption:3", "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb"},
+      {"source_id": "premise:1", "digest": "sha256:4da2b4a23d389238077b46686862d175c57b7006590426c9495bee8fd1792e76"},
+      {"source_id": "premise:2", "digest": "sha256:03882a180cfb8b85dcd9bc80614b775236c85e2d82d16c0c7e0a03a39502be68"}
+    ],
+    "justification": "The displayed calculation proves that equal representative choices produce equal product cosets, exactly the required well-definedness condition."
+  },
+  "bridge_steps": [],
+  "reason": "The repaired node correctly replaces the false subgroup-only reason with a complete normality-based proof of representative independence."
+}

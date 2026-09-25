@@ -164,13 +164,13 @@
       },
       {
         "event_id": 9,
-        "evidence_kind": "unreported",
+        "evidence_kind": "external",
         "fresh_model_call_by_controller": false,
         "latency_seconds": null,
         "phase": "final_review",
         "request_digest": "sha256:d262c44c28b62fecf49e6a05a3dc3ff682d956e56bc27e87447dbfc0841afd41",
         "revision": 2,
-        "status": "awaiting_external_response",
+        "status": "returned",
         "transport": "offline_file_replay",
         "usage": {
           "cached_input_tokens": null,
@@ -2639,6 +2639,336 @@
             "rule": "Quotient group structure inherited from G after well-definedness"
           },
           "revision": 2
+        },
+        {
+          "event": "goal_review_recorded",
+          "request": {
+            "input": {
+              "claim": "Let G be a group and N a subgroup of G. If N is normal in G, then G/N is a group under coset multiplication.",
+              "domain": "algebra",
+              "policy": "local-inference-v2",
+              "self_contained_claim": "Let G be a group and N a subgroup of G. If N is normal in G, then G/N is a group under coset multiplication.",
+              "sources": [
+                {
+                  "digest": "sha256:dc9d8a4a73d41d667b862600cd59bb673998c8a06a1d93a828a3f6c60d6d81ad",
+                  "node_ref": null,
+                  "source_id": "domain",
+                  "statement": "algebra"
+                },
+                {
+                  "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                  "node_ref": null,
+                  "source_id": "assumption:1",
+                  "statement": "G is a group"
+                },
+                {
+                  "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                  "node_ref": null,
+                  "source_id": "assumption:2",
+                  "statement": "N is a subgroup of G"
+                },
+                {
+                  "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb",
+                  "node_ref": null,
+                  "source_id": "assumption:3",
+                  "statement": "N is normal in G"
+                },
+                {
+                  "digest": "sha256:86e0d55cdf5a481fff527ca1ec36f4f961088366fb58a7aebe9aa5ce51ea4c8d",
+                  "node_ref": {
+                    "node_id": 4,
+                    "proof_id": "alg_002",
+                    "version": 2
+                  },
+                  "source_id": "premise:1",
+                  "statement": "Therefore G/N is a group."
+                }
+              ],
+              "target": {
+                "node_id": "__proof_goal__",
+                "proof_id": "alg_002",
+                "version": 2
+              },
+              "theorem_target_only": "Let G be a group and N a subgroup of G. If N is normal in G, then G/N is a group under coset multiplication."
+            },
+            "input_digest": "sha256:5340350917cdf1923e56f38a5056205c7abc07a8283e850d27c9f135039bfa41",
+            "instructions": "Review the submitted inference, not a substitute proof. The theorem is not a premise. Check circularity and every rule condition. Each condition needs explicit source_refs with source_id and digest from sources, or an explicit mathematical justification when no premise is needed. Missing or unknown conditions cannot support acceptance. For gap give 1-3 connected bridge steps ending at the exact claim. Never use future nodes. A local failure does not imply a false theorem. Report undetermined on insufficient evidence. This is a final target-coverage audit. Does the submitted final conclusion establish the original theorem? Do not supply a new proof. Cite premise:1 in the conclusion. If the submitted proof ends at the wrong target, use invalid/target_mismatch.",
+            "response_fields": [
+              "input_digest",
+              "evaluator_id",
+              "decision",
+              "error_type",
+              "rule",
+              "conditions",
+              "circularity",
+              "conclusion",
+              "bridge_steps",
+              "reason"
+            ],
+            "response_schema": {
+              "$defs": {
+                "sources": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "digest": {
+                        "pattern": "^sha256:[0-9a-f]{64}$",
+                        "type": "string"
+                      },
+                      "source_id": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "source_id",
+                      "digest"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "step": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "justification": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "source_refs": {
+                      "$ref": "#/$defs/sources"
+                    },
+                    "statement": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statement",
+                    "source_refs",
+                    "justification"
+                  ],
+                  "type": "object"
+                }
+              },
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "additionalProperties": false,
+              "properties": {
+                "bridge_steps": {
+                  "items": {
+                    "$ref": "#/$defs/step"
+                  },
+                  "maxItems": 3,
+                  "type": "array"
+                },
+                "circularity": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "justification": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "source_refs": {
+                      "$ref": "#/$defs/sources"
+                    },
+                    "status": {
+                      "enum": [
+                        "clear",
+                        "circular",
+                        "unknown"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "source_refs",
+                    "justification"
+                  ],
+                  "type": "object"
+                },
+                "conclusion": {
+                  "$ref": "#/$defs/step"
+                },
+                "conditions": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "condition": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "justification": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "source_refs": {
+                        "$ref": "#/$defs/sources"
+                      },
+                      "status": {
+                        "enum": [
+                          "supported",
+                          "missing",
+                          "unknown"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "condition",
+                      "status",
+                      "source_refs",
+                      "justification"
+                    ],
+                    "type": "object"
+                  },
+                  "minItems": 1,
+                  "type": "array"
+                },
+                "decision": {
+                  "enum": [
+                    "accepted",
+                    "invalid",
+                    "gap",
+                    "undetermined"
+                  ]
+                },
+                "error_type": {
+                  "enum": [
+                    null,
+                    "theorem_misuse",
+                    "algebraic_invalidity",
+                    "false_local_claim",
+                    "missing_assumption",
+                    "target_mismatch",
+                    "circular_reasoning"
+                  ]
+                },
+                "evaluator_id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "input_digest": {
+                  "pattern": "^sha256:[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                "reason": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "rule": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "input_digest",
+                "evaluator_id",
+                "decision",
+                "error_type",
+                "rule",
+                "conditions",
+                "circularity",
+                "conclusion",
+                "bridge_steps",
+                "reason"
+              ],
+              "title": "Local inference review v2",
+              "type": "object"
+            }
+          },
+          "response": {
+            "bridge_steps": [],
+            "circularity": {
+              "justification": "The audit uses the submitted final conclusion under the stated hypotheses and does not use the theorem target as evidence.",
+              "source_refs": [
+                {
+                  "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                  "source_id": "assumption:1"
+                },
+                {
+                  "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                  "source_id": "assumption:2"
+                },
+                {
+                  "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb",
+                  "source_id": "assumption:3"
+                },
+                {
+                  "digest": "sha256:86e0d55cdf5a481fff527ca1ec36f4f961088366fb58a7aebe9aa5ce51ea4c8d",
+                  "source_id": "premise:1"
+                }
+              ],
+              "status": "clear"
+            },
+            "conclusion": {
+              "justification": "Under precisely the theorem's hypotheses, the submitted proof reaches the required quotient-group conclusion for the specified coset multiplication.",
+              "source_refs": [
+                {
+                  "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                  "source_id": "assumption:1"
+                },
+                {
+                  "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                  "source_id": "assumption:2"
+                },
+                {
+                  "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb",
+                  "source_id": "assumption:3"
+                },
+                {
+                  "digest": "sha256:86e0d55cdf5a481fff527ca1ec36f4f961088366fb58a7aebe9aa5ce51ea4c8d",
+                  "source_id": "premise:1"
+                }
+              ],
+              "statement": "Let G be a group and N a subgroup of G. If N is normal in G, then G/N is a group under coset multiplication."
+            },
+            "conditions": [
+              {
+                "condition": "The theorem hypotheses are that G is a group, N is a subgroup of G, and N is normal in G.",
+                "justification": "These are exactly the original assumptions and the antecedent of the theorem.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                    "source_id": "assumption:2"
+                  },
+                  {
+                    "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb",
+                    "source_id": "assumption:3"
+                  }
+                ],
+                "status": "supported"
+              },
+              {
+                "condition": "The submitted proof concludes that G/N is a group under the previously defined coset multiplication.",
+                "justification": "The final submitted node states that G/N is a group, and its reviewed context fixes the operation as coset multiplication.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:86e0d55cdf5a481fff527ca1ec36f4f961088366fb58a7aebe9aa5ce51ea4c8d",
+                    "source_id": "premise:1"
+                  }
+                ],
+                "status": "supported"
+              }
+            ],
+            "decision": "accepted",
+            "error_type": null,
+            "evaluator_id": "person-a",
+            "input_digest": "sha256:5340350917cdf1923e56f38a5056205c7abc07a8283e850d27c9f135039bfa41",
+            "reason": "The repaired submitted proof reaches and covers the original theorem target exactly.",
+            "rule": "Final target coverage by the submitted concluding inference"
+          },
+          "revision": 2
+        },
+        {
+          "event": "proof_scanned",
+          "first_error": null,
+          "proof_digest": "sha256:2149b212a07989883f5fcfbb1bb1ba1c0d4b9c5101ab48d6acebf17da84a404f",
+          "revision": 2,
+          "state": "complete"
         }
       ],
       "nodes": [
@@ -2730,7 +3060,512 @@
         "theorem": "Let G be a group and N a subgroup of G. If N is normal in G, then G/N is a group under coset multiplication."
       },
       "proof_digest": "sha256:2149b212a07989883f5fcfbb1bb1ba1c0d4b9c5101ab48d6acebf17da84a404f",
-      "report": null,
+      "report": {
+        "certificate": null,
+        "first_error": null,
+        "first_error_candidate": null,
+        "goal_review": {
+          "evidence": {
+            "bridge_steps": [],
+            "circularity": {
+              "justification": "The audit uses the submitted final conclusion under the stated hypotheses and does not use the theorem target as evidence.",
+              "source_refs": [
+                {
+                  "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                  "source_id": "assumption:1"
+                },
+                {
+                  "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                  "source_id": "assumption:2"
+                },
+                {
+                  "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb",
+                  "source_id": "assumption:3"
+                },
+                {
+                  "digest": "sha256:86e0d55cdf5a481fff527ca1ec36f4f961088366fb58a7aebe9aa5ce51ea4c8d",
+                  "source_id": "premise:1"
+                }
+              ],
+              "status": "clear"
+            },
+            "conclusion": {
+              "justification": "Under precisely the theorem's hypotheses, the submitted proof reaches the required quotient-group conclusion for the specified coset multiplication.",
+              "source_refs": [
+                {
+                  "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                  "source_id": "assumption:1"
+                },
+                {
+                  "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                  "source_id": "assumption:2"
+                },
+                {
+                  "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb",
+                  "source_id": "assumption:3"
+                },
+                {
+                  "digest": "sha256:86e0d55cdf5a481fff527ca1ec36f4f961088366fb58a7aebe9aa5ce51ea4c8d",
+                  "source_id": "premise:1"
+                }
+              ],
+              "statement": "Let G be a group and N a subgroup of G. If N is normal in G, then G/N is a group under coset multiplication."
+            },
+            "conditions": [
+              {
+                "condition": "The theorem hypotheses are that G is a group, N is a subgroup of G, and N is normal in G.",
+                "justification": "These are exactly the original assumptions and the antecedent of the theorem.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                    "source_id": "assumption:2"
+                  },
+                  {
+                    "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb",
+                    "source_id": "assumption:3"
+                  }
+                ],
+                "status": "supported"
+              },
+              {
+                "condition": "The submitted proof concludes that G/N is a group under the previously defined coset multiplication.",
+                "justification": "The final submitted node states that G/N is a group, and its reviewed context fixes the operation as coset multiplication.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:86e0d55cdf5a481fff527ca1ec36f4f961088366fb58a7aebe9aa5ce51ea4c8d",
+                    "source_id": "premise:1"
+                  }
+                ],
+                "status": "supported"
+              }
+            ],
+            "decision": "accepted",
+            "error_type": null,
+            "evaluator_id": "person-a",
+            "input_digest": "sha256:5340350917cdf1923e56f38a5056205c7abc07a8283e850d27c9f135039bfa41",
+            "reason": "The repaired submitted proof reaches and covers the original theorem target exactly.",
+            "rule": "Final target coverage by the submitted concluding inference"
+          },
+          "input_digest": "sha256:5340350917cdf1923e56f38a5056205c7abc07a8283e850d27c9f135039bfa41",
+          "status": "accepted"
+        },
+        "nodes": [
+          {
+            "evidence": {
+              "bridge_steps": [],
+              "circularity": {
+                "justification": "The claim only unpacks the notation G/N and does not assume that G/N already has a group structure.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                    "source_id": "assumption:2"
+                  }
+                ],
+                "status": "clear"
+              },
+              "conclusion": {
+                "justification": "By definition, G/N denotes the set {aN : a in G} of left cosets of N in G. Normality is unnecessary for this set-level statement.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                    "source_id": "assumption:2"
+                  }
+                ],
+                "statement": "The elements of G/N are left cosets aN."
+              },
+              "conditions": [
+                {
+                  "condition": "G is a group.",
+                  "justification": "The ambient group is given explicitly.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                      "source_id": "assumption:1"
+                    }
+                  ],
+                  "status": "supported"
+                },
+                {
+                  "condition": "N is a subgroup of G.",
+                  "justification": "The subgroup assumption is stated explicitly and suffices to form its left cosets.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                      "source_id": "assumption:2"
+                    }
+                  ],
+                  "status": "supported"
+                }
+              ],
+              "decision": "accepted",
+              "error_type": null,
+              "evaluator_id": "person-a",
+              "input_digest": "sha256:dd7b2cfcfddcfcc7789fe2faceb5e5bb9de8855499ec214eb43f2d64d59e008a",
+              "reason": "The submitted sentence is the defining description of the quotient set G/N, supported by the group and subgroup assumptions.",
+              "rule": "Definition of the quotient set by a subgroup"
+            },
+            "evidence_source": "cached_evaluator",
+            "input_digest": "sha256:dd7b2cfcfddcfcc7789fe2faceb5e5bb9de8855499ec214eb43f2d64d59e008a",
+            "order_key": 10,
+            "status": "accepted",
+            "target": {
+              "node_id": 1,
+              "proof_id": "alg_002",
+              "version": 1
+            }
+          },
+          {
+            "evidence": {
+              "bridge_steps": [],
+              "circularity": {
+                "justification": "This line specifies the candidate product formula; it does not yet invoke the later conclusion that the formula is well-defined.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                    "source_id": "assumption:2"
+                  },
+                  {
+                    "digest": "sha256:4da2b4a23d389238077b46686862d175c57b7006590426c9495bee8fd1792e76",
+                    "source_id": "premise:1"
+                  }
+                ],
+                "status": "clear"
+              },
+              "conclusion": {
+                "justification": "The displayed equation coherently specifies the intended product on coset representatives; independence of representatives remains a separate well-definedness obligation.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                    "source_id": "assumption:2"
+                  },
+                  {
+                    "digest": "sha256:4da2b4a23d389238077b46686862d175c57b7006590426c9495bee8fd1792e76",
+                    "source_id": "premise:1"
+                  }
+                ],
+                "statement": "Define multiplication by (aN)(bN) = abN."
+              },
+              "conditions": [
+                {
+                  "condition": "The inputs are left cosets aN and bN in G/N.",
+                  "justification": "The preceding node identifies the elements of G/N as left cosets.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:4da2b4a23d389238077b46686862d175c57b7006590426c9495bee8fd1792e76",
+                      "source_id": "premise:1"
+                    }
+                  ],
+                  "status": "supported"
+                },
+                {
+                  "condition": "For a,b in G, the product ab is an element of G and therefore determines a left coset abN.",
+                  "justification": "Closure in G gives ab in G, and N being a subgroup makes abN a coset represented in G/N.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                      "source_id": "assumption:1"
+                    },
+                    {
+                      "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                      "source_id": "assumption:2"
+                    }
+                  ],
+                  "status": "supported"
+                }
+              ],
+              "decision": "accepted",
+              "error_type": null,
+              "evaluator_id": "person-a",
+              "input_digest": "sha256:953c3de4ca1bbc34a3a6de5a1a79557342ddcfb4a51a8789ed99b3e2c6892fc2",
+              "reason": "As a formula proposing the quotient multiplication, the line is valid; it should not itself be read as having already proved well-definedness.",
+              "rule": "Specification of the candidate coset multiplication"
+            },
+            "evidence_source": "cached_evaluator",
+            "input_digest": "sha256:953c3de4ca1bbc34a3a6de5a1a79557342ddcfb4a51a8789ed99b3e2c6892fc2",
+            "order_key": 20,
+            "status": "accepted",
+            "target": {
+              "node_id": 2,
+              "proof_id": "alg_002",
+              "version": 1
+            }
+          },
+          {
+            "evidence": {
+              "bridge_steps": [],
+              "circularity": {
+                "justification": "The argument proves independence from representatives directly from normality and group algebra, without assuming that the quotient operation is already well-defined.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                    "source_id": "assumption:2"
+                  },
+                  {
+                    "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb",
+                    "source_id": "assumption:3"
+                  },
+                  {
+                    "digest": "sha256:4da2b4a23d389238077b46686862d175c57b7006590426c9495bee8fd1792e76",
+                    "source_id": "premise:1"
+                  },
+                  {
+                    "digest": "sha256:03882a180cfb8b85dcd9bc80614b775236c85e2d82d16c0c7e0a03a39502be68",
+                    "source_id": "premise:2"
+                  }
+                ],
+                "status": "clear"
+              },
+              "conclusion": {
+                "justification": "The displayed calculation proves that equal representative choices produce equal product cosets, exactly the required well-definedness condition.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                    "source_id": "assumption:2"
+                  },
+                  {
+                    "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb",
+                    "source_id": "assumption:3"
+                  },
+                  {
+                    "digest": "sha256:4da2b4a23d389238077b46686862d175c57b7006590426c9495bee8fd1792e76",
+                    "source_id": "premise:1"
+                  },
+                  {
+                    "digest": "sha256:03882a180cfb8b85dcd9bc80614b775236c85e2d82d16c0c7e0a03a39502be68",
+                    "source_id": "premise:2"
+                  }
+                ],
+                "statement": "Suppose aN = a'N and bN = b'N. Then a^{-1}a' and b^{-1}b' lie in N. Since N is normal, b^{-1}(a^{-1}a')b lies in N; multiplying it by b^{-1}b' shows that (ab)^{-1}(a'b') = b^{-1}(a^{-1}a')b(b^{-1}b') lies in N. Hence abN = a'b'N, so coset multiplication is well-defined."
+              },
+              "conditions": [
+                {
+                  "condition": "For left cosets, aN=a'N and bN=b'N imply a^{-1}a' and b^{-1}b' lie in N.",
+                  "justification": "This is the standard equality criterion for left cosets of a subgroup.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                      "source_id": "assumption:2"
+                    },
+                    {
+                      "digest": "sha256:4da2b4a23d389238077b46686862d175c57b7006590426c9495bee8fd1792e76",
+                      "source_id": "premise:1"
+                    }
+                  ],
+                  "status": "supported"
+                },
+                {
+                  "condition": "Normality implies b^{-1}(a^{-1}a')b belongs to N.",
+                  "justification": "A normal subgroup is closed under conjugation by every element of G.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb",
+                      "source_id": "assumption:3"
+                    }
+                  ],
+                  "status": "supported"
+                },
+                {
+                  "condition": "The product b^{-1}(a^{-1}a')b(b^{-1}b') lies in N and equals (ab)^{-1}(a'b').",
+                  "justification": "Subgroup closure gives membership of the product, while cancellation in G gives b^{-1}(a^{-1}a')b(b^{-1}b')=b^{-1}a^{-1}a'b'=(ab)^{-1}(a'b').",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                      "source_id": "assumption:1"
+                    },
+                    {
+                      "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                      "source_id": "assumption:2"
+                    },
+                    {
+                      "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb",
+                      "source_id": "assumption:3"
+                    }
+                  ],
+                  "status": "supported"
+                }
+              ],
+              "decision": "accepted",
+              "error_type": null,
+              "evaluator_id": "person-a",
+              "input_digest": "sha256:d6847a07c955dee27bb9a44fa4afdc76d9fa4f008aa848c00c7459a964a7c29c",
+              "reason": "The repaired node correctly replaces the false subgroup-only reason with a complete normality-based proof of representative independence.",
+              "rule": "Representative independence of coset multiplication using normality"
+            },
+            "evidence_source": "evaluator",
+            "input_digest": "sha256:d6847a07c955dee27bb9a44fa4afdc76d9fa4f008aa848c00c7459a964a7c29c",
+            "order_key": 30,
+            "status": "accepted",
+            "target": {
+              "node_id": 3,
+              "proof_id": "alg_002",
+              "version": 2
+            }
+          },
+          {
+            "evidence": {
+              "bridge_steps": [],
+              "circularity": {
+                "justification": "Each group axiom is inherited or explicitly identified from the group G and the now well-defined coset product; the quotient-group conclusion is not assumed.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                    "source_id": "assumption:2"
+                  },
+                  {
+                    "digest": "sha256:4da2b4a23d389238077b46686862d175c57b7006590426c9495bee8fd1792e76",
+                    "source_id": "premise:1"
+                  },
+                  {
+                    "digest": "sha256:03882a180cfb8b85dcd9bc80614b775236c85e2d82d16c0c7e0a03a39502be68",
+                    "source_id": "premise:2"
+                  },
+                  {
+                    "digest": "sha256:65fb91720625dbe38404eca6c1f463c4cc78ccb66d58cc05874aefb61368b841",
+                    "source_id": "premise:3"
+                  }
+                ],
+                "status": "clear"
+              },
+              "conclusion": {
+                "justification": "The well-defined operation is closed, associative, has identity N, and gives every aN the inverse a^{-1}N, so it satisfies the group axioms.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                    "source_id": "assumption:2"
+                  },
+                  {
+                    "digest": "sha256:4da2b4a23d389238077b46686862d175c57b7006590426c9495bee8fd1792e76",
+                    "source_id": "premise:1"
+                  },
+                  {
+                    "digest": "sha256:03882a180cfb8b85dcd9bc80614b775236c85e2d82d16c0c7e0a03a39502be68",
+                    "source_id": "premise:2"
+                  },
+                  {
+                    "digest": "sha256:65fb91720625dbe38404eca6c1f463c4cc78ccb66d58cc05874aefb61368b841",
+                    "source_id": "premise:3"
+                  }
+                ],
+                "statement": "Therefore G/N is a group."
+              },
+              "conditions": [
+                {
+                  "condition": "The product (aN)(bN)=abN is well-defined on G/N.",
+                  "justification": "The repaired preceding node proves independence from both representative choices.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:03882a180cfb8b85dcd9bc80614b775236c85e2d82d16c0c7e0a03a39502be68",
+                      "source_id": "premise:2"
+                    },
+                    {
+                      "digest": "sha256:65fb91720625dbe38404eca6c1f463c4cc78ccb66d58cc05874aefb61368b841",
+                      "source_id": "premise:3"
+                    }
+                  ],
+                  "status": "supported"
+                },
+                {
+                  "condition": "Coset multiplication is associative.",
+                  "justification": "For cosets, ((aN)(bN))(cN)=(ab)cN=a(bc)N=(aN)((bN)(cN)) by associativity in G.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                      "source_id": "assumption:1"
+                    },
+                    {
+                      "digest": "sha256:03882a180cfb8b85dcd9bc80614b775236c85e2d82d16c0c7e0a03a39502be68",
+                      "source_id": "premise:2"
+                    }
+                  ],
+                  "status": "supported"
+                },
+                {
+                  "condition": "G/N has an identity and inverses under the coset product.",
+                  "justification": "The identity is N=eN, and the inverse of aN is a^{-1}N, as follows directly from the product formula and the identity and inverses in G.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161",
+                      "source_id": "assumption:1"
+                    },
+                    {
+                      "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1",
+                      "source_id": "assumption:2"
+                    },
+                    {
+                      "digest": "sha256:4da2b4a23d389238077b46686862d175c57b7006590426c9495bee8fd1792e76",
+                      "source_id": "premise:1"
+                    },
+                    {
+                      "digest": "sha256:03882a180cfb8b85dcd9bc80614b775236c85e2d82d16c0c7e0a03a39502be68",
+                      "source_id": "premise:2"
+                    }
+                  ],
+                  "status": "supported"
+                }
+              ],
+              "decision": "accepted",
+              "error_type": null,
+              "evaluator_id": "person-a",
+              "input_digest": "sha256:5ca7154aeadbba69fbaffe55b360a0f0d0ed9cfa0ced875b7f3dd07cd137005b",
+              "reason": "Once representative independence has been proved, the remaining quotient group axioms follow by the standard direct coset calculations from the corresponding axioms in G.",
+              "rule": "Quotient group structure inherited from G after well-definedness"
+            },
+            "evidence_source": "evaluator",
+            "input_digest": "sha256:5ca7154aeadbba69fbaffe55b360a0f0d0ed9cfa0ced875b7f3dd07cd137005b",
+            "order_key": 40,
+            "status": "accepted",
+            "target": {
+              "node_id": 4,
+              "proof_id": "alg_002",
+              "version": 2
+            }
+          }
+        ],
+        "pending_requests": [],
+        "policy": "iterative-first-error-v2",
+        "prefix_blockers": [],
+        "proof_digest": "sha256:2149b212a07989883f5fcfbb1bb1ba1c0d4b9c5101ab48d6acebf17da84a404f",
+        "review_calls_this_scan": 3,
+        "review_calls_total": 6,
+        "revision": 2,
+        "state": "complete"
+      },
       "review_calls": 6,
       "revision": 2
     },
@@ -3113,8 +3948,8 @@
   "proof_id": "alg_002",
   "repairs_applied": 1,
   "schema_version": "interactive-repair-pilot-run-v1",
-  "status": "pending",
-  "stop_reason": "awaiting_external_response",
+  "status": "complete",
+  "stop_reason": "completion_gate_accepted",
   "transport_accounting": {
     "events": [
       {
@@ -3231,8 +4066,9 @@
         "phase": "final_review",
         "request_digest": "sha256:5340350917cdf1923e56f38a5056205c7abc07a8283e850d27c9f135039bfa41",
         "request_filename": "requests/5340350917cdf1923e56f38a5056205c7abc07a8283e850d27c9f135039bfa41.json",
+        "response_digest": "sha256:1b0c001d62dbad2b67222fccfd348ee0a485d22dcd50ea8089c11fb5664f6922",
         "response_filename": "responses/5340350917cdf1923e56f38a5056205c7abc07a8283e850d27c9f135039bfa41.json",
-        "status": "awaiting_external_response",
+        "status": "supplied_external_response_replayed",
         "transport": "offline_file_replay",
         "usage": null
       }
