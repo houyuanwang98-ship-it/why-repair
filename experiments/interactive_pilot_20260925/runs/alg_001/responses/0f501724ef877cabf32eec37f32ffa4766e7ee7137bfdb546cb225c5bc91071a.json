@@ -1,0 +1,44 @@
+{
+  "input_digest": "sha256:0f501724ef877cabf32eec37f32ffa4766e7ee7137bfdb546cb225c5bc91071a",
+  "evaluator_id": "person-a",
+  "decision": "accepted",
+  "error_type": null,
+  "rule": "A full-dimensional subspace of a finite-dimensional vector space equals the whole space",
+  "conditions": [
+    {
+      "condition": "im(T) is a subspace of V.",
+      "status": "supported",
+      "source_refs": [{"source_id": "assumption:2", "digest": "sha256:6398a1570f2a91427cfc633368739761f00e7673d61fba89f9ae224c0fe6c87b"}],
+      "justification": "The image of the linear map T: V -> V is a subspace of its codomain V."
+    },
+    {
+      "condition": "V is finite-dimensional and dim im(T) = dim V.",
+      "status": "supported",
+      "source_refs": [
+        {"source_id": "assumption:1", "digest": "sha256:d9ebb6367bc3a25ecd79e9f69b671c4a355367ae11db8eb3c378e12f3c5e9de1"},
+        {"source_id": "premise:2", "digest": "sha256:3cc070c3499b327a1e221c2437ea3cedfd05d08ae82fb8aaae0c48371b867067"}
+      ],
+      "justification": "Both finite dimensionality and the equality of dimensions are explicitly available."
+    }
+  ],
+  "circularity": {
+    "status": "clear",
+    "source_refs": [
+      {"source_id": "assumption:1", "digest": "sha256:d9ebb6367bc3a25ecd79e9f69b671c4a355367ae11db8eb3c378e12f3c5e9de1"},
+      {"source_id": "assumption:2", "digest": "sha256:6398a1570f2a91427cfc633368739761f00e7673d61fba89f9ae224c0fe6c87b"},
+      {"source_id": "premise:2", "digest": "sha256:3cc070c3499b327a1e221c2437ea3cedfd05d08ae82fb8aaae0c48371b867067"}
+    ],
+    "justification": "The equality im(T)=V follows from the subspace dimension lemma, and surjectivity then follows by definition."
+  },
+  "conclusion": {
+    "statement": "Thus im(T) = V, so T is surjective.",
+    "source_refs": [
+      {"source_id": "assumption:1", "digest": "sha256:d9ebb6367bc3a25ecd79e9f69b671c4a355367ae11db8eb3c378e12f3c5e9de1"},
+      {"source_id": "assumption:2", "digest": "sha256:6398a1570f2a91427cfc633368739761f00e7673d61fba89f9ae224c0fe6c87b"},
+      {"source_id": "premise:2", "digest": "sha256:3cc070c3499b327a1e221c2437ea3cedfd05d08ae82fb8aaae0c48371b867067"}
+    ],
+    "justification": "A subspace of finite-dimensional V having dimension dim V must be V itself; im(T)=V is exactly surjectivity of T onto V."
+  },
+  "bridge_steps": [],
+  "reason": "The conclusion is a standard finite-dimensional subspace argument followed by the definition of surjectivity."
+}

@@ -1,0 +1,61 @@
+{
+  "input_digest": "sha256:78b684e1d03324a642aae488a280a2174945117b43c6c5eb1feb0c17599cb0c4",
+  "evaluator_id": "person-a",
+  "decision": "accepted",
+  "error_type": null,
+  "rule": "Kernel characterization of injectivity for a linear map",
+  "conditions": [
+    {
+      "condition": "T is a linear map V -> V, so ker(T) is the set of vectors v in V with T(v) = 0.",
+      "status": "supported",
+      "source_refs": [
+        {
+          "source_id": "assumption:2",
+          "digest": "sha256:6398a1570f2a91427cfc633368739761f00e7673d61fba89f9ae224c0fe6c87b"
+        }
+      ],
+      "justification": "The stated linear-map assumption makes the kernel and the zero vector in the claim well-defined."
+    },
+    {
+      "condition": "T is injective.",
+      "status": "supported",
+      "source_refs": [
+        {
+          "source_id": "assumption:3",
+          "digest": "sha256:1f9e7dcb3a7899d41521312635bff9ad77ad3c307a8d667e71259b4b7499d6ca"
+        }
+      ],
+      "justification": "Injectivity is an explicit assumption."
+    }
+  ],
+  "circularity": {
+    "status": "clear",
+    "source_refs": [
+      {
+        "source_id": "assumption:2",
+        "digest": "sha256:6398a1570f2a91427cfc633368739761f00e7673d61fba89f9ae224c0fe6c87b"
+      },
+      {
+        "source_id": "assumption:3",
+        "digest": "sha256:1f9e7dcb3a7899d41521312635bff9ad77ad3c307a8d667e71259b4b7499d6ca"
+      }
+    ],
+    "justification": "The inference uses only the map and injectivity assumptions, not the conclusion or theorem target."
+  },
+  "conclusion": {
+    "statement": "Since T is injective, ker(T) = {0}.",
+    "source_refs": [
+      {
+        "source_id": "assumption:2",
+        "digest": "sha256:6398a1570f2a91427cfc633368739761f00e7673d61fba89f9ae224c0fe6c87b"
+      },
+      {
+        "source_id": "assumption:3",
+        "digest": "sha256:1f9e7dcb3a7899d41521312635bff9ad77ad3c307a8d667e71259b4b7499d6ca"
+      }
+    ],
+    "justification": "If v lies in ker(T), then T(v)=0=T(0); injectivity gives v=0, while linearity gives T(0)=0, so the kernel is exactly {0}."
+  },
+  "bridge_steps": [],
+  "reason": "This is a standard direct consequence of injectivity and the definition of the kernel; finite dimensionality is not needed for this node."
+}

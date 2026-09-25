@@ -1,0 +1,47 @@
+{
+  "input_digest": "sha256:c5ceb441a6c266ecb7a1d9dd88ccab5c4e362e5072a92aa48561f9deda44a48c",
+  "evaluator_id": "person-a",
+  "decision": "accepted",
+  "error_type": null,
+  "rule": "Rank-nullity theorem",
+  "conditions": [
+    {
+      "condition": "V is finite-dimensional.",
+      "status": "supported",
+      "source_refs": [{"source_id": "assumption:1", "digest": "sha256:d9ebb6367bc3a25ecd79e9f69b671c4a355367ae11db8eb3c378e12f3c5e9de1"}],
+      "justification": "Finite dimensionality is an explicit assumption and permits the dimension form of rank-nullity."
+    },
+    {
+      "condition": "T: V -> V is linear.",
+      "status": "supported",
+      "source_refs": [{"source_id": "assumption:2", "digest": "sha256:6398a1570f2a91427cfc633368739761f00e7673d61fba89f9ae224c0fe6c87b"}],
+      "justification": "The linear-map hypothesis is explicit."
+    },
+    {
+      "condition": "ker(T) = {0}, hence dim ker(T) = 0.",
+      "status": "supported",
+      "source_refs": [{"source_id": "premise:1", "digest": "sha256:331e2d558af13ae519c091fa41a40023263962b6b072a6c00ef5bccec42314ee"}],
+      "justification": "The certified preceding node gives the trivial kernel, whose dimension is zero."
+    }
+  ],
+  "circularity": {
+    "status": "clear",
+    "source_refs": [
+      {"source_id": "assumption:1", "digest": "sha256:d9ebb6367bc3a25ecd79e9f69b671c4a355367ae11db8eb3c378e12f3c5e9de1"},
+      {"source_id": "assumption:2", "digest": "sha256:6398a1570f2a91427cfc633368739761f00e7673d61fba89f9ae224c0fe6c87b"},
+      {"source_id": "premise:1", "digest": "sha256:331e2d558af13ae519c091fa41a40023263962b6b072a6c00ef5bccec42314ee"}
+    ],
+    "justification": "Rank-nullity uses only the stated hypotheses and the already established kernel calculation."
+  },
+  "conclusion": {
+    "statement": "Therefore dim im(T) = dim V.",
+    "source_refs": [
+      {"source_id": "assumption:1", "digest": "sha256:d9ebb6367bc3a25ecd79e9f69b671c4a355367ae11db8eb3c378e12f3c5e9de1"},
+      {"source_id": "assumption:2", "digest": "sha256:6398a1570f2a91427cfc633368739761f00e7673d61fba89f9ae224c0fe6c87b"},
+      {"source_id": "premise:1", "digest": "sha256:331e2d558af13ae519c091fa41a40023263962b6b072a6c00ef5bccec42314ee"}
+    ],
+    "justification": "Rank-nullity gives dim V = dim ker(T) + dim im(T) = 0 + dim im(T)."
+  },
+  "bridge_steps": [],
+  "reason": "The dimension equality follows directly from rank-nullity and the preceding trivial-kernel result."
+}
