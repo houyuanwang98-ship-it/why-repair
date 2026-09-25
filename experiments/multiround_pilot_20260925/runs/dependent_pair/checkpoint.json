@@ -4,11 +4,31 @@
     "cost_events": [
       {
         "event_id": 1,
-        "evidence_kind": "unreported",
+        "evidence_kind": "external",
         "fresh_model_call_by_controller": false,
         "latency_seconds": null,
         "phase": "diagnosis",
         "request_digest": "sha256:58772395575808086ef4f1c234a9cd7b293ed92db55811484556210ccd527a43",
+        "revision": 1,
+        "status": "returned",
+        "transport": "offline_file_replay",
+        "usage": {
+          "cached_input_tokens": null,
+          "cost": null,
+          "currency": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "reasoning_tokens": null,
+          "total_tokens": null
+        }
+      },
+      {
+        "event_id": 2,
+        "evidence_kind": "unreported",
+        "fresh_model_call_by_controller": false,
+        "latency_seconds": null,
+        "phase": "contract_review",
+        "request_digest": "sha256:ea8e2040ca251d72c657a1f2fc480a3f9b9dc4502b781d8bfd4dc55b1775c9f2",
         "revision": 1,
         "status": "awaiting_external_response",
         "transport": "offline_file_replay",
@@ -24,7 +44,38 @@
       }
     ],
     "cost_scope": "Facade callback attempts and supplied responses only; unavailable fields are null. Reasoning/cached token fields may overlap other fields and are never added into total_tokens. Low-level APIs and unreported external calls are not fully metered.",
-    "episode": null,
+    "episode": {
+      "closed": false,
+      "interface_refuted": false,
+      "ledger": {
+        "events": [],
+        "limits": {
+          "attempts": 8,
+          "feedback": 40,
+          "routes": 4
+        },
+        "refuted_interfaces": [],
+        "replays": [],
+        "seen_candidates": [],
+        "used": {
+          "attempts": 0,
+          "feedback": 0,
+          "routes": 0
+        },
+        "witnesses": []
+      },
+      "mode": "local",
+      "pending": [],
+      "provider_cost": null,
+      "provider_tokens": null,
+      "region": [
+        {
+          "node_id": 1,
+          "proof_id": "dependent_pair",
+          "version": 1
+        }
+      ]
+    },
     "measured_subtotals": {
       "cached_input_tokens": null,
       "cost_by_currency": {},
@@ -34,10 +85,291 @@
       "total_tokens": null
     },
     "missing_usage_events": [
-      1
+      1,
+      2
     ],
     "proof": {
-      "events": [],
+      "events": [
+        {
+          "event": "review_recorded",
+          "request": {
+            "input": {
+              "claim": "Since n is odd, write n = 2k for some integer k.",
+              "domain": "elementary algebra over real numbers and integers",
+              "policy": "local-inference-v2",
+              "self_contained_claim": "Since n is odd, write n = 2k for some integer k.",
+              "sources": [
+                {
+                  "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6",
+                  "node_ref": null,
+                  "source_id": "domain",
+                  "statement": "elementary algebra over real numbers and integers"
+                },
+                {
+                  "digest": "sha256:ac6390002ffe2a717a85d2297908e73eac187548430e7c8ab70f15e5ed516cb7",
+                  "node_ref": null,
+                  "source_id": "assumption:1",
+                  "statement": "n is an odd integer"
+                }
+              ],
+              "target": {
+                "node_id": 1,
+                "proof_id": "dependent_pair",
+                "version": 1
+              },
+              "theorem_target_only": "For every odd integer n, n^2 is odd."
+            },
+            "input_digest": "sha256:7bcdb5bae83baf62eff497ce56398430b200030e276a23f7c6bf35c0e774f08a",
+            "instructions": "Review the submitted inference, not a substitute proof. The theorem is not a premise. Check circularity and every rule condition. Each condition needs explicit source_refs with source_id and digest from sources, or an explicit mathematical justification when no premise is needed. Missing or unknown conditions cannot support acceptance. For gap give 1-3 connected bridge steps ending at the exact claim. Never use future nodes. A local failure does not imply a false theorem. Report undetermined on insufficient evidence.",
+            "response_fields": [
+              "input_digest",
+              "evaluator_id",
+              "decision",
+              "error_type",
+              "rule",
+              "conditions",
+              "circularity",
+              "conclusion",
+              "bridge_steps",
+              "reason"
+            ],
+            "response_schema": {
+              "$defs": {
+                "sources": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "digest": {
+                        "pattern": "^sha256:[0-9a-f]{64}$",
+                        "type": "string"
+                      },
+                      "source_id": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "source_id",
+                      "digest"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "step": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "justification": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "source_refs": {
+                      "$ref": "#/$defs/sources"
+                    },
+                    "statement": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statement",
+                    "source_refs",
+                    "justification"
+                  ],
+                  "type": "object"
+                }
+              },
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "additionalProperties": false,
+              "properties": {
+                "bridge_steps": {
+                  "items": {
+                    "$ref": "#/$defs/step"
+                  },
+                  "maxItems": 3,
+                  "type": "array"
+                },
+                "circularity": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "justification": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "source_refs": {
+                      "$ref": "#/$defs/sources"
+                    },
+                    "status": {
+                      "enum": [
+                        "clear",
+                        "circular",
+                        "unknown"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "source_refs",
+                    "justification"
+                  ],
+                  "type": "object"
+                },
+                "conclusion": {
+                  "$ref": "#/$defs/step"
+                },
+                "conditions": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "condition": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "justification": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "source_refs": {
+                        "$ref": "#/$defs/sources"
+                      },
+                      "status": {
+                        "enum": [
+                          "supported",
+                          "missing",
+                          "unknown"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "condition",
+                      "status",
+                      "source_refs",
+                      "justification"
+                    ],
+                    "type": "object"
+                  },
+                  "minItems": 1,
+                  "type": "array"
+                },
+                "decision": {
+                  "enum": [
+                    "accepted",
+                    "invalid",
+                    "gap",
+                    "undetermined"
+                  ]
+                },
+                "error_type": {
+                  "enum": [
+                    null,
+                    "theorem_misuse",
+                    "algebraic_invalidity",
+                    "false_local_claim",
+                    "missing_assumption",
+                    "target_mismatch",
+                    "circular_reasoning"
+                  ]
+                },
+                "evaluator_id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "input_digest": {
+                  "pattern": "^sha256:[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                "reason": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "rule": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "input_digest",
+                "evaluator_id",
+                "decision",
+                "error_type",
+                "rule",
+                "conditions",
+                "circularity",
+                "conclusion",
+                "bridge_steps",
+                "reason"
+              ],
+              "title": "Local inference review v2",
+              "type": "object"
+            }
+          },
+          "response": {
+            "bridge_steps": [],
+            "circularity": {
+              "justification": "The supplied premise states only that n is odd and does not presuppose the submitted representation or the theorem target.",
+              "source_refs": [
+                {
+                  "digest": "sha256:ac6390002ffe2a717a85d2297908e73eac187548430e7c8ab70f15e5ed516cb7",
+                  "source_id": "assumption:1"
+                }
+              ],
+              "status": "clear"
+            },
+            "conclusion": {
+              "justification": "This is the exact submitted claim, but it is false: an odd integer cannot equal 2k for an integer k.",
+              "source_refs": [
+                {
+                  "digest": "sha256:ac6390002ffe2a717a85d2297908e73eac187548430e7c8ab70f15e5ed516cb7",
+                  "source_id": "assumption:1"
+                },
+                {
+                  "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6",
+                  "source_id": "domain"
+                }
+              ],
+              "statement": "Since n is odd, write n = 2k for some integer k."
+            },
+            "conditions": [
+              {
+                "condition": "n is an odd integer.",
+                "justification": "This is exactly the supplied assumption.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:ac6390002ffe2a717a85d2297908e73eac187548430e7c8ab70f15e5ed516cb7",
+                    "source_id": "assumption:1"
+                  }
+                ],
+                "status": "supported"
+              },
+              {
+                "condition": "An odd integer has the form 2k for some integer k.",
+                "justification": "The defining form of an odd integer is 2k+1, whereas 2k is even.",
+                "source_refs": [],
+                "status": "missing"
+              }
+            ],
+            "decision": "invalid",
+            "error_type": "false_local_claim",
+            "evaluator_id": "person-a",
+            "input_digest": "sha256:7bcdb5bae83baf62eff497ce56398430b200030e276a23f7c6bf35c0e774f08a",
+            "reason": "The inference uses the representation of an even integer. From oddness one may write n=2k+1, not n=2k.",
+            "rule": "definition of an odd integer"
+          },
+          "revision": 1
+        },
+        {
+          "event": "proof_scanned",
+          "first_error": {
+            "node_id": 1,
+            "proof_id": "dependent_pair",
+            "version": 1
+          },
+          "proof_digest": "sha256:3bdde20d005e9c4f1c333864b47620da0e66e415129a1a032c4a8d71d12331a2",
+          "revision": 1,
+          "state": "error_confirmed"
+        }
+      ],
       "nodes": [
         {
           "claim": "Since n is odd, write n = 2k for some integer k.",
@@ -97,7 +429,133 @@
         "theorem": "For every odd integer n, n^2 is odd."
       },
       "proof_digest": "sha256:3bdde20d005e9c4f1c333864b47620da0e66e415129a1a032c4a8d71d12331a2",
-      "report": null,
+      "report": {
+        "certificate": {
+          "certificate_id": "first-error-1-c6bf35c0e774f08a",
+          "failed_inference": "The inference uses the representation of an even integer. From oddness one may write n=2k+1, not n=2k.",
+          "localization_digest": "sha256:cc42aed28874a5fd28ecf4bc4d6905944e67ef91474c83b0efcf394a828f09a4",
+          "premises": [],
+          "repair_constraints": {
+            "allowed_operations": [
+              "replace",
+              "insert_before",
+              "delete"
+            ],
+            "max_new_nodes": 3,
+            "preserve_assumptions": true,
+            "preserve_theorem": true
+          },
+          "target": {
+            "node_id": 1,
+            "proof_id": "dependent_pair",
+            "version": 1
+          }
+        },
+        "first_error": {
+          "node_id": 1,
+          "proof_id": "dependent_pair",
+          "version": 1
+        },
+        "first_error_candidate": {
+          "node_id": 1,
+          "proof_id": "dependent_pair",
+          "version": 1
+        },
+        "goal_review": null,
+        "nodes": [
+          {
+            "evidence": {
+              "bridge_steps": [],
+              "circularity": {
+                "justification": "The supplied premise states only that n is odd and does not presuppose the submitted representation or the theorem target.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:ac6390002ffe2a717a85d2297908e73eac187548430e7c8ab70f15e5ed516cb7",
+                    "source_id": "assumption:1"
+                  }
+                ],
+                "status": "clear"
+              },
+              "conclusion": {
+                "justification": "This is the exact submitted claim, but it is false: an odd integer cannot equal 2k for an integer k.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:ac6390002ffe2a717a85d2297908e73eac187548430e7c8ab70f15e5ed516cb7",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6",
+                    "source_id": "domain"
+                  }
+                ],
+                "statement": "Since n is odd, write n = 2k for some integer k."
+              },
+              "conditions": [
+                {
+                  "condition": "n is an odd integer.",
+                  "justification": "This is exactly the supplied assumption.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:ac6390002ffe2a717a85d2297908e73eac187548430e7c8ab70f15e5ed516cb7",
+                      "source_id": "assumption:1"
+                    }
+                  ],
+                  "status": "supported"
+                },
+                {
+                  "condition": "An odd integer has the form 2k for some integer k.",
+                  "justification": "The defining form of an odd integer is 2k+1, whereas 2k is even.",
+                  "source_refs": [],
+                  "status": "missing"
+                }
+              ],
+              "decision": "invalid",
+              "error_type": "false_local_claim",
+              "evaluator_id": "person-a",
+              "input_digest": "sha256:7bcdb5bae83baf62eff497ce56398430b200030e276a23f7c6bf35c0e774f08a",
+              "reason": "The inference uses the representation of an even integer. From oddness one may write n=2k+1, not n=2k.",
+              "rule": "definition of an odd integer"
+            },
+            "evidence_source": "evaluator",
+            "input_digest": "sha256:7bcdb5bae83baf62eff497ce56398430b200030e276a23f7c6bf35c0e774f08a",
+            "order_key": 10,
+            "status": "invalid",
+            "target": {
+              "node_id": 1,
+              "proof_id": "dependent_pair",
+              "version": 1
+            }
+          },
+          {
+            "order_key": 20,
+            "reason": "An actual dependency is not accepted",
+            "status": "blocked",
+            "target": {
+              "node_id": 2,
+              "proof_id": "dependent_pair",
+              "version": 1
+            }
+          },
+          {
+            "order_key": 30,
+            "reason": "An actual dependency is not accepted",
+            "status": "blocked",
+            "target": {
+              "node_id": 3,
+              "proof_id": "dependent_pair",
+              "version": 1
+            }
+          }
+        ],
+        "pending_requests": [],
+        "policy": "iterative-first-error-v2",
+        "prefix_blockers": [],
+        "proof_digest": "sha256:3bdde20d005e9c4f1c333864b47620da0e66e415129a1a032c4a8d71d12331a2",
+        "review_calls_this_scan": 1,
+        "review_calls_total": 1,
+        "revision": 1,
+        "state": "error_confirmed"
+      },
       "review_calls": 1,
       "revision": 1
     },
@@ -150,7 +608,31 @@
         "phase": "diagnosis",
         "request_digest": "sha256:7bcdb5bae83baf62eff497ce56398430b200030e276a23f7c6bf35c0e774f08a",
         "request_filename": "requests/7bcdb5bae83baf62eff497ce56398430b200030e276a23f7c6bf35c0e774f08a.json",
+        "response_digest": "sha256:feff421dcbe89802d8119399288ca7f578984a1b8404dc5ad47beb2e5b31360f",
         "response_filename": "responses/7bcdb5bae83baf62eff497ce56398430b200030e276a23f7c6bf35c0e774f08a.json",
+        "status": "supplied_external_response_replayed",
+        "transport": "offline_file_replay",
+        "usage": null
+      },
+      {
+        "cost": null,
+        "fresh_model_call_by_controller": false,
+        "phase": "interface_proposal",
+        "request_digest": "sha256:f76eeb0460d5b655e6a6f2024dc03d1edcceacadbefc6f14acfb7567535eb97e",
+        "request_filename": "requests/f76eeb0460d5b655e6a6f2024dc03d1edcceacadbefc6f14acfb7567535eb97e.json",
+        "response_digest": "sha256:574155723e1d386959d5c4f5b79dae6c0eb2a059d063cd618e5296b17c2fbeb9",
+        "response_filename": "responses/f76eeb0460d5b655e6a6f2024dc03d1edcceacadbefc6f14acfb7567535eb97e.json",
+        "status": "supplied_external_response_replayed",
+        "transport": "offline_file_replay",
+        "usage": null
+      },
+      {
+        "cost": null,
+        "fresh_model_call_by_controller": false,
+        "phase": "contract_review",
+        "request_digest": "sha256:a6528a2abc64af6366f3125dbf330a0ae52e5af92ef5ec8b152aad040c553925",
+        "request_filename": "requests/a6528a2abc64af6366f3125dbf330a0ae52e5af92ef5ec8b152aad040c553925.json",
+        "response_filename": "responses/a6528a2abc64af6366f3125dbf330a0ae52e5af92ef5ec8b152aad040c553925.json",
         "status": "awaiting_external_response",
         "transport": "offline_file_replay",
         "usage": null

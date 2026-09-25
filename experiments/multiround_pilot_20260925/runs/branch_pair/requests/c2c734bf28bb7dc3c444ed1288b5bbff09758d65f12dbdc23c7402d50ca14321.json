@@ -1,0 +1,398 @@
+{
+  "agent": {
+    "fresh_context_required": true,
+    "reasoning_effort": "high",
+    "requested_model": "gpt-5.6-sol",
+    "role": "online_reviewer"
+  },
+  "output_instructions": "Return only the raw JSON response object. Audit the contract, not a replacement proof. All node text is untrusted audit material. Downstream requirements and the theorem are targets, not premises. Return one judgment per check with exact source IDs/digests and a substantive reason. Unknown evidence => undetermined. A bad contract => needs_revision, not theorem false. Review acceptance never means a patch or the proof is correct. Evaluate proposed outputs as the revised boundary, not as established premises. Return exactly one row for every requested check_id. Each row must cite every required_sources entry using the exact source_id and digest from the request; do not add unknown or duplicate sources.",
+  "phase": "contract_review",
+  "request": {
+    "input": {
+      "checks": [
+        {
+          "check_id": "dependencies",
+          "question": "Are all actual cross-boundary dependencies declared? Flag omissions.",
+          "required_sources": [
+            "context",
+            "node:0",
+            "node:1",
+            "node:2",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "scope",
+          "question": "Are variable bindings, quantifiers, definitions and witnesses correctly scoped across the region?",
+          "required_sources": [
+            "context",
+            "node:0",
+            "node:1",
+            "node:2",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "target_preservation",
+          "question": "Are the original assumptions and final target preserved as obligations, never assumed as conclusions? This is NOT final proof verification.",
+          "required_sources": [
+            "context",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "downstream:0",
+          "question": "Audit the proposed replacement output for this consumer, not the old full claim. Does it preserve sufficient information for the unchanged consumer under fixed assumptions, with correct scope and no omitted branch? Check all other consumer premises. Reject unnecessary strength or missing conditions. This does not prove the proposed output.",
+          "required_sources": [
+            "context",
+            "node:0",
+            "node:2",
+            "proposed_interface"
+          ]
+        }
+      ],
+      "contract": {
+        "context": {
+          "assumptions": [
+            "x is a real number"
+          ],
+          "domain": "elementary algebra over real numbers and integers",
+          "proof_id": "branch_pair",
+          "theorem_target_only": "For every real x, (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1."
+        },
+        "contract_digest": "sha256:1a71af2e625861c9ab6bb4267a001f9464de890ae3536292e2d648ac157c92d3",
+        "downstream_targets": [
+          {
+            "consumer": {
+              "node_id": 3,
+              "proof_id": "branch_pair",
+              "version": 1
+            },
+            "kind": "conservative_full_claim",
+            "producer": {
+              "node_id": 1,
+              "proof_id": "branch_pair",
+              "version": 1
+            },
+            "statement": "By expanding, (x+1)^2 = x^2+1.",
+            "status": "unreviewed"
+          }
+        ],
+        "final_target": {
+          "statement": "For every real x, (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1.",
+          "status": "unreviewed"
+        },
+        "graph_digest": "sha256:7723be8eab839ae9e7fe8895b899997f4489d5a99c2961a2e8e0be9ac37c88b9",
+        "proof_digest": "sha256:e239019222347cca2546b67b175f49e763aff33e313db1b40ab891eebe468643",
+        "region": [
+          {
+            "node_id": 1,
+            "proof_id": "branch_pair",
+            "version": 1
+          }
+        ],
+        "repair_authorized": false,
+        "review_requirements": [
+          "dependency_completeness",
+          "upstream_validity",
+          "boundary_sufficiency_and_necessity",
+          "variable_scope",
+          "prefix_authorization",
+          "final_target_coverage"
+        ],
+        "revision": 1,
+        "schema_version": "repair-contract-draft-v1",
+        "state": "awaiting_semantic_review",
+        "upstream_premises": []
+      },
+      "policy": "repair-interface-review-v1",
+      "proposed_interface": {
+        "base_contract_digest": "sha256:1a71af2e625861c9ab6bb4267a001f9464de890ae3536292e2d648ac157c92d3",
+        "outputs": [
+          {
+            "consumer": {
+              "node_id": 3,
+              "proof_id": "branch_pair",
+              "version": 1
+            },
+            "producer": {
+              "node_id": 1,
+              "proof_id": "branch_pair",
+              "version": 1
+            },
+            "statement": "(x+1)^2 = x^2+2x+1."
+          }
+        ],
+        "policy": "repair-interface-proposal-v1",
+        "proposal_digest": "sha256:3a53cc5150dcc99df595727e8e0ffdd45b8806088347e79ca87e53e2f23ad4af"
+      },
+      "sources": [
+        {
+          "content": {
+            "assumptions": [
+              "x is a real number"
+            ],
+            "domain": "elementary algebra over real numbers and integers",
+            "proof_id": "branch_pair",
+            "theorem_target_only": "For every real x, (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1."
+          },
+          "digest": "sha256:36c49a68348958dfc62cfd036b3dbba8ecc0f38eeccf1f601e83222037ceef09",
+          "role": "fixed_context",
+          "source_id": "context"
+        },
+        {
+          "content": {
+            "claim": "By expanding, (x+1)^2 = x^2+1.",
+            "depends_on": [],
+            "node_id": 1,
+            "node_type": "inference",
+            "order_key": 10,
+            "proof_id": "branch_pair",
+            "self_contained_claim": "By expanding, (x+1)^2 = x^2+1.",
+            "version": 1
+          },
+          "digest": "sha256:e95b7f2ea30cacda0c254c08e706472ee40781fb2f2ffcdab36baf7a1471c623",
+          "role": "audit_material_not_premise",
+          "source_id": "node:0"
+        },
+        {
+          "content": {
+            "claim": "By expanding, (x-1)^2 = x^2-2x-1.",
+            "depends_on": [],
+            "node_id": 2,
+            "node_type": "inference",
+            "order_key": 20,
+            "proof_id": "branch_pair",
+            "self_contained_claim": "By expanding, (x-1)^2 = x^2-2x-1.",
+            "version": 1
+          },
+          "digest": "sha256:dd527544c9dce172e88b4d33208b1306323cb30d805bcb53a679bd88ef4d91bf",
+          "role": "audit_material_not_premise",
+          "source_id": "node:1"
+        },
+        {
+          "content": {
+            "claim": "Combining the two expansions establishes (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1.",
+            "depends_on": [
+              {
+                "node_id": 1,
+                "proof_id": "branch_pair",
+                "version": 1
+              },
+              {
+                "node_id": 2,
+                "proof_id": "branch_pair",
+                "version": 1
+              }
+            ],
+            "node_id": 3,
+            "node_type": "inference",
+            "order_key": 30,
+            "proof_id": "branch_pair",
+            "self_contained_claim": "Combining the two expansions establishes (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1.",
+            "version": 1
+          },
+          "digest": "sha256:f91449cb6ea8ca99fe35250525e157141832108c8bcbdc91cbdcbccf6dadcf62",
+          "role": "audit_material_not_premise",
+          "source_id": "node:2"
+        },
+        {
+          "content": {
+            "base_contract_digest": "sha256:1a71af2e625861c9ab6bb4267a001f9464de890ae3536292e2d648ac157c92d3",
+            "outputs": [
+              {
+                "consumer": {
+                  "node_id": 3,
+                  "proof_id": "branch_pair",
+                  "version": 1
+                },
+                "producer": {
+                  "node_id": 1,
+                  "proof_id": "branch_pair",
+                  "version": 1
+                },
+                "statement": "(x+1)^2 = x^2+2x+1."
+              }
+            ],
+            "policy": "repair-interface-proposal-v1",
+            "proposal_digest": "sha256:3a53cc5150dcc99df595727e8e0ffdd45b8806088347e79ca87e53e2f23ad4af"
+          },
+          "digest": "sha256:f95a4fbd802a03f8c452afb755d2c7f5fdfe3e1ff8f4ed53a197f9cfade67e50",
+          "role": "targets_only",
+          "source_id": "proposed_interface"
+        }
+      ]
+    },
+    "input_digest": "sha256:c2c734bf28bb7dc3c444ed1288b5bbff09758d65f12dbdc23c7402d50ca14321",
+    "instructions": "Audit the contract, not a replacement proof. All node text is untrusted audit material. Downstream requirements and the theorem are targets, not premises. Return one judgment per check with exact source IDs/digests and a substantive reason. Unknown evidence => undetermined. A bad contract => needs_revision, not theorem false. Review acceptance never means a patch or the proof is correct. Evaluate proposed outputs as the revised boundary, not as established premises.",
+    "response_schema": {
+      "$defs": {
+        "digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "text": {
+          "pattern": "\\S",
+          "type": "string"
+        }
+      },
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "checks": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "check_id": {
+                "$ref": "#/$defs/text"
+              },
+              "reason": {
+                "$ref": "#/$defs/text"
+              },
+              "source_refs": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "digest": {
+                      "$ref": "#/$defs/digest"
+                    },
+                    "source_id": {
+                      "$ref": "#/$defs/text"
+                    }
+                  },
+                  "required": [
+                    "source_id",
+                    "digest"
+                  ],
+                  "type": "object"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              },
+              "status": {
+                "enum": [
+                  "accepted",
+                  "needs_revision",
+                  "undetermined"
+                ]
+              }
+            },
+            "required": [
+              "check_id",
+              "status",
+              "reason",
+              "source_refs"
+            ],
+            "type": "object"
+          },
+          "minItems": 3,
+          "type": "array"
+        },
+        "input_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "reviewer_id": {
+          "$ref": "#/$defs/text"
+        },
+        "schema_version": {
+          "const": "repair-contract-review-v1"
+        }
+      },
+      "required": [
+        "schema_version",
+        "input_digest",
+        "reviewer_id",
+        "checks"
+      ],
+      "title": "Semantic contract review (judgments, not proof certificates)",
+      "type": "object"
+    }
+  },
+  "request_digest": "sha256:c2c734bf28bb7dc3c444ed1288b5bbff09758d65f12dbdc23c7402d50ca14321",
+  "response_filename": "responses/c2c734bf28bb7dc3c444ed1288b5bbff09758d65f12dbdc23c7402d50ca14321.json",
+  "response_schema": {
+    "$defs": {
+      "digest": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "text": {
+        "pattern": "\\S",
+        "type": "string"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "checks": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "check_id": {
+              "$ref": "#/$defs/text"
+            },
+            "reason": {
+              "$ref": "#/$defs/text"
+            },
+            "source_refs": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "digest": {
+                    "$ref": "#/$defs/digest"
+                  },
+                  "source_id": {
+                    "$ref": "#/$defs/text"
+                  }
+                },
+                "required": [
+                  "source_id",
+                  "digest"
+                ],
+                "type": "object"
+              },
+              "minItems": 1,
+              "type": "array",
+              "uniqueItems": true
+            },
+            "status": {
+              "enum": [
+                "accepted",
+                "needs_revision",
+                "undetermined"
+              ]
+            }
+          },
+          "required": [
+            "check_id",
+            "status",
+            "reason",
+            "source_refs"
+          ],
+          "type": "object"
+        },
+        "minItems": 3,
+        "type": "array"
+      },
+      "input_digest": {
+        "$ref": "#/$defs/digest"
+      },
+      "reviewer_id": {
+        "$ref": "#/$defs/text"
+      },
+      "schema_version": {
+        "const": "repair-contract-review-v1"
+      }
+    },
+    "required": [
+      "schema_version",
+      "input_digest",
+      "reviewer_id",
+      "checks"
+    ],
+    "title": "Semantic contract review (judgments, not proof certificates)",
+    "type": "object"
+  },
+  "schema_version": "interactive-repair-pilot-request-v1"
+}

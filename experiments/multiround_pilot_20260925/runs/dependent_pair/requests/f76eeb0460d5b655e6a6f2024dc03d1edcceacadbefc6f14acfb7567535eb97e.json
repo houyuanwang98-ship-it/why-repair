@@ -1,0 +1,189 @@
+{
+  "agent": {
+    "fresh_context_required": true,
+    "reasoning_effort": "high",
+    "requested_model": "gpt-5.6-sol",
+    "role": "generator"
+  },
+  "output_instructions": "Return only the raw JSON response object. Propose exactly 2 boundary statement(s), in downstream_targets order. Each statement is an obligation the repaired region must establish for that unchanged consumer, never a premise. Preserve every consumer need without adding unnecessary strength. Return exactly {\"statements\": [...]} and no other fields.",
+  "phase": "interface_proposal",
+  "request": {
+    "input": {
+      "confirmed_first_error": {
+        "node_id": 1,
+        "proof_id": "dependent_pair",
+        "version": 1
+      },
+      "current_proof_nodes": [
+        {
+          "claim": "Since n is odd, write n = 2k for some integer k.",
+          "depends_on": [],
+          "node_id": 1,
+          "node_type": "inference",
+          "order_key": 10,
+          "proof_id": "dependent_pair",
+          "self_contained_claim": "Since n is odd, write n = 2k for some integer k.",
+          "version": 1
+        },
+        {
+          "claim": "Squaring the displayed expression for n gives n^2 = 4k^2+4k+2.",
+          "depends_on": [
+            {
+              "node_id": 1,
+              "proof_id": "dependent_pair",
+              "version": 1
+            }
+          ],
+          "node_id": 2,
+          "node_type": "inference",
+          "order_key": 20,
+          "proof_id": "dependent_pair",
+          "self_contained_claim": "Squaring the displayed expression for n gives n^2 = 4k^2+4k+2.",
+          "version": 1
+        },
+        {
+          "claim": "Therefore n^2 = 2(2k^2+2k)+1, so n^2 is odd.",
+          "depends_on": [
+            {
+              "node_id": 1,
+              "proof_id": "dependent_pair",
+              "version": 1
+            },
+            {
+              "node_id": 2,
+              "proof_id": "dependent_pair",
+              "version": 1
+            }
+          ],
+          "node_id": 3,
+          "node_type": "inference",
+          "order_key": 30,
+          "proof_id": "dependent_pair",
+          "self_contained_claim": "Therefore n^2 = 2(2k^2+2k)+1, so n^2 is odd.",
+          "version": 1
+        }
+      ],
+      "policy": "interactive-interface-proposal-v1",
+      "proof_context": {
+        "assumptions": [
+          "n is an odd integer"
+        ],
+        "domain": "elementary algebra over real numbers and integers",
+        "proof_id": "dependent_pair",
+        "theorem": "For every odd integer n, n^2 is odd."
+      },
+      "repair_contract": {
+        "context": {
+          "assumptions": [
+            "n is an odd integer"
+          ],
+          "domain": "elementary algebra over real numbers and integers",
+          "proof_id": "dependent_pair",
+          "theorem_target_only": "For every odd integer n, n^2 is odd."
+        },
+        "contract_digest": "sha256:ab91fad6ed92bbb48f63887f20d254e3afd2e79d0ba916fa2a1aa60329728b00",
+        "downstream_targets": [
+          {
+            "consumer": {
+              "node_id": 2,
+              "proof_id": "dependent_pair",
+              "version": 1
+            },
+            "kind": "conservative_full_claim",
+            "producer": {
+              "node_id": 1,
+              "proof_id": "dependent_pair",
+              "version": 1
+            },
+            "statement": "Since n is odd, write n = 2k for some integer k.",
+            "status": "unreviewed"
+          },
+          {
+            "consumer": {
+              "node_id": 3,
+              "proof_id": "dependent_pair",
+              "version": 1
+            },
+            "kind": "conservative_full_claim",
+            "producer": {
+              "node_id": 1,
+              "proof_id": "dependent_pair",
+              "version": 1
+            },
+            "statement": "Since n is odd, write n = 2k for some integer k.",
+            "status": "unreviewed"
+          }
+        ],
+        "final_target": {
+          "statement": "For every odd integer n, n^2 is odd.",
+          "status": "unreviewed"
+        },
+        "graph_digest": "sha256:368c73d7d21dbcf91f8858d88f784b8268667f20104494e3c00817f93714e744",
+        "proof_digest": "sha256:3bdde20d005e9c4f1c333864b47620da0e66e415129a1a032c4a8d71d12331a2",
+        "region": [
+          {
+            "node_id": 1,
+            "proof_id": "dependent_pair",
+            "version": 1
+          }
+        ],
+        "repair_authorized": false,
+        "review_requirements": [
+          "dependency_completeness",
+          "upstream_validity",
+          "boundary_sufficiency_and_necessity",
+          "variable_scope",
+          "prefix_authorization",
+          "final_target_coverage"
+        ],
+        "revision": 1,
+        "schema_version": "repair-contract-draft-v1",
+        "state": "awaiting_semantic_review",
+        "upstream_premises": []
+      }
+    },
+    "input_digest": "sha256:f76eeb0460d5b655e6a6f2024dc03d1edcceacadbefc6f14acfb7567535eb97e",
+    "instructions": "Propose exactly 2 boundary statement(s), in downstream_targets order. Each statement is an obligation the repaired region must establish for that unchanged consumer, never a premise. Preserve every consumer need without adding unnecessary strength. Return exactly {\"statements\": [...]} and no other fields.",
+    "response_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "statements": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "statements"
+      ],
+      "type": "object"
+    }
+  },
+  "request_digest": "sha256:f76eeb0460d5b655e6a6f2024dc03d1edcceacadbefc6f14acfb7567535eb97e",
+  "response_filename": "responses/f76eeb0460d5b655e6a6f2024dc03d1edcceacadbefc6f14acfb7567535eb97e.json",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "statements": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      }
+    },
+    "required": [
+      "statements"
+    ],
+    "type": "object"
+  },
+  "schema_version": "interactive-repair-pilot-request-v1"
+}

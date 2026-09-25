@@ -1,0 +1,168 @@
+{
+  "agent": {
+    "fresh_context_required": true,
+    "reasoning_effort": "high",
+    "requested_model": "gpt-5.6-sol",
+    "role": "generator"
+  },
+  "output_instructions": "Return only the raw JSON response object. Propose exactly 1 boundary statement(s), in downstream_targets order. Each statement is an obligation the repaired region must establish for that unchanged consumer, never a premise. Preserve every consumer need without adding unnecessary strength. Return exactly {\"statements\": [...]} and no other fields.",
+  "phase": "interface_proposal",
+  "request": {
+    "input": {
+      "confirmed_first_error": {
+        "node_id": 1,
+        "proof_id": "branch_pair",
+        "version": 1
+      },
+      "current_proof_nodes": [
+        {
+          "claim": "By expanding, (x+1)^2 = x^2+1.",
+          "depends_on": [],
+          "node_id": 1,
+          "node_type": "inference",
+          "order_key": 10,
+          "proof_id": "branch_pair",
+          "self_contained_claim": "By expanding, (x+1)^2 = x^2+1.",
+          "version": 1
+        },
+        {
+          "claim": "By expanding, (x-1)^2 = x^2-2x-1.",
+          "depends_on": [],
+          "node_id": 2,
+          "node_type": "inference",
+          "order_key": 20,
+          "proof_id": "branch_pair",
+          "self_contained_claim": "By expanding, (x-1)^2 = x^2-2x-1.",
+          "version": 1
+        },
+        {
+          "claim": "Combining the two expansions establishes (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1.",
+          "depends_on": [
+            {
+              "node_id": 1,
+              "proof_id": "branch_pair",
+              "version": 1
+            },
+            {
+              "node_id": 2,
+              "proof_id": "branch_pair",
+              "version": 1
+            }
+          ],
+          "node_id": 3,
+          "node_type": "inference",
+          "order_key": 30,
+          "proof_id": "branch_pair",
+          "self_contained_claim": "Combining the two expansions establishes (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1.",
+          "version": 1
+        }
+      ],
+      "policy": "interactive-interface-proposal-v1",
+      "proof_context": {
+        "assumptions": [
+          "x is a real number"
+        ],
+        "domain": "elementary algebra over real numbers and integers",
+        "proof_id": "branch_pair",
+        "theorem": "For every real x, (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1."
+      },
+      "repair_contract": {
+        "context": {
+          "assumptions": [
+            "x is a real number"
+          ],
+          "domain": "elementary algebra over real numbers and integers",
+          "proof_id": "branch_pair",
+          "theorem_target_only": "For every real x, (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1."
+        },
+        "contract_digest": "sha256:1a71af2e625861c9ab6bb4267a001f9464de890ae3536292e2d648ac157c92d3",
+        "downstream_targets": [
+          {
+            "consumer": {
+              "node_id": 3,
+              "proof_id": "branch_pair",
+              "version": 1
+            },
+            "kind": "conservative_full_claim",
+            "producer": {
+              "node_id": 1,
+              "proof_id": "branch_pair",
+              "version": 1
+            },
+            "statement": "By expanding, (x+1)^2 = x^2+1.",
+            "status": "unreviewed"
+          }
+        ],
+        "final_target": {
+          "statement": "For every real x, (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1.",
+          "status": "unreviewed"
+        },
+        "graph_digest": "sha256:7723be8eab839ae9e7fe8895b899997f4489d5a99c2961a2e8e0be9ac37c88b9",
+        "proof_digest": "sha256:e239019222347cca2546b67b175f49e763aff33e313db1b40ab891eebe468643",
+        "region": [
+          {
+            "node_id": 1,
+            "proof_id": "branch_pair",
+            "version": 1
+          }
+        ],
+        "repair_authorized": false,
+        "review_requirements": [
+          "dependency_completeness",
+          "upstream_validity",
+          "boundary_sufficiency_and_necessity",
+          "variable_scope",
+          "prefix_authorization",
+          "final_target_coverage"
+        ],
+        "revision": 1,
+        "schema_version": "repair-contract-draft-v1",
+        "state": "awaiting_semantic_review",
+        "upstream_premises": []
+      }
+    },
+    "input_digest": "sha256:26f7b65747aa3ef6aec4019b7c27a406cdca242d5fda5db652339c33598fa0fe",
+    "instructions": "Propose exactly 1 boundary statement(s), in downstream_targets order. Each statement is an obligation the repaired region must establish for that unchanged consumer, never a premise. Preserve every consumer need without adding unnecessary strength. Return exactly {\"statements\": [...]} and no other fields.",
+    "response_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "statements": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 1,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "statements"
+      ],
+      "type": "object"
+    }
+  },
+  "request_digest": "sha256:26f7b65747aa3ef6aec4019b7c27a406cdca242d5fda5db652339c33598fa0fe",
+  "response_filename": "responses/26f7b65747aa3ef6aec4019b7c27a406cdca242d5fda5db652339c33598fa0fe.json",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "statements": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "maxItems": 1,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "statements"
+    ],
+    "type": "object"
+  },
+  "schema_version": "interactive-repair-pilot-request-v1"
+}

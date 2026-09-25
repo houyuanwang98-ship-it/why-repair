@@ -1,0 +1,405 @@
+{
+  "agent": {
+    "fresh_context_required": true,
+    "reasoning_effort": "high",
+    "requested_model": "gpt-5.6-sol",
+    "role": "online_reviewer"
+  },
+  "output_instructions": "Return only the raw JSON response object. Review the submitted inference, not a substitute proof. The theorem is not a premise. Check circularity and every rule condition. Each condition needs explicit source_refs with source_id and digest from sources, or an explicit mathematical justification when no premise is needed. Missing or unknown conditions cannot support acceptance. For gap give 1-3 connected bridge steps ending at the exact claim. Never use future nodes. A local failure does not imply a false theorem. Report undetermined on insufficient evidence. This is a final target-coverage audit. Does the submitted final conclusion establish the original theorem? Do not supply a new proof. Cite premise:1 in the conclusion. If the submitted proof ends at the wrong target, use invalid/target_mismatch. Runtime constraints beyond the JSON Schema: every supported condition needs at least one valid source_refs entry; accepted and gap require all conditions supported and circularity.clear; accepted must have no bridge_steps; gap must have 1-3 bridge_steps, each step after the first must cite bridge:<previous index> using canonical_digest(step), the final bridge statement must exactly equal input.claim, and conclusion must cite the last bridge. Conclusion.statement must always exactly equal input.claim. Use only source IDs and digests in the request.",
+  "phase": "final_review",
+  "request": {
+    "input": {
+      "claim": "For every integer n, if n is even then n^2 is even.",
+      "domain": "elementary algebra over real numbers and integers",
+      "policy": "local-inference-v2",
+      "self_contained_claim": "For every integer n, if n is even then n^2 is even.",
+      "sources": [
+        {
+          "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6",
+          "node_ref": null,
+          "source_id": "domain",
+          "statement": "elementary algebra over real numbers and integers"
+        },
+        {
+          "digest": "sha256:5ced08966c1e6157e61134026bc1de57a5c28ba96c0ce3bbee7872f39c1eead4",
+          "node_ref": null,
+          "source_id": "assumption:1",
+          "statement": "n is an even integer"
+        },
+        {
+          "digest": "sha256:034fd8ac827cd23cc75c97be8213ce3893a49195f7872642bbbef2eb6e14e515",
+          "node_ref": {
+            "node_id": 2,
+            "proof_id": "valid_control",
+            "version": 1
+          },
+          "source_id": "premise:1",
+          "statement": "Then n^2 = 4k^2 is even."
+        }
+      ],
+      "target": {
+        "node_id": "__proof_goal__",
+        "proof_id": "valid_control",
+        "version": 1
+      },
+      "theorem_target_only": "For every integer n, if n is even then n^2 is even."
+    },
+    "input_digest": "sha256:e837f126af73b8bda2629bcbd6b7bc158cea2120e610e430c60cf19358a1b320",
+    "instructions": "Review the submitted inference, not a substitute proof. The theorem is not a premise. Check circularity and every rule condition. Each condition needs explicit source_refs with source_id and digest from sources, or an explicit mathematical justification when no premise is needed. Missing or unknown conditions cannot support acceptance. For gap give 1-3 connected bridge steps ending at the exact claim. Never use future nodes. A local failure does not imply a false theorem. Report undetermined on insufficient evidence. This is a final target-coverage audit. Does the submitted final conclusion establish the original theorem? Do not supply a new proof. Cite premise:1 in the conclusion. If the submitted proof ends at the wrong target, use invalid/target_mismatch.",
+    "response_fields": [
+      "input_digest",
+      "evaluator_id",
+      "decision",
+      "error_type",
+      "rule",
+      "conditions",
+      "circularity",
+      "conclusion",
+      "bridge_steps",
+      "reason"
+    ],
+    "response_schema": {
+      "$defs": {
+        "sources": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "digest": {
+                "pattern": "^sha256:[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "source_id": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "source_id",
+              "digest"
+            ],
+            "type": "object"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "step": {
+          "additionalProperties": false,
+          "properties": {
+            "justification": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "source_refs": {
+              "$ref": "#/$defs/sources"
+            },
+            "statement": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "statement",
+            "source_refs",
+            "justification"
+          ],
+          "type": "object"
+        }
+      },
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "bridge_steps": {
+          "items": {
+            "$ref": "#/$defs/step"
+          },
+          "maxItems": 3,
+          "type": "array"
+        },
+        "circularity": {
+          "additionalProperties": false,
+          "properties": {
+            "justification": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "source_refs": {
+              "$ref": "#/$defs/sources"
+            },
+            "status": {
+              "enum": [
+                "clear",
+                "circular",
+                "unknown"
+              ]
+            }
+          },
+          "required": [
+            "status",
+            "source_refs",
+            "justification"
+          ],
+          "type": "object"
+        },
+        "conclusion": {
+          "$ref": "#/$defs/step"
+        },
+        "conditions": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "condition": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "justification": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "source_refs": {
+                "$ref": "#/$defs/sources"
+              },
+              "status": {
+                "enum": [
+                  "supported",
+                  "missing",
+                  "unknown"
+                ]
+              }
+            },
+            "required": [
+              "condition",
+              "status",
+              "source_refs",
+              "justification"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "decision": {
+          "enum": [
+            "accepted",
+            "invalid",
+            "gap",
+            "undetermined"
+          ]
+        },
+        "error_type": {
+          "enum": [
+            null,
+            "theorem_misuse",
+            "algebraic_invalidity",
+            "false_local_claim",
+            "missing_assumption",
+            "target_mismatch",
+            "circular_reasoning"
+          ]
+        },
+        "evaluator_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "input_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "reason": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "rule": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "input_digest",
+        "evaluator_id",
+        "decision",
+        "error_type",
+        "rule",
+        "conditions",
+        "circularity",
+        "conclusion",
+        "bridge_steps",
+        "reason"
+      ],
+      "title": "Local inference review v2",
+      "type": "object"
+    }
+  },
+  "request_digest": "sha256:e837f126af73b8bda2629bcbd6b7bc158cea2120e610e430c60cf19358a1b320",
+  "response_filename": "responses/e837f126af73b8bda2629bcbd6b7bc158cea2120e610e430c60cf19358a1b320.json",
+  "response_schema": {
+    "$defs": {
+      "sources": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "digest": {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            "source_id": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "source_id",
+            "digest"
+          ],
+          "type": "object"
+        },
+        "type": "array",
+        "uniqueItems": true
+      },
+      "step": {
+        "additionalProperties": false,
+        "properties": {
+          "justification": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "source_refs": {
+            "$ref": "#/$defs/sources"
+          },
+          "statement": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "statement",
+          "source_refs",
+          "justification"
+        ],
+        "type": "object"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "bridge_steps": {
+        "items": {
+          "$ref": "#/$defs/step"
+        },
+        "maxItems": 3,
+        "type": "array"
+      },
+      "circularity": {
+        "additionalProperties": false,
+        "properties": {
+          "justification": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "source_refs": {
+            "$ref": "#/$defs/sources"
+          },
+          "status": {
+            "enum": [
+              "clear",
+              "circular",
+              "unknown"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "source_refs",
+          "justification"
+        ],
+        "type": "object"
+      },
+      "conclusion": {
+        "$ref": "#/$defs/step"
+      },
+      "conditions": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "condition": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "justification": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "source_refs": {
+              "$ref": "#/$defs/sources"
+            },
+            "status": {
+              "enum": [
+                "supported",
+                "missing",
+                "unknown"
+              ]
+            }
+          },
+          "required": [
+            "condition",
+            "status",
+            "source_refs",
+            "justification"
+          ],
+          "type": "object"
+        },
+        "minItems": 1,
+        "type": "array"
+      },
+      "decision": {
+        "enum": [
+          "accepted",
+          "invalid",
+          "gap",
+          "undetermined"
+        ]
+      },
+      "error_type": {
+        "enum": [
+          null,
+          "theorem_misuse",
+          "algebraic_invalidity",
+          "false_local_claim",
+          "missing_assumption",
+          "target_mismatch",
+          "circular_reasoning"
+        ]
+      },
+      "evaluator_id": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "input_digest": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "reason": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "rule": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "required": [
+      "input_digest",
+      "evaluator_id",
+      "decision",
+      "error_type",
+      "rule",
+      "conditions",
+      "circularity",
+      "conclusion",
+      "bridge_steps",
+      "reason"
+    ],
+    "title": "Local inference review v2",
+    "type": "object"
+  },
+  "schema_version": "interactive-repair-pilot-request-v1"
+}

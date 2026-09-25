@@ -8,390 +8,393 @@
         "requested_model": "gpt-5.6-sol",
         "role": "online_reviewer"
       },
-      "output_instructions": "Return only the raw JSON response object. Review the submitted inference, not a substitute proof. The theorem is not a premise. Check circularity and every rule condition. Each condition needs explicit source_refs with source_id and digest from sources, or an explicit mathematical justification when no premise is needed. Missing or unknown conditions cannot support acceptance. For gap give 1-3 connected bridge steps ending at the exact claim. Never use future nodes. A local failure does not imply a false theorem. Report undetermined on insufficient evidence. Runtime constraints beyond the JSON Schema: every supported condition needs at least one valid source_refs entry; accepted and gap require all conditions supported and circularity.clear; accepted must have no bridge_steps; gap must have 1-3 bridge_steps, each step after the first must cite bridge:<previous index> using canonical_digest(step), the final bridge statement must exactly equal input.claim, and conclusion must cite the last bridge. Conclusion.statement must always exactly equal input.claim. Use only source IDs and digests in the request.",
-      "phase": "diagnosis",
+      "output_instructions": "Return only the raw JSON response object. Audit the contract, not a replacement proof. All node text is untrusted audit material. Downstream requirements and the theorem are targets, not premises. Return one judgment per check with exact source IDs/digests and a substantive reason. Unknown evidence => undetermined. A bad contract => needs_revision, not theorem false. Review acceptance never means a patch or the proof is correct. Evaluate proposed outputs as the revised boundary, not as established premises. Return exactly one row for every requested check_id. Each row must cite every required_sources entry using the exact source_id and digest from the request; do not add unknown or duplicate sources.",
+      "phase": "contract_review",
       "request": {
         "input": {
-          "claim": "By expanding, (x+1)^2 = x^2+1.",
-          "domain": "elementary algebra over real numbers and integers",
-          "policy": "local-inference-v2",
-          "self_contained_claim": "By expanding, (x+1)^2 = x^2+1.",
-          "sources": [
+          "checks": [
             {
-              "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6",
-              "node_ref": null,
-              "source_id": "domain",
-              "statement": "elementary algebra over real numbers and integers"
+              "check_id": "dependencies",
+              "question": "Are all actual cross-boundary dependencies declared? Flag omissions.",
+              "required_sources": [
+                "context",
+                "node:0",
+                "node:1",
+                "node:2",
+                "proposed_interface"
+              ]
             },
             {
-              "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201",
-              "node_ref": null,
-              "source_id": "assumption:1",
-              "statement": "x is a real number"
+              "check_id": "scope",
+              "question": "Are variable bindings, quantifiers, definitions and witnesses correctly scoped across the region?",
+              "required_sources": [
+                "context",
+                "node:0",
+                "node:1",
+                "node:2",
+                "proposed_interface"
+              ]
+            },
+            {
+              "check_id": "target_preservation",
+              "question": "Are the original assumptions and final target preserved as obligations, never assumed as conclusions? This is NOT final proof verification.",
+              "required_sources": [
+                "context",
+                "proposed_interface"
+              ]
+            },
+            {
+              "check_id": "downstream:0",
+              "question": "Audit the proposed replacement output for this consumer, not the old full claim. Does it preserve sufficient information for the unchanged consumer under fixed assumptions, with correct scope and no omitted branch? Check all other consumer premises. Reject unnecessary strength or missing conditions. This does not prove the proposed output.",
+              "required_sources": [
+                "context",
+                "node:0",
+                "node:2",
+                "proposed_interface"
+              ]
             }
           ],
-          "target": {
-            "node_id": 1,
-            "proof_id": "branch_pair",
-            "version": 1
+          "contract": {
+            "context": {
+              "assumptions": [
+                "x is a real number"
+              ],
+              "domain": "elementary algebra over real numbers and integers",
+              "proof_id": "branch_pair",
+              "theorem_target_only": "For every real x, (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1."
+            },
+            "contract_digest": "sha256:1a71af2e625861c9ab6bb4267a001f9464de890ae3536292e2d648ac157c92d3",
+            "downstream_targets": [
+              {
+                "consumer": {
+                  "node_id": 3,
+                  "proof_id": "branch_pair",
+                  "version": 1
+                },
+                "kind": "conservative_full_claim",
+                "producer": {
+                  "node_id": 1,
+                  "proof_id": "branch_pair",
+                  "version": 1
+                },
+                "statement": "By expanding, (x+1)^2 = x^2+1.",
+                "status": "unreviewed"
+              }
+            ],
+            "final_target": {
+              "statement": "For every real x, (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1.",
+              "status": "unreviewed"
+            },
+            "graph_digest": "sha256:7723be8eab839ae9e7fe8895b899997f4489d5a99c2961a2e8e0be9ac37c88b9",
+            "proof_digest": "sha256:e239019222347cca2546b67b175f49e763aff33e313db1b40ab891eebe468643",
+            "region": [
+              {
+                "node_id": 1,
+                "proof_id": "branch_pair",
+                "version": 1
+              }
+            ],
+            "repair_authorized": false,
+            "review_requirements": [
+              "dependency_completeness",
+              "upstream_validity",
+              "boundary_sufficiency_and_necessity",
+              "variable_scope",
+              "prefix_authorization",
+              "final_target_coverage"
+            ],
+            "revision": 1,
+            "schema_version": "repair-contract-draft-v1",
+            "state": "awaiting_semantic_review",
+            "upstream_premises": []
           },
-          "theorem_target_only": "For every real x, (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1."
+          "policy": "repair-interface-review-v1",
+          "proposed_interface": {
+            "base_contract_digest": "sha256:1a71af2e625861c9ab6bb4267a001f9464de890ae3536292e2d648ac157c92d3",
+            "outputs": [
+              {
+                "consumer": {
+                  "node_id": 3,
+                  "proof_id": "branch_pair",
+                  "version": 1
+                },
+                "producer": {
+                  "node_id": 1,
+                  "proof_id": "branch_pair",
+                  "version": 1
+                },
+                "statement": "(x+1)^2 = x^2+2x+1."
+              }
+            ],
+            "policy": "repair-interface-proposal-v1",
+            "proposal_digest": "sha256:3a53cc5150dcc99df595727e8e0ffdd45b8806088347e79ca87e53e2f23ad4af"
+          },
+          "sources": [
+            {
+              "content": {
+                "assumptions": [
+                  "x is a real number"
+                ],
+                "domain": "elementary algebra over real numbers and integers",
+                "proof_id": "branch_pair",
+                "theorem_target_only": "For every real x, (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1."
+              },
+              "digest": "sha256:36c49a68348958dfc62cfd036b3dbba8ecc0f38eeccf1f601e83222037ceef09",
+              "role": "fixed_context",
+              "source_id": "context"
+            },
+            {
+              "content": {
+                "claim": "By expanding, (x+1)^2 = x^2+1.",
+                "depends_on": [],
+                "node_id": 1,
+                "node_type": "inference",
+                "order_key": 10,
+                "proof_id": "branch_pair",
+                "self_contained_claim": "By expanding, (x+1)^2 = x^2+1.",
+                "version": 1
+              },
+              "digest": "sha256:e95b7f2ea30cacda0c254c08e706472ee40781fb2f2ffcdab36baf7a1471c623",
+              "role": "audit_material_not_premise",
+              "source_id": "node:0"
+            },
+            {
+              "content": {
+                "claim": "By expanding, (x-1)^2 = x^2-2x-1.",
+                "depends_on": [],
+                "node_id": 2,
+                "node_type": "inference",
+                "order_key": 20,
+                "proof_id": "branch_pair",
+                "self_contained_claim": "By expanding, (x-1)^2 = x^2-2x-1.",
+                "version": 1
+              },
+              "digest": "sha256:dd527544c9dce172e88b4d33208b1306323cb30d805bcb53a679bd88ef4d91bf",
+              "role": "audit_material_not_premise",
+              "source_id": "node:1"
+            },
+            {
+              "content": {
+                "claim": "Combining the two expansions establishes (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1.",
+                "depends_on": [
+                  {
+                    "node_id": 1,
+                    "proof_id": "branch_pair",
+                    "version": 1
+                  },
+                  {
+                    "node_id": 2,
+                    "proof_id": "branch_pair",
+                    "version": 1
+                  }
+                ],
+                "node_id": 3,
+                "node_type": "inference",
+                "order_key": 30,
+                "proof_id": "branch_pair",
+                "self_contained_claim": "Combining the two expansions establishes (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1.",
+                "version": 1
+              },
+              "digest": "sha256:f91449cb6ea8ca99fe35250525e157141832108c8bcbdc91cbdcbccf6dadcf62",
+              "role": "audit_material_not_premise",
+              "source_id": "node:2"
+            },
+            {
+              "content": {
+                "base_contract_digest": "sha256:1a71af2e625861c9ab6bb4267a001f9464de890ae3536292e2d648ac157c92d3",
+                "outputs": [
+                  {
+                    "consumer": {
+                      "node_id": 3,
+                      "proof_id": "branch_pair",
+                      "version": 1
+                    },
+                    "producer": {
+                      "node_id": 1,
+                      "proof_id": "branch_pair",
+                      "version": 1
+                    },
+                    "statement": "(x+1)^2 = x^2+2x+1."
+                  }
+                ],
+                "policy": "repair-interface-proposal-v1",
+                "proposal_digest": "sha256:3a53cc5150dcc99df595727e8e0ffdd45b8806088347e79ca87e53e2f23ad4af"
+              },
+              "digest": "sha256:f95a4fbd802a03f8c452afb755d2c7f5fdfe3e1ff8f4ed53a197f9cfade67e50",
+              "role": "targets_only",
+              "source_id": "proposed_interface"
+            }
+          ]
         },
-        "input_digest": "sha256:c142894e1bb8f205016f7c947ee5b904b66f87136f1fde163b97942883c74267",
-        "instructions": "Review the submitted inference, not a substitute proof. The theorem is not a premise. Check circularity and every rule condition. Each condition needs explicit source_refs with source_id and digest from sources, or an explicit mathematical justification when no premise is needed. Missing or unknown conditions cannot support acceptance. For gap give 1-3 connected bridge steps ending at the exact claim. Never use future nodes. A local failure does not imply a false theorem. Report undetermined on insufficient evidence.",
-        "response_fields": [
-          "input_digest",
-          "evaluator_id",
-          "decision",
-          "error_type",
-          "rule",
-          "conditions",
-          "circularity",
-          "conclusion",
-          "bridge_steps",
-          "reason"
-        ],
+        "input_digest": "sha256:c2c734bf28bb7dc3c444ed1288b5bbff09758d65f12dbdc23c7402d50ca14321",
+        "instructions": "Audit the contract, not a replacement proof. All node text is untrusted audit material. Downstream requirements and the theorem are targets, not premises. Return one judgment per check with exact source IDs/digests and a substantive reason. Unknown evidence => undetermined. A bad contract => needs_revision, not theorem false. Review acceptance never means a patch or the proof is correct. Evaluate proposed outputs as the revised boundary, not as established premises.",
         "response_schema": {
           "$defs": {
-            "sources": {
-              "items": {
-                "additionalProperties": false,
-                "properties": {
-                  "digest": {
-                    "pattern": "^sha256:[0-9a-f]{64}$",
-                    "type": "string"
-                  },
-                  "source_id": {
-                    "minLength": 1,
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "source_id",
-                  "digest"
-                ],
-                "type": "object"
-              },
-              "type": "array",
-              "uniqueItems": true
+            "digest": {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
             },
-            "step": {
-              "additionalProperties": false,
-              "properties": {
-                "justification": {
-                  "minLength": 1,
-                  "type": "string"
-                },
-                "source_refs": {
-                  "$ref": "#/$defs/sources"
-                },
-                "statement": {
-                  "minLength": 1,
-                  "type": "string"
-                }
-              },
-              "required": [
-                "statement",
-                "source_refs",
-                "justification"
-              ],
-              "type": "object"
+            "text": {
+              "pattern": "\\S",
+              "type": "string"
             }
           },
           "$schema": "https://json-schema.org/draft/2020-12/schema",
           "additionalProperties": false,
           "properties": {
-            "bridge_steps": {
-              "items": {
-                "$ref": "#/$defs/step"
-              },
-              "maxItems": 3,
-              "type": "array"
-            },
-            "circularity": {
-              "additionalProperties": false,
-              "properties": {
-                "justification": {
-                  "minLength": 1,
-                  "type": "string"
-                },
-                "source_refs": {
-                  "$ref": "#/$defs/sources"
-                },
-                "status": {
-                  "enum": [
-                    "clear",
-                    "circular",
-                    "unknown"
-                  ]
-                }
-              },
-              "required": [
-                "status",
-                "source_refs",
-                "justification"
-              ],
-              "type": "object"
-            },
-            "conclusion": {
-              "$ref": "#/$defs/step"
-            },
-            "conditions": {
+            "checks": {
               "items": {
                 "additionalProperties": false,
                 "properties": {
-                  "condition": {
-                    "minLength": 1,
-                    "type": "string"
+                  "check_id": {
+                    "$ref": "#/$defs/text"
                   },
-                  "justification": {
-                    "minLength": 1,
-                    "type": "string"
+                  "reason": {
+                    "$ref": "#/$defs/text"
                   },
                   "source_refs": {
-                    "$ref": "#/$defs/sources"
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "digest": {
+                          "$ref": "#/$defs/digest"
+                        },
+                        "source_id": {
+                          "$ref": "#/$defs/text"
+                        }
+                      },
+                      "required": [
+                        "source_id",
+                        "digest"
+                      ],
+                      "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array",
+                    "uniqueItems": true
                   },
                   "status": {
                     "enum": [
-                      "supported",
-                      "missing",
-                      "unknown"
+                      "accepted",
+                      "needs_revision",
+                      "undetermined"
                     ]
                   }
                 },
                 "required": [
-                  "condition",
+                  "check_id",
                   "status",
-                  "source_refs",
-                  "justification"
+                  "reason",
+                  "source_refs"
                 ],
                 "type": "object"
               },
-              "minItems": 1,
+              "minItems": 3,
               "type": "array"
             },
-            "decision": {
-              "enum": [
-                "accepted",
-                "invalid",
-                "gap",
-                "undetermined"
-              ]
-            },
-            "error_type": {
-              "enum": [
-                null,
-                "theorem_misuse",
-                "algebraic_invalidity",
-                "false_local_claim",
-                "missing_assumption",
-                "target_mismatch",
-                "circular_reasoning"
-              ]
-            },
-            "evaluator_id": {
-              "minLength": 1,
-              "type": "string"
-            },
             "input_digest": {
-              "pattern": "^sha256:[0-9a-f]{64}$",
-              "type": "string"
+              "$ref": "#/$defs/digest"
             },
-            "reason": {
-              "minLength": 1,
-              "type": "string"
+            "reviewer_id": {
+              "$ref": "#/$defs/text"
             },
-            "rule": {
-              "minLength": 1,
-              "type": "string"
+            "schema_version": {
+              "const": "repair-contract-review-v1"
             }
           },
           "required": [
+            "schema_version",
             "input_digest",
-            "evaluator_id",
-            "decision",
-            "error_type",
-            "rule",
-            "conditions",
-            "circularity",
-            "conclusion",
-            "bridge_steps",
-            "reason"
+            "reviewer_id",
+            "checks"
           ],
-          "title": "Local inference review v2",
+          "title": "Semantic contract review (judgments, not proof certificates)",
           "type": "object"
         }
       },
-      "request_digest": "sha256:c142894e1bb8f205016f7c947ee5b904b66f87136f1fde163b97942883c74267",
-      "response_filename": "responses/c142894e1bb8f205016f7c947ee5b904b66f87136f1fde163b97942883c74267.json",
+      "request_digest": "sha256:c2c734bf28bb7dc3c444ed1288b5bbff09758d65f12dbdc23c7402d50ca14321",
+      "response_filename": "responses/c2c734bf28bb7dc3c444ed1288b5bbff09758d65f12dbdc23c7402d50ca14321.json",
       "response_schema": {
         "$defs": {
-          "sources": {
-            "items": {
-              "additionalProperties": false,
-              "properties": {
-                "digest": {
-                  "pattern": "^sha256:[0-9a-f]{64}$",
-                  "type": "string"
-                },
-                "source_id": {
-                  "minLength": 1,
-                  "type": "string"
-                }
-              },
-              "required": [
-                "source_id",
-                "digest"
-              ],
-              "type": "object"
-            },
-            "type": "array",
-            "uniqueItems": true
+          "digest": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "type": "string"
           },
-          "step": {
-            "additionalProperties": false,
-            "properties": {
-              "justification": {
-                "minLength": 1,
-                "type": "string"
-              },
-              "source_refs": {
-                "$ref": "#/$defs/sources"
-              },
-              "statement": {
-                "minLength": 1,
-                "type": "string"
-              }
-            },
-            "required": [
-              "statement",
-              "source_refs",
-              "justification"
-            ],
-            "type": "object"
+          "text": {
+            "pattern": "\\S",
+            "type": "string"
           }
         },
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "additionalProperties": false,
         "properties": {
-          "bridge_steps": {
-            "items": {
-              "$ref": "#/$defs/step"
-            },
-            "maxItems": 3,
-            "type": "array"
-          },
-          "circularity": {
-            "additionalProperties": false,
-            "properties": {
-              "justification": {
-                "minLength": 1,
-                "type": "string"
-              },
-              "source_refs": {
-                "$ref": "#/$defs/sources"
-              },
-              "status": {
-                "enum": [
-                  "clear",
-                  "circular",
-                  "unknown"
-                ]
-              }
-            },
-            "required": [
-              "status",
-              "source_refs",
-              "justification"
-            ],
-            "type": "object"
-          },
-          "conclusion": {
-            "$ref": "#/$defs/step"
-          },
-          "conditions": {
+          "checks": {
             "items": {
               "additionalProperties": false,
               "properties": {
-                "condition": {
-                  "minLength": 1,
-                  "type": "string"
+                "check_id": {
+                  "$ref": "#/$defs/text"
                 },
-                "justification": {
-                  "minLength": 1,
-                  "type": "string"
+                "reason": {
+                  "$ref": "#/$defs/text"
                 },
                 "source_refs": {
-                  "$ref": "#/$defs/sources"
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "digest": {
+                        "$ref": "#/$defs/digest"
+                      },
+                      "source_id": {
+                        "$ref": "#/$defs/text"
+                      }
+                    },
+                    "required": [
+                      "source_id",
+                      "digest"
+                    ],
+                    "type": "object"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
                 },
                 "status": {
                   "enum": [
-                    "supported",
-                    "missing",
-                    "unknown"
+                    "accepted",
+                    "needs_revision",
+                    "undetermined"
                   ]
                 }
               },
               "required": [
-                "condition",
+                "check_id",
                 "status",
-                "source_refs",
-                "justification"
+                "reason",
+                "source_refs"
               ],
               "type": "object"
             },
-            "minItems": 1,
+            "minItems": 3,
             "type": "array"
           },
-          "decision": {
-            "enum": [
-              "accepted",
-              "invalid",
-              "gap",
-              "undetermined"
-            ]
-          },
-          "error_type": {
-            "enum": [
-              null,
-              "theorem_misuse",
-              "algebraic_invalidity",
-              "false_local_claim",
-              "missing_assumption",
-              "target_mismatch",
-              "circular_reasoning"
-            ]
-          },
-          "evaluator_id": {
-            "minLength": 1,
-            "type": "string"
-          },
           "input_digest": {
-            "pattern": "^sha256:[0-9a-f]{64}$",
-            "type": "string"
+            "$ref": "#/$defs/digest"
           },
-          "reason": {
-            "minLength": 1,
-            "type": "string"
+          "reviewer_id": {
+            "$ref": "#/$defs/text"
           },
-          "rule": {
-            "minLength": 1,
-            "type": "string"
+          "schema_version": {
+            "const": "repair-contract-review-v1"
           }
         },
         "required": [
+          "schema_version",
           "input_digest",
-          "evaluator_id",
-          "decision",
-          "error_type",
-          "rule",
-          "conditions",
-          "circularity",
-          "conclusion",
-          "bridge_steps",
-          "reason"
+          "reviewer_id",
+          "checks"
         ],
-        "title": "Local inference review v2",
+        "title": "Semantic contract review (judgments, not proof certificates)",
         "type": "object"
       },
       "schema_version": "interactive-repair-pilot-request-v1"

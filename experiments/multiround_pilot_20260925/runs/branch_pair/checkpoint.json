@@ -4,11 +4,51 @@
     "cost_events": [
       {
         "event_id": 1,
-        "evidence_kind": "unreported",
+        "evidence_kind": "external",
         "fresh_model_call_by_controller": false,
         "latency_seconds": null,
         "phase": "diagnosis",
         "request_digest": "sha256:35d50641ca96df79111f2c03842fe03f166b46f6d83e0e03b22e615748516d1c",
+        "revision": 1,
+        "status": "returned",
+        "transport": "offline_file_replay",
+        "usage": {
+          "cached_input_tokens": null,
+          "cost": null,
+          "currency": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "reasoning_tokens": null,
+          "total_tokens": null
+        }
+      },
+      {
+        "event_id": 2,
+        "evidence_kind": "external",
+        "fresh_model_call_by_controller": false,
+        "latency_seconds": null,
+        "phase": "diagnosis",
+        "request_digest": "sha256:8e12a3905e24d81c5345909b4f351d99e0b9828b9c67bf6a012f8e18d65d05f3",
+        "revision": 1,
+        "status": "returned",
+        "transport": "offline_file_replay",
+        "usage": {
+          "cached_input_tokens": null,
+          "cost": null,
+          "currency": null,
+          "input_tokens": null,
+          "output_tokens": null,
+          "reasoning_tokens": null,
+          "total_tokens": null
+        }
+      },
+      {
+        "event_id": 3,
+        "evidence_kind": "unreported",
+        "fresh_model_call_by_controller": false,
+        "latency_seconds": null,
+        "phase": "contract_review",
+        "request_digest": "sha256:2a4520abf60c26883a6ef65739b6240786d76c5cdb9303814b1dc39d215f021b",
         "revision": 1,
         "status": "awaiting_external_response",
         "transport": "offline_file_replay",
@@ -24,7 +64,38 @@
       }
     ],
     "cost_scope": "Facade callback attempts and supplied responses only; unavailable fields are null. Reasoning/cached token fields may overlap other fields and are never added into total_tokens. Low-level APIs and unreported external calls are not fully metered.",
-    "episode": null,
+    "episode": {
+      "closed": false,
+      "interface_refuted": false,
+      "ledger": {
+        "events": [],
+        "limits": {
+          "attempts": 8,
+          "feedback": 40,
+          "routes": 4
+        },
+        "refuted_interfaces": [],
+        "replays": [],
+        "seen_candidates": [],
+        "used": {
+          "attempts": 0,
+          "feedback": 0,
+          "routes": 0
+        },
+        "witnesses": []
+      },
+      "mode": "local",
+      "pending": [],
+      "provider_cost": null,
+      "provider_tokens": null,
+      "region": [
+        {
+          "node_id": 1,
+          "proof_id": "branch_pair",
+          "version": 1
+        }
+      ]
+    },
     "measured_subtotals": {
       "cached_input_tokens": null,
       "cost_by_currency": {},
@@ -34,10 +105,568 @@
       "total_tokens": null
     },
     "missing_usage_events": [
-      1
+      1,
+      2,
+      3
     ],
     "proof": {
-      "events": [],
+      "events": [
+        {
+          "event": "review_recorded",
+          "request": {
+            "input": {
+              "claim": "By expanding, (x+1)^2 = x^2+1.",
+              "domain": "elementary algebra over real numbers and integers",
+              "policy": "local-inference-v2",
+              "self_contained_claim": "By expanding, (x+1)^2 = x^2+1.",
+              "sources": [
+                {
+                  "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6",
+                  "node_ref": null,
+                  "source_id": "domain",
+                  "statement": "elementary algebra over real numbers and integers"
+                },
+                {
+                  "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201",
+                  "node_ref": null,
+                  "source_id": "assumption:1",
+                  "statement": "x is a real number"
+                }
+              ],
+              "target": {
+                "node_id": 1,
+                "proof_id": "branch_pair",
+                "version": 1
+              },
+              "theorem_target_only": "For every real x, (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1."
+            },
+            "input_digest": "sha256:c142894e1bb8f205016f7c947ee5b904b66f87136f1fde163b97942883c74267",
+            "instructions": "Review the submitted inference, not a substitute proof. The theorem is not a premise. Check circularity and every rule condition. Each condition needs explicit source_refs with source_id and digest from sources, or an explicit mathematical justification when no premise is needed. Missing or unknown conditions cannot support acceptance. For gap give 1-3 connected bridge steps ending at the exact claim. Never use future nodes. A local failure does not imply a false theorem. Report undetermined on insufficient evidence.",
+            "response_fields": [
+              "input_digest",
+              "evaluator_id",
+              "decision",
+              "error_type",
+              "rule",
+              "conditions",
+              "circularity",
+              "conclusion",
+              "bridge_steps",
+              "reason"
+            ],
+            "response_schema": {
+              "$defs": {
+                "sources": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "digest": {
+                        "pattern": "^sha256:[0-9a-f]{64}$",
+                        "type": "string"
+                      },
+                      "source_id": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "source_id",
+                      "digest"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "step": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "justification": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "source_refs": {
+                      "$ref": "#/$defs/sources"
+                    },
+                    "statement": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statement",
+                    "source_refs",
+                    "justification"
+                  ],
+                  "type": "object"
+                }
+              },
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "additionalProperties": false,
+              "properties": {
+                "bridge_steps": {
+                  "items": {
+                    "$ref": "#/$defs/step"
+                  },
+                  "maxItems": 3,
+                  "type": "array"
+                },
+                "circularity": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "justification": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "source_refs": {
+                      "$ref": "#/$defs/sources"
+                    },
+                    "status": {
+                      "enum": [
+                        "clear",
+                        "circular",
+                        "unknown"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "source_refs",
+                    "justification"
+                  ],
+                  "type": "object"
+                },
+                "conclusion": {
+                  "$ref": "#/$defs/step"
+                },
+                "conditions": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "condition": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "justification": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "source_refs": {
+                        "$ref": "#/$defs/sources"
+                      },
+                      "status": {
+                        "enum": [
+                          "supported",
+                          "missing",
+                          "unknown"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "condition",
+                      "status",
+                      "source_refs",
+                      "justification"
+                    ],
+                    "type": "object"
+                  },
+                  "minItems": 1,
+                  "type": "array"
+                },
+                "decision": {
+                  "enum": [
+                    "accepted",
+                    "invalid",
+                    "gap",
+                    "undetermined"
+                  ]
+                },
+                "error_type": {
+                  "enum": [
+                    null,
+                    "theorem_misuse",
+                    "algebraic_invalidity",
+                    "false_local_claim",
+                    "missing_assumption",
+                    "target_mismatch",
+                    "circular_reasoning"
+                  ]
+                },
+                "evaluator_id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "input_digest": {
+                  "pattern": "^sha256:[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                "reason": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "rule": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "input_digest",
+                "evaluator_id",
+                "decision",
+                "error_type",
+                "rule",
+                "conditions",
+                "circularity",
+                "conclusion",
+                "bridge_steps",
+                "reason"
+              ],
+              "title": "Local inference review v2",
+              "type": "object"
+            }
+          },
+          "response": {
+            "bridge_steps": [],
+            "circularity": {
+              "justification": "The supplied premise does not state the submitted equality or the theorem target.",
+              "source_refs": [
+                {
+                  "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201",
+                  "source_id": "assumption:1"
+                }
+              ],
+              "status": "clear"
+            },
+            "conclusion": {
+              "justification": "This is the exact submitted claim, but it does not follow: the correct expansion is x^2+2x+1.",
+              "source_refs": [
+                {
+                  "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201",
+                  "source_id": "assumption:1"
+                },
+                {
+                  "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6",
+                  "source_id": "domain"
+                }
+              ],
+              "statement": "By expanding, (x+1)^2 = x^2+1."
+            },
+            "conditions": [
+              {
+                "condition": "x is a real number, so the usual field operations and distributive law apply.",
+                "justification": "The assumption places x in the real numbers and the stated domain is elementary real algebra.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6",
+                    "source_id": "domain"
+                  }
+                ],
+                "status": "supported"
+              },
+              {
+                "condition": "Expanding (x+1)^2 yields x^2+1 with no middle term.",
+                "justification": "Distributivity gives (x+1)(x+1)=x^2+x+x+1=x^2+2x+1, so the claimed expansion omits 2x and is not an identity.",
+                "source_refs": [],
+                "status": "missing"
+              }
+            ],
+            "decision": "invalid",
+            "error_type": "algebraic_invalidity",
+            "evaluator_id": "person-a",
+            "input_digest": "sha256:c142894e1bb8f205016f7c947ee5b904b66f87136f1fde163b97942883c74267",
+            "reason": "The inference is algebraically invalid because the cross term 2x is omitted; for example, at x=1 the two sides are 4 and 2.",
+            "rule": "binomial expansion by distributivity"
+          },
+          "revision": 1
+        },
+        {
+          "event": "review_recorded",
+          "request": {
+            "input": {
+              "claim": "By expanding, (x-1)^2 = x^2-2x-1.",
+              "domain": "elementary algebra over real numbers and integers",
+              "policy": "local-inference-v2",
+              "self_contained_claim": "By expanding, (x-1)^2 = x^2-2x-1.",
+              "sources": [
+                {
+                  "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6",
+                  "node_ref": null,
+                  "source_id": "domain",
+                  "statement": "elementary algebra over real numbers and integers"
+                },
+                {
+                  "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201",
+                  "node_ref": null,
+                  "source_id": "assumption:1",
+                  "statement": "x is a real number"
+                }
+              ],
+              "target": {
+                "node_id": 2,
+                "proof_id": "branch_pair",
+                "version": 1
+              },
+              "theorem_target_only": "For every real x, (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1."
+            },
+            "input_digest": "sha256:39238478c98bac6c07181e07bc0fa68f8664225c97a00d808e12dd3f839c3163",
+            "instructions": "Review the submitted inference, not a substitute proof. The theorem is not a premise. Check circularity and every rule condition. Each condition needs explicit source_refs with source_id and digest from sources, or an explicit mathematical justification when no premise is needed. Missing or unknown conditions cannot support acceptance. For gap give 1-3 connected bridge steps ending at the exact claim. Never use future nodes. A local failure does not imply a false theorem. Report undetermined on insufficient evidence.",
+            "response_fields": [
+              "input_digest",
+              "evaluator_id",
+              "decision",
+              "error_type",
+              "rule",
+              "conditions",
+              "circularity",
+              "conclusion",
+              "bridge_steps",
+              "reason"
+            ],
+            "response_schema": {
+              "$defs": {
+                "sources": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "digest": {
+                        "pattern": "^sha256:[0-9a-f]{64}$",
+                        "type": "string"
+                      },
+                      "source_id": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "source_id",
+                      "digest"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "step": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "justification": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "source_refs": {
+                      "$ref": "#/$defs/sources"
+                    },
+                    "statement": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "statement",
+                    "source_refs",
+                    "justification"
+                  ],
+                  "type": "object"
+                }
+              },
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "additionalProperties": false,
+              "properties": {
+                "bridge_steps": {
+                  "items": {
+                    "$ref": "#/$defs/step"
+                  },
+                  "maxItems": 3,
+                  "type": "array"
+                },
+                "circularity": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "justification": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "source_refs": {
+                      "$ref": "#/$defs/sources"
+                    },
+                    "status": {
+                      "enum": [
+                        "clear",
+                        "circular",
+                        "unknown"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "source_refs",
+                    "justification"
+                  ],
+                  "type": "object"
+                },
+                "conclusion": {
+                  "$ref": "#/$defs/step"
+                },
+                "conditions": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "condition": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "justification": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "source_refs": {
+                        "$ref": "#/$defs/sources"
+                      },
+                      "status": {
+                        "enum": [
+                          "supported",
+                          "missing",
+                          "unknown"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "condition",
+                      "status",
+                      "source_refs",
+                      "justification"
+                    ],
+                    "type": "object"
+                  },
+                  "minItems": 1,
+                  "type": "array"
+                },
+                "decision": {
+                  "enum": [
+                    "accepted",
+                    "invalid",
+                    "gap",
+                    "undetermined"
+                  ]
+                },
+                "error_type": {
+                  "enum": [
+                    null,
+                    "theorem_misuse",
+                    "algebraic_invalidity",
+                    "false_local_claim",
+                    "missing_assumption",
+                    "target_mismatch",
+                    "circular_reasoning"
+                  ]
+                },
+                "evaluator_id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "input_digest": {
+                  "pattern": "^sha256:[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                "reason": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "rule": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "input_digest",
+                "evaluator_id",
+                "decision",
+                "error_type",
+                "rule",
+                "conditions",
+                "circularity",
+                "conclusion",
+                "bridge_steps",
+                "reason"
+              ],
+              "title": "Local inference review v2",
+              "type": "object"
+            }
+          },
+          "response": {
+            "bridge_steps": [],
+            "circularity": {
+              "justification": "The supplied premise does not state the submitted equality or the theorem target.",
+              "source_refs": [
+                {
+                  "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201",
+                  "source_id": "assumption:1"
+                }
+              ],
+              "status": "clear"
+            },
+            "conclusion": {
+              "justification": "This is the exact submitted claim, but the correct expansion has constant term +1.",
+              "source_refs": [
+                {
+                  "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201",
+                  "source_id": "assumption:1"
+                },
+                {
+                  "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6",
+                  "source_id": "domain"
+                }
+              ],
+              "statement": "By expanding, (x-1)^2 = x^2-2x-1."
+            },
+            "conditions": [
+              {
+                "condition": "x is a real number, so the usual field operations and distributive law apply.",
+                "justification": "The assumption places x in the real numbers and the stated domain is elementary real algebra.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6",
+                    "source_id": "domain"
+                  }
+                ],
+                "status": "supported"
+              },
+              {
+                "condition": "Expanding (x-1)^2 yields x^2-2x-1.",
+                "justification": "Distributivity gives (x-1)(x-1)=x^2-x-x+1=x^2-2x+1, so the constant term in the submitted claim has the wrong sign.",
+                "source_refs": [],
+                "status": "missing"
+              }
+            ],
+            "decision": "invalid",
+            "error_type": "algebraic_invalidity",
+            "evaluator_id": "person-a",
+            "input_digest": "sha256:39238478c98bac6c07181e07bc0fa68f8664225c97a00d808e12dd3f839c3163",
+            "reason": "The inference is algebraically invalid because (-1)(-1)=+1, not -1; the correct identity is (x-1)^2=x^2-2x+1.",
+            "rule": "binomial expansion by distributivity"
+          },
+          "revision": 1
+        },
+        {
+          "event": "proof_scanned",
+          "first_error": {
+            "node_id": 1,
+            "proof_id": "branch_pair",
+            "version": 1
+          },
+          "proof_digest": "sha256:e239019222347cca2546b67b175f49e763aff33e313db1b40ab891eebe468643",
+          "revision": 1,
+          "state": "error_confirmed"
+        }
+      ],
       "nodes": [
         {
           "claim": "By expanding, (x+1)^2 = x^2+1.",
@@ -91,8 +720,195 @@
         "theorem": "For every real x, (x+1)^2 = x^2+2x+1 and (x-1)^2 = x^2-2x+1."
       },
       "proof_digest": "sha256:e239019222347cca2546b67b175f49e763aff33e313db1b40ab891eebe468643",
-      "report": null,
-      "review_calls": 1,
+      "report": {
+        "certificate": {
+          "certificate_id": "first-error-1-3b97942883c74267",
+          "failed_inference": "The inference is algebraically invalid because the cross term 2x is omitted; for example, at x=1 the two sides are 4 and 2.",
+          "localization_digest": "sha256:b4b40e3aceb73503ac78af60ad49346f887d932faa4fac68756666c714962049",
+          "premises": [],
+          "repair_constraints": {
+            "allowed_operations": [
+              "replace",
+              "insert_before",
+              "delete"
+            ],
+            "max_new_nodes": 3,
+            "preserve_assumptions": true,
+            "preserve_theorem": true
+          },
+          "target": {
+            "node_id": 1,
+            "proof_id": "branch_pair",
+            "version": 1
+          }
+        },
+        "first_error": {
+          "node_id": 1,
+          "proof_id": "branch_pair",
+          "version": 1
+        },
+        "first_error_candidate": {
+          "node_id": 1,
+          "proof_id": "branch_pair",
+          "version": 1
+        },
+        "goal_review": null,
+        "nodes": [
+          {
+            "evidence": {
+              "bridge_steps": [],
+              "circularity": {
+                "justification": "The supplied premise does not state the submitted equality or the theorem target.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201",
+                    "source_id": "assumption:1"
+                  }
+                ],
+                "status": "clear"
+              },
+              "conclusion": {
+                "justification": "This is the exact submitted claim, but it does not follow: the correct expansion is x^2+2x+1.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6",
+                    "source_id": "domain"
+                  }
+                ],
+                "statement": "By expanding, (x+1)^2 = x^2+1."
+              },
+              "conditions": [
+                {
+                  "condition": "x is a real number, so the usual field operations and distributive law apply.",
+                  "justification": "The assumption places x in the real numbers and the stated domain is elementary real algebra.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201",
+                      "source_id": "assumption:1"
+                    },
+                    {
+                      "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6",
+                      "source_id": "domain"
+                    }
+                  ],
+                  "status": "supported"
+                },
+                {
+                  "condition": "Expanding (x+1)^2 yields x^2+1 with no middle term.",
+                  "justification": "Distributivity gives (x+1)(x+1)=x^2+x+x+1=x^2+2x+1, so the claimed expansion omits 2x and is not an identity.",
+                  "source_refs": [],
+                  "status": "missing"
+                }
+              ],
+              "decision": "invalid",
+              "error_type": "algebraic_invalidity",
+              "evaluator_id": "person-a",
+              "input_digest": "sha256:c142894e1bb8f205016f7c947ee5b904b66f87136f1fde163b97942883c74267",
+              "reason": "The inference is algebraically invalid because the cross term 2x is omitted; for example, at x=1 the two sides are 4 and 2.",
+              "rule": "binomial expansion by distributivity"
+            },
+            "evidence_source": "evaluator",
+            "input_digest": "sha256:c142894e1bb8f205016f7c947ee5b904b66f87136f1fde163b97942883c74267",
+            "order_key": 10,
+            "status": "invalid",
+            "target": {
+              "node_id": 1,
+              "proof_id": "branch_pair",
+              "version": 1
+            }
+          },
+          {
+            "evidence": {
+              "bridge_steps": [],
+              "circularity": {
+                "justification": "The supplied premise does not state the submitted equality or the theorem target.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201",
+                    "source_id": "assumption:1"
+                  }
+                ],
+                "status": "clear"
+              },
+              "conclusion": {
+                "justification": "This is the exact submitted claim, but the correct expansion has constant term +1.",
+                "source_refs": [
+                  {
+                    "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201",
+                    "source_id": "assumption:1"
+                  },
+                  {
+                    "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6",
+                    "source_id": "domain"
+                  }
+                ],
+                "statement": "By expanding, (x-1)^2 = x^2-2x-1."
+              },
+              "conditions": [
+                {
+                  "condition": "x is a real number, so the usual field operations and distributive law apply.",
+                  "justification": "The assumption places x in the real numbers and the stated domain is elementary real algebra.",
+                  "source_refs": [
+                    {
+                      "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201",
+                      "source_id": "assumption:1"
+                    },
+                    {
+                      "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6",
+                      "source_id": "domain"
+                    }
+                  ],
+                  "status": "supported"
+                },
+                {
+                  "condition": "Expanding (x-1)^2 yields x^2-2x-1.",
+                  "justification": "Distributivity gives (x-1)(x-1)=x^2-x-x+1=x^2-2x+1, so the constant term in the submitted claim has the wrong sign.",
+                  "source_refs": [],
+                  "status": "missing"
+                }
+              ],
+              "decision": "invalid",
+              "error_type": "algebraic_invalidity",
+              "evaluator_id": "person-a",
+              "input_digest": "sha256:39238478c98bac6c07181e07bc0fa68f8664225c97a00d808e12dd3f839c3163",
+              "reason": "The inference is algebraically invalid because (-1)(-1)=+1, not -1; the correct identity is (x-1)^2=x^2-2x+1.",
+              "rule": "binomial expansion by distributivity"
+            },
+            "evidence_source": "evaluator",
+            "input_digest": "sha256:39238478c98bac6c07181e07bc0fa68f8664225c97a00d808e12dd3f839c3163",
+            "order_key": 20,
+            "status": "invalid",
+            "target": {
+              "node_id": 2,
+              "proof_id": "branch_pair",
+              "version": 1
+            }
+          },
+          {
+            "order_key": 30,
+            "reason": "An actual dependency is not accepted",
+            "status": "blocked",
+            "target": {
+              "node_id": 3,
+              "proof_id": "branch_pair",
+              "version": 1
+            }
+          }
+        ],
+        "pending_requests": [],
+        "policy": "iterative-first-error-v2",
+        "prefix_blockers": [],
+        "proof_digest": "sha256:e239019222347cca2546b67b175f49e763aff33e313db1b40ab891eebe468643",
+        "review_calls_this_scan": 2,
+        "review_calls_total": 2,
+        "revision": 1,
+        "state": "error_confirmed"
+      },
+      "review_calls": 2,
       "revision": 1
     },
     "search_ledger": {
@@ -144,7 +960,43 @@
         "phase": "diagnosis",
         "request_digest": "sha256:c142894e1bb8f205016f7c947ee5b904b66f87136f1fde163b97942883c74267",
         "request_filename": "requests/c142894e1bb8f205016f7c947ee5b904b66f87136f1fde163b97942883c74267.json",
+        "response_digest": "sha256:8f5be870bb00a9723db40912bf7ce755eeda224b4e1880f6062ac388e7d1d6eb",
         "response_filename": "responses/c142894e1bb8f205016f7c947ee5b904b66f87136f1fde163b97942883c74267.json",
+        "status": "supplied_external_response_replayed",
+        "transport": "offline_file_replay",
+        "usage": null
+      },
+      {
+        "cost": null,
+        "fresh_model_call_by_controller": false,
+        "phase": "diagnosis",
+        "request_digest": "sha256:39238478c98bac6c07181e07bc0fa68f8664225c97a00d808e12dd3f839c3163",
+        "request_filename": "requests/39238478c98bac6c07181e07bc0fa68f8664225c97a00d808e12dd3f839c3163.json",
+        "response_digest": "sha256:42ccc732f27340af9b7f63f7a079866dc3947666328bdfce2f84e9390dbda7f3",
+        "response_filename": "responses/39238478c98bac6c07181e07bc0fa68f8664225c97a00d808e12dd3f839c3163.json",
+        "status": "supplied_external_response_replayed",
+        "transport": "offline_file_replay",
+        "usage": null
+      },
+      {
+        "cost": null,
+        "fresh_model_call_by_controller": false,
+        "phase": "interface_proposal",
+        "request_digest": "sha256:26f7b65747aa3ef6aec4019b7c27a406cdca242d5fda5db652339c33598fa0fe",
+        "request_filename": "requests/26f7b65747aa3ef6aec4019b7c27a406cdca242d5fda5db652339c33598fa0fe.json",
+        "response_digest": "sha256:d8cc5d362347bc63b098fe9128b6465b4345de42a5bd415f166655e455b1c243",
+        "response_filename": "responses/26f7b65747aa3ef6aec4019b7c27a406cdca242d5fda5db652339c33598fa0fe.json",
+        "status": "supplied_external_response_replayed",
+        "transport": "offline_file_replay",
+        "usage": null
+      },
+      {
+        "cost": null,
+        "fresh_model_call_by_controller": false,
+        "phase": "contract_review",
+        "request_digest": "sha256:c2c734bf28bb7dc3c444ed1288b5bbff09758d65f12dbdc23c7402d50ca14321",
+        "request_filename": "requests/c2c734bf28bb7dc3c444ed1288b5bbff09758d65f12dbdc23c7402d50ca14321.json",
+        "response_filename": "responses/c2c734bf28bb7dc3c444ed1288b5bbff09758d65f12dbdc23c7402d50ca14321.json",
         "status": "awaiting_external_response",
         "transport": "offline_file_replay",
         "usage": null

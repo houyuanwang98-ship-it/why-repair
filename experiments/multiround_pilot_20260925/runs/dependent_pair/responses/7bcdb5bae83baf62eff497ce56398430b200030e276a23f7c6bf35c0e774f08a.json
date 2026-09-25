@@ -1,0 +1,52 @@
+{
+  "input_digest": "sha256:7bcdb5bae83baf62eff497ce56398430b200030e276a23f7c6bf35c0e774f08a",
+  "evaluator_id": "person-a",
+  "decision": "invalid",
+  "error_type": "false_local_claim",
+  "rule": "definition of an odd integer",
+  "conditions": [
+    {
+      "condition": "n is an odd integer.",
+      "status": "supported",
+      "source_refs": [
+        {
+          "source_id": "assumption:1",
+          "digest": "sha256:ac6390002ffe2a717a85d2297908e73eac187548430e7c8ab70f15e5ed516cb7"
+        }
+      ],
+      "justification": "This is exactly the supplied assumption."
+    },
+    {
+      "condition": "An odd integer has the form 2k for some integer k.",
+      "status": "missing",
+      "source_refs": [],
+      "justification": "The defining form of an odd integer is 2k+1, whereas 2k is even."
+    }
+  ],
+  "circularity": {
+    "status": "clear",
+    "source_refs": [
+      {
+        "source_id": "assumption:1",
+        "digest": "sha256:ac6390002ffe2a717a85d2297908e73eac187548430e7c8ab70f15e5ed516cb7"
+      }
+    ],
+    "justification": "The supplied premise states only that n is odd and does not presuppose the submitted representation or the theorem target."
+  },
+  "conclusion": {
+    "statement": "Since n is odd, write n = 2k for some integer k.",
+    "source_refs": [
+      {
+        "source_id": "assumption:1",
+        "digest": "sha256:ac6390002ffe2a717a85d2297908e73eac187548430e7c8ab70f15e5ed516cb7"
+      },
+      {
+        "source_id": "domain",
+        "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6"
+      }
+    ],
+    "justification": "This is the exact submitted claim, but it is false: an odd integer cannot equal 2k for an integer k."
+  },
+  "bridge_steps": [],
+  "reason": "The inference uses the representation of an even integer. From oddness one may write n=2k+1, not n=2k."
+}

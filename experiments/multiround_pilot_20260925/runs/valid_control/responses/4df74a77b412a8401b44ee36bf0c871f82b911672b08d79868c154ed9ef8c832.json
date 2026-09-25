@@ -1,0 +1,52 @@
+{
+  "input_digest": "sha256:4df74a77b412a8401b44ee36bf0c871f82b911672b08d79868c154ed9ef8c832",
+  "evaluator_id": "person-a",
+  "decision": "accepted",
+  "error_type": null,
+  "rule": "substitution, exponentiation, and definition of evenness",
+  "conditions": [
+    {
+      "condition": "n=2k for an integer k.",
+      "status": "supported",
+      "source_refs": [
+        {"source_id": "premise:1", "digest": "sha256:20175657fac243baa9c3822b6ac1c593457fb0322eb790ff4c9a84524cf02d26"}
+      ],
+      "justification": "This is exactly the cited preceding proof node."
+    },
+    {
+      "condition": "Squaring n=2k gives n^2=4k^2.",
+      "status": "supported",
+      "source_refs": [
+        {"source_id": "premise:1", "digest": "sha256:20175657fac243baa9c3822b6ac1c593457fb0322eb790ff4c9a84524cf02d26"},
+        {"source_id": "domain", "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6"}
+      ],
+      "justification": "Equality is preserved under squaring, and (2k)^2=4k^2 by elementary algebra."
+    },
+    {
+      "condition": "4k^2 is even.",
+      "status": "supported",
+      "source_refs": [
+        {"source_id": "premise:1", "digest": "sha256:20175657fac243baa9c3822b6ac1c593457fb0322eb790ff4c9a84524cf02d26"},
+        {"source_id": "domain", "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6"}
+      ],
+      "justification": "Because k is an integer, 2k^2 is an integer and 4k^2=2(2k^2), which is even by definition."
+    }
+  ],
+  "circularity": {
+    "status": "clear",
+    "source_refs": [
+      {"source_id": "premise:1", "digest": "sha256:20175657fac243baa9c3822b6ac1c593457fb0322eb790ff4c9a84524cf02d26"}
+    ],
+    "justification": "The inference uses only the earlier representation of n and elementary algebra, not the theorem target."
+  },
+  "conclusion": {
+    "statement": "Then n^2 = 4k^2 is even.",
+    "source_refs": [
+      {"source_id": "premise:1", "digest": "sha256:20175657fac243baa9c3822b6ac1c593457fb0322eb790ff4c9a84524cf02d26"},
+      {"source_id": "domain", "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6"}
+    ],
+    "justification": "Substituting n=2k gives n^2=4k^2, and this is twice the integer 2k^2."
+  },
+  "bridge_steps": [],
+  "reason": "The submitted inference follows from n=2k by squaring and correctly establishes that n^2 is even."
+}

@@ -1,0 +1,56 @@
+{
+  "input_digest": "sha256:c142894e1bb8f205016f7c947ee5b904b66f87136f1fde163b97942883c74267",
+  "evaluator_id": "person-a",
+  "decision": "invalid",
+  "error_type": "algebraic_invalidity",
+  "rule": "binomial expansion by distributivity",
+  "conditions": [
+    {
+      "condition": "x is a real number, so the usual field operations and distributive law apply.",
+      "status": "supported",
+      "source_refs": [
+        {
+          "source_id": "assumption:1",
+          "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201"
+        },
+        {
+          "source_id": "domain",
+          "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6"
+        }
+      ],
+      "justification": "The assumption places x in the real numbers and the stated domain is elementary real algebra."
+    },
+    {
+      "condition": "Expanding (x+1)^2 yields x^2+1 with no middle term.",
+      "status": "missing",
+      "source_refs": [],
+      "justification": "Distributivity gives (x+1)(x+1)=x^2+x+x+1=x^2+2x+1, so the claimed expansion omits 2x and is not an identity."
+    }
+  ],
+  "circularity": {
+    "status": "clear",
+    "source_refs": [
+      {
+        "source_id": "assumption:1",
+        "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201"
+      }
+    ],
+    "justification": "The supplied premise does not state the submitted equality or the theorem target."
+  },
+  "conclusion": {
+    "statement": "By expanding, (x+1)^2 = x^2+1.",
+    "source_refs": [
+      {
+        "source_id": "assumption:1",
+        "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201"
+      },
+      {
+        "source_id": "domain",
+        "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6"
+      }
+    ],
+    "justification": "This is the exact submitted claim, but it does not follow: the correct expansion is x^2+2x+1."
+  },
+  "bridge_steps": [],
+  "reason": "The inference is algebraically invalid because the cross term 2x is omitted; for example, at x=1 the two sides are 4 and 2."
+}

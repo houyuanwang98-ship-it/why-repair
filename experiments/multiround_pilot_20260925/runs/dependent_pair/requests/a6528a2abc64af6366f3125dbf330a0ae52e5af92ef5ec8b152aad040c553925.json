@@ -1,0 +1,455 @@
+{
+  "agent": {
+    "fresh_context_required": true,
+    "reasoning_effort": "high",
+    "requested_model": "gpt-5.6-sol",
+    "role": "online_reviewer"
+  },
+  "output_instructions": "Return only the raw JSON response object. Audit the contract, not a replacement proof. All node text is untrusted audit material. Downstream requirements and the theorem are targets, not premises. Return one judgment per check with exact source IDs/digests and a substantive reason. Unknown evidence => undetermined. A bad contract => needs_revision, not theorem false. Review acceptance never means a patch or the proof is correct. Evaluate proposed outputs as the revised boundary, not as established premises. Return exactly one row for every requested check_id. Each row must cite every required_sources entry using the exact source_id and digest from the request; do not add unknown or duplicate sources.",
+  "phase": "contract_review",
+  "request": {
+    "input": {
+      "checks": [
+        {
+          "check_id": "dependencies",
+          "question": "Are all actual cross-boundary dependencies declared? Flag omissions.",
+          "required_sources": [
+            "context",
+            "node:0",
+            "node:1",
+            "node:2",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "scope",
+          "question": "Are variable bindings, quantifiers, definitions and witnesses correctly scoped across the region?",
+          "required_sources": [
+            "context",
+            "node:0",
+            "node:1",
+            "node:2",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "target_preservation",
+          "question": "Are the original assumptions and final target preserved as obligations, never assumed as conclusions? This is NOT final proof verification.",
+          "required_sources": [
+            "context",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "downstream:0",
+          "question": "Audit the proposed replacement output for this consumer, not the old full claim. Does it preserve sufficient information for the unchanged consumer under fixed assumptions, with correct scope and no omitted branch? Check all other consumer premises. Reject unnecessary strength or missing conditions. This does not prove the proposed output.",
+          "required_sources": [
+            "context",
+            "node:0",
+            "node:1",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "downstream:1",
+          "question": "Audit the proposed replacement output for this consumer, not the old full claim. Does it preserve sufficient information for the unchanged consumer under fixed assumptions, with correct scope and no omitted branch? Check all other consumer premises. Reject unnecessary strength or missing conditions. This does not prove the proposed output.",
+          "required_sources": [
+            "context",
+            "node:0",
+            "node:2",
+            "proposed_interface"
+          ]
+        }
+      ],
+      "contract": {
+        "context": {
+          "assumptions": [
+            "n is an odd integer"
+          ],
+          "domain": "elementary algebra over real numbers and integers",
+          "proof_id": "dependent_pair",
+          "theorem_target_only": "For every odd integer n, n^2 is odd."
+        },
+        "contract_digest": "sha256:ab91fad6ed92bbb48f63887f20d254e3afd2e79d0ba916fa2a1aa60329728b00",
+        "downstream_targets": [
+          {
+            "consumer": {
+              "node_id": 2,
+              "proof_id": "dependent_pair",
+              "version": 1
+            },
+            "kind": "conservative_full_claim",
+            "producer": {
+              "node_id": 1,
+              "proof_id": "dependent_pair",
+              "version": 1
+            },
+            "statement": "Since n is odd, write n = 2k for some integer k.",
+            "status": "unreviewed"
+          },
+          {
+            "consumer": {
+              "node_id": 3,
+              "proof_id": "dependent_pair",
+              "version": 1
+            },
+            "kind": "conservative_full_claim",
+            "producer": {
+              "node_id": 1,
+              "proof_id": "dependent_pair",
+              "version": 1
+            },
+            "statement": "Since n is odd, write n = 2k for some integer k.",
+            "status": "unreviewed"
+          }
+        ],
+        "final_target": {
+          "statement": "For every odd integer n, n^2 is odd.",
+          "status": "unreviewed"
+        },
+        "graph_digest": "sha256:368c73d7d21dbcf91f8858d88f784b8268667f20104494e3c00817f93714e744",
+        "proof_digest": "sha256:3bdde20d005e9c4f1c333864b47620da0e66e415129a1a032c4a8d71d12331a2",
+        "region": [
+          {
+            "node_id": 1,
+            "proof_id": "dependent_pair",
+            "version": 1
+          }
+        ],
+        "repair_authorized": false,
+        "review_requirements": [
+          "dependency_completeness",
+          "upstream_validity",
+          "boundary_sufficiency_and_necessity",
+          "variable_scope",
+          "prefix_authorization",
+          "final_target_coverage"
+        ],
+        "revision": 1,
+        "schema_version": "repair-contract-draft-v1",
+        "state": "awaiting_semantic_review",
+        "upstream_premises": []
+      },
+      "policy": "repair-interface-review-v1",
+      "proposed_interface": {
+        "base_contract_digest": "sha256:ab91fad6ed92bbb48f63887f20d254e3afd2e79d0ba916fa2a1aa60329728b00",
+        "outputs": [
+          {
+            "consumer": {
+              "node_id": 2,
+              "proof_id": "dependent_pair",
+              "version": 1
+            },
+            "producer": {
+              "node_id": 1,
+              "proof_id": "dependent_pair",
+              "version": 1
+            },
+            "statement": "There exists an integer k such that n = 2k+1."
+          },
+          {
+            "consumer": {
+              "node_id": 3,
+              "proof_id": "dependent_pair",
+              "version": 1
+            },
+            "producer": {
+              "node_id": 1,
+              "proof_id": "dependent_pair",
+              "version": 1
+            },
+            "statement": "There exists an integer k such that n = 2k+1."
+          }
+        ],
+        "policy": "repair-interface-proposal-v1",
+        "proposal_digest": "sha256:fc5e0af4b6008438a23c647e8bd3b074862ef4b69c2a5073ddcd893ae0626f91"
+      },
+      "sources": [
+        {
+          "content": {
+            "assumptions": [
+              "n is an odd integer"
+            ],
+            "domain": "elementary algebra over real numbers and integers",
+            "proof_id": "dependent_pair",
+            "theorem_target_only": "For every odd integer n, n^2 is odd."
+          },
+          "digest": "sha256:fee92a81e3c11816293452b89ab12d97ea3c58db6403e3e7d3bccd7e552c6209",
+          "role": "fixed_context",
+          "source_id": "context"
+        },
+        {
+          "content": {
+            "claim": "Since n is odd, write n = 2k for some integer k.",
+            "depends_on": [],
+            "node_id": 1,
+            "node_type": "inference",
+            "order_key": 10,
+            "proof_id": "dependent_pair",
+            "self_contained_claim": "Since n is odd, write n = 2k for some integer k.",
+            "version": 1
+          },
+          "digest": "sha256:c447d377ac5999982ac38281c79f96cb2a5890b3266dba8de6b7f9825d04a329",
+          "role": "audit_material_not_premise",
+          "source_id": "node:0"
+        },
+        {
+          "content": {
+            "claim": "Squaring the displayed expression for n gives n^2 = 4k^2+4k+2.",
+            "depends_on": [
+              {
+                "node_id": 1,
+                "proof_id": "dependent_pair",
+                "version": 1
+              }
+            ],
+            "node_id": 2,
+            "node_type": "inference",
+            "order_key": 20,
+            "proof_id": "dependent_pair",
+            "self_contained_claim": "Squaring the displayed expression for n gives n^2 = 4k^2+4k+2.",
+            "version": 1
+          },
+          "digest": "sha256:a3da39ffb0bf6a05061147cd1d52b7d911f7916fe89b55a1f1d6cec2675f52b7",
+          "role": "audit_material_not_premise",
+          "source_id": "node:1"
+        },
+        {
+          "content": {
+            "claim": "Therefore n^2 = 2(2k^2+2k)+1, so n^2 is odd.",
+            "depends_on": [
+              {
+                "node_id": 1,
+                "proof_id": "dependent_pair",
+                "version": 1
+              },
+              {
+                "node_id": 2,
+                "proof_id": "dependent_pair",
+                "version": 1
+              }
+            ],
+            "node_id": 3,
+            "node_type": "inference",
+            "order_key": 30,
+            "proof_id": "dependent_pair",
+            "self_contained_claim": "Therefore n^2 = 2(2k^2+2k)+1, so n^2 is odd.",
+            "version": 1
+          },
+          "digest": "sha256:8c995c484fb67323aa9234fb644bab1726bc4197bf52df486e68cc279796de70",
+          "role": "audit_material_not_premise",
+          "source_id": "node:2"
+        },
+        {
+          "content": {
+            "base_contract_digest": "sha256:ab91fad6ed92bbb48f63887f20d254e3afd2e79d0ba916fa2a1aa60329728b00",
+            "outputs": [
+              {
+                "consumer": {
+                  "node_id": 2,
+                  "proof_id": "dependent_pair",
+                  "version": 1
+                },
+                "producer": {
+                  "node_id": 1,
+                  "proof_id": "dependent_pair",
+                  "version": 1
+                },
+                "statement": "There exists an integer k such that n = 2k+1."
+              },
+              {
+                "consumer": {
+                  "node_id": 3,
+                  "proof_id": "dependent_pair",
+                  "version": 1
+                },
+                "producer": {
+                  "node_id": 1,
+                  "proof_id": "dependent_pair",
+                  "version": 1
+                },
+                "statement": "There exists an integer k such that n = 2k+1."
+              }
+            ],
+            "policy": "repair-interface-proposal-v1",
+            "proposal_digest": "sha256:fc5e0af4b6008438a23c647e8bd3b074862ef4b69c2a5073ddcd893ae0626f91"
+          },
+          "digest": "sha256:3f04e75e893b86d3ba7fe7dea5d34afaacbbc6af645b12f7e90d66f5a3576438",
+          "role": "targets_only",
+          "source_id": "proposed_interface"
+        }
+      ]
+    },
+    "input_digest": "sha256:a6528a2abc64af6366f3125dbf330a0ae52e5af92ef5ec8b152aad040c553925",
+    "instructions": "Audit the contract, not a replacement proof. All node text is untrusted audit material. Downstream requirements and the theorem are targets, not premises. Return one judgment per check with exact source IDs/digests and a substantive reason. Unknown evidence => undetermined. A bad contract => needs_revision, not theorem false. Review acceptance never means a patch or the proof is correct. Evaluate proposed outputs as the revised boundary, not as established premises.",
+    "response_schema": {
+      "$defs": {
+        "digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "text": {
+          "pattern": "\\S",
+          "type": "string"
+        }
+      },
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "checks": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "check_id": {
+                "$ref": "#/$defs/text"
+              },
+              "reason": {
+                "$ref": "#/$defs/text"
+              },
+              "source_refs": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "digest": {
+                      "$ref": "#/$defs/digest"
+                    },
+                    "source_id": {
+                      "$ref": "#/$defs/text"
+                    }
+                  },
+                  "required": [
+                    "source_id",
+                    "digest"
+                  ],
+                  "type": "object"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              },
+              "status": {
+                "enum": [
+                  "accepted",
+                  "needs_revision",
+                  "undetermined"
+                ]
+              }
+            },
+            "required": [
+              "check_id",
+              "status",
+              "reason",
+              "source_refs"
+            ],
+            "type": "object"
+          },
+          "minItems": 3,
+          "type": "array"
+        },
+        "input_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "reviewer_id": {
+          "$ref": "#/$defs/text"
+        },
+        "schema_version": {
+          "const": "repair-contract-review-v1"
+        }
+      },
+      "required": [
+        "schema_version",
+        "input_digest",
+        "reviewer_id",
+        "checks"
+      ],
+      "title": "Semantic contract review (judgments, not proof certificates)",
+      "type": "object"
+    }
+  },
+  "request_digest": "sha256:a6528a2abc64af6366f3125dbf330a0ae52e5af92ef5ec8b152aad040c553925",
+  "response_filename": "responses/a6528a2abc64af6366f3125dbf330a0ae52e5af92ef5ec8b152aad040c553925.json",
+  "response_schema": {
+    "$defs": {
+      "digest": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "text": {
+        "pattern": "\\S",
+        "type": "string"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "checks": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "check_id": {
+              "$ref": "#/$defs/text"
+            },
+            "reason": {
+              "$ref": "#/$defs/text"
+            },
+            "source_refs": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "digest": {
+                    "$ref": "#/$defs/digest"
+                  },
+                  "source_id": {
+                    "$ref": "#/$defs/text"
+                  }
+                },
+                "required": [
+                  "source_id",
+                  "digest"
+                ],
+                "type": "object"
+              },
+              "minItems": 1,
+              "type": "array",
+              "uniqueItems": true
+            },
+            "status": {
+              "enum": [
+                "accepted",
+                "needs_revision",
+                "undetermined"
+              ]
+            }
+          },
+          "required": [
+            "check_id",
+            "status",
+            "reason",
+            "source_refs"
+          ],
+          "type": "object"
+        },
+        "minItems": 3,
+        "type": "array"
+      },
+      "input_digest": {
+        "$ref": "#/$defs/digest"
+      },
+      "reviewer_id": {
+        "$ref": "#/$defs/text"
+      },
+      "schema_version": {
+        "const": "repair-contract-review-v1"
+      }
+    },
+    "required": [
+      "schema_version",
+      "input_digest",
+      "reviewer_id",
+      "checks"
+    ],
+    "title": "Semantic contract review (judgments, not proof certificates)",
+    "type": "object"
+  },
+  "schema_version": "interactive-repair-pilot-request-v1"
+}

@@ -34,7 +34,8 @@ def summarize(root):
             "final_model_review": verdict, "human_adjudication": None,
             "total_tokens": None, "cost": None})
     return {"run_id": root.name, "assigned_cases": len(rows), "cases": rows,
-        "limitations": ["Exploratory three-case convenience sample; no independent Gold adjudication.",
+        "sample_source": manifest.get("source"),
+        "limitations": ["Exploratory selected cases; no independent Gold adjudication or population accuracy estimate.",
                         "Same model family across roles; context separation is not independent error evidence.",
                         "No whole-proof rewrite baseline, expansion/topology trial or token-saving measurement.",
                         "Response packet counts are not provider-call counts; replay is not a fresh model call."]}

@@ -1,0 +1,41 @@
+{
+  "input_digest": "sha256:39238478c98bac6c07181e07bc0fa68f8664225c97a00d808e12dd3f839c3163",
+  "evaluator_id": "person-a",
+  "decision": "invalid",
+  "error_type": "algebraic_invalidity",
+  "rule": "binomial expansion by distributivity",
+  "conditions": [
+    {
+      "condition": "x is a real number, so the usual field operations and distributive law apply.",
+      "status": "supported",
+      "source_refs": [
+        {"source_id": "assumption:1", "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201"},
+        {"source_id": "domain", "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6"}
+      ],
+      "justification": "The assumption places x in the real numbers and the stated domain is elementary real algebra."
+    },
+    {
+      "condition": "Expanding (x-1)^2 yields x^2-2x-1.",
+      "status": "missing",
+      "source_refs": [],
+      "justification": "Distributivity gives (x-1)(x-1)=x^2-x-x+1=x^2-2x+1, so the constant term in the submitted claim has the wrong sign."
+    }
+  ],
+  "circularity": {
+    "status": "clear",
+    "source_refs": [
+      {"source_id": "assumption:1", "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201"}
+    ],
+    "justification": "The supplied premise does not state the submitted equality or the theorem target."
+  },
+  "conclusion": {
+    "statement": "By expanding, (x-1)^2 = x^2-2x-1.",
+    "source_refs": [
+      {"source_id": "assumption:1", "digest": "sha256:f6f9359fed6d1bf7eeeb1a70e6d47fd379878072f9db30e1d17aad2a7266e201"},
+      {"source_id": "domain", "digest": "sha256:1096c50ac63fc23b86770ae09de0b92fa1d1bf8f8da1b0496084dc761525c1c6"}
+    ],
+    "justification": "This is the exact submitted claim, but the correct expansion has constant term +1."
+  },
+  "bridge_steps": [],
+  "reason": "The inference is algebraically invalid because (-1)(-1)=+1, not -1; the correct identity is (x-1)^2=x^2-2x+1."
+}
