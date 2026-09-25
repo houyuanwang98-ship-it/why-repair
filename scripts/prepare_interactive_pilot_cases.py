@@ -27,14 +27,14 @@ def main():
         path.parent.mkdir(parents=True, exist_ok=True)
         if path.exists() and path.read_text(encoding="utf-8") != payload:
             raise RuntimeError("Refusing to overwrite a different frozen case")
-        path.write_text(payload, encoding="utf-8")
+        path.write_text(payload, encoding="utf-8", newline="\n")
         manifest["cases"].append({"id": item["id"], "path": str(path.relative_to(DEST)),
                                   "sha256": hashlib.sha256(payload.encode()).hexdigest()})
     path = DEST / "manifest.json"
     payload = json.dumps(manifest, indent=2) + "\n"
     if path.exists() and path.read_text(encoding="utf-8") != payload:
         raise RuntimeError("Refusing to overwrite a different frozen manifest")
-    path.write_text(payload, encoding="utf-8")
+    path.write_text(payload, encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":
