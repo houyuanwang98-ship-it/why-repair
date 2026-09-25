@@ -1,0 +1,215 @@
+{
+  "agent": {
+    "fresh_context_required": true,
+    "reasoning_effort": "high",
+    "requested_model": "gpt-5.6-sol",
+    "role": "generator"
+  },
+  "output_instructions": "Return only the raw JSON response object. Propose exactly 0 boundary statement(s), in downstream_targets order. Each statement is an obligation the repaired region must establish for that unchanged consumer, never a premise. Preserve every consumer need without adding unnecessary strength. Return exactly {\"statements\": [...]} and no other fields.",
+  "phase": "interface_proposal",
+  "request": {
+    "input": {
+      "confirmed_first_error": {
+        "node_id": 4,
+        "proof_id": "alg_003",
+        "version": 1
+      },
+      "current_proof_nodes": [
+        {
+          "claim": "Let a and b be in ker(phi). Then phi(a) = 0 and phi(b) = 0.",
+          "depends_on": [],
+          "node_id": 1,
+          "node_type": "inference",
+          "order_key": 10,
+          "proof_id": "alg_003",
+          "self_contained_claim": "Let a and b be in ker(phi). Then phi(a) = 0 and phi(b) = 0.",
+          "version": 1
+        },
+        {
+          "claim": "We have phi(a - b) = phi(a) - phi(b) = 0, so a - b is in ker(phi).",
+          "depends_on": [
+            {
+              "node_id": 1,
+              "proof_id": "alg_003",
+              "version": 1
+            }
+          ],
+          "node_id": 2,
+          "node_type": "inference",
+          "order_key": 20,
+          "proof_id": "alg_003",
+          "self_contained_claim": "We have phi(a - b) = phi(a) - phi(b) = 0, so a - b is in ker(phi).",
+          "version": 1
+        },
+        {
+          "claim": "Thus ker(phi) is closed under subtraction.",
+          "depends_on": [
+            {
+              "node_id": 1,
+              "proof_id": "alg_003",
+              "version": 1
+            },
+            {
+              "node_id": 2,
+              "proof_id": "alg_003",
+              "version": 1
+            }
+          ],
+          "node_id": 3,
+          "node_type": "inference",
+          "order_key": 30,
+          "proof_id": "alg_003",
+          "self_contained_claim": "Thus ker(phi) is closed under subtraction.",
+          "version": 1
+        },
+        {
+          "claim": "Therefore ker(phi) is an ideal of R.",
+          "depends_on": [
+            {
+              "node_id": 1,
+              "proof_id": "alg_003",
+              "version": 1
+            },
+            {
+              "node_id": 2,
+              "proof_id": "alg_003",
+              "version": 1
+            },
+            {
+              "node_id": 3,
+              "proof_id": "alg_003",
+              "version": 1
+            }
+          ],
+          "node_id": 4,
+          "node_type": "inference",
+          "order_key": 40,
+          "proof_id": "alg_003",
+          "self_contained_claim": "Therefore ker(phi) is an ideal of R.",
+          "version": 1
+        }
+      ],
+      "policy": "interactive-interface-proposal-v1",
+      "proof_context": {
+        "assumptions": [
+          "phi: R -> S is a ring homomorphism"
+        ],
+        "domain": "algebra",
+        "proof_id": "alg_003",
+        "theorem": "Let phi: R -> S be a ring homomorphism. Then ker(phi) is an ideal of R."
+      },
+      "repair_contract": {
+        "context": {
+          "assumptions": [
+            "phi: R -> S is a ring homomorphism"
+          ],
+          "domain": "algebra",
+          "proof_id": "alg_003",
+          "theorem_target_only": "Let phi: R -> S be a ring homomorphism. Then ker(phi) is an ideal of R."
+        },
+        "contract_digest": "sha256:3eb10ee6f05d51bd349570a82034dd56c99faf2364228f7c022a63b45ae5cb97",
+        "downstream_targets": [],
+        "final_target": {
+          "statement": "Let phi: R -> S be a ring homomorphism. Then ker(phi) is an ideal of R.",
+          "status": "unreviewed"
+        },
+        "graph_digest": "sha256:16a29fd046e7f2a87b4fc493fed46df379db30d8043e7f24f196e4e2a2946f36",
+        "proof_digest": "sha256:80aed1a54ae700be5df23c7967bfedc8dba2857f9a0cbcb71f0ffae1bc61356a",
+        "region": [
+          {
+            "node_id": 4,
+            "proof_id": "alg_003",
+            "version": 1
+          }
+        ],
+        "repair_authorized": false,
+        "review_requirements": [
+          "dependency_completeness",
+          "upstream_validity",
+          "boundary_sufficiency_and_necessity",
+          "variable_scope",
+          "prefix_authorization",
+          "final_target_coverage"
+        ],
+        "revision": 1,
+        "schema_version": "repair-contract-draft-v1",
+        "state": "awaiting_semantic_review",
+        "upstream_premises": [
+          {
+            "node_digest": "sha256:8d21c734ff07f11ddfd09371123e313ba489a5135d723f1a7f77c714004d7c18",
+            "source": {
+              "node_id": 1,
+              "proof_id": "alg_003",
+              "version": 1
+            },
+            "statement": "Let a and b be in ker(phi). Then phi(a) = 0 and phi(b) = 0.",
+            "status": "unreviewed"
+          },
+          {
+            "node_digest": "sha256:fe79b41fb7af37286bb87cf99d5d6cf0c5e28440f95b62c170981d6d9e4fe1ad",
+            "source": {
+              "node_id": 2,
+              "proof_id": "alg_003",
+              "version": 1
+            },
+            "statement": "We have phi(a - b) = phi(a) - phi(b) = 0, so a - b is in ker(phi).",
+            "status": "unreviewed"
+          },
+          {
+            "node_digest": "sha256:f04d0fef486c6696d763bd0a65f4767ed41b9e3b928f8e8a4839df4283d1bd18",
+            "source": {
+              "node_id": 3,
+              "proof_id": "alg_003",
+              "version": 1
+            },
+            "statement": "Thus ker(phi) is closed under subtraction.",
+            "status": "unreviewed"
+          }
+        ]
+      }
+    },
+    "input_digest": "sha256:cb9503de3ece5ff3ba07cd196be715e7680f4f30102a8163f8b9aafb74ec3dee",
+    "instructions": "Propose exactly 0 boundary statement(s), in downstream_targets order. Each statement is an obligation the repaired region must establish for that unchanged consumer, never a premise. Preserve every consumer need without adding unnecessary strength. Return exactly {\"statements\": [...]} and no other fields.",
+    "response_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "statements": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 0,
+          "minItems": 0,
+          "type": "array"
+        }
+      },
+      "required": [
+        "statements"
+      ],
+      "type": "object"
+    }
+  },
+  "request_digest": "sha256:cb9503de3ece5ff3ba07cd196be715e7680f4f30102a8163f8b9aafb74ec3dee",
+  "response_filename": "responses/cb9503de3ece5ff3ba07cd196be715e7680f4f30102a8163f8b9aafb74ec3dee.json",
+  "response_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "statements": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "maxItems": 0,
+        "minItems": 0,
+        "type": "array"
+      }
+    },
+    "required": [
+      "statements"
+    ],
+    "type": "object"
+  },
+  "schema_version": "interactive-repair-pilot-request-v1"
+}

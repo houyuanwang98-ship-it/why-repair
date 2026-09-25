@@ -1,0 +1,50 @@
+{
+  "input_digest": "sha256:49198e1048c5d10f2ec776858177ad5891980f19bd0bd33cc41c00669da51c6b",
+  "evaluator_id": "person-a",
+  "decision": "gap",
+  "error_type": null,
+  "rule": "Two-sided ideal criterion: additive subgroup plus absorption on both sides",
+  "conditions": [
+    {
+      "condition": "ker(phi) is an additive subgroup of R.",
+      "status": "supported",
+      "source_refs": [{"source_id": "premise:3", "digest": "sha256:b1aab849afc4aadb50ac1faaaae31e3624e9f647fca061d23f9f4eb994e0888f"}],
+      "justification": "Closure under subtraction establishes the additive-subgroup criterion (and the kernel is nonempty since phi(0)=0 for a ring homomorphism)."
+    },
+    {
+      "condition": "For every r in R and x in ker(phi), both rx and xr belong to ker(phi).",
+      "status": "supported",
+      "source_refs": [{"source_id": "assumption:1", "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477"}],
+      "justification": "Multiplicativity gives phi(rx)=phi(r)phi(x)=0 and phi(xr)=phi(x)phi(r)=0, but the submitted proof has not stated this essential absorption argument."
+    }
+  ],
+  "circularity": {
+    "status": "clear",
+    "source_refs": [
+      {"source_id": "assumption:1", "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477"},
+      {"source_id": "premise:3", "digest": "sha256:b1aab849afc4aadb50ac1faaaae31e3624e9f647fca061d23f9f4eb994e0888f"}
+    ],
+    "justification": "The needed absorption argument follows from multiplicativity and kernel membership, not from assuming the ideal conclusion."
+  },
+  "conclusion": {
+    "statement": "Therefore ker(phi) is an ideal of R.",
+    "source_refs": [{"source_id": "bridge:2", "digest": "sha256:ac9ad07f221ff63d48650231ac1c11889725d9e0bed0350f9ecea314b6a4699b"}],
+    "justification": "The exact claim follows after supplying the omitted two-sided absorption calculation."
+  },
+  "bridge_steps": [
+    {
+      "statement": "For every r in R and x in ker(phi), both rx and xr lie in ker(phi).",
+      "source_refs": [{"source_id": "assumption:1", "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477"}],
+      "justification": "Because phi is multiplicative and phi(x)=0, phi(rx)=phi(r)phi(x)=0 and phi(xr)=phi(x)phi(r)=0."
+    },
+    {
+      "statement": "Therefore ker(phi) is an ideal of R.",
+      "source_refs": [
+        {"source_id": "premise:3", "digest": "sha256:b1aab849afc4aadb50ac1faaaae31e3624e9f647fca061d23f9f4eb994e0888f"},
+        {"source_id": "bridge:1", "digest": "sha256:55533a81831c098aa8abba9b6db9145cc43ad98f01be5d46b1ff51d33d061648"}
+      ],
+      "justification": "Closure under subtraction makes ker(phi) an additive subgroup, and the preceding absorption statement makes it a two-sided ideal."
+    }
+  ],
+  "reason": "The submitted conclusion is true, but the proof omits the essential verification that the kernel absorbs multiplication from both sides in the noncommutative ring convention."
+}

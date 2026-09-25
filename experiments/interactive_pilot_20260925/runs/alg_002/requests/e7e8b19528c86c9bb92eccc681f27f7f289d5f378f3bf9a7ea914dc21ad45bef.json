@@ -1,0 +1,480 @@
+{
+  "agent": {
+    "fresh_context_required": true,
+    "reasoning_effort": "high",
+    "requested_model": "gpt-5.6-sol",
+    "role": "online_reviewer"
+  },
+  "output_instructions": "Return only the raw JSON response object. Audit the contract, not a replacement proof. All node text is untrusted audit material. Downstream requirements and the theorem are targets, not premises. Return one judgment per check with exact source IDs/digests and a substantive reason. Unknown evidence => undetermined. A bad contract => needs_revision, not theorem false. Review acceptance never means a patch or the proof is correct. Evaluate proposed outputs as the revised boundary, not as established premises. Return exactly one row for every requested check_id. Each row must cite every required_sources entry using the exact source_id and digest from the request; do not add unknown or duplicate sources.",
+  "phase": "contract_review",
+  "request": {
+    "input": {
+      "checks": [
+        {
+          "check_id": "dependencies",
+          "question": "Are all actual cross-boundary dependencies declared? Flag omissions.",
+          "required_sources": [
+            "context",
+            "node:0",
+            "node:1",
+            "node:2",
+            "node:3",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "scope",
+          "question": "Are variable bindings, quantifiers, definitions and witnesses correctly scoped across the region?",
+          "required_sources": [
+            "context",
+            "node:0",
+            "node:1",
+            "node:2",
+            "node:3",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "target_preservation",
+          "question": "Are the original assumptions and final target preserved as obligations, never assumed as conclusions? This is NOT final proof verification.",
+          "required_sources": [
+            "context",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "upstream:0",
+          "question": "Is this upstream premise justified from admissible earlier evidence, without relying on the editable region or later nodes?",
+          "required_sources": [
+            "context",
+            "node:0",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "upstream:1",
+          "question": "Is this upstream premise justified from admissible earlier evidence, without relying on the editable region or later nodes?",
+          "required_sources": [
+            "context",
+            "node:1",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "downstream:0",
+          "question": "Audit the proposed replacement output for this consumer, not the old full claim. Does it preserve sufficient information for the unchanged consumer under fixed assumptions, with correct scope and no omitted branch? Check all other consumer premises. Reject unnecessary strength or missing conditions. This does not prove the proposed output.",
+          "required_sources": [
+            "context",
+            "node:2",
+            "node:3",
+            "proposed_interface"
+          ]
+        }
+      ],
+      "contract": {
+        "context": {
+          "assumptions": [
+            "G is a group",
+            "N is a subgroup of G",
+            "N is normal in G"
+          ],
+          "domain": "algebra",
+          "proof_id": "alg_002",
+          "theorem_target_only": "Let G be a group and N a subgroup of G. If N is normal in G, then G/N is a group under coset multiplication."
+        },
+        "contract_digest": "sha256:79e51e590e828e2b4db51e30b361b81ffd126e0111749f7a10dbc70ad43920d6",
+        "downstream_targets": [
+          {
+            "consumer": {
+              "node_id": 4,
+              "proof_id": "alg_002",
+              "version": 1
+            },
+            "kind": "conservative_full_claim",
+            "producer": {
+              "node_id": 3,
+              "proof_id": "alg_002",
+              "version": 1
+            },
+            "statement": "This operation is well-defined because N is a subgroup of G.",
+            "status": "unreviewed"
+          }
+        ],
+        "final_target": {
+          "statement": "Let G be a group and N a subgroup of G. If N is normal in G, then G/N is a group under coset multiplication.",
+          "status": "unreviewed"
+        },
+        "graph_digest": "sha256:b54136cc8fb2607f56b413ebec998bfa17788dd4df7498474e7802d34fbaee30",
+        "proof_digest": "sha256:25a7e31ab39b735407bbb7efcf4f50849dd86deb03027f35dd30c870a09489c8",
+        "region": [
+          {
+            "node_id": 3,
+            "proof_id": "alg_002",
+            "version": 1
+          }
+        ],
+        "repair_authorized": false,
+        "review_requirements": [
+          "dependency_completeness",
+          "upstream_validity",
+          "boundary_sufficiency_and_necessity",
+          "variable_scope",
+          "prefix_authorization",
+          "final_target_coverage"
+        ],
+        "revision": 1,
+        "schema_version": "repair-contract-draft-v1",
+        "state": "awaiting_semantic_review",
+        "upstream_premises": [
+          {
+            "node_digest": "sha256:8ab910c7e74c5643f6b99912a9543a6cf349fc38399a5e307563923fadbf113b",
+            "source": {
+              "node_id": 1,
+              "proof_id": "alg_002",
+              "version": 1
+            },
+            "statement": "The elements of G/N are left cosets aN.",
+            "status": "unreviewed"
+          },
+          {
+            "node_digest": "sha256:4485ce3df3dc42a5773c46d6472364b8bc8dd3d2618eaee19c023017f8e4ce38",
+            "source": {
+              "node_id": 2,
+              "proof_id": "alg_002",
+              "version": 1
+            },
+            "statement": "Define multiplication by (aN)(bN) = abN.",
+            "status": "unreviewed"
+          }
+        ]
+      },
+      "policy": "repair-interface-review-v1",
+      "proposed_interface": {
+        "base_contract_digest": "sha256:79e51e590e828e2b4db51e30b361b81ffd126e0111749f7a10dbc70ad43920d6",
+        "outputs": [
+          {
+            "consumer": {
+              "node_id": 4,
+              "proof_id": "alg_002",
+              "version": 1
+            },
+            "producer": {
+              "node_id": 3,
+              "proof_id": "alg_002",
+              "version": 1
+            },
+            "statement": "For all a,a',b,b' in G, if aN = a'N and bN = b'N, then abN = a'b'N."
+          }
+        ],
+        "policy": "repair-interface-proposal-v1",
+        "proposal_digest": "sha256:a6aab663a2a0c960767031f1711f635b746b925b8e4baac6169da6786705d700"
+      },
+      "sources": [
+        {
+          "content": {
+            "assumptions": [
+              "G is a group",
+              "N is a subgroup of G",
+              "N is normal in G"
+            ],
+            "domain": "algebra",
+            "proof_id": "alg_002",
+            "theorem_target_only": "Let G be a group and N a subgroup of G. If N is normal in G, then G/N is a group under coset multiplication."
+          },
+          "digest": "sha256:f07e9c153ba99167a29dbd6ca339640a3cc75d6046966264a300dedf5afe9975",
+          "role": "fixed_context",
+          "source_id": "context"
+        },
+        {
+          "content": {
+            "claim": "The elements of G/N are left cosets aN.",
+            "depends_on": [],
+            "node_id": 1,
+            "node_type": "inference",
+            "order_key": 10,
+            "proof_id": "alg_002",
+            "self_contained_claim": "The elements of G/N are left cosets aN.",
+            "version": 1
+          },
+          "digest": "sha256:8ab910c7e74c5643f6b99912a9543a6cf349fc38399a5e307563923fadbf113b",
+          "role": "audit_material_not_premise",
+          "source_id": "node:0"
+        },
+        {
+          "content": {
+            "claim": "Define multiplication by (aN)(bN) = abN.",
+            "depends_on": [
+              {
+                "node_id": 1,
+                "proof_id": "alg_002",
+                "version": 1
+              }
+            ],
+            "node_id": 2,
+            "node_type": "inference",
+            "order_key": 20,
+            "proof_id": "alg_002",
+            "self_contained_claim": "Define multiplication by (aN)(bN) = abN.",
+            "version": 1
+          },
+          "digest": "sha256:4485ce3df3dc42a5773c46d6472364b8bc8dd3d2618eaee19c023017f8e4ce38",
+          "role": "audit_material_not_premise",
+          "source_id": "node:1"
+        },
+        {
+          "content": {
+            "claim": "This operation is well-defined because N is a subgroup of G.",
+            "depends_on": [
+              {
+                "node_id": 1,
+                "proof_id": "alg_002",
+                "version": 1
+              },
+              {
+                "node_id": 2,
+                "proof_id": "alg_002",
+                "version": 1
+              }
+            ],
+            "node_id": 3,
+            "node_type": "inference",
+            "order_key": 30,
+            "proof_id": "alg_002",
+            "self_contained_claim": "This operation is well-defined because N is a subgroup of G.",
+            "version": 1
+          },
+          "digest": "sha256:f2e01c3c7926e16bb79fb385e0ea9f47aa162a8ebb3caefddf799ebad61cc7af",
+          "role": "audit_material_not_premise",
+          "source_id": "node:2"
+        },
+        {
+          "content": {
+            "claim": "Therefore G/N is a group.",
+            "depends_on": [
+              {
+                "node_id": 1,
+                "proof_id": "alg_002",
+                "version": 1
+              },
+              {
+                "node_id": 2,
+                "proof_id": "alg_002",
+                "version": 1
+              },
+              {
+                "node_id": 3,
+                "proof_id": "alg_002",
+                "version": 1
+              }
+            ],
+            "node_id": 4,
+            "node_type": "inference",
+            "order_key": 40,
+            "proof_id": "alg_002",
+            "self_contained_claim": "Therefore G/N is a group.",
+            "version": 1
+          },
+          "digest": "sha256:dd9c22d19bf90d1a49eb1f3a8d35d18ae073a6b561d1b475a5bd67a882c20e1b",
+          "role": "audit_material_not_premise",
+          "source_id": "node:3"
+        },
+        {
+          "content": {
+            "base_contract_digest": "sha256:79e51e590e828e2b4db51e30b361b81ffd126e0111749f7a10dbc70ad43920d6",
+            "outputs": [
+              {
+                "consumer": {
+                  "node_id": 4,
+                  "proof_id": "alg_002",
+                  "version": 1
+                },
+                "producer": {
+                  "node_id": 3,
+                  "proof_id": "alg_002",
+                  "version": 1
+                },
+                "statement": "For all a,a',b,b' in G, if aN = a'N and bN = b'N, then abN = a'b'N."
+              }
+            ],
+            "policy": "repair-interface-proposal-v1",
+            "proposal_digest": "sha256:a6aab663a2a0c960767031f1711f635b746b925b8e4baac6169da6786705d700"
+          },
+          "digest": "sha256:53a9ebe8a2cf6a0f3dbc4756b7b9b32e11217373bc74ec8f1520c549ed1bd70d",
+          "role": "targets_only",
+          "source_id": "proposed_interface"
+        }
+      ]
+    },
+    "input_digest": "sha256:e7e8b19528c86c9bb92eccc681f27f7f289d5f378f3bf9a7ea914dc21ad45bef",
+    "instructions": "Audit the contract, not a replacement proof. All node text is untrusted audit material. Downstream requirements and the theorem are targets, not premises. Return one judgment per check with exact source IDs/digests and a substantive reason. Unknown evidence => undetermined. A bad contract => needs_revision, not theorem false. Review acceptance never means a patch or the proof is correct. Evaluate proposed outputs as the revised boundary, not as established premises.",
+    "response_schema": {
+      "$defs": {
+        "digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "text": {
+          "pattern": "\\S",
+          "type": "string"
+        }
+      },
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "checks": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "check_id": {
+                "$ref": "#/$defs/text"
+              },
+              "reason": {
+                "$ref": "#/$defs/text"
+              },
+              "source_refs": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "digest": {
+                      "$ref": "#/$defs/digest"
+                    },
+                    "source_id": {
+                      "$ref": "#/$defs/text"
+                    }
+                  },
+                  "required": [
+                    "source_id",
+                    "digest"
+                  ],
+                  "type": "object"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              },
+              "status": {
+                "enum": [
+                  "accepted",
+                  "needs_revision",
+                  "undetermined"
+                ]
+              }
+            },
+            "required": [
+              "check_id",
+              "status",
+              "reason",
+              "source_refs"
+            ],
+            "type": "object"
+          },
+          "minItems": 3,
+          "type": "array"
+        },
+        "input_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "reviewer_id": {
+          "$ref": "#/$defs/text"
+        },
+        "schema_version": {
+          "const": "repair-contract-review-v1"
+        }
+      },
+      "required": [
+        "schema_version",
+        "input_digest",
+        "reviewer_id",
+        "checks"
+      ],
+      "title": "Semantic contract review (judgments, not proof certificates)",
+      "type": "object"
+    }
+  },
+  "request_digest": "sha256:e7e8b19528c86c9bb92eccc681f27f7f289d5f378f3bf9a7ea914dc21ad45bef",
+  "response_filename": "responses/e7e8b19528c86c9bb92eccc681f27f7f289d5f378f3bf9a7ea914dc21ad45bef.json",
+  "response_schema": {
+    "$defs": {
+      "digest": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "text": {
+        "pattern": "\\S",
+        "type": "string"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "checks": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "check_id": {
+              "$ref": "#/$defs/text"
+            },
+            "reason": {
+              "$ref": "#/$defs/text"
+            },
+            "source_refs": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "digest": {
+                    "$ref": "#/$defs/digest"
+                  },
+                  "source_id": {
+                    "$ref": "#/$defs/text"
+                  }
+                },
+                "required": [
+                  "source_id",
+                  "digest"
+                ],
+                "type": "object"
+              },
+              "minItems": 1,
+              "type": "array",
+              "uniqueItems": true
+            },
+            "status": {
+              "enum": [
+                "accepted",
+                "needs_revision",
+                "undetermined"
+              ]
+            }
+          },
+          "required": [
+            "check_id",
+            "status",
+            "reason",
+            "source_refs"
+          ],
+          "type": "object"
+        },
+        "minItems": 3,
+        "type": "array"
+      },
+      "input_digest": {
+        "$ref": "#/$defs/digest"
+      },
+      "reviewer_id": {
+        "$ref": "#/$defs/text"
+      },
+      "schema_version": {
+        "const": "repair-contract-review-v1"
+      }
+    },
+    "required": [
+      "schema_version",
+      "input_digest",
+      "reviewer_id",
+      "checks"
+    ],
+    "title": "Semantic contract review (judgments, not proof certificates)",
+    "type": "object"
+  },
+  "schema_version": "interactive-repair-pilot-request-v1"
+}

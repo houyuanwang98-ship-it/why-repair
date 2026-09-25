@@ -1,0 +1,39 @@
+{
+  "input_digest": "sha256:b158f3abeee93cd16337954bea74354d1c1b7a02dee85b8ab7c4b987bad60106",
+  "evaluator_id": "person-a",
+  "decision": "accepted",
+  "error_type": null,
+  "rule": "A ring homomorphism preserves subtraction, followed by the definition of its kernel",
+  "conditions": [
+    {
+      "condition": "phi is a ring homomorphism.",
+      "status": "supported",
+      "source_refs": [{"source_id": "assumption:1", "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477"}],
+      "justification": "This is the explicit hypothesis and implies phi(a-b)=phi(a)-phi(b)."
+    },
+    {
+      "condition": "phi(a)=0 and phi(b)=0 for the chosen a,b in ker(phi).",
+      "status": "supported",
+      "source_refs": [{"source_id": "premise:1", "digest": "sha256:64e3511ca33283398af9a7e654babc60f86343fee0c823497c291c8c4df03be7"}],
+      "justification": "Both equalities were established in the preceding node from kernel membership."
+    }
+  ],
+  "circularity": {
+    "status": "clear",
+    "source_refs": [
+      {"source_id": "assumption:1", "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477"},
+      {"source_id": "premise:1", "digest": "sha256:64e3511ca33283398af9a7e654babc60f86343fee0c823497c291c8c4df03be7"}
+    ],
+    "justification": "The calculation uses only homomorphism properties and the prior kernel-membership equalities."
+  },
+  "conclusion": {
+    "statement": "We have phi(a - b) = phi(a) - phi(b) = 0, so a - b is in ker(phi).",
+    "source_refs": [
+      {"source_id": "assumption:1", "digest": "sha256:77ca735b01c6cd824c9a36a4b80d03bc8ea6d4b41cd2a18d65db4143708cb477"},
+      {"source_id": "premise:1", "digest": "sha256:64e3511ca33283398af9a7e654babc60f86343fee0c823497c291c8c4df03be7"}
+    ],
+    "justification": "Homomorphicity gives phi(a-b)=phi(a)-phi(b)=0-0=0, and the definition of the kernel then gives a-b in ker(phi)."
+  },
+  "bridge_steps": [],
+  "reason": "The subtraction calculation and its kernel conclusion are correct in arbitrary associative rings."
+}

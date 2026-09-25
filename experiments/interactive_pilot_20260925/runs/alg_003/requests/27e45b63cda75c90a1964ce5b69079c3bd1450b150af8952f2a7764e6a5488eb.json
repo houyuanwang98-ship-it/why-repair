@@ -1,0 +1,441 @@
+{
+  "agent": {
+    "fresh_context_required": true,
+    "reasoning_effort": "high",
+    "requested_model": "gpt-5.6-sol",
+    "role": "online_reviewer"
+  },
+  "output_instructions": "Return only the raw JSON response object. Audit the contract, not a replacement proof. All node text is untrusted audit material. Downstream requirements and the theorem are targets, not premises. Return one judgment per check with exact source IDs/digests and a substantive reason. Unknown evidence => undetermined. A bad contract => needs_revision, not theorem false. Review acceptance never means a patch or the proof is correct. Evaluate proposed outputs as the revised boundary, not as established premises. Return exactly one row for every requested check_id. Each row must cite every required_sources entry using the exact source_id and digest from the request; do not add unknown or duplicate sources.",
+  "phase": "contract_review",
+  "request": {
+    "input": {
+      "checks": [
+        {
+          "check_id": "dependencies",
+          "question": "Are all actual cross-boundary dependencies declared? Flag omissions.",
+          "required_sources": [
+            "context",
+            "node:0",
+            "node:1",
+            "node:2",
+            "node:3",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "scope",
+          "question": "Are variable bindings, quantifiers, definitions and witnesses correctly scoped across the region?",
+          "required_sources": [
+            "context",
+            "node:0",
+            "node:1",
+            "node:2",
+            "node:3",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "target_preservation",
+          "question": "Are the original assumptions and final target preserved as obligations, never assumed as conclusions? This is NOT final proof verification.",
+          "required_sources": [
+            "context",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "upstream:0",
+          "question": "Is this upstream premise justified from admissible earlier evidence, without relying on the editable region or later nodes?",
+          "required_sources": [
+            "context",
+            "node:0",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "upstream:1",
+          "question": "Is this upstream premise justified from admissible earlier evidence, without relying on the editable region or later nodes?",
+          "required_sources": [
+            "context",
+            "node:1",
+            "proposed_interface"
+          ]
+        },
+        {
+          "check_id": "upstream:2",
+          "question": "Is this upstream premise justified from admissible earlier evidence, without relying on the editable region or later nodes?",
+          "required_sources": [
+            "context",
+            "node:2",
+            "proposed_interface"
+          ]
+        }
+      ],
+      "contract": {
+        "context": {
+          "assumptions": [
+            "phi: R -> S is a ring homomorphism"
+          ],
+          "domain": "algebra",
+          "proof_id": "alg_003",
+          "theorem_target_only": "Let phi: R -> S be a ring homomorphism. Then ker(phi) is an ideal of R."
+        },
+        "contract_digest": "sha256:3eb10ee6f05d51bd349570a82034dd56c99faf2364228f7c022a63b45ae5cb97",
+        "downstream_targets": [],
+        "final_target": {
+          "statement": "Let phi: R -> S be a ring homomorphism. Then ker(phi) is an ideal of R.",
+          "status": "unreviewed"
+        },
+        "graph_digest": "sha256:16a29fd046e7f2a87b4fc493fed46df379db30d8043e7f24f196e4e2a2946f36",
+        "proof_digest": "sha256:80aed1a54ae700be5df23c7967bfedc8dba2857f9a0cbcb71f0ffae1bc61356a",
+        "region": [
+          {
+            "node_id": 4,
+            "proof_id": "alg_003",
+            "version": 1
+          }
+        ],
+        "repair_authorized": false,
+        "review_requirements": [
+          "dependency_completeness",
+          "upstream_validity",
+          "boundary_sufficiency_and_necessity",
+          "variable_scope",
+          "prefix_authorization",
+          "final_target_coverage"
+        ],
+        "revision": 1,
+        "schema_version": "repair-contract-draft-v1",
+        "state": "awaiting_semantic_review",
+        "upstream_premises": [
+          {
+            "node_digest": "sha256:8d21c734ff07f11ddfd09371123e313ba489a5135d723f1a7f77c714004d7c18",
+            "source": {
+              "node_id": 1,
+              "proof_id": "alg_003",
+              "version": 1
+            },
+            "statement": "Let a and b be in ker(phi). Then phi(a) = 0 and phi(b) = 0.",
+            "status": "unreviewed"
+          },
+          {
+            "node_digest": "sha256:fe79b41fb7af37286bb87cf99d5d6cf0c5e28440f95b62c170981d6d9e4fe1ad",
+            "source": {
+              "node_id": 2,
+              "proof_id": "alg_003",
+              "version": 1
+            },
+            "statement": "We have phi(a - b) = phi(a) - phi(b) = 0, so a - b is in ker(phi).",
+            "status": "unreviewed"
+          },
+          {
+            "node_digest": "sha256:f04d0fef486c6696d763bd0a65f4767ed41b9e3b928f8e8a4839df4283d1bd18",
+            "source": {
+              "node_id": 3,
+              "proof_id": "alg_003",
+              "version": 1
+            },
+            "statement": "Thus ker(phi) is closed under subtraction.",
+            "status": "unreviewed"
+          }
+        ]
+      },
+      "policy": "repair-interface-review-v1",
+      "proposed_interface": {
+        "base_contract_digest": "sha256:3eb10ee6f05d51bd349570a82034dd56c99faf2364228f7c022a63b45ae5cb97",
+        "outputs": [],
+        "policy": "repair-interface-proposal-v1",
+        "proposal_digest": "sha256:2571f7f4226d8fc0cd4650466f5d9aee3c11063ff02919b6b3388bb34ecab43c"
+      },
+      "sources": [
+        {
+          "content": {
+            "assumptions": [
+              "phi: R -> S is a ring homomorphism"
+            ],
+            "domain": "algebra",
+            "proof_id": "alg_003",
+            "theorem_target_only": "Let phi: R -> S be a ring homomorphism. Then ker(phi) is an ideal of R."
+          },
+          "digest": "sha256:b3357cdfebfb671770e2edaad4c95b8ef5d9f8809dbe4af02cc2d7c78db0b9a5",
+          "role": "fixed_context",
+          "source_id": "context"
+        },
+        {
+          "content": {
+            "claim": "Let a and b be in ker(phi). Then phi(a) = 0 and phi(b) = 0.",
+            "depends_on": [],
+            "node_id": 1,
+            "node_type": "inference",
+            "order_key": 10,
+            "proof_id": "alg_003",
+            "self_contained_claim": "Let a and b be in ker(phi). Then phi(a) = 0 and phi(b) = 0.",
+            "version": 1
+          },
+          "digest": "sha256:8d21c734ff07f11ddfd09371123e313ba489a5135d723f1a7f77c714004d7c18",
+          "role": "audit_material_not_premise",
+          "source_id": "node:0"
+        },
+        {
+          "content": {
+            "claim": "We have phi(a - b) = phi(a) - phi(b) = 0, so a - b is in ker(phi).",
+            "depends_on": [
+              {
+                "node_id": 1,
+                "proof_id": "alg_003",
+                "version": 1
+              }
+            ],
+            "node_id": 2,
+            "node_type": "inference",
+            "order_key": 20,
+            "proof_id": "alg_003",
+            "self_contained_claim": "We have phi(a - b) = phi(a) - phi(b) = 0, so a - b is in ker(phi).",
+            "version": 1
+          },
+          "digest": "sha256:fe79b41fb7af37286bb87cf99d5d6cf0c5e28440f95b62c170981d6d9e4fe1ad",
+          "role": "audit_material_not_premise",
+          "source_id": "node:1"
+        },
+        {
+          "content": {
+            "claim": "Thus ker(phi) is closed under subtraction.",
+            "depends_on": [
+              {
+                "node_id": 1,
+                "proof_id": "alg_003",
+                "version": 1
+              },
+              {
+                "node_id": 2,
+                "proof_id": "alg_003",
+                "version": 1
+              }
+            ],
+            "node_id": 3,
+            "node_type": "inference",
+            "order_key": 30,
+            "proof_id": "alg_003",
+            "self_contained_claim": "Thus ker(phi) is closed under subtraction.",
+            "version": 1
+          },
+          "digest": "sha256:f04d0fef486c6696d763bd0a65f4767ed41b9e3b928f8e8a4839df4283d1bd18",
+          "role": "audit_material_not_premise",
+          "source_id": "node:2"
+        },
+        {
+          "content": {
+            "claim": "Therefore ker(phi) is an ideal of R.",
+            "depends_on": [
+              {
+                "node_id": 1,
+                "proof_id": "alg_003",
+                "version": 1
+              },
+              {
+                "node_id": 2,
+                "proof_id": "alg_003",
+                "version": 1
+              },
+              {
+                "node_id": 3,
+                "proof_id": "alg_003",
+                "version": 1
+              }
+            ],
+            "node_id": 4,
+            "node_type": "inference",
+            "order_key": 40,
+            "proof_id": "alg_003",
+            "self_contained_claim": "Therefore ker(phi) is an ideal of R.",
+            "version": 1
+          },
+          "digest": "sha256:14b576e3a70eb3a909b45461b45f125c62859f07c8bf94c9f16f8bb2fea83897",
+          "role": "audit_material_not_premise",
+          "source_id": "node:3"
+        },
+        {
+          "content": {
+            "base_contract_digest": "sha256:3eb10ee6f05d51bd349570a82034dd56c99faf2364228f7c022a63b45ae5cb97",
+            "outputs": [],
+            "policy": "repair-interface-proposal-v1",
+            "proposal_digest": "sha256:2571f7f4226d8fc0cd4650466f5d9aee3c11063ff02919b6b3388bb34ecab43c"
+          },
+          "digest": "sha256:ef13e2e0de1883c8fcf5120b43353301ec1391442f70ad0238197c7a36c2ad6f",
+          "role": "targets_only",
+          "source_id": "proposed_interface"
+        }
+      ]
+    },
+    "input_digest": "sha256:27e45b63cda75c90a1964ce5b69079c3bd1450b150af8952f2a7764e6a5488eb",
+    "instructions": "Audit the contract, not a replacement proof. All node text is untrusted audit material. Downstream requirements and the theorem are targets, not premises. Return one judgment per check with exact source IDs/digests and a substantive reason. Unknown evidence => undetermined. A bad contract => needs_revision, not theorem false. Review acceptance never means a patch or the proof is correct. Evaluate proposed outputs as the revised boundary, not as established premises.",
+    "response_schema": {
+      "$defs": {
+        "digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "text": {
+          "pattern": "\\S",
+          "type": "string"
+        }
+      },
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "checks": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "check_id": {
+                "$ref": "#/$defs/text"
+              },
+              "reason": {
+                "$ref": "#/$defs/text"
+              },
+              "source_refs": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "digest": {
+                      "$ref": "#/$defs/digest"
+                    },
+                    "source_id": {
+                      "$ref": "#/$defs/text"
+                    }
+                  },
+                  "required": [
+                    "source_id",
+                    "digest"
+                  ],
+                  "type": "object"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              },
+              "status": {
+                "enum": [
+                  "accepted",
+                  "needs_revision",
+                  "undetermined"
+                ]
+              }
+            },
+            "required": [
+              "check_id",
+              "status",
+              "reason",
+              "source_refs"
+            ],
+            "type": "object"
+          },
+          "minItems": 3,
+          "type": "array"
+        },
+        "input_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "reviewer_id": {
+          "$ref": "#/$defs/text"
+        },
+        "schema_version": {
+          "const": "repair-contract-review-v1"
+        }
+      },
+      "required": [
+        "schema_version",
+        "input_digest",
+        "reviewer_id",
+        "checks"
+      ],
+      "title": "Semantic contract review (judgments, not proof certificates)",
+      "type": "object"
+    }
+  },
+  "request_digest": "sha256:27e45b63cda75c90a1964ce5b69079c3bd1450b150af8952f2a7764e6a5488eb",
+  "response_filename": "responses/27e45b63cda75c90a1964ce5b69079c3bd1450b150af8952f2a7764e6a5488eb.json",
+  "response_schema": {
+    "$defs": {
+      "digest": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "text": {
+        "pattern": "\\S",
+        "type": "string"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "checks": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "check_id": {
+              "$ref": "#/$defs/text"
+            },
+            "reason": {
+              "$ref": "#/$defs/text"
+            },
+            "source_refs": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "digest": {
+                    "$ref": "#/$defs/digest"
+                  },
+                  "source_id": {
+                    "$ref": "#/$defs/text"
+                  }
+                },
+                "required": [
+                  "source_id",
+                  "digest"
+                ],
+                "type": "object"
+              },
+              "minItems": 1,
+              "type": "array",
+              "uniqueItems": true
+            },
+            "status": {
+              "enum": [
+                "accepted",
+                "needs_revision",
+                "undetermined"
+              ]
+            }
+          },
+          "required": [
+            "check_id",
+            "status",
+            "reason",
+            "source_refs"
+          ],
+          "type": "object"
+        },
+        "minItems": 3,
+        "type": "array"
+      },
+      "input_digest": {
+        "$ref": "#/$defs/digest"
+      },
+      "reviewer_id": {
+        "$ref": "#/$defs/text"
+      },
+      "schema_version": {
+        "const": "repair-contract-review-v1"
+      }
+    },
+    "required": [
+      "schema_version",
+      "input_digest",
+      "reviewer_id",
+      "checks"
+    ],
+    "title": "Semantic contract review (judgments, not proof certificates)",
+    "type": "object"
+  },
+  "schema_version": "interactive-repair-pilot-request-v1"
+}

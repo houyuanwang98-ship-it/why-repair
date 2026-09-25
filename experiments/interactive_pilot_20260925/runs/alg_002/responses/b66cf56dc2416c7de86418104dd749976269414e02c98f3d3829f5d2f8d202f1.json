@@ -1,0 +1,40 @@
+{
+  "input_digest": "sha256:b66cf56dc2416c7de86418104dd749976269414e02c98f3d3829f5d2f8d202f1",
+  "evaluator_id": "person-a",
+  "decision": "invalid",
+  "error_type": "false_local_claim",
+  "rule": "Well-definedness of coset multiplication requires independence from representatives",
+  "conditions": [
+    {
+      "condition": "If aN=a'N and bN=b'N, then abN=a'b'N.",
+      "status": "missing",
+      "source_refs": [],
+      "justification": "The submitted sentence gives no representative-independence argument. Merely being a subgroup does not imply this condition."
+    },
+    {
+      "condition": "N is normal in G, which is the relevant hypothesis for coset multiplication to be well-defined.",
+      "status": "supported",
+      "source_refs": [{"source_id": "assumption:3", "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb"}],
+      "justification": "Normality is explicitly available, but the submitted reason incorrectly attributes well-definedness only to the subgroup property."
+    }
+  ],
+  "circularity": {
+    "status": "clear",
+    "source_refs": [
+      {"source_id": "assumption:2", "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1"},
+      {"source_id": "assumption:3", "digest": "sha256:75caf92f05bbd806e941aaa5d5a4d1c6993e723e0b9656a2d818cf4a9c9f39cb"},
+      {"source_id": "premise:2", "digest": "sha256:03882a180cfb8b85dcd9bc80614b775236c85e2d82d16c0c7e0a03a39502be68"}
+    ],
+    "justification": "The defect is a false sufficiency claim, not circular reasoning."
+  },
+  "conclusion": {
+    "statement": "This operation is well-defined because N is a subgroup of G.",
+    "source_refs": [
+      {"source_id": "assumption:2", "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1"},
+      {"source_id": "premise:2", "digest": "sha256:03882a180cfb8b85dcd9bc80614b775236c85e2d82d16c0c7e0a03a39502be68"}
+    ],
+    "justification": "The cited subgroup fact ensures cosets exist but does not ensure that the product formula is independent of representatives; non-normal subgroups provide counterexamples."
+  },
+  "bridge_steps": [],
+  "reason": "Although the operation is well-defined under the separately stated normality assumption, the submitted causal reason is false: subgroup status alone is insufficient."
+}

@@ -1,0 +1,44 @@
+{
+  "input_digest": "sha256:953c3de4ca1bbc34a3a6de5a1a79557342ddcfb4a51a8789ed99b3e2c6892fc2",
+  "evaluator_id": "person-a",
+  "decision": "accepted",
+  "error_type": null,
+  "rule": "Specification of the candidate coset multiplication",
+  "conditions": [
+    {
+      "condition": "The inputs are left cosets aN and bN in G/N.",
+      "status": "supported",
+      "source_refs": [{"source_id": "premise:1", "digest": "sha256:4da2b4a23d389238077b46686862d175c57b7006590426c9495bee8fd1792e76"}],
+      "justification": "The preceding node identifies the elements of G/N as left cosets."
+    },
+    {
+      "condition": "For a,b in G, the product ab is an element of G and therefore determines a left coset abN.",
+      "status": "supported",
+      "source_refs": [
+        {"source_id": "assumption:1", "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161"},
+        {"source_id": "assumption:2", "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1"}
+      ],
+      "justification": "Closure in G gives ab in G, and N being a subgroup makes abN a coset represented in G/N."
+    }
+  ],
+  "circularity": {
+    "status": "clear",
+    "source_refs": [
+      {"source_id": "assumption:1", "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161"},
+      {"source_id": "assumption:2", "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1"},
+      {"source_id": "premise:1", "digest": "sha256:4da2b4a23d389238077b46686862d175c57b7006590426c9495bee8fd1792e76"}
+    ],
+    "justification": "This line specifies the candidate product formula; it does not yet invoke the later conclusion that the formula is well-defined."
+  },
+  "conclusion": {
+    "statement": "Define multiplication by (aN)(bN) = abN.",
+    "source_refs": [
+      {"source_id": "assumption:1", "digest": "sha256:e690e0e496efeab3bc872c81765d04263eb7c8cf585da1c0c36219f8a233d161"},
+      {"source_id": "assumption:2", "digest": "sha256:81172e48ba196537bd06edb39153bacd3ae94e1db65d9fd2a2c87d0fa9a0f8c1"},
+      {"source_id": "premise:1", "digest": "sha256:4da2b4a23d389238077b46686862d175c57b7006590426c9495bee8fd1792e76"}
+    ],
+    "justification": "The displayed equation coherently specifies the intended product on coset representatives; independence of representatives remains a separate well-definedness obligation."
+  },
+  "bridge_steps": [],
+  "reason": "As a formula proposing the quotient multiplication, the line is valid; it should not itself be read as having already proved well-definedness."
+}
